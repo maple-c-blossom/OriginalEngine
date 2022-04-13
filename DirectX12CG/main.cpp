@@ -597,16 +597,37 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = gpipelineDesc.BlendState.RenderTarget[0];
      blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;//標準設定
 
-     ////共通設定
-     //blenddesc.BlendEnable = true;
-     //blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
-     //blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
-     //blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+     //共通設定
+     blenddesc.BlendEnable = true;
+     blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+     blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+     blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
 
-     ////加算合成
+     //半透明合成
+     blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+     blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+     blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+
+     //加算合成
+     //#pragma region 加算合成
      //blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-     //blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-     //blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+     //blenddesc.SrcBlend = D3D12_BLEND_ONE;
+     //blenddesc.DestBlend = D3D12_BLEND_ONE;
+     //#pragma endregion
+
+     //減算合成
+   /*  #pragma region 減算合成
+     blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
+     blenddesc.SrcBlend = D3D12_BLEND_ONE;
+     blenddesc.DestBlend = D3D12_BLEND_ONE;
+     #pragma endregion*/
+
+     ////色反転
+     //blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+     //blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
+     //blenddesc.DestBlend = D3D12_BLEND_ZERO;
+
+
 #pragma endregion ブレンドステートの設定
      //--------------------------
 
@@ -709,15 +730,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion キーボード初期化
         //----------------------------------------
 
-        if (key[DIK_SPACE])
-        {
-            clearColor[0] = {1.0f}; // 青っぽい色
-        }
-        else
-        {
-            clearColor[0] = { 0.1f };
-        }
-
 
 #pragma endregion 更新処理
 
@@ -762,25 +774,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             //ビューポートの設定コマンド-----------------------------
 #pragma region ビューポートの設定コマンド
 
-        D3D12_VIEWPORT viewport[4]{};
+        D3D12_VIEWPORT viewport{};
 
-        viewport[0].Width = 200;
-        viewport[0].Height = 200;
-        viewport[0].TopLeftX = 0;
-        viewport[0].TopLeftY = 0;
-        viewport[0].MinDepth = 0.0f;
-        viewport[0].MaxDepth = 1.0f;
+        viewport.Width = window_width;
+        viewport.Height = window_height;
+        viewport.TopLeftX = 0;
+        viewport.TopLeftY = 0;
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
 
-        viewport[1].Width = 200;
-        viewport[1].Height = 200;
-        viewport[1].TopLeftX = viewport[0].Width;
-        viewport[1].TopLeftY = viewport[0].Height;
-        viewport[1].MinDepth = 0.0f;
-        viewport[1].MaxDepth = 1.0f;
-
-
-
-        commandList->RSSetViewports(4, viewport);
+        commandList->RSSetViewports(1, &viewport);
 
 #pragma endregion ビューポートの設定コマンド
         //------------------------------
