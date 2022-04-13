@@ -104,7 +104,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     // ウィンドウオブジェクトの生成
     HWND hwnd = CreateWindow(w.lpszClassName, // クラス名
-        L"DirectX自主勉",         // タイトルバーの文字
+        L"DirectX12Game",         // タイトルバーの文字
         WS_OVERLAPPEDWINDOW,        // 標準的なウィンドウスタイル
         CW_USEDEFAULT,              // 表示X座標（OSに任せる）
         CW_USEDEFAULT,              // 表示Y座標（OSに任せる）
