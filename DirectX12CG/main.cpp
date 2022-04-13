@@ -762,16 +762,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             //ビューポートの設定コマンド-----------------------------
 #pragma region ビューポートの設定コマンド
 
-        D3D12_VIEWPORT viewport{};
+        D3D12_VIEWPORT viewport[4]{};
 
-        viewport.Width = window_width;
-        viewport.Height = window_height;
-        viewport.TopLeftX = 0;
-        viewport.TopLeftY = 0;
-        viewport.MinDepth = 0.0f;
-        viewport.MaxDepth = 1.0f;
+        viewport[0].Width = 200;
+        viewport[0].Height = 200;
+        viewport[0].TopLeftX = 0;
+        viewport[0].TopLeftY = 0;
+        viewport[0].MinDepth = 0.0f;
+        viewport[0].MaxDepth = 1.0f;
 
-        commandList->RSSetViewports(1, &viewport);
+        viewport[1].Width = 200;
+        viewport[1].Height = 200;
+        viewport[1].TopLeftX = viewport[0].Width;
+        viewport[1].TopLeftY = viewport[0].Height;
+        viewport[1].MinDepth = 0.0f;
+        viewport[1].MaxDepth = 1.0f;
+
+
+
+        commandList->RSSetViewports(4, viewport);
 
 #pragma endregion ビューポートの設定コマンド
         //------------------------------
