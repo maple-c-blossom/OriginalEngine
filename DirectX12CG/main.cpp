@@ -179,7 +179,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     ComPtr<IDXGIFactory6> dxgiFactory = nullptr;
     ComPtr<IDXGISwapChain4> swapchain = nullptr;
     ComPtr<ID3D12CommandAllocator> commandAllocator = nullptr;
-    ComPtr<ID3D12GraphicsCommandList> cmdList = nullptr;
+    ComPtr<ID3D12GraphicsCommandList> commandList = nullptr;
     ComPtr<ID3D12CommandQueue> commandQueue = nullptr;
     ComPtr<ID3D12DescriptorHeap> rtvHeaps = nullptr;
 
@@ -260,7 +260,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     assert(SUCCEEDED(result));
 
     //コマンドリストを生成
-    result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&cmdList));
+    result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList));
     assert(SUCCEEDED(result));
 
 
@@ -360,6 +360,276 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //------------
 #pragma endregion 
 
+
+#pragma region 描画初期化処理
+
+     //頂点データ---------------------------------
+#pragma region 頂点データ
+     XMFLOAT3 vertices[] = {
+         {-0.5f,-0.5f,0.0f},
+         {-0.5f,+0.5f,0.0f},
+         {+ 0.5f,-0.5f,0.0f},
+     };
+
+     UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+#pragma endregion 頂点データ
+     //--------------------------
+     
+     //頂点バッファ---------------
+#pragma region 頂点バッファの設定
+    D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+    heapprop.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
+
+    D3D12_RESOURCE_DESC resdesc{};  // リソース設定
+    resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    resdesc.Width = sizeVB; // 頂点データ全体のサイズ
+    resdesc.Height = 1;
+    resdesc.DepthOrArraySize = 1;
+    resdesc.MipLevels = 1;
+    resdesc.SampleDesc.Count = 1;
+    resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+#pragma endregion 頂点バッファの設定
+     //----------------------------------
+
+     // 頂点バッファの生成----------------------------
+#pragma region 頂点バッファの生成
+     ComPtr<ID3D12Resource> vertBuff = nullptr;
+     result = device->CreateCommittedResource(
+         &heapprop, // ヒープ設定
+         D3D12_HEAP_FLAG_NONE,
+         &resdesc, // リソース設定
+         D3D12_RESOURCE_STATE_GENERIC_READ,
+         nullptr,
+         IID_PPV_ARGS(&vertBuff));
+
+     assert(SUCCEEDED(result));
+#pragma endregion 頂点バッファの生成
+     //-------------------------
+
+     // 頂点バッファへのデータ転送------------
+#pragma region GPU上のバッファに対応した仮想メモリを取得
+     XMFLOAT3* vertMap = nullptr;
+     result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+     assert(SUCCEEDED(result));
+
+     // 全頂点に対して
+     for (int i = 0; i < _countof(vertices); i++)
+     {
+         vertMap[i] = vertices[i];   // 座標をコピー
+     }
+
+     // マップを解除
+     vertBuff->Unmap(0, nullptr);
+#pragma endregion GPU上のバッファに対応した仮想メモリを取得
+     //--------------------------------------
+
+     // 頂点バッファビューの作成--------------------------
+#pragma region 頂点バッファビューの作成
+     D3D12_VERTEX_BUFFER_VIEW vbView{};
+
+     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+     vbView.SizeInBytes = sizeVB;
+     vbView.StrideInBytes = sizeof(XMFLOAT3);
+#pragma endregion 頂点バッファビューの作成
+     //-----------------------------------
+
+       //シェーダーオブジェクト宣言-------------------------------------------
+#pragma region シェーダーオブジェクト宣言
+     ComPtr<ID3DBlob> vsBlob = nullptr; // 頂点シェーダオブジェクト
+     ComPtr<ID3DBlob> psBlob = nullptr; // ピクセルシェーダオブジェクト
+     ComPtr<ID3DBlob> errorBlob = nullptr; // エラーオブジェクト
+#pragma endregion シェーダーオブジェクト宣言
+//---------------------------------
+
+// 頂点シェーダの読み込みとコンパイル--------------------------------
+#pragma region 頂点シェーダの読み込みとコンパイル
+
+     result = D3DCompileFromFile(
+         L"BasicVS.hlsl",  // シェーダファイル名
+         nullptr,
+         D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+         "main", "vs_5_0", // エントリーポイント名、シェーダーモデル指定
+         D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+         0,
+         &vsBlob, &errorBlob);
+
+#pragma endregion 頂点シェーダの読み込みとコンパイル
+     //------------------------------------------
+
+
+     //  シェーダーのエラーに関する出力部分-----------------
+#pragma region シェーダーのエラーに関する出力部分
+
+     if (FAILED(result)) {
+         // errorBlobからエラー内容をstring型にコピー
+         string error;
+         error.resize(errorBlob->GetBufferSize());
+
+         copy_n((char*)errorBlob->GetBufferPointer(),
+             errorBlob->GetBufferSize(),
+             error.begin());
+         error += "\n";
+         // エラー内容を出力ウィンドウに表示
+         OutputDebugStringA(error.c_str());
+         assert(0);
+     }
+
+#pragma endregion シェーダーのエラーに関する出力部分
+     //-----------------------------------
+
+     // ピクセルシェーダの読み込みとコンパイル-------------------------------
+#pragma region ピクセルシェーダの読み込みとコンパイル
+
+     result = D3DCompileFromFile(
+         L"BasicPS.hlsl",   // シェーダファイル名
+         nullptr,
+         D3D_COMPILE_STANDARD_FILE_INCLUDE, // インクルード可能にする
+         "main", "ps_5_0", // エントリーポイント名、シェーダーモデル指定
+         D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
+         0,
+         &psBlob, &errorBlob);
+
+#pragma endregion ピクセルシェーダの読み込みとコンパイル
+     //--------------------------------
+
+     //  シェーダーのエラーに関する出力部分-----------------
+#pragma region シェーダーのエラーに関する出力部分
+
+     if (FAILED(result)) {
+         // errorBlobからエラー内容をstring型にコピー
+         string error;
+         error.resize(errorBlob->GetBufferSize());
+
+         copy_n((char*)errorBlob->GetBufferPointer(),
+             errorBlob->GetBufferSize(),
+             error.begin());
+         error += "\n";
+         // エラー内容を出力ウィンドウに表示
+         OutputDebugStringA(error.c_str());
+         assert(0);
+     }
+
+#pragma endregion シェーダーのエラーに関する出力部分
+     //-----------------------------------
+
+
+      // 頂点レイアウト------------------
+#pragma region 頂点レイアウト
+
+     D3D12_INPUT_ELEMENT_DESC inputLayout[] =
+     {
+         {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
+         //{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//法線ベクトル
+         //{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
+     };
+
+#pragma endregion 頂点レイアウト
+     //--------------------
+
+     // グラフィックスパイプライン設定-----------
+     D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipelineDesc{};
+     //-------------------------
+
+     //頂点シェーダ、ピクセルシェーダをパイプラインに設定-----------------------------
+#pragma region 頂点シェーダとピクセルシェーダをパイプラインに設定
+
+     gpipelineDesc.VS.pShaderBytecode = vsBlob->GetBufferPointer();
+     gpipelineDesc.VS.BytecodeLength = vsBlob->GetBufferSize();
+     gpipelineDesc.PS.pShaderBytecode = psBlob->GetBufferPointer();
+     gpipelineDesc.PS.BytecodeLength = psBlob->GetBufferSize();
+
+#pragma endregion 頂点シェーダとピクセルシェーダをパイプラインに設定
+     //-----------------------------------
+
+     //サンプルマスクとラスタライザステートの設定------------------------------------
+#pragma region サンプルマスクとラスタライザステートの設定
+
+     gpipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
+     gpipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;  // 背面カリング
+     gpipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
+     gpipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
+
+#pragma endregion サンプルマスクとラスタライザステートの設定
+//------------------------------------
+
+
+      //ブレンドステートの設定-------------------------------
+#pragma region ブレンドステートの設定
+//gpipeline.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;  // RBGA全てのチャンネルを描画
+     D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = gpipelineDesc.BlendState.RenderTarget[0];
+     blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;//標準設定
+
+     ////共通設定
+     //blenddesc.BlendEnable = true;
+     //blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+     //blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
+     //blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+
+     ////加算合成
+     //blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
+     //blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
+     //blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+#pragma endregion ブレンドステートの設定
+     //--------------------------
+
+     //頂点レイアウトの設定------------------
+#pragma region 頂点レイアウトの設定
+
+     gpipelineDesc.InputLayout.pInputElementDescs = inputLayout;
+     gpipelineDesc.InputLayout.NumElements = _countof(inputLayout);
+
+#pragma endregion 頂点レイアウトの設定
+     //----------------------------
+
+     //図形の形状を三角形に設定-------------------------
+     gpipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+     //------------------
+
+     //その他の設定----------------
+#pragma region その他の設定
+
+     gpipelineDesc.NumRenderTargets = 1; // 描画対象は1つ
+     gpipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM; // 0～255指定のRGBA
+     gpipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
+
+#pragma endregion その他の設定
+//----------------
+
+     //ルートシグネチャの生成--------------------------
+#pragma region ルートシグネチャの生成
+
+     ComPtr <ID3D12RootSignature> rootsignature;
+
+     D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+     rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+     //rootSignatureDesc.pParameters = rootparams; //ルートパラメータの先頭アドレス
+     //rootSignatureDesc.NumParameters = _countof(rootparams); //ルートパラメータ数
+     //rootSignatureDesc.pStaticSamplers = &samplerDesc;
+     //rootSignatureDesc.NumStaticSamplers = 1;
+
+
+     ComPtr<ID3DBlob> rootSigBlob = nullptr;
+     result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &errorBlob);
+     result = device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
+
+     assert(SUCCEEDED(result));
+
+     // パイプラインにルートシグネチャをセット
+     gpipelineDesc.pRootSignature = rootsignature.Get();
+
+#pragma endregion ルートシグネチャの生成
+     //--------------------------------
+
+    //パイプラインステートの生成-------------------------
+#pragma region パイプラインステートの生成
+
+     ComPtr<ID3D12PipelineState> pipelinestate = nullptr;
+     result = device->CreateGraphicsPipelineState(&gpipelineDesc, IID_PPV_ARGS(&pipelinestate));
+     assert(SUCCEEDED(result));
+#pragma endregion パイプラインステートの生成
+     //-----------------------------
+
+#pragma endregion
     while (true)
     {
 
@@ -381,6 +651,141 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion メッセージ関係
         //--------------------
+
+
+#pragma region 描画処理
+                //バックバッファの番号を取得（2つなので0番か1番）--------------------------
+        UINT bbIndex = swapchain->GetCurrentBackBufferIndex();
+        //-----------------------------------
+
+        // １．リソースバリアで書き込み可能に変更----
+#pragma region １．リソースバリアで書き込み可能に変更
+
+        D3D12_RESOURCE_BARRIER barrierDesc{};
+        barrierDesc.Transition.pResource = backBuffers[bbIndex].Get(); // バックバッファを指定
+        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // 表示から
+        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
+        commandList->ResourceBarrier(1, &barrierDesc);
+
+#pragma endregion 1．リソースバリアで書き込み可能に変更
+        //--------------------------
+
+        // ２．描画先指定----------------
+#pragma region ２．描画先指定
+
+// レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
+        D3D12_CPU_DESCRIPTOR_HANDLE rtvH = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
+        rtvH.ptr += bbIndex * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+
+
+#pragma endregion 2．描画先指定
+        //-------------------
+        
+        //３．画面クリア-------------
+#pragma region 3.画面クリア
+
+        float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+        commandList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
+#pragma endregion 3.画面クリア
+        //---------------------------
+
+        //描画コマンド------------------
+#pragma region 描画コマンド
+            //ビューポートの設定コマンド-----------------------------
+#pragma region ビューポートの設定コマンド
+
+        D3D12_VIEWPORT viewport{};
+
+        viewport.Width = window_width;
+        viewport.Height = window_height;
+        viewport.TopLeftX = 0;
+        viewport.TopLeftY = 0;
+        viewport.MinDepth = 0.0f;
+        viewport.MaxDepth = 1.0f;
+
+        commandList->RSSetViewports(1, &viewport);
+
+#pragma endregion ビューポートの設定コマンド
+        //------------------------------
+
+        //シザー矩形の設定コマンド-----------------
+#pragma region シザー矩形の設定コマンド
+
+        D3D12_RECT scissorrect{};
+
+        scissorrect.left = 0;                                       // 切り抜き座標左
+        scissorrect.right = scissorrect.left + window_width;        // 切り抜き座標右
+        scissorrect.top = 0;                                        // 切り抜き座標上
+        scissorrect.bottom = scissorrect.top + window_height;       // 切り抜き座標下
+
+        commandList->RSSetScissorRects(1, &scissorrect);
+
+#pragma endregion シザー矩形の設定コマンド
+        //------------------
+
+        commandList->SetPipelineState(pipelinestate.Get());
+        commandList->SetGraphicsRootSignature(rootsignature.Get());
+        
+
+        //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
+        commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        commandList->IASetVertexBuffers(0, 1, &vbView);
+
+        //描画コマンド
+        commandList->DrawInstanced(_countof(vertices), 1, 0, 0);
+
+#pragma endregion 描画コマンド
+        //----------------------
+
+        // ５．リソースバリアを戻す--------------
+#pragma region 5.リソースバリアを戻す
+
+        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
+        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // 表示に
+        commandList->ResourceBarrier(1, &barrierDesc);
+
+#pragma endregion 5.リソースバリアを戻す
+        //--------------------
+
+        // 命令のクローズ-----------------------------------
+        result = commandList->Close();
+        assert(SUCCEEDED(result));
+        //------------
+
+        // コマンドリストの実行-------------------------------------
+#pragma region コマンドリスト実行
+         ID3D12CommandList* commandLists[] = { commandList.Get() }; // コマンドリストの配列
+        commandQueue->ExecuteCommandLists(1, commandLists);
+
+        // バッファをフリップ（裏表の入替え)-----------------------
+       result =  swapchain->Present(1, 0);
+       assert(SUCCEEDED(result));
+        //-----------------
+
+#pragma region コマンド実行完了待ち
+    // コマンドリストの実行完了を待つ
+        commandQueue->Signal(fence.Get(), ++fenceVal);
+        if (fence->GetCompletedValue() != fenceVal)
+        {
+            HANDLE event = CreateEvent(nullptr, false, false, nullptr);
+            fence->SetEventOnCompletion(fenceVal, event);
+            WaitForSingleObject(event, INFINITE);
+            CloseHandle(event);
+        }
+#pragma endregion コマンド実行完了待ち
+
+        //キューをクリア
+        result = commandAllocator->Reset(); // キューをクリア
+        assert(SUCCEEDED(result));
+
+        //再びコマンドリストをためる準備
+        result = commandList->Reset(commandAllocator.Get(), nullptr);  // 再びコマンドリストを貯める準備
+        assert(SUCCEEDED(result));
+
+#pragma endregion コマンドリスト実行
+//------------------
+
+#pragma endregion
     }
 
 
