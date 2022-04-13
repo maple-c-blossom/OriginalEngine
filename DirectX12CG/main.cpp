@@ -49,8 +49,10 @@ void KeyInit(BYTE* key, BYTE* oldkey, int ArraySize)
     for (int i = 0; i < ArraySize; i++)
     {
         oldkey[i] = key[i];
-        key[i] = 0;
     }
+
+
+
 }
 //---------------------
 
@@ -358,6 +360,42 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion フェンスの生成
      //------------
+
+         //入力系初期化--------------
+#pragma region 入力系初期化
+
+     IDirectInput8* dinput = nullptr;
+     result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
+     assert(SUCCEEDED(result));
+     //キーボードデバイスの生成-----------------
+#pragma region キーボードデバイスの生成
+
+     IDirectInputDevice8* devkeyboard = nullptr;
+     result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
+     assert(SUCCEEDED(result));
+
+#pragma endregion キーボードデバイスの生成
+     //--------------------------
+
+     //入力データ形式セット--------------------------------
+     result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
+     assert(SUCCEEDED(result));
+     //---------------------------------
+
+     //排他レベル制御-------------------------------------------------------------
+     result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+     assert(SUCCEEDED(result));
+
+     //---------------------------------------------------
+
+     //キー初期化----------------------
+     BYTE key[256] = {};
+     BYTE oldkey[256] = {};
+     //-----------------------
+
+#pragma endregion 入力系初期化
+//----------------
+
 #pragma endregion 
 
 
@@ -629,6 +667,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion パイプラインステートの生成
      //-----------------------------
 
+     float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+
 #pragma endregion
     while (true)
     {
@@ -644,7 +684,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
 
         // xボタンで終了メッセージが来たらゲームループを抜ける
-        if (msg.message == WM_QUIT) 
+        if (msg.message == WM_QUIT || key[DIK_ESCAPE])
         {
             break;
         }
@@ -652,6 +692,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion メッセージ関係
         //--------------------
 
+
+#pragma region 更新処理
+        //キーボード初期化-------------------------------------
+#pragma region キーボード初期化
+
+        //キーボード情報の取得開始-----------------
+        devkeyboard->Acquire();
+        //----------------------------
+
+        //全キーの入力状態を取得する---------------------------
+        KeyInit(key, oldkey, sizeof(key) / sizeof(key[0]));
+        result = devkeyboard->GetDeviceState(sizeof(key), key);
+        //----------------------------
+
+#pragma endregion キーボード初期化
+        //----------------------------------------
+
+        if (key[DIK_SPACE])
+        {
+            clearColor[0] = {1.0f}; // 青っぽい色
+        }
+        else
+        {
+            clearColor[0] = { 0.1f };
+        }
+
+
+#pragma endregion 更新処理
 
 #pragma region 描画処理
                 //バックバッファの番号を取得（2つなので0番か1番）--------------------------
@@ -684,7 +752,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //３．画面クリア-------------
 #pragma region 3.画面クリア
 
-        float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+        
         commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 #pragma endregion 3.画面クリア
         //---------------------------
@@ -786,7 +854,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion コマンドリスト実行
 //------------------
 
-#pragma endregion
+#pragma endregion 描画処理
+
+
     }
 
 
