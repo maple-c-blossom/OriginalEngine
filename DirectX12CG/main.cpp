@@ -107,6 +107,15 @@ bool IsKeyRelease(int keyNum, BYTE* key, BYTE* oldkey)
 //--------------------
 
 
+//定数バッファ用構造体-----------------------------------
+typedef struct ConstBufferDataMaterial
+{
+    XMFLOAT4 color;
+    XMMATRIX mat;
+};
+//------------------------------------------
+
+
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
 {  
@@ -401,6 +410,61 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region 描画初期化処理
 
+
+#pragma region 定数バッファの生成
+
+     D3D12_HEAP_PROPERTIES cdHeapProp{};
+     cdHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+
+     D3D12_RESOURCE_DESC cdResdesc{};
+     cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+     cdResdesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;
+     cdResdesc.Height = 1;
+     cdResdesc.DepthOrArraySize = 1;
+     cdResdesc.MipLevels = 1;
+     cdResdesc.SampleDesc.Count = 1;
+     cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+     ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+
+
+     result = device->CreateCommittedResource
+     (
+         &cdHeapProp,        //ヒープ設定
+         D3D12_HEAP_FLAG_NONE,
+         &cdResdesc,//リソース設定
+         D3D12_RESOURCE_STATE_GENERIC_READ,
+         nullptr,
+         IID_PPV_ARGS(&constBuffMaterial)
+     );
+     assert(SUCCEEDED(result));
+
+
+     ConstBufferDataMaterial* constMapMaterial = nullptr;
+
+     result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
+
+     assert(SUCCEEDED(result));
+
+     constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);
+
+#pragma endregion
+
+     //ルートパラメータの設定---------------------------
+#pragma region ルートパラメータの設定
+
+     D3D12_ROOT_PARAMETER rootparam = {};
+     rootparam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+     rootparam.Descriptor.ShaderRegister = 0;
+     rootparam.Descriptor.RegisterSpace = 0;
+     rootparam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+
+#pragma endregion ルートパラメータの設定
+     //------------------------
+
+
+
+
      //頂点データ---------------------------------
 #pragma region 頂点データ
      XMFLOAT3 vertices[] = {
@@ -416,16 +480,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
     D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
-    heapprop.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
+    cdHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
 
     D3D12_RESOURCE_DESC resdesc{};  // リソース設定
-    resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    resdesc.Width = sizeVB; // 頂点データ全体のサイズ
-    resdesc.Height = 1;
-    resdesc.DepthOrArraySize = 1;
-    resdesc.MipLevels = 1;
-    resdesc.SampleDesc.Count = 1;
-    resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    cdResdesc.Width = sizeVB; // 頂点データ全体のサイズ
+    cdResdesc.Height = 1;
+    cdResdesc.DepthOrArraySize = 1;
+    cdResdesc.MipLevels = 1;
+    cdResdesc.SampleDesc.Count = 1;
+    cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
@@ -433,9 +497,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 頂点バッファの生成
      ComPtr<ID3D12Resource> vertBuff = nullptr;
      result = device->CreateCommittedResource(
-         &heapprop, // ヒープ設定
+         &cdHeapProp, // ヒープ設定
          D3D12_HEAP_FLAG_NONE,
-         &resdesc, // リソース設定
+         &cdResdesc, // リソース設定
          D3D12_RESOURCE_STATE_GENERIC_READ,
          nullptr,
          IID_PPV_ARGS(&vertBuff));
@@ -661,8 +725,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
      rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-     //rootSignatureDesc.pParameters = rootparams; //ルートパラメータの先頭アドレス
-     //rootSignatureDesc.NumParameters = _countof(rootparams); //ルートパラメータ数
+     rootSignatureDesc.pParameters = &rootparam; //ルートパラメータの先頭アドレス
+     rootSignatureDesc.NumParameters = 1; //ルートパラメータ数
      //rootSignatureDesc.pStaticSamplers = &samplerDesc;
      //rootSignatureDesc.NumStaticSamplers = 1;
 
@@ -810,6 +874,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
         commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         commandList->IASetVertexBuffers(0, 1, &vbView);
+
+        
+        //定数バッファビュー(CBV)の設定コマンド
+        commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 
         //描画コマンド
         commandList->DrawInstanced(_countof(vertices), 1, 0, 0);
