@@ -589,7 +589,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region その他の設定
 
      gpipelineDesc.NumRenderTargets = 1; // 描画対象は1つ
-     gpipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM; // 0～255指定のRGBA
+     gpipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
      gpipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 #pragma endregion その他の設定
@@ -674,9 +674,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region ２．描画先指定
 
 // レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-        D3D12_CPU_DESCRIPTOR_HANDLE rtvH = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
-        rtvH.ptr += bbIndex * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
-
+        D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
+        rtvHandle.ptr += bbIndex * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+        commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
 
 #pragma endregion 2．描画先指定
         //-------------------
@@ -685,7 +685,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 3.画面クリア
 
         float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
-        commandList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
+        commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 #pragma endregion 3.画面クリア
         //---------------------------
 
@@ -751,6 +751,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         result = commandList->Close();
         assert(SUCCEEDED(result));
         //------------
+        
 
         // コマンドリストの実行-------------------------------------
 #pragma region コマンドリスト実行
