@@ -132,17 +132,42 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 頂点データ
      XMFLOAT3 vertices[] = {
          {-0.5f,-0.5f,0.0f}, //左下
-         {+ 0.5f,-0.5f,0.0f},//右下
-         {-0.5f,0.0f,0.0},//左中
-         {+0.5f,0.0f,0.0f},//右中
          {-0.5f,+0.5f,0.0f}, //左上
-         {+0.5f,+0.5f,0.0f}, //右上
+         {+ 0.5f,-0.5f,0.0f},//右下
+         {+ 0.5f,+0.5f,0.0f},//右上
      };
 
      UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
 #pragma endregion 頂点データ
      //--------------------------
      
+     //頂点インデックス---------------------------
+#pragma region 頂点インデックス
+     uint16_t indices[] =
+     {
+         0,1,2,
+         1,2,3,
+     };
+#pragma endregion
+     //--------------------------
+
+     //インデックスバッファの設定-------------------------
+#pragma region インデックスの設定
+     //インデックスデータ全体のサイズ
+     UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(indices));
+
+     cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+     cdResdesc.Width = sizeIB;
+     cdResdesc.Height = 1;
+     cdResdesc.DepthOrArraySize = 1;
+     cdResdesc.MipLevels = 1;
+     cdResdesc.SampleDesc.Count = 1;
+     cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+#pragma endregion インデックスの設定
+     //------------------------
+
+
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
     D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
@@ -441,7 +466,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion 更新処理
 
 #pragma region 描画処理
-                //バックバッファの番号を取得（2つなので0番か1番）--------------------------
+        //バックバッファの番号を取得（2つなので0番か1番）--------------------------
         UINT bbIndex = dx.swapchain->GetCurrentBackBufferIndex();
         //-----------------------------------
 
@@ -470,8 +495,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         
         //３．画面クリア-------------
 #pragma region 3.画面クリア
-
-        
         dx.commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
 #pragma endregion 3.画面クリア
         //---------------------------
