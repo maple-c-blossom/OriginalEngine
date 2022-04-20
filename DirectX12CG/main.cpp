@@ -45,12 +45,20 @@ typedef struct ConstBufferDataMaterial
 };
 //------------------------------------------
 
+//頂点データ構造体-------------------------------------
+typedef struct Vertex
+{
+    XMFLOAT3 pos;//xyz座標
+    //XMFLOAT3 normal;//法線ベクトル
+    XMFLOAT2 uv;//uv座標
+};
+//--------------------------------------
+
 
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
 {  
-	
-    
+
     DxWindow dxWindow;
 
 #pragma region DirectX初期化
@@ -69,8 +77,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion デバック時のみ
     //-------------
+
     Dx12 dx(dxWindow);
+
     Input input(dx.result,dxWindow.w,dxWindow.hwnd);
+
 #pragma endregion 
 
 
@@ -130,14 +141,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //頂点データ---------------------------------
 #pragma region 頂点データ
-     XMFLOAT3 vertices[] = {
-         {-0.5f,-0.5f,0.0f}, //左下
-         {-0.5f,+0.5f,0.0f}, //左上
-         {+ 0.5f,-0.5f,0.0f},//右下
-         {+ 0.5f,+0.5f,0.0f},//右上
+     Vertex vertices[] = {
+         {{-0.4f,-0.7f,0.0f}, {0.0f,1.0f}},//左下
+         {{-0.4f,+0.7f,0.0f}, {0.0f,0.0f}},//左上
+         {{+0.4f,-0.7f,0.0f}, {1.0f,1.0f}},//右下
+         {{+0.4f,+0.7f,0.0f}, {1.0f,0.0f}},//右上
      };
 
-     UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
+     UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 #pragma endregion 頂点データ
      //--------------------------
      
@@ -148,7 +159,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
          0,1,2,
          1,2,3,
      };
-#pragma endregion
+#pragma endregion 頂点インデックス
      //--------------------------
 
      //インデックスバッファの設定-------------------------
@@ -167,6 +178,51 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion インデックスの設定
      //------------------------
 
+#pragma region インデックスバッファ生成
+
+     ComPtr<ID3D12Resource> indexBuff = nullptr;
+         //インデックスバッファの生成-----------------------------
+     dx.result = dx.device->CreateCommittedResource(
+         &cdHeapProp,
+         D3D12_HEAP_FLAG_NONE,
+         &cdResdesc,
+         D3D12_RESOURCE_STATE_GENERIC_READ,
+         nullptr,
+         IID_PPV_ARGS(&indexBuff)
+     );
+
+#pragma endregion インデックスバッファ生成
+
+     //インデックスバッファへのデータ転送------------------------------
+#pragma region インデックスバッファへのデータ転送
+
+     //GPU上のバッファに対応した仮想メモリを取得----------------------------
+     uint16_t* indexMap = nullptr;
+     dx.result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+     //---------------------------------------
+
+     //全インデックスに対して-------------------------
+     for (int i = 0; i < _countof(indices); i++)
+     {
+         indexMap[i] = indices[i];
+     }
+     //-----------------------
+
+     //繋がりを解除---------------------
+     indexBuff->Unmap(0, nullptr);
+     //------------------------
+
+#pragma endregion インデックスバッファへのデータ転送
+    //-------------------------------------
+
+     //インデックスバッファビューの作成-----------------------------------
+#pragma region インデックスバッファビューの作成
+     D3D12_INDEX_BUFFER_VIEW ibView{};
+     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
+     ibView.Format = DXGI_FORMAT_R16_UINT;
+     ibView.SizeInBytes = sizeIB;
+#pragma endregion インデックスバッファビューの作成
+     //------------------------------------------
 
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
@@ -201,7 +257,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      // 頂点バッファへのデータ転送------------
 #pragma region GPU上のバッファに対応した仮想メモリを取得
-     XMFLOAT3* vertMap = nullptr;
+     Vertex* vertMap = nullptr;
      dx.result = vertBuff->Map(0, nullptr, (void**)&vertMap);
      assert(SUCCEEDED(dx.result));
 
@@ -222,7 +278,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
      vbView.SizeInBytes = sizeVB;
-     vbView.StrideInBytes = sizeof(XMFLOAT3);
+     vbView.StrideInBytes = sizeof(vertices[0]);
 #pragma endregion 頂点バッファビューの作成
      //-----------------------------------
 
@@ -313,7 +369,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      {
          {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
          //{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//法線ベクトル
-         //{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}
+         {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uv座標
      };
 
 #pragma endregion 頂点レイアウト
@@ -448,9 +504,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion
     while (true)
     {
-
-
-
         input.UpDateInit(dx.result);
 
         dxWindow.messageUpdate();
@@ -489,6 +542,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx.rtvHeaps->GetCPUDescriptorHandleForHeapStart();
         rtvHandle.ptr += bbIndex * dx.device->GetDescriptorHandleIncrementSize(dx.rtvHeapDesc.Type);
         dx.commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
+        dx.commandList->IASetIndexBuffer(&ibView);
 
 #pragma endregion 2．描画先指定
         //-------------------
@@ -546,7 +600,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         dx.commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
 
         //描画コマンド
-        dx.commandList->DrawInstanced(_countof(vertices), 1, 0, 0);
+        dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
 
 #pragma endregion 描画コマンド
         //----------------------

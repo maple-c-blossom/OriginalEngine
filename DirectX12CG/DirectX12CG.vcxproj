@@ -43,6 +43,9 @@
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Basic.hlsli" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

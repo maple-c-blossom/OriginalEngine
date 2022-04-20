@@ -23,7 +23,6 @@ public:
 #pragma region “ü—ÍŠÖ”
 //‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
     bool IsKeyDown(int keyNum);
-
     //‰Ÿ‚µ‚Ä‚¢‚È‚¢ó‘Ô
     bool IsKeyNDown(int keyNum);
     //’·‰Ÿ‚µó‘Ô
@@ -34,8 +33,6 @@ public:
     bool IsKeyRelease(int keyNum);
 #pragma endregion “ü—ÍŠÖ”
     //--------------------
-
-
 
     void Init(HRESULT &result, WNDCLASSEX w, HWND hwnd);
 
