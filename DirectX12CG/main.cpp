@@ -128,15 +128,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion ルートパラメータの設定
      //------------------------
 
-
-
-
      //頂点データ---------------------------------
 #pragma region 頂点データ
      XMFLOAT3 vertices[] = {
-         {-0.5f,-0.5f,0.0f},
-         {-0.5f,+0.5f,0.0f},
-         {+ 0.5f,-0.5f,0.0f},
+         {-0.5f,-0.5f,0.0f}, //左下
+         {+ 0.5f,-0.5f,0.0f},//右下
+         {-0.5f,0.0f,0.0},//左中
+         {+0.5f,0.0f,0.0f},//右中
+         {-0.5f,+0.5f,0.0f}, //左上
+         {+0.5f,+0.5f,0.0f}, //右上
      };
 
      UINT sizeVB = static_cast<UINT>(sizeof(XMFLOAT3) * _countof(vertices));
