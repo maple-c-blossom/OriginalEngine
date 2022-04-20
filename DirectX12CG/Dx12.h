@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <cassert>
@@ -78,13 +77,13 @@ public:
 
     Dx12(DxWindow dxWindow);
 
+    void SetDXFactory();
+
     void SetAdapter();
 
     void SetDevice(IDXGIAdapter4* tmpAdapter);
 
     void SetCommandListAndQueue();
-
-    void SetDXFactory();
 
     void SetSwapChain(DxWindow dxWindow);
 
