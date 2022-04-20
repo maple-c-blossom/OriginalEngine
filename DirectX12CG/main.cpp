@@ -12,6 +12,7 @@
 #include "Input.h"
 #include "DxWindow.h"
 #include "Dx12.h"
+#include <memory>
 
 #pragma endregion include
 
@@ -87,7 +88,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region 描画初期化処理
 
-
+    //定数バッファの生成-------------------
 #pragma region 定数バッファの生成
 
      D3D12_HEAP_PROPERTIES cdHeapProp{};
@@ -126,15 +127,118 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);
 
 #pragma endregion
+     //----------------------
+     
+     //画像イメージデータの作成----------------------
+#pragma region 画像イメージデータの作成
+     //横方向ピクセル数
+     const size_t textureWidth = 256;
+     //縦方向ピクセル数
+     const size_t textureHeight = 256;
+     //配列の要素数
+     const size_t imageDataCount = textureWidth * textureHeight;
+     //画像イメージデータの配列
+     XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
+
+     for (int i = 0; i < imageDataCount; i++)
+     {
+         imageData[i].x = 1.0f;//R
+         imageData[i].y = 0.0f;//G
+         imageData[i].z = 0.0f;//B
+         imageData[i].w = 1.0f;//A
+     }
+
+#pragma endregion 画像イメージデータの作成
+     //------------------------------------
+
+#pragma region テクスチャバッファ設定
+
+     D3D12_HEAP_PROPERTIES texHeapProp{};
+
+     texHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
+     texHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+     texHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+
+     D3D12_RESOURCE_DESC texresDesc{};
+     texresDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+     texresDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+     texresDesc.Width = textureWidth;
+     texresDesc.Height = textureHeight;
+     texresDesc.DepthOrArraySize = 1;
+     texresDesc.MipLevels = 1;
+     texresDesc.SampleDesc.Count = 1;
+
+
+#pragma endregion テクスチャバッファ設定
+
+#pragma region テクスチャバッファの生成
+     ComPtr<ID3D12Resource> texbuff = nullptr;
+     dx.result = dx.device->CreateCommittedResource(&texHeapProp, D3D12_HEAP_FLAG_NONE, &texresDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&texbuff));
+#pragma endregion テクスチャバッファの生成
+
+     dx.result = texbuff->WriteToSubresource(0, nullptr, imageData, sizeof(XMFLOAT4) * textureWidth, sizeof(XMFLOAT4) * imageDataCount);
+
+         //デスクリプタヒープの生成-------------------------
+#pragma region デスクリプタヒープの生成
+
+     const size_t kMaxSRVCount = 2056;
+
+    //定数バッファ用のデスクリプタヒープ
+
+     //設定構造体
+     D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+     srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+     srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE; //シェーダーから見えるように
+     srvHeapDesc.NumDescriptors = kMaxSRVCount;//定数バッファの数
+
+     //デスクリプタヒープの生成  
+     ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;
+     dx.result = dx.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+
+     D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+#pragma endregion デスクリプタヒープの生成
+    //-------------------------------
+
+     //シェーダーリソースビューの作成------------------------------
+#pragma region シェーダーリソースビューの作成
+     //シェーダーリソースビュー設定
+     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+
+     srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+     srvDesc.Texture2D.MipLevels = 1;
+
+     //ヒープの二番目にシェーダーリソースビュー作成
+     dx.device->CreateShaderResourceView(texbuff.Get(), &srvDesc, srvHandle);
+
+#pragma endregion シェーダーリソースビューの作成
+     //----------------------------
+
+     //デスクリプタレンジの設定--------------------------------
+#pragma region デスクリプタレンジの設定
+     D3D12_DESCRIPTOR_RANGE descriptorRange;
+     descriptorRange.NumDescriptors = 1;
+     descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+     descriptorRange.BaseShaderRegister = 0;
+     descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+#pragma endregion デスクリプタレンジの設定
+     //-----------------------------------------
 
      //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
 
-     D3D12_ROOT_PARAMETER rootparam = {};
-     rootparam.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-     rootparam.Descriptor.ShaderRegister = 0;
-     rootparam.Descriptor.RegisterSpace = 0;
-     rootparam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+     D3D12_ROOT_PARAMETER rootparams[2] = {};
+     //定数バッファ0番
+     rootparams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+     rootparams[0].Descriptor.ShaderRegister = 0;
+     rootparams[0].Descriptor.RegisterSpace = 0;
+     rootparams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+     //テクスチャレジスタ0番
+     rootparams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+     rootparams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;
+     rootparams[1].DescriptorTable.NumDescriptorRanges = 1;
+     rootparams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
 #pragma endregion ルートパラメータの設定
      //------------------------
@@ -472,8 +576,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
      rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-     rootSignatureDesc.pParameters = &rootparam; //ルートパラメータの先頭アドレス
-     rootSignatureDesc.NumParameters = 1; //ルートパラメータ数
+     rootSignatureDesc.pParameters = rootparams; //ルートパラメータの先頭アドレス
+     rootSignatureDesc.NumParameters = _countof(rootparams); //ルートパラメータ数
      //rootSignatureDesc.pStaticSamplers = &samplerDesc;
      //rootSignatureDesc.NumStaticSamplers = 1;
 
