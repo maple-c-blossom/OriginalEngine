@@ -217,7 +217,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //デスクリプタレンジの設定--------------------------------
 #pragma region デスクリプタレンジの設定
-     D3D12_DESCRIPTOR_RANGE descriptorRange;
+     D3D12_DESCRIPTOR_RANGE descriptorRange{};
      descriptorRange.NumDescriptors = 1;
      descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
      descriptorRange.BaseShaderRegister = 0;
@@ -569,6 +569,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion その他の設定
 //----------------
 
+
+//      //テクスチャサンプラーの設定-----------------------
+#pragma region テクスチャサンプラーの設定
+
+     D3D12_STATIC_SAMPLER_DESC samplerDesc{};
+
+     samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+     samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+     samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+     samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+     samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+     samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
+     samplerDesc.MinLOD = 0.0f;
+     samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+     samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+#pragma endregion テクスチャサンプラーの設定
+   //----------------------------------
+
      //ルートシグネチャの生成--------------------------
 #pragma region ルートシグネチャの生成
 
@@ -578,8 +597,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
      rootSignatureDesc.pParameters = rootparams; //ルートパラメータの先頭アドレス
      rootSignatureDesc.NumParameters = _countof(rootparams); //ルートパラメータ数
-     //rootSignatureDesc.pStaticSamplers = &samplerDesc;
-     //rootSignatureDesc.NumStaticSamplers = 1;
+     rootSignatureDesc.pStaticSamplers = &samplerDesc;
+     rootSignatureDesc.NumStaticSamplers = 1;
 
 
      ComPtr<ID3DBlob> rootSigBlob = nullptr;
@@ -702,6 +721,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         
         //定数バッファビュー(CBV)の設定コマンド
         dx.commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+
+        //SRVヒープの設定コマンド
+        dx.commandList->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
+
+        //SRVヒープの先頭アドレスを取得
+        D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+        //SRVヒープの先頭にあるSRVをパラメータ1番に設定
+        dx.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
         //描画コマンド
         dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
