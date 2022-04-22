@@ -13,6 +13,7 @@
 #include "DxWindow.h"
 #include "Dx12.h"
 #include <memory>
+#include <DirectXTex.h>
 
 #pragma endregion include
 
@@ -38,13 +39,19 @@ using namespace Microsoft::WRL;
 
 
 
-//定数バッファ用構造体-----------------------------------
+//定数バッファ用構造体(マテリアル)-----------------------------------
 typedef struct ConstBufferDataMaterial
 {
     XMFLOAT4 color;
     XMMATRIX mat;
 };
 //------------------------------------------
+
+typedef struct ConstBufferDataTransform
+{
+    XMMATRIX mat;
+};
+
 
 //頂点データ構造体-------------------------------------
 typedef struct Vertex
@@ -129,6 +136,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion
      //----------------------
      
+     //画像ファイル--------------------
+#pragma region 画像ファイル
+     TexMetadata metadata{};
+     ScratchImage scratchImg{};
+
+     dx.result = LoadFromWICFile(L"Resources\\tori.png", WIC_FLAGS_NONE, &metadata, scratchImg);
+#pragma endregion 画像ファイル
+     //----------------------------
+
+     //ミップマップの生成-------------
+#pragma region ミップマップの生成
+
+     ScratchImage mipChain{};
+     //ミップマップ生成
+     dx.result = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
+     if (SUCCEEDED(dx.result))
+     {
+         scratchImg = std::move(mipChain);
+         metadata = scratchImg.GetMetadata();
+     }
+     metadata.format = MakeSRGB(metadata.format);
+#pragma endregion ミップマップの生成
+     //---------------
+
      //画像イメージデータの作成----------------------
 #pragma region 画像イメージデータの作成
      //横方向ピクセル数
@@ -161,22 +192,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      D3D12_RESOURCE_DESC texresDesc{};
      texresDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-     texresDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-     texresDesc.Width = textureWidth;
-     texresDesc.Height = textureHeight;
-     texresDesc.DepthOrArraySize = 1;
-     texresDesc.MipLevels = 1;
+     texresDesc.Format = metadata.format;
+     texresDesc.Width = metadata.width;
+     texresDesc.Height = (UINT)metadata.height;
+     texresDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
+     texresDesc.MipLevels = (UINT16)metadata.mipLevels;
      texresDesc.SampleDesc.Count = 1;
 
 
 #pragma endregion テクスチャバッファ設定
+
+
 
 #pragma region テクスチャバッファの生成
      ComPtr<ID3D12Resource> texbuff = nullptr;
      dx.result = dx.device->CreateCommittedResource(&texHeapProp, D3D12_HEAP_FLAG_NONE, &texresDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&texbuff));
 #pragma endregion テクスチャバッファの生成
 
-     dx.result = texbuff->WriteToSubresource(0, nullptr, imageData, sizeof(XMFLOAT4) * textureWidth, sizeof(XMFLOAT4) * imageDataCount);
+     for (size_t i = 0; i < metadata.mipLevels; i++)
+     {
+         //ミップマップレベルを指定してイメージを取得
+         const Image* img = scratchImg.GetImage(i, 0, 0);
+         //テクスチャバッファにデータ転送
+         dx.result = texbuff->WriteToSubresource((UINT) i, nullptr,img->pixels, (UINT)img->rowPitch,(UINT)img->slicePitch);
+         assert(SUCCEEDED(dx.result));
+     }
 
          //デスクリプタヒープの生成-------------------------
 #pragma region デスクリプタヒープの生成
@@ -204,10 +244,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //シェーダーリソースビュー設定
      D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 
-     srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+     srvDesc.Format = texresDesc.Format;
      srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
      srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-     srvDesc.Texture2D.MipLevels = 1;
+     srvDesc.Texture2D.MipLevels = texresDesc.MipLevels;
 
      //ヒープの二番目にシェーダーリソースビュー作成
      dx.device->CreateShaderResourceView(texbuff.Get(), &srvDesc, srvHandle);
@@ -567,10 +607,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      gpipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
 
 #pragma endregion その他の設定
-//----------------
+    //----------------
 
 
-//      //テクスチャサンプラーの設定-----------------------
+   //テクスチャサンプラーの設定-----------------------
 #pragma region テクスチャサンプラーの設定
 
      D3D12_STATIC_SAMPLER_DESC samplerDesc{};
