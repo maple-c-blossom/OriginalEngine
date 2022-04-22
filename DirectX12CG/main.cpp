@@ -95,6 +95,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region 描画初期化処理
 
+
+    ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
+
+    ConstBufferDataTransform* constMapTranceform = nullptr;
+
+
     //定数バッファの生成-------------------
 #pragma region 定数バッファの生成
 
@@ -135,7 +141,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion
      //----------------------
-     
+
      //画像ファイル--------------------
 #pragma region 画像ファイル
      TexMetadata metadata{};
