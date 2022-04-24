@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Depth.cpp" />
     <ClCompile Include="Dx12.cpp" />
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -42,6 +43,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Depth.h" />
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />

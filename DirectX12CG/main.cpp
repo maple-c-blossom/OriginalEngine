@@ -17,6 +17,7 @@
 #include "View.h"
 #include "Projection.h"
 #include "WorldMatrix.h"
+#include "Depth.h"
 
 #pragma endregion include
 
@@ -99,8 +100,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region 描画初期化処理
 
-
-
+    //深度バッファ----
+    Depth depth(dxWindow, dx);
+    //-------
 
     //定数バッファの生成-------------------
 #pragma region 定数バッファの生成
@@ -186,7 +188,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         matWorld.CreateMatrixWorld(XMMatrixScaling(1.0f, 0.5f, 1.0f), matWorld.ReturnMatRot(matWorld.matRot,15.0f,30.0f,0.0f), XMMatrixTranslation(-50.0f, 0.0f, 0.0f));
         //ビュー変換行列
         View matView;
-        matView.CreateMatrixView(XMFLOAT3(0.0f, 100.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+        matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
         //射影変換行列
         Projection matProjection;
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow.window_width / dxWindow.window_height, 0.1f, 1000.0f);
@@ -352,12 +354,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //頂点データ---------------------------------
 #pragma region 頂点データ
-     Vertex vertices[] = {
-         {{-50.0f,-50.0f,0.0f}, {0.0f,1.0f}},//左下
-         {{-50.0f,50.0f,0.0f}, {0.0f,0.0f}},//左上
-         {{50.0f,-50.0f,0.0f}, {1.0f,1.0f}},//右下
-         {{50.0f,50.0f,0.0f}, {1.0f,0.0f}},//右上
-     };
+    Vertex vertices[] =
+    {
+        //前
+        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{-5.0f,5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
+        {{5.0f,-5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
+        {{5.0f,5.0f,-5.0f}   ,{1.0f,0.0f}},// 右上
+        //後ろ
+        {{-5.0f,5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
+        {{-5.0f,-5.0f,5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        {{5.0f,-5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
+        //左
+        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{-5.0f,-5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
+        {{-5.0f,5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
+        {{-5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        //右
+        {{5.0f,-5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
+        {{5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        {{5.0f,5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
+        //上
+        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,-5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
+        {{-5.0f,-5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
+        {{5.0f,-5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        //下
+        {{5.0f,5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
+        {{-5.0f,5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        {{-5.0f,5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
+    };
+
+
+
+
 
      UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 #pragma endregion 頂点データ
@@ -365,11 +398,27 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      
      //頂点インデックス---------------------------
 #pragma region 頂点インデックス
-     uint16_t indices[] =
-     {
-         0,1,2,
-         1,2,3,
-     };
+      unsigned short indices[]
+      {
+          //前
+          0,1,2,
+          2,1,3,
+          //後ろ
+          4,5,6,
+          6,5,7,
+          //左
+          8,9,10,
+          10,9,11,
+          //右
+          12,13,14,
+          14,13,15,
+          //上
+          16,17,18,
+          18,17,19,
+          //下
+          20,21,22,
+          22,21,23,
+      };
 #pragma endregion 頂点インデックス
      //--------------------------
 
@@ -676,6 +725,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion その他の設定
     //----------------
 
+     depth.SetDepthStencilState(gpipelineDesc);
 
    //テクスチャサンプラーの設定-----------------------
 #pragma region テクスチャサンプラーの設定
@@ -813,7 +863,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 // レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
         D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx.rtvHeaps->GetCPUDescriptorHandleForHeapStart();
         rtvHandle.ptr += bbIndex * dx.device->GetDescriptorHandleIncrementSize(dx.rtvHeapDesc.Type);
-        dx.commandList->OMSetRenderTargets(1, &rtvHandle, false, nullptr);
+        D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
+        dx.commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
         dx.commandList->IASetIndexBuffer(&ibView);
 
 #pragma endregion 2．描画先指定
@@ -822,6 +873,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //３．画面クリア-------------
 #pragma region 3.画面クリア
         dx.commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+        dx.commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 #pragma endregion 3.画面クリア
         //---------------------------
 
