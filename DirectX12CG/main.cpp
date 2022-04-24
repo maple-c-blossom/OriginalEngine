@@ -62,7 +62,7 @@ typedef struct ConstBufferDataTransform
 typedef struct Vertex
 {
     XMFLOAT3 pos;//xyz座標
-    //XMFLOAT3 normal;//法線ベクトル
+    XMFLOAT3 normal;//法線ベクトル
     XMFLOAT2 uv;//uv座標
 };
 //--------------------------------------
@@ -357,35 +357,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Vertex vertices[] =
     {
         //前
-        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{-5.0f,5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
-        {{5.0f,-5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
-        {{5.0f,5.0f,-5.0f}   ,{1.0f,0.0f}},// 右上
+        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{-5.0f,5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{5.0f,-5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
+        {{5.0f,5.0f,-5.0f}   ,{} ,{1.0f,0.0f}},// 右上
         //後ろ
-        {{-5.0f,5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
-        {{-5.0f,-5.0f,5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
-        {{5.0f,-5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
+        {{-5.0f,5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{-5.0f,-5.0f,5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
+        {{5.0f,-5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
         //左
-        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{-5.0f,-5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
-        {{-5.0f,5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
-        {{-5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{-5.0f,-5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{-5.0f,5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
+        {{-5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
         //右
-        {{5.0f,-5.0f,5.0f}  ,{0.0f,0.0f}},// 左上
-        {{5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
-        {{5.0f,5.0f,-5.0f}  ,{1.0f,1.0f}},// 右下
+        {{5.0f,-5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
+        {{5.0f,5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
         //上
-        {{-5.0f,-5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,-5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
-        {{-5.0f,-5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
-        {{5.0f,-5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
+        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,-5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{-5.0f,-5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
+        {{5.0f,-5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
         //下
-        {{5.0f,5.0f,-5.0f}  ,{0.0f,0.0f}},// 左上
-        {{-5.0f,5.0f,-5.0f} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{1.0f,0.0f}},// 右上
-        {{-5.0f,5.0f,5.0f}  ,{1.0f,1.0f}},// 右下
+        {{5.0f,5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
+        {{-5.0f,5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
+        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
+        {{-5.0f,5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
     };
 
 
@@ -628,7 +628,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      D3D12_INPUT_ELEMENT_DESC inputLayout[] =
      {
          {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1行で書いたほうが見やすい)
-         //{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//法線ベクトル
+         {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//法線ベクトル
          {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uv座標
      };
 
@@ -654,7 +654,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region サンプルマスクとラスタライザステートの設定
 
      gpipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
-     gpipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;  // 背面カリング
+     gpipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;  // 背面カリング
      gpipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
      gpipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
 
