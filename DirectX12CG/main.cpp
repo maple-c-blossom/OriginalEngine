@@ -47,7 +47,6 @@ using namespace Microsoft::WRL;
 typedef struct ConstBufferDataMaterial
 {
     XMFLOAT4 color;
-    XMMATRIX mat;
 };
 //------------------------------------------
 
@@ -140,7 +139,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      assert(SUCCEEDED(dx.result));
 
-     constMapMaterial->color = XMFLOAT4(1, 0, 0, 0.5f);
+     constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 
 #pragma endregion
      //----------------------
@@ -515,8 +514,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion 頂点バッファの生成
      //-------------------------
 
+     //法線ベクトル計算---------------------------
+#pragma region 法線ベクトル計算
+     for (int i = 0; i < _countof(indices) / 3; i++)
+     {
+         //三角形1つごとに計算
+
+         //三角形のインデックスを取り出して、一時的な変数に入れる
+         unsigned short index0 = indices[i * 3 + 0];
+         unsigned short index1 = indices[i * 3 + 1];
+         unsigned short index2 = indices[i * 3 + 2];
+
+         //三角形を構成する頂点座標
+         XMVECTOR p0 = XMLoadFloat3(&vertices[index0].pos);
+         XMVECTOR p1 = XMLoadFloat3(&vertices[index1].pos);
+         XMVECTOR p2 = XMLoadFloat3(&vertices[index2].pos);
+
+         //p0->p1ベクトル、p0->p2ベクトルを計算（ベクトルの減算）
+         XMVECTOR v1 = XMVectorSubtract(p1, p0);
+         XMVECTOR v2 = XMVectorSubtract(p2, p0);
+
+         //外積は両方から垂直なベクトル
+         XMVECTOR normal = XMVector3Cross(v1, v2);
+
+         //正規化（長さを一にする)
+         normal = XMVector3Normalize(normal);
+
+         //求めた法線を頂点データに代入
+         XMStoreFloat3(&vertices[index0].normal, normal);
+         XMStoreFloat3(&vertices[index1].normal, normal);
+         XMStoreFloat3(&vertices[index2].normal, normal);
+
+     }
+#pragma endregion 法線ベクトルを計算
+     //-------------------------
+
      // 頂点バッファへのデータ転送------------
-#pragma region GPU上のバッファに対応した仮想メモリを取得
+#pragma region 頂点バッファへのデータ転送
      Vertex* vertMap = nullptr;
      dx.result = vertBuff->Map(0, nullptr, (void**)&vertMap);
      assert(SUCCEEDED(dx.result));
@@ -529,7 +563,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      // マップを解除
      vertBuff->Unmap(0, nullptr);
-#pragma endregion GPU上のバッファに対応した仮想メモリを取得
+#pragma endregion 頂点バッファへのデータ転送
      //--------------------------------------
 
      // 頂点バッファビューの作成--------------------------
