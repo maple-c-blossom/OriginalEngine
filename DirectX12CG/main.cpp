@@ -47,11 +47,12 @@ typedef struct ConstBufferDataMaterial
 };
 //------------------------------------------
 
+//定数バッファ用構造体(座標)------------------------
 typedef struct ConstBufferDataTransform
 {
     XMMATRIX mat;
 };
-
+//---------------------------------
 
 //頂点データ構造体-------------------------------------
 typedef struct Vertex
@@ -96,9 +97,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 描画初期化処理
 
 
-    ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
-
-    ConstBufferDataTransform* constMapTranceform = nullptr;
 
 
     //定数バッファの生成-------------------
@@ -141,6 +139,55 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion
      //----------------------
+
+     //定数バッファの生成-------------------
+#pragma region 定数バッファの生成
+    ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
+
+    ConstBufferDataTransform* constMapTranceform = nullptr;
+     
+        D3D12_HEAP_PROPERTIES cbHeapProp{};
+        cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+
+        D3D12_RESOURCE_DESC cbResdesc{};
+        cbResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        cbResdesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;
+        cbResdesc.Height = 1;
+        cbResdesc.DepthOrArraySize = 1;
+        cbResdesc.MipLevels = 1;
+        cbResdesc.SampleDesc.Count = 1;
+        cbResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+        dx.result = dx.device->CreateCommittedResource
+        (
+            &cbHeapProp,        //ヒープ設定
+            D3D12_HEAP_FLAG_NONE,
+            &cbResdesc,//リソース設定
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(&constBuffTranceform)
+        );
+        assert(SUCCEEDED(dx.result));
+
+        dx.result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+
+        assert(SUCCEEDED(dx.result));
+     
+#pragma endregion
+     //----------------------
+
+     //行列-----------------------
+#pragma region 行列
+     constMapTranceform->mat = XMMatrixIdentity();
+
+     constMapTranceform->mat.r[0].m128_f32[0] = 2.0f / dxWindow.window_width;
+     constMapTranceform->mat.r[1].m128_f32[1] = -2.0f / dxWindow.window_height;
+
+     constMapTranceform->mat.r[3].m128_f32[0] = -1.0f;
+     constMapTranceform->mat.r[3].m128_f32[1] = 1.0f;
+#pragma endregion 行列
+     //---------------------
+
 
      //画像ファイル--------------------
 #pragma region 画像ファイル
@@ -274,28 +321,32 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
 
-     D3D12_ROOT_PARAMETER rootparams[2] = {};
+     D3D12_ROOT_PARAMETER rootparams[3] = {};
      //定数バッファ0番
-     rootparams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-     rootparams[0].Descriptor.ShaderRegister = 0;
-     rootparams[0].Descriptor.RegisterSpace = 0;
-     rootparams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+     rootparams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//種類
+     rootparams[0].Descriptor.ShaderRegister = 0;//定数バッファ番号
+     rootparams[0].Descriptor.RegisterSpace = 0;//デフォルト値
+     rootparams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//全てのシェーダーから見える
      //テクスチャレジスタ0番
      rootparams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
      rootparams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;
      rootparams[1].DescriptorTable.NumDescriptorRanges = 1;
      rootparams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-
+     //定数バッファ1番
+     rootparams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+     rootparams[2].Descriptor.ShaderRegister = 1;
+     rootparams[2].Descriptor.RegisterSpace = 0;
+     rootparams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 #pragma endregion ルートパラメータの設定
      //------------------------
 
      //頂点データ---------------------------------
 #pragma region 頂点データ
      Vertex vertices[] = {
-         {{-0.4f,-0.7f,0.0f}, {0.0f,1.0f}},//左下
-         {{-0.4f,+0.7f,0.0f}, {0.0f,0.0f}},//左上
-         {{+0.4f,-0.7f,0.0f}, {1.0f,1.0f}},//右下
-         {{+0.4f,+0.7f,0.0f}, {1.0f,0.0f}},//右上
+         {{0.0f,100.0f,0.0f}, {0.0f,1.0f}},//左下
+         {{0.0f,0.0f,0.0f}, {0.0f,0.0f}},//左上
+         {{100.0f,100.0f,0.0f}, {1.0f,1.0f}},//右下
+         {{100.0f,0.0f,0.0f}, {1.0f,0.0f}},//右上
      };
 
      UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
@@ -671,6 +722,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
 
 #pragma endregion
+
+     //ゲームループ用変数--------------------------------
+#pragma region ゲームループ用変数
+
+#pragma endregion ゲームループ用変数
+     //--------------------------
+     
+     //ゲームループ-------------------------------------
+#pragma region ゲームループ
     while (true)
     {
         input.UpDateInit(dx.result);
@@ -777,6 +837,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
+        //定数バッファビュー(CBV)の設定コマンド
+        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform->GetGPUVirtualAddress());
+
         //描画コマンド
         dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
 
@@ -836,6 +899,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
     }
-
+#pragma endregion ゲームループ
+    //---------------------------------
 	return 0;
 }
