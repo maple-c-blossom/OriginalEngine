@@ -146,9 +146,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //定数バッファの生成-------------------
 #pragma region 定数バッファの生成
-    ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
+    ComPtr<ID3D12Resource> constBuffTranceform0 = nullptr;
 
-    ConstBufferDataTransform* constMapTranceform = nullptr;
+    ConstBufferDataTransform* constMapTranceform0 = nullptr;
      
         D3D12_HEAP_PROPERTIES cbHeapProp{};
         cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -169,16 +169,41 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             &cbResdesc,//リソース設定
             D3D12_RESOURCE_STATE_GENERIC_READ,
             nullptr,
-            IID_PPV_ARGS(&constBuffTranceform)
+            IID_PPV_ARGS(&constBuffTranceform0)
         );
         assert(SUCCEEDED(dx.result));
 
-        dx.result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+        dx.result = constBuffTranceform0->Map(0, nullptr, (void**)&constMapTranceform0);
 
         assert(SUCCEEDED(dx.result));
      
 #pragma endregion
      //----------------------
+
+             //定数バッファの生成-------------------
+#pragma region 定数バッファの生成
+        ComPtr<ID3D12Resource> constBuffTranceform1 = nullptr;
+
+        ConstBufferDataTransform* constMapTranceform1 = nullptr;
+
+        dx.result = dx.device->CreateCommittedResource
+        (
+            &cbHeapProp,        //ヒープ設定
+            D3D12_HEAP_FLAG_NONE,
+            &cbResdesc,//リソース設定
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(&constBuffTranceform1)
+        );
+        assert(SUCCEEDED(dx.result));
+
+        dx.result = constBuffTranceform1->Map(0, nullptr, (void**)&constMapTranceform1);
+
+        assert(SUCCEEDED(dx.result));
+
+#pragma endregion
+        //----------------------
+
 
      //行列-----------------------
 #pragma region 行列
@@ -192,7 +217,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         Projection matProjection;
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow.window_width / dxWindow.window_height, 0.1f, 1000.0f);
 
-        constMapTranceform->mat = matWorld.matWorld * matView.mat * matProjection.mat;
+        constMapTranceform0->mat = matWorld.matWorld * matView.mat * matProjection.mat;
+
+        //ワールド行列
+        WorldMatrix matWorld1;
+        matWorld1.CreateMatrixWorld(XMMatrixScaling(1.0f, 0.5f, 1.0f), matWorld1.ReturnMatRot(matWorld1.matRot, 15.0f, 30.0f, 0.0f), XMMatrixTranslation(-50.0f, 0.0f, 0.0f));
+
+        constMapTranceform1->mat = matWorld1.matWorld * matView.mat * matProjection.mat;
 
 
 
@@ -870,8 +901,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         matWorld.UpdataMatrixWorld();
 
+        matWorld1.SetMatScale(1.0f, 1.0f, 1.0f);
 
-        constMapTranceform->mat = matWorld.matWorld * matView.mat * matProjection.mat;
+        matWorld1.matRot = XMMatrixRotationY(XM_PI / 4.0f);
+
+        matWorld1.SetMatTrans(-position.x, -position.y, -position.z);
+
+        matWorld1.UpdataMatrixWorld();
+
+        constMapTranceform0->mat = matWorld.matWorld * matView.mat * matProjection.mat;
+
+        constMapTranceform1->mat = matWorld1.matWorld * matView.mat * matProjection.mat;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -967,7 +1007,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         dx.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
         //定数バッファビュー(CBV)の設定コマンド
-        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform->GetGPUVirtualAddress());
+        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform0->GetGPUVirtualAddress());
+
+        //描画コマンド
+        dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+
+
+        //定数バッファビュー(CBV)の設定コマンド
+        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform1->GetGPUVirtualAddress());
 
         //描画コマンド
         dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
