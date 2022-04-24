@@ -41,13 +41,6 @@ using namespace Microsoft::WRL;
 
 #pragma endregion using namespace
 
-
-
-
-
-
-
-
 //頂点データ構造体-------------------------------------
 typedef struct Vertex
 {
@@ -56,7 +49,6 @@ typedef struct Vertex
     XMFLOAT2 uv;//uv座標
 };
 //--------------------------------------
-
 
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
@@ -81,8 +73,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion デバック時のみ
     //-------------
 
+    //DirectXクラス生成
     Dx12 dx(dxWindow);
-
+    //inputクラス生成
     Input input(dx.result,dxWindow.w,dxWindow.hwnd);
 
 #pragma endregion 
@@ -122,7 +115,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
 
-
      //行列-----------------------
 #pragma region 行列
         //ビュー変換行列
@@ -133,7 +125,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow.window_width / dxWindow.window_height, 0.1f, 1000.0f);
 #pragma endregion 行列
      //---------------------
-
 
      //画像ファイル--------------------
 #pragma region 画像ファイル
@@ -200,7 +191,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 
 #pragma endregion テクスチャバッファ設定
-
 
 
 #pragma region テクスチャバッファの生成
@@ -589,7 +579,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma endregion シェーダーのエラーに関する出力部分
      //-----------------------------------
-
 
       // 頂点レイアウト------------------
 #pragma region 頂点レイアウト
