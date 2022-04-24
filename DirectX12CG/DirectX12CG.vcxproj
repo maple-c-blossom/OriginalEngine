@@ -23,6 +23,7 @@
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicPS.hlsl">
@@ -42,6 +43,7 @@
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.hlsli" />

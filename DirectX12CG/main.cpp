@@ -14,6 +14,7 @@
 #include "Dx12.h"
 #include <memory>
 #include <DirectXTex.h>
+#include "View.h"
 
 #pragma endregion include
 
@@ -178,13 +179,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //行列-----------------------
 #pragma region 行列
+
+        //ビュー変換行列
+      
+        View matView;
+        matView.CreateMatrixView(XMFLOAT3(0.0f, 100.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+
+        //射影変換行列
         XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
             XMConvertToRadians(45.0f),
             (float)dxWindow.window_width / dxWindow.window_height,
             0.1f, 1000.0f
         );
 
-        constMapTranceform->mat = matProjection;
+        constMapTranceform->mat = matView.mat * matProjection;
 
 
 
@@ -346,10 +354,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //頂点データ---------------------------------
 #pragma region 頂点データ
      Vertex vertices[] = {
-         {{-50.0f,-50.0f,50.0f}, {0.0f,1.0f}},//左下
-         {{-50.0f,50.0f,50.0f}, {0.0f,0.0f}},//左上
-         {{50.0f,-50.0f,50.0f}, {1.0f,1.0f}},//右下
-         {{50.0f,50.0f,50.0f}, {1.0f,0.0f}},//右上
+         {{-50.0f,-50.0f,0.0f}, {0.0f,1.0f}},//左下
+         {{-50.0f,50.0f,0.0f}, {0.0f,0.0f}},//左上
+         {{50.0f,-50.0f,0.0f}, {1.0f,1.0f}},//右下
+         {{50.0f,50.0f,0.0f}, {1.0f,0.0f}},//右上
      };
 
      UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
@@ -728,7 +736,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //ゲームループ用変数--------------------------------
 #pragma region ゲームループ用変数
-
+     float angle = 0.0f;
 #pragma endregion ゲームループ用変数
      //--------------------------
      
@@ -746,8 +754,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         }
 
 #pragma region 更新処理
+        if (input.IsKeyDown(DIK_D) || input.IsKeyDown(DIK_A))
+        {
+            if (input.IsKeyDown(DIK_D)) { angle += XMConvertToRadians(1.0f); }
+            else if (input.IsKeyDown(DIK_A)) { angle -= XMConvertToRadians(1.0f); }
 
+            matView.eye.x = -100.0f * sinf(angle);
+            matView.eye.z = -100.0f * cosf(angle);
+            matView.CreateMatrixView();
 
+        }
+
+        constMapTranceform->mat = matView.mat * matProjection;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
