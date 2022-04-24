@@ -178,13 +178,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //行列-----------------------
 #pragma region 行列
-     constMapTranceform->mat = XMMatrixIdentity();
+        XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
+            XMConvertToRadians(45.0f),
+            (float)dxWindow.window_width / dxWindow.window_height,
+            0.1f, 1000.0f
+        );
 
-     constMapTranceform->mat.r[0].m128_f32[0] = 2.0f / dxWindow.window_width;
-     constMapTranceform->mat.r[1].m128_f32[1] = -2.0f / dxWindow.window_height;
+        constMapTranceform->mat = matProjection;
 
-     constMapTranceform->mat.r[3].m128_f32[0] = -1.0f;
-     constMapTranceform->mat.r[3].m128_f32[1] = 1.0f;
+
+
 #pragma endregion 行列
      //---------------------
 
@@ -343,10 +346,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //頂点データ---------------------------------
 #pragma region 頂点データ
      Vertex vertices[] = {
-         {{0.0f,100.0f,0.0f}, {0.0f,1.0f}},//左下
-         {{0.0f,0.0f,0.0f}, {0.0f,0.0f}},//左上
-         {{100.0f,100.0f,0.0f}, {1.0f,1.0f}},//右下
-         {{100.0f,0.0f,0.0f}, {1.0f,0.0f}},//右上
+         {{-50.0f,-50.0f,50.0f}, {0.0f,1.0f}},//左下
+         {{-50.0f,50.0f,50.0f}, {0.0f,0.0f}},//左上
+         {{50.0f,-50.0f,50.0f}, {1.0f,1.0f}},//右下
+         {{50.0f,50.0f,50.0f}, {1.0f,0.0f}},//右上
      };
 
      UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
