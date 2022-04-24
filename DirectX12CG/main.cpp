@@ -18,6 +18,8 @@
 #include "Projection.h"
 #include "WorldMatrix.h"
 #include "Depth.h"
+#include "Object3d.h"
+#include "ObjectMaterial.h"
 
 #pragma endregion include
 
@@ -43,19 +45,8 @@ using namespace Microsoft::WRL;
 
 
 
-//定数バッファ用構造体(マテリアル)-----------------------------------
-typedef struct ConstBufferDataMaterial
-{
-    XMFLOAT4 color;
-};
-//------------------------------------------
 
-//定数バッファ用構造体(座標)------------------------
-typedef struct ConstBufferDataTransform
-{
-    XMMATRIX mat;
-};
-//---------------------------------
+
 
 //頂点データ構造体-------------------------------------
 typedef struct Vertex
@@ -103,130 +94,43 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     Depth depth(dxWindow, dx);
     //-------
 
-    //定数バッファの生成-------------------
-#pragma region 定数バッファの生成
+    //3Dオブジェクトマテリアルの生成-------------------
+    ObjectMaterial objMaterial;
+    objMaterial.Init(dx);
+    //---------------------
 
-     D3D12_HEAP_PROPERTIES cdHeapProp{};
-     cdHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    //3Dオブジェクトの生成-------------------
+#pragma region 3Dオブジェクトの生成
 
-     D3D12_RESOURCE_DESC cdResdesc{};
-     cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-     cdResdesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;
-     cdResdesc.Height = 1;
-     cdResdesc.DepthOrArraySize = 1;
-     cdResdesc.MipLevels = 1;
-     cdResdesc.SampleDesc.Count = 1;
-     cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+     const size_t objectNum = 50;
+     Object3d object3D[objectNum];
+     for (int i = 0; i < objectNum; i++)
+     {
+         object3D[i].Init(dx);
+         if (i > 0)
+         {
+             object3D[i].parent = &object3D[i - 1];
 
-     ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+             object3D[i].scale = { 0.9f,0.9f,0.9f };
 
+             object3D[i].rotasion = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
 
-     dx.result = dx.device->CreateCommittedResource
-     (
-         &cdHeapProp,        //ヒープ設定
-         D3D12_HEAP_FLAG_NONE,
-         &cdResdesc,//リソース設定
-         D3D12_RESOURCE_STATE_GENERIC_READ,
-         nullptr,
-         IID_PPV_ARGS(&constBuffMaterial)
-     );
-     assert(SUCCEEDED(dx.result));
+             object3D[i].position = { 0.0f,0.0f,-0.8f };
+         }
+     }
 
-
-     ConstBufferDataMaterial* constMapMaterial = nullptr;
-
-     dx.result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
-
-     assert(SUCCEEDED(dx.result));
-
-     constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
-
-#pragma endregion
-     //----------------------
-
-     //定数バッファの生成-------------------
-#pragma region 定数バッファの生成
-    ComPtr<ID3D12Resource> constBuffTranceform0 = nullptr;
-
-    ConstBufferDataTransform* constMapTranceform0 = nullptr;
-     
-        D3D12_HEAP_PROPERTIES cbHeapProp{};
-        cbHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
-
-        D3D12_RESOURCE_DESC cbResdesc{};
-        cbResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-        cbResdesc.Width = (sizeof(ConstBufferDataTransform) + 0xff) & ~0xff;
-        cbResdesc.Height = 1;
-        cbResdesc.DepthOrArraySize = 1;
-        cbResdesc.MipLevels = 1;
-        cbResdesc.SampleDesc.Count = 1;
-        cbResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-
-        dx.result = dx.device->CreateCommittedResource
-        (
-            &cbHeapProp,        //ヒープ設定
-            D3D12_HEAP_FLAG_NONE,
-            &cbResdesc,//リソース設定
-            D3D12_RESOURCE_STATE_GENERIC_READ,
-            nullptr,
-            IID_PPV_ARGS(&constBuffTranceform0)
-        );
-        assert(SUCCEEDED(dx.result));
-
-        dx.result = constBuffTranceform0->Map(0, nullptr, (void**)&constMapTranceform0);
-
-        assert(SUCCEEDED(dx.result));
-     
-#pragma endregion
-     //----------------------
-
-             //定数バッファの生成-------------------
-#pragma region 定数バッファの生成
-        ComPtr<ID3D12Resource> constBuffTranceform1 = nullptr;
-
-        ConstBufferDataTransform* constMapTranceform1 = nullptr;
-
-        dx.result = dx.device->CreateCommittedResource
-        (
-            &cbHeapProp,        //ヒープ設定
-            D3D12_HEAP_FLAG_NONE,
-            &cbResdesc,//リソース設定
-            D3D12_RESOURCE_STATE_GENERIC_READ,
-            nullptr,
-            IID_PPV_ARGS(&constBuffTranceform1)
-        );
-        assert(SUCCEEDED(dx.result));
-
-        dx.result = constBuffTranceform1->Map(0, nullptr, (void**)&constMapTranceform1);
-
-        assert(SUCCEEDED(dx.result));
-
-#pragma endregion
-        //----------------------
+#pragma endregion 3Dオブジェクトの生成
+    //----------------------
 
 
      //行列-----------------------
 #pragma region 行列
-        //ワールド行列
-        WorldMatrix matWorld;
-        matWorld.CreateMatrixWorld(XMMatrixScaling(1.0f, 0.5f, 1.0f), matWorld.ReturnMatRot(matWorld.matRot,15.0f,30.0f,0.0f), XMMatrixTranslation(-50.0f, 0.0f, 0.0f));
         //ビュー変換行列
         View matView;
         matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
         //射影変換行列
         Projection matProjection;
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow.window_width / dxWindow.window_height, 0.1f, 1000.0f);
-
-        constMapTranceform0->mat = matWorld.matWorld * matView.mat * matProjection.mat;
-
-        //ワールド行列
-        WorldMatrix matWorld1;
-        matWorld1.CreateMatrixWorld(XMMatrixScaling(1.0f, 0.5f, 1.0f), matWorld1.ReturnMatRot(matWorld1.matRot, 15.0f, 30.0f, 0.0f), XMMatrixTranslation(-50.0f, 0.0f, 0.0f));
-
-        constMapTranceform1->mat = matWorld1.matWorld * matView.mat * matProjection.mat;
-
-
-
 #pragma endregion 行列
      //---------------------
 
@@ -457,13 +361,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //インデックスデータ全体のサイズ
      UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(indices));
 
-     cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-     cdResdesc.Width = sizeIB;
-     cdResdesc.Height = 1;
-     cdResdesc.DepthOrArraySize = 1;
-     cdResdesc.MipLevels = 1;
-     cdResdesc.SampleDesc.Count = 1;
-     cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+     objMaterial.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+     objMaterial.Resdesc.Width = sizeIB;
+     objMaterial.Resdesc.Height = 1;
+     objMaterial.Resdesc.DepthOrArraySize = 1;
+     objMaterial.Resdesc.MipLevels = 1;
+     objMaterial.Resdesc.SampleDesc.Count = 1;
+     objMaterial.Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 #pragma endregion インデックスの設定
      //------------------------
@@ -473,9 +377,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      ComPtr<ID3D12Resource> indexBuff = nullptr;
          //インデックスバッファの生成-----------------------------
      dx.result = dx.device->CreateCommittedResource(
-         &cdHeapProp,
+         &objMaterial.HeapProp,
          D3D12_HEAP_FLAG_NONE,
-         &cdResdesc,
+         &objMaterial.Resdesc,
          D3D12_RESOURCE_STATE_GENERIC_READ,
          nullptr,
          IID_PPV_ARGS(&indexBuff)
@@ -517,16 +421,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
     D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
-    cdHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
+    objMaterial.HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
 
     D3D12_RESOURCE_DESC resdesc{};  // リソース設定
-    cdResdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    cdResdesc.Width = sizeVB; // 頂点データ全体のサイズ
-    cdResdesc.Height = 1;
-    cdResdesc.DepthOrArraySize = 1;
-    cdResdesc.MipLevels = 1;
-    cdResdesc.SampleDesc.Count = 1;
-    cdResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    objMaterial.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    objMaterial.Resdesc.Width = sizeVB; // 頂点データ全体のサイズ
+    objMaterial.Resdesc.Height = 1;
+    objMaterial.Resdesc.DepthOrArraySize = 1;
+    objMaterial.Resdesc.MipLevels = 1;
+    objMaterial.Resdesc.SampleDesc.Count = 1;
+    objMaterial.Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
@@ -534,9 +438,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 頂点バッファの生成
      ComPtr<ID3D12Resource> vertBuff = nullptr;
      dx.result = dx.device->CreateCommittedResource(
-         &cdHeapProp, // ヒープ設定
+         &objMaterial.HeapProp, // ヒープ設定
          D3D12_HEAP_FLAG_NONE,
-         &cdResdesc, // リソース設定
+         &objMaterial.Resdesc, // リソース設定
          D3D12_RESOURCE_STATE_GENERIC_READ,
          nullptr,
          IID_PPV_ARGS(&vertBuff));
@@ -852,10 +756,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region ゲームループ用変数
      float angle = 0.0f;
 
-     XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-     XMFLOAT3 rotasion = {0.0f,0.0f,0.0f};
-     XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
-
 #pragma endregion ゲームループ用変数
      //--------------------------
      
@@ -886,32 +786,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         if (input.IsKeyDown(DIK_UP) || input.IsKeyDown(DIK_DOWN) || input.IsKeyDown(DIK_LEFT) || input.IsKeyDown(DIK_RIGHT))
         {
-            if (input.IsKeyDown(DIK_UP)) { position.z += 1.0f; }
-            else if (input.IsKeyDown(DIK_DOWN)) { position.z -= 1.0f; }
+            if (input.IsKeyDown(DIK_UP)) { object3D[0].position.z += 1.0f; }
+            else if (input.IsKeyDown(DIK_DOWN)) { object3D[0].position.z -= 1.0f; }
 
-            if (input.IsKeyDown(DIK_RIGHT)) { position.x += 1.0f; }
-            else if (input.IsKeyDown(DIK_LEFT)) { position.x -= 1.0f; }
+            if (input.IsKeyDown(DIK_RIGHT)) { object3D[0].position.x += 1.0f; }
+            else if (input.IsKeyDown(DIK_LEFT)) { object3D[0].position.x -= 1.0f; }
         }
 
-        matWorld.SetMatScale(scale.x, scale.y, scale.z);
 
-        matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
+        for (int i = 0; i < _countof(object3D); i++)
+        {
+            object3D[i].Updata(matView, matProjection);
+        }
 
-        matWorld.SetMatTrans(position.x, position.y, position.z);
-
-        matWorld.UpdataMatrixWorld();
-
-        matWorld1.SetMatScale(1.0f, 1.0f, 1.0f);
-
-        matWorld1.matRot = XMMatrixRotationY(XM_PI / 4.0f);
-
-        matWorld1.SetMatTrans(-position.x, -position.y, -position.z);
-
-        matWorld1.UpdataMatrixWorld();
-
-        constMapTranceform0->mat = matWorld.matWorld * matView.mat * matProjection.mat;
-
-        constMapTranceform1->mat = matWorld1.matWorld * matView.mat * matProjection.mat;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -939,7 +826,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         rtvHandle.ptr += bbIndex * dx.device->GetDescriptorHandleIncrementSize(dx.rtvHeapDesc.Type);
         D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
         dx.commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
-        dx.commandList->IASetIndexBuffer(&ibView);
 
 #pragma endregion 2．描画先指定
         //-------------------
@@ -991,11 +877,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
         dx.commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-        dx.commandList->IASetVertexBuffers(0, 1, &vbView);
 
         
         //定数バッファビュー(CBV)の設定コマンド
-        dx.commandList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
+        dx.commandList->SetGraphicsRootConstantBufferView(0, objMaterial.constBuffMaterial->GetGPUVirtualAddress());
 
         //SRVヒープの設定コマンド
         dx.commandList->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
@@ -1006,18 +891,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        //定数バッファビュー(CBV)の設定コマンド
-        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform0->GetGPUVirtualAddress());
-
-        //描画コマンド
-        dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
-
-
-        //定数バッファビュー(CBV)の設定コマンド
-        dx.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform1->GetGPUVirtualAddress());
-
-        //描画コマンド
-        dx.commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+        for (int i = 0; i < _countof(object3D); i++)
+        {
+            object3D[i].Draw(dx, vbView, ibView, _countof(indices));
+        }
 
 #pragma endregion 描画コマンド
         //----------------------
