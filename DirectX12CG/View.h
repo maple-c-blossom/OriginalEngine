@@ -12,7 +12,7 @@ using namespace DirectX;
 class View
 {
     public:
-    XMMATRIX mat;
+    XMMATRIX mat;//行列
     XMFLOAT3 eye{ 0,0,0 }; //視点座標(カメラ自身の座標)
     XMFLOAT3 target{ 0,0,1 };//注視点座標(カメラが見ている座標、XMMatrixLookAtLHはこの座標から視点座標へのベクトルを求めることで向きを決定している)
     XMFLOAT3 up{ 0,1,0 };//上方向ベクトル(カメラの上側がどこかを決定する座標。)
@@ -28,6 +28,6 @@ class View
     /// <summary>
     /// すでにある変数を利用して行列を作成します
     /// </summary>
-    void CreateMatrixView();
+    void UpDateMatrixView();
 };
 

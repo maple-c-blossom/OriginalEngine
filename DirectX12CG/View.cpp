@@ -8,7 +8,7 @@ void View::CreateMatrixView(XMFLOAT3 eye, XMFLOAT3 target, XMFLOAT3 up)
 	mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
-void View::CreateMatrixView()
+void View::UpDateMatrixView()
 {
 	mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }

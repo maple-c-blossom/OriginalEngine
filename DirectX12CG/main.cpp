@@ -15,6 +15,8 @@
 #include <memory>
 #include <DirectXTex.h>
 #include "View.h"
+#include "Projection.h"
+#include "WorldMatrix.h"
 
 #pragma endregion include
 
@@ -179,20 +181,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //行列-----------------------
 #pragma region 行列
-
+        //ワールド行列
+        WorldMatrix matWorld;
+        matWorld.CreateMatrixWorld(XMMatrixScaling(1.0f, 0.5f, 1.0f), matWorld.ReturnMatRot(matWorld.matRot,15.0f,30.0f,0.0f), XMMatrixTranslation(-50.0f, 0.0f, 0.0f));
         //ビュー変換行列
-      
         View matView;
         matView.CreateMatrixView(XMFLOAT3(0.0f, 100.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-
         //射影変換行列
-        XMMATRIX matProjection = XMMatrixPerspectiveFovLH(
-            XMConvertToRadians(45.0f),
-            (float)dxWindow.window_width / dxWindow.window_height,
-            0.1f, 1000.0f
-        );
+        Projection matProjection;
+         matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow.window_width / dxWindow.window_height, 0.1f, 1000.0f);
 
-        constMapTranceform->mat = matView.mat * matProjection;
+        constMapTranceform->mat = matWorld.matWorld * matView.mat * matProjection.mat;
 
 
 
@@ -737,6 +736,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //ゲームループ用変数--------------------------------
 #pragma region ゲームループ用変数
      float angle = 0.0f;
+
+     XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
+     XMFLOAT3 rotasion = {0.0f,0.0f,0.0f};
+     XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
+
 #pragma endregion ゲームループ用変数
      //--------------------------
      
@@ -761,11 +765,29 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
             matView.eye.x = -100.0f * sinf(angle);
             matView.eye.z = -100.0f * cosf(angle);
-            matView.CreateMatrixView();
+            matView.UpDateMatrixView();
 
         }
 
-        constMapTranceform->mat = matView.mat * matProjection;
+        if (input.IsKeyDown(DIK_UP) || input.IsKeyDown(DIK_DOWN) || input.IsKeyDown(DIK_LEFT) || input.IsKeyDown(DIK_RIGHT))
+        {
+            if (input.IsKeyDown(DIK_UP)) { position.z += 1.0f; }
+            else if (input.IsKeyDown(DIK_DOWN)) { position.z -= 1.0f; }
+
+            if (input.IsKeyDown(DIK_RIGHT)) { position.x += 1.0f; }
+            else if (input.IsKeyDown(DIK_LEFT)) { position.x -= 1.0f; }
+        }
+
+        matWorld.SetMatScale(scale.x, scale.y, scale.z);
+
+        matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
+
+        matWorld.SetMatTrans(position.x, position.y, position.z);
+
+        matWorld.UpdataMatrixWorld();
+
+
+        constMapTranceform->mat = matWorld.matWorld * matView.mat * matProjection.mat;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
