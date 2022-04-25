@@ -40,20 +40,20 @@ void DxWindow::messageUpdate()
 DxWindow::DxWindow()
 {
 
-    w.cbSize = sizeof(WNDCLASSEX);
-    w.lpfnWndProc = (WNDPROC)WindowProc; // ウィンドウプロシージャを設定
-    w.lpszClassName = L"DirectXGame"; // ウィンドウクラス名
-    w.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
-    w.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
+    window.cbSize = sizeof(WNDCLASSEX);
+    window.lpfnWndProc = (WNDPROC)WindowProc; // ウィンドウプロシージャを設定
+    window.lpszClassName = L"DirectXGame"; // ウィンドウクラス名
+    window.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
+    window.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
 
     // ウィンドウクラスをOSに登録
-    RegisterClassEx(&w);
+    RegisterClassEx(&window);
 
     AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false); // 自動でサイズ補正
 
 
     // ウィンドウオブジェクトの生成
-    hwnd = CreateWindow(w.lpszClassName, // クラス名
+    hwnd = CreateWindow(window.lpszClassName, // クラス名
         L"DirectX12Game",         // タイトルバーの文字
         WS_OVERLAPPEDWINDOW,        // 標準的なウィンドウスタイル
         CW_USEDEFAULT,              // 表示X座標（OSに任せる）
@@ -62,7 +62,7 @@ DxWindow::DxWindow()
         wrc.bottom - wrc.top,   // ウィンドウ縦幅
         nullptr,                // 親ウィンドウハンドル
         nullptr,                // メニューハンドル
-        w.hInstance,            // 呼び出しアプリケーションハンドル
+        window.hInstance,            // 呼び出しアプリケーションハンドル
         nullptr);               // オプション
 
     // ウィンドウ表示
@@ -71,6 +71,6 @@ DxWindow::DxWindow()
 
 DxWindow::~DxWindow()
 {
-    UnregisterClass(w.lpszClassName, w.hInstance);
+    UnregisterClass(window.lpszClassName, window.hInstance);
 }
 

@@ -71,6 +71,16 @@ XMMATRIX WorldMatrix::ReturnMatRot(XMMATRIX matRot ,float angleX, float angleY, 
 	return matRot;
 }
 
+void WorldMatrix::SetMatScale(float scaleX, float scaleY, float scaleZ)
+{
+	matScale = XMMatrixScaling(scaleX, scaleY, scaleZ);
+}
+
+void WorldMatrix::SetMatTrans(float transX, float transY, float transZ)
+{
+	matTransform = XMMatrixTranslation(transX, transY, transZ);
+}
+
 void WorldMatrix::CreateMatrixWorld(XMMATRIX matScale, XMMATRIX matRot, XMMATRIX matTransform)
 {
 	this->matScale = matScale;
@@ -83,22 +93,10 @@ void WorldMatrix::CreateMatrixWorld(XMMATRIX matScale, XMMATRIX matRot, XMMATRIX
 	matWorld *= matTransform;
 }
 
-void WorldMatrix::SetMatScale(float scaleX, float scaleY, float scaleZ)
-{
-	matScale = XMMatrixScaling(scaleX, scaleY, scaleZ);
-}
-
-
-
 void WorldMatrix::UpdataMatrixWorld()
 {
 	matWorld = XMMatrixIdentity();
 	matWorld *= matScale;
 	matWorld *= matRot;
 	matWorld *= matTransform;
-}
-
-void WorldMatrix::SetMatTrans(float transX, float transY, float transZ)
-{
-	matTransform = XMMatrixTranslation(transX, transY, transZ);
 }

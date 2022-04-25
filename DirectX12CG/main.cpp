@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
     //DirectXクラス生成
     Dx12 dx(dxWindow);
     //inputクラス生成
-    Input input(dx.result,dxWindow.w,dxWindow.hwnd);
+    Input input(dx.result,dxWindow.window,dxWindow.hwnd);
 
 #pragma endregion 
 

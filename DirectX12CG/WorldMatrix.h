@@ -66,6 +66,7 @@ public:
 	void SetMatTrans(float transX, float transY, float transZ);
 
 	void CreateMatrixWorld(XMMATRIX matScale, XMMATRIX matRot, XMMATRIX matTransform);
+
 	void UpdataMatrixWorld();
 
 };
