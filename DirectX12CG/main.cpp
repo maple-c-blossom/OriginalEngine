@@ -1,4 +1,4 @@
-#pragma region include
+#pragma region ïWèÄ.h include
 
 #include <d3dcompiler.h>
 #include <Windows.h>
@@ -9,19 +9,22 @@
 #include <DirectXMath.h>
 #include <wrl.h>
 #include <cassert>
+#include <memory>
+#include <DirectXTex.h>
+
+#pragma endregion ïWèÄ.h include
+
+#pragma region é©çÏ.h include
 #include "Input.h"
 #include "DxWindow.h"
 #include "Dx12.h"
-#include <memory>
-#include <DirectXTex.h>
 #include "View.h"
 #include "Projection.h"
 #include "WorldMatrix.h"
 #include "Depth.h"
 #include "Object3d.h"
 #include "ObjectMaterial.h"
-
-#pragma endregion include
+#pragma endregion é©çÏ.h include
 
 #pragma region pragma comment
 
