@@ -34,3 +34,14 @@ void ObjectMaterial::Init(Dx12 dx12)
 
     constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
+
+void MCB::ObjectMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
+{
+    Resdesc.Dimension = dimension;
+    Resdesc.Width = sizeIB;
+    Resdesc.Height = height;
+    Resdesc.DepthOrArraySize = DepthOrArraySize;
+    Resdesc.MipLevels = MipLevels;
+    Resdesc.SampleDesc.Count = SampleDescCount;
+    Resdesc.Layout = layput;
+}

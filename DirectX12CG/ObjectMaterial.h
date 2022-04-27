@@ -8,6 +8,7 @@
 #include "WorldMatrix.h"
 #include "Dx12.h"
 #include "View.h"
+#include "Vertex.h"
 
 namespace MCB
 {
@@ -26,6 +27,8 @@ namespace MCB
 		ConstBufferDataMaterial* constMapMaterial = nullptr;
 
 		void Init(Dx12 dx12);
+
+		void SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layput);
 
 	};
 

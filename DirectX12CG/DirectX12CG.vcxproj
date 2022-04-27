@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Depth.cpp" />
+    <ClCompile Include="Descriptor.cpp" />
     <ClCompile Include="Dx12.cpp" />
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -28,9 +29,11 @@
     <ClCompile Include="Object3d.cpp" />
     <ClCompile Include="ObjectMaterial.cpp" />
     <ClCompile Include="Projection.cpp" />
+    <ClCompile Include="RootParameter.cpp" />
     <ClCompile Include="TexImgData.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="TextureFile.cpp" />
+    <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="WorldMatrix.cpp" />
   </ItemGroup>
@@ -50,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Depth.h" />
+    <ClInclude Include="Descriptor.h" />
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />
@@ -57,9 +61,11 @@
     <ClInclude Include="Object3d.h" />
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="RootParameter.h" />
     <ClInclude Include="TexImgData.h" />
     <ClInclude Include="TextureBuffer.h" />
     <ClInclude Include="TextureFile.h" />
+    <ClInclude Include="Vertex.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="WorldMatrix.h" />
   </ItemGroup>

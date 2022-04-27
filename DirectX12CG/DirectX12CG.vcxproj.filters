@@ -55,6 +55,18 @@
     <Filter Include="ヘッダー ファイル\Texture">
       <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Vertices&amp;Index">
+      <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Descriptor&amp;Sheader">
+      <UniqueIdentifier>{e5df687b-8a73-4eef-a7f7-edd7747db1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Descriptor&amp;Sheader">
+      <UniqueIdentifier>{ec728e33-bec1-4c91-a324-352353a52725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Vertices&amp;Index">
+      <UniqueIdentifier>{bde88a0d-bf14-4210-ad52-b644a1616865}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="TextureBuffer.cpp">
       <Filter>ソース ファイル\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Descriptor.cpp">
+      <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
+    </ClCompile>
+    <ClCompile Include="RootParameter.cpp">
+      <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>ソース ファイル\Vertices&amp;Index</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +168,15 @@
     </ClInclude>
     <ClInclude Include="TextureBuffer.h">
       <Filter>ヘッダー ファイル\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Descriptor.h">
+      <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
+    </ClInclude>
+    <ClInclude Include="RootParameter.h">
+      <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>ヘッダー ファイル\Vertices&amp;Index</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

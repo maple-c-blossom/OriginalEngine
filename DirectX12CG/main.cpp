@@ -29,6 +29,9 @@
 #include "MipMap.h"
 #include "TexImgData.h"
 #include "TextureBuffer.h"
+#include "Descriptor.h"
+#include "RootParameter.h"
+#include "Vertex.h"
 
 #pragma endregion 自作.h include
 
@@ -51,14 +54,6 @@ using namespace MCB;
 
 #pragma endregion using namespace
 
-//頂点データ構造体-------------------------------------
-typedef struct Vertex
-{
-    XMFLOAT3 pos;//xyz座標
-    XMFLOAT3 normal;//法線ベクトル
-    XMFLOAT2 uv;//uv座標
-};
-//--------------------------------------
 
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) 
@@ -167,153 +162,61 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region デスクリプタヒープの生成
 
      const size_t kMaxSRVCount = 2056;
+     Descriptor descriptor;
+     descriptor.SetHeapDesc(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, kMaxSRVCount);
+     dx.result = descriptor.SetDescriptorHeap(dx);
+     descriptor.SetSrvHeap();
 
-    //定数バッファ用のデスクリプタヒープ
-
-     //設定構造体
-     D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
-     srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-     srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE; //シェーダーから見えるように
-     srvHeapDesc.NumDescriptors = kMaxSRVCount;//定数バッファの数
-
-     //デスクリプタヒープの生成  
-     ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;
-     dx.result = dx.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
-
-     D3D12_CPU_DESCRIPTOR_HANDLE srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
 #pragma endregion デスクリプタヒープの生成
     //-------------------------------
 
      //シェーダーリソースビューの作成------------------------------
 #pragma region シェーダーリソースビューの作成
-     //シェーダーリソースビュー設定
-     D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 
-     srvDesc.Format = texBuff.texresDesc.Format;
-     srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-     srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-     srvDesc.Texture2D.MipLevels = texBuff.texresDesc.MipLevels;
+     descriptor.SetSrvDesc(texBuff, D3D12_SRV_DIMENSION_TEXTURE2D);
 
-     //ヒープの二番目にシェーダーリソースビュー作成
-     dx.device->CreateShaderResourceView(texBuff.texbuff.Get(), &srvDesc, srvHandle);
+     descriptor.SetShaderResourceView(dx, texBuff);
 
 #pragma endregion シェーダーリソースビューの作成
      //----------------------------
 
      //デスクリプタレンジの設定--------------------------------
 #pragma region デスクリプタレンジの設定
-     D3D12_DESCRIPTOR_RANGE descriptorRange{};
-     descriptorRange.NumDescriptors = 1;
-     descriptorRange.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-     descriptorRange.BaseShaderRegister = 0;
-     descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+     descriptor.SetDescriptorRange(1, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0);
+
 #pragma endregion デスクリプタレンジの設定
      //-----------------------------------------
 
      //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
 
-     D3D12_ROOT_PARAMETER rootparams[3] = {};
-     //定数バッファ0番
-     rootparams[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;//種類
-     rootparams[0].Descriptor.ShaderRegister = 0;//定数バッファ番号
-     rootparams[0].Descriptor.RegisterSpace = 0;//デフォルト値
-     rootparams[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//全てのシェーダーから見える
-     //テクスチャレジスタ0番
-     rootparams[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-     rootparams[1].DescriptorTable.pDescriptorRanges = &descriptorRange;
-     rootparams[1].DescriptorTable.NumDescriptorRanges = 1;
-     rootparams[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-     //定数バッファ1番
-     rootparams[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-     rootparams[2].Descriptor.ShaderRegister = 1;
-     rootparams[2].Descriptor.RegisterSpace = 0;
-     rootparams[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
+     RootParameter rootparams;
+     rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL,descriptor,0);
+     rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL,descriptor,1);
+     rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
 #pragma endregion ルートパラメータの設定
      //------------------------
 
      //頂点データ---------------------------------
 #pragma region 頂点データ
-    Vertex vertices[] =
-    {
-        //前
-        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{-5.0f,5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{5.0f,-5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-        {{5.0f,5.0f,-5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        //後ろ
-        {{-5.0f,5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{-5.0f,-5.0f,5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        {{5.0f,-5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-        //左
-        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{-5.0f,-5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{-5.0f,5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-        {{-5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        //右
-        {{5.0f,-5.0f,5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        {{5.0f,5.0f,-5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-        //上
-        {{-5.0f,-5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,-5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{-5.0f,-5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-        {{5.0f,-5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        //下
-        {{5.0f,5.0f,-5.0f}  ,{} ,{0.0f,0.0f}},// 左上
-        {{-5.0f,5.0f,-5.0f} ,{} ,{0.0f,1.0f}},// 左下(x,y,z,u,v)
-        {{5.0f,5.0f,5.0f}   ,{} ,{1.0f,0.0f}},// 右上
-        {{-5.0f,5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
-    };
+   
+     Vertex vertex;
 
 
-
-
-
-     UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
 #pragma endregion 頂点データ
      //--------------------------
      
      //頂点インデックス---------------------------
 #pragma region 頂点インデックス
-      unsigned short indices[]
-      {
-          //前
-          0,1,2,
-          2,1,3,
-          //後ろ
-          4,5,6,
-          6,5,7,
-          //左
-          8,9,10,
-          10,9,11,
-          //右
-          12,13,14,
-          14,13,15,
-          //上
-          16,17,18,
-          18,17,19,
-          //下
-          20,21,22,
-          22,21,23,
-      };
+
 #pragma endregion 頂点インデックス
      //--------------------------
 
      //インデックスバッファの設定-------------------------
 #pragma region インデックスの設定
-     //インデックスデータ全体のサイズ
-     UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(indices));
-
-     objMaterial.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-     objMaterial.Resdesc.Width = sizeIB;
-     objMaterial.Resdesc.Height = 1;
-     objMaterial.Resdesc.DepthOrArraySize = 1;
-     objMaterial.Resdesc.MipLevels = 1;
-     objMaterial.Resdesc.SampleDesc.Count = 1;
-     objMaterial.Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    
+     objMaterial.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, vertex.sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 
 #pragma endregion インデックスの設定
      //------------------------
@@ -342,9 +245,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //---------------------------------------
 
      //全インデックスに対して-------------------------
-     for (int i = 0; i < _countof(indices); i++)
+     for (int i = 0; i < _countof(vertex.boxIndices); i++)
      {
-         indexMap[i] = indices[i];
+         indexMap[i] = vertex.boxIndices[i];
      }
      //-----------------------
 
@@ -360,7 +263,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      D3D12_INDEX_BUFFER_VIEW ibView{};
      ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
      ibView.Format = DXGI_FORMAT_R16_UINT;
-     ibView.SizeInBytes = sizeIB;
+     ibView.SizeInBytes = vertex.sizeIB;
 #pragma endregion インデックスバッファビューの作成
      //------------------------------------------
 
@@ -371,7 +274,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
     D3D12_RESOURCE_DESC resdesc{};  // リソース設定
     objMaterial.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    objMaterial.Resdesc.Width = sizeVB; // 頂点データ全体のサイズ
+    objMaterial.Resdesc.Width = vertex.sizeVB; // 頂点データ全体のサイズ
     objMaterial.Resdesc.Height = 1;
     objMaterial.Resdesc.DepthOrArraySize = 1;
     objMaterial.Resdesc.MipLevels = 1;
@@ -397,19 +300,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      //法線ベクトル計算---------------------------
 #pragma region 法線ベクトル計算
-     for (int i = 0; i < _countof(indices) / 3; i++)
+     for (int i = 0; i < _countof(vertex.boxIndices) / 3; i++)
      {
          //三角形1つごとに計算
 
          //三角形のインデックスを取り出して、一時的な変数に入れる
-         unsigned short index0 = indices[i * 3 + 0];
-         unsigned short index1 = indices[i * 3 + 1];
-         unsigned short index2 = indices[i * 3 + 2];
+         unsigned short index0 = vertex.boxIndices[i * 3 + 0];
+         unsigned short index1 = vertex.boxIndices[i * 3 + 1];
+         unsigned short index2 = vertex.boxIndices[i * 3 + 2];
 
          //三角形を構成する頂点座標
-         XMVECTOR p0 = XMLoadFloat3(&vertices[index0].pos);
-         XMVECTOR p1 = XMLoadFloat3(&vertices[index1].pos);
-         XMVECTOR p2 = XMLoadFloat3(&vertices[index2].pos);
+         XMVECTOR p0 = XMLoadFloat3(&vertex.Box[index0].pos);
+         XMVECTOR p1 = XMLoadFloat3(&vertex.Box[index1].pos);
+         XMVECTOR p2 = XMLoadFloat3(&vertex.Box[index2].pos);
 
          //p0->p1ベクトル、p0->p2ベクトルを計算（ベクトルの減算）
          XMVECTOR v1 = XMVectorSubtract(p1, p0);
@@ -422,9 +325,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
          normal = XMVector3Normalize(normal);
 
          //求めた法線を頂点データに代入
-         XMStoreFloat3(&vertices[index0].normal, normal);
-         XMStoreFloat3(&vertices[index1].normal, normal);
-         XMStoreFloat3(&vertices[index2].normal, normal);
+         XMStoreFloat3(&vertex.Box[index0].normal, normal);
+         XMStoreFloat3(&vertex.Box[index1].normal, normal);
+         XMStoreFloat3(&vertex.Box[index2].normal, normal);
 
      }
 #pragma endregion 法線ベクトルを計算
@@ -432,14 +335,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      // 頂点バッファへのデータ転送------------
 #pragma region 頂点バッファへのデータ転送
-     Vertex* vertMap = nullptr;
+     StructVertex* vertMap = nullptr;
      dx.result = vertBuff->Map(0, nullptr, (void**)&vertMap);
      assert(SUCCEEDED(dx.result));
 
      // 全頂点に対して
-     for (int i = 0; i < _countof(vertices); i++)
+     for (int i = 0; i < _countof(vertex.Box); i++)
      {
-         vertMap[i] = vertices[i];   // 座標をコピー
+         vertMap[i] = vertex.Box[i];   // 座標をコピー
      }
 
      // マップを解除
@@ -452,8 +355,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      D3D12_VERTEX_BUFFER_VIEW vbView{};
 
      vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-     vbView.SizeInBytes = sizeVB;
-     vbView.StrideInBytes = sizeof(vertices[0]);
+     vbView.SizeInBytes = vertex.sizeVB;
+     vbView.StrideInBytes = sizeof(vertex.Box[0]);
 #pragma endregion 頂点バッファビューの作成
      //-----------------------------------
 
@@ -666,8 +569,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
      D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
      rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-     rootSignatureDesc.pParameters = rootparams; //ルートパラメータの先頭アドレス
-     rootSignatureDesc.NumParameters = _countof(rootparams); //ルートパラメータ数
+     rootSignatureDesc.pParameters = &rootparams.rootparams.front(); //ルートパラメータの先頭アドレス
+     rootSignatureDesc.NumParameters = rootparams.rootparams.size(); //ルートパラメータ数
      rootSignatureDesc.pStaticSamplers = &samplerDesc;
      rootSignatureDesc.NumStaticSamplers = 1;
 
@@ -828,17 +731,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
         dx.commandList->SetGraphicsRootConstantBufferView(0, objMaterial.constBuffMaterial->GetGPUVirtualAddress());
 
         //SRVヒープの設定コマンド
-        dx.commandList->SetDescriptorHeaps(1, srvHeap.GetAddressOf());
+        dx.commandList->SetDescriptorHeaps(1, descriptor.srvHeap.GetAddressOf());
 
         //SRVヒープの先頭アドレスを取得
-        D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap->GetGPUDescriptorHandleForHeapStart();
+        D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
 
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
         for (int i = 0; i < _countof(object3D); i++)
         {
-            object3D[i].Draw(dx, vbView, ibView, _countof(indices));
+            object3D[i].Draw(dx, vbView, ibView, _countof(vertex.boxIndices));
         }
 
 #pragma endregion 描画コマンド
