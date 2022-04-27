@@ -15,6 +15,7 @@
 #pragma endregion 標準.h include
 
 #pragma region 自作.h include
+
 #include "Input.h"
 #include "DxWindow.h"
 #include "Dx12.h"
@@ -24,6 +25,11 @@
 #include "Depth.h"
 #include "Object3d.h"
 #include "ObjectMaterial.h"
+#include "TextureFile.h"
+#include "MipMap.h"
+#include "TexImgData.h"
+#include "TextureBuffer.h"
+
 #pragma endregion 自作.h include
 
 #pragma region pragma comment
@@ -131,85 +137,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //---------------------
 
      //画像ファイル--------------------
-#pragma region 画像ファイル
-     TexMetadata metadata{};
-     ScratchImage scratchImg{};
-
-     dx.result = LoadFromWICFile(L"Resources\\tori.png", WIC_FLAGS_NONE, &metadata, scratchImg);
-#pragma endregion 画像ファイル
+     TextureFile textureFile;
+     dx.result = textureFile.LoadTexture(L"Resources\\tori.png", WIC_FLAGS_NONE);
      //----------------------------
 
      //ミップマップの生成-------------
-#pragma region ミップマップの生成
-
-     ScratchImage mipChain{};
-     //ミップマップ生成
-     dx.result = GenerateMipMaps(scratchImg.GetImages(), scratchImg.GetImageCount(), scratchImg.GetMetadata(), TEX_FILTER_DEFAULT, 0, mipChain);
-     if (SUCCEEDED(dx.result))
-     {
-         scratchImg = std::move(mipChain);
-         metadata = scratchImg.GetMetadata();
-     }
-     metadata.format = MakeSRGB(metadata.format);
-#pragma endregion ミップマップの生成
+     MipMap mipmap;
+     dx.result = mipmap.GenerateMipMap(&textureFile.scratchImg, TEX_FILTER_DEFAULT, 0, textureFile.metadata);
      //---------------
 
      //画像イメージデータの作成----------------------
-#pragma region 画像イメージデータの作成
-     //横方向ピクセル数
-     const size_t textureWidth = 256;
-     //縦方向ピクセル数
-     const size_t textureHeight = 256;
-     //配列の要素数
-     const size_t imageDataCount = textureWidth * textureHeight;
-     //画像イメージデータの配列
-     XMFLOAT4* imageData = new XMFLOAT4[imageDataCount];
-
-     for (int i = 0; i < imageDataCount; i++)
-     {
-         imageData[i].x = 1.0f;//R
-         imageData[i].y = 0.0f;//G
-         imageData[i].z = 0.0f;//B
-         imageData[i].w = 1.0f;//A
-     }
-
-#pragma endregion 画像イメージデータの作成
+     TexImgData imageData;
+     imageData.SetImageDataRGBA(XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
      //------------------------------------
 
-#pragma region テクスチャバッファ設定
-
-     D3D12_HEAP_PROPERTIES texHeapProp{};
-
-     texHeapProp.Type = D3D12_HEAP_TYPE_CUSTOM;
-     texHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-     texHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
-
-     D3D12_RESOURCE_DESC texresDesc{};
-     texresDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-     texresDesc.Format = metadata.format;
-     texresDesc.Width = metadata.width;
-     texresDesc.Height = (UINT)metadata.height;
-     texresDesc.DepthOrArraySize = (UINT16)metadata.arraySize;
-     texresDesc.MipLevels = (UINT16)metadata.mipLevels;
-     texresDesc.SampleDesc.Count = 1;
+      //テクスチャバッファ設定---------------------------------------
+      TextureBuffer texBuff;
+      texBuff.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM,D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,D3D12_MEMORY_POOL_L0);
+      texBuff.SetTexResourceDesc(textureFile, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+      //--------------------------------------
 
 
-#pragma endregion テクスチャバッファ設定
-
-
-#pragma region テクスチャバッファの生成
-     ComPtr<ID3D12Resource> texbuff = nullptr;
-     dx.result = dx.device->CreateCommittedResource(&texHeapProp, D3D12_HEAP_FLAG_NONE, &texresDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&texbuff));
-#pragma endregion テクスチャバッファの生成
-
-     for (size_t i = 0; i < metadata.mipLevels; i++)
-     {
-         //ミップマップレベルを指定してイメージを取得
-         const Image* img = scratchImg.GetImage(i, 0, 0);
-         //テクスチャバッファにデータ転送
-         dx.result = texbuff->WriteToSubresource((UINT) i, nullptr,img->pixels, (UINT)img->rowPitch,(UINT)img->slicePitch);
-         assert(SUCCEEDED(dx.result));
-     }
+      //テクスチャバッファの生成----------------------
+      dx.result = texBuff.CommitResouce(dx, D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+      texBuff.TransferMipmatToTexBuff(textureFile, nullptr, dx.result);
+      //-----------------------------------
 
          //デスクリプタヒープの生成-------------------------
 #pragma region デスクリプタヒープの生成
@@ -237,13 +189,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      //シェーダーリソースビュー設定
      D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 
-     srvDesc.Format = texresDesc.Format;
+     srvDesc.Format = texBuff.texresDesc.Format;
      srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
      srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-     srvDesc.Texture2D.MipLevels = texresDesc.MipLevels;
+     srvDesc.Texture2D.MipLevels = texBuff.texresDesc.MipLevels;
 
      //ヒープの二番目にシェーダーリソースビュー作成
-     dx.device->CreateShaderResourceView(texbuff.Get(), &srvDesc, srvHandle);
+     dx.device->CreateShaderResourceView(texBuff.texbuff.Get(), &srvDesc, srvHandle);
 
 #pragma endregion シェーダーリソースビューの作成
      //----------------------------

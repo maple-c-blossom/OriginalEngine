@@ -24,9 +24,13 @@
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MipMap.cpp" />
     <ClCompile Include="Object3d.cpp" />
     <ClCompile Include="ObjectMaterial.cpp" />
     <ClCompile Include="Projection.cpp" />
+    <ClCompile Include="TexImgData.cpp" />
+    <ClCompile Include="TextureBuffer.cpp" />
+    <ClCompile Include="TextureFile.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="WorldMatrix.cpp" />
   </ItemGroup>
@@ -49,9 +53,13 @@
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MipMap.h" />
     <ClInclude Include="Object3d.h" />
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="Projection.h" />
+    <ClInclude Include="TexImgData.h" />
+    <ClInclude Include="TextureBuffer.h" />
+    <ClInclude Include="TextureFile.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="WorldMatrix.h" />
   </ItemGroup>
