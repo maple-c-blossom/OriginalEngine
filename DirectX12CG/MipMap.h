@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXTex.h>
+#include "TextureFile.h"
 namespace MCB
 {
 	class MipMap
@@ -7,6 +8,7 @@ namespace MCB
 	public:
 		DirectX::ScratchImage mipChain{};
 
-		HRESULT GenerateMipMap(DirectX::ScratchImage* scratchimg, DirectX::TEX_FILTER_FLAGS flag, size_t levels, TexMetadata& metadata);
+		HRESULT GenerateMipMap(TextureFile* scratchimg, DirectX::TEX_FILTER_FLAGS flag, size_t levels);
+
 	};
 }

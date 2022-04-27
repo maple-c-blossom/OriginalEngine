@@ -7,7 +7,7 @@ HRESULT MCB::TextureBuffer::CommitResouce(Dx12 &dx12, D3D12_HEAP_FLAGS flags, D3
     return dx12.device->CreateCommittedResource(&texHeapProp, flags, &texresDesc, resouceState, clearValue, IID_PPV_ARGS(&texbuff));
 }
 
-HRESULT MCB::TextureBuffer::TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox, HRESULT &result)
+void MCB::TextureBuffer::TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox, HRESULT &result)
 {
     for (size_t i = 0; i < texFile.metadata.mipLevels; i++)
     {

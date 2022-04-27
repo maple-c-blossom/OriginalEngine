@@ -3,17 +3,17 @@
 using namespace DirectX;
 
 
-HRESULT MCB::MipMap::GenerateMipMap(DirectX::ScratchImage* scratchimg, DirectX::TEX_FILTER_FLAGS flag, size_t levels, TexMetadata &metadata)
+HRESULT MCB::MipMap::GenerateMipMap(TextureFile* scratchimg, DirectX::TEX_FILTER_FLAGS flag, size_t levels)
 {
 	HRESULT result;
 	//ミップマップ生成
-	GenerateMipMaps(scratchimg->GetImages(), scratchimg->GetImageCount(), scratchimg->GetMetadata(), flag, levels, mipChain);
+	result = GenerateMipMaps(scratchimg->scratchImg.GetImages(), scratchimg->scratchImg.GetImageCount(), scratchimg->scratchImg.GetMetadata(), flag, levels, mipChain);
 	if (SUCCEEDED(result))
 	{
-		*scratchimg = std::move(mipChain);
-		metadata = scratchimg->GetMetadata();
+		scratchimg->scratchImg = std::move(mipChain);
+		scratchimg->metadata = scratchimg->scratchImg.GetMetadata();
 	}
-	metadata.format = MakeSRGB(metadata.format);
+	scratchimg->metadata.format = MakeSRGB(scratchimg->metadata.format);
 	
 	return result;
 }

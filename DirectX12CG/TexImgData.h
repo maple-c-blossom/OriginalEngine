@@ -1,6 +1,8 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include<vector>
+
 namespace MCB
 {
 	class TexImgData
@@ -13,8 +15,9 @@ namespace MCB
         //配列の要素数
         size_t imageDataCount = textureWidth * textureHeight;
         //画像イメージデータの配列
-        DirectX::XMFLOAT4* imageData;
-
+       std::vector<DirectX::XMFLOAT4> imageData;
+    
+       ~TexImgData();
         void SetImageDataRGBA(DirectX::XMFLOAT4 RGBA);
   
 

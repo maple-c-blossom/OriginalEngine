@@ -19,7 +19,7 @@ namespace MCB
 
         HRESULT CommitResouce(Dx12 &dx12,D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue);
 
-        HRESULT TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox,HRESULT &result);
+        void TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox,HRESULT &result);
         
         void SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE_PROPERTY cpuPagePropety, D3D12_MEMORY_POOL memorypool);
 

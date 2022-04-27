@@ -141,10 +141,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      dx.result = textureFile.LoadTexture(L"Resources\\tori.png", WIC_FLAGS_NONE);
      //----------------------------
 
-     //ミップマップの生成-------------
+     //ミップマップの生成-------------------------
      MipMap mipmap;
-     dx.result = mipmap.GenerateMipMap(&textureFile.scratchImg, TEX_FILTER_DEFAULT, 0, textureFile.metadata);
-     //---------------
+     dx.result = mipmap.GenerateMipMap(&textureFile, TEX_FILTER_DEFAULT, 0);
+     //----------------------------
 
      //画像イメージデータの作成----------------------
      TexImgData imageData;
