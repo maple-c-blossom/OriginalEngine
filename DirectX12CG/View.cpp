@@ -1,5 +1,8 @@
 #include "View.h"
 
+using namespace DirectX;
+using namespace MCB;
+
 void View::CreateMatrixView(XMFLOAT3 eye, XMFLOAT3 target, XMFLOAT3 up)
 {
 	this->eye = eye;

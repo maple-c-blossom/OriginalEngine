@@ -1,5 +1,9 @@
 #include "Dx12.h"
 
+using namespace MCB;
+using namespace std;
+
+
 Dx12::Dx12(DxWindow dxWindow)
 {
     SetDXFactory();

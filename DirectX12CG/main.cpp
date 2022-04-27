@@ -41,6 +41,7 @@
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
+using namespace MCB;
 
 #pragma endregion using namespace
 

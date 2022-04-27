@@ -9,46 +9,44 @@
 #include "Dx12.h"
 #include "View.h"
 #include "Projection.h"
-#pragma region using namespace
 
-using namespace std;
-using namespace DirectX;
-using namespace Microsoft::WRL;
-
-#pragma endregion using namespace
-class Object3d
+namespace MCB
 {
-public:
-    //定数バッファ用構造体(行列)------------------------
-    typedef struct ConstBufferDataTransform
+    class Object3d
     {
-        XMMATRIX mat;
-    };
-    //---------------------------------
+    public:
+        //定数バッファ用構造体(行列)------------------------
+        typedef struct ConstBufferDataTransform
+        {
+            DirectX::XMMATRIX mat;
+        };
+        //---------------------------------
     
-    //行列用定数バッファ
-    ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
+        //行列用定数バッファ
+        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
 
-    //行列用定数バッファマップ
-    ConstBufferDataTransform* constMapTranceform = nullptr;
+        //行列用定数バッファマップ
+        ConstBufferDataTransform* constMapTranceform = nullptr;
 
-    //アフィン変換情報
-    XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-    XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
-    XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
+        //アフィン変換情報
+        DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
+        DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
+        DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
 
-    //ワールド行列
-    WorldMatrix matWorld;
-    //親オブジェクトへのポインタ
-    Object3d* parent = nullptr;
-
-
+        //ワールド行列
+        WorldMatrix matWorld;
+        //親オブジェクトへのポインタ
+        Object3d* parent = nullptr;
 
 
-    void Init(Dx12& dx12);
 
-    void Updata(View& view, Projection& projection);
 
-    void Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView,UINT numIndices);
-};
+        void Init(Dx12& dx12);
+
+        void Updata(View& view, Projection& projection);
+
+        void Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView,UINT numIndices);
+    };
+
+}
 

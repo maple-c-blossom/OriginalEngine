@@ -1,5 +1,7 @@
 #include "Object3d.h"
 
+using namespace MCB;
+
 void Object3d::Init(Dx12& dx12)
 {
     D3D12_HEAP_PROPERTIES HeapProp{};

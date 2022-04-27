@@ -2,6 +2,7 @@
 #include <cassert>
 #define DIRECINPUT_VERSION 0x0800 //DirectInputのバージョン指定
 
+using namespace MCB;
 
 void Input::Init(HRESULT &result, WNDCLASSEX w, HWND hwnd)
 {
@@ -83,6 +84,7 @@ Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
 #pragma endregion 入力系初期化
 	//----------------
 }
+
 
 void Input::KeyInit()
 {

@@ -1,5 +1,8 @@
 #include "DxWindow.h"
 #include <Windows.h>
+
+using namespace MCB;
+
 LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
      // メッセージに応じてゲーム固有の処理を行う 

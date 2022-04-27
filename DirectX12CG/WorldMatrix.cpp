@@ -1,5 +1,8 @@
 #include "WorldMatrix.h"
 
+using namespace MCB;
+using  namespace DirectX;
+
 void WorldMatrix::SetMatRotX(float angle, bool ConvertToRadians)
 {
 	if (ConvertToRadians)

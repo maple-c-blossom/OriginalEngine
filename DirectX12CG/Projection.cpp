@@ -1,5 +1,8 @@
 #include "Projection.h"
 
+using namespace DirectX;
+using namespace MCB;
+
 void Projection::CreateMatrixProjection(float fovAngle, float aspectRatio, float nearZ, float farZ)
 {
     this->fovAngle = fovAngle;

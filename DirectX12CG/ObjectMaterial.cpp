@@ -1,5 +1,8 @@
 #include "ObjectMaterial.h"
 
+using namespace MCB;
+using namespace DirectX;
+
 void ObjectMaterial::Init(Dx12 dx12)
 {
     

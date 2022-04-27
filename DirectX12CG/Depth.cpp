@@ -1,5 +1,6 @@
 #include "Depth.h"
 
+using namespace MCB;
 Depth::Depth(DxWindow dxWindow, Dx12 &dx12)
 {
     InitDepthResDesc(dxWindow);

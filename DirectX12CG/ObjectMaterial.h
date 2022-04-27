@@ -8,29 +8,26 @@
 #include "WorldMatrix.h"
 #include "Dx12.h"
 #include "View.h"
-#include "Projection.h"
-#pragma region using namespace
 
-using namespace std;
-using namespace DirectX;
-using namespace Microsoft::WRL;
-
-#pragma endregion using namespace
-class ObjectMaterial
+namespace MCB
 {
-public:
-	//定数バッファ用構造体(マテリアル)-----------------------------------
-	typedef struct ConstBufferDataMaterial
+	class ObjectMaterial
 	{
-		XMFLOAT4 color;
+	public:
+		//定数バッファ用構造体(マテリアル)-----------------------------------
+		typedef struct ConstBufferDataMaterial
+		{
+			DirectX::XMFLOAT4 color;
+		};
+		//------------------------------------------
+		D3D12_HEAP_PROPERTIES HeapProp{};
+		D3D12_RESOURCE_DESC Resdesc{};
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+		ConstBufferDataMaterial* constMapMaterial = nullptr;
+
+		void Init(Dx12 dx12);
+
 	};
-	//------------------------------------------
-	D3D12_HEAP_PROPERTIES HeapProp{};
-	D3D12_RESOURCE_DESC Resdesc{};
-	ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
-	ConstBufferDataMaterial* constMapMaterial = nullptr;
 
-	void Init(Dx12 dx12);
-
-};
+}
 
