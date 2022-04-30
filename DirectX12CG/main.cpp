@@ -32,6 +32,7 @@
 #include "Descriptor.h"
 #include "RootParameter.h"
 #include "Vertex.h"
+#include "MCBMatrix.h"
 
 #pragma endregion 自作.h include
 
@@ -131,6 +132,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma endregion 行列
      //---------------------
 
+#pragma region 画像関係
      //画像ファイル--------------------
      TextureFile textureFile;
      dx.result = textureFile.LoadTexture(L"Resources\\tori.png", WIC_FLAGS_NONE);
@@ -157,6 +159,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
       dx.result = texBuff.CommitResouce(dx, D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
       texBuff.TransferMipmatToTexBuff(textureFile, nullptr, dx.result);
       //-----------------------------------
+#pragma endregion 画像関係
 
          //デスクリプタヒープの生成-------------------------
 #pragma region デスクリプタヒープの生成
@@ -203,16 +206,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
    
      Vertex vertex;
 
-
 #pragma endregion 頂点データ
      //--------------------------
-     
-     //頂点インデックス---------------------------
-#pragma region 頂点インデックス
-
-#pragma endregion 頂点インデックス
-     //--------------------------
-
+    
      //インデックスバッファの設定-------------------------
 #pragma region インデックスの設定
     
@@ -223,78 +219,35 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #pragma region インデックスバッファ生成
 
-     ComPtr<ID3D12Resource> indexBuff = nullptr;
-         //インデックスバッファの生成-----------------------------
-     dx.result = dx.device->CreateCommittedResource(
-         &objMaterial.HeapProp,
-         D3D12_HEAP_FLAG_NONE,
-         &objMaterial.Resdesc,
-         D3D12_RESOURCE_STATE_GENERIC_READ,
-         nullptr,
-         IID_PPV_ARGS(&indexBuff)
-     );
+     vertex.CreateIndexBuffer(dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE,objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 #pragma endregion インデックスバッファ生成
 
      //インデックスバッファへのデータ転送------------------------------
 #pragma region インデックスバッファへのデータ転送
 
-     //GPU上のバッファに対応した仮想メモリを取得----------------------------
-     uint16_t* indexMap = nullptr;
-     dx.result = indexBuff->Map(0, nullptr, (void**)&indexMap);
-     //---------------------------------------
-
-     //全インデックスに対して-------------------------
-     for (int i = 0; i < _countof(vertex.boxIndices); i++)
-     {
-         indexMap[i] = vertex.boxIndices[i];
-     }
-     //-----------------------
-
-     //繋がりを解除---------------------
-     indexBuff->Unmap(0, nullptr);
-     //------------------------
+     dx.result = vertex.IndexMaping();
 
 #pragma endregion インデックスバッファへのデータ転送
     //-------------------------------------
 
      //インデックスバッファビューの作成-----------------------------------
 #pragma region インデックスバッファビューの作成
-     D3D12_INDEX_BUFFER_VIEW ibView{};
-     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-     ibView.Format = DXGI_FORMAT_R16_UINT;
-     ibView.SizeInBytes = vertex.sizeIB;
+     vertex.SetIbView(DXGI_FORMAT_R16_UINT);
 #pragma endregion インデックスバッファビューの作成
      //------------------------------------------
 
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
-    D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
-    objMaterial.HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD; // GPUへの転送用
-
-    D3D12_RESOURCE_DESC resdesc{};  // リソース設定
-    objMaterial.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    objMaterial.Resdesc.Width = vertex.sizeVB; // 頂点データ全体のサイズ
-    objMaterial.Resdesc.Height = 1;
-    objMaterial.Resdesc.DepthOrArraySize = 1;
-    objMaterial.Resdesc.MipLevels = 1;
-    objMaterial.Resdesc.SampleDesc.Count = 1;
-    objMaterial.Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+     objMaterial.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, vertex.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
      // 頂点バッファの生成----------------------------
 #pragma region 頂点バッファの生成
-     ComPtr<ID3D12Resource> vertBuff = nullptr;
-     dx.result = dx.device->CreateCommittedResource(
-         &objMaterial.HeapProp, // ヒープ設定
-         D3D12_HEAP_FLAG_NONE,
-         &objMaterial.Resdesc, // リソース設定
-         D3D12_RESOURCE_STATE_GENERIC_READ,
-         nullptr,
-         IID_PPV_ARGS(&vertBuff));
 
-     assert(SUCCEEDED(dx.result));
+     vertex.CreateVertexBuffer(dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE, objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+
 #pragma endregion 頂点バッファの生成
      //-------------------------
 
@@ -336,7 +289,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      // 頂点バッファへのデータ転送------------
 #pragma region 頂点バッファへのデータ転送
      StructVertex* vertMap = nullptr;
-     dx.result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+     dx.result = vertex.vertBuff->Map(0, nullptr, (void**)&vertMap);
      assert(SUCCEEDED(dx.result));
 
      // 全頂点に対して
@@ -346,7 +299,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
      }
 
      // マップを解除
-     vertBuff->Unmap(0, nullptr);
+     vertex.vertBuff->Unmap(0, nullptr);
 #pragma endregion 頂点バッファへのデータ転送
      //--------------------------------------
 
@@ -354,7 +307,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #pragma region 頂点バッファビューの作成
      D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+     vbView.BufferLocation = vertex.vertBuff->GetGPUVirtualAddress();
      vbView.SizeInBytes = vertex.sizeVB;
      vbView.StrideInBytes = sizeof(vertex.Box[0]);
 #pragma endregion 頂点バッファビューの作成
@@ -647,6 +600,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
             object3D[i].Updata(matView, matProjection);
         }
 
+        MCBMatrix matrix1;
+        matrix1._11 = 10; matrix1._21 = 15; matrix1._31 = 98; matrix1._41 = 84;
+        matrix1._12 = 11; matrix1._22 = 51; matrix1._32 = 15; matrix1._42 = 14;
+        matrix1._13 = 25; matrix1._23 = 21; matrix1._33 = 61; matrix1._43 = 16;
+        matrix1._14 = 21; matrix1._24 = 87; matrix1._34 = 48; matrix1._44 = 45;
+
+        MCBMatrix matrix2;
+        matrix2._11 = 45; matrix2._21 = 2; matrix2._31 = 98; matrix2._41 = 104;
+        matrix2._12 = 15; matrix2._22 = 55; matrix2._32 = 125; matrix2._42 = 124;
+        matrix2._13 = 35; matrix2._23 = 34; matrix2._33 = 61; matrix2._43 = 160;
+        matrix2._14 = 54; matrix2._24 = 857; matrix2._34 = 482; matrix2._44 = 15;
+
+        matrix1 = matrix1 * matrix2;
+
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -741,7 +708,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
         for (int i = 0; i < _countof(object3D); i++)
         {
-            object3D[i].Draw(dx, vbView, ibView, _countof(vertex.boxIndices));
+            object3D[i].Draw(dx, vbView, vertex.ibView, _countof(vertex.boxIndices));
         }
 
 #pragma endregion 描画コマンド

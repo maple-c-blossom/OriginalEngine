@@ -1,7 +1,10 @@
 #pragma once
 #include <DirectXMath.h>
 #include <Windows.h>
-
+#include <wrl.h>
+#include "Dx12.h"
+#include <d3d12.h>
+#include "ObjectMaterial.h"
 namespace MCB
 {
     //頂点データ構造体-------------------------------------
@@ -49,7 +52,7 @@ namespace MCB
             {{-5.0f,5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
         };
 
-        unsigned short boxIndices[36]
+        unsigned short boxIndices[36] =
         {
             //前
             0,1,2,
@@ -71,10 +74,30 @@ namespace MCB
             22,21,23,
         };
     
+        Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
+
+        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+
+        uint16_t* indexMap = nullptr;
+
          UINT sizeVB = static_cast<UINT>(sizeof(Box[0]) * _countof(Box));
 
          //インデックスデータ全体のサイズ
          UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(boxIndices));
+
+         D3D12_INDEX_BUFFER_VIEW ibView{};
+
+         D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+
+         D3D12_RESOURCE_DESC resdesc{};  // リソース設定
+
+         void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+
+         void SetIbView(DXGI_FORMAT format);
+
+         void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+
+         HRESULT IndexMaping();
     };
 
 }

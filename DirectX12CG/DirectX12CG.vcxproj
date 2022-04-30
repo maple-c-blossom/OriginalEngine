@@ -25,6 +25,7 @@
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MCBMatrix.cpp" />
     <ClCompile Include="MipMap.cpp" />
     <ClCompile Include="Object3d.cpp" />
     <ClCompile Include="ObjectMaterial.cpp" />
@@ -57,6 +58,7 @@
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="MCBMatrix.h" />
     <ClInclude Include="MipMap.h" />
     <ClInclude Include="Object3d.h" />
     <ClInclude Include="ObjectMaterial.h" />

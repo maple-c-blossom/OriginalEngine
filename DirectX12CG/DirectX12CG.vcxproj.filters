@@ -120,6 +120,9 @@
     <ClCompile Include="Vertex.cpp">
       <Filter>ソース ファイル\Vertices&amp;Index</Filter>
     </ClCompile>
+    <ClCompile Include="MCBMatrix.cpp">
+      <Filter>ソース ファイル\Matrix</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="BasicVS.hlsl">
@@ -177,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>ヘッダー ファイル\Vertices&amp;Index</Filter>
+    </ClInclude>
+    <ClInclude Include="MCBMatrix.h">
+      <Filter>ヘッダー ファイル\Matrix</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
