@@ -1,10 +1,16 @@
 #include "Object3d.h"
 
 using namespace MCB;
+using namespace std;
 MCB::Object3d::Object3d()
 {
     NORM_FRONT_VEC.vec = { 0,0,1 };
     nowFrontVec = NORM_FRONT_VEC;
+}
+
+MCB::Object3d::~Object3d()
+{
+    delete vertex;
 }
 
 void Object3d::Init(Dx12& dx12)
@@ -75,5 +81,39 @@ void Object3d::Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView, D3D12_INDEX_BUF
     dx12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
     dx12.commandList->DrawIndexedInstanced(numIndices, 1, 0, 0, 0);
+
+}
+
+void MCB::Object3d::CreateModel(const char* fileName)
+{
+    std::ifstream file;
+
+    std::vector<Float3> position;//頂点座標
+    std::vector<Float3> normals;//法線ベクトル
+    std::vector<Float3> texcoords;//テクスチャUV
+
+    
+    
+
+    file.open(fileName);
+    if (file.fail())
+    {
+        assert(0);
+    }
+
+
+    string line;
+    while (getline(file, line))
+    {
+        std::istringstream line_stream(line);
+
+        string key;
+        getline(line_stream, key, ' ');
+
+
+
+    }
+
+    file.close();
 
 }

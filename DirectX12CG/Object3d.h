@@ -10,12 +10,28 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include "ObjVertex.h"
 
 namespace MCB
 {
     class Object3d
     {
     public:
+
+        //頂点データ構造体-------------------------------------
+        typedef struct ObjectVertex
+        {
+            DirectX::XMFLOAT3 pos;//xyz座標
+            DirectX::XMFLOAT3 normal;//法線ベクトル
+            DirectX::XMFLOAT2 uv;//uv座標
+        };
+        //--------------------------------------
+
+
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
@@ -35,13 +51,18 @@ namespace MCB
         DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
 
         //ワールド行列
-        WorldMatrix matWorld;
+        WorldMatrix matWorld = {};
 
-        Vector3D NORM_FRONT_VEC;
-        Vector3D nowFrontVec;
-        float frontAngle;
+        Vector3D NORM_FRONT_VEC = {};
+        Vector3D nowFrontVec = {};
+        float frontAngle = 0;
+
+        ObjectVertex* vertex = new ObjectVertex;
+
 
         Object3d();
+
+        ~Object3d();
 
         //親オブジェクトへのポインタ
         Object3d* parent = nullptr;
@@ -53,6 +74,8 @@ namespace MCB
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
         void Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView,UINT numIndices);
+
+        void CreateModel(const char* fileName);
     };
 
 }

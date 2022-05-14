@@ -80,6 +80,10 @@ namespace MCB
 
         uint16_t* indexMap = nullptr;
 
+        StructVertex* vertMap = nullptr;
+
+        D3D12_VERTEX_BUFFER_VIEW vbView{};
+
          UINT sizeVB = static_cast<UINT>(sizeof(Box[0]) * _countof(Box));
 
          //インデックスデータ全体のサイズ
@@ -95,9 +99,17 @@ namespace MCB
 
          void SetIbView(DXGI_FORMAT format);
 
+         void SetVbView();
+
          void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
 
+         void CalculationNormalVec();
+
          HRESULT IndexMaping();
+
+         HRESULT VertexMaping();
+
+        
     };
 
 }
