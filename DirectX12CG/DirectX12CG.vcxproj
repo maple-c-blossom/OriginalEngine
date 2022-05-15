@@ -34,8 +34,10 @@
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="RootParameter.cpp" />
+    <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TexImgData.cpp" />
+    <ClCompile Include="TexSample.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="TextureFile.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -73,8 +75,10 @@
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="RootParameter.h" />
+    <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TexImgData.h" />
+    <ClInclude Include="TexSample.h" />
     <ClInclude Include="TextureBuffer.h" />
     <ClInclude Include="TextureFile.h" />
     <ClInclude Include="Util.h" />

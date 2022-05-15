@@ -35,6 +35,9 @@
 #include "MCBMatrix.h"
 #include "Util.h"
 #include "Shader.h"
+#include "Pipeline.h"
+#include "TexSample.h"
+#include "RootSignature.h"
 
 #pragma endregion 自作.h include
 
@@ -305,69 +308,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion ピクセルシェーダの読み込みとコンパイル
      //--------------------------------
 
-     // グラフィックスパイプライン設定-----------
-     D3D12_GRAPHICS_PIPELINE_STATE_DESC gpipelineDesc{};
-     //-------------------------
+     Pipeline pipleline;
 
      //頂点シェーダ、ピクセルシェーダをパイプラインに設定-----------------------------
 #pragma region 頂点シェーダとピクセルシェーダをパイプラインに設定
 
-     gpipelineDesc.VS.pShaderBytecode = shader.vsBlob->GetBufferPointer();
-     gpipelineDesc.VS.BytecodeLength = shader.vsBlob->GetBufferSize();
-
-     gpipelineDesc.PS.pShaderBytecode = shader.psBlob->GetBufferPointer();
-     gpipelineDesc.PS.BytecodeLength = shader.psBlob->GetBufferSize();
+     pipleline.SetGpipleneDescAll(&shader);
 
 #pragma endregion 頂点シェーダとピクセルシェーダをパイプラインに設定
      //-----------------------------------
 
      //サンプルマスクとラスタライザステートの設定------------------------------------
 #pragma region サンプルマスクとラスタライザステートの設定
+     pipleline.SetSampleMask();
 
-     gpipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK; // 標準設定
-     gpipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;  // 背面カリング
-     gpipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ポリゴン内塗りつぶし
-     gpipelineDesc.RasterizerState.DepthClipEnable = true; // 深度クリッピングを有効に
-
+     pipleline.SetAllAddRasterizerState();
 #pragma endregion サンプルマスクとラスタライザステートの設定
      //------------------------------------
 
 
       //ブレンドステートの設定-------------------------------
 #pragma region ブレンドステートの設定
-//gpipeline.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;  // RBGA全てのチャンネルを描画
-     D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = gpipelineDesc.BlendState.RenderTarget[0];
-     blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;//標準設定
 
-     //共通設定
-     blenddesc.BlendEnable = true;
-     blenddesc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
-     blenddesc.SrcBlendAlpha = D3D12_BLEND_ONE;
-     blenddesc.DestBlendAlpha = D3D12_BLEND_ZERO;
+     pipleline.SetRenderTaegetBlendDesc(pipleline.pipelineDesc.BlendState.RenderTarget[0]);
 
-     //半透明合成
-     blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-     blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;
-     blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+     pipleline.SetRenderTargetWriteMask();
 
-     //加算合成
-     //#pragma region 加算合成
-     //blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-     //blenddesc.SrcBlend = D3D12_BLEND_ONE;
-     //blenddesc.DestBlend = D3D12_BLEND_ONE;
-     //#pragma endregion
+     pipleline.SetNormalBlendDesc();
 
-     //減算合成
-   /*  #pragma region 減算合成
-     blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;
-     blenddesc.SrcBlend = D3D12_BLEND_ONE;
-     blenddesc.DestBlend = D3D12_BLEND_ONE;
-     #pragma endregion*/
-
-     ////色反転
-     //blenddesc.BlendOp = D3D12_BLEND_OP_ADD;
-     //blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;
-     //blenddesc.DestBlend = D3D12_BLEND_ZERO;
+     pipleline.SetAlphaBlend();
 
 
 #pragma endregion ブレンドステートの設定
@@ -376,42 +345,33 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //頂点レイアウトの設定------------------
 #pragma region 頂点レイアウトの設定
 
-     gpipelineDesc.InputLayout.pInputElementDescs = shader.inputLayout;
-     gpipelineDesc.InputLayout.NumElements = _countof(shader.inputLayout);
+     pipleline.pipelineDesc.InputLayout.pInputElementDescs = shader.inputLayout;
+     pipleline.pipelineDesc.InputLayout.NumElements = _countof(shader.inputLayout);
 
 #pragma endregion 頂点レイアウトの設定
      //----------------------------
 
      //図形の形状を三角形に設定-------------------------
-     gpipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+     pipleline.SetPrimitiveTopologyType();
      //------------------
 
      //その他の設定----------------
 #pragma region その他の設定
 
-     gpipelineDesc.NumRenderTargets = 1; // 描画対象は1つ
-     gpipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB; // 0～255指定のRGBA
-     gpipelineDesc.SampleDesc.Count = 1; // 1ピクセルにつき1回サンプリング
+     pipleline.SetNumRenderTargets();
+     pipleline.SetRTVFormats();
+     pipleline.SetSampleDescCount();
 
 #pragma endregion その他の設定
     //----------------
 
-     depth.SetDepthStencilState(gpipelineDesc);
+     depth.SetDepthStencilState(pipleline.pipelineDesc);
 
    //テクスチャサンプラーの設定-----------------------
 #pragma region テクスチャサンプラーの設定
 
-     D3D12_STATIC_SAMPLER_DESC samplerDesc{};
-
-     samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-     samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-     samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-     samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
-     samplerDesc.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
-     samplerDesc.MaxLOD = D3D12_FLOAT32_MAX;
-     samplerDesc.MinLOD = 0.0f;
-     samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
-     samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+     TexSample sample;
+     sample.Init();
 
 #pragma endregion テクスチャサンプラーの設定
    //----------------------------------
@@ -419,24 +379,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //ルートシグネチャの生成--------------------------
 #pragma region ルートシグネチャの生成
 
-     ComPtr <ID3D12RootSignature> rootsignature;
+     RootSignature rootsignature;
 
-     D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
-     rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-     rootSignatureDesc.pParameters = &rootparams.rootparams.front(); //ルートパラメータの先頭アドレス
-     rootSignatureDesc.NumParameters = rootparams.rootparams.size(); //ルートパラメータ数
-     rootSignatureDesc.pStaticSamplers = &samplerDesc;
-     rootSignatureDesc.NumStaticSamplers = 1;
+     rootsignature.InitRootSignatureDesc(rootparams, sample);
 
+     rootsignature.SetSerializeRootSignature(shader,*dx);
 
-     ComPtr<ID3DBlob> rootSigBlob = nullptr;
-     dx->result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &shader.errorBlob);
-     dx->result = dx->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
-
-     assert(SUCCEEDED(dx->result));
+     rootsignature.CreateRootSignature(dx);
 
      // パイプラインにルートシグネチャをセット
-     gpipelineDesc.pRootSignature = rootsignature.Get();
+
+     pipleline.SetRootSignature(rootsignature);
 
 #pragma endregion ルートシグネチャの生成
      //--------------------------------
@@ -444,9 +397,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //パイプラインステートの生成-------------------------
 #pragma region パイプラインステートの生成
 
-     ComPtr<ID3D12PipelineState> pipelinestate = nullptr;
-     dx->result = dx->device->CreateGraphicsPipelineState(&gpipelineDesc, IID_PPV_ARGS(&pipelinestate));
-     assert(SUCCEEDED(dx->result));
+     pipleline.CreateGraphicsPipelineState(dx);
+
 #pragma endregion パイプラインステートの生成
      //-----------------------------
 
@@ -602,8 +554,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion シザー矩形の設定コマンド
         //------------------
 
-        dx->commandList->SetPipelineState(pipelinestate.Get());
-        dx->commandList->SetGraphicsRootSignature(rootsignature.Get());
+        dx->commandList->SetPipelineState(pipleline.pipelinestate.Get());
+        dx->commandList->SetGraphicsRootSignature(rootsignature.rootsignature.Get());
         
 
         //プリミティブ形状の設定コマンド（三角形リスト）--------------------------

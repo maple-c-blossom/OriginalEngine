@@ -79,6 +79,12 @@
     <Filter Include="ヘッダー ファイル\Vertices&amp;Index">
       <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Pipeline">
+      <UniqueIdentifier>{eb244fb2-87d3-41d2-a45a-1b6b6af2345d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Pipeline">
+      <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -151,7 +157,13 @@
       <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
     </ClCompile>
     <ClCompile Include="Pipeline.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="TexSample.cpp">
+      <Filter>ソース ファイル\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="RootSignature.cpp">
+      <Filter>ソース ファイル\Pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,7 +242,13 @@
       <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
     </ClInclude>
     <ClInclude Include="Pipeline.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="TexSample.h">
+      <Filter>ヘッダー ファイル\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="RootSignature.h">
+      <Filter>ヘッダー ファイル\Pipeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
