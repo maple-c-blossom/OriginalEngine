@@ -10,9 +10,7 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
-#include <fstream>
-#include <sstream>
-#include <string>
+
 #include <vector>
 #include "ObjVertex.h"
 
@@ -21,15 +19,6 @@ namespace MCB
     class Object3d
     {
     public:
-
-        //頂点データ構造体-------------------------------------
-        typedef struct ObjectVertex
-        {
-            DirectX::XMFLOAT3 pos;//xyz座標
-            DirectX::XMFLOAT3 normal;//法線ベクトル
-            DirectX::XMFLOAT2 uv;//uv座標
-        };
-        //--------------------------------------
 
 
         //定数バッファ用構造体(行列)------------------------
@@ -57,7 +46,7 @@ namespace MCB
         Vector3D nowFrontVec = {};
         float frontAngle = 0;
 
-        ObjectVertex* vertex = new ObjectVertex;
+        ObjVertex vertex;
 
 
         Object3d();
@@ -73,9 +62,9 @@ namespace MCB
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
-        void Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView,D3D12_INDEX_BUFFER_VIEW& ibView,UINT numIndices);
+        void Draw(Dx12 dx12);
 
-        void CreateModel(const char* fileName);
+        //void CreateModel(const char* fileName);
     };
 
 }

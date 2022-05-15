@@ -107,33 +107,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
 
-     const size_t objectNum = 50;
-     Object3d object3D[objectNum];
-     for (int i = 0; i < objectNum; i++)
-     {
-         object3D[i].Init(*dx);
-         if (i > 0)
-         {
-             object3D[i].parent = &object3D[i - 1];
+     //const size_t objectNum = 50;
+     //Object3d object3D[objectNum];
+     //for (int i = 0; i < objectNum; i++)
+     //{
+     //    object3D[i].Init(*dx);
+     //    if (i > 0)
+     //    {
+     //        object3D[i].parent = &object3D[i - 1];
 
-             object3D[i].scale = { 0.9f,0.9f,0.9f };
+     //        object3D[i].scale = { 0.9f,0.9f,0.9f };
 
-             object3D[i].rotasion = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
+     //        object3D[i].rotasion = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
 
-             object3D[i].position = { 0.0f,0.0f,-3.0f };
-         }
-     }
+     //        object3D[i].position = { 0.0f,0.0f,-3.0f };
+     //    }
+     //}
 
-     Object3d Rales[objectNum * 2];
-     for (int i = 0; i < objectNum * 2; i++)
-     {
-         Rales[i].Init(*dx);
-         Rales[i].position.y = -25.0f;
-         if (i > 0)
-         {
-             Rales[i].position.z = Rales[i - 1].position.z + 20;
-         }
-     }
+     //Object3d Rales[objectNum * 2];
+     //for (int i = 0; i < objectNum * 2; i++)
+     //{
+     //    Rales[i].Init(*dx);
+     //    Rales[i].position.y = -25.0f;
+     //    if (i > 0)
+     //    {
+     //        Rales[i].position.z = Rales[i - 1].position.z + 20;
+     //    }
+     //}
+
+    Object3d triangle;
+    triangle.Init(*dx);
+    triangle.vertex.CreateModel("Resources\\triangle.obj");
 
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
@@ -221,68 +225,70 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //頂点データ---------------------------------
 #pragma region 頂点データ
    
-     Vertex* vertex = new Vertex;
+     //Vertex* vertex = new Vertex;
 
 #pragma endregion 頂点データ
      //--------------------------
     
      //インデックスバッファの設定-------------------------
 #pragma region インデックスの設定
-    
-     objMaterial.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, vertex->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+     triangle.vertex.SetSizeIB();
+
+     objMaterial.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle.vertex.sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 
 #pragma endregion インデックスの設定
      //------------------------
 
 #pragma region インデックスバッファ生成
 
-     vertex->CreateIndexBuffer(*dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE,objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     triangle.vertex.CreateIndexBuffer(*dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE,objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 #pragma endregion インデックスバッファ生成
 
      //インデックスバッファへのデータ転送------------------------------
 #pragma region インデックスバッファへのデータ転送
 
-     dx->result = vertex->IndexMaping();
+     dx->result = triangle.vertex.IndexMaping();
 
 #pragma endregion インデックスバッファへのデータ転送
     //-------------------------------------
 
      //インデックスバッファビューの作成-----------------------------------
 #pragma region インデックスバッファビューの作成
-     vertex->SetIbView(DXGI_FORMAT_R16_UINT);
+     triangle.vertex.SetIbView(DXGI_FORMAT_R16_UINT);
 #pragma endregion インデックスバッファビューの作成
      //------------------------------------------
 
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
-     objMaterial.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, vertex->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+     triangle.vertex.SetSizeVB();
+     objMaterial.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle.vertex.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
      // 頂点バッファの生成----------------------------
 #pragma region 頂点バッファの生成
 
-     vertex->CreateVertexBuffer(*dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE, objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     triangle.vertex.CreateVertexBuffer(*dx, objMaterial.HeapProp, D3D12_HEAP_FLAG_NONE, objMaterial.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 #pragma endregion 頂点バッファの生成
      //-------------------------
 
      //法線ベクトル計算---------------------------
 #pragma region 法線ベクトル計算
-     vertex->CalculationNormalVec();
+     //triangle.vertex.CalculationNormalVec();
 #pragma endregion 法線ベクトルを計算
      //-------------------------
 
      // 頂点バッファへのデータ転送------------
 #pragma region 頂点バッファへのデータ転送
-     vertex->VertexMaping();
+     triangle.vertex.VertexMaping();
 #pragma endregion 頂点バッファへのデータ転送
      //--------------------------------------
 
      // 頂点バッファビューの作成--------------------------
 #pragma region 頂点バッファビューの作成
-     vertex->SetVbView();
+     triangle.vertex.SetVbView();
 #pragma endregion 頂点バッファビューの作成
      //-----------------------------------
 
@@ -472,15 +478,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        for (int i = 0; i < _countof(object3D); i++)
-        {
-            object3D[i].Updata(matView, matProjection,true);
-        }
+        //for (int i = 0; i < _countof(object3D); i++)
+        //{
+        //    object3D[i].Updata(matView, matProjection,true);
+        //}
 
-        for (int i = 0; i < _countof(Rales); i++)
-        {
-            Rales[i].Updata(matView, matProjection);
-        }
+        //for (int i = 0; i < _countof(Rales); i++)
+        //{
+        //    Rales[i].Updata(matView, matProjection);
+        //}
+
+        triangle.Updata(matView, matProjection, true);
 
 #pragma endregion 更新処理
 
@@ -574,15 +582,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        for (int i = 0; i < _countof(object3D); i++)
-        {
-            object3D[i].Draw(*dx, vertex->vbView, vertex->ibView, _countof(vertex->boxIndices));
-        }
+        //for (int i = 0; i < _countof(object3D); i++)
+        //{
+        //    object3D[i].Draw(*dx);
+        //}
 
-        for (int i = 0; i < _countof(Rales); i++)
-        {
-            Rales[i].Draw(*dx,  vertex->vbView, vertex->ibView, _countof(vertex->boxIndices));
-        }
+        //for (int i = 0; i < _countof(Rales); i++)
+        //{
+        //    Rales[i].Draw(*dx);
+        //}
+
+        triangle.Draw(*dx);
 
 #pragma endregion 描画コマンド
         //----------------------
@@ -648,6 +658,5 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete textureFile;
     delete mipmap;
     delete imageData;
-    delete vertex;
 	return 0;
 }

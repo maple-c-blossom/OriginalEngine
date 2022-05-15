@@ -10,6 +10,7 @@
 #include "View.h"
 #include "Vertex.h"
 
+
 namespace MCB
 {
 	class ObjectMaterial
@@ -18,7 +19,7 @@ namespace MCB
 		//定数バッファ用構造体(マテリアル)-----------------------------------
 		typedef struct ConstBufferDataMaterial
 		{
-			DirectX::XMFLOAT4 color;
+			DirectX::XMFLOAT4 color = {0,0,0,1};
 		};
 		//------------------------------------------
 		D3D12_HEAP_PROPERTIES HeapProp{};

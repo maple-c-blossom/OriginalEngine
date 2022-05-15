@@ -10,7 +10,7 @@ MCB::Object3d::Object3d()
 
 MCB::Object3d::~Object3d()
 {
-    delete vertex;
+    //delete vertex;
 }
 
 void Object3d::Init(Dx12& dx12)
@@ -71,49 +71,16 @@ void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Object3d::Draw(Dx12 dx12, D3D12_VERTEX_BUFFER_VIEW& vbView, D3D12_INDEX_BUFFER_VIEW& ibView, UINT numIndices)
+void Object3d::Draw(Dx12 dx12)
 {
     //頂点データ
-    dx12.commandList->IASetVertexBuffers(0, 1, &vbView);
+    dx12.commandList->IASetVertexBuffers(0, 1, &vertex.vbView);
     //インデックスデータ
-    dx12.commandList->IASetIndexBuffer(&ibView);
+    dx12.commandList->IASetIndexBuffer(&vertex.ibView);
     //定数バッファビュー(CBV)の設定コマンド
     dx12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawIndexedInstanced(numIndices, 1, 0, 0, 0);
+    dx12.commandList->DrawIndexedInstanced((unsigned int) vertex.indices.size(), 1, 0, 0, 0);
 
 }
 
-void MCB::Object3d::CreateModel(const char* fileName)
-{
-    std::ifstream file;
-
-    std::vector<Float3> position;//頂点座標
-    std::vector<Float3> normals;//法線ベクトル
-    std::vector<Float3> texcoords;//テクスチャUV
-
-    
-    
-
-    file.open(fileName);
-    if (file.fail())
-    {
-        assert(0);
-    }
-
-
-    string line;
-    while (getline(file, line))
-    {
-        std::istringstream line_stream(line);
-
-        string key;
-        getline(line_stream, key, ' ');
-
-
-
-    }
-
-    file.close();
-
-}
