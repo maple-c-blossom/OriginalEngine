@@ -138,7 +138,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Object3d triangle;
     triangle.Init(*dx);
     triangle.vertex.CreateModel("Resources\\triangle.obj");
-
+    triangle.scale = { 20,20,20 };
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
 
@@ -609,7 +609,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         // 命令のクローズ-----------------------------------
         dx->result = dx->commandList->Close();
-        assert(SUCCEEDED(dx->result));
+        assert(SUCCEEDED(dx->result) && "命令クローズ段階でのエラー");
         //------------
         
 
@@ -620,7 +620,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         // バッファをフリップ（裏表の入替え)-----------------------
        dx->result =  dx->swapchain->Present(1, 0);
-       assert(SUCCEEDED(dx->result));
+       assert(SUCCEEDED(dx->result) && "バッファフリップ段階でのエラー");
         //-----------------
 
 #pragma region コマンド実行完了待ち
@@ -637,11 +637,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         //キューをクリア
         dx->result = dx->commandAllocator->Reset(); // キューをクリア
-        assert(SUCCEEDED(dx->result));
+        assert(SUCCEEDED(dx->result) && "キュークリア段階でのエラー");
 
         //再びコマンドリストをためる準備
         dx->result = dx->commandList->Reset(dx->commandAllocator.Get(), nullptr);  // 再びコマンドリストを貯める準備
-        assert(SUCCEEDED(dx->result));
+        assert(SUCCEEDED(dx->result) && "コマンドリスト再貯蓄準備段階でのエラー");
 
 #pragma endregion コマンドリスト実行
 //------------------

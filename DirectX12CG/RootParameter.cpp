@@ -1,5 +1,10 @@
 #include "RootParameter.h"
 
+MCB::RootParameter::~RootParameter()
+{
+    rootparams.clear();
+}
+
 void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, Descriptor &descriptor,int NumDescriptorRanges)
 {
     D3D12_ROOT_PARAMETER rootparam{};

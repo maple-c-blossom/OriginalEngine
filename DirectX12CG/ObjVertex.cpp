@@ -87,7 +87,7 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
     file.open(fileName);
     if (file.fail())
     {
-        assert(0);
+        assert(0 && "FileNotFound");
     }
 
 
@@ -117,7 +117,7 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
         {
 
             string index_string;
-            while (getline(line_stream, index_string, ' '));
+            while (getline(line_stream, index_string, ' '))
             {
                 istringstream index_stream(index_string);
                 unsigned short indexPosition;
@@ -132,6 +132,9 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
 
     file.close();
 
+    positions.clear();
+    normals.clear();
+    texcoords.clear();
 }
 
 void MCB::ObjVertex::SetSizeIB()
