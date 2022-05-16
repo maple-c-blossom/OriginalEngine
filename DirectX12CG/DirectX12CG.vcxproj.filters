@@ -85,6 +85,9 @@
     <Filter Include="ヘッダー ファイル\Pipeline">
       <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\ShaderHeader">
+      <UniqueIdentifier>{221cc362-ce73-4b12-b724-3af9f026f791}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -173,6 +176,12 @@
     <FxCompile Include="BasicPS.hlsl">
       <Filter>リソース ファイル\PixelShader</Filter>
     </FxCompile>
+    <FxCompile Include="OBJPixelShader.hlsl">
+      <Filter>リソース ファイル\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="OBJVertexShader.hlsl">
+      <Filter>リソース ファイル\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxWindow.h">
@@ -253,7 +262,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Basic.hlsli">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ShaderHeader</Filter>
+    </None>
+    <None Include="OBJHeader.hlsli">
+      <Filter>リソース ファイル\ShaderHeader</Filter>
     </None>
   </ItemGroup>
 </Project>

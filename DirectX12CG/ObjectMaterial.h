@@ -23,6 +23,16 @@ namespace MCB
 		};
 		//------------------------------------------
 
+		typedef struct ConstBufferDataMaterialB1
+		{
+			Float3 ambient;
+			float pad1;
+			Float3 diffuse;
+			float pad2;
+			Float3 specular;
+			float alpha;
+		};
+
 
 		typedef struct Material
 		{
@@ -48,6 +58,7 @@ namespace MCB
 		D3D12_HEAP_PROPERTIES HeapProp{};
 		D3D12_RESOURCE_DESC Resdesc{};
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1 = nullptr;
 		ConstBufferDataMaterial* constMapMaterial = nullptr;
 
 		~ObjectMaterial();
