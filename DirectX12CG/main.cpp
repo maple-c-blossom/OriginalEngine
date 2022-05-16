@@ -106,35 +106,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
-
-     //const size_t objectNum = 50;
-     //Object3d object3D[objectNum];
-     //for (int i = 0; i < objectNum; i++)
-     //{
-     //    object3D[i].Init(*dx);
-     //    if (i > 0)
-     //    {
-     //        object3D[i].parent = &object3D[i - 1];
-
-     //        object3D[i].scale = { 0.9f,0.9f,0.9f };
-
-     //        object3D[i].rotasion = { 0.0f,0.0f,XMConvertToRadians(30.0f) };
-
-     //        object3D[i].position = { 0.0f,0.0f,-3.0f };
-     //    }
-     //}
-
-     //Object3d Rales[objectNum * 2];
-     //for (int i = 0; i < objectNum * 2; i++)
-     //{
-     //    Rales[i].Init(*dx);
-     //    Rales[i].position.y = -25.0f;
-     //    if (i > 0)
-     //    {
-     //        Rales[i].position.z = Rales[i - 1].position.z + 20;
-     //    }
-     //}
-
     Object3d triangle;
     triangle.Init(*dx);
     triangle.vertex.CreateModel("Resources\\triangle.obj");
@@ -225,8 +196,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //頂点データ---------------------------------
 #pragma region 頂点データ
    
-     //Vertex* vertex = new Vertex;
-
 #pragma endregion 頂点データ
      //--------------------------
     
