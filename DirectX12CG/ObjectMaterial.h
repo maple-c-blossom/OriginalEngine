@@ -9,7 +9,7 @@
 #include "Dx12.h"
 #include "View.h"
 #include "Vertex.h"
-
+#include "Float.h"
 
 namespace MCB
 {
@@ -22,10 +22,35 @@ namespace MCB
 			DirectX::XMFLOAT4 color = {0,0,0,1};
 		};
 		//------------------------------------------
+
+
+		typedef struct Material
+		{
+			std::string name;
+			Float3 ambient;
+			Float3 diffuse;
+			Float3 specular;
+			float alpha;
+			std::string textureFileName;
+
+			Material()
+			{
+				ambient = { 0.3f,0.3f,0.3f };
+				diffuse = { 0.0f,0.0f,0.0f };
+				specular = { 0.0f,0.0f,0.0f };
+				alpha = 1.0f;
+			}
+		};
+
+
+
+		static Material material;
 		D3D12_HEAP_PROPERTIES HeapProp{};
 		D3D12_RESOURCE_DESC Resdesc{};
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
 		ConstBufferDataMaterial* constMapMaterial = nullptr;
+
+		~ObjectMaterial();
 
 		void Init(Dx12 dx12);
 

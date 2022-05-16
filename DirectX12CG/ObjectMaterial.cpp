@@ -3,6 +3,11 @@
 using namespace MCB;
 using namespace DirectX;
 
+MCB::ObjectMaterial::~ObjectMaterial()
+{
+    constBuffMaterial->Unmap(0, nullptr);
+}
+
 void ObjectMaterial::Init(Dx12 dx12)
 {
     

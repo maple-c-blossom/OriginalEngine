@@ -1,3 +1,7 @@
+#define _CRTDBG_MAP_ALLOC 
+#include <cstdlib>
+#include <crtdbg.h>
+
 #pragma region 標準.h include
 
 #include <d3dcompiler.h>
@@ -60,12 +64,13 @@ using namespace MCB;
 
 #pragma endregion using namespace
 
-
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
 	_In_ int nCmdShow) 
 {  
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+    //int* hoge = new int(4);
     DxWindow* dxWindow = new DxWindow;
 
 #pragma region DirectX初期化
@@ -627,5 +632,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete textureFile;
     delete mipmap;
     delete imageData;
+
+    _CrtDumpMemoryLeaks();
 	return 0;
 }

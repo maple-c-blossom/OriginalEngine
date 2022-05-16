@@ -79,7 +79,7 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
 
     std::vector<Float3> positions;//頂点座標
     std::vector<Float3> normals;//法線ベクトル
-    std::vector<Float3> texcoords;//テクスチャUV
+    std::vector<Float2> texcoords;//テクスチャUV
 
 
 
@@ -107,10 +107,31 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
             line_stream >> position.z;
             //座標データに追加
             positions.emplace_back(position);
-            //頂点データに追加
-            ObjectVertex vertex{};
-            vertex.pos = position;
-            vertices.emplace_back(vertex);
+            ////頂点データに追加
+            //ObjectVertex vertex{};
+            //vertex.pos = position;
+            //vertices.emplace_back(vertex);
+        }
+
+        if (key == "vt")
+        {
+            Float2 texcoord{};
+            line_stream >> texcoord.x;
+            line_stream >> texcoord.y;
+
+            texcoord.y = 1.0f - texcoord.y;
+
+            texcoords.emplace_back(texcoord);
+        }
+
+        if (key == "vn")
+        {
+            Float3 normal{};
+            line_stream >> normal.x;
+            line_stream >> normal.y;
+            line_stream >> normal.z;
+
+            normals.emplace_back(normal);
         }
 
         if (key == "f")
@@ -120,10 +141,22 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
             while (getline(line_stream, index_string, ' '))
             {
                 istringstream index_stream(index_string);
-                unsigned short indexPosition;
+                unsigned short indexPosition,indexTexcoord, indexNormal;
                 index_stream >> indexPosition;
+                index_stream.seekg(1, ios_base::cur);
+                index_stream >> indexTexcoord;
+                index_stream.seekg(1, ios_base::cur);
+                index_stream >> indexNormal;
 
-                indices.emplace_back(indexPosition - 1);
+
+                ObjectVertex vertex{};
+                vertex.pos = positions[indexPosition - 1];
+                vertex.normal = normals[indexNormal - 1];
+                vertex.uv = texcoords[indexTexcoord - 1];
+
+                vertices.emplace_back(vertex);
+                indices.emplace_back((unsigned short)indices.size());
+
             }
 
         }

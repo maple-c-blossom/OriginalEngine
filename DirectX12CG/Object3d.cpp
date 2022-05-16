@@ -11,6 +11,7 @@ MCB::Object3d::Object3d()
 MCB::Object3d::~Object3d()
 {
     //delete vertex;
+    constBuffTranceform->Unmap(0, nullptr);
 }
 
 void Object3d::Init(Dx12& dx12)
