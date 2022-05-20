@@ -5,7 +5,7 @@ using namespace DirectX;
 
 MCB::ObjectMaterial::~ObjectMaterial()
 {
-    constBuffMaterial->Unmap(0, nullptr);
+    constBuffMaterialB1->Unmap(0, nullptr);
 }
 
 void ObjectMaterial::Init(Dx12 dx12)
@@ -15,7 +15,7 @@ void ObjectMaterial::Init(Dx12 dx12)
 
  
     Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    Resdesc.Width = (sizeof(ConstBufferDataMaterial) + 0xff) & ~0xff;
+    Resdesc.Width = (sizeof(ConstBufferDataMaterialB1) + 0xff) & ~0xff;
     Resdesc.Height = 1;
     Resdesc.DepthOrArraySize = 1;
     Resdesc.MipLevels = 1;
@@ -29,15 +29,20 @@ void ObjectMaterial::Init(Dx12 dx12)
         &Resdesc,//ƒŠƒ\[ƒXÝ’è
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&constBuffMaterial)
+        IID_PPV_ARGS(&constBuffMaterialB1)
     );
     assert(SUCCEEDED(dx12.result));
 
-    dx12.result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
+    dx12.result = constBuffMaterialB1->Map(0, nullptr, (void**)&constMapMaterial);
 
     assert(SUCCEEDED(dx12.result));
 
-    constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
+    constMapMaterial->ambient = material.ambient;
+    constMapMaterial->diffuse = material.diffuse;
+    constMapMaterial->specular = material.specular;
+    constMapMaterial->alpha = material.alpha;
+
+    //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
 
 void MCB::ObjectMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layput)

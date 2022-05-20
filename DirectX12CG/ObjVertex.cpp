@@ -164,7 +164,6 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
     }
 
     file.close();
-
     positions.clear();
     normals.clear();
     texcoords.clear();

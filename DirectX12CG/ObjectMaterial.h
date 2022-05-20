@@ -19,12 +19,13 @@ namespace MCB
 		//定数バッファ用構造体(マテリアル)-----------------------------------
 		typedef struct ConstBufferDataMaterial
 		{
-			DirectX::XMFLOAT4 color = {0,0,0,1};
+			DirectX::XMFLOAT4 color = { 0,0,0,1 };
 		};
 		//------------------------------------------
 
 		typedef struct ConstBufferDataMaterialB1
 		{
+
 			Float3 ambient;
 			float pad1;
 			Float3 diffuse;
@@ -59,7 +60,7 @@ namespace MCB
 		D3D12_RESOURCE_DESC Resdesc{};
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1 = nullptr;
-		ConstBufferDataMaterial* constMapMaterial = nullptr;
+		ConstBufferDataMaterialB1* constMapMaterial = nullptr;
 
 		~ObjectMaterial();
 
