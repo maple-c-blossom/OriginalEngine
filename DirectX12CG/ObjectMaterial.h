@@ -55,7 +55,7 @@ namespace MCB
 
 
 
-		static Material material;
+		Material material;
 		D3D12_HEAP_PROPERTIES HeapProp{};
 		D3D12_RESOURCE_DESC Resdesc{};
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;

@@ -545,7 +545,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         
         //定数バッファビュー(CBV)の設定コマンド
-        dx->commandList->SetGraphicsRootConstantBufferView(0, objMaterial.constBuffMaterial->GetGPUVirtualAddress());
+        dx->commandList->SetGraphicsRootConstantBufferView(0, objMaterial.constBuffMaterialB1->GetGPUVirtualAddress());
 
         //SRVヒープの設定コマンド
         dx->commandList->SetDescriptorHeaps(1, descriptor.srvHeap.GetAddressOf());
