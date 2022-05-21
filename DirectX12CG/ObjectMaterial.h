@@ -9,19 +9,19 @@
 #include "Dx12.h"
 #include "View.h"
 #include "Vertex.h"
-#include "Float.h"
+#include "MCBFloat.h"
 
 namespace MCB
 {
 	class ObjectMaterial
 	{
 	public:
-		//定数バッファ用構造体(マテリアル)-----------------------------------
-		typedef struct ConstBufferDataMaterial
-		{
-			DirectX::XMFLOAT4 color = { 0,0,0,1 };
-		};
-		//------------------------------------------
+		////定数バッファ用構造体(マテリアル)-----------------------------------
+		//typedef struct ConstBufferDataMaterial
+		//{
+		//	DirectX::XMFLOAT4 color = { 0,0,0,1 };
+		//};
+		////------------------------------------------
 
 		typedef struct ConstBufferDataMaterialB1
 		{
@@ -58,7 +58,7 @@ namespace MCB
 		Material material;
 		D3D12_HEAP_PROPERTIES HeapProp{};
 		D3D12_RESOURCE_DESC Resdesc{};
-		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
+		//Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1 = nullptr;
 		ConstBufferDataMaterialB1* constMapMaterial = nullptr;
 

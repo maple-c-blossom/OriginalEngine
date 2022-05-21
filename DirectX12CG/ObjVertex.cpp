@@ -3,6 +3,10 @@
 
 using namespace std;
 
+MCB::ObjVertex::~ObjVertex()
+{
+}
+
 void MCB::ObjVertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     dx12.result = dx12.device->CreateCommittedResource(
@@ -73,7 +77,8 @@ HRESULT MCB::ObjVertex::VertexMaping()
     return result;
 }
 
-void MCB::ObjVertex::CreateModel(const char* fileName)
+
+void MCB::ObjVertex::CreateModel(const string fileName)
 {
     std::ifstream file;
 
@@ -84,10 +89,14 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
 
 
 
-    file.open(fileName);
+    //file.open(fileName);
+
+    const string FileName = fileName + ".obj";
+    const string directoryPath = "Resources\\" + fileName + "\\";
+    file.open(directoryPath + FileName);
     if (file.fail())
     {
-        assert(0 && "FileNotFound");
+        assert(0 && "ObjectFileNotFound");
     }
 
 
@@ -134,6 +143,13 @@ void MCB::ObjVertex::CreateModel(const char* fileName)
             normals.emplace_back(normal);
         }
 
+        if (key == "mtllib")
+        {
+            string filename;
+            line_stream >> filename;
+            LoadMaterial(directoryPath, filename);
+        }
+
         if (key == "f")
         {
 
@@ -174,7 +190,71 @@ void MCB::ObjVertex::SetSizeIB()
     sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
 }
 
+
+
 void MCB::ObjVertex::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
+}
+
+void MCB::ObjVertex::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+{
+    std::ifstream file;
+
+    file.open(directoryPath + filename);
+
+    if (file.fail())
+    {
+        assert(0 && "MaterialFileNotFound");
+    }
+
+    string line;
+    while (getline(file, line))
+    {
+        std::istringstream line_stream(line);
+
+        string key;
+        getline(line_stream, key, ' ');
+
+        if (key[0] == '\t')
+        {
+            key.erase(key.begin());
+        }
+
+        if (key == "newmtl")
+        {
+            line_stream >> material.material.name;
+        }
+
+        if (key == "Ka")
+        {
+            line_stream >> material.material.ambient.x;
+            line_stream >> material.material.ambient.y;
+            line_stream >> material.material.ambient.z;
+        }
+
+        if (key == "Kd")
+        {
+            line_stream >> material.material.diffuse.x;
+            line_stream >> material.material.diffuse.y;
+            line_stream >> material.material.diffuse.z;
+        }
+
+        if (key == "Ks")
+        {
+            line_stream >> material.material.specular.x;
+            line_stream >> material.material.specular.y;
+            line_stream >> material.material.specular.z;
+        }
+
+        if (key == "map_Kd")
+        {
+            line_stream >> material.material.textureFileName;
+
+            texture.LoadTexture(directoryPath, material.material.textureFileName);
+        }
+
+    }
+    file.close();
+
 }

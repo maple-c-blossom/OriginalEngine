@@ -46,10 +46,10 @@ namespace MCB
         Vector3D nowFrontVec = {};
         float frontAngle = 0;
 
-        ObjVertex vertex;
+        ObjVertex model;
 
 
-        Object3d();
+        Object3d(Dx12& dx12);
 
         ~Object3d();
 

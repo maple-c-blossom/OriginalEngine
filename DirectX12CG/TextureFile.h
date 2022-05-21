@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXTex.h>
+#include <string>
 namespace MCB
 {
 	class TextureFile
@@ -9,6 +10,7 @@ namespace MCB
 		DirectX::ScratchImage scratchImg{};
 
 		HRESULT LoadTexture(const wchar_t *FileName,DirectX::WIC_FLAGS flag);
+		HRESULT LoadTexture(const std::string& directoryPath, const std::string& filename);
 	};
 
 

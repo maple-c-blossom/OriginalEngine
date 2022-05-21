@@ -150,7 +150,7 @@
     <ClCompile Include="Vector3D.cpp">
       <Filter>ソース ファイル\Math\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="Float.cpp">
+    <ClCompile Include="MCBFloat.cpp">
       <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
     <ClCompile Include="ObjVertex.cpp">
@@ -241,7 +241,7 @@
     <ClInclude Include="Vector3D.h">
       <Filter>ヘッダー ファイル\Math\Vector</Filter>
     </ClInclude>
-    <ClInclude Include="Float.h">
+    <ClInclude Include="MCBFloat.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
     <ClInclude Include="ObjVertex.h">

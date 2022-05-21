@@ -9,7 +9,9 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "Float.h"
+#include "MCBFloat.h"
+#include "TextureFile.h"
+
 namespace MCB
 {
     //頂点データ構造体-------------------------------------
@@ -24,6 +26,8 @@ namespace MCB
     {
     public:
 
+        ~ObjVertex();
+
         Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 
         Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
@@ -32,6 +36,8 @@ namespace MCB
 
         ObjectVertex* vertMap = nullptr;
 
+
+        TextureFile texture;
 
         std::vector<ObjectVertex> vertices;
         std::vector<unsigned short> indices;
@@ -43,9 +49,11 @@ namespace MCB
 
         D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-        D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+        //D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
 
-        D3D12_RESOURCE_DESC resdesc{};  // リソース設定
+        //D3D12_RESOURCE_DESC resdesc{};  // リソース設定
+
+        ObjectMaterial material;
 
         void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
 
@@ -59,11 +67,15 @@ namespace MCB
 
         HRESULT VertexMaping();
 
-        void CreateModel(const char* fileName);
+        void CreateModel(const std::string fileName);
 
         void SetSizeIB();
 
         void SetSizeVB();
+
+        void LoadMaterial( const std::string& directoryPath,const std::string& filename);
+
+
     };
 
 }

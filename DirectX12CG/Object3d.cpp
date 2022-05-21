@@ -2,10 +2,11 @@
 
 using namespace MCB;
 using namespace std;
-MCB::Object3d::Object3d()
+MCB::Object3d::Object3d(Dx12& dx12)
 {
     NORM_FRONT_VEC.vec = { 0,0,1 };
     nowFrontVec = NORM_FRONT_VEC;
+    model.material.Init(dx12);
 }
 
 MCB::Object3d::~Object3d()
@@ -75,13 +76,13 @@ void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
 void Object3d::Draw(Dx12 dx12)
 {
     //頂点データ
-    dx12.commandList->IASetVertexBuffers(0, 1, &vertex.vbView);
+    dx12.commandList->IASetVertexBuffers(0, 1, &model.vbView);
     //インデックスデータ
-    dx12.commandList->IASetIndexBuffer(&vertex.ibView);
+    dx12.commandList->IASetIndexBuffer(&model.ibView);
     //定数バッファビュー(CBV)の設定コマンド
     dx12.commandList->SetGraphicsRootConstantBufferView(2, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawIndexedInstanced((unsigned int) vertex.indices.size(), 1, 0, 0, 0);
+    dx12.commandList->DrawIndexedInstanced((unsigned int) model.indices.size(), 1, 0, 0, 0);
 
 }
 

@@ -23,7 +23,7 @@
     <ClCompile Include="Descriptor.cpp" />
     <ClCompile Include="Dx12.cpp" />
     <ClCompile Include="DxWindow.cpp" />
-    <ClCompile Include="Float.cpp" />
+    <ClCompile Include="MCBFloat.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MCBMatrix.cpp" />
@@ -93,7 +93,7 @@
     <ClInclude Include="Descriptor.h" />
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
-    <ClInclude Include="Float.h" />
+    <ClInclude Include="MCBFloat.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MCBMatrix.h" />
     <ClInclude Include="MipMap.h" />
