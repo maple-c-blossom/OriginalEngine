@@ -8,6 +8,94 @@ void MCB::MCBMatrix::MCBMatrixIdentity()
 	_41 = 0.0f; _42 = 0.0f; _43 = 0.0f; _44 = 1.0f;
 }
 
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(float x, float y, float z)
+{
+	MCBMatrix temp;
+	temp.MCBMatrixIdentity();
+
+	temp._41 = x;
+	temp._42 = y;
+	temp._43 = z;
+	temp._44 = 1;
+
+	return temp;
+}
+
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(float x, float y, float z)
+{
+
+	MCBMatrix temp;
+	temp.MCBMatrixIdentity();
+
+	temp._11 = x;
+	temp._22 = y;
+	temp._33 = z;
+	temp._44 = 1;
+
+	return temp;
+	return MCBMatrix();
+}
+
+void MCB::MCBMatrix::ConvertMatrixArray(float** ArrayMat)
+{
+	ArrayMat[0][0] = _11, ArrayMat[0][1] = _12, ArrayMat[0][2] = _13, ArrayMat[0][3] = _14;
+	ArrayMat[1][0] = _21, ArrayMat[1][1] = _22, ArrayMat[1][2] = _23, ArrayMat[1][3] = _24;
+	ArrayMat[2][0] = _31, ArrayMat[2][1] = _32, ArrayMat[2][2] = _33, ArrayMat[2][3] = _34;
+	ArrayMat[3][0] = _41, ArrayMat[3][1] = _42, ArrayMat[3][2] = _43, ArrayMat[3][3] = _44;
+}
+
+void MCB::MCBMatrix::ConvertMatrixMCBMat(float** ArrayMat)
+{
+	_11 = ArrayMat[0][0], _12 = ArrayMat[0][1], _13 = ArrayMat[0][2], _14 = ArrayMat[0][3];
+	_21 = ArrayMat[1][0], _22 = ArrayMat[1][1], _23 = ArrayMat[1][2], _24 = ArrayMat[1][3];
+	_31 = ArrayMat[2][0], _32 = ArrayMat[2][1], _33 = ArrayMat[2][2], _34 = ArrayMat[2][3];
+	_41 = ArrayMat[3][0], _42 = ArrayMat[3][1], _43 = ArrayMat[3][2], _44 = ArrayMat[3][3];
+}
+
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX(float angle)
+{
+	MCBMatrix matrix;
+
+	matrix.MCBMatrixIdentity();
+
+	matrix._22 = cosf(angle);
+	matrix._23 = sinf(angle);
+
+	matrix._32 = -sinf(angle);
+	matrix._33 = cosf(angle);
+
+	return matrix;
+}
+
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(float angle)
+{
+	MCBMatrix matrix;
+
+	matrix.MCBMatrixIdentity();
+	matrix,_11 = cosf(angle);
+	matrix._31 = -sin(angle);
+
+	matrix._13 = sinf(angle);
+	matrix._33 = cosf(angle);
+
+	return matrix;
+}
+
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(float angle)
+{
+	MCBMatrix matrix;
+	matrix.MCBMatrixIdentity();
+
+	matrix._11 = cos(angle);
+	matrix._12 = sin(angle);
+
+	matrix._21 = -sin(angle);
+	matrix._22 = cos(angle);
+
+	return matrix;
+}
+
+
 MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(double angle, DirectX::XMFLOAT3 vector)
 {
 	MCBMatrix matRot = ReturnMatrixIdentity();

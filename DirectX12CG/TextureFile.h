@@ -9,6 +9,8 @@ namespace MCB
 		DirectX::TexMetadata metadata{};
 		DirectX::ScratchImage scratchImg{};
 
+		~TextureFile();
+
 		HRESULT LoadTexture(const wchar_t *FileName,DirectX::WIC_FLAGS flag);
 		HRESULT LoadTexture(const std::string& directoryPath, const std::string& filename);
 	};

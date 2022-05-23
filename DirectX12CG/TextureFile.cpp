@@ -3,6 +3,11 @@
 using namespace DirectX;
 using namespace std;
 
+MCB::TextureFile::~TextureFile()
+{
+    scratchImg.Release();
+}
+
 HRESULT MCB::TextureFile::LoadTexture(const wchar_t *FileName, DirectX::WIC_FLAGS flag)
 {
 	return LoadFromWICFile(FileName, flag, &metadata, scratchImg);

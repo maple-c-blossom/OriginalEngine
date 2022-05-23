@@ -13,6 +13,7 @@ MCB::Object3d::~Object3d()
 {
     //delete vertex;
     constBuffTranceform->Unmap(0, nullptr);
+    model.texture.scratchImg.Release();
 }
 
 void Object3d::Init(Dx12& dx12)

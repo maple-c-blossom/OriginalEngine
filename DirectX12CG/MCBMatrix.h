@@ -15,6 +15,20 @@ namespace MCB
 	public:
 		void MCBMatrixIdentity();
 
+		MCBMatrix MCBMatrixTransrate(float x, float y, float z);
+
+		MCBMatrix MCBMatrixScaling(float x, float y, float z);
+
+		void ConvertMatrixArray(float** ArrayMat);
+
+		void ConvertMatrixMCBMat(float** ArrayMat);
+
+		MCBMatrix MCBMatrixRotaX(float angle);
+
+		MCBMatrix MCBMatrixRotaY(float angle);
+
+		MCBMatrix MCBMatrixRotaZ(float angle);
+
 		MCBMatrix MCBMatrixRota(double angle,DirectX::XMFLOAT3 vector);
 
 		MCBMatrix ReturnMatrixIdentity();
