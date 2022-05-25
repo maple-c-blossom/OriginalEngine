@@ -1,13 +1,13 @@
-#include "ObjVertex.h"
+#include "Model.h"
 #
 
 using namespace std;
 
-MCB::ObjVertex::~ObjVertex()
+MCB::Model::~Model()
 {
 }
 
-void MCB::ObjVertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     dx12.result = dx12.device->CreateCommittedResource(
         &HeapProp, // ヒープ設定
@@ -19,14 +19,14 @@ void MCB::ObjVertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES&
     assert(SUCCEEDED(dx12.result));
 }
 
-void MCB::ObjVertex::SetIbView(DXGI_FORMAT format)
+void MCB::Model::SetIbView(DXGI_FORMAT format)
 {
     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
     ibView.Format = format;
     ibView.SizeInBytes = sizeIB;
 }
 
-void MCB::ObjVertex::CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     dx12.result = dx12.device->CreateCommittedResource(
         &HeapProp,
@@ -39,7 +39,7 @@ void MCB::ObjVertex::CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& 
 
 }
 
-HRESULT MCB::ObjVertex::IndexMaping()
+HRESULT MCB::Model::IndexMaping()
 {
     HRESULT result = S_OK;
     //GPU上のバッファに対応した仮想メモリを取得----------------------------
@@ -55,14 +55,14 @@ HRESULT MCB::ObjVertex::IndexMaping()
     return result;
 }
 
-void MCB::ObjVertex::SetVbView()
+void MCB::Model::SetVbView()
 {
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
     vbView.SizeInBytes = sizeVB;
     vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
-HRESULT MCB::ObjVertex::VertexMaping()
+HRESULT MCB::Model::VertexMaping()
 {
     HRESULT result = S_OK;
 
@@ -78,7 +78,7 @@ HRESULT MCB::ObjVertex::VertexMaping()
 }
 
 
-void MCB::ObjVertex::CreateModel(const string fileName)
+void MCB::Model::CreateModel(const string fileName)
 {
     std::ifstream file;
 
@@ -185,19 +185,19 @@ void MCB::ObjVertex::CreateModel(const string fileName)
     texcoords.clear();
 }
 
-void MCB::ObjVertex::SetSizeIB()
+void MCB::Model::SetSizeIB()
 {
     sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
 }
 
 
 
-void MCB::ObjVertex::SetSizeVB()
+void MCB::Model::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
 }
 
-void MCB::ObjVertex::LoadMaterial(const std::string& directoryPath, const std::string& filename)
+void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
     std::ifstream file;
 

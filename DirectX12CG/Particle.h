@@ -10,13 +10,13 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
-
+#include "Vertex.h"
 #include <vector>
-#include "Model.h"
+
 
 namespace MCB
 {
-    class Object3d
+    class Particle
     {
     public:
 
@@ -45,16 +45,15 @@ namespace MCB
         Vector3D NORM_FRONT_VEC = {};
         Vector3D nowFrontVec = {};
         float frontAngle = 0;
+        
+        Vertex vert;
 
-        Model* model = new Model;
+        Particle(Dx12& dx12);
 
-
-        Object3d(Dx12& dx12);
-
-        ~Object3d();
+        ~Particle();
 
         //親オブジェクトへのポインタ
-        Object3d* parent = nullptr;
+        Particle* parent = nullptr;
 
         bool trackingFlag = false;
 
@@ -68,4 +67,8 @@ namespace MCB
     };
 
 }
+
+
+
+
 

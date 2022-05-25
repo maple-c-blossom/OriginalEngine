@@ -34,12 +34,6 @@
     <Filter Include="ヘッダー ファイル\Object">
       <UniqueIdentifier>{a0aa570b-6a62-4bb5-bdea-446a023511d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\VertexShader">
-      <UniqueIdentifier>{de84811d-e66c-4849-a6ff-bca3be5f796f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\PixelShader">
-      <UniqueIdentifier>{060f4353-5dfb-44c4-b1e2-b96183f34f77}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Texture">
       <UniqueIdentifier>{fff0c284-4827-4ebc-afcb-873631b9bb46}</UniqueIdentifier>
     </Filter>
@@ -85,11 +79,41 @@
     <Filter Include="ヘッダー ファイル\Pipeline">
       <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\ShaderHeader">
+    <Filter Include="ソース ファイル\Particle">
+      <UniqueIdentifier>{f0becb41-c220-42f8-9e9c-fbdd59e50c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Particle">
+      <UniqueIdentifier>{0e2385a5-8404-4dcb-825c-7a39dfbde112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\BasicShader">
+      <UniqueIdentifier>{6c143c2c-1c7c-48b7-b975-2a3e196d6cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\BasicShader\PixelShader">
+      <UniqueIdentifier>{060f4353-5dfb-44c4-b1e2-b96183f34f77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\BasicShader\GeometoryShader">
+      <UniqueIdentifier>{eb50deca-a9aa-4027-b35c-5ce823a5136c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\BasicShader\VertexShader">
+      <UniqueIdentifier>{de84811d-e66c-4849-a6ff-bca3be5f796f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\BasicShader\ShaderHeader">
       <UniqueIdentifier>{221cc362-ce73-4b12-b724-3af9f026f791}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル\GeometoryShader">
-      <UniqueIdentifier>{eb50deca-a9aa-4027-b35c-5ce823a5136c}</UniqueIdentifier>
+    <Filter Include="リソース ファイル\ParticleShader">
+      <UniqueIdentifier>{e72dba48-f07e-4874-b269-9cef8007657c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\GeometoryShader">
+      <UniqueIdentifier>{daa2cbbf-1ac3-4c7d-85e8-b1629cb111ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\PixelShader">
+      <UniqueIdentifier>{469f5d74-e2d0-4c6b-aa92-95a8413b68a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\ShaderHeader">
+      <UniqueIdentifier>{b4b5eb7f-d159-499e-a0ec-e135aebbf67a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\VertexShader">
+      <UniqueIdentifier>{47a71b20-3487-4592-bf1c-9fbd3d7a5592}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +180,7 @@
     <ClCompile Include="MCBFloat.cpp">
       <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="ObjVertex.cpp">
+    <ClCompile Include="Model.cpp">
       <Filter>ソース ファイル\Vertices&amp;Index</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
@@ -174,16 +198,28 @@
     <ClCompile Include="Quaternion.cpp">
       <Filter>ソース ファイル\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>ソース ファイル\Particle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="OBJGeometryShader.hlsl">
-      <Filter>リソース ファイル\GeometoryShader</Filter>
+      <Filter>リソース ファイル\BasicShader\GeometoryShader</Filter>
     </FxCompile>
     <FxCompile Include="OBJPixelShader.hlsl">
-      <Filter>リソース ファイル\PixelShader</Filter>
+      <Filter>リソース ファイル\BasicShader\PixelShader</Filter>
     </FxCompile>
     <FxCompile Include="OBJVertexShader.hlsl">
-      <Filter>リソース ファイル\VertexShader</Filter>
+      <Filter>リソース ファイル\BasicShader\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleGeometryShader.hlsl">
+      <Filter>リソース ファイル\ParticleShader\GeometoryShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticlePixelShader.hlsl">
+      <Filter>リソース ファイル\ParticleShader\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="ParticleVertexShader.hlsl">
+      <Filter>リソース ファイル\ParticleShader\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,7 +283,7 @@
     <ClInclude Include="MCBFloat.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="ObjVertex.h">
+    <ClInclude Include="Model.h">
       <Filter>ヘッダー ファイル\Vertices&amp;Index</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
@@ -265,10 +301,16 @@
     <ClInclude Include="Quaternion.h">
       <Filter>ヘッダー ファイル\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>ヘッダー ファイル\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="OBJHeader.hlsli">
-      <Filter>リソース ファイル\ShaderHeader</Filter>
+      <Filter>リソース ファイル\BasicShader\ShaderHeader</Filter>
+    </None>
+    <None Include="ParticleHeader.hlsli">
+      <Filter>リソース ファイル\ParticleShader\ShaderHeader</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -22,11 +22,11 @@ namespace MCB
         Float2 uv;//uvç¿ïW
     };
     //--------------------------------------
-    class ObjVertex
+    class Model
     {
     public:
 
-        ~ObjVertex();
+        ~Model();
 
         Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 

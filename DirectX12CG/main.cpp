@@ -42,6 +42,7 @@
 #include "Pipeline.h"
 #include "TexSample.h"
 #include "RootSignature.h"
+#include "Particle.h"
 
 #pragma endregion 自作.h include
 
@@ -116,6 +117,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     triangle->Init(*dx);
     triangle->model->CreateModel("triangle");
     triangle->scale = { 20,20,20 };
+
+    //Particle particle(*dx);
+    //particle.Init(*dx);
+
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
 
@@ -392,7 +397,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion パイプラインステートの生成
      //-----------------------------
 
-     float clearColor[] = { 0.1f,0.25f, 0.5f,0.0f }; // 青っぽい色
+     float clearColor[] = { 0.0f,0.0f, 0.0f,0.0f }; // 青っぽい色
 
 #pragma endregion
 
