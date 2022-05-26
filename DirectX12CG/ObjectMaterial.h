@@ -8,7 +8,6 @@
 #include "WorldMatrix.h"
 #include "Dx12.h"
 #include "View.h"
-#include "Vertex.h"
 #include "MCBFloat.h"
 
 namespace MCB

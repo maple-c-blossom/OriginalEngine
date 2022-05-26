@@ -12,6 +12,7 @@ MCB::Particle::~Particle()
 {
     //delete vertex;
     constBuffTranceform->Unmap(0, nullptr);
+    //vert.material.constBuffMaterialB1->Unmap(0, nullptr);
 }
 
 void Particle::Init(Dx12& dx12)
@@ -81,7 +82,7 @@ void Particle::Draw(Dx12 dx12)
     //定数バッファビュー(CBV)の設定コマンド
     dx12.commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawIndexedInstanced(_countof(vert.vertices), 1, 0, 0, 0);
+    dx12.commandList->DrawInstanced(_countof(vert.vertices), 1, 0, 0);
 
 }
 

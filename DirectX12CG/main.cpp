@@ -118,8 +118,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     triangle->model->CreateModel("triangle");
     triangle->scale = { 20,20,20 };
 
-    //Particle particle(*dx);
-    //particle.Init(*dx);
+    Particle particle(*dx);
+    particle.vert.material.Init(*dx);
+    particle.Init(*dx);
 
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
@@ -209,48 +210,52 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
    
 #pragma endregion 頂点データ
      //--------------------------
+
     
      //インデックスバッファの設定-------------------------
 #pragma region インデックスの設定
-     triangle->model->SetSizeIB();
+   /*  triangle->model->SetSizeIB();
 
-     triangle->model->material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+     triangle->model->material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);*/
 
 #pragma endregion インデックスの設定
      //------------------------
 
 #pragma region インデックスバッファ生成
 
-     triangle->model->CreateIndexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     //triangle->model->CreateIndexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 #pragma endregion インデックスバッファ生成
 
      //インデックスバッファへのデータ転送------------------------------
 #pragma region インデックスバッファへのデータ転送
 
-     dx->result = triangle->model->IndexMaping();
+     //dx->result = triangle->model->IndexMaping();
 
 #pragma endregion インデックスバッファへのデータ転送
     //-------------------------------------
 
      //インデックスバッファビューの作成-----------------------------------
 #pragma region インデックスバッファビューの作成
-     triangle->model->SetIbView(DXGI_FORMAT_R16_UINT);
+     //triangle->model->SetIbView(DXGI_FORMAT_R16_UINT);
 #pragma endregion インデックスバッファビューの作成
      //------------------------------------------
 
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
-     triangle->model->SetSizeVB();
-     triangle->model->material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+     /*triangle->model->SetSizeVB();
+     triangle->model->material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);*/
+
+     particle.vert.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, particle.vert.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
      // 頂点バッファの生成----------------------------
 #pragma region 頂点バッファの生成
 
-     triangle->model->CreateVertexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     //triangle->model->CreateVertexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
+     particle.vert.CreateVertexBuffer(*dx, particle.vert.material.HeapProp, D3D12_HEAP_FLAG_NONE, particle.vert.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 #pragma endregion 頂点バッファの生成
      //-------------------------
 
@@ -262,13 +267,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
      // 頂点バッファへのデータ転送------------
 #pragma region 頂点バッファへのデータ転送
-     triangle->model->VertexMaping();
+     //triangle->model->VertexMaping();
+
+     particle.vert.VertexMaping();
 #pragma endregion 頂点バッファへのデータ転送
      //--------------------------------------
 
      // 頂点バッファビューの作成--------------------------
 #pragma region 頂点バッファビューの作成
-     triangle->model->SetVbView();
+     //triangle->model->SetVbView();
+
+     particle.vert.SetVbView();
 #pragma endregion 頂点バッファビューの作成
      //-----------------------------------
 
@@ -281,7 +290,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     // 頂点シェーダの読み込みとコンパイル--------------------------------
 #pragma region 頂点シェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"OBJVertexShader.hlsl", "main", VS);
+     shader.ShaderCompile(L"ParticleVertexShader.hlsl", "main", VS);
 
 #pragma endregion 頂点シェーダの読み込みとコンパイル
     //------------------------------------------
@@ -289,7 +298,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //ジオメトリシェーダの読み込みとコンパイル---------------
 #pragma region ジオメトリシェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"OBJGeometryShader.hlsl", "main", GS);
+     shader.ShaderCompile(L"ParticleGeometryShader.hlsl", "main", GS);
 
 #pragma endregion ジオメトリシェーダの読み込みとコンパイル
      //---------------------------------
@@ -298,7 +307,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      // ピクセルシェーダの読み込みとコンパイル-------------------------------
 #pragma region ピクセルシェーダの読み込みとコンパイル
      
-     shader.ShaderCompile(L"OBJPixelShader.hlsl", "main", PS);
+     shader.ShaderCompile(L"ParticlePixelShader.hlsl", "main", PS);
 
 #pragma endregion ピクセルシェーダの読み込みとコンパイル
      //--------------------------------
@@ -347,7 +356,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //----------------------------
 
      //図形の形状を三角形に設定-------------------------
-     pipleline.SetPrimitiveTopologyType();
+     pipleline.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT);
      //------------------
 
      //その他の設定----------------
@@ -477,7 +486,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //    Rales[i].Updata(matView, matProjection);
         //}
 
-        triangle->Updata(matView, matProjection, true);
+        //triangle->Updata(matView, matProjection, true);
+
+        particle.Updata(matView, matProjection);
 
 #pragma endregion 更新処理
 
@@ -556,7 +567,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         
 
         //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
-        dx->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        dx->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 
         
         //定数バッファビュー(CBV)の設定コマンド
@@ -581,7 +592,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //    Rales[i].Draw(*dx);
         //}
 
-        triangle->Draw(*dx);
+        //triangle->Draw(*dx);
+
+        particle.Draw(*dx);
 
 #pragma endregion 描画コマンド
         //----------------------
