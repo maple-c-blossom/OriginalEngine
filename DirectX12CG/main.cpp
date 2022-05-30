@@ -118,9 +118,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     triangle->model->CreateModel("triangle");
     triangle->scale = { 20,20,20 };
 
-    Particle particle(*dx);
-    particle.vert.material.Init(*dx);
-    particle.Init(*dx);
+    //Particle particle(*dx);
+    //particle.vert.material.Init(*dx);
+    //particle.Init(*dx);
 
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
@@ -214,70 +214,64 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     
      //インデックスバッファの設定-------------------------
 #pragma region インデックスの設定
-   /*  triangle->model->SetSizeIB();
+     triangle->model->SetSizeIB();
 
-     triangle->model->material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);*/
+     triangle->model->material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 
 #pragma endregion インデックスの設定
      //------------------------
 
 #pragma region インデックスバッファ生成
 
-     //triangle->model->CreateIndexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     triangle->model->CreateIndexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
 #pragma endregion インデックスバッファ生成
 
      //インデックスバッファへのデータ転送------------------------------
 #pragma region インデックスバッファへのデータ転送
 
-     //dx->result = triangle->model->IndexMaping();
+     dx->result = triangle->model->IndexMaping();
 
 #pragma endregion インデックスバッファへのデータ転送
     //-------------------------------------
 
      //インデックスバッファビューの作成-----------------------------------
 #pragma region インデックスバッファビューの作成
-     //triangle->model->SetIbView(DXGI_FORMAT_R16_UINT);
+     triangle->model->SetIbView(DXGI_FORMAT_R16_UINT);
 #pragma endregion インデックスバッファビューの作成
      //------------------------------------------
 
      //頂点バッファ---------------
 #pragma region 頂点バッファの設定
-     /*triangle->model->SetSizeVB();
-     triangle->model->material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);*/
+     triangle->model->SetSizeVB();
+     triangle->model->material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 
-     particle.vert.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, particle.vert.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+     //particle.vert.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, particle.vert.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 #pragma endregion 頂点バッファの設定
      //----------------------------------
 
      // 頂点バッファの生成----------------------------
 #pragma region 頂点バッファの生成
 
-     //triangle->model->CreateVertexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     triangle->model->CreateVertexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
-     particle.vert.CreateVertexBuffer(*dx, particle.vert.material.HeapProp, D3D12_HEAP_FLAG_NONE, particle.vert.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+     //particle.vert.CreateVertexBuffer(*dx, particle.vert.material.HeapProp, D3D12_HEAP_FLAG_NONE, particle.vert.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 #pragma endregion 頂点バッファの生成
-     //-------------------------
-
-     //法線ベクトル計算---------------------------
-#pragma region 法線ベクトル計算
-     //triangle.vertex.CalculationNormalVec();
-#pragma endregion 法線ベクトルを計算
      //-------------------------
 
      // 頂点バッファへのデータ転送------------
 #pragma region 頂点バッファへのデータ転送
-     //triangle->model->VertexMaping();
+     triangle->model->VertexMaping();
 
-     particle.vert.VertexMaping();
+     //particle.vert.VertexMaping();
 #pragma endregion 頂点バッファへのデータ転送
      //--------------------------------------
 
      // 頂点バッファビューの作成--------------------------
 #pragma region 頂点バッファビューの作成
-     //triangle->model->SetVbView();
+     triangle->model->SetVbView();
 
-     particle.vert.SetVbView();
+     //particle.vert.SetVbView();
 #pragma endregion 頂点バッファビューの作成
      //-----------------------------------
 
@@ -476,19 +470,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        //for (int i = 0; i < _countof(object3D); i++)
-        //{
-        //    object3D[i].Updata(matView, matProjection,true);
-        //}
-
-        //for (int i = 0; i < _countof(Rales); i++)
-        //{
-        //    Rales[i].Updata(matView, matProjection);
-        //}
-
-        //triangle->Updata(matView, matProjection, true);
-
-        particle.Updata(matView, matProjection);
+        triangle->Updata(matView, matProjection);
 
 #pragma endregion 更新処理
 
@@ -582,19 +564,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        //for (int i = 0; i < _countof(object3D); i++)
-        //{
-        //    object3D[i].Draw(*dx);
-        //}
+        triangle->Draw(*dx);
 
-        //for (int i = 0; i < _countof(Rales); i++)
-        //{
-        //    Rales[i].Draw(*dx);
-        //}
-
-        //triangle->Draw(*dx);
-
-        particle.Draw(*dx);
 
 #pragma endregion 描画コマンド
         //----------------------

@@ -4,13 +4,19 @@ namespace MCB
 {
 	class Quaternion
 	{
-		Float4 quaternion = { 0,0,0,0 };
+		float x;
+		float y;
+		float z;
+		float w;
 
-		void SetRotaQuaternion(Vector3D vec,float angle);
-		Quaternion GetQuaternionConjugated(Quaternion q);
-		Quaternion GetQuaternionReciprocal(Quaternion q);
+		void SetRota(Vector3D vec,float angle);
+		Quaternion GetConjugated(Quaternion q);
+		Quaternion GetReciprocal(Quaternion q);
 		Quaternion GetCartesianProduct(Quaternion q, Quaternion p);
-
+		float Dot(Quaternion a, Quaternion b);
+		float GetAngle(Quaternion a, Quaternion b);
+		Quaternion Slerp(Quaternion start, Quaternion end, int time,int maxTime);
+		Quaternion SetRotationQuaternion(Vector3D rotationAxisVec, Vector3D PositionVec, float angle);
 	};
 }
 

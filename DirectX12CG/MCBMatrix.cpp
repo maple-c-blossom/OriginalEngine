@@ -1,4 +1,8 @@
 #include "MCBMatrix.h"
+#include <stdexcept>
+#include <string>
+
+using namespace MCB;
 
 void MCB::MCBMatrix::MCBMatrixIdentity()
 {
@@ -304,4 +308,81 @@ MCB::MCBMatrix& MCB::MCBMatrix::operator-=(MCBMatrix matrix)
 {
 	*this = *this - matrix;
 	return *this;
+}
+
+float MCB::MCBMatrix::operator[](unsigned int n)
+{
+	switch (n)
+	{
+	case 0:
+		return _11;
+		break;
+
+	case 1:
+		return _12;
+		break;
+
+	case 2:
+		return _13;
+		break;
+		
+	case 3:
+		return _14;
+		break;
+
+	case 4:
+		return _21;
+		break;
+
+	case 5:
+		return _22;
+		break;
+
+	case 6:
+		return _23;
+		break;
+
+	case 7:
+		return _24;
+		break;
+
+	case 8:
+		return _31;
+		break;
+
+	case 9:
+		return _32;
+		break;
+
+	case 10:
+		return _33;
+		break;
+
+	case 11:
+		return _34;
+		break;
+
+	case 12:
+		return _41;
+		break;
+
+	case 13:
+		return _42;
+		break;
+
+	case 14:
+		return _43;
+		break;
+
+	case 15:
+		return _44;
+		break;
+	default:
+		throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
+		return -114514.1919810f;
+		break;
+	}
+
+	throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
+	return -114514.1919810f;
 }
