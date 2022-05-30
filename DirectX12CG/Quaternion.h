@@ -1,9 +1,11 @@
 #pragma once
 #include "Vector3D.h"
+#include "MCBMatrix.h"
 namespace MCB
 {
 	class Quaternion
 	{
+	public:
 		float x;
 		float y;
 		float z;
@@ -17,6 +19,7 @@ namespace MCB
 		float GetAngle(Quaternion a, Quaternion b);
 		Quaternion Slerp(Quaternion start, Quaternion end, int time,int maxTime);
 		Quaternion SetRotationQuaternion(Vector3D rotationAxisVec, Vector3D PositionVec, float angle);
+		MCBMatrix GetQuaternionRotaMat(Quaternion rotaQ);
 	};
 }
 

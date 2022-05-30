@@ -43,6 +43,7 @@
 #include "TexSample.h"
 #include "RootSignature.h"
 #include "Particle.h"
+#include "Quaternion.h"
 
 #pragma endregion Ž©ì.h include
 
@@ -469,6 +470,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
         matView.UpDateMatrixView();
+
+        XMMATRIX matrot = XMMatrixRotationX(0.5f);
+        MCBMatrix matRot;
+        MCBMatrix matRot2;
+        Quaternion q;
+        Vector3D vec{ 1,0,0 };
+        Vector3D position;
+        position.vec.x = triangle->position.x;
+        position.vec.y = triangle->position.y;
+        position.vec.z = triangle->position.z;
+        q.SetRota(vec, 0.5f);
+        matRot = q.GetQuaternionRotaMat(q);
 
         triangle->Updata(matView, matProjection);
 

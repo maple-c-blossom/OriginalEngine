@@ -33,7 +33,7 @@ namespace MCB
 
 		MCBMatrix ReturnMatrixIdentity();
 
-		MCBMatrix operator*(MCBMatrix matrix);
+		//MCBMatrix operator*(MCBMatrix matrix);
 		MCBMatrix operator*(float s);
 		MCBMatrix operator/(float s);
 		MCBMatrix operator+(MCBMatrix matrix);
@@ -48,6 +48,7 @@ namespace MCB
 		float operator[](unsigned int n);
 
 	};
+		MCBMatrix operator*(MCBMatrix matrix1,MCBMatrix matrix2);
 
 }
 
