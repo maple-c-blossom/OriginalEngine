@@ -98,6 +98,11 @@ namespace MCB
          //D3D12_INDEX_BUFFER_VIEW ibView{};
 
          //D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+         static const int vertexCount = 1;
+
+         ObjectMaterial material;
+
+         D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
 
          //D3D12_RESOURCE_DESC resdesc{};  // リソース設定
 
