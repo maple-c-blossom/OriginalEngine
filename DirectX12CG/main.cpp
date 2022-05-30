@@ -466,7 +466,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             matView.eye.z += targetVec.z * move.z;
 
 
-
+      
         }
 
         matView.target.x = matView.eye.x + targetVec.x;

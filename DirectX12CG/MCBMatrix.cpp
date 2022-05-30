@@ -135,6 +135,25 @@ MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 	return ans;
 }
 
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixLookAtLH(Float3 eye, Float3 target, Float3 up)
+{
+
+	return MCBMatrix();
+}
+
+MCB::MCBMatrix MCB::MCBMatrix::MatrixTranspose(MCBMatrix mat)
+{
+	MCBMatrix ans;
+
+	ans._11 = mat._11; ans._12 = mat._21; ans._13 = mat._31; ans._14 = mat._41;
+	ans._21 = mat._12; ans._22 = mat._22; ans._23 = mat._32; ans._24 = mat._42;
+	ans._31 = mat._13; ans._32 = mat._23; ans._33 = mat._33; ans._34 = mat._43;
+	ans._41 = mat._14; ans._42 = mat._24; ans._43 = mat._34; ans._44 = mat._44;
+
+
+	return ans;
+}
+
 MCB::MCBMatrix MCB::MCBMatrix::operator*(MCBMatrix matrix)
 {
 	MCBMatrix ans;

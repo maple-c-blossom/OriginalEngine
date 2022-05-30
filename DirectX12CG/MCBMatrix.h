@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-
+#include "Vector3D.h"
 namespace MCB
 {
 
@@ -32,6 +32,12 @@ namespace MCB
 		MCBMatrix MCBMatrixRota(double angle,DirectX::XMFLOAT3 vector);
 
 		MCBMatrix ReturnMatrixIdentity();
+
+		MCBMatrix MCBMatrixLookAtLH(Float3 eye, Float3 target, Float3 up);
+
+		MCBMatrix MatrixTranspose(MCBMatrix mat);
+
+		MCBMatrix MatrixReverse(MCBMatrix mat);
 
 		MCBMatrix operator*(MCBMatrix matrix);
 		MCBMatrix operator*(float s);
