@@ -32,14 +32,12 @@ namespace MCB
 		MCBMatrix MCBMatrixRota(double angle,DirectX::XMFLOAT3 vector);
 
 		MCBMatrix ReturnMatrixIdentity();
-
 		MCBMatrix MCBMatrixLookAtLH(Float3 eye, Float3 target, Float3 up);
 
 		MCBMatrix MatrixTranspose(MCBMatrix mat);
 
 		MCBMatrix MatrixReverse(MCBMatrix mat);
-
-		MCBMatrix operator*(MCBMatrix matrix);
+		//MCBMatrix operator*(MCBMatrix matrix);
 		MCBMatrix operator*(float s);
 		MCBMatrix operator/(float s);
 		MCBMatrix operator+(MCBMatrix matrix);
@@ -51,7 +49,10 @@ namespace MCB
 		MCBMatrix& operator+=(MCBMatrix matrix);
 		MCBMatrix& operator-=(MCBMatrix matrix);
 
+		float operator[](unsigned int n);
+
 	};
+		MCBMatrix operator*(MCBMatrix matrix1,MCBMatrix matrix2);
 
 }
 

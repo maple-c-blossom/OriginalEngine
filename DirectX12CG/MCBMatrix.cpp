@@ -1,4 +1,8 @@
 #include "MCBMatrix.h"
+#include <stdexcept>
+#include <string>
+
+using namespace MCB;
 
 void MCB::MCBMatrix::MCBMatrixIdentity()
 {
@@ -135,59 +139,40 @@ MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 	return ans;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixLookAtLH(Float3 eye, Float3 target, Float3 up)
-{
-
-	return MCBMatrix();
-}
-
-MCB::MCBMatrix MCB::MCBMatrix::MatrixTranspose(MCBMatrix mat)
-{
-	MCBMatrix ans;
-
-	ans._11 = mat._11; ans._12 = mat._21; ans._13 = mat._31; ans._14 = mat._41;
-	ans._21 = mat._12; ans._22 = mat._22; ans._23 = mat._32; ans._24 = mat._42;
-	ans._31 = mat._13; ans._32 = mat._23; ans._33 = mat._33; ans._34 = mat._43;
-	ans._41 = mat._14; ans._42 = mat._24; ans._43 = mat._34; ans._44 = mat._44;
-
-
-	return ans;
-}
-
-MCB::MCBMatrix MCB::MCBMatrix::operator*(MCBMatrix matrix)
-{
-	MCBMatrix ans;
-
-#pragma region １行目
-	ans._11 = (_11 * matrix._11) + (_12 * matrix._21) + (_13 * matrix._31) + (_14 * matrix._41);
-	ans._12 = (_11 * matrix._12) + (_12 * matrix._22) + (_13 * matrix._32) + (_14 * matrix._42);
-	ans._13 = (_11 * matrix._13) + (_12 * matrix._23) + (_13 * matrix._33) + (_14 * matrix._43);
-	ans._14 = (_11 * matrix._14) + (_12 * matrix._24) + (_13 * matrix._34) + (_14 * matrix._44);
-#pragma endregion 1行目
-
-#pragma region 2行目
-	ans._21 = (_21 * matrix._11) + (_22 * matrix._21) + (_23 * matrix._31) + (_24 * matrix._41);
-	ans._22 = (_21 * matrix._12) + (_22 * matrix._22) + (_23 * matrix._32) + (_24 * matrix._42);
-	ans._23 = (_21 * matrix._13) + (_22 * matrix._23) + (_23 * matrix._33) + (_24 * matrix._43);
-	ans._24 = (_21 * matrix._14) + (_22 * matrix._24) + (_23 * matrix._34) + (_24 * matrix._44);
-#pragma endregion 2行目
-
-#pragma region 3行目
-	ans._31 = (_31 * matrix._11) + (_32 * matrix._21) + (_33 * matrix._31) + (_34 * matrix._41);
-	ans._32 = (_31 * matrix._12) + (_32 * matrix._22) + (_33 * matrix._32) + (_34 * matrix._42);
-	ans._33 = (_31 * matrix._13) + (_32 * matrix._23) + (_33 * matrix._33) + (_34 * matrix._43);
-	ans._34 = (_31 * matrix._14) + (_32 * matrix._24) + (_33 * matrix._34) + (_34 * matrix._44);
-#pragma endregion 3行目
-
-#pragma region 4行目
-	ans._41 = (_41 * matrix._11) + (_42 * matrix._21) + (_43 * matrix._31) + (_44 * matrix._41);
-	ans._42 = (_41 * matrix._12) + (_42 * matrix._22) + (_43 * matrix._32) + (_44 * matrix._42);
-	ans._43 = (_41 * matrix._13) + (_42 * matrix._23) + (_43 * matrix._33) + (_44 * matrix._43);
-	ans._44 = (_41 * matrix._14) + (_42 * matrix._24) + (_43 * matrix._34) + (_44 * matrix._44);
-#pragma endregion 4行目
-
-	return ans;
-}
+//MCB::MCBMatrix MCB::MCBMatrix::operator*(MCBMatrix matrix)
+//{
+//	MCBMatrix ans;
+//
+//#pragma region １行目
+//	ans._11 = (_11 * matrix._11) + (_12 * matrix._21) + (_13 * matrix._31) + (_14 * matrix._41);
+//	ans._12 = (_11 * matrix._12) + (_12 * matrix._22) + (_13 * matrix._32) + (_14 * matrix._42);
+//	ans._13 = (_11 * matrix._13) + (_12 * matrix._23) + (_13 * matrix._33) + (_14 * matrix._43);
+//	ans._14 = (_11 * matrix._14) + (_12 * matrix._24) + (_13 * matrix._34) + (_14 * matrix._44);
+//#pragma endregion 1行目
+//
+//#pragma region 2行目
+//	ans._21 = (_21 * matrix._11) + (_22 * matrix._21) + (_23 * matrix._31) + (_24 * matrix._41);
+//	ans._22 = (_21 * matrix._12) + (_22 * matrix._22) + (_23 * matrix._32) + (_24 * matrix._42);
+//	ans._23 = (_21 * matrix._13) + (_22 * matrix._23) + (_23 * matrix._33) + (_24 * matrix._43);
+//	ans._24 = (_21 * matrix._14) + (_22 * matrix._24) + (_23 * matrix._34) + (_24 * matrix._44);
+//#pragma endregion 2行目
+//
+//#pragma region 3行目
+//	ans._31 = (_31 * matrix._11) + (_32 * matrix._21) + (_33 * matrix._31) + (_34 * matrix._41);
+//	ans._32 = (_31 * matrix._12) + (_32 * matrix._22) + (_33 * matrix._32) + (_34 * matrix._42);
+//	ans._33 = (_31 * matrix._13) + (_32 * matrix._23) + (_33 * matrix._33) + (_34 * matrix._43);
+//	ans._34 = (_31 * matrix._14) + (_32 * matrix._24) + (_33 * matrix._34) + (_34 * matrix._44);
+//#pragma endregion 3行目
+//
+//#pragma region 4行目
+//	ans._41 = (_41 * matrix._11) + (_42 * matrix._21) + (_43 * matrix._31) + (_44 * matrix._41);
+//	ans._42 = (_41 * matrix._12) + (_42 * matrix._22) + (_43 * matrix._32) + (_44 * matrix._42);
+//	ans._43 = (_41 * matrix._13) + (_42 * matrix._23) + (_43 * matrix._33) + (_44 * matrix._43);
+//	ans._44 = (_41 * matrix._14) + (_42 * matrix._24) + (_43 * matrix._34) + (_44 * matrix._44);
+//#pragma endregion 4行目
+//
+//	return ans;
+//}
 
 MCB::MCBMatrix MCB::MCBMatrix::operator*(float s)
 {
@@ -323,4 +308,116 @@ MCB::MCBMatrix& MCB::MCBMatrix::operator-=(MCBMatrix matrix)
 {
 	*this = *this - matrix;
 	return *this;
+}
+
+float MCB::MCBMatrix::operator[](unsigned int n)
+{
+	switch (n)
+	{
+	case 0:
+		return _11;
+		break;
+
+	case 1:
+		return _12;
+		break;
+
+	case 2:
+		return _13;
+		break;
+		
+	case 3:
+		return _14;
+		break;
+
+	case 4:
+		return _21;
+		break;
+
+	case 5:
+		return _22;
+		break;
+
+	case 6:
+		return _23;
+		break;
+
+	case 7:
+		return _24;
+		break;
+
+	case 8:
+		return _31;
+		break;
+
+	case 9:
+		return _32;
+		break;
+
+	case 10:
+		return _33;
+		break;
+
+	case 11:
+		return _34;
+		break;
+
+	case 12:
+		return _41;
+		break;
+
+	case 13:
+		return _42;
+		break;
+
+	case 14:
+		return _43;
+		break;
+
+	case 15:
+		return _44;
+		break;
+	default:
+		throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
+		return -114514.1919810f;
+		break;
+	}
+
+	throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
+	return -114514.1919810f;
+}
+
+MCBMatrix MCB::operator*(MCBMatrix matrix1, MCBMatrix matrix2)
+{
+	MCBMatrix ans;
+
+#pragma region １行目
+	ans._11 = (matrix1._11 * matrix2._11) + (matrix1._12 * matrix2._21) + (matrix1._13 * matrix2._31) + (matrix1._14 * matrix2._41);
+	ans._12 = (matrix1._11 * matrix2._12) + (matrix1._12 * matrix2._22) + (matrix1._13 * matrix2._32) + (matrix1._14 * matrix2._42);
+	ans._13 = (matrix1._11 * matrix2._13) + (matrix1._12 * matrix2._23) + (matrix1._13 * matrix2._33) + (matrix1._14 * matrix2._43);
+	ans._14 = (matrix1._11 * matrix2._14) + (matrix1._12 * matrix2._24) + (matrix1._13 * matrix2._34) + (matrix1._14 * matrix2._44);
+#pragma endregion 1行目
+
+#pragma region 2行目
+	ans._21 = (matrix1._21 * matrix2._11) + (matrix1._22 * matrix2._21) + (matrix1._23 * matrix2._31) + (matrix1._24 * matrix2._41);
+	ans._22 = (matrix1._21 * matrix2._12) + (matrix1._22 * matrix2._22) + (matrix1._23 * matrix2._32) + (matrix1._24 * matrix2._42);
+	ans._23 = (matrix1._21 * matrix2._13) + (matrix1._22 * matrix2._23) + (matrix1._23 * matrix2._33) + (matrix1._24 * matrix2._43);
+	ans._24 = (matrix1._21 * matrix2._14) + (matrix1._22 * matrix2._24) + (matrix1._23 * matrix2._34) + (matrix1._24 * matrix2._44);
+#pragma endregion 2行目
+
+#pragma region 3行目
+	ans._31 = (matrix1._31 * matrix2._11) + (matrix1._32 * matrix2._21) + (matrix1._33 * matrix2._31) + (matrix1._34 * matrix2._41);
+	ans._32 = (matrix1._31 * matrix2._12) + (matrix1._32 * matrix2._22) + (matrix1._33 * matrix2._32) + (matrix1._34 * matrix2._42);
+	ans._33 = (matrix1._31 * matrix2._13) + (matrix1._32 * matrix2._23) + (matrix1._33 * matrix2._33) + (matrix1._34 * matrix2._43);
+	ans._34 = (matrix1._31 * matrix2._14) + (matrix1._32 * matrix2._24) + (matrix1._33 * matrix2._34) + (matrix1._34 * matrix2._44);
+#pragma endregion 3行目
+
+#pragma region 4行目
+	ans._41 = (matrix1._41 * matrix2._11) + (matrix1._42 * matrix2._21) + (matrix1._43 * matrix2._31) + (matrix1._44 * matrix2._41);
+	ans._42 = (matrix1._41 * matrix2._12) + (matrix1._42 * matrix2._22) + (matrix1._43 * matrix2._32) + (matrix1._44 * matrix2._42);
+	ans._43 = (matrix1._41 * matrix2._13) + (matrix1._42 * matrix2._23) + (matrix1._43 * matrix2._33) + (matrix1._44 * matrix2._43);
+	ans._44 = (matrix1._41 * matrix2._14) + (matrix1._42 * matrix2._24) + (matrix1._43 * matrix2._34) + (matrix1._44 * matrix2._44);
+#pragma endregion 4行目
+
+	return ans;
 }
