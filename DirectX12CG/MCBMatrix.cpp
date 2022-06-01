@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <string>
 
+using namespace DirectX;
 using namespace MCB;
 
 void MCB::MCBMatrix::MCBMatrixIdentity()
@@ -173,6 +174,32 @@ MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 //
 //	return ans;
 //}
+
+DirectX::XMMATRIX MCB::MCBMatrix::MatrixConvertXMMatrix(MCBMatrix mat)
+{
+	XMMATRIX ans;
+	ans.r[0].m128_f32[0] = mat._11;
+	ans.r[0].m128_f32[1] = mat._12;
+	ans.r[0].m128_f32[2] = mat._13;
+	ans.r[0].m128_f32[3] = mat._14;
+
+	ans.r[1].m128_f32[0] = mat._21;
+	ans.r[1].m128_f32[1] = mat._22;
+	ans.r[1].m128_f32[2] = mat._23;
+	ans.r[1].m128_f32[3] = mat._24;
+
+	ans.r[2].m128_f32[0] = mat._31;
+	ans.r[2].m128_f32[1] = mat._32;
+	ans.r[2].m128_f32[2] = mat._33;
+	ans.r[2].m128_f32[3] = mat._34;
+
+	ans.r[3].m128_f32[0] = mat._41;
+	ans.r[3].m128_f32[1] = mat._42;
+	ans.r[3].m128_f32[2] = mat._43;
+	ans.r[3].m128_f32[3] = mat._44;
+
+	return ans;
+}
 
 MCB::MCBMatrix MCB::MCBMatrix::operator*(float s)
 {
