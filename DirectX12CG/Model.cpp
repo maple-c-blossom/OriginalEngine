@@ -3,8 +3,15 @@
 
 using namespace std;
 
+MCB::Model::Model( Dx12 dx12, const std::string fileName)
+{
+    material.Init(dx12);
+    Init(dx12, fileName);
+}
+
 MCB::Model::~Model()
 {
+
 }
 
 void MCB::Model::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
@@ -42,6 +49,9 @@ void MCB::Model::CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& Heap
 HRESULT MCB::Model::IndexMaping()
 {
     HRESULT result = S_OK;
+
+
+    uint16_t* indexMap = nullptr;
     //GPU上のバッファに対応した仮想メモリを取得----------------------------
     result = indexBuff->Map(0, nullptr, (void**)&indexMap);
     //---------------------------------------
@@ -65,6 +75,8 @@ void MCB::Model::SetVbView()
 HRESULT MCB::Model::VertexMaping()
 {
     HRESULT result = S_OK;
+
+    ObjectVertex* vertMap = nullptr;
 
     result = vertBuff->Map(0, nullptr, (void**)&vertMap);
     assert(SUCCEEDED(result));
@@ -256,5 +268,23 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
 
     }
     file.close();
+
+}
+
+void MCB::Model::Init(Dx12 dx, const std::string fileName)
+{
+    CreateModel(fileName);
+
+    SetSizeIB();
+    material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    CreateIndexBuffer(dx, material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    dx.result = IndexMaping();
+    SetIbView(DXGI_FORMAT_R16_UINT);
+
+    SetSizeVB();
+    material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    CreateVertexBuffer(dx, material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    VertexMaping();
+    SetVbView();
 
 }

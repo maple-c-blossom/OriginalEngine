@@ -114,11 +114,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
-    Object3d* triangle = new Object3d(*dx);
-    triangle->Init(*dx);
-    triangle->model->CreateModel("triangle");
-    triangle->scale = { 20,20,20 };
+    Object3d* Box = new Object3d(*dx);
+    Object3d* Box2 = new Object3d(*dx);
 
+    Model* BoxModel = new Model(*dx, "Box");
+
+    //Box->Init(*dx);
+    //Box->model->CreateModel("Box");
+    //BoxModel->Init(*dx, "Box");
+
+    Box->model = BoxModel;
+    Box2->model = BoxModel;
+
+    Box->scale = { 20,20,20 };
+    Box2->scale = { 20,20,20 };
     //Particle particle(*dx);
     //particle.vert.material.Init(*dx);
     //particle.Init(*dx);
@@ -145,7 +154,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
      //ミップマップの生成-------------------------
      MipMap* mipmap = new MipMap;
-     dx->result = mipmap->GenerateMipMap(&triangle->model->texture, TEX_FILTER_DEFAULT, 0);
+     dx->result = mipmap->GenerateMipMap(&BoxModel->texture, TEX_FILTER_DEFAULT, 0);
      //----------------------------
 
      //画像イメージデータの作成----------------------
@@ -156,13 +165,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
       //テクスチャバッファ設定---------------------------------------
       TextureBuffer texBuff;
       texBuff.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM,D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,D3D12_MEMORY_POOL_L0);
-      texBuff.SetTexResourceDesc(triangle->model->texture, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+      texBuff.SetTexResourceDesc(BoxModel->texture, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
       //--------------------------------------
 
 
       //テクスチャバッファの生成----------------------
       dx->result = texBuff.CommitResouce(*dx, D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
-      texBuff.TransferMipmatToTexBuff(triangle->model->texture, nullptr, dx->result);
+      texBuff.TransferMipmatToTexBuff(BoxModel->texture, nullptr, dx->result);
       //-----------------------------------
 #pragma endregion 画像関係
 
@@ -205,76 +214,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
 #pragma endregion ルートパラメータの設定
      //------------------------
-
-     //頂点データ---------------------------------
-#pragma region 頂点データ
-   
-#pragma endregion 頂点データ
-     //--------------------------
-
-    
-     //インデックスバッファの設定-------------------------
-#pragma region インデックスの設定
-     triangle->model->SetSizeIB();
-
-     triangle->model->material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-
-#pragma endregion インデックスの設定
-     //------------------------
-
-#pragma region インデックスバッファ生成
-
-     triangle->model->CreateIndexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-
-#pragma endregion インデックスバッファ生成
-
-     //インデックスバッファへのデータ転送------------------------------
-#pragma region インデックスバッファへのデータ転送
-
-     dx->result = triangle->model->IndexMaping();
-
-#pragma endregion インデックスバッファへのデータ転送
-    //-------------------------------------
-
-     //インデックスバッファビューの作成-----------------------------------
-#pragma region インデックスバッファビューの作成
-     triangle->model->SetIbView(DXGI_FORMAT_R16_UINT);
-#pragma endregion インデックスバッファビューの作成
-     //------------------------------------------
-
-     //頂点バッファ---------------
-#pragma region 頂点バッファの設定
-     triangle->model->SetSizeVB();
-     triangle->model->material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangle->model->sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-
-     //particle.vert.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, particle.vert.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-#pragma endregion 頂点バッファの設定
-     //----------------------------------
-
-     // 頂点バッファの生成----------------------------
-#pragma region 頂点バッファの生成
-
-     triangle->model->CreateVertexBuffer(*dx, triangle->model->material.HeapProp, D3D12_HEAP_FLAG_NONE, triangle->model->material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-
-     //particle.vert.CreateVertexBuffer(*dx, particle.vert.material.HeapProp, D3D12_HEAP_FLAG_NONE, particle.vert.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-#pragma endregion 頂点バッファの生成
-     //-------------------------
-
-     // 頂点バッファへのデータ転送------------
-#pragma region 頂点バッファへのデータ転送
-     triangle->model->VertexMaping();
-
-     //particle.vert.VertexMaping();
-#pragma endregion 頂点バッファへのデータ転送
-     //--------------------------------------
-
-     // 頂点バッファビューの作成--------------------------
-#pragma region 頂点バッファビューの作成
-     triangle->model->SetVbView();
-
-     //particle.vert.SetVbView();
-#pragma endregion 頂点バッファビューの作成
-     //-----------------------------------
+ 
 
     //シェーダーオブジェクト宣言-------------------------------------------
 #pragma region シェーダーオブジェクト宣言
@@ -285,7 +225,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     // 頂点シェーダの読み込みとコンパイル--------------------------------
 #pragma region 頂点シェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"ParticleVertexShader.hlsl", "main", VS);
+     shader.ShaderCompile(L"OBJVertexShader.hlsl", "main", VS);
 
 #pragma endregion 頂点シェーダの読み込みとコンパイル
     //------------------------------------------
@@ -293,7 +233,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //ジオメトリシェーダの読み込みとコンパイル---------------
 #pragma region ジオメトリシェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"ParticleGeometryShader.hlsl", "main", GS);
+     shader.ShaderCompile(L"OBJGeometryShader.hlsl", "main", GS);
 
 #pragma endregion ジオメトリシェーダの読み込みとコンパイル
      //---------------------------------
@@ -302,7 +242,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      // ピクセルシェーダの読み込みとコンパイル-------------------------------
 #pragma region ピクセルシェーダの読み込みとコンパイル
      
-     shader.ShaderCompile(L"ParticlePixelShader.hlsl", "main", PS);
+     shader.ShaderCompile(L"OBJPixelShader.hlsl", "main", PS);
 
 #pragma endregion ピクセルシェーダの読み込みとコンパイル
      //--------------------------------
@@ -351,7 +291,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //----------------------------
 
      //図形の形状を三角形に設定-------------------------
-     pipleline.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT);
+     pipleline.SetPrimitiveTopologyType();
      //------------------
 
      //その他の設定----------------
@@ -471,20 +411,39 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        XMMATRIX matrot = XMMatrixRotationX(0.5f);
+
+
+        XMMATRIX matrot = XMMatrixIdentity();
+        matrot = XMMatrixRotationX(600.0f);
         MCBMatrix matRot;
         MCBMatrix matRot2;
         Quaternion q;
         Vector3D vec{ 1,0,0 };
-        Vector3D position;
-        position.vec.x = triangle->position.x;
-        position.vec.y = triangle->position.y;
-        position.vec.z = triangle->position.z;
-        q.SetRota(vec, 0.5f);
+        Box->rotasion = {350.0f,0,0 };
+        q.SetRota(vec, 350.0f);
+        //q = q.SetRotationQuaternion(vec, position, 0.5f);
         matRot = q.GetQuaternionRotaMat(q);
 
-        triangle->Updata(matView, matProjection);
+        Vector3D vec1;
+        vec1.vec.x = matRot._21;
+        vec1.vec.y = matRot._22;
+        vec1.vec.z = matRot._23;
+        float len = vec1.V3Len();
 
+
+        WorldMatrix mat;
+        mat.SetMatScale(20, 20, 20);
+        mat.SetMatTrans(Box->position.x + 40 , Box->position.y, Box->position.z);
+        mat.matWorld = XMMatrixIdentity();
+        //mat.matWorld = mat.matScale * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q.GetReciprocal(q)));
+        //mat.matWorld = mat.matWorld * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
+        mat.matWorld = mat.matScale * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
+        mat.matWorld = mat.matWorld * mat.matTransform;
+
+        Box->Updata(matView, matProjection);
+
+        Box2->matWorld.matWorld = mat.matWorld;
+        Box2->constMapTranceform->mat = mat.matWorld * matView.mat * matProjection.mat;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -562,11 +521,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         
 
         //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
-        dx->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+        dx->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
         
         //定数バッファビュー(CBV)の設定コマンド
-        dx->commandList->SetGraphicsRootConstantBufferView(2, triangle->model->material.constBuffMaterialB1->GetGPUVirtualAddress());
+        dx->commandList->SetGraphicsRootConstantBufferView(2, BoxModel->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
         //SRVヒープの設定コマンド
         dx->commandList->SetDescriptorHeaps(1, descriptor.srvHeap.GetAddressOf());
@@ -577,8 +536,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        triangle->Draw(*dx);
-
+        Box->Draw(*dx);
+        Box2->Draw(*dx);
 
 #pragma endregion 描画コマンド
         //----------------------
@@ -644,7 +603,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //delete textureFile;
     delete mipmap;
     delete imageData;
-    delete triangle;
+    delete Box;
+    delete Box2;
+    delete BoxModel;
     //_CrtDumpMemoryLeaks();
 	return 0;
 }

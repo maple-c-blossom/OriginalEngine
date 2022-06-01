@@ -26,15 +26,15 @@ namespace MCB
     {
     public:
 
+        Model(Dx12 dx12, const std::string fileName);
+
         ~Model();
 
         Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 
         Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 
-        uint16_t* indexMap = nullptr;
 
-        ObjectVertex* vertMap = nullptr;
 
 
         TextureFile texture;
@@ -75,7 +75,8 @@ namespace MCB
 
         void LoadMaterial( const std::string& directoryPath,const std::string& filename);
 
-
+        void Init(Dx12 dx,const std::string fileName);
+        
     };
 
 }

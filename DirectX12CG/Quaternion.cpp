@@ -77,7 +77,7 @@ MCBMatrix MCB::Quaternion::GetQuaternionRotaMat(Quaternion rotaQ)
 	mat._24 = 0;
 
 	mat._31 = (2 * x * z) + (2 * w * y);
-	mat._32 = (2 * y * z) - (2 * w * z);
+	mat._32 = (2 * y * z) - (2 * w * x);
 	mat._33 = 1 - (2 * (x * x)) - (2 * (y * y));
 	mat._34 = 0;
 
@@ -85,6 +85,7 @@ MCBMatrix MCB::Quaternion::GetQuaternionRotaMat(Quaternion rotaQ)
 	mat._42 = 0;
 	mat._43 = 0;
 	mat._44 = 1;
+
 
 	return mat;
 }
