@@ -436,7 +436,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         mat.SetMatTrans(Box->position.x + 40 , Box->position.y, Box->position.z);
         mat.matWorld = XMMatrixIdentity();
         mat.matWorld = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q) ) * mat.matScale;
-        mat.matWorld = mat.matWorld * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q.GetReciprocal(q)));
+/*        mat.matWorld = mat.matWorld * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q.GetReciprocal(q)))*/;
         //mat.matWorld = mat.matScale * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
         mat.matWorld = mat.matWorld * mat.matTransform;
 
