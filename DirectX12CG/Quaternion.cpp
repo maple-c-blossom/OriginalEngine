@@ -5,11 +5,11 @@ using namespace MCB;
 void MCB::Quaternion::SetRota(Vector3D vec, float angle)
 {
 	vec.V3Norm();
-	float s = (sinf(angle) / 2);
+	float s = (sinf(angle / 2));
 	x = vec.vec.x * s;
 	y = vec.vec.y * s;
 	z = vec.vec.z * s;
-	w = cosf(angle) / 2;
+	w = cosf(angle / 2);
 }
 
 Quaternion MCB::Quaternion::GetConjugated(Quaternion q)
