@@ -92,7 +92,7 @@ MCBMatrix MCB::Quaternion::GetQuaternionRotaMat(Quaternion rotaQ)
 
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int time, int maxTime)
 {
-	time = time / maxTime;
+	float Time = (float)time / (float)maxTime;
 	Quaternion ans;
 	float angle = GetAngle(start, end);
 
@@ -109,8 +109,8 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 		return start;
 	}
 
-	float sut = sinf(angle * time);
-	float sout = sinf(angle * (1.0f - time));
+	float sut = sinf(angle * Time);
+	float sout = sinf(angle * (1.0f - Time));
 
 	float coeff1 = sout / st;
 	float coeff2 = sut / st;
