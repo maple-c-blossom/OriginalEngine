@@ -10,16 +10,23 @@ MCB::Object3d::Object3d(Dx12& dx12)
     this->Init(dx12);
 }
 
+MCB::Object3d::Object3d()
+{
+}
+
 MCB::Object3d::~Object3d()
 {
     //delete vertex;
     constBuffTranceform->Unmap(0, nullptr);
-    model->texture.scratchImg.Release();
+    //model->texture.scratchImg.Release();
     //delete model;
 }
 
 void Object3d::Init(Dx12& dx12)
 {
+    NORM_FRONT_VEC.vec = { 0,0,1 };
+    nowFrontVec = NORM_FRONT_VEC;
+
     D3D12_HEAP_PROPERTIES HeapProp{};
     HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 

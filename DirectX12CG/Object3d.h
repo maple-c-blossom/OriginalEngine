@@ -50,6 +50,7 @@ namespace MCB
 
 
         Object3d(Dx12& dx12);
+        Object3d();
 
         ~Object3d();
 

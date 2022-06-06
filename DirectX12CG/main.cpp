@@ -48,6 +48,7 @@
 #include "RootSignature.h"
 #include "Particle.h"
 #include "Quaternion.h"
+#include <array>
 
 #pragma endregion 自作.h include
 
@@ -118,8 +119,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
-    Object3d* Box = new Object3d(*dx);
-    Object3d* Box2 = new Object3d(*dx);
+    //Object3d* Box = new Object3d(*dx);
+    std::array<Object3d, 20> Box;
+    std::array<Object3d, 40> Box2;
 
     Model* BoxModel = new Model(*dx, "Box");
 
@@ -127,11 +129,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //Box->model->CreateModel("Box");
     //BoxModel->Init(*dx, "Box");
 
-    Box->model = BoxModel;
-    Box2->model = BoxModel;
+    Box.begin()->model = BoxModel;
 
-    Box->scale = { 20,20,20 };
-    Box2->scale = { 20,20,20 };
+    Box.begin()->scale = {5,5,5};
+   
+
+
+    for (int i = 0; i < Box.size(); i++)
+    {
+        Box[i].Init(*dx);
+        Box[i].model = BoxModel;
+        if (i > 0)
+        {
+            Box[i].parent = &Box[i - 1];
+            Box[i].scale = { 0.9f,0.9f,0.9f };
+            Box[i].rotasion = { 0,0,0.2 };
+            Box[i].position = { 0,0,1 };
+        }
+    }
+
+    for (int i = 0; i < Box2.size(); i++)
+    {
+        Box2[i].Init(*dx);
+        Box2[i].model = BoxModel;
+        Box2[i].position.y = -10;
+        Box2[i].scale = {5,5,5};
+        if (i > 0)
+        {
+;           Box2[i].position.z = Box2[i - 1].position.z + 20;
+        }
+    }
+
     //Particle particle(*dx);
     //particle.vert.material.Init(*dx);
     //particle.Init(*dx);
@@ -345,21 +373,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion パイプラインステートの生成
      //-----------------------------
 
-     float clearColor[] = { 0.0f,0.0f, 0.0f,0.0f }; // 青っぽい色
+     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 
 #pragma endregion
 
      //ゲームループ用変数--------------------------------
 #pragma region ゲームループ用変数
-     float angle = 0.0f;
-     const int DEFAULT_MOVE_LIMIT = 60;
 
      XMFLOAT3 targetVec = { 0,0,1 };
      XMFLOAT3 Angle = { 0,0,0 };
-     float angle_test = 0.0;
-     float angle_test1 = 0.99;
-     int time = 0;
-     const int MaxTime = 300;
+
 #pragma endregion ゲームループ用変数
      //--------------------------
      
@@ -417,56 +440,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        if (angle_test >= 2 * M_PI)
+        for (int i = 0; i < Box.size(); i++)
         {
-            angle_test = 0;
+            Box[i].Updata(matView, matProjection);
         }
 
-        angle_test += 0.01f;
-
-        XMMATRIX matrot = XMMatrixIdentity();
-        matrot = XMMatrixRotationX(600.0f);
-        MCBMatrix matRot;
-        MCBMatrix matRot2;
-        Quaternion q;
-        Quaternion q1;
-        Quaternion q2;
-        Vector3D vec{ 1,1,0 };
-        Vector3D vec1{ 0,1,1 };
-        Box->rotasion = { angle_test,0,0 };
-        q.SetRota(vec, angle_test);
-        q1.SetRota(vec1, angle_test1);
-
-        if (time < MaxTime)
+        for (int i = 0; i < Box2.size(); i++)
         {
-            time++;
+            Box2[i].Updata(matView, matProjection);
         }
 
-        //q2 = q2.Slerp(q, q1, time, MaxTime);
-
-        //q = q.SetRotationQuaternion(vec, position, 0.5f);
-        //matRot = q2.GetQuaternionRotaMat(q2);
-
-        //Vector3D vec1;
-        //vec1.vec.x = matRot._21;
-        //vec1.vec.y = matRot._22;
-        //vec1.vec.z = matRot._23;
-        //float len = vec1.V3Len();
-
-
-        WorldMatrix mat;
-        mat.SetMatScale(20, 20, 20);
-        mat.SetMatTrans(Box->position.x , Box->position.y, Box->position.z);
-        mat.matWorld = XMMatrixIdentity();
-        mat.matWorld = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q) ) * mat.matScale;
-/*        mat.matWorld = mat.matWorld * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q.GetReciprocal(q)))*/;
-        //mat.matWorld = mat.matScale * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-        mat.matWorld = mat.matWorld * mat.matTransform;
-
-        Box->Updata(matView, matProjection);
-
-        Box2->matWorld.matWorld = mat.matWorld;
-        Box2->constMapTranceform->mat = mat.matWorld * matView.mat * matProjection.mat;
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -559,8 +542,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        //Box->Draw(*dx);
-        Box2->Draw(*dx);
+        for (int i = 0; i < Box.size(); i++)
+        {
+            Box[i].Draw(*dx);
+        }
+
+        for (int i = 0; i < Box2.size(); i++)
+        {
+            Box2[i].Draw(*dx);
+        }
 
 #pragma endregion 描画コマンド
         //----------------------
@@ -626,8 +616,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //delete textureFile;
     delete mipmap;
     delete imageData;
-    delete Box;
-    delete Box2;
+    //delete Box;
+    //delete Box2;
     delete BoxModel;
     //_CrtDumpMemoryLeaks();
 	return 0;
