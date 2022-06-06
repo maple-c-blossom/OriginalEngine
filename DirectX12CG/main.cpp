@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <crtdbg.h>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 #pragma region ïWèÄ.h include
 
 #include <d3dcompiler.h>
@@ -15,6 +18,7 @@
 #include <cassert>
 #include <memory>
 #include <DirectXTex.h>
+
 
 #pragma endregion ïWèÄ.h include
 
@@ -413,7 +417,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        //angle_test += 0.001f;
+        if (angle_test >= 2 * M_PI)
+        {
+            angle_test = 0;
+        }
+
+        angle_test += 0.01f;
 
         XMMATRIX matrot = XMMatrixIdentity();
         matrot = XMMatrixRotationX(600.0f);
@@ -422,7 +431,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Quaternion q;
         Quaternion q1;
         Quaternion q2;
-        Vector3D vec{ 1,0,0 };
+        Vector3D vec{ 1,1,0 };
         Vector3D vec1{ 0,1,1 };
         Box->rotasion = { angle_test,0,0 };
         q.SetRota(vec, angle_test);
@@ -433,10 +442,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             time++;
         }
 
-        q2 = q2.Slerp(q, q1, time, MaxTime);
+        //q2 = q2.Slerp(q, q1, time, MaxTime);
 
         //q = q.SetRotationQuaternion(vec, position, 0.5f);
-        matRot = q2.GetQuaternionRotaMat(q2);
+        //matRot = q2.GetQuaternionRotaMat(q2);
 
         //Vector3D vec1;
         //vec1.vec.x = matRot._21;
@@ -449,7 +458,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         mat.SetMatScale(20, 20, 20);
         mat.SetMatTrans(Box->position.x , Box->position.y, Box->position.z);
         mat.matWorld = XMMatrixIdentity();
-        mat.matWorld = matRot.MatrixConvertXMMatrix(q2.GetQuaternionRotaMat(q2) ) * mat.matScale;
+        mat.matWorld = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q) ) * mat.matScale;
 /*        mat.matWorld = mat.matWorld * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q.GetReciprocal(q)))*/;
         //mat.matWorld = mat.matScale * matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
         mat.matWorld = mat.matWorld * mat.matTransform;
