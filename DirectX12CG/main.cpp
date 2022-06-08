@@ -1,9 +1,10 @@
 #define _CRTDBG_MAP_ALLOC 
-#include <cstdlib>
 #include <crtdbg.h>
+#include <cstdlib>
 
 #define _USE_MATH_DEFINES
-#include <math.h>
+#include <cmath>
+
 
 #pragma region 標準.h include
 
@@ -75,8 +76,8 @@ using namespace MCB;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
     _In_ int nCmdShow)
 {
-    //_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(434);
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    //_CrtSetBreakAlloc(1030);
 
     //int* hoge = new int(4);
     DxWindow* dxWindow = new DxWindow;
@@ -383,6 +384,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      XMFLOAT3 targetVec = { 0,0,1 };
      XMFLOAT3 Angle = { 0,0,0 };
 
+     bool SelectVio = true;
+
 #pragma endregion ゲームループ用変数
      //--------------------------
      
@@ -400,37 +403,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
 
 #pragma region 更新処理
-        if (input->IsKeyDown(DIK_RIGHT) || input->IsKeyDown(DIK_LEFT) || input->IsKeyDown(DIK_UP) || input->IsKeyDown(DIK_DOWN))
+
+        if (input->IsKeyTrigger(DIK_Q))
         {
-
-            if (input->IsKeyDown(DIK_RIGHT)) { Angle.y += 0.05f; };
-            if (input->IsKeyDown(DIK_LEFT)) { Angle.y -= 0.05f; };
-
-            if (input->IsKeyDown(DIK_UP)) { Angle.x += 0.05f; };
-            if (input->IsKeyDown(DIK_DOWN)) { Angle.x -= 0.05f; };
-
-            targetVec.x = sinf(Angle.y);
-            targetVec.y = sinf(Angle.x);
-            targetVec.z = cosf(Angle.y + Angle.x);
-
-
+            SelectVio = !SelectVio;
         }
 
-        if (input->IsKeyDown(DIK_D) || input->IsKeyDown(DIK_A) || input->IsKeyDown(DIK_W) || input->IsKeyDown(DIK_S))
+
+        if (input->IsKeyDown(DIK_RIGHT) || input->IsKeyDown(DIK_LEFT) || input->IsKeyDown(DIK_UP) || input->IsKeyDown(DIK_DOWN))
         {
             XMFLOAT3 move = { 0.0f,0.0f,0.0f };
-            if (input->IsKeyDown(DIK_W)) { move.z += 1.0f; }
-            else if (input->IsKeyDown(DIK_S)) { move.z -= 1.0f; }
+            if (input->IsKeyDown(DIK_RIGHT)) { move.x += 1.0f; }
+            else if (input->IsKeyDown(DIK_LEFT)) { move.x -= 1.0f; }
 
-            //if (input.IsKeyDown(DIK_D)) { move.x += 1.0f; }
-            //else if (input.IsKeyDown(DIK_A)) { move.x-= 1.0f; }
+            if (input->IsKeyDown(DIK_UP)) { move.z += 1.0f; }
+            else if (input->IsKeyDown(DIK_DOWN)) { move.z -= 1.0f; }
 
-            matView.eye.x += targetVec.x * move.z;
-            matView.eye.y += targetVec.y * move.z;
-            matView.eye.z += targetVec.z * move.z;
+            matView.eye.x += move.x;
+            matView.eye.y += move.y;
+            matView.eye.z += move.z;
 
 
-      
         }
 
         matView.target.x = matView.eye.x + targetVec.x;
@@ -439,6 +432,60 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
         matView.UpDateMatrixView();
+
+        if (input->IsKeyDown(DIK_D) || input->IsKeyDown(DIK_A) || input->IsKeyDown(DIK_W) || input->IsKeyDown(DIK_S))
+        {
+                Float3 tempmove = { 0,0,0 };
+                Float3 move = { 0,0,0 };
+            if (SelectVio)
+            {
+
+                if (input->IsKeyDown(DIK_D)) { Box[0].rotasion.y += 0.05f; };
+                if (input->IsKeyDown(DIK_A)) { Box[0].rotasion.y -= 0.05f; };
+
+                Box[0].nowFrontVec.vec.x = sinf(Box[0].rotasion.y);
+                Box[0].nowFrontVec.vec.z = cosf(Box[0].rotasion.y);
+
+                if (input->IsKeyDown(DIK_W)) { tempmove.z += 1.0f; };
+                if (input->IsKeyDown(DIK_S)) { tempmove.z -= 1.0f; };
+
+                move.x = Box[0].nowFrontVec.vec.x * tempmove.z ;
+                move.y = Box[0].nowFrontVec.vec.y * tempmove.z ;
+                move.z = Box[0].nowFrontVec.vec.z * tempmove.z ;
+
+
+                Box[0].position.x += move.x;
+                Box[0].position.y += move.y;
+                Box[0].position.z += move.z;
+            }
+            else
+            {
+                Vector3D camerafrontVec = { matView.target.x - matView.eye.x , matView.target.y - matView.eye.y ,matView.target.z - matView.eye.z};
+                camerafrontVec.V3Norm();
+                Vector3D cameraRightVec;
+                cameraRightVec = cameraRightVec.GetV3Cross(Vector3D{ 0,1,0 }, camerafrontVec);
+                cameraRightVec.V3Norm();
+
+                if (input->IsKeyDown(DIK_D)) { tempmove.x += 1.0f; };
+                if (input->IsKeyDown(DIK_A)) { tempmove.x -= 1.0f; };
+                if (input->IsKeyDown(DIK_W)) { tempmove.z += 1.0f; };
+                if (input->IsKeyDown(DIK_S)) { tempmove.z -= 1.0f; };
+
+                move.x = cameraRightVec.vec.x * tempmove.x + camerafrontVec.vec.x * tempmove.x;
+                move.y = cameraRightVec.vec.y * tempmove.y + camerafrontVec.vec.y * tempmove.y;
+                move.z = cameraRightVec.vec.z * tempmove.z + camerafrontVec.vec.z * tempmove.z;
+
+                Box[0].position.x += move.x;
+                Box[0].position.y += move.y;
+                Box[0].position.z += move.z;
+
+            }
+
+        }
+
+       
+
+
 
         for (int i = 0; i < Box.size(); i++)
         {
@@ -619,6 +666,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //delete Box;
     //delete Box2;
     delete BoxModel;
-    //_CrtDumpMemoryLeaks();
+    _CrtDumpMemoryLeaks();
 	return 0;
 }

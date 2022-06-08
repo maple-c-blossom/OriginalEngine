@@ -19,6 +19,8 @@ namespace MCB
 		float GetInnerProduct(Vector3D vector);
 		Vector3D GetV3Cross(Vector3D vector);
 
+		Vector3D GetV3Cross(Vector3D aVector, Vector3D bVector);
+
 		Vector3D& operator+=(const Vector3D& Vec);
 		Vector3D& operator-=(const Vector3D& Vec);
 		Vector3D& operator*=(const float& k);

@@ -61,6 +61,16 @@ Vector3D MCB::Vector3D::GetV3Cross(Vector3D vector)
 	return temp;
 }
 
+Vector3D MCB::Vector3D::GetV3Cross(Vector3D avector, Vector3D bvector)
+{
+	Vector3D temp;
+	temp.vec.x = avector.vec.y * bvector.vec.z - avector.vec.z * bvector.vec.y;
+	temp.vec.y = avector.vec.z * bvector.vec.x - avector.vec.x * bvector.vec.z;
+	temp.vec.z = avector.vec.x * bvector.vec.y - avector.vec.y * bvector.vec.x;
+	return temp;
+}
+
+
 float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 {
 	Vector3D temp;
