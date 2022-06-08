@@ -258,7 +258,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     // 頂点シェーダの読み込みとコンパイル--------------------------------
 #pragma region 頂点シェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"OBJVertexShader.hlsl", "main", VS);
+     shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJVertexShader.hlsl", "main", VS);
 
 #pragma endregion 頂点シェーダの読み込みとコンパイル
     //------------------------------------------
@@ -266,7 +266,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //ジオメトリシェーダの読み込みとコンパイル---------------
 #pragma region ジオメトリシェーダの読み込みとコンパイル
 
-     shader.ShaderCompile(L"OBJGeometryShader.hlsl", "main", GS);
+     shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJGeometryShader.hlsl", "main", GS);
 
 #pragma endregion ジオメトリシェーダの読み込みとコンパイル
      //---------------------------------
@@ -275,7 +275,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      // ピクセルシェーダの読み込みとコンパイル-------------------------------
 #pragma region ピクセルシェーダの読み込みとコンパイル
      
-     shader.ShaderCompile(L"OBJPixelShader.hlsl", "main", PS);
+     shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJPixelShader.hlsl", "main", PS);
 
 #pragma endregion ピクセルシェーダの読み込みとコンパイル
      //--------------------------------

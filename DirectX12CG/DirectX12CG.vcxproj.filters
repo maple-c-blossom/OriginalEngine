@@ -206,15 +206,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="OBJGeometryShader.hlsl">
-      <Filter>リソース ファイル\BasicShader\GeometoryShader</Filter>
-    </FxCompile>
-    <FxCompile Include="OBJPixelShader.hlsl">
-      <Filter>リソース ファイル\BasicShader\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="OBJVertexShader.hlsl">
-      <Filter>リソース ファイル\BasicShader\VertexShader</Filter>
-    </FxCompile>
     <FxCompile Include="ParticleGeometryShader.hlsl">
       <Filter>リソース ファイル\ParticleShader\GeometoryShader</Filter>
     </FxCompile>
@@ -223,6 +214,15 @@
     </FxCompile>
     <FxCompile Include="ParticleVertexShader.hlsl">
       <Filter>リソース ファイル\ParticleShader\VertexShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShader\OBJGeometryShader.hlsl">
+      <Filter>リソース ファイル\BasicShader\GeometoryShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShader\OBJPixelShader.hlsl">
+      <Filter>リソース ファイル\BasicShader\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShader\OBJVertexShader.hlsl">
+      <Filter>リソース ファイル\BasicShader\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,11 +312,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OBJHeader.hlsli">
-      <Filter>リソース ファイル\BasicShader\ShaderHeader</Filter>
-    </None>
     <None Include="ParticleHeader.hlsli">
       <Filter>リソース ファイル\ParticleShader\ShaderHeader</Filter>
+    </None>
+    <None Include="Resources\Shaders\OBJShader\OBJHeader.hlsli">
+      <Filter>リソース ファイル\BasicShader\ShaderHeader</Filter>
     </None>
   </ItemGroup>
 </Project>
