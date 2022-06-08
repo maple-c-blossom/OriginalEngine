@@ -426,10 +426,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         }
 
+
         matView.target.x = matView.eye.x + targetVec.x;
         matView.target.y = matView.eye.y + targetVec.y;
         matView.target.z = matView.eye.z + targetVec.z;
-
 
         matView.UpDateMatrixView();
 
