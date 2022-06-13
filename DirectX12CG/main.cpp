@@ -413,17 +413,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         if (input->IsKeyDown(DIK_RIGHT) || input->IsKeyDown(DIK_LEFT) || input->IsKeyDown(DIK_UP) || input->IsKeyDown(DIK_DOWN))
         {
             XMFLOAT3 move = { 0.0f,0.0f,0.0f };
-            if (input->IsKeyDown(DIK_RIGHT)) { move.x += 1.0f; }
-            else if (input->IsKeyDown(DIK_LEFT)) { move.x -= 1.0f; }
+            if (input->IsKeyDown(DIK_RIGHT)) { Angle.y += 0.05f; }
+            else if (input->IsKeyDown(DIK_LEFT)) { Angle.y -= 0.05f; }
 
             if (input->IsKeyDown(DIK_UP)) { move.z += 1.0f; }
             else if (input->IsKeyDown(DIK_DOWN)) { move.z -= 1.0f; }
 
-            matView.eye.x += move.x;
-            matView.eye.y += move.y;
-            matView.eye.z += move.z;
+            //matView.eye.x += move.x;
+            //matView.eye.y += move.y;
 
+            targetVec.x = sinf(Angle.y);
+            targetVec.y = sinf(Angle.x);
+            targetVec.z = cosf(Angle.y + Angle.x);
 
+            matView.eye.z += move.z * targetVec.z;
         }
 
 
@@ -466,18 +469,36 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
                 cameraRightVec = cameraRightVec.GetV3Cross(Vector3D{ 0,1,0 }, camerafrontVec);
                 cameraRightVec.V3Norm();
 
-                if (input->IsKeyDown(DIK_D)) { tempmove.x += 1.0f; };
-                if (input->IsKeyDown(DIK_A)) { tempmove.x -= 1.0f; };
-                if (input->IsKeyDown(DIK_W)) { tempmove.z += 1.0f; };
-                if (input->IsKeyDown(DIK_S)) { tempmove.z -= 1.0f; };
+                if (input->IsKeyDown(DIK_D)) 
+                {
+                    Box[0].position.x += cameraRightVec.vec.x;
+                    Box[0].position.y += cameraRightVec.vec.y;
+                    Box[0].position.z += cameraRightVec.vec.z;
+                };
+                if (input->IsKeyDown(DIK_A)) 
+                {
+                    Box[0].position.x -= cameraRightVec.vec.x;
+                    Box[0].position.y -= cameraRightVec.vec.y;
+                    Box[0].position.z -= cameraRightVec.vec.z;
 
-                move.x = cameraRightVec.vec.x * tempmove.x + camerafrontVec.vec.x * tempmove.x;
-                move.y = cameraRightVec.vec.y * tempmove.y + camerafrontVec.vec.y * tempmove.y;
-                move.z = cameraRightVec.vec.z * tempmove.z + camerafrontVec.vec.z * tempmove.z;
+                };
+                if (input->IsKeyDown(DIK_W)) 
+                {
+                    Box[0].position.x += camerafrontVec.vec.x;
+                    Box[0].position.y += camerafrontVec.vec.y;
+                    Box[0].position.z += camerafrontVec.vec.z;
+                };
+                if (input->IsKeyDown(DIK_S)) 
+                {
+                    Box[0].position.x -= camerafrontVec.vec.x;
+                    Box[0].position.y -= camerafrontVec.vec.y;
+                    Box[0].position.z -= camerafrontVec.vec.z;
+                
+                };
 
-                Box[0].position.x += move.x;
-                Box[0].position.y += move.y;
-                Box[0].position.z += move.z;
+                //move.x = cameraRightVec.vec.x * tempmove.x + camerafrontVec.vec.x * tempmove.x;
+                //move.y = cameraRightVec.vec.y * tempmove.y + camerafrontVec.vec.y * tempmove.y;
+                //move.z = cameraRightVec.vec.z * tempmove.z + camerafrontVec.vec.z * tempmove.z;
 
             }
 
