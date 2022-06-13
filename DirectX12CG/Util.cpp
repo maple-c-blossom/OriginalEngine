@@ -116,3 +116,8 @@ double MCB::Abs(double num)
 	}
 	return num;
 }
+
+double MCB::ConvertRadius(double Angle)
+{
+	return Angle * (PI / 180);
+}

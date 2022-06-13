@@ -121,7 +121,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
-    std::array<std::array<std::array<Object3d, 9>,9>,9> Box;
+    std::array<Object3d, 9> Box;
     std::array<Object3d, 40> Box2;
 
     Model* BoxModel = new Model(*dx, "Box");
@@ -130,23 +130,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //Box->model->CreateModel("Box");
     //BoxModel->Init(*dx, "Box");
 
-    Box.begin()->begin()->begin()->model = BoxModel;
+    Box.begin()->model = BoxModel;
 
     //Box.begin()->begin()->scale = {5,5,5};
    
+    int distance = 20;
 
+    int defultAngle = 40;
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < Box.size(); i++)
     {
-        for (int j = 0; j < 9; j++)
-        {
 
-            for (int k = 0; k < 9; k++)
-            {
-                Box[i][j][k].Init(*dx);
-                Box[i][j][k].model = BoxModel;
-                Box[i][j][k].scale = {3,3,3};
-            }
+        Box[i].Init(*dx);
+        Box[i].model = BoxModel;
+        Box[i].scale = {3,3,3};
+        
             //if (j > 0)
             //{
             //    Box[i][j].parent = &Box[0][j - 1];
@@ -154,7 +152,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             //    Box[i][j].rotasion = {0,0,0.2};
             //    Box[i][j].position = {0,0,1};
             //}
-        }
     }
 
     for (int i = 0; i < Box2.size(); i++)
@@ -180,7 +177,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
         View matView;
-        matView.CreateMatrixView(XMFLOAT3(42.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+        matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
         //射影変換行列
         Projection matProjection;
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow->window_width / dxWindow->window_height, 0.1f, 1000.0f);
@@ -506,21 +503,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         //}
 
-       
+        defultAngle += 4;
 
-
+        if (defultAngle > 360)
+        {
+            defultAngle = 0;
+        }
 
         for (int i = 0; i < 9; i++)
         {
-            for (int j = 0; j < 9; j++)
-            {
-                for (int k = 0; k < 9; k++)
-                {
-                    Box[i][j][k].position = {(float)10 * k,(float)10 * j,(float)10 * i};
-                    Box[i][j][k].Updata(matView, matProjection);
-
-                }
-            }
+            Box[i].position = { distance * sinf(ConvertRadius(-defultAngle + i * 40)), distance * cosf(ConvertRadius(-defultAngle + i * 40)), 0 };
+            Box[i].Updata(matView, matProjection);
         }
 
         for (int i = 0; i < Box2.size(); i++)
@@ -622,13 +615,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         for (int i = 0; i < 9; i++)
         {
-            for (int j = 0; j < 9; j++)
-            {
-                for (int k = 0; k < 9; k++)
-                {
-                    Box[i][j][k].Draw(*dx);
-                }
-            }
+                Box[i].Draw(*dx);
         }
 
         //for (int i = 0; i < Box2.size(); i++)

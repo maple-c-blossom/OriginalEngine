@@ -16,5 +16,7 @@ namespace MCB
 	float Abs(float num);
 	double Abs(double num);
 
+	double ConvertRadius(double Angle);
+
 }
 
