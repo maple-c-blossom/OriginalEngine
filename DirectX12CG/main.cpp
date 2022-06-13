@@ -121,7 +121,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
-    std::array<std::array<Object3d, 9>,9> Box;
+    std::array<std::array<std::array<Object3d, 9>,9>,9> Box;
     std::array<Object3d, 40> Box2;
 
     Model* BoxModel = new Model(*dx, "Box");
@@ -130,7 +130,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //Box->model->CreateModel("Box");
     //BoxModel->Init(*dx, "Box");
 
-    Box.begin()->begin()->model = BoxModel;
+    Box.begin()->begin()->begin()->model = BoxModel;
 
     //Box.begin()->begin()->scale = {5,5,5};
    
@@ -141,10 +141,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         for (int j = 0; j < 9; j++)
         {
 
-
-            Box[i][j].Init(*dx);
-            Box[i][j].model = BoxModel;
-            Box[i][j].scale = {2,2,2};
+            for (int k = 0; k < 9; k++)
+            {
+                Box[i][j][k].Init(*dx);
+                Box[i][j][k].model = BoxModel;
+                Box[i][j][k].scale = {3,3,3};
+            }
             //if (j > 0)
             //{
             //    Box[i][j].parent = &Box[0][j - 1];
@@ -512,8 +514,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         {
             for (int j = 0; j < 9; j++)
             {
-                Box[i][j].position = { (float)10 * j,(float)10 * i,20 };
-                Box[i][j].Updata(matView, matProjection);
+                for (int k = 0; k < 9; k++)
+                {
+                    Box[i][j][k].position = {(float)10 * k,(float)10 * j,(float)10 * i};
+                    Box[i][j][k].Updata(matView, matProjection);
+
+                }
             }
         }
 
@@ -618,8 +624,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         {
             for (int j = 0; j < 9; j++)
             {
-                if ( (i > 0 && j > 0) && (i % 2 == 1 && j % 2 == 1)) continue;
-                Box[i][j].Draw(*dx);
+                for (int k = 0; k < 9; k++)
+                {
+                    Box[i][j][k].Draw(*dx);
+                }
             }
         }
 
