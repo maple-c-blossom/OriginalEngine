@@ -121,7 +121,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
-    std::array<Object3d, 20> Box;
+    std::array<std::array<Object3d, 9>,9> Box;
     std::array<Object3d, 40> Box2;
 
     Model* BoxModel = new Model(*dx, "Box");
@@ -130,22 +130,28 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //Box->model->CreateModel("Box");
     //BoxModel->Init(*dx, "Box");
 
-    Box.begin()->model = BoxModel;
+    Box.begin()->begin()->model = BoxModel;
 
-    Box.begin()->scale = {5,5,5};
+    //Box.begin()->begin()->scale = {5,5,5};
    
 
 
-    for (int i = 0; i < Box.size(); i++)
+    for (int i = 0; i < 9; i++)
     {
-        Box[i].Init(*dx);
-        Box[i].model = BoxModel;
-        if (i > 0)
+        for (int j = 0; j < 9; j++)
         {
-            Box[i].parent = &Box[i - 1];
-            Box[i].scale = { 0.9f,0.9f,0.9f };
-            Box[i].rotasion = { 0,0,0.2 };
-            Box[i].position = { 0,0,1 };
+
+
+            Box[i][j].Init(*dx);
+            Box[i][j].model = BoxModel;
+            Box[i][j].scale = {2,2,2};
+            //if (j > 0)
+            //{
+            //    Box[i][j].parent = &Box[0][j - 1];
+            //    Box[i][j].scale = {0.9f,0.9f,0.9f};
+            //    Box[i][j].rotasion = {0,0,0.2};
+            //    Box[i][j].position = {0,0,1};
+            //}
         }
     }
 
@@ -172,7 +178,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
         View matView;
-        matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+        matView.CreateMatrixView(XMFLOAT3(42.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
         //射影変換行列
         Projection matProjection;
          matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f),(float)dxWindow->window_width / dxWindow->window_height, 0.1f, 1000.0f);
@@ -404,31 +410,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        if (input->IsKeyTrigger(DIK_Q))
-        {
-            SelectVio = !SelectVio;
-        }
+        //if (input->IsKeyTrigger(DIK_Q))
+        //{
+        //    SelectVio = !SelectVio;
+        //}
 
 
-        if (input->IsKeyDown(DIK_RIGHT) || input->IsKeyDown(DIK_LEFT) || input->IsKeyDown(DIK_UP) || input->IsKeyDown(DIK_DOWN))
-        {
-            XMFLOAT3 move = { 0.0f,0.0f,0.0f };
-            if (input->IsKeyDown(DIK_RIGHT)) { Angle.y += 0.05f; }
-            else if (input->IsKeyDown(DIK_LEFT)) { Angle.y -= 0.05f; }
+        //if (input->IsKeyDown(DIK_RIGHT) || input->IsKeyDown(DIK_LEFT) || input->IsKeyDown(DIK_UP) || input->IsKeyDown(DIK_DOWN))
+        //{
+        //    XMFLOAT3 move = { 0.0f,0.0f,0.0f };
+        //    if (input->IsKeyDown(DIK_RIGHT)) { move.x += 1.0f; }
+        //    else if (input->IsKeyDown(DIK_LEFT)) { move.x -= 1.0f; }
 
-            if (input->IsKeyDown(DIK_UP)) { move.z += 1.0f; }
-            else if (input->IsKeyDown(DIK_DOWN)) { move.z -= 1.0f; }
+        //    if (input->IsKeyDown(DIK_UP)) { move.y += 1.0f; }
+        //    else if (input->IsKeyDown(DIK_DOWN)) { move.y -= 1.0f; }
 
-            //matView.eye.x += move.x;
-            //matView.eye.y += move.y;
-
-            targetVec.x = sinf(Angle.y);
-            targetVec.y = sinf(Angle.x);
-            targetVec.z = cosf(Angle.y + Angle.x);
-
-            matView.eye.z += move.z * targetVec.z;
-        }
-
+        //    matView.eye.x += move.x;
+        //    matView.eye.y += move.y;
+        //    matView.eye.z += move.z;
+        //}
 
         matView.target.x = matView.eye.x + targetVec.x;
         matView.target.y = matView.eye.y + targetVec.y;
@@ -436,81 +436,85 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
-        if (input->IsKeyDown(DIK_D) || input->IsKeyDown(DIK_A) || input->IsKeyDown(DIK_W) || input->IsKeyDown(DIK_S))
-        {
-                Float3 tempmove = { 0,0,0 };
-                Float3 move = { 0,0,0 };
-            if (SelectVio)
-            {
+        //if (input->IsKeyDown(DIK_D) || input->IsKeyDown(DIK_A) || input->IsKeyDown(DIK_W) || input->IsKeyDown(DIK_S))
+        //{
+        //        Float3 tempmove = { 0,0,0 };
+        //        Float3 move = { 0,0,0 };
+        //    if (SelectVio)
+        //    {
 
-                if (input->IsKeyDown(DIK_D)) { Box[0].rotasion.y += 0.05f; };
-                if (input->IsKeyDown(DIK_A)) { Box[0].rotasion.y -= 0.05f; };
+        //        if (input->IsKeyDown(DIK_D)) { Box[0].rotasion.y += 0.05f; };
+        //        if (input->IsKeyDown(DIK_A)) { Box[0].rotasion.y -= 0.05f; };
 
-                Box[0].nowFrontVec.vec.x = sinf(Box[0].rotasion.y);
-                Box[0].nowFrontVec.vec.z = cosf(Box[0].rotasion.y);
+        //        Box[0].nowFrontVec.vec.x = sinf(Box[0].rotasion.y);
+        //        Box[0].nowFrontVec.vec.z = cosf(Box[0].rotasion.y);
 
-                if (input->IsKeyDown(DIK_W)) { tempmove.z += 1.0f; };
-                if (input->IsKeyDown(DIK_S)) { tempmove.z -= 1.0f; };
+        //        if (input->IsKeyDown(DIK_W)) { tempmove.z += 1.0f; };
+        //        if (input->IsKeyDown(DIK_S)) { tempmove.z -= 1.0f; };
 
-                move.x = Box[0].nowFrontVec.vec.x * tempmove.z ;
-                move.y = Box[0].nowFrontVec.vec.y * tempmove.z ;
-                move.z = Box[0].nowFrontVec.vec.z * tempmove.z ;
+        //        move.x = Box[0].nowFrontVec.vec.x * tempmove.z ;
+        //        move.y = Box[0].nowFrontVec.vec.y * tempmove.z ;
+        //        move.z = Box[0].nowFrontVec.vec.z * tempmove.z ;
 
 
-                Box[0].position.x += move.x;
-                Box[0].position.y += move.y;
-                Box[0].position.z += move.z;
-            }
-            else
-            {
-                Vector3D camerafrontVec = { matView.target.x - matView.eye.x , matView.target.y - matView.eye.y ,matView.target.z - matView.eye.z};
-                camerafrontVec.V3Norm();
-                Vector3D cameraRightVec;
-                cameraRightVec = cameraRightVec.GetV3Cross(Vector3D{ 0,1,0 }, camerafrontVec);
-                cameraRightVec.V3Norm();
+        //        Box[0].position.x += move.x;
+        //        Box[0].position.y += move.y;
+        //        Box[0].position.z += move.z;
+        //    }
+        //    else
+        //    {
+        //        Vector3D camerafrontVec = { matView.target.x - matView.eye.x , matView.target.y - matView.eye.y ,matView.target.z - matView.eye.z};
+        //        camerafrontVec.V3Norm();
+        //        Vector3D cameraRightVec;
+        //        cameraRightVec = cameraRightVec.GetV3Cross(Vector3D{ 0,1,0 }, camerafrontVec);
+        //        cameraRightVec.V3Norm();
 
-                if (input->IsKeyDown(DIK_D)) 
-                {
-                    Box[0].position.x += cameraRightVec.vec.x;
-                    Box[0].position.y += cameraRightVec.vec.y;
-                    Box[0].position.z += cameraRightVec.vec.z;
-                };
-                if (input->IsKeyDown(DIK_A)) 
-                {
-                    Box[0].position.x -= cameraRightVec.vec.x;
-                    Box[0].position.y -= cameraRightVec.vec.y;
-                    Box[0].position.z -= cameraRightVec.vec.z;
+        //        if (input->IsKeyDown(DIK_D)) 
+        //        {
+        //            Box[0].position.x += cameraRightVec.vec.x;
+        //            Box[0].position.y += cameraRightVec.vec.y;
+        //            Box[0].position.z += cameraRightVec.vec.z;
+        //        };
+        //        if (input->IsKeyDown(DIK_A)) 
+        //        {
+        //            Box[0].position.x -= cameraRightVec.vec.x;
+        //            Box[0].position.y -= cameraRightVec.vec.y;
+        //            Box[0].position.z -= cameraRightVec.vec.z;
 
-                };
-                if (input->IsKeyDown(DIK_W)) 
-                {
-                    Box[0].position.x += camerafrontVec.vec.x;
-                    Box[0].position.y += camerafrontVec.vec.y;
-                    Box[0].position.z += camerafrontVec.vec.z;
-                };
-                if (input->IsKeyDown(DIK_S)) 
-                {
-                    Box[0].position.x -= camerafrontVec.vec.x;
-                    Box[0].position.y -= camerafrontVec.vec.y;
-                    Box[0].position.z -= camerafrontVec.vec.z;
-                
-                };
+        //        };
+        //        if (input->IsKeyDown(DIK_W)) 
+        //        {
+        //            Box[0].position.x += camerafrontVec.vec.x;
+        //            Box[0].position.y += camerafrontVec.vec.y;
+        //            Box[0].position.z += camerafrontVec.vec.z;
+        //        };
+        //        if (input->IsKeyDown(DIK_S)) 
+        //        {
+        //            Box[0].position.x -= camerafrontVec.vec.x;
+        //            Box[0].position.y -= camerafrontVec.vec.y;
+        //            Box[0].position.z -= camerafrontVec.vec.z;
+        //        
+        //        };
 
-                //move.x = cameraRightVec.vec.x * tempmove.x + camerafrontVec.vec.x * tempmove.x;
-                //move.y = cameraRightVec.vec.y * tempmove.y + camerafrontVec.vec.y * tempmove.y;
-                //move.z = cameraRightVec.vec.z * tempmove.z + camerafrontVec.vec.z * tempmove.z;
+        //        //move.x = cameraRightVec.vec.x * tempmove.x + camerafrontVec.vec.x * tempmove.x;
+        //        //move.y = cameraRightVec.vec.y * tempmove.y + camerafrontVec.vec.y * tempmove.y;
+        //        //move.z = cameraRightVec.vec.z * tempmove.z + camerafrontVec.vec.z * tempmove.z;
 
-            }
+        //    }
 
-        }
+        //}
 
        
 
 
 
-        for (int i = 0; i < Box.size(); i++)
+        for (int i = 0; i < 9; i++)
         {
-            Box[i].Updata(matView, matProjection);
+            for (int j = 0; j < 9; j++)
+            {
+                Box[i][j].position = { (float)10 * j,(float)10 * i,20 };
+                Box[i][j].Updata(matView, matProjection);
+            }
         }
 
         for (int i = 0; i < Box2.size(); i++)
@@ -610,15 +614,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        for (int i = 0; i < Box.size(); i++)
+        for (int i = 0; i < 9; i++)
         {
-            Box[i].Draw(*dx);
+            for (int j = 0; j < 9; j++)
+            {
+                if ( (i > 0 && j > 0) && (i % 2 == 1 && j % 2 == 1)) continue;
+                Box[i][j].Draw(*dx);
+            }
         }
 
-        for (int i = 0; i < Box2.size(); i++)
-        {
-            Box2[i].Draw(*dx);
-        }
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Draw(*dx);
+        //}
 
 #pragma endregion 描画コマンド
         //----------------------
