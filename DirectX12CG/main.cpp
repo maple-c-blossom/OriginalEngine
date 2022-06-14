@@ -143,8 +143,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         Box[i].Init(*dx);
         Box[i].model = BoxModel;
-        Box[i].scale = {3,3,3};
-        
+        Box[i].scale = {5,5,5};
+        Box[i].rotasion = { 45.0f,45.0f,0 };
+        Box[i].position = { 10,10,10 };
             //if (j > 0)
             //{
             //    Box[i][j].parent = &Box[0][j - 1];
@@ -502,17 +503,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //    }
 
         //}
-
-        defultAngle += 4;
-
-        if (defultAngle > 360)
-        {
-            defultAngle = 0;
-        }
-
         for (int i = 0; i < 9; i++)
         {
-            Box[i].position = { distance * sinf(ConvertRadius(-defultAngle + i * 40)), distance * cosf(ConvertRadius(-defultAngle + i * 40)), 0 };
             Box[i].Updata(matView, matProjection);
         }
 
@@ -613,7 +605,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの先頭にあるSRVをパラメータ1番に設定
         dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 1; i++)
         {
                 Box[i].Draw(*dx);
         }
