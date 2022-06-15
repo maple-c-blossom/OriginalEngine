@@ -27,11 +27,15 @@ namespace MCB
             //デスクリプタレンジの設定
             D3D12_DESCRIPTOR_RANGE descriptorRange{};
 
-            void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_TYPE type, D3D12_DESCRIPTOR_HEAP_FLAGS flags, const size_t kMax);
+            const size_t MaxSRVCount = 2056;
+
+            void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags);
 
             HRESULT SetDescriptorHeap(Dx12 &dx12);
 
             void SetSrvHeap();
+
+            void SetSrvHeap(unsigned short int incrementNum, Dx12 dx12);
 
             void SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension);
 

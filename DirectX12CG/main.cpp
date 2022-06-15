@@ -193,7 +193,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
      //画像イメージデータの作成----------------------
      TexImgData* imageData = new TexImgData;
-     imageData->SetImageDataRGBA(XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
+     imageData->SetImageDataRGBA(XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
      //------------------------------------
 
       //テクスチャバッファ設定---------------------------------------
@@ -214,7 +214,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
      const size_t kMaxSRVCount = 2056;
      Descriptor descriptor;
-     descriptor.SetHeapDesc(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE, kMaxSRVCount);
+     descriptor.SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
      dx->result = descriptor.SetDescriptorHeap(*dx);
      descriptor.SetSrvHeap();
 

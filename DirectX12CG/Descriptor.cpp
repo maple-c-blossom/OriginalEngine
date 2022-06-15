@@ -1,10 +1,10 @@
 #include "Descriptor.h"
 
-void MCB::Descriptor::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_TYPE type, D3D12_DESCRIPTOR_HEAP_FLAGS flags, const size_t kMax)
+void MCB::Descriptor::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags)
 {
-    srvHeapDesc.Type = type;
+    srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     srvHeapDesc.Flags = flags; //シェーダーから見えるように
-    srvHeapDesc.NumDescriptors = kMax;//定数バッファの数
+    srvHeapDesc.NumDescriptors = MaxSRVCount;//定数バッファの数
 }
 
 HRESULT MCB::Descriptor::SetDescriptorHeap(Dx12 &dx12)
@@ -37,4 +37,11 @@ void MCB::Descriptor::SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION s
 void MCB::Descriptor::SetSrvHeap()
 {
     srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+    
+}
+
+void MCB::Descriptor::SetSrvHeap(unsigned short int incrementNum, Dx12 dx12)
+{
+    srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
+    srvHandle.ptr += incrementNum * dx12.device.Get()->GetDescriptorHandleIncrementSize(srvHeapDesc.Type);
 }

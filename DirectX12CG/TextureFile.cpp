@@ -12,6 +12,7 @@ HRESULT MCB::TextureFile::LoadTexture(const wchar_t *FileName, DirectX::WIC_FLAG
 {
 	return LoadFromWICFile(FileName, flag, &metadata, scratchImg);
 }
+
 HRESULT MCB::TextureFile::LoadTexture(const std::string& directoryPath, const std::string& filename)
 {
     string filepath = directoryPath + filename;

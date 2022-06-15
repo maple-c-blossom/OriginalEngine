@@ -41,6 +41,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TexImgData.cpp" />
     <ClCompile Include="TexSample.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureBuffer.cpp" />
     <ClCompile Include="TextureFile.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="TexImgData.h" />
     <ClInclude Include="TexSample.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureBuffer.h" />
     <ClInclude Include="TextureFile.h" />
     <ClInclude Include="Util.h" />
