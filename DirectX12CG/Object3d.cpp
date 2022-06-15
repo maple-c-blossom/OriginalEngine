@@ -83,8 +83,17 @@ void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Object3d::Draw(Dx12 dx12)
+void Object3d::Draw(Dx12 dx12, ShaderResource descriptor, unsigned short int increment)
 {
+    //SRVヒープの先頭アドレスを取得
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+
+    srvGpuHandle.ptr += increment * dx12.device.Get()->GetDescriptorHandleIncrementSize(descriptor.srvHeapDesc.Type);
+
+    //SRVヒープの先頭にあるSRVをパラメータ1番に設定
+    dx12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
     //頂点データ
     dx12.commandList->IASetVertexBuffers(0, 1, &model->vbView);
     //インデックスデータ

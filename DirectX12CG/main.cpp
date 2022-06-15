@@ -34,10 +34,6 @@
 #include "Depth.h"
 #include "Object3d.h"
 #include "ObjectMaterial.h"
-#include "TextureFile.h"
-#include "MipMap.h"
-#include "TexImgData.h"
-#include "TextureBuffer.h"
 #include "Descriptor.h"
 #include "RootParameter.h"
 #include "Vertex.h"
@@ -50,6 +46,7 @@
 #include "Particle.h"
 #include "Quaternion.h"
 #include <array>
+#include "Texture.h"
 
 #pragma endregion 自作.h include
 
@@ -118,13 +115,18 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //objMaterial.Init(*dx);
     ////---------------------
 
+    ShaderResource descriptor;
+    descriptor.Init(*dx);
+
+    
+
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
     std::array<Object3d, 20> Box;
     std::array<Object3d, 40> Box2;
 
-    Model* BoxModel = new Model(*dx, "Box");
+    Model* BoxModel = new Model(*dx, "Box",&descriptor);
 
     //Box->Init(*dx);
     //Box->model->CreateModel("Box");
@@ -162,6 +164,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
     }
 
+    //BoxModel->texture.SetSrvHeap(*dx);
+
     //Particle particle(*dx);
     //particle.vert.material.Init(*dx);
     //particle.Init(*dx);
@@ -181,55 +185,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
      //---------------------
 
 #pragma region 画像関係
-     //画像ファイル--------------------
-     //TextureFile* textureFile = new TextureFile;
-     //dx->result = textureFile->LoadTexture(L"Resources\\tori.png", WIC_FLAGS_NONE);
-     //----------------------------
-
-     //ミップマップの生成-------------------------
-     MipMap* mipmap = new MipMap;
-     dx->result = mipmap->GenerateMipMap(&BoxModel->texture, TEX_FILTER_DEFAULT, 0);
-     //----------------------------
-
-     //画像イメージデータの作成----------------------
-     TexImgData* imageData = new TexImgData;
-     imageData->SetImageDataRGBA(XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
-     //------------------------------------
-
-      //テクスチャバッファ設定---------------------------------------
-      TextureBuffer texBuff;
-      texBuff.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM,D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,D3D12_MEMORY_POOL_L0);
-      texBuff.SetTexResourceDesc(BoxModel->texture, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
-      //--------------------------------------
 
 
-      //テクスチャバッファの生成----------------------
-      dx->result = texBuff.CommitResouce(*dx, D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
-      texBuff.TransferMipmatToTexBuff(BoxModel->texture, nullptr, dx->result);
-      //-----------------------------------
 #pragma endregion 画像関係
 
-         //デスクリプタヒープの生成-------------------------
-#pragma region デスクリプタヒープの生成
 
-     const size_t kMaxSRVCount = 2056;
-     Descriptor descriptor;
-     descriptor.SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
-     dx->result = descriptor.SetDescriptorHeap(*dx);
-     descriptor.SetSrvHeap();
 
-#pragma endregion デスクリプタヒープの生成
-    //-------------------------------
-
-     //シェーダーリソースビューの作成------------------------------
-#pragma region シェーダーリソースビューの作成
-
-     descriptor.SetSrvDesc(texBuff, D3D12_SRV_DIMENSION_TEXTURE2D);
-
-     descriptor.SetShaderResourceView(*dx, texBuff);
-
-#pragma endregion シェーダーリソースビューの作成
-     //----------------------------
 
      //デスクリプタレンジの設定--------------------------------
 #pragma region デスクリプタレンジの設定
@@ -584,20 +545,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //SRVヒープの設定コマンド
         dx->commandList->SetDescriptorHeaps(1, descriptor.srvHeap.GetAddressOf());
 
-        //SRVヒープの先頭アドレスを取得
-        D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
-
-        //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-        dx->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
         for (int i = 0; i < Box.size(); i++)
         {
-            Box[i].Draw(*dx);
+            Box[i].Draw(*dx,descriptor);
         }
 
         for (int i = 0; i < Box2.size(); i++)
         {
-            Box2[i].Draw(*dx);
+            Box2[i].Draw(*dx,descriptor);
         }
 
 #pragma endregion 描画コマンド
@@ -662,8 +618,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete dx;
     delete input;
     //delete textureFile;
-    delete mipmap;
-    delete imageData;
+    //delete mipmap;
+    //delete imageData;
     //delete Box;
     //delete Box2;
     delete BoxModel;

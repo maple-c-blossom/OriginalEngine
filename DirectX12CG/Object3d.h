@@ -10,7 +10,7 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
-
+#include "Descriptor.h"
 #include <vector>
 #include "Model.h"
 
@@ -63,7 +63,7 @@ namespace MCB
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
-        void Draw(Dx12 dx12);
+        void Draw(Dx12 dx12, ShaderResource descriptor, unsigned short int increment = 0);
 
         //void CreateModel(const char* fileName);
     };

@@ -14,11 +14,15 @@ namespace MCB
 		TexImgData texImg;
 		TextureBuffer texBuff;
 		TextureFile texfile;
+		ShaderResource* srvptr = nullptr;
+		unsigned short int incrementNum = 0;
 
-		void CreateTexture(Dx12 dx12, const wchar_t* FileName);
 
-		void CreateTexture(Dx12 dx12, const std::string& directoryPath, const std::string& filename);
+		void CreateTexture(Dx12 dx12, const wchar_t* FileName,unsigned short int incrementNum, ShaderResource* srv);
 
+		void CreateTexture(Dx12 dx12, const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum, ShaderResource* srv);
+
+		void SetSrvHeap(Dx12 dx12);
 
 	};
 
