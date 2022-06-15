@@ -1,5 +1,5 @@
 #include "Model.h"
-#
+
 
 using namespace std;
 
@@ -11,7 +11,7 @@ MCB::Model::Model(Dx12 dx12, const std::string fileName, ShaderResource* srv, un
 
 MCB::Model::~Model()
 {
-    texture.texfile.scratchImg.Release();
+    //texture.texfile.scratchImg.Release();
 }
 
 void MCB::Model::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)

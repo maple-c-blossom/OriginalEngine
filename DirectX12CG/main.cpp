@@ -109,16 +109,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //深度バッファ----
     Depth depth(*dxWindow, *dx);
     //-------
-
-    ////3Dオブジェクトマテリアルの生成-------------------
-    //ObjectMaterial objMaterial;
-    //objMaterial.Init(*dx);
-    ////---------------------
-
     ShaderResource descriptor;
     descriptor.Init(*dx);
-
-    
 
 
     //3Dオブジェクトの生成-------------------
@@ -128,10 +120,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     std::array<Object3d, 40> Box2;
 
     Model* BoxModel = new Model(*dx, "Box",&descriptor);
-
-    //Box->Init(*dx);
-    //Box->model->CreateModel("Box");
-    //BoxModel->Init(*dx, "Box");
 
     Box.begin()->model = BoxModel;
 
@@ -167,7 +155,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
     Texture testTex;
-    testTex.CreateTexture(*dx, L"Resources\\reimu.png", 1, &descriptor);
+    //testTex.CreateTexture(*dx, L"Resources\\reimu.png", 1, &descriptor);
 
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
@@ -183,21 +171,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion 行列
      //---------------------
 
-#pragma region 画像関係
-
-
-#pragma endregion 画像関係
-
-
-
-
-     //デスクリプタレンジの設定--------------------------------
-#pragma region デスクリプタレンジの設定
-
-     descriptor.SetDescriptorRange(1, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0);
-
-#pragma endregion デスクリプタレンジの設定
-     //-----------------------------------------
 
      //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定

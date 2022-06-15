@@ -17,6 +17,7 @@ namespace MCB
 		ShaderResource* srvptr = nullptr;
 		unsigned short int incrementNum = 0;
 
+		~Texture();
 
 		void CreateTexture(Dx12 dx12, const wchar_t* FileName,unsigned short int incrementNum, ShaderResource* srv);
 

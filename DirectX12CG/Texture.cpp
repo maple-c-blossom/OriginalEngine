@@ -5,6 +5,11 @@
 using namespace MCB;
 using namespace DirectX;
 
+MCB::Texture::~Texture()
+{
+
+}
+
 void MCB::Texture::CreateTexture(Dx12 dx12, const wchar_t* FileName, unsigned short int incrementNum,ShaderResource *srv)
 {
     HRESULT result = texfile.LoadTexture(FileName, WIC_FLAGS_NONE);
