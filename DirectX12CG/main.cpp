@@ -120,6 +120,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     
 
+
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
@@ -164,11 +165,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
     }
 
-    //BoxModel->texture.SetSrvHeap(*dx);
 
-    //Particle particle(*dx);
-    //particle.vert.material.Init(*dx);
-    //particle.Init(*dx);
+    Texture testTex;
+    testTex.CreateTexture(*dx, L"Resources\\reimu.png", 1, &descriptor);
 
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
@@ -548,12 +547,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         for (int i = 0; i < Box.size(); i++)
         {
-            Box[i].Draw(*dx,descriptor);
+                Box[i].Draw(*dx,descriptor);
         }
 
         for (int i = 0; i < Box2.size(); i++)
         {
-            Box2[i].Draw(*dx,descriptor);
+            Box2[i].Draw(*dx,descriptor , 1);
         }
 
 #pragma endregion 描画コマンド
@@ -617,11 +616,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete dxWindow;
     delete dx;
     delete input;
-    //delete textureFile;
-    //delete mipmap;
-    //delete imageData;
-    //delete Box;
-    //delete Box2;
     delete BoxModel;
     _CrtDumpMemoryLeaks();
 	return 0;
