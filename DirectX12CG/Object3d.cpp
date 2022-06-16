@@ -85,6 +85,9 @@ void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
 
 void Object3d::Draw(Dx12 dx12, ShaderResource descriptor, unsigned short int increment)
 {
+    //定数バッファビュー(CBV)の設定コマンド
+    dx12.commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
+
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
 

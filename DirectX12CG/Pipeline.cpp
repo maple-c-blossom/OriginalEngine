@@ -42,6 +42,7 @@ void MCB::Pipeline::SetGpipleneDescPS(ID3DBlob* blob)
 {
 	pipelineDesc.PS.pShaderBytecode = blob->GetBufferPointer();
 	pipelineDesc.PS.BytecodeLength = blob->GetBufferSize();
+	pipelineDesc.PS.BytecodeLength = blob->GetBufferSize();
 }
 
 void MCB::Pipeline::SetGpipleneDescAll(ID3DBlob* VS, ID3DBlob* PS)

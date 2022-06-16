@@ -34,19 +34,16 @@
 #include "Depth.h"
 #include "Object3d.h"
 #include "ObjectMaterial.h"
-#include "Descriptor.h"
 #include "RootParameter.h"
 #include "Vertex.h"
 #include "MCBMatrix.h"
 #include "Util.h"
-#include "Shader.h"
-#include "Pipeline.h"
-#include "TexSample.h"
-#include "RootSignature.h"
 #include "Particle.h"
 #include "Quaternion.h"
 #include <array>
 #include "Texture.h"
+#include "PIpelineRootSignature.h"
+#include "Draw.h"
 
 #pragma endregion 自作.h include
 
@@ -183,131 +180,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion ルートパラメータの設定
     //------------------------
 
-
-   //シェーダーオブジェクト宣言-------------------------------------------
-#pragma region シェーダーオブジェクト宣言
-    Shader shader;
-#pragma endregion シェーダーオブジェクト宣言
-    //---------------------------------
-
-    // 頂点シェーダの読み込みとコンパイル--------------------------------
-#pragma region 頂点シェーダの読み込みとコンパイル
-
-    shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJVertexShader.hlsl", "main", VS);
-
-#pragma endregion 頂点シェーダの読み込みとコンパイル
-    //------------------------------------------
-
-     //ジオメトリシェーダの読み込みとコンパイル---------------
-#pragma region ジオメトリシェーダの読み込みとコンパイル
-
-    shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJGeometryShader.hlsl", "main", GS);
-
-#pragma endregion ジオメトリシェーダの読み込みとコンパイル
-    //---------------------------------
-
-
-    // ピクセルシェーダの読み込みとコンパイル-------------------------------
-#pragma region ピクセルシェーダの読み込みとコンパイル
-
-    shader.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJPixelShader.hlsl", "main", PS);
-
-#pragma endregion ピクセルシェーダの読み込みとコンパイル
-    //--------------------------------
-
-    Pipeline pipleline;
-
-    //頂点シェーダ、ピクセルシェーダをパイプラインに設定-----------------------------
-#pragma region 頂点シェーダとピクセルシェーダをパイプラインに設定
-
-    pipleline.SetGpipleneDescAll(&shader);
-
-#pragma endregion 頂点シェーダとピクセルシェーダをパイプラインに設定
-    //-----------------------------------
-
-    //サンプルマスクとラスタライザステートの設定------------------------------------
-#pragma region サンプルマスクとラスタライザステートの設定
-    pipleline.SetSampleMask();
-
-    pipleline.SetAllAddRasterizerState();
-#pragma endregion サンプルマスクとラスタライザステートの設定
-    //------------------------------------
-
-
-     //ブレンドステートの設定-------------------------------
-#pragma region ブレンドステートの設定
-
-    pipleline.SetRenderTaegetBlendDesc(pipleline.pipelineDesc.BlendState.RenderTarget[0]);
-
-    pipleline.SetRenderTargetWriteMask();
-
-    pipleline.SetNormalBlendDesc();
-
-    pipleline.SetAlphaBlend();
-
-
-#pragma endregion ブレンドステートの設定
-    //--------------------------
-
-    //頂点レイアウトの設定------------------
-#pragma region 頂点レイアウトの設定
-
-    pipleline.pipelineDesc.InputLayout.pInputElementDescs = shader.inputLayout;
-    pipleline.pipelineDesc.InputLayout.NumElements = _countof(shader.inputLayout);
-
-#pragma endregion 頂点レイアウトの設定
-    //----------------------------
-
-    //図形の形状を三角形に設定-------------------------
-    pipleline.SetPrimitiveTopologyType();
-    //------------------
-
-    //その他の設定----------------
-#pragma region その他の設定
-
-    pipleline.SetNumRenderTargets();
-    pipleline.SetRTVFormats();
-    pipleline.SetSampleDescCount();
-
-#pragma endregion その他の設定
-    //----------------
-
-    depth.SetDepthStencilState(pipleline.pipelineDesc);
-
-    //テクスチャサンプラーの設定-----------------------
-#pragma region テクスチャサンプラーの設定
-
-    TexSample sample;
-    sample.Init();
-
-#pragma endregion テクスチャサンプラーの設定
-    //----------------------------------
-
-      //ルートシグネチャの生成--------------------------
-#pragma region ルートシグネチャの生成
-
-    RootSignature rootsignature;
-
-    rootsignature.InitRootSignatureDesc(rootparams, sample);
-
-    rootsignature.SetSerializeRootSignature(shader, *dx);
-
-    rootsignature.CreateRootSignature(dx);
-
-    // パイプラインにルートシグネチャをセット
-
-    pipleline.SetRootSignature(rootsignature);
-
-#pragma endregion ルートシグネチャの生成
-    //--------------------------------
-
-   //パイプラインステートの生成-------------------------
-#pragma region パイプラインステートの生成
-
-    pipleline.CreateGraphicsPipelineState(dx);
-
-#pragma endregion パイプラインステートの生成
-    //-----------------------------
+    PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(*dx,depth,rootparams);
 
     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 
@@ -506,21 +379,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma endregion シザー矩形の設定コマンド
         //------------------
-
-        dx->commandList->SetPipelineState(pipleline.pipelinestate.Get());
-        dx->commandList->SetGraphicsRootSignature(rootsignature.rootsignature.Get());
-
-
-        //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
-        dx->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-
-        //定数バッファビュー(CBV)の設定コマンド
-        dx->commandList->SetGraphicsRootConstantBufferView(2, BoxModel->material.constBuffMaterialB1->GetGPUVirtualAddress());
-
-        //SRVヒープの設定コマンド
-        dx->commandList->SetDescriptorHeaps(1, descriptor.srvHeap.GetAddressOf());
-
+        Draw::AfterDraw(*dx, depth, descriptor, obj3dPipeline);
 
         for (int i = 0; i < Box.size(); i++)
         {

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="Descriptor.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Dx12.cpp" />
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="MCBFloat.cpp" />
@@ -34,11 +35,13 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleMaterial.cpp" />
     <ClCompile Include="Pipeline.cpp" />
+    <ClCompile Include="PIpelineRootSignature.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RootParameter.cpp" />
     <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TexImgData.cpp" />
     <ClCompile Include="TexSample.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -127,6 +130,7 @@
   <ItemGroup>
     <ClInclude Include="Depth.h" />
     <ClInclude Include="Descriptor.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="MCBFloat.h" />
@@ -139,11 +143,13 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleMaterial.h" />
     <ClInclude Include="Pipeline.h" />
+    <ClInclude Include="PIpelineRootSignature.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RootParameter.h" />
     <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TexImgData.h" />
     <ClInclude Include="TexSample.h" />
     <ClInclude Include="Texture.h" />
