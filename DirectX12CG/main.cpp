@@ -184,6 +184,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //------------------------
 
     PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(*dx,depth,rootparams);
+    PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(*dx, depth, rootparams);
+
 
     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // ê¬Ç¡Ç€Ç¢êF
 

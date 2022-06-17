@@ -19,6 +19,8 @@ namespace MCB
 
 		PipelineRootSignature Create3DObjectPipeline(Dx12 &dx12,Depth& depth, RootParameter& rootparam);
 
+		PipelineRootSignature CreateSpritePipeline(Dx12 &dx12,Depth& depth, RootParameter& rootparam);
+
 	};
 }
 
