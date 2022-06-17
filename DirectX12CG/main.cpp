@@ -112,6 +112,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Texture testTex;
     testTex.CreateTexture(*dx, L"Resources\\reimu.png", 1, &descriptor);
+
+    Draw draw;
+
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
@@ -148,7 +151,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Box2[i].scale = { 5,5,5 };
         if (i > 0)
         {
-            ;           Box2[i].position.z = Box2[i - 1].position.z + 20;
+              Box2[i].position.z = Box2[i - 1].position.z + 20;
         }
     }
 
@@ -311,75 +314,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion 更新処理
 
 #pragma region 描画処理
-        //バックバッファの番号を取得（2つなので0番か1番）--------------------------
-        UINT bbIndex = dx->swapchain->GetCurrentBackBufferIndex();
-        //-----------------------------------
 
-        // １．リソースバリアで書き込み可能に変更----
-#pragma region １．リソースバリアで書き込み可能に変更
-
-        D3D12_RESOURCE_BARRIER barrierDesc{};
-        barrierDesc.Transition.pResource = dx->backBuffers[bbIndex].Get(); // バックバッファを指定
-        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // 表示から
-        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
-        dx->commandList->ResourceBarrier(1, &barrierDesc);
-
-#pragma endregion 1．リソースバリアで書き込み可能に変更
-        //--------------------------
-
-        // ２．描画先指定----------------
-#pragma region ２．描画先指定
-
-// レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-        D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = dx->rtvHeaps->GetCPUDescriptorHandleForHeapStart();
-        rtvHandle.ptr += bbIndex * dx->device->GetDescriptorHandleIncrementSize(dx->rtvHeapDesc.Type);
-        D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
-        dx->commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
-
-#pragma endregion 2．描画先指定
-        //-------------------
-
-        //３．画面クリア-------------
-#pragma region 3.画面クリア
-        dx->commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-        dx->commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-#pragma endregion 3.画面クリア
-        //---------------------------
-
-        //描画コマンド------------------
-#pragma region 描画コマンド
-            //ビューポートの設定コマンド-----------------------------
-#pragma region ビューポートの設定コマンド
-
-        D3D12_VIEWPORT viewport{};
-
-        viewport.Width = dxWindow->window_width;
-        viewport.Height = dxWindow->window_height;
-        viewport.TopLeftX = 0;
-        viewport.TopLeftY = 0;
-        viewport.MinDepth = 0.0f;
-        viewport.MaxDepth = 1.0f;
-
-        dx->commandList->RSSetViewports(1, &viewport);
-
-#pragma endregion ビューポートの設定コマンド
-        //------------------------------
-
-        //シザー矩形の設定コマンド-----------------
-#pragma region シザー矩形の設定コマンド
-
-        D3D12_RECT scissorrect{};
-
-        scissorrect.left = 0;                                       // 切り抜き座標左
-        scissorrect.right = scissorrect.left + dxWindow->window_width;        // 切り抜き座標右
-        scissorrect.top = 0;                                        // 切り抜き座標上
-        scissorrect.bottom = scissorrect.top + dxWindow->window_height;       // 切り抜き座標下
-
-        dx->commandList->RSSetScissorRects(1, &scissorrect);
-
-#pragma endregion シザー矩形の設定コマンド
-        //------------------
-        Draw::AfterDraw(*dx, depth, descriptor, obj3dPipeline);
+        draw.PreDraw(*dx, depth, descriptor, obj3dPipeline, *dxWindow, clearColor);
 
         for (int i = 0; i < Box.size(); i++)
         {
@@ -394,51 +330,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion 描画コマンド
         //----------------------
 
-        // ５．リソースバリアを戻す--------------
-#pragma region 5.リソースバリアを戻す
 
-        barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
-        barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // 表示に
-        dx->commandList->ResourceBarrier(1, &barrierDesc);
-
-#pragma endregion 5.リソースバリアを戻す
-        //--------------------
-
-        // 命令のクローズ-----------------------------------
-        dx->result = dx->commandList->Close();
-        assert(SUCCEEDED(dx->result) && "命令クローズ段階でのエラー");
-        //------------
-
-
-        // コマンドリストの実行-------------------------------------
-#pragma region コマンドリスト実行
-        ID3D12CommandList* commandLists[] = { dx->commandList.Get() }; // コマンドリストの配列
-        dx->commandQueue->ExecuteCommandLists(1, commandLists);
-
-        // バッファをフリップ（裏表の入替え)-----------------------
-        dx->result = dx->swapchain->Present(1, 0);
-        assert(SUCCEEDED(dx->result) && "バッファフリップ段階でのエラー");
-        //-----------------
-
-#pragma region コマンド実行完了待ち
-    // コマンドリストの実行完了を待つ
-        dx->commandQueue->Signal(dx->fence.Get(), ++dx->fenceVal);
-        if (dx->fence->GetCompletedValue() != dx->fenceVal)
-        {
-            HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-            dx->fence->SetEventOnCompletion(dx->fenceVal, event);
-            WaitForSingleObject(event, INFINITE);
-            CloseHandle(event);
-        }
-#pragma endregion コマンド実行完了待ち
-
-        //キューをクリア
-        dx->result = dx->commandAllocator->Reset(); // キューをクリア
-        assert(SUCCEEDED(dx->result) && "キュークリア段階でのエラー");
-
-        //再びコマンドリストをためる準備
-        dx->result = dx->commandList->Reset(dx->commandAllocator.Get(), nullptr);  // 再びコマンドリストを貯める準備
-        assert(SUCCEEDED(dx->result) && "コマンドリスト再貯蓄準備段階でのエラー");
+        draw.PostDraw(*dx);
 
 #pragma endregion コマンドリスト実行
         //------------------
