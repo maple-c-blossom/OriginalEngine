@@ -26,7 +26,7 @@ namespace MCB
     {
     public:
 
-        Model(Dx12 dx, const std::string fileName, ShaderResource* srv, unsigned short int textureNum = 0);
+        Model(Dx12 dx, const std::string fileName, ShaderResource* srv);
 
         ~Model();
 
@@ -67,15 +67,15 @@ namespace MCB
 
         HRESULT VertexMaping();
 
-        void CreateModel(Dx12 dx,const std::string fileName, ShaderResource* srv,unsigned short int TextureNum = 0);
+        void CreateModel(Dx12 dx,const std::string fileName, ShaderResource* srv);
 
         void SetSizeIB();
 
         void SetSizeVB();
 
-        void LoadMaterial(Dx12 dx12, const std::string& directoryPath,const std::string& filename, ShaderResource* srv,unsigned short int TextureNum = 0);
+        void LoadMaterial(Dx12 dx12, const std::string& directoryPath,const std::string& filename, ShaderResource* srv);
 
-        void Init(Dx12 dx12, const std::string fileName, ShaderResource* srv, unsigned short int textureNum = 0);
+        void Init(Dx12 dx12, const std::string fileName, ShaderResource* srv);
         
     };
 

@@ -27,7 +27,7 @@ namespace MCB
             //デスクリプタレンジの設定
             D3D12_DESCRIPTOR_RANGE descriptorRange{};
 
-            const size_t MaxSRVCount = 2056;
+            const size_t MaxSRVCount = 0xfff;
 
             void Init(Dx12 dx);
 

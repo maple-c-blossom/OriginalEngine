@@ -44,6 +44,7 @@
 #include "Texture.h"
 #include "PIpelineRootSignature.h"
 #include "Draw.h"
+#include "Sprite.h"
 
 #pragma endregion 自作.h include
 
@@ -111,10 +112,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     descriptor.Init(*dx);
 
     Texture testTex;
-    testTex.CreateTexture(*dx, L"Resources\\reimu.png", 1, &descriptor);
+    testTex.CreateTexture(*dx, L"Resources\\reimu.png", &descriptor);
 
     Draw draw;
 
+    Sprite sprite;
+    sprite = sprite.CreateSprite(*dx, *dxWindow);
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
@@ -319,6 +322,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         draw.PreDraw(*dx, depth, descriptor, obj3dPipeline, *dxWindow, clearColor);
 
+        
+
         for (int i = 0; i < Box.size(); i++)
         {
             Box[i].Draw(*dx, descriptor);
@@ -326,8 +331,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         for (int i = 0; i < Box2.size(); i++)
         {
-            Box2[i].Draw(*dx, descriptor, 1);
+            Box2[i].Draw(*dx, descriptor,0);
         }
+
+        sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
+
+        sprite.SpriteDraw(sprite, *dx, descriptor, testTex);
 
 #pragma endregion 描画コマンド
         //----------------------
