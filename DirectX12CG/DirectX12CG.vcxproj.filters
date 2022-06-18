@@ -213,11 +213,11 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="PIpelineRootSignature.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Draw.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PIpelineRootSignature.cpp">
+      <Filter>ソース ファイル\Pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

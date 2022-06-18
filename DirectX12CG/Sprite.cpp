@@ -1,4 +1,33 @@
 #include "Sprite.h"
+#include "Util.h"
+using namespace MCB;
+using namespace DirectX;
+
+DirectX::XMMATRIX Sprite::matProje{};
+
+void MCB::Sprite::SpriteUpdate(Sprite& sprite)
+{
+    HRESULT result = S_FALSE;
+    sprite.matWorld = DirectX::XMMatrixIdentity();
+    sprite.matWorld *= DirectX::XMMatrixRotationZ(ConvertRadius(sprite.rotation));
+    sprite.matWorld *= XMMatrixTranslation(sprite.position.x, sprite.position.y, sprite.position.z);
+
+    SpriteConstBufferDataTransform* constMap = nullptr;
+    result = sprite.constBuff->Map(0, nullptr, (void**)&constMap);
+    assert(SUCCEEDED(result) && "SpriteUpdate時のconstBuff->Mapエラー");
+    constMap->color = sprite.color;
+    constMap->mat = sprite.matWorld * Sprite::matProje;
+
+    sprite.constBuff->Unmap(0, nullptr);
+
+}
+
+void MCB::Sprite::InitMatProje(DxWindow& dxWindow)
+{
+    Sprite::matProje = DirectX::XMMatrixOrthographicOffCenterLH(
+        0.0f, dxWindow.window_width, dxWindow.window_height, 0.0f, 0.0f, 1.0f);
+
+}
 
 MCB::Sprite MCB::Sprite::CreateSprite(Dx12& dx12, DxWindow& dxWindow)
 {
@@ -71,8 +100,7 @@ MCB::Sprite MCB::Sprite::CreateSprite(Dx12& dx12, DxWindow& dxWindow)
     assert(SUCCEEDED(result) && "Sprite生成時のconstBuff->Mapエラー");
     Float4 tempcolor; tempcolor.x = 1; tempcolor.y = 1;tempcolor.z = 1;tempcolor.w = 1;
     constMap->color = tempcolor;
-    constMap->mat = DirectX::XMMatrixOrthographicOffCenterLH(
-        0.0f, dxWindow.window_width, dxWindow.window_height, 0.0f, 0.0f, 1.0f);
+    constMap->mat = Sprite::matProje;
     tempSprite.constBuff->Unmap(0,nullptr);
 
 

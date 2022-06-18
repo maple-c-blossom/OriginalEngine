@@ -10,6 +10,8 @@
 #include "Texture.h"
 namespace MCB
 {
+
+
 	class Sprite
 	{
 	public:
@@ -21,12 +23,12 @@ namespace MCB
 		};
 		//---------------------------------
 
-
 		typedef struct SpriteVertex
 		{
 			Float3 pos;
 			Float2 uv;
 		};
+
 
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 		D3D12_VERTEX_BUFFER_VIEW vbView{};
@@ -37,7 +39,14 @@ namespace MCB
 		D3D12_RESOURCE_DESC constResdesc{};
 		//Texture texture;
 
+		float rotation = 0.0f;
+		Float3 position = { 0,0,0 };
+		DirectX::XMMATRIX matWorld;
+		Float4 color = {1.0f,1.0f,1.0f,1.0f};
+		static DirectX::XMMATRIX matProje;
 
+		void SpriteUpdate(Sprite& sprite);
+		void InitMatProje(DxWindow& dxWindow);
 		Sprite CreateSprite(Dx12& dx12, DxWindow& dxWindow);
 		void SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature& pipeline, ShaderResource& descHeap);
 		void SpriteDraw(const Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex);

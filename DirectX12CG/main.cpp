@@ -116,8 +116,35 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     Draw draw;
 
-    Sprite sprite;
-    sprite = sprite.CreateSprite(*dx, *dxWindow);
+
+     //行列-----------------------
+#pragma region 行列
+        //ビュー変換行列
+    View matView;
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    //射影変換行列
+    Projection matProjection;
+    matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 1000.0f);
+#pragma endregion 行列
+    //---------------------
+
+
+    //ルートパラメータの設定---------------------------
+#pragma region ルートパラメータの設定
+
+    RootParameter rootparams;
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 1);
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
+#pragma endregion ルートパラメータの設定
+    //------------------------
+
+    PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(*dx,depth,rootparams);
+
+    PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(*dx, depth, rootparams);
+     
+    
+        
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
@@ -164,33 +191,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
 
-     //行列-----------------------
-#pragma region 行列
-        //ビュー変換行列
-    View matView;
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-    //射影変換行列
-    Projection matProjection;
-    matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 1000.0f);
-#pragma endregion 行列
-    //---------------------
 
 
-    //ルートパラメータの設定---------------------------
-#pragma region ルートパラメータの設定
 
-    RootParameter rootparams;
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 1);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
-#pragma endregion ルートパラメータの設定
-    //------------------------
+    Sprite sprite[30];
+    sprite[0].InitMatProje(*dxWindow);
 
-    PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(*dx,depth,rootparams);
-    PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(*dx, depth, rootparams);
+    for (int i = 0; i < _countof(sprite); i++)
+    {
+        sprite[i] = sprite[i].CreateSprite(*dx, *dxWindow);
+    }
 
 
     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
+
 
 #pragma endregion
 
@@ -316,6 +330,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             Box2[i].Updata(matView, matProjection);
         }
 
+
+        for (int i = 0; i < _countof(sprite); i++)
+        {
+            sprite[i].position = { (float)GetRand(0,dxWindow->window_width),(float)GetRand(0,dxWindow->window_height),0 };
+            sprite[i].SpriteUpdate(sprite[i]);
+        }
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -334,10 +354,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             Box2[i].Draw(*dx, descriptor,0);
         }
 
-        sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
-
-        sprite.SpriteDraw(sprite, *dx, descriptor, testTex);
-
+        sprite->SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
+        for (int i = 0; i < _countof(sprite); i++)
+        {
+            sprite[i].SpriteDraw(sprite[i], *dx, descriptor, testTex);
+        }
 #pragma endregion 描画コマンド
         //----------------------
 

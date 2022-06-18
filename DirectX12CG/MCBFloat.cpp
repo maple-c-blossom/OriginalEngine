@@ -49,9 +49,9 @@ MCB::Float4::Float4()
 
 MCB::Float4::Float4(float x, float y, float z, float w)
 {
-	x = x;
-	y = y;
-	z = z;
-	w = w;
+	this->x = x;
+	this->y = y;
+	this->z = z;
+	this->w = w;
 }
 
