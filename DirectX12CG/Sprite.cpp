@@ -147,20 +147,40 @@ void MCB::Sprite::SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature&
 }
 
 
-void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, Float2 size)
+void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float size_x, float size_y)
 {
     Sprite tempsprite = sprite;
+
+    Float2 size;
+    size.x = size_x;
+    size.y = size_y;
+
     if (size.x == 0 || size.y == 0)
     {
         D3D12_RESOURCE_DESC resdesc = tex.texBuff.texbuff->GetDesc();
 
-        tempsprite.size.x = (float)resdesc.Width;
-        tempsprite.size.y = (float)resdesc.Height;
+        if (size.x == 0)
+        {
+            tempsprite.size.x = (float)resdesc.Width;
+        }
+
+        if (size.y == 0)
+        {
+            tempsprite.size.y = (float)resdesc.Height;
+        }
     }
-    else
+    
+    if(size.x != 0 || size.y != 0)
     {
-        tempsprite.size.x = size.x;
-        tempsprite.size.y = size.y;
+        if (size.x != 0)
+        {
+            tempsprite.size.x = size.x;
+        }
+
+        if (size.y != 0)
+        {
+            tempsprite.size.y = size.y;
+        }
     }
     if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y)
     {
