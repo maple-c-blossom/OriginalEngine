@@ -37,19 +37,20 @@ namespace MCB
 		D3D12_HEAP_PROPERTIES constHeapProp{};
 		D3D12_RESOURCE_DESC Resdesc{};
 		D3D12_RESOURCE_DESC constResdesc{};
-		//Texture texture;
 
 		float rotation = 0.0f;
 		Float3 position = { 0,0,0 };
 		DirectX::XMMATRIX matWorld;
 		Float4 color = {1.0f,1.0f,1.0f,1.0f};
 		static DirectX::XMMATRIX matProje;
+		Float2 size = { 100,100 };
 
+		void SpriteTransferVertexBuffer(const Sprite& sprite);
 		void SpriteUpdate(Sprite& sprite);
 		void InitMatProje(DxWindow& dxWindow);
 		Sprite CreateSprite(Dx12& dx12, DxWindow& dxWindow);
 		void SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature& pipeline, ShaderResource& descHeap);
-		void SpriteDraw(const Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex);
+		void SpriteDraw(Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex,Float2 size = {0.0f,0.0f});
 	};
 
 }

@@ -194,13 +194,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 
-    Sprite sprite[30];
-    sprite[0].InitMatProje(*dxWindow);
+    Sprite sprite;
+    sprite.InitMatProje(*dxWindow);
 
-    for (int i = 0; i < _countof(sprite); i++)
-    {
-        sprite[i] = sprite[i].CreateSprite(*dx, *dxWindow);
-    }
+
+    sprite = sprite.CreateSprite(*dx, *dxWindow);
+
 
 
     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
@@ -216,7 +215,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
     bool SelectVio = true;
-
+    int count = 0;
 
 #pragma endregion ゲームループ用変数
     //--------------------------
@@ -331,11 +330,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
 
 
-        for (int i = 0; i < _countof(sprite); i++)
-        {
-            sprite[i].position = { (float)GetRand(0,dxWindow->window_width),(float)GetRand(0,dxWindow->window_height),0 };
-            sprite[i].SpriteUpdate(sprite[i]);
-        }
+
+        sprite.SpriteUpdate(sprite);
+        
+
+
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -354,11 +353,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             Box2[i].Draw(*dx, descriptor,0);
         }
 
-        sprite->SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
-        for (int i = 0; i < _countof(sprite); i++)
-        {
-            sprite[i].SpriteDraw(sprite[i], *dx, descriptor, testTex);
-        }
+        sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
+
+        sprite.SpriteDraw(sprite, *dx, descriptor, testTex);
+
 #pragma endregion 描画コマンド
         //----------------------
 

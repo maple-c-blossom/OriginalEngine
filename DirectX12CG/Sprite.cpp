@@ -5,6 +5,32 @@ using namespace DirectX;
 
 DirectX::XMMATRIX Sprite::matProje{};
 
+void MCB::Sprite::SpriteTransferVertexBuffer(const Sprite& sprite)
+{
+    HRESULT result = S_FALSE;
+
+    SpriteVertex vertices[] =
+    {
+        {{},{0.0f,1.0f}},
+        {{},{0.0f,0.0f}},
+        {{},{1.0f,1.0f}},
+        {{},{1.0f,0.0f}},
+    };
+    enum{LB,LT,RB,RT};
+
+    vertices[LB].pos = { 0.0f,sprite.size.y,0.0f };
+    vertices[LT].pos = { 0.0f,     0.0f  ,0.0f };
+    vertices[RB].pos = { sprite.size.x,sprite.size.y,0.0f };
+    vertices[RT].pos = { sprite.size.x,0.0f,0.0f };
+
+    SpriteVertex* vertexMap = nullptr;
+    result = sprite.vertBuff->Map(0, nullptr, (void**)&vertexMap);
+    assert(SUCCEEDED(result) && "SpriteTransferVertexBuffer時のvertBuff->Mapエラー");
+    memcpy(vertexMap, vertices, sizeof(vertices));
+    sprite.vertBuff->Unmap(0, nullptr);
+
+}
+
 void MCB::Sprite::SpriteUpdate(Sprite& sprite)
 {
     HRESULT result = S_FALSE;
@@ -34,7 +60,6 @@ MCB::Sprite MCB::Sprite::CreateSprite(Dx12& dx12, DxWindow& dxWindow)
     HRESULT result = S_FALSE;
 
     Sprite tempSprite = {};
-
 
 
     SpriteVertex vertices[] =
@@ -121,8 +146,28 @@ void MCB::Sprite::SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature&
     dx12.commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
 }
 
-void MCB::Sprite::SpriteDraw(const Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex)
+
+void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, Float2 size)
 {
+    Sprite tempsprite = sprite;
+    if (size.x == 0 || size.y == 0)
+    {
+        D3D12_RESOURCE_DESC resdesc = tex.texBuff.texbuff->GetDesc();
+
+        tempsprite.size.x = (float)resdesc.Width;
+        tempsprite.size.y = (float)resdesc.Height;
+    }
+    else
+    {
+        tempsprite.size.x = size.x;
+        tempsprite.size.y = size.y;
+    }
+    if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y)
+    {
+        tempsprite.SpriteTransferVertexBuffer(tempsprite);
+        sprite.size = tempsprite.size;
+    }
+
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -135,7 +180,7 @@ void MCB::Sprite::SpriteDraw(const Sprite& sprite, Dx12& dx12, ShaderResource de
     //頂点データ
     dx12.commandList->IASetVertexBuffers(0, 1, &vbView);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(0,sprite.constBuff->GetGPUVirtualAddress());
+    dx12.commandList->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff->GetGPUVirtualAddress());
     //描画コマンド
     dx12.commandList->DrawInstanced(4,1,0,0);
 
