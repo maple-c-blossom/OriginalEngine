@@ -25,6 +25,18 @@ void MCB::Sprite::SpriteTransferVertexBuffer(const Sprite& sprite)
 
     enum { LB, LT, RB, RT };
 
+    if (sprite.isFlipX)
+    {
+        left = -left;
+        right = -right;
+    }
+
+    if (sprite.isFlipY)
+    {
+        top = -top;
+        bottom = -bottom;
+    }
+
     vertices[LB].pos = { left,bottom,0.0f };
     vertices[LT].pos = { left,top,0.0f };
     vertices[RB].pos = { right,bottom,0.0f };
@@ -240,12 +252,25 @@ void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descript
 
 }
 
-void MCB::Sprite::SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, bool isflipX, bool isflipY)
+void MCB::Sprite::SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX, float positionY, bool isflipX, bool isflipY)
 {
     Sprite tempSprite = sprite;
 
+    tempSprite.position.x = positionX;
+    tempSprite.position.y = positionY;
+    tempSprite.position.z = 0;
+
+    tempSprite.SpriteUpdate(tempSprite);
+
     tempSprite.isFlipX = isflipX;
     tempSprite.isFlipY = isflipY;
+
+    D3D12_RESOURCE_DESC resdesc = tex.texBuff.texbuff->GetDesc();
+
+    tempSprite.size.x = (float)resdesc.Width;
+    tempSprite.size.y = (float)resdesc.Height;
+
+    tempSprite.SpriteTransferVertexBuffer(tempSprite);
 
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();

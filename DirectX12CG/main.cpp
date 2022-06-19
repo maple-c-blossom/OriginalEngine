@@ -355,7 +355,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 
-        sprite.SpriteDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
+        sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
 
 #pragma endregion •`‰æƒRƒ}ƒ“ƒh
         //----------------------

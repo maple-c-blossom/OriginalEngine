@@ -56,7 +56,8 @@ namespace MCB
 		void SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature& pipeline, ShaderResource& descHeap);
 		void SpriteDraw(Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0,float positionY = 0,
 						float size_x = 0, float size_y = 0);
-		void SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, bool isflipX = false, bool isflipY = false);
+		void SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0, float positionY = 0, 
+							bool isflipX = false, bool isflipY = false);
 
 	};
 
