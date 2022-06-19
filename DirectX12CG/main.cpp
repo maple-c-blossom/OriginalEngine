@@ -330,9 +330,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
 
 
-        sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
-        sprite.SpriteUpdate(sprite);
-        
+        //sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
+        //sprite.SpriteUpdate(sprite);
+        //
 
 
 #pragma endregion 更新処理
@@ -355,7 +355,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 
-        sprite.SpriteDraw(sprite, *dx, descriptor, testTex);
+        sprite.SpriteDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
 
 #pragma endregion 描画コマンド
         //----------------------

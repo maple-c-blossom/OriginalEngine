@@ -169,8 +169,8 @@ void MCB::Sprite::SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature&
 }
 
 
-void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex,
-                            float size_x, float size_y, float anchorPoint_x, float anchorPoint_y)
+void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX, float positionY,
+                            float size_x, float size_y)
 {
     Sprite tempsprite = sprite;
 
@@ -180,8 +180,11 @@ void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descript
     size.x = size_x;
     size.y = size_y;
 
-    anchorPoint.x = anchorPoint_x;
-    anchorPoint.y = anchorPoint_y;
+    tempsprite.position.x = positionX;
+    tempsprite.position.y = positionY;
+    tempsprite.position.z = 0;
+
+    tempsprite.SpriteUpdate(tempsprite);
 
     if (size.x == 0 || size.y == 0)
     {
@@ -211,27 +214,12 @@ void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descript
         }
     }
 
-    if (anchorPoint.x != tempsprite.anchorPoint.x || anchorPoint.y != tempsprite.anchorPoint.y)
-    {
-        if (anchorPoint.x != tempsprite.anchorPoint.x)
-        {
-            tempsprite.anchorPoint.x = anchorPoint.x;
-        }
-
-        if (anchorPoint.y != tempsprite.anchorPoint.y)
-        {
-            tempsprite.anchorPoint.y = anchorPoint.y;
-        }
-    }
 
 
-
-    if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y ||
-       tempsprite.anchorPoint.x != sprite.anchorPoint.x || tempsprite.anchorPoint.y != sprite.anchorPoint.y)
+    if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y)
     {
         tempsprite.SpriteTransferVertexBuffer(tempsprite);
         sprite.size = tempsprite.size;
-        sprite.anchorPoint = tempsprite.anchorPoint;
     }
 
     //SRVヒープの先頭アドレスを取得
@@ -249,5 +237,30 @@ void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descript
     dx12.commandList->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff->GetGPUVirtualAddress());
     //描画コマンド
     dx12.commandList->DrawInstanced(4,1,0,0);
+
+}
+
+void MCB::Sprite::SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, bool isflipX, bool isflipY)
+{
+    Sprite tempSprite = sprite;
+
+    tempSprite.isFlipX = isflipX;
+    tempSprite.isFlipY = isflipY;
+
+    //SRVヒープの先頭アドレスを取得
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+
+    srvGpuHandle.ptr += tex.incrementNum * dx12.device.Get()->GetDescriptorHandleIncrementSize(descriptor.srvHeapDesc.Type);
+
+    //SRVヒープの先頭にあるSRVをパラメータ1番に設定
+    dx12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
+    //頂点データ
+    dx12.commandList->IASetVertexBuffers(0, 1, &vbView);
+    //定数バッファビュー(CBV)の設定コマンド
+    dx12.commandList->SetGraphicsRootConstantBufferView(0, sprite.constBuff->GetGPUVirtualAddress());
+    //描画コマンド
+    dx12.commandList->DrawInstanced(4, 1, 0, 0);
 
 }

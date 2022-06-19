@@ -45,14 +45,19 @@ namespace MCB
 		static DirectX::XMMATRIX matProje;
 		Float2 size = { 100,100 };
 		Float2 anchorPoint = { 0.5f,0.5f };
+		bool isFlipX = false;
+		bool isFlipY = false;
+
 
 		void SpriteTransferVertexBuffer(const Sprite& sprite);
 		void SpriteUpdate(Sprite& sprite);
 		void InitMatProje(DxWindow& dxWindow);
 		Sprite CreateSprite(Dx12& dx12, DxWindow& dxWindow);
 		void SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature& pipeline, ShaderResource& descHeap);
-		void SpriteDraw(Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex, 
-						float size_x = 0, float size_y = 0,float anchorPoint_x = 0.5f, float anchorPoint_y = 0.5f);
+		void SpriteDraw(Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0,float positionY = 0,
+						float size_x = 0, float size_y = 0);
+		void SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, bool isflipX = false, bool isflipY = false);
+
 	};
 
 }
