@@ -330,7 +330,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
 
 
-
+        sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
         sprite.SpriteUpdate(sprite);
         
 

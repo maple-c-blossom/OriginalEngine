@@ -16,12 +16,20 @@ void MCB::Sprite::SpriteTransferVertexBuffer(const Sprite& sprite)
         {{},{1.0f,1.0f}},
         {{},{1.0f,0.0f}},
     };
-    enum{LB,LT,RB,RT};
 
-    vertices[LB].pos = { 0.0f,sprite.size.y,0.0f };
-    vertices[LT].pos = { 0.0f,     0.0f  ,0.0f };
-    vertices[RB].pos = { sprite.size.x,sprite.size.y,0.0f };
-    vertices[RT].pos = { sprite.size.x,0.0f,0.0f };
+    float left = (0.0f - sprite.anchorPoint.x) * sprite.size.x;
+    float right = (1.0f - sprite.anchorPoint.x) * sprite.size.x;
+    float top = (0.0f - sprite.anchorPoint.y) * sprite.size.y;
+    float bottom = (1.0f - sprite.anchorPoint.y) * sprite.size.y;
+
+
+    enum { LB, LT, RB, RT };
+
+    vertices[LB].pos = { left,bottom,0.0f };
+    vertices[LT].pos = { left,top,0.0f };
+    vertices[RB].pos = { right,bottom,0.0f };
+    vertices[RT].pos = { right,top,0.0f };
+
 
     SpriteVertex* vertexMap = nullptr;
     result = sprite.vertBuff->Map(0, nullptr, (void**)&vertexMap);
@@ -89,6 +97,20 @@ MCB::Sprite MCB::Sprite::CreateSprite(Dx12& dx12, DxWindow& dxWindow)
 
     assert(SUCCEEDED(result) && "Sprite生成時の頂点バッファCommittedResourceエラー");
 
+    float left = (0.0f - tempSprite.anchorPoint.x) * tempSprite.size.x;
+    float right = (1.0f - tempSprite.anchorPoint.x) * tempSprite.size.x;
+    float top = (0.0f - tempSprite.anchorPoint.y) * tempSprite.size.y;
+    float bottom = (1.0f - tempSprite.anchorPoint.y) * tempSprite.size.y;
+
+
+    enum { LB, LT, RB, RT };
+
+    vertices[LB].pos = { left,bottom,0.0f };
+    vertices[LT].pos = { left,top,0.0f };
+    vertices[RB].pos = { right,bottom,0.0f };
+    vertices[RT].pos = { right,top,0.0f };
+
+
     SpriteVertex* vertexMap = nullptr;
     result = tempSprite.vertBuff->Map(0, nullptr, (void**)&vertexMap);
     assert(SUCCEEDED(result) && "Sprite生成時のvertBuff->Mapエラー");
@@ -147,13 +169,19 @@ void MCB::Sprite::SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature&
 }
 
 
-void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float size_x, float size_y)
+void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex,
+                            float size_x, float size_y, float anchorPoint_x, float anchorPoint_y)
 {
     Sprite tempsprite = sprite;
 
     Float2 size;
+    Float2 anchorPoint;
+
     size.x = size_x;
     size.y = size_y;
+
+    anchorPoint.x = anchorPoint_x;
+    anchorPoint.y = anchorPoint_y;
 
     if (size.x == 0 || size.y == 0)
     {
@@ -182,10 +210,28 @@ void MCB::Sprite::SpriteDraw(Sprite& sprite, Dx12& dx12, ShaderResource descript
             tempsprite.size.y = size.y;
         }
     }
-    if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y)
+
+    if (anchorPoint.x != tempsprite.anchorPoint.x || anchorPoint.y != tempsprite.anchorPoint.y)
+    {
+        if (anchorPoint.x != tempsprite.anchorPoint.x)
+        {
+            tempsprite.anchorPoint.x = anchorPoint.x;
+        }
+
+        if (anchorPoint.y != tempsprite.anchorPoint.y)
+        {
+            tempsprite.anchorPoint.y = anchorPoint.y;
+        }
+    }
+
+
+
+    if (tempsprite.size.x != sprite.size.x || tempsprite.size.y != sprite.size.y ||
+       tempsprite.anchorPoint.x != sprite.anchorPoint.x || tempsprite.anchorPoint.y != sprite.anchorPoint.y)
     {
         tempsprite.SpriteTransferVertexBuffer(tempsprite);
         sprite.size = tempsprite.size;
+        sprite.anchorPoint = tempsprite.anchorPoint;
     }
 
     //SRVヒープの先頭アドレスを取得
