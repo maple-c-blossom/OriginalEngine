@@ -151,19 +151,31 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //3Dモデル読み込み
     Model* BoxModel = new Model(*dx, "Box", &descriptor);
-        
+    
+    Model* skydomeModel = new Model(*dx, "skydome", &descriptor);
+
+    Model* groundModel = new Model(*dx, "ground", &descriptor);
+
+
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
     std::array<Object3d, 20> Box;
     std::array<Object3d, 40> Box2;
+    Object3d Skydorm;
+    Skydorm.Init(*dx);
+    Skydorm.model = skydomeModel;
+    Skydorm.scale = { 4,4,4 };
+
+    Object3d ground;
+    ground.Init(*dx);
+    ground.model = groundModel;
 
 
     Box.begin()->model = BoxModel;
 
     Box.begin()->scale = { 5,5,5 };
 
-    int distance = 20;
 
 
     for (int i = 0; i < Box.size(); i++)
@@ -223,6 +235,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     bool SelectVio = true;
     int count = 0;
 
+    int distance = 20;
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -335,6 +348,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             Box2[i].Updata(matView, matProjection);
         }
 
+        
+        Skydorm.Updata(matView, matProjection);
+        ground.Updata(matView, matProjection);
 
         //sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
         //sprite.SpriteUpdate(sprite);
@@ -346,7 +362,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         draw.PreDraw(*dx, depth, descriptor, obj3dPipeline, *dxWindow, clearColor);
 
-        
+        Skydorm.Draw(*dx, descriptor);
+        ground.Draw(*dx, descriptor);
 
         for (int i = 0; i < Box.size(); i++)
         {
@@ -384,8 +401,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete dx;
     delete input;
     delete BoxModel;
-    //delete testTex;
-}
+    delete skydomeModel;
+    delete groundModel;
+}   
     _CrtDumpMemoryLeaks();
 
 	return 0;
