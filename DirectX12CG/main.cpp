@@ -45,6 +45,7 @@
 #include "PIpelineRootSignature.h"
 #include "Draw.h"
 #include "Sprite.h"
+#include "DebugText.h"
 
 #pragma endregion 自作.h include
 
@@ -111,9 +112,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     ShaderResource descriptor;
     descriptor.Init(*dx);
 
-    Texture testTex;
-    testTex.CreateTexture(*dx, L"Resources\\reimu.png", &descriptor);
-
     Draw draw;
 
 
@@ -143,7 +141,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(*dx, depth, rootparams);
      
-    
+
+
+    //テクスチャ読み込み
+    Texture testTex;
+    testTex.CreateTexture(*dx, L"Resources\\reimu.png", &descriptor);
+    Texture debugTextTexture;
+    debugTextTexture.CreateTexture(*dx, L"Resources\\debugfont.png", &descriptor);
+
+    //3Dモデル読み込み
+    Model* BoxModel = new Model(*dx, "Box", &descriptor);
         
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
@@ -151,7 +158,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     std::array<Object3d, 20> Box;
     std::array<Object3d, 40> Box2;
 
-    Model* BoxModel = new Model(*dx, "Box", &descriptor);
 
     Box.begin()->model = BoxModel;
 
@@ -191,16 +197,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion 3Dオブジェクトの生成
     //----------------------
 
-
-
-
+    //スプライトの生成---------------
     Sprite sprite;
     sprite.InitMatProje(*dxWindow);
-
-
     sprite = sprite.CreateSprite(*dx, *dxWindow);
 
 
+    DebugText debugText;
+    debugText.Init(*dx, *dxWindow,&debugTextTexture);
+
+    //-----------------------
 
     float clearColor[] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 
@@ -333,8 +339,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
         //sprite.SpriteUpdate(sprite);
         //
-
-
+        
 #pragma endregion 更新処理
 
 #pragma region 描画処理
@@ -355,7 +360,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 
-        sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
+        //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
+        //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
+
+        debugText.AllDraw(descriptor);
 
 #pragma endregion 描画コマンド
         //----------------------

@@ -27,7 +27,9 @@ namespace MCB
             //デスクリプタレンジの設定
             D3D12_DESCRIPTOR_RANGE descriptorRange{};
 
-            const size_t MaxSRVCount = 0xfff;
+            static unsigned short int AllincrementNum;
+
+            const size_t MaxSRVCount = 0xffff;
 
             void Init(Dx12 dx);
 
@@ -38,6 +40,8 @@ namespace MCB
             void SetSrvHeap();
 
             void SetSrvHeap(unsigned short int incrementNum, Dx12 dx12);
+
+            void InitAllincrementNum();
 
             void SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension);
 

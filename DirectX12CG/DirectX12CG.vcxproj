@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="Descriptor.cpp" />
     <ClCompile Include="Draw.cpp" />
@@ -128,6 +129,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugText.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="Descriptor.h" />
     <ClInclude Include="Draw.h" />
