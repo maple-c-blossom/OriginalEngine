@@ -29,7 +29,7 @@ namespace MCB
 
             static unsigned short int AllincrementNum;
 
-            const size_t MaxSRVCount = 0xffff;
+            const size_t MaxSRVCount = 0xfff;
 
             void Init(Dx12 dx);
 

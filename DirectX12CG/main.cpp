@@ -152,9 +152,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dモデル読み込み
     Model* BoxModel = new Model(*dx, "Box", &descriptor);
     
+    Model* groundModel = new Model(*dx, "ground", &descriptor);
+
     Model* skydomeModel = new Model(*dx, "skydome", &descriptor);
 
-    Model* groundModel = new Model(*dx, "ground", &descriptor);
 
 
     //3Dオブジェクトの生成-------------------
@@ -162,15 +163,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //Object3d* Box = new Object3d(*dx);
     std::array<Object3d, 20> Box;
     std::array<Object3d, 40> Box2;
-    Object3d Skydorm;
-    Skydorm.Init(*dx);
-    Skydorm.model = skydomeModel;
-    Skydorm.scale = { 4,4,4 };
 
     Object3d ground;
     ground.Init(*dx);
     ground.model = groundModel;
+    ground.scale = { 4,4,4 };
 
+    Object3d Skydorm;
+    Skydorm.Init(*dx);
+    Skydorm.model = skydomeModel;
+    Skydorm.scale = { 4,4,4 };
 
     Box.begin()->model = BoxModel;
 
@@ -352,6 +354,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Updata(matView, matProjection);
         ground.Updata(matView, matProjection);
 
+
+
         //sprite.position = { (float)dxWindow->window_width / 2,(float)dxWindow->window_height / 2,0 };
         //sprite.SpriteUpdate(sprite);
         //
@@ -380,6 +384,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
 
+        sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
+
         debugText.AllDraw(descriptor);
 
 #pragma endregion 描画コマンド
@@ -396,6 +402,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     }
 #pragma endregion ゲームループ
+
+
     //---------------------------------
     delete dxWindow;
     delete dx;
