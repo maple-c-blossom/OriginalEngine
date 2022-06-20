@@ -168,11 +168,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     ground.Init(*dx);
     ground.model = groundModel;
     ground.scale = { 4,4,4 };
+    ground.position = { 0,-15,0 };
 
     Object3d Skydorm;
     Skydorm.Init(*dx);
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
+
 
     Box.begin()->model = BoxModel;
 
@@ -384,7 +386,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
 
-        sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
+        //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
         debugText.AllDraw(descriptor);
 

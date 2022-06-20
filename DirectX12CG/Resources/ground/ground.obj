@@ -5218,7 +5218,7 @@ vt 100.0000 100.0000 0.5000
 
 o Plane001
 g Plane001
-usemtl Material__44
+usemtl Material44
 f 1/1/1 2/2/1 3/3/1 
 f 4/4/1 3/3/1 2/2/1 
 f 3/3/1 4/4/1 5/5/1 
