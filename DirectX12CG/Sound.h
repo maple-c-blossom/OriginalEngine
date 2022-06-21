@@ -3,7 +3,7 @@
 #include <fstream>
 #include "Dx12.h"
 #include <wrl.h>
-
+#include <array>
 
 #pragma comment(lib,"xaudio2.lib")
 
@@ -30,28 +30,31 @@ namespace MCB
 			WAVEFORMATEX fmt;
 		};
 
+		typedef struct SoundData
+		{
+			WAVEFORMATEX wfex;
+			BYTE* pBuffer;
+			unsigned int bufferSize;
+			bool free = true;
+			const char* name;
+		};
+
 		Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
 		IXAudio2MasteringVoice* masterVoice;
+		static const int MaxSound = 1026;
+
+		std::array<SoundData, MaxSound> sounds;
 
 		void ReleasexAudio2();
 
+		unsigned int LoadWaveSound(const char* fileName);
+		void DeleteSound(unsigned int SoundHandle);
+		void AllDeleteSound();
+
+		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false);
+
 		SoundManager();
 		~SoundManager();
-	};
-
-	class Sound
-	{
-	public:
-		SoundManager* soundManager;
-		WAVEFORMATEX wfex;
-		BYTE* pBuffer;
-		unsigned int bufferSize;
-
-		Sound(SoundManager* soundManager);
-		void LoadWaveSound(const char* fileName);
-		void DeleteSound();
-
-		void PlaySoundWave(bool isLoop);
 
 	};
 

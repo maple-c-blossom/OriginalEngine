@@ -102,8 +102,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //inputクラス生成
     Input* input = new Input(dx->result, dxWindow->window, dxWindow->hwnd);
 
-    //サウンド初期化
-    SoundManager soundManager;
+
 #pragma endregion 
 
 
@@ -233,10 +232,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion
 
 #pragma region サウンド
-    //サウンド系
-    Sound testSound(&soundManager);
-    testSound.LoadWaveSound("Resources\\cat1.wav");
+    //サウンド初期化
+    SoundManager soundManager;
+    //サウンド系読み込み
+    int testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
 
+    //soundManager.PlaySoundWave(testSound);
 #pragma endregion サウンド
 
      //ゲームループ用変数--------------------------------
@@ -418,8 +419,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma endregion ゲームループ
 
     soundManager.ReleasexAudio2();
-
-    testSound.DeleteSound();
+    soundManager.AllDeleteSound();
+    //testSound.DeleteSound();
 
     //---------------------------------
     delete dxWindow;
@@ -428,6 +429,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
+
 }   
     _CrtDumpMemoryLeaks();
 
