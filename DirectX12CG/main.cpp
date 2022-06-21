@@ -46,6 +46,7 @@
 #include "Draw.h"
 #include "Sprite.h"
 #include "DebugText.h"
+#include "Sound.h"
 
 #pragma endregion 自作.h include
 
@@ -101,6 +102,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //inputクラス生成
     Input* input = new Input(dx->result, dxWindow->window, dxWindow->hwnd);
 
+    //サウンド初期化
+    SoundManager soundManager;
 #pragma endregion 
 
 
@@ -228,6 +231,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 #pragma endregion
+
+#pragma region サウンド
+    //サウンド系
+    Sound testSound(&soundManager);
+    testSound.LoadWaveSound("Resources\\cat1.wav");
+
+#pragma endregion サウンド
 
      //ゲームループ用変数--------------------------------
 #pragma region ゲームループ用変数
@@ -390,6 +400,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         debugText.AllDraw(descriptor);
 
+
+
 #pragma endregion 描画コマンド
         //----------------------
 
@@ -405,6 +417,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     }
 #pragma endregion ゲームループ
 
+    soundManager.ReleasexAudio2();
+
+    testSound.DeleteSound();
 
     //---------------------------------
     delete dxWindow;
