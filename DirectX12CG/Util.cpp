@@ -1,4 +1,6 @@
 #include "Util.h"
+#include <stdlib.h>
+#include <time.h>
 
 using namespace MCB;
 
@@ -117,7 +119,17 @@ double MCB::Abs(double num)
 	return num;
 }
 
-double MCB::ConvertRadius(double Angle)
+float MCB::ConvertRadius(float angle)
 {
-	return Angle * (PI / 180);
+	return angle * PI / 180.0f;
+}
+
+void MCB::InitRand()
+{
+	srand(time(nullptr));
+}
+
+int MCB::GetRand(int min, int max)
+{
+	return min + rand() % (max - min);
 }
