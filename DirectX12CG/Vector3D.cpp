@@ -7,6 +7,9 @@ MCB::Vector3D::Vector3D(Float3 start, Float3 end)
 {
 	vec = end - start;
 }
+
+
+
 MCB::Vector3D::Vector3D()
 {
 	vec.x = 0;
@@ -36,8 +39,9 @@ float MCB::Vector3D::V3Len() const
 void MCB::Vector3D::V3Norm()
 {
 	float VecLen = V3Len();
-	if (VecLen == 0)
+	if (VecLen == 0.0f)
 	{
+		//assert(0);
 		return;
 	}
 
@@ -70,6 +74,28 @@ Vector3D MCB::Vector3D::GetV3Cross(Vector3D avector, Vector3D bvector)
 	return temp;
 }
 
+Vector3D MCB::Vector3D::GetUpVec(Vector3D RightVec, Vector3D frontVec)
+{
+	Vector3D ans;
+	RightVec.V3Norm();
+	frontVec.V3Norm();
+	ans = ans.GetV3Cross(frontVec, RightVec);
+	ans.V3Norm();
+
+	return ans;
+}
+
+
+Vector3D MCB::Vector3D::GetRightVec(Vector3D frontVec, Vector3D UpVec)
+{
+	Vector3D ans;
+	frontVec.V3Norm();
+	UpVec.V3Norm();
+	ans = ans.GetV3Cross(UpVec, frontVec);
+	ans.V3Norm();
+
+	return ans;
+}
 
 float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 {
@@ -77,7 +103,7 @@ float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 	temp.vec = vec;
 	temp.V3Norm();
 	vector.V3Norm();
-	return temp.GetV3Dot(vector);
+	return acos(temp.GetV3Dot(vector));
 }
 
 Vector3D& MCB::Vector3D::operator+=(const Vector3D& Vec)
