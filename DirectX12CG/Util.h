@@ -19,5 +19,7 @@ namespace MCB
 
 	void InitRand();
 	int GetRand(int min, int max);
+
+
 }
 

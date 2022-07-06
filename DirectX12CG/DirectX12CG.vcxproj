@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="Descriptor.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="PIpelineRootSignature.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Quaternion.cpp" />
+    <ClCompile Include="RayObject.cpp" />
     <ClCompile Include="RootParameter.cpp" />
     <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -130,6 +132,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="Descriptor.h" />
@@ -149,6 +152,7 @@
     <ClInclude Include="PIpelineRootSignature.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Quaternion.h" />
+    <ClInclude Include="RayObject.h" />
     <ClInclude Include="RootParameter.h" />
     <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Shader.h" />

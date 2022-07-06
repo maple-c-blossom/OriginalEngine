@@ -47,7 +47,7 @@
 #include "Sprite.h"
 #include "DebugText.h"
 #include "Sound.h"
-
+#include "Collider.h"
 #pragma endregion 自作.h include
 
 #pragma region pragma comment
@@ -209,7 +209,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
     }
 
-
+    
 
 
 #pragma endregion 3Dオブジェクトの生成
@@ -322,8 +322,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
         debugText.AllDraw(descriptor);
-
-
 
 #pragma endregion 描画コマンド
         //----------------------
