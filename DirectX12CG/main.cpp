@@ -48,7 +48,14 @@
 #include "DebugText.h"
 #include "Sound.h"
 #include "Collider.h"
+
 #pragma endregion 自作.h include
+
+#pragma region ゲーム系.h include
+
+#include "RayObject.h"
+
+#pragma endregion ゲーム系.h include
 
 #pragma region pragma comment
 
@@ -121,7 +128,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
     View matView;
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     //射影変換行列
     Projection matProjection;
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
@@ -171,11 +178,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     ground.model = groundModel;
     ground.scale = { 4,4,4 };
     ground.position = { 0,-15,0 };
-
+    ;
     Object3d Skydorm;
     Skydorm.Init(*dx);
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
+
+    RayObject ray;
+    ray.Init(*dx);
+    ray.model = BoxModel;
+    ray.scale = { 1,1,30 };
 
 
     Box.begin()->model = BoxModel;
@@ -270,11 +282,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
+        if (input->IsKeyDown(DIK_D))
+        {
+            matView.eye.x++;
+        }
 
+        if (input->IsKeyDown(DIK_A))
+        {
+            matView.eye.x--;
+        }
 
-        matView.target.x = matView.eye.x + targetVec.x;
-        matView.target.y = matView.eye.y + targetVec.y;
-        matView.target.z = matView.eye.z + targetVec.z;
+        if (input->IsKeyDown(DIK_W))
+        {
+            matView.eye.z++;
+        }
+
+        if (input->IsKeyDown(DIK_S))
+        {
+            matView.eye.z--;
+        }
+
+        matView.target.x = ray.position.x;
+        matView.target.y = ray.position.y;
+        matView.target.z = ray.position.z;
 
         matView.UpDateMatrixView();
 
@@ -293,7 +323,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Updata(matView, matProjection);
         ground.Updata(matView, matProjection);
 
-
+        ray.Updata(matView, matProjection);
 
 #pragma endregion 更新処理
 
@@ -304,15 +334,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Draw(*dx, descriptor);
         ground.Draw(*dx, descriptor);
 
-        for (int i = 0; i < Box.size(); i++)
-        {
-            Box[i].Draw(*dx, descriptor);
-        }
+        //for (int i = 0; i < Box.size(); i++)
+        //{
+        //    Box[i].Draw(*dx, descriptor);
+        //}
 
-        for (int i = 0; i < Box2.size(); i++)
-        {
-            Box2[i].Draw(*dx, descriptor,0);
-        }
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Draw(*dx, descriptor,0);
+        //}
+
+        ray.Draw(*dx, descriptor);
 
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 

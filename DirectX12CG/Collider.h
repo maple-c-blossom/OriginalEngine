@@ -24,7 +24,7 @@ namespace MCB
 	class Sphere
 	{
 	public:
-		Float3 position;
+		Float3 centerPosition;
 		float radius;
 	};
 
