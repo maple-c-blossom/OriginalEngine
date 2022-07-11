@@ -249,7 +249,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     bool SelectVio = true;
     int count = 0;
-
+    float angle = 0.00f;
     int distance = 20;
 #pragma endregion ゲームループ用変数
     //--------------------------
@@ -270,7 +270,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-
+        matView.eye.x += sinf(angle);
+        matView.eye.z +=  + cosf(angle);
 
         matView.target.x = matView.eye.x + targetVec.x;
         matView.target.y = matView.eye.y + targetVec.y;
