@@ -28,7 +28,7 @@ void Input::Init(HRESULT &result, WNDCLASSEX w, HWND hwnd)
 	//---------------------------------
 
 	//”r‘¼ƒŒƒxƒ‹§Œä-------------------------------------------------------------
-	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
 
 #pragma endregion “ü—ÍŒn‰Šú‰»
@@ -78,7 +78,7 @@ Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
 	//---------------------------------
 
 	//”r‘¼ƒŒƒxƒ‹§Œä-------------------------------------------------------------
-	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(result));
 
 #pragma endregion “ü—ÍŒn‰Šú‰»

@@ -4,9 +4,12 @@
 
 namespace MCB
 {
-	class SphereObj:public Object3d,Sphere
+	class SphereObj:public Object3d, public Sphere
 	{
-		void SetCollider(float rayRadius);
+	public:
+		void SetCollider(float SphereRadius);
+
+		void ColliderUpdate();
 	};
 
 }

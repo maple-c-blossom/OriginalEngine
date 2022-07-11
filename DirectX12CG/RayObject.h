@@ -8,6 +8,7 @@ namespace MCB
 	public:
 		Ray collider;
 		
+		void ColliderUpdate();
 		void SetCollider(float rayRange,float rayRadius,Vector3D targetVec);
 	};
 

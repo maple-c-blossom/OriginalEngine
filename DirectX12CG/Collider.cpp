@@ -34,8 +34,10 @@ bool MCB::CalcRaySphere(Ray ray, Sphere sphere)
 	}
 
 	Float3 rayHitPosition;
-	(Vector3D)rayHitPosition = (ray.rayVec * tempPos);
-	(Vector3D)rayHitPosition += (Vector3D)ray.StartPosition;
+	rayHitPosition.x = ray.rayVec.vec.x;
+	rayHitPosition.y = ray.rayVec.vec.y;
+	rayHitPosition.z = ray.rayVec.vec.z;
+	rayHitPosition += ray.StartPosition;
 
 
 	Sphere Sray;

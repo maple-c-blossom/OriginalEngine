@@ -231,9 +231,6 @@
     <ClCompile Include="Draw.cpp">
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>ソース ファイル\Engin\Math</Filter>
-    </ClCompile>
     <ClCompile Include="Sound.cpp">
       <Filter>ソース ファイル\Engin</Filter>
     </ClCompile>
@@ -244,7 +241,10 @@
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
     <ClCompile Include="SphereObj.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,9 +370,6 @@
     <ClInclude Include="DebugText.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>ヘッダー ファイル\Engin\Math</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.h">
       <Filter>ヘッダー ファイル\Engin</Filter>
     </ClInclude>
@@ -383,7 +380,10 @@
       <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
     <ClInclude Include="SphereObj.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

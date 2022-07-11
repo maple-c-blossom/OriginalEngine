@@ -54,6 +54,7 @@
 #pragma region ƒQ[ƒ€Œn.h include
 
 #include "RayObject.h"
+#include "SphereObj.h"
 
 #pragma endregion ƒQ[ƒ€Œn.h include
 
@@ -84,7 +85,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     {
     //_CrtSetBreakAlloc(1030);
 
-    //int* hoge = new int(4);
     DxWindow* dxWindow = new DxWindow;
 
 #pragma region DirectX‰Šú‰»
@@ -188,7 +188,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     ray.Init(*dx);
     ray.model = BoxModel;
     ray.scale = { 1,1,30 };
+    ray.SetCollider(50, 1, { 0,0,1 });
 
+    SphereObj sphere;
+    sphere.Init(*dx);
+    sphere.model = BoxModel;
+    sphere.SetCollider(1);
 
     Box.begin()->model = BoxModel;
 
@@ -200,14 +205,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     {
         Box[i].Init(*dx);
         Box[i].model = BoxModel;
-        if (i > 0)
-        {
-            Box[i].parent = &Box[i - 1];
-            Box[i].scale = { 0.9f,0.9f,0.9f };
-            Box[i].rotasion = { 0,0,0.2 };
-            Box[i].position = { 0,0,1 };
-        }
+        Box[i].scale = { 10,1,1 };
+
+        //if (i > 0)
+        //{
+        //    Box[i].parent = &Box[i - 1];
+        //    Box[i].scale = { 0.9f,0.9f,0.9f };
+        //    Box[i].rotasion = { 0,0,0.2 };
+        //    Box[i].position = { 0,0,1 };
+        //}
     }
+
 
     for (int i = 0; i < Box2.size(); i++)
     {
@@ -284,22 +292,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         if (input->IsKeyDown(DIK_D))
         {
-            matView.eye.x++;
+            sphere.position.x += 0.1f;
         }
 
         if (input->IsKeyDown(DIK_A))
         {
-            matView.eye.x--;
+            sphere.position.x -= 0.1f;
         }
 
         if (input->IsKeyDown(DIK_W))
         {
-            matView.eye.z++;
+            sphere.position.z += 0.1f;
         }
 
         if (input->IsKeyDown(DIK_S))
         {
-            matView.eye.z--;
+            sphere.position.z -= 0.1f;
         }
 
         matView.target.x = ray.position.x;
@@ -308,22 +316,33 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         matView.UpDateMatrixView();
 
+        Box[0].position.x = ray.collider.StartPosition.x;
+        Box[0].position.y = ray.collider.StartPosition.y;
+        Box[0].position.z = ray.collider.StartPosition.z;
+
+        Box[1].position.x = ray.collider.StartPosition.x + (ray.collider.range * ray.collider.rayVec.vec.x);
+        Box[1].position.y = ray.collider.StartPosition.y + (ray.collider.range * ray.collider.rayVec.vec.y);
+        Box[1].position.z = ray.collider.StartPosition.z + (ray.collider.range * ray.collider.rayVec.vec.z);
 
         for (int i = 0; i < 9; i++)
         {
             Box[i].Updata(matView, matProjection);
         }
 
-        for (int i = 0; i < Box2.size(); i++)
-        {
-            Box2[i].Updata(matView, matProjection);
-        }
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Updata(matView, matProjection);
+        //}
 
         
         Skydorm.Updata(matView, matProjection);
         ground.Updata(matView, matProjection);
 
         ray.Updata(matView, matProjection);
+        ray.ColliderUpdate();
+
+        sphere.Updata(matView, matProjection);
+        sphere.ColliderUpdate();
 
 #pragma endregion XVˆ—
 
@@ -334,10 +353,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Draw(*dx, descriptor);
         ground.Draw(*dx, descriptor);
 
-        //for (int i = 0; i < Box.size(); i++)
-        //{
-        //    Box[i].Draw(*dx, descriptor);
-        //}
+        for (int i = 0; i < 2; i++)
+        {
+            Box[i].Draw(*dx, descriptor);
+        }
 
         //for (int i = 0; i < Box2.size(); i++)
         //{
@@ -346,10 +365,19 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
         ray.Draw(*dx, descriptor);
 
+        sphere.Draw(*dx,descriptor);
+
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
+        if (CalcRaySphere(ray.collider, sphere))
+        {
+            debugText.Print(0, 600, 1, "hogehogehogehoge");
+            //debugText.AllDraw(descriptor);
+        }
+
+        //sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
-        //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
+        debugText.Print(0, 400, 1, "%f,%f,%f", sphere.position.x, sphere.position.y, sphere.position.z);
 
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
