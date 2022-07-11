@@ -251,6 +251,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     int count = 0;
     float angle = 0.00f;
     int distance = 20;
+    Quaternion eyeQ;
+    eyeQ.SetRota({ 0,1,0 }, 0);
+    Quaternion eyePosition;
+    eyePosition.x = matView.eye.x - Box[0].position.x;
+    eyePosition.y = matView.eye.y - Box[0].position.y;
+    eyePosition.z = matView.eye.z - Box[0].position.z;
+    eyePosition.w = 0;
+
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -270,12 +278,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        matView.eye.x += sinf(angle);
-        matView.eye.z +=  + cosf(angle);
 
-        matView.target.x = matView.eye.x + targetVec.x;
-        matView.target.y = matView.eye.y + targetVec.y;
-        matView.target.z = matView.eye.z + targetVec.z;
+        angle += 0.05f;
+        eyeQ.SetRota({ 0,1,0 }, angle);
+
+        Quaternion temp;
+        temp = eyeQ.GetCartesianProduct(eyeQ, eyePosition);
+        temp = eyePosition.GetCartesianProduct(eyePosition, eyeQ.GetReciprocal(eyeQ));
+
+        matView.eye.x = temp.x;
+        matView.eye.y = temp.y;
+        matView.eye.z = temp.z;
+
+        matView.target.x = Box[0].position.x;
+        matView.target.y = Box[0].position.y;
+        matView.target.z = Box[0].position.z;
 
         matView.UpDateMatrixView();
 
