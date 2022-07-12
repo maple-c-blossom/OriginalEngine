@@ -1,11 +1,13 @@
 #include "Descriptor.h"
 
+using namespace MCB;
+
 unsigned short int MCB::ShaderResource::AllincrementNum = 0;
 
-void MCB::ShaderResource::Init(Dx12 &dx)
+void MCB::ShaderResource::Init()
 {
     SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
-    dx.result = SetDescriptorHeap(dx);
+    Dx12::GetInstance()->result = SetDescriptorHeap();
     SetDescriptorRange(1, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0);
 }
 
@@ -16,15 +18,15 @@ void MCB::ShaderResource::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags)
     srvHeapDesc.NumDescriptors = MaxSRVCount;//定数バッファの数
 }
 
-HRESULT MCB::ShaderResource::SetDescriptorHeap(Dx12 &dx12)
+HRESULT MCB::ShaderResource::SetDescriptorHeap()
 {
-    return dx12.device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
+    return Dx12::GetInstance()->device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
 }
 
-void MCB::ShaderResource::SetShaderResourceView(Dx12& dx12, TextureBuffer& texBuffer)
+void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
 {
     //ヒープの二番目にシェーダーリソースビュー作成
-    dx12.device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
+    Dx12::GetInstance()->device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
 }
 
 void MCB::ShaderResource::SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int BaseShaderRegister)
@@ -49,13 +51,32 @@ void MCB::ShaderResource::SetSrvHeap()
     
 }
 
-void MCB::ShaderResource::SetSrvHeap(unsigned short int incrementNum, Dx12& dx12)
+void MCB::ShaderResource::SetSrvHeap(unsigned short int incrementNum)
 {
     srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
-    srvHandle.ptr += incrementNum * dx12.device.Get()->GetDescriptorHandleIncrementSize(srvHeapDesc.Type);
+    srvHandle.ptr += incrementNum * Dx12::GetInstance()->device.Get()->GetDescriptorHandleIncrementSize(srvHeapDesc.Type);
 }
 
 void MCB::ShaderResource::InitAllincrementNum()
 {
     ShaderResource::AllincrementNum = 0;
+}
+
+
+ShaderResource* MCB::ShaderResource::GetInstance()
+{
+    static ShaderResource* instance = new ShaderResource;
+    return instance;
+}
+
+void MCB::ShaderResource::DeleteInstace()
+{
+    delete ShaderResource::GetInstance();
+}
+
+ShaderResource* MCB::ShaderResource::GetInitInstance()
+{
+    ShaderResource* instance = ShaderResource::GetInstance();
+    instance->Init();
+    return instance;
 }

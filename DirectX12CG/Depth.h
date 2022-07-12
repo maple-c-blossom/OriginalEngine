@@ -20,20 +20,20 @@ namespace MCB
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
 		D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 
-		Depth(DxWindow& dxWindow, Dx12& dx12);
+		Depth();
 
 
-		void InitDepthResDesc(DxWindow& dxWindow);
+		void InitDepthResDesc();
 
 		void InitDepthHeapProp();
 
 		void InitDepthClearValue();
 
-		void InitDepthBuffer(Dx12 &dx12);
+		void InitDepthBuffer();
 
-		void InitDepthDescriptorHeap(Dx12 &dx12);
+		void InitDepthDescriptorHeap();
 
-		void InitDepthStencilView(Dx12& dx12);
+		void InitDepthStencilView();
 
 		void SetDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);
 		void SetSpriteDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc);

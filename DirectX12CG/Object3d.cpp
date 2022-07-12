@@ -2,17 +2,15 @@
 
 using namespace MCB;
 using namespace std;
-MCB::Object3d::Object3d(Dx12& dx12)
+MCB::Object3d::Object3d()
 {
     NORM_FRONT_VEC.vec = { 0,0,1 };
     nowFrontVec = NORM_FRONT_VEC;
     //model->material.Init(dx12);
-    this->Init(dx12);
+    this->Init();
 }
 
-MCB::Object3d::Object3d()
-{
-}
+
 
 MCB::Object3d::~Object3d()
 {
@@ -22,8 +20,9 @@ MCB::Object3d::~Object3d()
     //delete model;
 }
 
-void Object3d::Init(Dx12& dx12)
+void Object3d::Init()
 {
+    Dx12* dx12 = Dx12::GetInstance();
     NORM_FRONT_VEC.vec = { 0,0,1 };
     nowFrontVec = NORM_FRONT_VEC;
 
@@ -39,7 +38,7 @@ void Object3d::Init(Dx12& dx12)
     Resdesc.SampleDesc.Count = 1;
     Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12.result = dx12.device->CreateCommittedResource
+    dx12->result = dx12->device->CreateCommittedResource
     (
         &HeapProp,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
@@ -49,9 +48,9 @@ void Object3d::Init(Dx12& dx12)
         IID_PPV_ARGS(&constBuffTranceform)
     );
 
-    assert(SUCCEEDED(dx12.result));
+    assert(SUCCEEDED(dx12->result));
 
-    dx12.result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+    dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
 }
 
 void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
@@ -114,52 +113,58 @@ void Object3d::Updata(View& view, Projection& projection,Quaternion q, bool isBi
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Object3d::Draw(Dx12& dx12, ShaderResource descriptor)
+void Object3d::Draw()
 {
+    Dx12* dx12 = Dx12::GetInstance();
+    ShaderResource* descriptor = ShaderResource::GetInstance();
+
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
+    dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += model->texture.incrementNum * dx12.device.Get()->GetDescriptorHandleIncrementSize(descriptor.srvHeapDesc.Type);
+    srvGpuHandle.ptr += model->texture.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12.commandList->IASetVertexBuffers(0, 1, &model->vbView);
+    dx12->commandList->IASetVertexBuffers(0, 1, &model->vbView);
     //インデックスデータ
-    dx12.commandList->IASetIndexBuffer(&model->ibView);
+    dx12->commandList->IASetIndexBuffer(&model->ibView);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawIndexedInstanced((unsigned int) model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList->DrawIndexedInstanced((unsigned int) model->indices.size(), 1, 0, 0, 0);
 
 }
 
-void Object3d::Draw(Dx12& dx12, ShaderResource descriptor, unsigned short int incremant)
+void Object3d::Draw(unsigned short int incremant)
 {
+    Dx12* dx12 = Dx12::GetInstance();
+    ShaderResource* descriptor = ShaderResource::GetInstance();
+
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
+    dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += incremant * dx12.device.Get()->GetDescriptorHandleIncrementSize(descriptor.srvHeapDesc.Type);
+    srvGpuHandle.ptr += incremant * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12.commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12.commandList->IASetVertexBuffers(0, 1, &model->vbView);
+    dx12->commandList->IASetVertexBuffers(0, 1, &model->vbView);
     //インデックスデータ
-    dx12.commandList->IASetIndexBuffer(&model->ibView);
+    dx12->commandList->IASetIndexBuffer(&model->ibView);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
 
 }

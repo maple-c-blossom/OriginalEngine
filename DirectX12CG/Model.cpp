@@ -3,10 +3,10 @@
 
 using namespace std;
 
-MCB::Model::Model(Dx12 &dx12, const std::string fileName, ShaderResource* srv)
+MCB::Model::Model( const std::string fileName)
 {
-    material.Init(dx12);
-    Init(dx12, fileName, srv);
+    material.Init();
+    Init(fileName);
 }
 
 MCB::Model::~Model()
@@ -14,16 +14,16 @@ MCB::Model::~Model()
     //texture.texfile.scratchImg.Release();
 }
 
-void MCB::Model::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateVertexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
-    dx12.result = dx12.device->CreateCommittedResource(
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp, // ヒープ設定
         flag,
         &Resdesc, // リソース設定
         state,
         nullptr,
         IID_PPV_ARGS(&vertBuff));
-    assert(SUCCEEDED(dx12.result));
+    assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 
 void MCB::Model::SetIbView(DXGI_FORMAT format)
@@ -33,9 +33,9 @@ void MCB::Model::SetIbView(DXGI_FORMAT format)
     ibView.SizeInBytes = sizeIB;
 }
 
-void MCB::Model::CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateIndexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
-    dx12.result = dx12.device->CreateCommittedResource(
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp,
         flag,
         &Resdesc,
@@ -90,7 +90,7 @@ HRESULT MCB::Model::VertexMaping()
 }
 
 
-void MCB::Model::CreateModel(Dx12& dx,const string fileName, ShaderResource* srv)
+void MCB::Model::CreateModel(const string fileName)
 {
     std::ifstream file;
 
@@ -159,7 +159,7 @@ void MCB::Model::CreateModel(Dx12& dx,const string fileName, ShaderResource* srv
         {
             string filename;
             line_stream >> filename;
-            LoadMaterial(dx,directoryPath, filename, srv);
+            LoadMaterial(directoryPath, filename);
         }
 
         if (key == "f")
@@ -208,7 +208,7 @@ void MCB::Model::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
 }
-void MCB::Model::LoadMaterial(Dx12& dx, const std::string& directoryPath, const std::string& filename, ShaderResource* srv)
+void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
     std::ifstream file;
 
@@ -262,7 +262,7 @@ void MCB::Model::LoadMaterial(Dx12& dx, const std::string& directoryPath, const 
         {
             line_stream >> material.material.textureFileName;
 
-            texture.CreateTexture(dx, directoryPath, material.material.textureFileName,srv);
+            texture.CreateTexture(directoryPath, material.material.textureFileName);
         }
 
     }
@@ -270,19 +270,19 @@ void MCB::Model::LoadMaterial(Dx12& dx, const std::string& directoryPath, const 
 
 }
 
-void MCB::Model::Init(Dx12& dx, const std::string fileName, ShaderResource* srv)
+void MCB::Model::Init(const std::string fileName)
 {
-    CreateModel(dx,fileName,srv);
+    CreateModel(fileName);
 
     SetSizeIB();
     material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-    CreateIndexBuffer(dx, material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-    dx.result = IndexMaping();
+    CreateIndexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    Dx12::GetInstance()->result = IndexMaping();
     SetIbView(DXGI_FORMAT_R16_UINT);
 
     SetSizeVB();
     material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-    CreateVertexBuffer(dx, material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    CreateVertexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
     VertexMaping();
     SetVbView();
 

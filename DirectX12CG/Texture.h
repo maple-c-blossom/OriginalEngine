@@ -20,16 +20,16 @@ namespace MCB
 
 		~Texture();
 
-		void CreateTexture(Dx12& dx12, const wchar_t* FileName,unsigned short int incrementNum, ShaderResource* srv);
+		void CreateTexture(const wchar_t* FileName,unsigned short int incrementNum);
 
-		void CreateTexture(Dx12& dx12, const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum, ShaderResource* srv);
+		void CreateTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
 
-		void CreateTexture(Dx12& dx12, const wchar_t* FileName, ShaderResource* srv);
+		void CreateTexture(const wchar_t* FileName);
 
-		void CreateTexture(Dx12& dx12, const std::string& directoryPath, const std::string& filename, ShaderResource* srv);
+		void CreateTexture( const std::string& directoryPath, const std::string& filename);
 
 
-		void SetSrvHeap(Dx12& dx12);
+		void SetSrvHeap();
 
 	};
 

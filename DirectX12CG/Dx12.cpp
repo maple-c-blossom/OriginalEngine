@@ -113,16 +113,16 @@ void MCB::Dx12::DeleteInstace()
     delete Dx12::GetInstance();
 }
 
-Dx12* MCB::Dx12::GetInitInstance(DxWindow& dxWindow)
+Dx12* MCB::Dx12::GetInitInstance()
 {
     Dx12* instance = Dx12::GetInstance();
-    instance->Init(dxWindow);
+    instance->Init();
     return instance;
 }
 
 
 
-void MCB::Dx12::Init(DxWindow& dxWindow)
+void MCB::Dx12::Init()
 {
     SetDXFactory();
 
@@ -130,7 +130,7 @@ void MCB::Dx12::Init(DxWindow& dxWindow)
 
     SetCommandListAndQueue();
 
-    SetSwapChain(dxWindow);
+    SetSwapChain();
 
     SetDesctiptor();
 
@@ -152,13 +152,14 @@ void Dx12::SetDXFactory()
     //-------------------
 }
 
-void Dx12::SetSwapChain(DxWindow& dxWindow)
+void Dx12::SetSwapChain()
 {
+    DxWindow* dxWindow = DxWindow::GetInstance();
     //スワップチェーンの生成ここから------------------------------------------------------------------
 #pragma region スワップチェーンの生成
 
-    swapChainDesc.Width = dxWindow.window_width;
-    swapChainDesc.Height = dxWindow.window_height;
+    swapChainDesc.Width = dxWindow->window_width;
+    swapChainDesc.Height = dxWindow->window_height;
     swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     swapChainDesc.SampleDesc.Count = 1;
     swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
@@ -166,7 +167,7 @@ void Dx12::SetSwapChain(DxWindow& dxWindow)
     swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    result = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), dxWindow.hwnd, &swapChainDesc, nullptr, nullptr, &swapchain1);
+    result = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), dxWindow->hwnd, &swapChainDesc, nullptr, nullptr, &swapchain1);
 
     assert(SUCCEEDED(result));
 

@@ -17,7 +17,7 @@ namespace MCB
 
         Microsoft::WRL::ComPtr<ID3D12Resource> texbuff = nullptr;
 
-        HRESULT CommitResouce(Dx12 &dx12,D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue);
+        HRESULT CommitResouce(D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue);
 
         void TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox,HRESULT &result);
         

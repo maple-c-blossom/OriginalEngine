@@ -81,9 +81,9 @@ namespace MCB
 
         static Dx12* GetInstance();
         static void DeleteInstace();
-        static Dx12* GetInitInstance(DxWindow& dxWindow);
+        static Dx12* GetInitInstance();
 
-        void Init(DxWindow& dxWindow);
+        void Init();
 
         void SetDXFactory();
 
@@ -93,7 +93,7 @@ namespace MCB
 
         void SetCommandListAndQueue();
 
-        void SetSwapChain(DxWindow& dxWindow);
+        void SetSwapChain();
 
         void SetDesctiptor();
 

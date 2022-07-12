@@ -1,5 +1,7 @@
 #pragma once
 #include <dinput.h>
+#include "Dx12.h"
+#include "DxWindow.h"
 #define DIRECINPUT_VERSION 0x0800 //DirectInputのバージョン指定
 
 namespace MCB
@@ -20,7 +22,7 @@ namespace MCB
 
         static Input* GetInstance();
         static void DeleteInstace();
-        static Input* GetInitInstance(HRESULT& result, WNDCLASSEX w, HWND hwnd);
+        static Input* GetInitInstance();
 
         //キー初期化----------------------
         BYTE key[256] = {};
@@ -48,9 +50,9 @@ namespace MCB
 #pragma endregion 入力関数
         //--------------------
 
-        void Init(HRESULT& result, WNDCLASSEX w, HWND hwnd);
+        void Init();
 
-        void UpDateInit(HRESULT& result);
+        void UpDateInit();
     };
 }
 

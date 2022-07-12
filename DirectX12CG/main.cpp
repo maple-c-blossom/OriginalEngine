@@ -98,9 +98,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //-------------
 
     //DirectXクラス生成
-    Dx12* dx = Dx12::GetInitInstance(*dxWindow);
+    Dx12* dx = Dx12::GetInitInstance();
     //inputクラス生成
-    Input* input = Input::GetInitInstance(dx->result, dxWindow->window, dxWindow->hwnd);
+    Input* input = Input::GetInitInstance();
 
 
 #pragma endregion 
@@ -109,10 +109,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 描画初期化処理
 
     //深度バッファ----
-    Depth depth(*dxWindow, *dx);
+    Depth depth;
     //-------
-    ShaderResource descriptor;
-    descriptor.Init(*dx);
+    ShaderResource* descriptor = ShaderResource::GetInitInstance();
 
     Draw draw;
 
@@ -133,9 +132,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region ルートパラメータの設定
 
     RootParameter rootparams;
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 1);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, descriptor, 0);
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, *descriptor, 0);
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, *descriptor, 1);
+    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, *descriptor, 0);
 #pragma endregion ルートパラメータの設定
     //------------------------
 
@@ -147,16 +146,16 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //テクスチャ読み込み
     Texture testTex;
-    testTex.CreateTexture(*dx, L"Resources\\reimu.png", &descriptor);
+    testTex.CreateTexture(L"Resources\\reimu.png");
     Texture debugTextTexture;
-    debugTextTexture.CreateTexture(*dx, L"Resources\\debugfont.png", &descriptor);
+    debugTextTexture.CreateTexture( L"Resources\\debugfont.png");
 
     //3Dモデル読み込み
-    Model* BoxModel = new Model(*dx, "Box", &descriptor);
+    Model* BoxModel = new Model("Box");
     
-    Model* groundModel = new Model(*dx, "ground", &descriptor);
+    Model* groundModel = new Model("ground");
 
-    Model* skydomeModel = new Model(*dx, "skydome", &descriptor);
+    Model* skydomeModel = new Model("skydome");
 
 
 
@@ -167,13 +166,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     std::array<Object3d, 40> Box2;
 
     Object3d ground;
-    ground.Init(*dx);
+    ground.Init();
     ground.model = groundModel;
     ground.scale = { 4,4,4 };
     ground.position = { 0,-15,0 };
 
     Object3d Skydorm;
-    Skydorm.Init(*dx);
+    Skydorm.Init();
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
@@ -186,7 +185,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     for (int i = 0; i < Box.size(); i++)
     {
-        Box[i].Init(*dx);
+        Box[i].Init();
         Box[i].model = BoxModel;
         if (i > 0)
         {
@@ -199,7 +198,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     for (int i = 0; i < Box2.size(); i++)
     {
-        Box2[i].Init(*dx);
+        Box2[i].Init();
         Box2[i].model = BoxModel;
         Box2[i].position.y = -10;
         Box2[i].scale = { 5,5,5 };
@@ -217,12 +216,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //スプライトの生成---------------
     Sprite sprite;
-    sprite.InitMatProje(*dxWindow);
-    sprite = sprite.CreateSprite(*dx, *dxWindow);
+    sprite.InitMatProje();
+    sprite = sprite.CreateSprite();
 
 
     DebugText debugText;
-    debugText.Init(*dx, *dxWindow,&debugTextTexture);
+    debugText.Init(&debugTextTexture);
 
     //-----------------------
 
@@ -259,7 +258,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     while (true)
     {
 
-        input->UpDateInit(dx->result);
+        input->UpDateInit();
 
         dxWindow->messageUpdate();
 
@@ -298,29 +297,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 描画処理
 
-        draw.PreDraw(*dx, depth, descriptor, obj3dPipeline, *dxWindow, clearColor);
+        draw.PreDraw(depth, obj3dPipeline,  clearColor);
 
-        Skydorm.Draw(*dx, descriptor);
-        ground.Draw(*dx, descriptor);
+        Skydorm.Draw();
+        ground.Draw();
 
         for (int i = 0; i < Box.size(); i++)
         {
-            Box[i].Draw(*dx, descriptor);
+            Box[i].Draw();
         }
 
         for (int i = 0; i < Box2.size(); i++)
         {
-            Box2[i].Draw(*dx, descriptor,0);
+            Box2[i].Draw(0);
         }
 
-        sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
+        sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
 
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
-        debugText.AllDraw(descriptor);
+        debugText.AllDraw();
 
 
 
@@ -328,7 +327,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //----------------------
 
 
-        draw.PostDraw(*dx);
+        draw.PostDraw();
 
 #pragma endregion コマンドリスト実行
         //------------------
@@ -349,6 +348,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     delete skydomeModel;
     delete groundModel;
 
+    ShaderResource::DeleteInstace();
     DxWindow::DeleteInstance();
     Dx12::DeleteInstace();
     Input::DeleteInstace();

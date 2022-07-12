@@ -1,21 +1,22 @@
 #include "Depth.h"
 
 using namespace MCB;
-Depth::Depth(DxWindow& dxWindow, Dx12 &dx12)
+Depth::Depth()
 {
-    InitDepthResDesc(dxWindow);
+    InitDepthResDesc();
     InitDepthHeapProp();
     InitDepthClearValue();
-    InitDepthBuffer(dx12);
-    InitDepthDescriptorHeap(dx12);
-    InitDepthStencilView(dx12);
+    InitDepthBuffer();
+    InitDepthDescriptorHeap();
+    InitDepthStencilView();
 }
 
-void Depth::InitDepthResDesc(DxWindow& dxWindow)
+void Depth::InitDepthResDesc()
 {
+    DxWindow* dxWindow = DxWindow::GetInstance();
     depthResDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-    depthResDesc.Width = dxWindow.window_width;
-    depthResDesc.Height = dxWindow.window_height;
+    depthResDesc.Width = dxWindow->window_width;
+    depthResDesc.Height = dxWindow->window_height;
     depthResDesc.DepthOrArraySize = 1;
     depthResDesc.Format = DXGI_FORMAT_D32_FLOAT;
     depthResDesc.SampleDesc.Count = 1;
@@ -33,27 +34,30 @@ void Depth::InitDepthClearValue()
     depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;
 }
 
-void Depth::InitDepthBuffer(Dx12 &dx12)
+void Depth::InitDepthBuffer()
 {
-    dx12.result = dx12.device->CreateCommittedResource(&depthHeapProp, D3D12_HEAP_FLAG_NONE, &depthResDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(&depthBuffer));
-    assert(SUCCEEDED(dx12.result) && "InitDepthBuffer関数でエラー");
+    Dx12* dx12 = Dx12::GetInstance();
+    dx12->result = dx12->device->CreateCommittedResource(&depthHeapProp, D3D12_HEAP_FLAG_NONE, &depthResDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(&depthBuffer));
+    assert(SUCCEEDED(dx12->result) && "InitDepthBuffer関数でエラー");
 }
 
-void Depth::InitDepthDescriptorHeap(Dx12 &dx12)
+void Depth::InitDepthDescriptorHeap()
 {
+    Dx12* dx12 = Dx12::GetInstance();
     dsvHeapDesc.NumDescriptors = 1;
     dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 
-    dx12.result = dx12.device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
-    assert(SUCCEEDED(dx12.result) && "InitDepthDescriptorHeap関数でエラー");
+    dx12->result = dx12->device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
+    assert(SUCCEEDED(dx12->result) && "InitDepthDescriptorHeap関数でエラー");
 }
 
-void Depth::InitDepthStencilView(Dx12& dx12)
+void Depth::InitDepthStencilView()
 {
+    Dx12* dx12 = Dx12::GetInstance();
     dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
     dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-    dx12.device->CreateDepthStencilView(depthBuffer.Get(), &dsvDesc, dsvHeap->GetCPUDescriptorHandleForHeapStart());
-    assert(SUCCEEDED(dx12.result) && "InitDepthStencilView関数でエラー");
+    dx12->device->CreateDepthStencilView(depthBuffer.Get(), &dsvDesc, dsvHeap->GetCPUDescriptorHandleForHeapStart());
+    assert(SUCCEEDED(dx12->result) && "InitDepthStencilView関数でエラー");
 }
 
 void Depth::SetDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)

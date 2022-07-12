@@ -4,39 +4,42 @@
 
 using namespace MCB;
 
-void Input::Init(HRESULT &result, WNDCLASSEX w, HWND hwnd)
+void Input::Init()
 {
+	Dx12* dx12 = Dx12::GetInstance();
+	DxWindow* dxWindow = DxWindow::GetInstance();
 	//入力系初期化--------------
 #pragma region 入力系初期化
 
 
-	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
-	assert(SUCCEEDED(result));
+	dx12->result = DirectInput8Create(dxWindow->window.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
+	assert(SUCCEEDED(dx12->result));
 	//キーボードデバイスの生成-----------------
 #pragma region キーボードデバイスの生成
 
 
-	result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
-	assert(SUCCEEDED(result));
+	dx12->result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
+	assert(SUCCEEDED(dx12->result));
 
 #pragma endregion キーボードデバイスの生成
 	//--------------------------
 
 	//入力データ形式セット--------------------------------
-	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
-	assert(SUCCEEDED(result));
+	dx12->result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
+	assert(SUCCEEDED(dx12->result));
 	//---------------------------------
 
 	//排他レベル制御-------------------------------------------------------------
-	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
+	dx12->result = devkeyboard->SetCooperativeLevel(dxWindow->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(dx12->result));
 
 #pragma endregion 入力系初期化
 	//----------------
 }
 
-void Input::UpDateInit(HRESULT &result)
+void Input::UpDateInit()
 {
+	
 	//キーボード初期化-------------------------------------
 #pragma region キーボード初期化
 
@@ -46,7 +49,7 @@ void Input::UpDateInit(HRESULT &result)
 
 	//全キーの入力状態を取得する---------------------------
 	KeyInit();
-	result = devkeyboard->GetDeviceState(sizeof(key), key);
+	Dx12::GetInstance()->result = devkeyboard->GetDeviceState(sizeof(key), key);
 	//----------------------------
 
 #pragma endregion キーボード初期化
@@ -97,10 +100,10 @@ void MCB::Input::DeleteInstace()
 	delete Input::GetInstance();
 }
 
-Input* MCB::Input::GetInitInstance(HRESULT& result, WNDCLASSEX w, HWND hwnd)
+Input* MCB::Input::GetInitInstance()
 {
 	static Input* instance = Input::GetInstance();
-	instance->Init(result, w, hwnd);
+	instance->Init();
 	return instance;
 }
 

@@ -1,13 +1,13 @@
 #include "DebugText.h"
 
-void MCB::DebugText::Init(Dx12& dx, DxWindow& window, Texture* texture)
+void MCB::DebugText::Init(Texture* texture)
 {
 	for (int i = 0; maxCharCount > i; i++)
 	{
-		sprite[i] = sprite[i].CreateSprite(dx, window);
+		sprite[i] = sprite[i].CreateSprite();
 	}
 	debugfont = texture;
-	dx12 = &dx;
+	dx12 = Dx12::GetInstance();
 }
 
 void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
@@ -46,15 +46,16 @@ void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
 	}
 }
 
-void MCB::DebugText::AllDraw(ShaderResource descriptor)
+void MCB::DebugText::AllDraw()
 {
+	ShaderResource* descriptor = ShaderResource::GetInstance();
 	for (int i = 0; i < spriteIndex; i++)
 	{
 		//SRVヒープの先頭アドレスを取得
-		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor.srvHeap->GetGPUDescriptorHandleForHeapStart();
+		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-		srvGpuHandle.ptr += debugfont->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor.srvHeapDesc.Type);
+		srvGpuHandle.ptr += debugfont->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
 		//SRVヒープの先頭にあるSRVをパラメータ1番に設定
 		dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
