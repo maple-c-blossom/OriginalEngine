@@ -8,15 +8,15 @@ void MCB::RootSignature::InitRootSignatureDesc(RootParameter& rootparams, TexSam
     rootSignatureDesc.pStaticSamplers = &sample.samplerDesc;
     rootSignatureDesc.NumStaticSamplers = 1;
 }
-void MCB::RootSignature::SetSerializeRootSignature(Shader& shader,Dx12& dx12)
+void MCB::RootSignature::SetSerializeRootSignature(Shader& shader)
 {
-    dx12.result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &shader.errorBlob);
-    assert(SUCCEEDED(dx12.result));
+    Dx12::GetInstance()->result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &shader.errorBlob);
+    assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 
-void MCB::RootSignature::CreateRootSignature(Dx12 *dx12)
+void MCB::RootSignature::CreateRootSignature()
 {
-    dx12->result = dx12->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
-    assert(SUCCEEDED(dx12->result));
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateRootSignature(0, rootSigBlob->GetBufferPointer(), rootSigBlob->GetBufferSize(), IID_PPV_ARGS(&rootsignature));
+    assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 

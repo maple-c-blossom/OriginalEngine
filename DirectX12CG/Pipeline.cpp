@@ -158,10 +158,10 @@ void MCB::Pipeline::SetRootSignature(RootSignature rootSignature)
 	pipelineDesc.pRootSignature = rootSignature.rootsignature.Get();
 }
 
-void MCB::Pipeline::CreateGraphicsPipelineState(Dx12 *dx12)
+void MCB::Pipeline::CreateGraphicsPipelineState()
 {
-	dx12->result = dx12->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelinestate));
-	assert(SUCCEEDED(dx12->result));
+	Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(&pipelinestate));
+	assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 
 

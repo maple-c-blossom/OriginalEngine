@@ -17,9 +17,9 @@ namespace MCB
 		Shader shader;
 		TexSample texSample;
 
-		PipelineRootSignature Create3DObjectPipeline(Dx12 &dx12,Depth& depth, RootParameter& rootparam);
+		PipelineRootSignature Create3DObjectPipeline(Depth& depth, RootParameter& rootparam);
 
-		PipelineRootSignature CreateSpritePipeline(Dx12 &dx12,Depth& depth, RootParameter& rootparam);
+		PipelineRootSignature CreateSpritePipeline(Depth& depth, RootParameter& rootparam);
 
 	};
 }

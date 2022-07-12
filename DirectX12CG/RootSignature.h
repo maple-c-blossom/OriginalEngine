@@ -17,8 +17,8 @@ namespace MCB
 		Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
 		
 		void InitRootSignatureDesc(RootParameter& rootparams, TexSample& sample);
-		void SetSerializeRootSignature(Shader& shader,Dx12 &dx12);
-		void CreateRootSignature(Dx12 *dx12);
+		void SetSerializeRootSignature(Shader& shader);
+		void CreateRootSignature();
 	};
 }
 

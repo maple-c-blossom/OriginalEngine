@@ -62,7 +62,7 @@ namespace MCB
 
 		void SetRootSignature(RootSignature rootSignature);
 
-		void CreateGraphicsPipelineState(Dx12 *dx12);
+		void CreateGraphicsPipelineState();
 
 	};
 }
