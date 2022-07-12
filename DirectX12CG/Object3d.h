@@ -66,9 +66,9 @@ namespace MCB
 
         void Updata(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
 
-        void Draw(Dx12 dx12, ShaderResource descriptor);
+        void Draw(Dx12& dx12, ShaderResource descriptor);
 
-        void Draw(Dx12 dx12, ShaderResource descriptor,unsigned short int incremant);
+        void Draw(Dx12& dx12, ShaderResource descriptor,unsigned short int incremant);
 
         //void CreateModel(const char* fileName);
     };

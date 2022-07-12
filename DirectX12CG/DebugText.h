@@ -21,7 +21,7 @@ namespace MCB
 		Texture* debugfont;
 		Dx12* dx12;
 
-		void Init(Dx12 &dx,DxWindow window,Texture* texture);
+		void Init(Dx12 &dx,DxWindow& window,Texture* texture);
 		void Print( float x, float y, float scale, const char* text, ... );
 		void AllDraw(ShaderResource descriptor);
 	};

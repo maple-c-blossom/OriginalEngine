@@ -3,7 +3,7 @@
 
 using namespace std;
 
-MCB::Model::Model(Dx12 dx12, const std::string fileName, ShaderResource* srv)
+MCB::Model::Model(Dx12 &dx12, const std::string fileName, ShaderResource* srv)
 {
     material.Init(dx12);
     Init(dx12, fileName, srv);
@@ -90,7 +90,7 @@ HRESULT MCB::Model::VertexMaping()
 }
 
 
-void MCB::Model::CreateModel(Dx12 dx,const string fileName, ShaderResource* srv)
+void MCB::Model::CreateModel(Dx12& dx,const string fileName, ShaderResource* srv)
 {
     std::ifstream file;
 
@@ -208,7 +208,7 @@ void MCB::Model::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
 }
-void MCB::Model::LoadMaterial(Dx12 dx, const std::string& directoryPath, const std::string& filename, ShaderResource* srv)
+void MCB::Model::LoadMaterial(Dx12& dx, const std::string& directoryPath, const std::string& filename, ShaderResource* srv)
 {
     std::ifstream file;
 
@@ -270,7 +270,7 @@ void MCB::Model::LoadMaterial(Dx12 dx, const std::string& directoryPath, const s
 
 }
 
-void MCB::Model::Init(Dx12 dx, const std::string fileName, ShaderResource* srv)
+void MCB::Model::Init(Dx12& dx, const std::string fileName, ShaderResource* srv)
 {
     CreateModel(dx,fileName,srv);
 

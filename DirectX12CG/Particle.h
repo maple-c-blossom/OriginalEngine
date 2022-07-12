@@ -61,7 +61,7 @@ namespace MCB
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
-        void Draw(Dx12 dx12);
+        void Draw(Dx12& dx12);
 
         //void CreateModel(const char* fileName);
     };

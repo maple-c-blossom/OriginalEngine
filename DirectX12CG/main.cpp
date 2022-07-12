@@ -78,7 +78,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //_CrtSetBreakAlloc(1030);
 
     //int* hoge = new int(4);
-    DxWindow* dxWindow = new DxWindow;
+    DxWindow* dxWindow = DxWindow::GetInitInstance();
 
 #pragma region DirectX初期化
     //デバック時のみ----------
@@ -98,9 +98,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //-------------
 
     //DirectXクラス生成
-    Dx12* dx = new Dx12(*dxWindow);
+    Dx12* dx = Dx12::GetInitInstance(*dxWindow);
     //inputクラス生成
-    Input* input = new Input(dx->result, dxWindow->window, dxWindow->hwnd);
+    Input* input = Input::GetInitInstance(dx->result, dxWindow->window, dxWindow->hwnd);
 
 
 #pragma endregion 
@@ -271,7 +271,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 更新処理
 
 
-
         matView.target.x = matView.eye.x + targetVec.x;
         matView.target.y = matView.eye.y + targetVec.y;
         matView.target.z = matView.eye.z + targetVec.z;
@@ -345,13 +344,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //testSound.DeleteSound();
 
     //---------------------------------
-    delete dxWindow;
-    delete dx;
-    delete input;
+    //delete dx;
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
 
+    DxWindow::DeleteInstance();
+    Dx12::DeleteInstace();
+    Input::DeleteInstace();
 }   
     _CrtDumpMemoryLeaks();
 

@@ -18,6 +18,11 @@ namespace MCB
 
     class Dx12
     {
+    private:
+        Dx12() {};
+        Dx12(const Dx12& dx12) {};
+        Dx12& operator=(const Dx12& dx12) {};
+        ~Dx12() {};
     public:
 
         //äÓñ{ïœêîèâä˙âª-----
@@ -72,7 +77,13 @@ namespace MCB
         Microsoft::WRL::ComPtr<ID3D12Fence> fence = nullptr;
         UINT64 fenceVal = 0;
 
-        Dx12(DxWindow dxWindow);
+        //Dx12(DxWindow dxWindow);
+
+        static Dx12* GetInstance();
+        static void DeleteInstace();
+        static Dx12* GetInitInstance(DxWindow& dxWindow);
+
+        void Init(DxWindow& dxWindow);
 
         void SetDXFactory();
 
@@ -82,7 +93,7 @@ namespace MCB
 
         void SetCommandListAndQueue();
 
-        void SetSwapChain(DxWindow dxWindow);
+        void SetSwapChain(DxWindow& dxWindow);
 
         void SetDesctiptor();
 

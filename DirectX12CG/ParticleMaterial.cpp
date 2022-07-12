@@ -8,7 +8,7 @@ MCB::ParticleMaterial::~ParticleMaterial()
     constBuffMaterialB1->Unmap(0, nullptr);
 }
 
-void ParticleMaterial::Init(Dx12 dx12)
+void ParticleMaterial::Init(Dx12& dx12)
 {
 
     HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;

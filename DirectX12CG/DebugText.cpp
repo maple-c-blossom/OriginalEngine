@@ -1,6 +1,6 @@
 #include "DebugText.h"
 
-void MCB::DebugText::Init(Dx12& dx, DxWindow window, Texture* texture)
+void MCB::DebugText::Init(Dx12& dx, DxWindow& window, Texture* texture)
 {
 	for (int i = 0; maxCharCount > i; i++)
 	{

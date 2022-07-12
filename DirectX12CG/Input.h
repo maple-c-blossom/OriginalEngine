@@ -6,17 +6,28 @@ namespace MCB
 {
     class Input
     {
-    public:
+    private:
         IDirectInputDevice8* devkeyboard = nullptr;
 
         IDirectInput8* dinput = nullptr;
+
+        Input() {};
+        Input(const Input& input) {};
+        ~Input() {};
+        Input& operator= (const Input & Input){};
+
+    public:
+
+        static Input* GetInstance();
+        static void DeleteInstace();
+        static Input* GetInitInstance(HRESULT& result, WNDCLASSEX w, HWND hwnd);
 
         //キー初期化----------------------
         BYTE key[256] = {};
         BYTE oldkey[256] = {};
         //-----------------------
 
-        Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
+        //Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
 
         //キーボード初期化-------------------------------
         void KeyInit();

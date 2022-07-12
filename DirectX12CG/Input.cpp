@@ -54,37 +54,55 @@ void Input::UpDateInit(HRESULT &result)
 
 }
 
-Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
+//Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
+//{
+//	//入力系初期化--------------
+//#pragma region 入力系初期化
+//
+//
+//	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
+//	assert(SUCCEEDED(result));
+//	//キーボードデバイスの生成-----------------
+//#pragma region キーボードデバイスの生成
+//
+//
+//	result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
+//	assert(SUCCEEDED(result));
+//
+//#pragma endregion キーボードデバイスの生成
+//	//--------------------------
+//
+//	//入力データ形式セット--------------------------------
+//	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
+//	assert(SUCCEEDED(result));
+//	//---------------------------------
+//
+//	//排他レベル制御-------------------------------------------------------------
+//	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+//	assert(SUCCEEDED(result));
+//
+//#pragma endregion 入力系初期化
+//	//----------------
+//}
+
+
+Input* MCB::Input::GetInstance()
 {
-	//入力系初期化--------------
-#pragma region 入力系初期化
-
-
-	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
-	assert(SUCCEEDED(result));
-	//キーボードデバイスの生成-----------------
-#pragma region キーボードデバイスの生成
-
-
-	result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
-	assert(SUCCEEDED(result));
-
-#pragma endregion キーボードデバイスの生成
-	//--------------------------
-
-	//入力データ形式セット--------------------------------
-	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
-	assert(SUCCEEDED(result));
-	//---------------------------------
-
-	//排他レベル制御-------------------------------------------------------------
-	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
-	assert(SUCCEEDED(result));
-
-#pragma endregion 入力系初期化
-	//----------------
+	static Input* instance = new Input;
+	return instance;
 }
 
+void MCB::Input::DeleteInstace()
+{
+	delete Input::GetInstance();
+}
+
+Input* MCB::Input::GetInitInstance(HRESULT& result, WNDCLASSEX w, HWND hwnd)
+{
+	static Input* instance = Input::GetInstance();
+	instance->Init(result, w, hwnd);
+	return instance;
+}
 
 void Input::KeyInit()
 {

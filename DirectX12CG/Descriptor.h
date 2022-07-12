@@ -31,7 +31,7 @@ namespace MCB
 
             const size_t MaxSRVCount = 0xfff;
 
-            void Init(Dx12 dx);
+            void Init(Dx12& dx);
 
             void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags);
 
@@ -39,7 +39,7 @@ namespace MCB
 
             void SetSrvHeap();
 
-            void SetSrvHeap(unsigned short int incrementNum, Dx12 dx12);
+            void SetSrvHeap(unsigned short int incrementNum, Dx12& dx12);
 
             void InitAllincrementNum();
 

@@ -114,7 +114,7 @@ void Object3d::Updata(View& view, Projection& projection,Quaternion q, bool isBi
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Object3d::Draw(Dx12 dx12, ShaderResource descriptor)
+void Object3d::Draw(Dx12& dx12, ShaderResource descriptor)
 {
     //定数バッファビュー(CBV)の設定コマンド
     dx12.commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
@@ -139,7 +139,7 @@ void Object3d::Draw(Dx12 dx12, ShaderResource descriptor)
 
 }
 
-void Object3d::Draw(Dx12 dx12, ShaderResource descriptor, unsigned short int incremant)
+void Object3d::Draw(Dx12& dx12, ShaderResource descriptor, unsigned short int incremant)
 {
     //定数バッファビュー(CBV)の設定コマンド
     dx12.commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());

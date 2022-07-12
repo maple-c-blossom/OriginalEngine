@@ -3,23 +3,23 @@
 using namespace MCB;
 using namespace std;
 
-
-Dx12::Dx12(DxWindow dxWindow)
-{
-    SetDXFactory();
-
-    SetAdapter();
-
-    SetCommandListAndQueue();
-
-    SetSwapChain(dxWindow);
-
-    SetDesctiptor();
-
-    SetBackBuffer();
-
-    SetFence();
-}
+//
+//Dx12::Dx12(DxWindow dxWindow)
+//{
+//    SetDXFactory();
+//
+//    SetAdapter();
+//
+//    SetCommandListAndQueue();
+//
+//    SetSwapChain(dxWindow);
+//
+//    SetDesctiptor();
+//
+//    SetBackBuffer();
+//
+//    SetFence();
+//}
 
 void Dx12::SetAdapter()
 {
@@ -102,6 +102,43 @@ void Dx12::SetCommandListAndQueue()
     //コマンドリストここまで------------------------------------------------------------------------------------------
 }
 
+Dx12* MCB::Dx12::GetInstance()
+{
+    static Dx12* instance = new Dx12;
+    return instance;
+}
+
+void MCB::Dx12::DeleteInstace()
+{
+    delete Dx12::GetInstance();
+}
+
+Dx12* MCB::Dx12::GetInitInstance(DxWindow& dxWindow)
+{
+    Dx12* instance = Dx12::GetInstance();
+    instance->Init(dxWindow);
+    return instance;
+}
+
+
+
+void MCB::Dx12::Init(DxWindow& dxWindow)
+{
+    SetDXFactory();
+
+    SetAdapter();
+
+    SetCommandListAndQueue();
+
+    SetSwapChain(dxWindow);
+
+    SetDesctiptor();
+
+    SetBackBuffer();
+
+    SetFence();
+}
+
 void Dx12::SetDXFactory()
 {
     //DXGIファクトリー生成----------------
@@ -115,7 +152,7 @@ void Dx12::SetDXFactory()
     //-------------------
 }
 
-void Dx12::SetSwapChain(DxWindow dxWindow)
+void Dx12::SetSwapChain(DxWindow& dxWindow)
 {
     //スワップチェーンの生成ここから------------------------------------------------------------------
 #pragma region スワップチェーンの生成

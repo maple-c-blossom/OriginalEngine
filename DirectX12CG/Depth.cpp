@@ -1,7 +1,7 @@
 #include "Depth.h"
 
 using namespace MCB;
-Depth::Depth(DxWindow dxWindow, Dx12 &dx12)
+Depth::Depth(DxWindow& dxWindow, Dx12 &dx12)
 {
     InitDepthResDesc(dxWindow);
     InitDepthHeapProp();
@@ -11,7 +11,7 @@ Depth::Depth(DxWindow dxWindow, Dx12 &dx12)
     InitDepthStencilView(dx12);
 }
 
-void Depth::InitDepthResDesc(DxWindow dxWindow)
+void Depth::InitDepthResDesc(DxWindow& dxWindow)
 {
     depthResDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     depthResDesc.Width = dxWindow.window_width;

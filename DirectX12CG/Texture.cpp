@@ -12,7 +12,7 @@ MCB::Texture::~Texture()
 
 }
 
-void MCB::Texture::CreateTexture(Dx12 dx12, const wchar_t* FileName, unsigned short int incrementNum,ShaderResource *srv)
+void MCB::Texture::CreateTexture(Dx12& dx12, const wchar_t* FileName, unsigned short int incrementNum,ShaderResource *srv)
 {
     HRESULT result = texfile.LoadTexture(FileName, WIC_FLAGS_NONE);
 
@@ -47,7 +47,7 @@ void MCB::Texture::CreateTexture(Dx12 dx12, const wchar_t* FileName, unsigned sh
 
 
 
-void MCB::Texture::CreateTexture(Dx12 dx12, const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum, ShaderResource* srv)
+void MCB::Texture::CreateTexture(Dx12& dx12, const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum, ShaderResource* srv)
 {
     HRESULT result = texfile.LoadTexture(directoryPath, filename);
 
@@ -81,7 +81,7 @@ void MCB::Texture::CreateTexture(Dx12 dx12, const std::string& directoryPath, co
 
 }
 
-void MCB::Texture::SetSrvHeap(Dx12 dx12)
+void MCB::Texture::SetSrvHeap(Dx12& dx12)
 {
     if (srvptr == nullptr)
     {
@@ -95,7 +95,7 @@ void MCB::Texture::SetSrvHeap(Dx12 dx12)
     srvptr->SetShaderResourceView(dx12, texBuff);
 }
 
-void MCB::Texture::CreateTexture(Dx12 dx12, const wchar_t* FileName, ShaderResource* srv)
+void MCB::Texture::CreateTexture(Dx12& dx12, const wchar_t* FileName, ShaderResource* srv)
 {
     HRESULT result = texfile.LoadTexture(FileName, WIC_FLAGS_NONE);
 
@@ -128,7 +128,7 @@ void MCB::Texture::CreateTexture(Dx12 dx12, const wchar_t* FileName, ShaderResou
     SetSrvHeap(dx12);
 }
 
-void MCB::Texture::CreateTexture(Dx12 dx12, const std::string& directoryPath, const std::string& filename, ShaderResource* srv)
+void MCB::Texture::CreateTexture(Dx12& dx12, const std::string& directoryPath, const std::string& filename, ShaderResource* srv)
 {
     HRESULT result = texfile.LoadTexture(directoryPath, filename);
 
