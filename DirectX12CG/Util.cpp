@@ -133,3 +133,58 @@ int MCB::GetRand(int min, int max)
 {
 	return min + rand() % (max - min);
 }
+
+MCB::SimpleFigure::SimpleFigure()
+{
+
+	triangle.Init();
+	triangle.model = &triangleMaterial;
+	triangleMaterial.vertices = {
+		{PointA,{1,1,1},{0,0}},
+		{PointB,{1,1,1},{0,0}},
+		{PointC,{1,1,1},{0,0}}
+	};
+	triangleMaterial.SetSizeVB();
+	triangleMaterial.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangleMaterial.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+	triangleMaterial.CreateVertexBuffer(triangleMaterial.material.HeapProp, D3D12_HEAP_FLAG_NONE, triangleMaterial.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+	triangleMaterial.VertexMaping();
+	triangleMaterial.SetVbView();
+	triangleMaterial.material.constMapMaterial->color = color;
+	triangle.model->texture.CreateNoTextureFileIsTexture();
+}
+
+void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
+{
+
+	Dx12* dx12 = Dx12::GetInstance();
+	ShaderResource* descriptor = ShaderResource::GetInstance();
+
+	triangleMaterial.vertices = {
+		{PointA,{1,1,1},{0,0}},
+		{PointB,{1,1,1},{0,0}},
+		{PointC,{1,1,1},{0,0}}
+	};
+
+	triangleMaterial.VertexMaping();
+	triangleMaterial.material.constMapMaterial->color = color;
+
+
+
+	triangle.Updata(view,proj);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->commandList->SetGraphicsRootConstantBufferView(2, triangleMaterial.material.constBuffMaterialB1->GetGPUVirtualAddress());
+
+	//SRVヒープの先頭アドレスを取得
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+	srvGpuHandle.ptr += triangle.model->texture.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+	//SRVヒープの先頭にあるSRVをパラメータ1番に設定
+	dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
+	//頂点データ
+	dx12->commandList->IASetVertexBuffers(0, 1, &triangleMaterial.vbView);
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.constBuffTranceform->GetGPUVirtualAddress());
+	//描画コマンド
+	dx12->commandList->DrawInstanced(triangleMaterial.vertices.size(), 1, 0, 0);
+}

@@ -173,3 +173,30 @@ void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::st
 
     SetSrvHeap();
 }
+
+void MCB::Texture::CreateNoTextureFileIsTexture()
+{
+    Dx12* dx12 = Dx12::GetInstance();
+    ShaderResource* srv = ShaderResource::GetInstance();
+
+    //画像イメージデータの作成----------------------
+    texImg.SetImageDataRGBA(Float4(1.0f, 1.0f, 1.0f, 1.0f));
+    //------------------------------------
+
+     //テクスチャバッファ設定---------------------------------------
+    texBuff.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
+    texBuff.SetNoTextureFileTexResourceDesc();
+    //--------------------------------------
+
+
+    //テクスチャバッファの生成----------------------
+   HRESULT result = texBuff.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
+    texBuff.TransferMipmatToTexBuff(texImg,result);
+    //-----------------------------------
+    this->incrementNum = ShaderResource::AllincrementNum;
+
+    ShaderResource::AllincrementNum++;
+    srvptr = srv;
+
+    SetSrvHeap();
+}

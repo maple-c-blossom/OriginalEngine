@@ -28,6 +28,7 @@ namespace MCB
 
 		void CreateTexture( const std::string& directoryPath, const std::string& filename);
 
+		void CreateNoTextureFileIsTexture();
 
 		void SetSrvHeap();
 

@@ -37,3 +37,21 @@ void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, D3D12_RESOURCE
     texresDesc.SampleDesc.Count = SampleDescCount;
 }
 
+void MCB::TextureBuffer::SetNoTextureFileTexResourceDesc()
+{
+    texresDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+    texresDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+    texresDesc.Width = 256;
+    texresDesc.Height = 256;
+    texresDesc.DepthOrArraySize = 1;
+    texresDesc.MipLevels = 1;
+    texresDesc.SampleDesc.Count = 1;
+}
+
+void MCB::TextureBuffer::TransferMipmatToTexBuff(TexImgData teximg,HRESULT& result)
+{
+
+    //テクスチャバッファにデータ転送
+    result = texbuff->WriteToSubresource(0, nullptr, &teximg.imageData[0], sizeof(Float4) * teximg.textureWidth, sizeof(Float4) * teximg.imageDataCount);
+    assert(SUCCEEDED(result));
+}

@@ -161,6 +161,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
+
+    SimpleFigure triangle;
+
     //Object3d* Box = new Object3d(*dx);
     std::array<Object3d, 20> Box;
     std::array<Object3d, 40> Box2;
@@ -250,6 +253,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     int count = 0;
 
     int distance = 20;
+
+    bool colorUpX = false;
+    bool colorUpY = false;
+    bool colorUpZ = false;
+    bool colorUpW = false;
+
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -302,20 +311,67 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Draw();
         ground.Draw();
 
-        for (int i = 0; i < Box.size(); i++)
+        //for (int i = 0; i < Box.size(); i++)
+        //{
+        //    Box[i].Draw();
+        //}
+
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Draw(0);
+        //}
+
+        if (triangle.color.x > 1)
         {
-            Box[i].Draw();
+            colorUpX = false;
+            triangle.color.x = 1;
+        }
+        if (triangle.color.x < 0)
+        {
+            colorUpX = true;
+            triangle.color.x = 0;
+
         }
 
-        for (int i = 0; i < Box2.size(); i++)
+        if (colorUpX)
         {
-            Box2[i].Draw(0);
+            triangle.color.x += 0.01f;
         }
+        else
+        {
+            triangle.color.x -= 0.01f;
+        }
+        
+        if (triangle.color.y > 1)
+        {
+            colorUpY = false;
+            triangle.color.y = 1;
+        }
+        if (triangle.color.y < 0)
+        {
+            colorUpY = true;
+            triangle.color.y = 0;
+
+        }
+
+        if (colorUpY)
+        {
+            triangle.color.y += 0.05f;
+        }
+        else
+        {
+            triangle.color.y -= 0.05f;
+        }
+
+
+        triangle.triangle.scale = { 20,20,1 };
+        
+        triangle.DrawTriangle(matView, matProjection);
 
         sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
-        //debugText.Print(0, 600, 1, "hogehogehogehoge",Box[0].position.x, Box[0].position.y, Box[0].position.z);
+        debugText.Print(0, 600, 1, "%f", triangle.color.x);
 
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 

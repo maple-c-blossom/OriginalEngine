@@ -9,6 +9,11 @@ MCB::Model::Model( const std::string fileName)
     Init(fileName);
 }
 
+MCB::Model::Model()
+{
+    material.Init();
+}
+
 MCB::Model::~Model()
 {
     //texture.texfile.scratchImg.Release();

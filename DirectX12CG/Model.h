@@ -27,7 +27,7 @@ namespace MCB
     public:
 
         Model(const std::string fileName);
-
+        Model();
         ~Model();
 
         Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
