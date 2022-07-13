@@ -86,10 +86,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #ifdef _DEBUG
 //デバックレイヤーをオンに
-    ComPtr<ID3D12Debug> debugController;
+    ComPtr<ID3D12Debug1> debugController;
     if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
     {
         debugController->EnableDebugLayer();
+        debugController->SetEnableGPUBasedValidation(TRUE);
     }
 
 #endif
