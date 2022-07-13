@@ -47,8 +47,16 @@
 #include "Sprite.h"
 #include "DebugText.h"
 #include "Sound.h"
+#include "Collider.h"
 
 #pragma endregion 自作.h include
+
+#pragma region ゲーム系.h include
+
+#include "RayObject.h"
+#include "SphereObj.h"
+
+#pragma endregion ゲーム系.h include
 
 #pragma region pragma comment
 
@@ -121,7 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
     View matView;
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     //射影変換行列
     Projection matProjection;
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
@@ -174,12 +182,22 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     ground.model = groundModel;
     ground.scale = { 4,4,4 };
     ground.position = { 0,-15,0 };
-
+    ;
     Object3d Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
+    RayObject ray;
+    ray.Init(*dx);
+    ray.model = BoxModel;
+    ray.scale = { 1,1,30 };
+    ray.SetCollider(50, 1, { 0,0,1 });
+
+    SphereObj sphere;
+    sphere.Init(*dx);
+    sphere.model = BoxModel;
+    sphere.SetCollider(1);
 
     Box.begin()->model = BoxModel;
 
@@ -191,14 +209,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     {
         Box[i].Init();
         Box[i].model = BoxModel;
-        if (i > 0)
-        {
-            Box[i].parent = &Box[i - 1];
-            Box[i].scale = { 0.9f,0.9f,0.9f };
-            Box[i].rotasion = { 0,0,0.2 };
-            Box[i].position = { 0,0,1 };
-        }
+        Box[i].scale = { 10,1,1 };
+
+        //if (i > 0)
+        //{
+        //    Box[i].parent = &Box[i - 1];
+        //    Box[i].scale = { 0.9f,0.9f,0.9f };
+        //    Box[i].rotasion = { 0,0,0.2 };
+        //    Box[i].position = { 0,0,1 };
+        //}
     }
+
 
     for (int i = 0; i < Box2.size(); i++)
     {
@@ -212,7 +233,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         }
     }
 
-
+    
 
 
 #pragma endregion 3Dオブジェクトの生成
@@ -377,8 +398,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
         debugText.AllDraw();
-
-
 
 #pragma endregion 描画コマンド
         //----------------------
