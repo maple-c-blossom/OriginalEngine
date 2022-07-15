@@ -189,13 +189,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Skydorm.scale = { 4,4,4 };
 
     RayObject ray;
-    ray.Init(*dx);
+    ray.Init();
     ray.model = BoxModel;
     ray.scale = { 1,1,30 };
     ray.SetCollider(50, 1, { 0,0,1 });
 
     SphereObj sphere;
-    sphere.Init(*dx);
+    sphere.Init();
     sphere.model = BoxModel;
     sphere.SetCollider(1);
 

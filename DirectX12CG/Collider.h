@@ -28,6 +28,13 @@ namespace MCB
 		float radius;
 	};
 
+	class Plane
+	{
+	public:
+		Vector3D normal = {0,1,0};
+		float distance = 0;
+	};
+
 	bool CalcRaySphere(Ray ray,Sphere sphere);
 	bool CalcSphere(Sphere sphereA,Sphere sphereB);
 }
