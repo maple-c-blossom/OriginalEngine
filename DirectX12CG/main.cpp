@@ -129,7 +129,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
     View matView;
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(100.0f, 100.0f, -100.0f), XMFLOAT3(100.0f, 100.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     //射影変換行列
     Projection matProjection;
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
@@ -174,7 +174,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     SimpleFigure triangle;
 
     //Object3d* Box = new Object3d(*dx);
-    std::array<Object3d, 3> Box;
+    std::array<std::array<Object3d, 10>,10> Box;
     //std::array<Object3d, 40> Box2;
 
     Object3d ground;
@@ -188,51 +188,36 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
-    RayObject ray;
-    ray.Init();
-    ray.model = BoxModel;
-    ray.scale = { 1,1,30 };
-    ray.SetCollider(50, 1, { 0,0,1 });
-
-    SphereObj sphere;
-    sphere.Init();
-    sphere.model = BoxModel;
-    sphere.SetCollider(1);
-
-    Box.begin()->model = BoxModel;
-
-    Box.begin()->scale = { 5,5,5 };
 
 
 
-    //for (int i = 0; i < Box.size(); i++)
-    //{
-    //    Box[i].Init(*dx);
-    //    Box[i].model = BoxModel;
-    //    if (i > 0)
-    //    {
-    //        Box[i].parent = &Box[i - 1];
-    //        Box[i].scale = { 0.9f,0.9f,0.9f };
-    //        Box[i].rotasion = { 0,0,0.2 };
-    //        Box[i].position = { 0,0,1 };
-    //    }
-    //}
+
+    for (int i = 0; i < 10; i++)
+    {
+        for (int j = 0; j < 10; j++)
+        {
+            Box[i][j].Init();
+            Box[i][j].model = BoxModel;
+            Box[i][j].scale = {5,5,5};
+            Box[i][j].position = {(float)20 * j,(float)20 * i,1};
+        }
+    }
 
 
-    for (int i = 0; i < 3; i++)
+  /*  for (int i = 0; i < 3; i++)
     {
         Box[i].Init();
         Box[i].model = BoxModel;
         Box[i].scale = { 10,1,1 };
 
-        //if (i > 0)
-        //{
-        //    Box[i].parent = &Box[i - 1];
-        //    Box[i].scale = { 0.9f,0.9f,0.9f };
-        //    Box[i].rotasion = { 0,0,0.2 };
-        //    Box[i].position = { 0,0,1 };
-        //}
-    }
+        if (i > 0)
+        {
+            Box[i].parent = &Box[i - 1];
+            Box[i].scale = { 0.9f,0.9f,0.9f };
+            Box[i].rotasion = { 0,0,0.2 };
+            Box[i].position = { 0,0,1 };
+        }
+    }*/
 
 
     //for (int i = 0; i < Box2.size(); i++)
@@ -285,18 +270,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 targetVec = { 0,0,1 };
     XMFLOAT3 Angle = { 0,0,0 };
 
-    XMFLOAT3 target = Box[0].position;
-    XMFLOAT3 startTarget = Box[0].position;
-    int time = 0;
-    int maxTime = 10;
-    int nowTarget = 0;
+    float fovAngle = matProjection.fovAngle;
 
-    int distance = 20;
-
-    bool colorUpX = false;
-    bool colorUpY = false;
-    bool colorUpZ = false;
-    bool colorUpW = false;
 
 #pragma endregion ゲームループ用変数
     //--------------------------
@@ -317,17 +292,55 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
+        if (input->IsKeyDown(DIK_UP))
+        {
+            fovAngle -= 0.01;
+            if (fovAngle < 0.05f)
+            {
+                fovAngle = 0.05f;
+            }
+        }
 
-        matView.target.x = matView.eye.x + targetVec.x;
-        matView.target.y = matView.eye.y + targetVec.y;
-        matView.target.z = matView.eye.z + targetVec.z;
+        if (input->IsKeyDown(DIK_DOWN))
+        {
+            fovAngle += 0.01;
+            if (fovAngle > 1)
+            {
+                fovAngle = 1.0f;
+            }
+        }
+
+        matProjection.fovAngle = fovAngle;
+        matProjection.UpdataMatrixProjection();
+
+        if (input->IsKeyDown(DIK_W))
+        {
+            matView.target.y++;
+        }
+        if (input->IsKeyDown(DIK_S))
+        {
+            matView.target.y--;
+        }
+
+        if (input->IsKeyDown(DIK_D))
+        {
+            matView.target.x++;
+        }
+        if (input->IsKeyDown(DIK_A))
+        {
+            matView.target.x--;
+        }
 
         matView.UpDateMatrixView();
 
 
-        for (int i = 0; i < 3; i++)
+
+        for (int i = 0; i < 10; i++)
         {
-            Box[i].Updata(matView, matProjection);
+            for (int j = 0; j < 10; j++)
+            {
+                Box[i][j].Updata(matView, matProjection);
+            }
         }
 
         //for (int i = 0; i < Box2.size(); i++)
@@ -350,67 +363,25 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Draw();
         ground.Draw();
 
-        //for (int i = 0; i < Box.size(); i++)
-        //{
-        //    Box[i].Draw();
-        //}
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                Box[i][j].Draw();
+
+            }
+        }
 
         //for (int i = 0; i < Box2.size(); i++)
         //{
         //    Box2[i].Draw(0);
         //}
 
-        if (triangle.color.x > 1)
-        {
-            colorUpX = false;
-            triangle.color.x = 1;
-        }
-        if (triangle.color.x < 0)
-        {
-            colorUpX = true;
-            triangle.color.x = 0;
-
-        }
-
-        if (colorUpX)
-        {
-            triangle.color.x += 0.01f;
-        }
-        else
-        {
-            triangle.color.x -= 0.01f;
-        }
-        
-        if (triangle.color.y > 1)
-        {
-            colorUpY = false;
-            triangle.color.y = 1;
-        }
-        if (triangle.color.y < 0)
-        {
-            colorUpY = true;
-            triangle.color.y = 0;
-
-        }
-
-        if (colorUpY)
-        {
-            triangle.color.y += 0.05f;
-        }
-        else
-        {
-            triangle.color.y -= 0.05f;
-        }
-
-
-        triangle.triangle.scale = { 20,20,1 };
-        
-        triangle.DrawTriangle(matView, matProjection);
 
         sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
-        debugText.Print(0, 600, 1, "%f", triangle.color.x);
+        debugText.Print(0, 600, 1, "%f", fovAngle);
 
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
