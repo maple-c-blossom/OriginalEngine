@@ -244,6 +244,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     sprite.InitMatProje();
     sprite = sprite.CreateSprite();
 
+    Sprite zoomSprite;
+    zoomSprite.InitMatProje();
+    zoomSprite = zoomSprite.CreateSprite();
+    Texture zoomTex;
+    zoomTex.CreateTexture(L"Resources\\reticle.png");
 
     DebugText debugText;
     debugText.Init(&debugTextTexture);
@@ -270,8 +275,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 targetVec = { 0,0,1 };
     XMFLOAT3 Angle = { 0,0,0 };
 
-    float fovAngle = matProjection.fovAngle;
-
+    float fovAngle = 40;
+    bool isZoom = false;
 
 #pragma endregion ゲームループ用変数
     //--------------------------
@@ -292,41 +297,37 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        if (input->IsKeyDown(DIK_UP))
+        if(input->IsKeyTrigger(DIK_SPACE))
         {
-            fovAngle -= 0.01;
-            if (fovAngle < 0.05f)
+            if (isZoom)
             {
-                fovAngle = 0.05f;
+                isZoom = false;
+                fovAngle = 40.0f;
             }
-        }
-
-        if (input->IsKeyDown(DIK_DOWN))
-        {
-            fovAngle += 0.01;
-            if (fovAngle > 1)
+            else
             {
-                fovAngle = 1.0f;
+                isZoom = true;
+                fovAngle = 20.0f;
             }
         }
 
         matProjection.fovAngle = fovAngle;
         matProjection.UpdataMatrixProjection();
 
-        if (input->IsKeyDown(DIK_W))
+        if (input->IsKeyDown(DIK_UP))
         {
             matView.target.y++;
         }
-        if (input->IsKeyDown(DIK_S))
+        if (input->IsKeyDown(DIK_DOWN))
         {
             matView.target.y--;
         }
 
-        if (input->IsKeyDown(DIK_D))
+        if (input->IsKeyDown(DIK_RIGHT))
         {
             matView.target.x++;
         }
-        if (input->IsKeyDown(DIK_A))
+        if (input->IsKeyDown(DIK_LEFT))
         {
             matView.target.x--;
         }
@@ -383,6 +384,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         debugText.Print(0, 600, 1, "%f", fovAngle);
 
+        if (isZoom)
+        {
+            zoomSprite.SpriteDraw(zoomSprite, zoomTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
+        }
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
         debugText.AllDraw();

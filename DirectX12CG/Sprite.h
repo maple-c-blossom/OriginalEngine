@@ -50,7 +50,6 @@ namespace MCB
 		bool isFlipX = false;
 		bool isFlipY = false;
 
-
 		void SpriteTransferVertexBuffer(const Sprite& sprite, Texture* tex = nullptr);
 		void SpriteUpdate(Sprite& sprite);
 		void InitMatProje();
