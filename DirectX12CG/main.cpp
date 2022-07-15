@@ -285,8 +285,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     float startFovAngle = noZoomFovAngle / 4;
     float endFovAngle = noZoomFovAngle / 8;
     int time = 0;
-    int maxTime = 30;
+    int maxTime = 10;
     bool isZoom = false;
+    bool isMoreZoom = false;
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -315,25 +316,34 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         {
             if(input->IsKeyDown(DIK_W))
             {
+                isMoreZoom = true;
+            }
+            else if(input->IsKeyDown(DIK_S))
+            {
+                isMoreZoom = false;
+
+            }
+
+            if (isMoreZoom)
+            {
                 if (time < maxTime)
                 {
                     time++;
                 }
-            
+
                 if (time > maxTime)
                 {
                     time = maxTime;
                 }
-
             }
-            else if(input->IsKeyDown(DIK_S))
+            else
             {
                 if (time > 0)
                 {
                     time--;
                 }
 
-                if(time < 0)
+                if (time < 0)
                 {
                     time = 0;
                 }
