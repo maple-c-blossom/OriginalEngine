@@ -163,8 +163,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //3Dオブジェクトの生成-------------------
 #pragma region 3Dオブジェクトの生成
     //Object3d* Box = new Object3d(*dx);
-    std::array<Object3d, 20> Box;
-    std::array<Object3d, 40> Box2;
+    std::array<Object3d, 3> Box;
+    //std::array<Object3d, 40> Box2;
 
     Object3d ground;
     ground.Init(*dx);
@@ -184,30 +184,42 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 
-    for (int i = 0; i < Box.size(); i++)
+    //for (int i = 0; i < Box.size(); i++)
+    //{
+    //    Box[i].Init(*dx);
+    //    Box[i].model = BoxModel;
+    //    if (i > 0)
+    //    {
+    //        Box[i].parent = &Box[i - 1];
+    //        Box[i].scale = { 0.9f,0.9f,0.9f };
+    //        Box[i].rotasion = { 0,0,0.2 };
+    //        Box[i].position = { 0,0,1 };
+    //    }
+    //}
+
+
+    for (int i = 0; i < 3; i++)
     {
         Box[i].Init(*dx);
         Box[i].model = BoxModel;
-        if (i > 0)
-        {
-            Box[i].parent = &Box[i - 1];
-            Box[i].scale = { 0.9f,0.9f,0.9f };
-            Box[i].rotasion = { 0,0,0.2 };
-            Box[i].position = { 0,0,1 };
-        }
+        Box[i].scale = { 5,5,5 };
     }
 
-    for (int i = 0; i < Box2.size(); i++)
-    {
-        Box2[i].Init(*dx);
-        Box2[i].model = BoxModel;
-        Box2[i].position.y = -10;
-        Box2[i].scale = { 5,5,5 };
-        if (i > 0)
-        {
-              Box2[i].position.z = Box2[i - 1].position.z + 20;
-        }
-    }
+    Box[0].position = { 10,20,0 };
+    Box[1].position = { -20,0,0 };
+    Box[2].position = { 20, 0,0 };
+
+    //for (int i = 0; i < Box2.size(); i++)
+    //{
+    //    Box2[i].Init(*dx);
+    //    Box2[i].model = BoxModel;
+    //    Box2[i].position.y = -10;
+    //    Box2[i].scale = { 5,5,5 };
+    //    if (i > 0)
+    //    {
+    //          Box2[i].position.z = Box2[i - 1].position.z + 20;
+    //    }
+    //}
 
 
 
@@ -251,6 +263,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     int count = 0;
 
     int distance = 20;
+    
+    XMFLOAT3 target = Box[0].position;
+    int nowTarget = 0;
+
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -270,24 +286,32 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
+        if (input->IsKeyTrigger(DIK_SPACE))
+        {
+            nowTarget++;
+            if (nowTarget > 2)
+            {
+                nowTarget = 0;
+            }
+            target = Box[nowTarget].position;
+        }
 
-
-        matView.target.x = matView.eye.x + targetVec.x;
-        matView.target.y = matView.eye.y + targetVec.y;
-        matView.target.z = matView.eye.z + targetVec.z;
+        matView.target.x = target.x;
+        matView.target.y = target.y;
+        matView.target.z = target.z;
 
         matView.UpDateMatrixView();
 
 
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 3; i++)
         {
             Box[i].Updata(matView, matProjection);
         }
 
-        for (int i = 0; i < Box2.size(); i++)
-        {
-            Box2[i].Updata(matView, matProjection);
-        }
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Updata(matView, matProjection);
+        //}
 
         
         Skydorm.Updata(matView, matProjection);
@@ -304,15 +328,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         Skydorm.Draw(*dx, descriptor);
         ground.Draw(*dx, descriptor);
 
-        for (int i = 0; i < Box.size(); i++)
+        for (int i = 0; i < 3; i++)
         {
             Box[i].Draw(*dx, descriptor);
         }
 
-        for (int i = 0; i < Box2.size(); i++)
-        {
-            Box2[i].Draw(*dx, descriptor,0);
-        }
+        //for (int i = 0; i < Box2.size(); i++)
+        //{
+        //    Box2[i].Draw(*dx, descriptor,0);
+        //}
 
         sprite.SpriteCommonBeginDraw(*dx, spritePipeline, descriptor);
 
