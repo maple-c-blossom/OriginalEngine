@@ -259,6 +259,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 Angle = { 0,0,0 };
 
     XMFLOAT3 target = Box[0].position;
+    XMFLOAT3 startTarget = Box[0].position;
+    int time = 0;
+    int maxTime = 10;
     int nowTarget = 0;
 
 #pragma endregion ゲームループ用変数
@@ -287,13 +290,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             {
                 nowTarget = 0;
             }
+            startTarget = target;
             target = Box[nowTarget].position;
+            time = 0;
         }
-
-
-        matView.target.x = target.x;
-        matView.target.y = target.y;
-        matView.target.z = target.z;
+        if (time < maxTime)
+        {
+            time++;
+        }
+        matView.target.x = Lerp(startTarget.x, target.x, maxTime, time);
+        matView.target.y = Lerp(startTarget.y, target.y, maxTime, time);
+        matView.target.z = Lerp(startTarget.z, target.z, maxTime, time);
+        //matView.target.x = target.x;
+        //matView.target.y = target.y;
+        //matView.target.z = target.z;
 
         matView.UpDateMatrixView();
 
