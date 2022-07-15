@@ -261,6 +261,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     bool SelectVio = true;
     int count = 0;
+    float angle = 0.00f;
+    int distance = 20;
+    Quaternion eyeQ;
+    eyeQ.SetRota({ 0,1,0 }, 0);
+    Quaternion eyePosition;
+    eyePosition.x = matView.eye.x - Box[0].position.x;
+    eyePosition.y = matView.eye.y - Box[0].position.y;
+    eyePosition.z = matView.eye.z - Box[0].position.z;
+    eyePosition.w = 0;
 
     int distance = 20;
     
@@ -295,6 +304,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
             }
             target = Box[nowTarget].position;
         }
+        matView.eye.x = temp.x;
+        matView.eye.y = temp.y;
+        matView.eye.z = temp.z;
 
         matView.target.x = target.x;
         matView.target.y = target.y;
