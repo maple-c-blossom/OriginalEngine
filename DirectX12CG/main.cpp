@@ -275,8 +275,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 targetVec = { 0,0,1 };
     XMFLOAT3 Angle = { 0,0,0 };
 
-    float fovAngle = 40;
-    bool isZoom = false;
+    float startFovAngle = 40;
+    float endFovAngle = 20;
+    int time = 0;
+    int maxTime = 30;
 
 #pragma endregion ゲームループ用変数
     //--------------------------
@@ -297,21 +299,33 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        if(input->IsKeyTrigger(DIK_SPACE))
+        if(input->IsKeyDown(DIK_SPACE))
         {
-            if (isZoom)
+            if (time < maxTime)
             {
-                isZoom = false;
-                fovAngle = 40.0f;
+                time++;
             }
-            else
+            
+            if (time > maxTime)
             {
-                isZoom = true;
-                fovAngle = 20.0f;
+                time = maxTime;
+            }
+
+        }
+        else
+        {
+            if (time > 0)
+            {
+                time--;
+            }
+
+            if(time < 0)
+            {
+                time = 0;
             }
         }
 
-        matProjection.fovAngle = fovAngle;
+        matProjection.fovAngle = Lerp(XMConvertToRadians(startFovAngle), XMConvertToRadians(endFovAngle),maxTime,time);
         matProjection.UpdataMatrixProjection();
 
         if (input->IsKeyDown(DIK_UP))
@@ -382,9 +396,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
-        debugText.Print(0, 600, 1, "%f", fovAngle);
+        debugText.Print(0, 600, 1, "%d", time);
 
-        if (isZoom)
+        if (input->IsKeyDown(DIK_SPACE))
         {
             zoomSprite.SpriteDraw(zoomSprite, zoomTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
         }
