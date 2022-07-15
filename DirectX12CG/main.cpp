@@ -235,17 +235,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     }
 
 
-    for (int i = 0; i < Box2.size(); i++)
-    {
-        Box2[i].Init();
-        Box2[i].model = BoxModel;
-        Box2[i].position.y = -10;
-        Box2[i].scale = { 5,5,5 };
-        if (i > 0)
-        {
-              Box2[i].position.z = Box2[i - 1].position.z + 20;
-        }
-    }
+    //for (int i = 0; i < Box2.size(); i++)
+    //{
+    //    Box2[i].Init();
+    //    Box2[i].model = BoxModel;
+    //    Box2[i].position.y = -10;
+    //    Box2[i].scale = { 5,5,5 };
+    //    if (i > 0)
+    //    {
+    //          Box2[i].position.z = Box2[i - 1].position.z + 20;
+    //    }
+    //}
 
     
 
