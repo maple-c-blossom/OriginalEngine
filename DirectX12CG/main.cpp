@@ -250,6 +250,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Texture zoomTex;
     zoomTex.CreateTexture(L"Resources\\reticle.png");
 
+    Sprite scopeSprite;
+    scopeSprite.InitMatProje();
+    scopeSprite = scopeSprite.CreateSprite();
+    Texture scopeTex;
+    scopeTex.CreateTexture(L"Resources\\scope.png");
+
     DebugText debugText;
     debugText.Init(&debugTextTexture);
 
@@ -275,11 +281,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 targetVec = { 0,0,1 };
     XMFLOAT3 Angle = { 0,0,0 };
 
-    float startFovAngle = 40;
-    float endFovAngle = 20;
+    float noZoomFovAngle = 40;
+    float startFovAngle = noZoomFovAngle / 4;
+    float endFovAngle = noZoomFovAngle / 8;
     int time = 0;
     int maxTime = 30;
-
+    bool isZoom = false;
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -299,33 +306,45 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        if(input->IsKeyDown(DIK_SPACE))
+        if (input->IsKeyTrigger(DIK_SPACE))
         {
-            if (time < maxTime)
-            {
-                time++;
-            }
-            
-            if (time > maxTime)
-            {
-                time = maxTime;
-            }
+            isZoom = !isZoom;
+        }
 
+        if (isZoom)
+        {
+            if(input->IsKeyDown(DIK_W))
+            {
+                if (time < maxTime)
+                {
+                    time++;
+                }
+            
+                if (time > maxTime)
+                {
+                    time = maxTime;
+                }
+
+            }
+            else if(input->IsKeyDown(DIK_S))
+            {
+                if (time > 0)
+                {
+                    time--;
+                }
+
+                if(time < 0)
+                {
+                    time = 0;
+                }
+            }
+            matProjection.fovAngle = Lerp(XMConvertToRadians(startFovAngle), XMConvertToRadians(endFovAngle),maxTime,time);
         }
         else
         {
-            if (time > 0)
-            {
-                time--;
-            }
-
-            if(time < 0)
-            {
-                time = 0;
-            }
+            matProjection.fovAngle = XMConvertToRadians(noZoomFovAngle);
         }
 
-        matProjection.fovAngle = Lerp(XMConvertToRadians(startFovAngle), XMConvertToRadians(endFovAngle),maxTime,time);
         matProjection.UpdataMatrixProjection();
 
         if (input->IsKeyDown(DIK_UP))
@@ -398,8 +417,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         debugText.Print(0, 600, 1, "%d", time);
 
-        if (input->IsKeyDown(DIK_SPACE))
+        if (isZoom)
         {
+            scopeSprite.SpriteDraw(scopeSprite, scopeTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
             zoomSprite.SpriteDraw(zoomSprite, zoomTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
         }
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
