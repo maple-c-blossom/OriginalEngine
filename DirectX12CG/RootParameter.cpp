@@ -5,7 +5,7 @@ MCB::RootParameter::~RootParameter()
     rootparams.clear();
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, ShaderResource &descriptor,int NumDescriptorRanges)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, int NumDescriptorRanges)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -13,7 +13,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
-        rootparam.DescriptorTable.pDescriptorRanges = &descriptor.descriptorRange;
+        rootparam.DescriptorTable.pDescriptorRanges = &ShaderResource::GetInstance()->descriptorRange;
         rootparam.DescriptorTable.NumDescriptorRanges = NumDescriptorRanges;
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
@@ -30,7 +30,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, ShaderResource& descriptor, int ShaderRegister)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -38,7 +38,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, Shade
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
-        rootparam.DescriptorTable.pDescriptorRanges = &descriptor.descriptorRange;
+        rootparam.DescriptorTable.pDescriptorRanges = &ShaderResource::GetInstance()->descriptorRange;
         rootparam.DescriptorTable.NumDescriptorRanges = 0;
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)

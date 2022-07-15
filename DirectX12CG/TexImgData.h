@@ -21,6 +21,8 @@ namespace MCB
        ~TexImgData();
         void SetImageDataRGBA(DirectX::XMFLOAT4 RGBA);
         void SetImageDataRGBA(Float4 RGBA);
+
+        void SetNoTextureFileImageDataRGBA(Float4 RGBA);
   
 
 	};

@@ -1,22 +1,35 @@
 #pragma once
 #include <dinput.h>
+#include "Dx12.h"
+#include "DxWindow.h"
 #define DIRECINPUT_VERSION 0x0800 //DirectInputのバージョン指定
 
 namespace MCB
 {
     class Input
     {
-    public:
+    private:
         IDirectInputDevice8* devkeyboard = nullptr;
 
         IDirectInput8* dinput = nullptr;
+
+        Input() {};
+        Input(const Input& input) {};
+        ~Input() {};
+        Input& operator= (const Input & Input){};
+
+    public:
+
+        static Input* GetInstance();
+        static void DeleteInstace();
+        static Input* GetInitInstance();
 
         //キー初期化----------------------
         BYTE key[256] = {};
         BYTE oldkey[256] = {};
         //-----------------------
 
-        Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
+        //Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
 
         //キーボード初期化-------------------------------
         void KeyInit();
@@ -37,9 +50,9 @@ namespace MCB
 #pragma endregion 入力関数
         //--------------------
 
-        void Init(HRESULT& result, WNDCLASSEX w, HWND hwnd);
+        void Init();
 
-        void UpDateInit(HRESULT& result);
+        void UpDateInit();
     };
 }
 

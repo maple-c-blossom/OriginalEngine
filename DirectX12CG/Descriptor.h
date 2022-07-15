@@ -10,6 +10,10 @@ namespace MCB
 
 	class ShaderResource
 	{
+        ShaderResource() {};
+        ShaderResource(const ShaderResource& shaderResource) {};
+        ShaderResource& operator=(const ShaderResource& shaderResource) {};
+        ~ShaderResource() {};
 		public:
             //定数バッファ用のデスクリプタヒープ
 
@@ -31,21 +35,27 @@ namespace MCB
 
             const size_t MaxSRVCount = 0xfff;
 
-            void Init(Dx12 dx);
+
+            static ShaderResource* GetInstance();
+            static void DeleteInstace();
+            static ShaderResource* GetInitInstance();
+
+
+            void Init();
 
             void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags);
 
-            HRESULT SetDescriptorHeap(Dx12 &dx12);
+            HRESULT SetDescriptorHeap();
 
             void SetSrvHeap();
 
-            void SetSrvHeap(unsigned short int incrementNum, Dx12 dx12);
+            void SetSrvHeap(unsigned short int incrementNum);
 
             void InitAllincrementNum();
 
             void SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension);
 
-            void SetShaderResourceView(Dx12& dx12, TextureBuffer& texBuffer);
+            void SetShaderResourceView(TextureBuffer& texBuffer);
 
             void SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int BaseShaderRegister);
 	};

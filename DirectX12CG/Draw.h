@@ -23,21 +23,21 @@ namespace MCB
 		
 
 
-		void SetBeforeBbIndex(Dx12& dx12);
-		void SetBeforeResourceBarrier(Dx12 &dx12);
-		void BeforeDraw(Dx12 &dx12,Depth depth, ShaderResource srv,PipelineRootSignature pipeline);
-		void SetRenderTargetView(Dx12& dx12,Depth& depth);
-		void ClearScreen(Dx12& dx12,const float* clearColor);
-		void SetViewPort(Dx12& dx12,DxWindow& dxWindow);
-		void SetScissorrect(Dx12& dx12, DxWindow& dxWindow);
-		void PreDraw(Dx12& dx12, Depth depth, ShaderResource srv, PipelineRootSignature pipeline, DxWindow& dxWindow, const float* clearColor);
+		void SetBeforeBbIndex();
+		void SetBeforeResourceBarrier();
+		void BeforeDraw(Depth depth,PipelineRootSignature pipeline);
+		void SetRenderTargetView(Depth& depth);
+		void ClearScreen(const float* clearColor);
+		void SetViewPort();
+		void SetScissorrect();
+		void PreDraw(Depth depth,PipelineRootSignature pipeline, const float* clearColor);
 
 
-		void SetAfterResourceBarrier(Dx12& dx12);
-		void CloseDrawCommandOrder(Dx12& dx12);
-		void CommandListExecution(Dx12& dx12);
-		void ResetQueAndCommandList(Dx12& dx12);
-		void PostDraw(Dx12& dx12);
+		void SetAfterResourceBarrier();
+		void CloseDrawCommandOrder();
+		void CommandListExecution();
+		void ResetQueAndCommandList();
+		void PostDraw();
 	};
 
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include "Object3d.h"
 #define PI 3.14159265358979323846264338327950288f
 namespace MCB
 {
@@ -19,5 +20,18 @@ namespace MCB
 
 	void InitRand();
 	int GetRand(int min, int max);
+
+	class SimpleFigure
+	{
+	public:
+		SimpleFigure();
+		Model triangleMaterial;
+		Object3d triangle;
+
+		Float3 PointA = { -0.5f,-0.5f,1.0f }; Float3 PointB = { -0.5f,0.5f,1.0f };
+		Float3 PointC = { 0.5f,-0.5f,1.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
+		void  DrawTriangle(View view, Projection proj);
+
+	};
 }
 

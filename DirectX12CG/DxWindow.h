@@ -5,7 +5,17 @@ namespace MCB
 {
     class DxWindow
     {
+    private:
+        DxWindow() {};
+        DxWindow(const DxWindow& dx12) {};
+        DxWindow& operator=(const DxWindow& dx12) {};
+        ~DxWindow();
+
     public:
+        static DxWindow* GetInstance();
+        static DxWindow* GetInitInstance();
+        static void DeleteInstance();
+
         // ウィンドウサイズ
         const int window_width = 1280;  // 横幅
         const int window_height = 720;  // 縦幅
@@ -19,12 +29,13 @@ namespace MCB
         HWND hwnd;
         const wchar_t* windowName = L"LE2A_02_アベ_リュウタ_AL3";
 
-        DxWindow();
-        ~DxWindow();
+
         // ウィンドウプロシージャ 
         static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
         void messageUpdate();
+        void Init();
+
     };
 }
 

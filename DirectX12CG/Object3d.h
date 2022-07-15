@@ -50,7 +50,6 @@ namespace MCB
         Model* model = nullptr;
 
 
-        Object3d(Dx12& dx12);
         Object3d();
 
         ~Object3d();
@@ -60,15 +59,15 @@ namespace MCB
 
         bool trackingFlag = false;
 
-        void Init(Dx12& dx12);
+        void Init();
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
         void Updata(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
 
-        void Draw(Dx12 dx12, ShaderResource descriptor);
+        void Draw();
 
-        void Draw(Dx12 dx12, ShaderResource descriptor,unsigned short int incremant);
+        void Draw(unsigned short int incremant);
 
         //void CreateModel(const char* fileName);
     };

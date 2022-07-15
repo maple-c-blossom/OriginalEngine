@@ -13,75 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\Object">
-      <UniqueIdentifier>{f9678f7a-df8e-47b9-b1ac-dfb176c574a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\DirectX">
-      <UniqueIdentifier>{afd52624-acf3-4d53-873a-09722a5cf32e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{57e1e8d7-770f-447d-a971-18c7cca3cb58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\3D">
-      <UniqueIdentifier>{eb6ba388-9701-4e70-b923-48144367fc89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\DirectX">
-      <UniqueIdentifier>{4d183000-2838-4261-b565-16af9505f69e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\3D">
-      <UniqueIdentifier>{82d29c91-4bed-4af8-99fe-360042030ac8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Object">
-      <UniqueIdentifier>{a0aa570b-6a62-4bb5-bdea-446a023511d8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Texture">
-      <UniqueIdentifier>{fff0c284-4827-4ebc-afcb-873631b9bb46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Texture">
-      <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Descriptor&amp;Sheader">
-      <UniqueIdentifier>{e5df687b-8a73-4eef-a7f7-edd7747db1ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Descriptor&amp;Sheader">
-      <UniqueIdentifier>{ec728e33-bec1-4c91-a324-352353a52725}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Vertices&amp;Index">
-      <UniqueIdentifier>{bde88a0d-bf14-4210-ad52-b644a1616865}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Input">
-      <UniqueIdentifier>{fcaaf576-eca5-4dc0-80d0-8cdc84857f58}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Math">
-      <UniqueIdentifier>{b2488221-a3ca-4c3c-bd45-18c6adfa0ed1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Math\Matrix">
-      <UniqueIdentifier>{e84cb9d1-fc26-4494-9bce-75c39c9494da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Math\Vector">
-      <UniqueIdentifier>{23479cc5-8905-4bea-8da4-8f37b7055e3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Math">
-      <UniqueIdentifier>{ae8be9eb-5e9f-499c-a461-2979f9f27ae3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Math\Matrix">
-      <UniqueIdentifier>{5101529f-3641-4876-a145-f7ee32ba12fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Math\Vector">
-      <UniqueIdentifier>{f1476017-61e3-4b95-8347-289ef5be820e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Vertices&amp;Index">
-      <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Pipeline">
-      <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Particle">
-      <UniqueIdentifier>{f0becb41-c220-42f8-9e9c-fbdd59e50c7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Particle">
-      <UniqueIdentifier>{0e2385a5-8404-4dcb-825c-7a39dfbde112}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\BasicShader">
       <UniqueIdentifier>{6c143c2c-1c7c-48b7-b975-2a3e196d6cdd}</UniqueIdentifier>
     </Filter>
@@ -112,11 +43,92 @@
     <Filter Include="リソース ファイル\ParticleShader\VertexShader">
       <UniqueIdentifier>{47a71b20-3487-4592-bf1c-9fbd3d7a5592}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Pipeline">
-      <UniqueIdentifier>{eb244fb2-87d3-41d2-a45a-1b6b6af2345d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\SpriteShader">
       <UniqueIdentifier>{e3e36a56-89e5-4d0e-ba24-74e15967b994}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin">
+      <UniqueIdentifier>{57fffc77-ead1-4762-a8af-898a64d8e478}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Vertices&amp;Index">
+      <UniqueIdentifier>{bde88a0d-bf14-4210-ad52-b644a1616865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Texture">
+      <UniqueIdentifier>{fff0c284-4827-4ebc-afcb-873631b9bb46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Pipeline">
+      <UniqueIdentifier>{eb244fb2-87d3-41d2-a45a-1b6b6af2345d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Particle">
+      <UniqueIdentifier>{f0becb41-c220-42f8-9e9c-fbdd59e50c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Object">
+      <UniqueIdentifier>{f9678f7a-df8e-47b9-b1ac-dfb176c574a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math">
+      <UniqueIdentifier>{b2488221-a3ca-4c3c-bd45-18c6adfa0ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math\Matrix">
+      <UniqueIdentifier>{e84cb9d1-fc26-4494-9bce-75c39c9494da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math\Vector">
+      <UniqueIdentifier>{23479cc5-8905-4bea-8da4-8f37b7055e3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Input">
+      <UniqueIdentifier>{57e1e8d7-770f-447d-a971-18c7cca3cb58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\DirectX">
+      <UniqueIdentifier>{afd52624-acf3-4d53-873a-09722a5cf32e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Descriptor&amp;Sheader">
+      <UniqueIdentifier>{ec728e33-bec1-4c91-a324-352353a52725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\3D">
+      <UniqueIdentifier>{eb6ba388-9701-4e70-b923-48144367fc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin">
+      <UniqueIdentifier>{256e957f-f10c-45d6-94bc-b14af46af5b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Object">
+      <UniqueIdentifier>{a0aa570b-6a62-4bb5-bdea-446a023511d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Particle">
+      <UniqueIdentifier>{0e2385a5-8404-4dcb-825c-7a39dfbde112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Pipeline">
+      <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Texture">
+      <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Vertices&amp;Index">
+      <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Math">
+      <UniqueIdentifier>{ae8be9eb-5e9f-499c-a461-2979f9f27ae3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Math\Matrix">
+      <UniqueIdentifier>{5101529f-3641-4876-a145-f7ee32ba12fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Math\Vector">
+      <UniqueIdentifier>{f1476017-61e3-4b95-8347-289ef5be820e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Input">
+      <UniqueIdentifier>{fcaaf576-eca5-4dc0-80d0-8cdc84857f58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\DirectX">
+      <UniqueIdentifier>{4d183000-2838-4261-b565-16af9505f69e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Descriptor&amp;Sheader">
+      <UniqueIdentifier>{e5df687b-8a73-4eef-a7f7-edd7747db1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\3D">
+      <UniqueIdentifier>{82d29c91-4bed-4af8-99fe-360042030ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Game">
+      <UniqueIdentifier>{5b01ddb0-0d69-4f0c-88e3-5984c0578527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Game">
+      <UniqueIdentifier>{ced38064-c65b-4f3f-b68d-42290caade83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,106 +136,115 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Object3d.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソース ファイル\Engin\Object</Filter>
     </ClCompile>
     <ClCompile Include="ObjectMaterial.cpp">
-      <Filter>ソース ファイル\Object</Filter>
+      <Filter>ソース ファイル\Engin\Object</Filter>
     </ClCompile>
     <ClCompile Include="Dx12.cpp">
-      <Filter>ソース ファイル\DirectX</Filter>
+      <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="DxWindow.cpp">
-      <Filter>ソース ファイル\DirectX</Filter>
+      <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="Projection.cpp">
-      <Filter>ソース ファイル\Math\Matrix</Filter>
+      <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="View.cpp">
-      <Filter>ソース ファイル\Math\Matrix</Filter>
+      <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="WorldMatrix.cpp">
-      <Filter>ソース ファイル\Math\Matrix</Filter>
+      <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
     <ClCompile Include="Depth.cpp">
-      <Filter>ソース ファイル\3D</Filter>
+      <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
     <ClCompile Include="MipMap.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TexImgData.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TextureFile.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TextureBuffer.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Descriptor.cpp">
-      <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
     <ClCompile Include="RootParameter.cpp">
-      <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
     <ClCompile Include="Vertex.cpp">
-      <Filter>ソース ファイル\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
     </ClCompile>
     <ClCompile Include="MCBMatrix.cpp">
-      <Filter>ソース ファイル\Math\Matrix</Filter>
-    </ClCompile>
-    <ClCompile Include="Util.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
     <ClCompile Include="Vector3D.cpp">
-      <Filter>ソース ファイル\Math\Vector</Filter>
+      <Filter>ソース ファイル\Engin\Math\Vector</Filter>
     </ClCompile>
     <ClCompile Include="MCBFloat.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>ソース ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
     <ClCompile Include="Pipeline.cpp">
-      <Filter>ソース ファイル\Pipeline</Filter>
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="TexSample.cpp">
-      <Filter>ソース ファイル\Pipeline</Filter>
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="RootSignature.cpp">
-      <Filter>ソース ファイル\Pipeline</Filter>
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="Quaternion.cpp">
-      <Filter>ソース ファイル\Math</Filter>
+      <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
     <ClCompile Include="Particle.cpp">
-      <Filter>ソース ファイル\Particle</Filter>
+      <Filter>ソース ファイル\Engin\Particle</Filter>
     </ClCompile>
     <ClCompile Include="ParticleMaterial.cpp">
-      <Filter>ソース ファイル\Particle</Filter>
+      <Filter>ソース ファイル\Engin\Particle</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="PIpelineRootSignature.cpp">
-      <Filter>ソース ファイル\Pipeline</Filter>
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="DebugText.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Draw.cpp">
-      <Filter>ソース ファイル\DirectX</Filter>
+      <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>ソース ファイル\Engin</Filter>
+    </ClCompile>
+    <ClCompile Include="RayObject.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereObj.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,106 +275,115 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxWindow.h">
-      <Filter>ヘッダー ファイル\DirectX</Filter>
+      <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Dx12.h">
-      <Filter>ヘッダー ファイル\DirectX</Filter>
+      <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Projection.h">
-      <Filter>ヘッダー ファイル\Math\Matrix</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="View.h">
-      <Filter>ヘッダー ファイル\Math\Matrix</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="WorldMatrix.h">
-      <Filter>ヘッダー ファイル\Math\Matrix</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="Depth.h">
-      <Filter>ヘッダー ファイル\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
+      <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
     <ClInclude Include="Object3d.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
+      <Filter>ヘッダー ファイル\Engin\Object</Filter>
     </ClInclude>
     <ClInclude Include="ObjectMaterial.h">
-      <Filter>ヘッダー ファイル\Object</Filter>
+      <Filter>ヘッダー ファイル\Engin\Object</Filter>
     </ClInclude>
     <ClInclude Include="MipMap.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TexImgData.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureFile.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="TextureBuffer.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Descriptor.h">
-      <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
     <ClInclude Include="RootParameter.h">
-      <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>ヘッダー ファイル\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
     </ClInclude>
     <ClInclude Include="MCBMatrix.h">
-      <Filter>ヘッダー ファイル\Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
     <ClInclude Include="Vector3D.h">
-      <Filter>ヘッダー ファイル\Math\Vector</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math\Vector</Filter>
     </ClInclude>
     <ClInclude Include="MCBFloat.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>ヘッダー ファイル\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>ヘッダー ファイル\Descriptor&amp;Sheader</Filter>
+      <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
     <ClInclude Include="Pipeline.h">
-      <Filter>ヘッダー ファイル\Pipeline</Filter>
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="TexSample.h">
-      <Filter>ヘッダー ファイル\Pipeline</Filter>
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="RootSignature.h">
-      <Filter>ヘッダー ファイル\Pipeline</Filter>
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="Quaternion.h">
-      <Filter>ヘッダー ファイル\Math</Filter>
+      <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
-      <Filter>ヘッダー ファイル\Particle</Filter>
+      <Filter>ヘッダー ファイル\Engin\Particle</Filter>
     </ClInclude>
     <ClInclude Include="ParticleMaterial.h">
-      <Filter>ヘッダー ファイル\Particle</Filter>
+      <Filter>ヘッダー ファイル\Engin\Particle</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="PIpelineRootSignature.h">
-      <Filter>ヘッダー ファイル\Pipeline</Filter>
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
     <ClInclude Include="Draw.h">
-      <Filter>ヘッダー ファイル\DirectX</Filter>
+      <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="DebugText.h">
-      <Filter>ヘッダー ファイル\Texture</Filter>
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
+    <ClInclude Include="RayObject.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereObj.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

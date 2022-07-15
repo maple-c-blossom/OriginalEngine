@@ -8,9 +8,9 @@ MCB::ObjectMaterial::~ObjectMaterial()
     constBuffMaterialB1->Unmap(0, nullptr);
 }
 
-void ObjectMaterial::Init(Dx12 dx12)
+void ObjectMaterial::Init()
 {
-    
+    Dx12* dx12 = Dx12::GetInstance();
     HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 
  
@@ -22,7 +22,7 @@ void ObjectMaterial::Init(Dx12 dx12)
     Resdesc.SampleDesc.Count = 1;
     Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12.result = dx12.device->CreateCommittedResource
+    dx12->result = dx12->device->CreateCommittedResource
     (
         &HeapProp,        //ƒq[ƒvÝ’è
         D3D12_HEAP_FLAG_NONE,
@@ -31,16 +31,17 @@ void ObjectMaterial::Init(Dx12 dx12)
         nullptr,
         IID_PPV_ARGS(&constBuffMaterialB1)
     );
-    assert(SUCCEEDED(dx12.result));
+    assert(SUCCEEDED(dx12->result));
 
-    dx12.result = constBuffMaterialB1->Map(0, nullptr, (void**)&constMapMaterial);
+    dx12->result = constBuffMaterialB1->Map(0, nullptr, (void**)&constMapMaterial);
 
-    assert(SUCCEEDED(dx12.result));
+    assert(SUCCEEDED(dx12->result));
 
     constMapMaterial->ambient = material.ambient;
     constMapMaterial->diffuse = material.diffuse;
     constMapMaterial->specular = material.specular;
     constMapMaterial->alpha = material.alpha;
+    constMapMaterial->color = material.color;
 
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }

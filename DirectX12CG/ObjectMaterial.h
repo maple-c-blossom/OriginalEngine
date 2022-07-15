@@ -31,6 +31,7 @@ namespace MCB
 			float pad2;
 			Float3 specular;
 			float alpha;
+			Float4 color;
 		};
 
 
@@ -41,6 +42,7 @@ namespace MCB
 			Float3 diffuse;
 			Float3 specular;
 			float alpha;
+			Float4 color = { 1.0f,1.0f,1.0f,1.0f };
 			std::string textureFileName;
 
 			Material()
@@ -49,6 +51,7 @@ namespace MCB
 				diffuse = { 0.0f,0.0f,0.0f };
 				specular = { 0.0f,0.0f,0.0f };
 				alpha = 1.0f;
+				color = { 1.0f,1.0f,1.0f,1.0f };
 			}
 		};
 
@@ -63,7 +66,7 @@ namespace MCB
 
 		~ObjectMaterial();
 
-		void Init(Dx12 dx12);
+		void Init();
 
 		void SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
 

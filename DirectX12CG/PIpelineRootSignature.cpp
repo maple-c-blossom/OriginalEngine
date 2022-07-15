@@ -1,7 +1,7 @@
 #include "PIpelineRootSignature.h"
 using namespace MCB;
 
-PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline(Dx12& dx12, Depth& depth, RootParameter& rootparams)
+PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParameter& rootparams)
 {
     PipelineRootSignature pipelinerootsognature;
 
@@ -94,9 +94,9 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline(Dx12& d
 
     pipelinerootsognature.rootsignature.InitRootSignatureDesc(rootparams, pipelinerootsognature.texSample);
 
-    pipelinerootsognature.rootsignature.SetSerializeRootSignature(pipelinerootsognature.shader, dx12);
+    pipelinerootsognature.rootsignature.SetSerializeRootSignature(pipelinerootsognature.shader);
 
-    pipelinerootsognature.rootsignature.CreateRootSignature(&dx12);
+    pipelinerootsognature.rootsignature.CreateRootSignature();
 
     // パイプラインにルートシグネチャをセット
 
@@ -108,7 +108,7 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline(Dx12& d
    //パイプラインステートの生成-------------------------
 #pragma region パイプラインステートの生成
 
-    pipelinerootsognature.pipeline.CreateGraphicsPipelineState(&dx12);
+    pipelinerootsognature.pipeline.CreateGraphicsPipelineState();
 
 #pragma endregion パイプラインステートの生成
     //-----------------------------
@@ -117,7 +117,7 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline(Dx12& d
 	return pipelinerootsognature;
 }
 
-PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Dx12& dx12, Depth& depth, RootParameter& rootparams)
+PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParameter& rootparams)
 {
 
     PipelineRootSignature pipelinerootsognature;
@@ -203,9 +203,9 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Dx12& dx1
 
     pipelinerootsognature.rootsignature.InitRootSignatureDesc(rootparams, pipelinerootsognature.texSample);
 
-    pipelinerootsognature.rootsignature.SetSerializeRootSignature(pipelinerootsognature.shader, dx12);
+    pipelinerootsognature.rootsignature.SetSerializeRootSignature(pipelinerootsognature.shader);
 
-    pipelinerootsognature.rootsignature.CreateRootSignature(&dx12);
+    pipelinerootsognature.rootsignature.CreateRootSignature();
 
     // パイプラインにルートシグネチャをセット
 
@@ -217,7 +217,7 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Dx12& dx1
    //パイプラインステートの生成-------------------------
 #pragma region パイプラインステートの生成
 
-    pipelinerootsognature.pipeline.CreateGraphicsPipelineState(&dx12);
+    pipelinerootsognature.pipeline.CreateGraphicsPipelineState();
 
 #pragma endregion パイプラインステートの生成
     //-----------------------------

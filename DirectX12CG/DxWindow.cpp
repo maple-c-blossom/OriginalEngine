@@ -40,7 +40,7 @@ void DxWindow::messageUpdate()
     //--------------------
 }
 
-DxWindow::DxWindow()
+void DxWindow::Init()
 {
 
     window.cbSize = sizeof(WNDCLASSEX);
@@ -75,5 +75,23 @@ DxWindow::DxWindow()
 DxWindow::~DxWindow()
 {
     UnregisterClass(window.lpszClassName, window.hInstance);
+}
+
+DxWindow* MCB::DxWindow::GetInstance()
+{
+    static DxWindow* instance = new DxWindow;
+    return instance;
+}
+
+DxWindow* MCB::DxWindow::GetInitInstance()
+{
+    static DxWindow* instance = DxWindow::GetInstance();
+    instance->Init();
+    return instance;
+}
+
+void MCB::DxWindow::DeleteInstance()
+{
+    delete DxWindow::GetInstance();
 }
 

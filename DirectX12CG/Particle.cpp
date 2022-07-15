@@ -73,7 +73,7 @@ void Particle::Updata(View& view, Projection& projection, bool isBillBord)
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Particle::Draw(Dx12 dx12)
+void Particle::Draw(Dx12& dx12)
 {
     //頂点データ
     dx12.commandList->IASetVertexBuffers(0, 1, &vert.vbView);

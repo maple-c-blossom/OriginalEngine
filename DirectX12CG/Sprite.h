@@ -53,17 +53,17 @@ namespace MCB
 
 		void SpriteTransferVertexBuffer(const Sprite& sprite, Texture* tex = nullptr);
 		void SpriteUpdate(Sprite& sprite);
-		void InitMatProje(DxWindow& dxWindow);
-		Sprite CreateSprite(Dx12& dx12, DxWindow& dxWindow);
-		void SpriteCommonBeginDraw(Dx12& dx12, const PipelineRootSignature& pipeline, ShaderResource& descHeap);
+		void InitMatProje();
+		Sprite CreateSprite();
+		void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
-		void SpriteDraw(Sprite& sprite,Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0,float positionY = 0,
+		void SpriteDraw(Sprite& sprite,Texture& tex, float positionX = 0,float positionY = 0,
 						float size_x = 0, float size_y = 0);
 
-		void SpriteFlipDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0, float positionY = 0, 
+		void SpriteFlipDraw(Sprite& sprite, Texture& tex, float positionX = 0, float positionY = 0, 
 							bool isflipX = false, bool isflipY = false);
 
-		void SpriteCuttingDraw(Sprite& sprite, Dx12& dx12, ShaderResource descriptor, Texture& tex, float positionX = 0, float positionY = 0,
+		void SpriteCuttingDraw(Sprite& sprite,Texture& tex, float positionX = 0, float positionY = 0,
 			Float2 cuttingsize = {0,0},Float2 CuttingLeftTop = {0,0});
 
 

@@ -26,8 +26,8 @@ namespace MCB
     {
     public:
 
-        Model(Dx12 dx, const std::string fileName, ShaderResource* srv);
-
+        Model(const std::string fileName);
+        Model();
         ~Model();
 
         Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
@@ -55,27 +55,27 @@ namespace MCB
 
         ObjectMaterial material;
 
-        void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+        void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
 
         void SetIbView(DXGI_FORMAT format);
 
         void SetVbView();
 
-        void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+        void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
 
         HRESULT IndexMaping();
 
         HRESULT VertexMaping();
 
-        void CreateModel(Dx12 dx,const std::string fileName, ShaderResource* srv);
+        void CreateModel(const std::string fileName);
 
         void SetSizeIB();
 
         void SetSizeVB();
 
-        void LoadMaterial(Dx12 dx12, const std::string& directoryPath,const std::string& filename, ShaderResource* srv);
+        void LoadMaterial(const std::string& directoryPath,const std::string& filename);
 
-        void Init(Dx12 dx12, const std::string fileName, ShaderResource* srv);
+        void Init(const std::string fileName);
         
     };
 
