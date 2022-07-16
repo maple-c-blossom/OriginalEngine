@@ -274,7 +274,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 Angle = { 0,0,0 };
 
     float angle = 0;
-
+    float anglemove = 0.1f;
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -294,7 +294,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        angle += 0.1f;
+        if (angle >= XMConvertToRadians(90) || angle <= XMConvertToRadians(-90))
+        {
+            anglemove *= -1;
+        }
+
+        angle += anglemove;
 
         human.Box[human.ArmL].rotasion = { angle,0,0 };
         human.Box[human.ArmR].rotasion = { -angle,0,0 };
@@ -358,7 +363,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
-        debugText.Print(0, 600, 1, "%d", time);
+        //debugText.Print(0, 600, 1, "%d", time);
 
        
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
