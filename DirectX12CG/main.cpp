@@ -275,6 +275,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     float angle = 0;
     float anglemove = 0.1f;
+
+    bool isJump = false;
+    float jumpSpeed = 5;
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -301,7 +304,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         
         if (input->IsKeyDown(DIK_W))
         {
-            angle += anglemove;
+            if (input->IsKeyDown(DIK_LSHIFT))
+            {
+                angle += anglemove * 1.5f;
+            }
+            else
+            {
+               angle += anglemove;
+            }
         }
         else
         {
@@ -322,6 +332,27 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
                 }
             }
 
+        }
+
+        if (!isJump && input->IsKeyTrigger(DIK_SPACE))
+        {
+            isJump = true;
+        }
+
+        if (isJump)
+        {
+            human.Box[human.Root].position.y += jumpSpeed;
+            if (jumpSpeed >= -2)
+            {
+                jumpSpeed -= 0.5f;
+            }
+
+            if (human.Box[human.Root].position.y <= 0)
+            {
+                isJump = false;
+                human.Box[human.Root].position.y = 0;
+                jumpSpeed = 5;
+            }
         }
 
         human.Box[human.ArmL].rotasion = { angle,0,0 };
