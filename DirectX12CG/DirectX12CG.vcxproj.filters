@@ -246,6 +246,9 @@
     <ClCompile Include="Collider.cpp">
       <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="ParticleGeometryShader.hlsl">
@@ -384,6 +387,9 @@
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

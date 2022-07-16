@@ -19,7 +19,7 @@
 #include <cassert>
 #include <memory>
 #include <DirectXTex.h>
-
+#include <array>
 
 #pragma endregion 標準.h include
 
@@ -40,7 +40,6 @@
 #include "Util.h"
 #include "Particle.h"
 #include "Quaternion.h"
-#include <array>
 #include "Texture.h"
 #include "PIpelineRootSignature.h"
 #include "Draw.h"
@@ -49,6 +48,7 @@
 #include "Sound.h"
 #include "Collider.h"
 
+#include "Human.h"
 #pragma endregion 自作.h include
 
 #pragma region ゲーム系.h include
@@ -76,6 +76,7 @@ using namespace Microsoft::WRL;
 using namespace MCB;
 
 #pragma endregion using namespace
+
 
 // Windowsアプリでのエントリーポイント(main関数) 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
@@ -129,7 +130,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region 行列
         //ビュー変換行列
     View matView;
-    matView.CreateMatrixView(XMFLOAT3(100.0f, 100.0f, -100.0f), XMFLOAT3(100.0f, 100.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     //射影変換行列
     Projection matProjection;
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
@@ -173,8 +174,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     SimpleFigure triangle;
 
+    Human human;
+    human.Init(BoxModel);
+
     //Object3d* Box = new Object3d(*dx);
-    std::array<std::array<Object3d, 10>,10> Box;
+
     //std::array<Object3d, 40> Box2;
 
     Object3d ground;
@@ -190,18 +194,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 
 
-
-
-    for (int i = 0; i < 10; i++)
-    {
-        for (int j = 0; j < 10; j++)
-        {
-            Box[i][j].Init();
-            Box[i][j].model = BoxModel;
-            Box[i][j].scale = {5,5,5};
-            Box[i][j].position = {(float)20 * j,(float)20 * i,1};
-        }
-    }
 
 
   /*  for (int i = 0; i < 3; i++)
@@ -281,13 +273,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     XMFLOAT3 targetVec = { 0,0,1 };
     XMFLOAT3 Angle = { 0,0,0 };
 
-    float noZoomFovAngle = 40;
-    float startFovAngle = noZoomFovAngle / 4;
-    float endFovAngle = noZoomFovAngle / 8;
-    int time = 0;
-    int maxTime = 10;
-    bool isZoom = false;
-    bool isMoreZoom = false;
+    float angle = 0;
+
 #pragma endregion ゲームループ用変数
     //--------------------------
 
@@ -307,92 +294,46 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 #pragma region 更新処理
 
-        if (input->IsKeyTrigger(DIK_SPACE))
-        {
-            isZoom = !isZoom;
-        }
+        angle += 0.1f;
 
-        if (isZoom)
-        {
-            if(input->IsKeyDown(DIK_W))
-            {
-                isMoreZoom = true;
-            }
-            else if(input->IsKeyDown(DIK_S))
-            {
-                isMoreZoom = false;
-
-            }
-
-            if (isMoreZoom)
-            {
-                if (time < maxTime)
-                {
-                    time++;
-                }
-
-                if (time > maxTime)
-                {
-                    time = maxTime;
-                }
-            }
-            else
-            {
-                if (time > 0)
-                {
-                    time--;
-                }
-
-                if (time < 0)
-                {
-                    time = 0;
-                }
-            }
-            matProjection.fovAngle = Lerp(XMConvertToRadians(startFovAngle), XMConvertToRadians(endFovAngle),maxTime,time);
-        }
-        else
-        {
-            matProjection.fovAngle = XMConvertToRadians(noZoomFovAngle);
-        }
-
-        matProjection.UpdataMatrixProjection();
-
-        if (input->IsKeyDown(DIK_UP))
-        {
-            matView.target.y++;
-        }
-        if (input->IsKeyDown(DIK_DOWN))
-        {
-            matView.target.y--;
-        }
+        human.Box[human.ArmL].rotasion = { angle,0,0 };
+        human.Box[human.ArmR].rotasion = { -angle,0,0 };
+        human.Box[human.LegL].rotasion = { -angle,0,0 };
+        human.Box[human.LegR].rotasion = { angle,0,0 };
 
         if (input->IsKeyDown(DIK_RIGHT))
         {
-            matView.target.x++;
-        }
-        if (input->IsKeyDown(DIK_LEFT))
-        {
-            matView.target.x--;
+            human.Box[human.Root].position.x++;
         }
 
+        if (input->IsKeyDown(DIK_LEFT))
+        {
+            human.Box[human.Root].position.x--;
+        }
+
+        if (input->IsKeyDown(DIK_D))
+        {
+            human.Box[human.Root].rotasion.y += 0.1f;
+        }
+
+        if (input->IsKeyDown(DIK_A))
+        {
+            human.Box[human.Root].rotasion.y -= 0.1f;
+        }
+
+        matProjection.UpdataMatrixProjection();
         matView.UpDateMatrixView();
 
 
 
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                Box[i][j].Updata(matView, matProjection);
-            }
-        }
 
         //for (int i = 0; i < Box2.size(); i++)
         //{
         //    Box2[i].Updata(matView, matProjection);
         //}
 
-        
+        human.UpDate(matView, matProjection);
+
         Skydorm.Updata(matView, matProjection);
         ground.Updata(matView, matProjection);
 
@@ -405,33 +346,21 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         draw.PreDraw(depth, obj3dPipeline,  clearColor);
 
         Skydorm.Draw();
-        ground.Draw();
+        //ground.Draw();
 
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                Box[i][j].Draw();
-
-            }
-        }
 
         //for (int i = 0; i < Box2.size(); i++)
         //{
         //    Box2[i].Draw(0);
         //}
-
+        human.Draw();
 
         sprite.SpriteCommonBeginDraw(spritePipeline);
 
         //sprite.SpriteFlipDraw(sprite, *dx, descriptor, testTex, (float)dxWindow->window_width / 2, (float)dxWindow->window_height / 2);
         debugText.Print(0, 600, 1, "%d", time);
 
-        if (isZoom)
-        {
-            scopeSprite.SpriteDraw(scopeSprite, scopeTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
-            zoomSprite.SpriteDraw(zoomSprite, zoomTex, dxWindow->window_width / 2, dxWindow->window_height / 2);
-        }
+       
         //sprite.SpriteDraw(sprite, *dx, descriptor, ground.model->texture);
 
         debugText.AllDraw();
