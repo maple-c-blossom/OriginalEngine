@@ -100,7 +100,6 @@ void MCB::Scene::Draw()
 {
     draw.PreDraw(*depth, *obj3dPipelinePtr, clearColor);
     //3Dオブジェクト
-
     Skydorm.Draw();
     human.Draw();
 
@@ -109,8 +108,6 @@ void MCB::Scene::Draw()
 
 
     debugText.AllDraw();
-
-
     draw.PostDraw();
 }
 
