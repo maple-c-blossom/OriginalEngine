@@ -15,11 +15,15 @@ namespace MCB
             Head,
             ArmL,
             ArmR,
+            HandL,
+            HandR,
             Hip,
             LegL,
-            LegR
+            LegR,
+            FootL,
+            FootR,
         };
-        std::array<Object3d, 9> Box;
+        std::array<Object3d, 13> Box;
 
         void Init(Model* model);
         void UpDate(View view, Projection proj);

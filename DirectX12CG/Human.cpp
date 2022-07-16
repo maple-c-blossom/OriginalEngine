@@ -31,6 +31,17 @@ void MCB::Human::Init(Model* model)
 	Box[ArmR].parent = &Box[Chest];
 	Box[ArmR].position = { 4.5f,0.0f,0 };
 
+	Box[HandL].Init();
+	Box[HandL].model = model;
+	Box[HandL].parent = &Box[ArmL];
+	Box[HandL].position = { 0.0f,-2.0f,0 };
+
+	Box[HandR].Init();
+	Box[HandR].model = model;
+	Box[HandR].parent = &Box[ArmR];
+	Box[HandR].position = { 0.0f,-2.0f,0 };
+
+
 	//â∫îºêg
 	Box[Hip].Init();
 	Box[Hip].model = model;
@@ -46,6 +57,16 @@ void MCB::Human::Init(Model* model)
 	Box[LegR].model = model;
 	Box[LegR].parent = &Box[Hip];
 	Box[LegR].position = { 4.5,-4.5f,0 };
+
+	Box[FootL].Init();
+	Box[FootL].model = model;
+	Box[FootL].parent = &Box[LegL];
+	Box[FootL].position = { 0.0f,-2.0f,0 };
+
+	Box[FootR].Init();
+	Box[FootR].model = model;
+	Box[FootR].parent = &Box[LegR];
+	Box[FootR].position = { 0.0,-2.0f,0 };
 }
 
 void MCB::Human::UpDate(View view, Projection proj)

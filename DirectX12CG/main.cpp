@@ -298,8 +298,31 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         {
             anglemove *= -1;
         }
+        
+        if (input->IsKeyDown(DIK_W))
+        {
+            angle += anglemove;
+        }
+        else
+        {
+            if (angle > 0)
+            {
+                angle -= 0.1f;
+                if (angle <= 0)
+                {
+                    angle = 0;
+                }
+            }
+            else if (angle < 0)
+            {
+                angle += 0.1f;
+                if (angle >= 0)
+                {
+                    angle = 0;
+                }
+            }
 
-        angle += anglemove;
+        }
 
         human.Box[human.ArmL].rotasion = { angle,0,0 };
         human.Box[human.ArmR].rotasion = { -angle,0,0 };
