@@ -157,11 +157,11 @@ namespace MCB
 		void Initialize() override;
 
 		//Še‰Šú‰»ŒnŠÖ”ŒQ--------------------
-		void LoadModel();
-		void LoadTexture();
-		void LoadSound();
-		void Object3DInit();
-		void SpriteInit();
+		void LoadModel()  override;
+		void LoadTexture()  override;
+		void LoadSound()  override;
+		void Object3DInit()  override;
+		void SpriteInit()  override;
 
 		//---------------
 		void MatrixUpdate();

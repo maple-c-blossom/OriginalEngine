@@ -12,6 +12,7 @@ MCB::Scene::~Scene()
     delete groundModel;
 }
 
+#pragma region 通常変数の初期化と3Dオブジェクトの初期化
 void MCB::Scene::Initialize()
 {
     matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
@@ -21,6 +22,7 @@ void MCB::Scene::Initialize()
     LoadSound();
     Object3DInit();
     SpriteInit();
+
     angle = 0;
     anglemove = 0.1f;
 
@@ -28,42 +30,11 @@ void MCB::Scene::Initialize()
     jumpSpeed = 5;
 }
 
-
-
-void MCB::Scene::LoadModel()
-{
-	BoxModel = new Model("Box");
-
-	groundModel = new Model("ground");
-
-	skydomeModel = new Model("skydome");
-}
-
-
-
-void MCB::Scene::LoadTexture()
-{
-	testTex.CreateTexture(L"Resources\\reimu.png");
-	debugTextTexture.CreateTexture(L"Resources\\debugfont.png");
-    zoomTex.CreateTexture(L"Resources\\reticle.png");
-    scopeTex.CreateTexture(L"Resources\\scope.png");
-
-}
-
-
-
-void MCB::Scene::LoadSound()
-{
-	testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
-}
-
-
-
 void MCB::Scene::Object3DInit()
 {
     human;
     human.Init(BoxModel);
-    
+
     ground;
     ground.Init();
     ground.model = groundModel;
@@ -77,7 +48,31 @@ void MCB::Scene::Object3DInit()
 
 }
 
+#pragma endregion 通常変数の初期化
 
+#pragma region 各種リソースの読み込みと初期化
+void MCB::Scene::LoadModel()
+{
+	BoxModel = new Model("Box");
+
+	groundModel = new Model("ground");
+
+	skydomeModel = new Model("skydome");
+}
+
+void MCB::Scene::LoadTexture()
+{
+	testTex.CreateTexture(L"Resources\\reimu.png");
+	debugTextTexture.CreateTexture(L"Resources\\debugfont.png");
+    zoomTex.CreateTexture(L"Resources\\reticle.png");
+    scopeTex.CreateTexture(L"Resources\\scope.png");
+
+}
+
+void MCB::Scene::LoadSound()
+{
+	testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
+}
 
 void MCB::Scene::SpriteInit()
 {
@@ -90,6 +85,7 @@ void MCB::Scene::SpriteInit()
     debugText.Init(&debugTextTexture);
 
 }
+#pragma endregion 各種リソースの読み込みと初期化
 
 void MCB::Scene::Update()
 {
@@ -126,8 +122,6 @@ void MCB::Scene::MatrixUpdate()
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
 }
-
-
 
 MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1)
 {
