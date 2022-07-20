@@ -161,3 +161,19 @@ void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop)
 
 }
 
+void MCB::SoundManager::StopSoundWave(unsigned int soundHandle)
+{
+	HRESULT result = S_FALSE;
+	IXAudio2SourceVoice* pSourceVoice = nullptr;
+	result = xAudio2.Get()->CreateSourceVoice(&pSourceVoice, &sounds[soundHandle].wfex);
+	assert(SUCCEEDED(result));
+
+	XAUDIO2_BUFFER buf{};
+	buf.pAudioData = sounds[soundHandle].pBuffer;
+	buf.AudioBytes = sounds[soundHandle].bufferSize;
+	buf.Flags = XAUDIO2_END_OF_STREAM;
+
+	result = pSourceVoice->SubmitSourceBuffer(&buf);
+	result = pSourceVoice->Stop();
+}
+

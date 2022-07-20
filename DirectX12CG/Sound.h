@@ -52,6 +52,7 @@ namespace MCB
 		void AllDeleteSound();
 
 		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false);
+		void StopSoundWave(unsigned int soundHandle);
 
 		SoundManager();
 		~SoundManager();

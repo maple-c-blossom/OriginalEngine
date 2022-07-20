@@ -28,6 +28,8 @@ void MCB::Scene::Initialize()
 
     isJump = false;
     jumpSpeed = 5;
+
+    soundManager.PlaySoundWave(testSound, true);
 }
 
 void MCB::Scene::Object3DInit()
@@ -90,7 +92,10 @@ void MCB::Scene::SpriteInit()
 void MCB::Scene::Update()
 {
 
-
+    if (input->IsKeyTrigger(DIK_SPACE))
+    {
+        soundManager.StopSoundWave(testSound);
+    }
 
     //s—ñ•ÏŠ·
     MatrixUpdate();
