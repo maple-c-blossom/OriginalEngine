@@ -46,6 +46,16 @@ void ObjectMaterial::Init()
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
 
+void MCB::ObjectMaterial::Update()
+{
+    constMapMaterial->ambient = material.ambient;
+    constMapMaterial->diffuse = material.diffuse;
+    constMapMaterial->specular = material.specular;
+    constMapMaterial->alpha = material.alpha;
+    constMapMaterial->color = material.color;
+}
+
+
 void MCB::ObjectMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
 {
     Resdesc.Dimension = dimension;

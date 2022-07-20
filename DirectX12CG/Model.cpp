@@ -7,6 +7,7 @@ MCB::Model::Model( const std::string fileName)
 {
     material.Init();
     Init(fileName);
+    material.Update();
 }
 
 MCB::Model::Model()
