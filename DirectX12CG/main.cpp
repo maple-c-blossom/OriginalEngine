@@ -4,14 +4,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "Scene.h"
-#pragma region using namespace
-
-using namespace std;
-using namespace DirectX;
-using namespace Microsoft::WRL;
 using namespace MCB;
-
-#pragma endregion using namespace 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
     _In_ int nCmdShow)
 {
@@ -22,7 +15,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #pragma region デバック時のみ
 #ifdef _DEBUG
 //デバックレイヤーをオンに
-    ComPtr<ID3D12Debug1> debugController;
+    Microsoft::WRL::ComPtr<ID3D12Debug1> debugController;
     if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
     {
         debugController->EnableDebugLayer();
