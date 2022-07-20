@@ -32,7 +32,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 #endif
 #pragma endregion デバック時のみ
     //-------------
-    // 
     Dx12::GetInitInstance();
     Input* input = Input::GetInitInstance();
     Depth depth;

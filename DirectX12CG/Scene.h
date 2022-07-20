@@ -131,6 +131,8 @@ namespace MCB
 		Human human;
 		Object3d ground;
 		Object3d Skydorm;
+		Object3d box;
+
 #pragma endregion 3Dオブジェクト
 
 		#pragma region スプライト
