@@ -11,23 +11,30 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     {
     DxWindow* dxWindow = DxWindow::GetInitInstance();
+    Dx12::GetInitInstance();
+    Input* input = Input::GetInitInstance();
+    Depth depth;
+    ShaderResource::GetInitInstance();
     //デバック時のみ----------
 #pragma region デバック時のみ
 #ifdef _DEBUG
 //デバックレイヤーをオンに
     Microsoft::WRL::ComPtr<ID3D12Debug1> debugController;
+    Microsoft::WRL::ComPtr<ID3D12InfoQueue> infoQueue;
     if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
     {
         debugController->EnableDebugLayer();
         debugController->SetEnableGPUBasedValidation(TRUE);
     }
+
+    if (SUCCEEDED(Dx12::GetInstance()->device.Get()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+    {
+        infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+        infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+    }
 #endif
 #pragma endregion デバック時のみ
     //-------------
-    Dx12::GetInitInstance();
-    Input* input = Input::GetInitInstance();
-    Depth depth;
-    ShaderResource::GetInitInstance();
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
     RootParameter rootparams;
