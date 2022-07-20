@@ -96,54 +96,7 @@ void MCB::Scene::SpriteInit()
 void MCB::Scene::Update()
 {
 
-    if (input->IsKeyDown(DIK_W))
-    {
-        box.position.z++;
-    }
 
-    if (input->IsKeyDown(DIK_S))
-    {
-        box.position.z--;
-    }
-
-    if (input->IsKeyDown(DIK_D))
-    {
-        box.position.x++;
-    }
-
-    if (input->IsKeyDown(DIK_A))
-    {
-        box.position.x--;
-    }
-    
-    if (input->IsKeyDown(DIK_LEFT))
-    {
-        box.rotasion.y += 0.1f;
-    }
-    if (input->IsKeyDown(DIK_RIGHT))
-    {
-        box.rotasion.y -= 0.1f;
-    }
-
-
-    if (input->IsKeyDown(DIK_Q))
-    {
-        matView.eye.x++;
-    }
-    if (input->IsKeyDown(DIK_E))
-    {
-        matView.eye.x--;
-    }
-
-    if (input->IsKeyDown(DIK_UP))
-    {
-        box.scale.z++;
-    }
-
-    if (input->IsKeyDown(DIK_DOWN))
-    {
-        box.scale.z--;
-    }
 
     //s—ñ•ÏŠ·
     MatrixUpdate();
