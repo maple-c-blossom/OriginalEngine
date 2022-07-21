@@ -22,6 +22,8 @@ void MCB::Scene::Initialize()
     LoadSound();
     Object3DInit();
     SpriteInit();
+    InitRand();
+    //soundManager.PlaySoundWave(testSound, true);
 
     angle = 0;
     anglemove = 0.1f;
@@ -29,7 +31,10 @@ void MCB::Scene::Initialize()
     isJump = false;
     jumpSpeed = 5;
 
-    //soundManager.PlaySoundWave(testSound, true);
+    startQ.SetRota({ 0,1,0 }, 0);
+    mainQ = startQ;
+    endQ.SetRota({ 1,1,1 }, 0.5);
+    time = 0;
 }
 
 void MCB::Scene::Object3DInit()
@@ -95,9 +100,18 @@ void MCB::Scene::SpriteInit()
 
 void MCB::Scene::Update()
 {
-
-
-
+    if (input->IsKeyTrigger(DIK_SPACE))
+    {
+        time = 0;
+        mainQ = startQ;
+        endQ.SetRota({ (float)GetRand(0,10000) / 10000,(float)GetRand(0,10000) / 10000, 
+            (float)GetRand(0,10000) / 10000 }, (float)GetRand(0, 10000) / 10000);
+    }
+    if (time < maxTime)
+    {
+        time++;
+    }
+    mainQ = mainQ.Slerp(startQ, endQ, time, maxTime);
     //行列変換
     MatrixUpdate();
 }
@@ -111,9 +125,9 @@ void MCB::Scene::Draw()
     box.Draw();
     //スプライト
     sprite.SpriteCommonBeginDraw(*spritePipelinePtr);
-
-    debugText.Print(0, 0, 1, "BoxMove:WASD, BoxRotation:Arrow(LEFT,RIGHT), BoxScale:Arrow(UP,DOWN)");
-    debugText.Print(0, 100, 1, "CameraMoveX:QE");
+    debugText.Print(20, 20, 1, "Reset&RandomEndQ:SPACE");
+    debugText.Print(20, 60, 1, "time:%d, mainQ: x.%f, y.%f, z.%f, w.%f",time,mainQ.x, mainQ.y, mainQ.z, mainQ.w);
+    debugText.Print(20, 100, 1, "endQ: x.%f, y.%f, z.%f, w.%f",endQ.x, endQ.y, endQ.z, endQ.w);
     debugText.AllDraw();
     draw.PostDraw();
 }
@@ -125,7 +139,7 @@ void MCB::Scene::MatrixUpdate()
     human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
-    box.Updata(matView, matProjection);
+    box.Updata(matView, matProjection,mainQ);
 }
 
 MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1)

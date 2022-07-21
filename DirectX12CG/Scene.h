@@ -151,6 +151,12 @@ namespace MCB
 		float anglemove = 0.1f;
 		bool isJump = false;
 		float jumpSpeed = 5;
+
+		Quaternion mainQ = { 0,0,0,1 };
+		Quaternion endQ;
+		Quaternion startQ;
+		int time = 0;
+		int maxTime = 300;
 #pragma endregion ’Êí•Ï”
 
 	public:
