@@ -132,6 +132,8 @@ namespace MCB
 		Object3d ground;
 		Object3d Skydorm;
 		Object3d box;
+		RayObject ray;
+		SphereObj sphere;
 
 #pragma endregion 3Dオブジェクト
 
@@ -147,16 +149,8 @@ namespace MCB
 #pragma endregion スプライト
 
 		#pragma region 通常変数
-		float angle = 0;
-		float anglemove = 0.1f;
-		bool isJump = false;
-		float jumpSpeed = 5;
+		bool loopFlag = true;
 
-		Quaternion mainQ = { 0,0,0,1 };
-		Quaternion endQ;
-		Quaternion startQ;
-		int time = 0;
-		int maxTime = 300;
 #pragma endregion 通常変数
 
 	public:

@@ -16,6 +16,7 @@ void MCB::SoundManager::DeleteSound(unsigned int SoundHandle)
 	sounds[SoundHandle].bufferSize = 0;
 	sounds[SoundHandle].wfex = {};
 	sounds[SoundHandle].free = true;
+	sounds[SoundHandle].pSourceVoice = nullptr;
 }
 
 void MCB::SoundManager::AllDeleteSound()
@@ -30,6 +31,7 @@ void MCB::SoundManager::AllDeleteSound()
 			sounds[i].bufferSize = 0;
 			sounds[i].wfex = {};
 			sounds[i].free = true;
+			sounds[i].pSourceVoice = nullptr;
 		}
 	}
 }
@@ -58,6 +60,7 @@ MCB::SoundManager::~SoundManager()
 			sounds[i].pBuffer = 0;
 			sounds[i].bufferSize = 0;
 			sounds[i].wfex = {};
+			sounds[i].pSourceVoice = nullptr;
 		}
 	}
 
@@ -78,8 +81,9 @@ unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 	{
 		if (sounds[i].free)
 		{
-			handleNum = i;
+ 			handleNum = i;
 			sounds[i].free = false;
+			break;
 		}
 	}
 	
@@ -136,44 +140,61 @@ unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 	sounds[handleNum].pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	sounds[handleNum].bufferSize = data.size;
 	sounds[handleNum].name = fileName;
-
+	result = xAudio2.Get()->CreateSourceVoice(&sounds[handleNum].pSourceVoice, &sounds[handleNum].wfex);
+	assert(SUCCEEDED(result));
 	return handleNum;
 
 }
 
-void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop)
+void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop, unsigned short loopCount, bool isfarstPlay)
 {
 	HRESULT result = S_FALSE;
 
-	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	result =xAudio2.Get()->CreateSourceVoice(&pSourceVoice, &sounds[soundHandle].wfex);
-	assert(SUCCEEDED(result));
-
+	//IXAudio2SourceVoice* pSourceVoice = nullptr;
+	//result =xAudio2.Get()->CreateSourceVoice(&pSourceVoice, &sounds[soundHandle].wfex);
+	//assert(SUCCEEDED(result));
 	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = sounds[soundHandle].pBuffer;
 	buf.AudioBytes = sounds[soundHandle].bufferSize;
-	if (isLoop) buf.LoopCount = XAUDIO2_LOOP_INFINITE;
-	else buf.LoopCount = 0;
+	if (isLoop) buf.LoopCount = loopCount;
+	else 
+	{
+		sounds[soundHandle].pSourceVoice->ExitLoop();
+		buf.LoopCount = 0;
+		buf.LoopBegin = 0;
+		buf.LoopLength = 0;
+	}
+	if (isfarstPlay)
+	{
+		buf.PlayBegin = 0;
+		buf.LoopBegin = 0;
+		buf.LoopLength = 0;
+	}
 	buf.Flags = XAUDIO2_END_OF_STREAM;
 
-	result = pSourceVoice->SubmitSourceBuffer(&buf);
-	result = pSourceVoice->Start();
+	result = sounds[soundHandle].pSourceVoice->SubmitSourceBuffer(&buf);
+	result = sounds[soundHandle].pSourceVoice->Start();
 
 }
 
 void MCB::SoundManager::StopSoundWave(unsigned int soundHandle)
 {
 	HRESULT result = S_FALSE;
-	IXAudio2SourceVoice* pSourceVoice = nullptr;
-	result = xAudio2.Get()->CreateSourceVoice(&pSourceVoice, &sounds[soundHandle].wfex);
-	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = sounds[soundHandle].pBuffer;
 	buf.AudioBytes = sounds[soundHandle].bufferSize;
 	buf.Flags = XAUDIO2_END_OF_STREAM;
-
-	result = pSourceVoice->SubmitSourceBuffer(&buf);
-	result = pSourceVoice->Stop();
+	if (buf.LoopCount > 1)
+	{
+		buf.LoopCount = 0;
+	}
+	result = sounds[soundHandle].pSourceVoice->SubmitSourceBuffer(&buf);
+	result = sounds[soundHandle].pSourceVoice->Stop();
 }
+
+//void MCB::SoundManager::SetVolume(unsigned int volume,unsigned int soundHandle)
+//{
+//	sounds[soundHandle].pSourceVoice->SetVolume(volume);
+//}
 

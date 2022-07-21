@@ -37,6 +37,7 @@ namespace MCB
 			unsigned int bufferSize;
 			bool free = true;
 			const char* name;
+			IXAudio2SourceVoice* pSourceVoice = nullptr;
 		};
 
 		Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
@@ -51,9 +52,9 @@ namespace MCB
 		void DeleteSound(unsigned int SoundHandle);
 		void AllDeleteSound();
 
-		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false);
+		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE, bool isfarstPlay = true);
 		void StopSoundWave(unsigned int soundHandle);
-
+		//void SetVolume(unsigned int volume, unsigned int soundHandle);
 		SoundManager();
 		~SoundManager();
 
