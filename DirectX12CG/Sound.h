@@ -52,8 +52,9 @@ namespace MCB
 		void DeleteSound(unsigned int SoundHandle);
 		void AllDeleteSound();
 
-		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE, bool isfarstPlay = true);
-		void StopSoundWave(unsigned int soundHandle);
+		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE);
+		void StopSoundWave(unsigned int soundHandle, bool startPosReset = true);
+		//void SetVolume(unsigned int volume, unsigned int soundHandle);
 		//void SetVolume(unsigned int volume, unsigned int soundHandle);
 		SoundManager();
 		~SoundManager();

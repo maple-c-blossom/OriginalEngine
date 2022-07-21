@@ -122,6 +122,7 @@ namespace MCB
 		//サウンド
 		#pragma region サウンド
 		int testSound;
+		int test2Sound;
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース
@@ -150,7 +151,7 @@ namespace MCB
 
 		#pragma region 通常変数
 		bool loopFlag = true;
-
+		bool startPositionReset = true;
 #pragma endregion 通常変数
 
 	public:

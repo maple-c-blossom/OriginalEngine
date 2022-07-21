@@ -85,6 +85,8 @@ void MCB::Scene::LoadTexture()
 void MCB::Scene::LoadSound()
 {
 	testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
+    test2Sound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
+
 }
 
 void MCB::Scene::SpriteInit()
@@ -167,7 +169,17 @@ void MCB::Scene::Update()
         soundManager.PlaySoundWave(testSound, loopFlag);
     }
 
+    if (input->IsKeyTrigger(DIK_U))
+    {
+        loopFlag = !loopFlag;
+        soundManager.StopSoundWave(testSound);
+    }
 
+    if (input->IsKeyTrigger(DIK_F))
+    {
+        soundManager.StopSoundWave(test2Sound);
+        soundManager.PlaySoundWave(test2Sound, false);
+    }
     //s—ñ•ÏŠ·
     MatrixUpdate();
 }
@@ -189,6 +201,7 @@ void MCB::Scene::Draw()
     }
     debugText.Print(0, 20, 1, "Move:WASD,yMove:Space,LCONTROL cameraMove:ArrowKey");
     debugText.Print(0, 60, 1, "Sound: stop->T, start->Y");
+    debugText.Print(0, 100, 1, "SE:start->F,LoopChengeandStop->U,LootFlag:%s", (loopFlag ? "true" : "false"));
     debugText.AllDraw();
     draw.PostDraw();
 }
