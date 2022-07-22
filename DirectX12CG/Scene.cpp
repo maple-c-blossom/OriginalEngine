@@ -86,7 +86,7 @@ void MCB::Scene::LoadSound()
 {
 	testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
     test2Sound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
-
+    soundManager.SetVolume(10, testSound);
 }
 
 void MCB::Scene::SpriteInit()

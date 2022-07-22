@@ -189,14 +189,17 @@ void MCB::SoundManager::StopSoundWave(unsigned int soundHandle,bool startPosRese
 	//{
 		result = xAudio2.Get()->CreateSourceVoice(&sounds[soundHandle].pSourceVoice, &sounds[soundHandle].wfex);
 		assert(SUCCEEDED(result));
+		sounds[soundHandle].pSourceVoice->SetVolume(sounds[soundHandle].volume);
 	//}
 }
 
-//void MCB::SoundManager::SetVolume(unsigned int volume,unsigned int soundHandle)
-//{
-//	HRESULT result = S_FALSE;
-//	sounds[soundHandle].pSourceVoice->SetVolume(volume);
-//	result = xAudio2.Get()->CreateSourceVoice(&sounds[soundHandle].pSourceVoice, &sounds[soundHandle].wfex);
-//	assert(SUCCEEDED(result));
-//}
+void MCB::SoundManager::SetVolume(unsigned int volume,unsigned int soundHandle)
+{
+	float tempVolume = volume / 100.0f;
+	this->sounds[soundHandle].volume = tempVolume;
+	HRESULT result = S_FALSE;
+	result = xAudio2.Get()->CreateSourceVoice(&sounds[soundHandle].pSourceVoice, &sounds[soundHandle].wfex);
+	sounds[soundHandle].pSourceVoice->SetVolume(sounds[soundHandle].volume);
+	assert(SUCCEEDED(result));
+}
 
