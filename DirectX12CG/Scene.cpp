@@ -86,7 +86,7 @@ void MCB::Scene::LoadSound()
 {
 	testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
     test2Sound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
-    soundManager.SetVolume(10, testSound);
+    soundManager.SetVolume(100, testSound);
 }
 
 void MCB::Scene::SpriteInit()
@@ -138,12 +138,12 @@ void MCB::Scene::Update()
 
     if (input->IsKeyDown(DIK_UP))
     {
-        matView.eye.y += 0.1f;
+        volume ++;
     }
 
     if (input->IsKeyDown(DIK_DOWN))
     {
-        matView.eye.y -= 0.1f;
+        volume--;
     }
     if (input->IsKeyDown(DIK_LEFT))
     {
@@ -158,6 +158,8 @@ void MCB::Scene::Update()
     ray.ColliderUpdate();
     sphere.ColliderUpdate();
 
+    soundManager.SetVolume(volume, testSound);
+
     if (input->IsKeyTrigger(DIK_T))
     {
         soundManager.StopSoundWave(testSound);
@@ -165,7 +167,7 @@ void MCB::Scene::Update()
 
     if (input->IsKeyTrigger(DIK_Y))
     {
-        soundManager.StopSoundWave(testSound);
+        //soundManager.StopSoundWave(testSound);
         soundManager.PlaySoundWave(testSound, loopFlag);
     }
 

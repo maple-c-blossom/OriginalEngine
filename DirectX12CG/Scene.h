@@ -123,6 +123,8 @@ namespace MCB
 		#pragma region サウンド
 		int testSound;
 		int test2Sound;
+
+		int volume = 255;
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース

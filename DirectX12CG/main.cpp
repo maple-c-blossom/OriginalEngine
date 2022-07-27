@@ -24,7 +24,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         debugController->SetEnableGPUBasedValidation(TRUE);
     }
 
-    //if (SUCCEEDED(Dx12::GetInstance()->device.Get()->QueryInterface(IID_PPV_ARGS(&infoQueue))))
+    //if (SUCCEEDED(Dx12::GetInstance()->device.Get()->QueryInterface(IID_PPV_ARGS(infoQueue.GetAddressOf()))))
     //{
     //    infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
     //    infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
@@ -36,7 +36,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Input* input = Input::GetInitInstance();
     Depth depth;
     ShaderResource::GetInitInstance();
-
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
     RootParameter rootparams;
@@ -49,6 +48,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
     Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
     scene.Initialize();
+
+
+
+
 #pragma region ゲームループ
     while (true)
     {
