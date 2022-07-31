@@ -10,12 +10,13 @@ MCB::Scene::~Scene()
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
+    delete light;
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
 void MCB::Scene::Initialize()
 {
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 40.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
     LoadModel();
@@ -23,8 +24,10 @@ void MCB::Scene::Initialize()
     Object3DInit();
     SpriteInit();
     InitRand();
-    soundManager.PlaySoundWave(testSound, loopFlag);
-
+    //soundManager.PlaySoundWave(testSound, loopFlag);
+    light = Light::LightCreate();
+    light->SetLightColor({ 1,1,1 });
+    Object3d::SetLight(light);
 
 
 }
@@ -48,7 +51,6 @@ void MCB::Scene::Object3DInit()
     box.Init();
     box.model = BoxModel;
     box.scale = {3,3,3};
-    box.position.x = 30;
 
     ray.Init();
     ray.model = BoxModel;
@@ -66,7 +68,7 @@ void MCB::Scene::Object3DInit()
 #pragma region 各種リソースの読み込みと初期化
 void MCB::Scene::LoadModel()
 {
-	BoxModel = new Model("Box");
+	BoxModel = new Model("sphere",true);
 
 	groundModel = new Model("ground");
 
@@ -104,84 +106,19 @@ void MCB::Scene::SpriteInit()
 
 void MCB::Scene::Update()
 {
-    if (input->IsKeyDown(DIK_D))
-    {
-        sphere.position.x += 0.1f;
-    }
+    box.rotasion.y += 0.01f;
+   
+    Vector3D lightdir = light->lightdir;
 
-    if (input->IsKeyDown(DIK_A))
-    {
-        sphere.position.x -= 0.1f;
-    }
-
-    if (input->IsKeyDown(DIK_W))
-    {
-        sphere.position.z += 0.1f;
-    }
-
-    if (input->IsKeyDown(DIK_S))
-    {
-        sphere.position.z -= 0.1f;
-    }
-    
-    if (input->IsKeyDown(DIK_SPACE))
-    {
-        sphere.position.y += 0.1f;
-    }
-    
-    if (input->IsKeyDown(DIK_LCONTROL))
-    {
-        sphere.position.y -= 0.1f;
-    }
+    if (input->IsKeyDown(DIK_W))lightdir.vec.z++;
+    if (input->IsKeyDown(DIK_S))lightdir.vec.z--;
+    if (input->IsKeyDown(DIK_D))lightdir.vec.x++;
+    if (input->IsKeyDown(DIK_A))lightdir.vec.x--;
 
 
+    light->SetLightDir(lightdir);
 
-    if (input->IsKeyDown(DIK_UP))
-    {
-        volume ++;
-    }
-
-    if (input->IsKeyDown(DIK_DOWN))
-    {
-        volume--;
-    }
-    if (input->IsKeyDown(DIK_LEFT))
-    {
-        matView.eye.x += 0.1f;
-    }
-
-    if (input->IsKeyDown(DIK_RIGHT))
-    {
-        matView.eye.x -= 0.1f;
-    }
-
-    ray.ColliderUpdate();
-    sphere.ColliderUpdate();
-
-    soundManager.SetVolume(volume, testSound);
-
-    if (input->IsKeyTrigger(DIK_T))
-    {
-        soundManager.StopSoundWave(testSound);
-    }
-
-    if (input->IsKeyTrigger(DIK_Y))
-    {
-        //soundManager.StopSoundWave(testSound);
-        soundManager.PlaySoundWave(testSound, loopFlag);
-    }
-
-    if (input->IsKeyTrigger(DIK_U))
-    {
-        loopFlag = !loopFlag;
-        soundManager.StopSoundWave(testSound);
-    }
-
-    if (input->IsKeyTrigger(DIK_F))
-    {
-        soundManager.StopSoundWave(test2Sound);
-        soundManager.PlaySoundWave(test2Sound, false);
-    }
+    light->Updata();
     //行列変換
     MatrixUpdate();
 }
@@ -192,18 +129,10 @@ void MCB::Scene::Draw()
     //3Dオブジェクト
     Skydorm.Draw();
     //human.Draw();
-    ray.Draw();
-    sphere.Draw();
     box.Draw();
+
     //スプライト
     sprite.SpriteCommonBeginDraw(*spritePipelinePtr);
-    if (CalcRaySphere(ray.collider, sphere))
-    {
-        debugText.Print(0, 100, 5, "Hit");
-    }
-    debugText.Print(0, 20, 1, "Move:WASD,yMove:Space,LCONTROL cameraMove:ArrowKey");
-    debugText.Print(0, 60, 1, "Sound: stop->T, start->Y");
-    debugText.Print(0, 100, 1, "SE:start->F,LoopChengeandStop->U,LootFlag:%s", (loopFlag ? "true" : "false"));
     debugText.AllDraw();
     draw.PostDraw();
 }

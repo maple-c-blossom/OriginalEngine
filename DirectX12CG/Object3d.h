@@ -14,6 +14,7 @@
 #include <vector>
 #include "Model.h"
 #include "Quaternion.h"
+#include "Light.h"
 
 namespace MCB
 {
@@ -24,10 +25,15 @@ namespace MCB
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
-            DirectX::XMMATRIX mat;
+            //DirectX::XMMATRIX mat;
+            DirectX::XMMATRIX viewproj;
+            DirectX::XMMATRIX world;
+            Float3 cameraPos;
+
         };
         //---------------------------------
 
+        static Light* light;
 
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
@@ -69,6 +75,7 @@ namespace MCB
 
         void Draw(unsigned short int incremant);
 
+        static void SetLight(Light* light);
         //void CreateModel(const char* fileName);
     };
 

@@ -33,7 +33,8 @@ namespace MCB
 	Vector3D operator+(Vector3D& vecA, Vector3D& vecB);
 	Vector3D operator-(Vector3D& vecA, Vector3D& vecB);
 	Vector3D operator*(Vector3D& vecA,float k);
-
+	Vector3D operator/(Vector3D& vecA,float k);
+	Vector3D operator-(Vector3D& vecA);
 
 }
 

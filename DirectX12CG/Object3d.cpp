@@ -2,6 +2,9 @@
 
 using namespace MCB;
 using namespace std;
+
+Light* Object3d::light = nullptr;
+
 MCB::Object3d::Object3d()
 {
     NORM_FRONT_VEC.vec = { 0,0,1 };
@@ -79,7 +82,11 @@ void Object3d::Updata(View& view, Projection& projection,bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
     
-    constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
+    constMapTranceform->world = matWorld.matWorld * view.mat;
+    constMapTranceform->viewproj = projection.mat;
+    constMapTranceform->cameraPos.x = view.eye.x;
+    constMapTranceform->cameraPos.y = view.eye.y;
+    constMapTranceform->cameraPos.z = view.eye.z;
 }
 
 void Object3d::Updata(View& view, Projection& projection,Quaternion q, bool isBillBord)
@@ -110,7 +117,11 @@ void Object3d::Updata(View& view, Projection& projection,Quaternion q, bool isBi
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
+    constMapTranceform->world = matWorld.matWorld * view.mat;
+    constMapTranceform->viewproj = projection.mat;
+    constMapTranceform->cameraPos.x = view.eye.x;
+    constMapTranceform->cameraPos.y = view.eye.y;
+    constMapTranceform->cameraPos.z = view.eye.z;
 }
 
 void Object3d::Draw()
@@ -120,7 +131,7 @@ void Object3d::Draw()
 
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
-
+    light->Draw(3);
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -149,6 +160,8 @@ void Object3d::Draw(unsigned short int incremant)
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
+    light->Draw(3);
+
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -167,4 +180,9 @@ void Object3d::Draw(unsigned short int incremant)
     //描画コマンド
     dx12->commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
 
+}
+
+void MCB::Object3d::SetLight(Light* light)
+{
+    Object3d::light = light;
 }

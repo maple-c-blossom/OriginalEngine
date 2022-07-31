@@ -3,10 +3,10 @@
 
 using namespace std;
 
-MCB::Model::Model( const std::string fileName)
+MCB::Model::Model( const std::string fileName,bool smooth)
 {
     material.Init();
-    Init(fileName);
+    Init(fileName,smooth);
     material.Update();
 }
 
@@ -96,7 +96,7 @@ HRESULT MCB::Model::VertexMaping()
 }
 
 
-void MCB::Model::CreateModel(const string fileName)
+void MCB::Model::CreateModel(const string fileName, bool smooth)
 {
     std::ifstream file;
 
@@ -187,9 +187,10 @@ void MCB::Model::CreateModel(const string fileName)
                 vertex.pos = positions[indexPosition - 1];
                 vertex.normal = normals[indexNormal - 1];
                 vertex.uv = texcoords[indexTexcoord - 1];
-
                 vertices.emplace_back(vertex);
                 indices.emplace_back((unsigned short)indices.size());
+                if(smooth) AddSmoothData(indexPosition, (unsigned short)GetVertexCount() - 1);
+                //if (smooth) CalculateSmoothedVertexNormals();
 
             }
 
@@ -201,6 +202,7 @@ void MCB::Model::CreateModel(const string fileName)
     positions.clear();
     normals.clear();
     texcoords.clear();
+    if (smooth) CalculateSmoothedVertexNormals();
 }
 
 void MCB::Model::SetSizeIB()
@@ -214,6 +216,7 @@ void MCB::Model::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
 }
+
 void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
 {
     std::ifstream file;
@@ -276,9 +279,9 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
 
 }
 
-void MCB::Model::Init(const std::string fileName)
+void MCB::Model::Init(const std::string fileName, bool smooth)
 {
-    CreateModel(fileName);
+    CreateModel(fileName,smooth);
 
     SetSizeIB();
     material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
@@ -292,4 +295,29 @@ void MCB::Model::Init(const std::string fileName)
     VertexMaping();
     SetVbView();
 
+}
+
+void MCB::Model::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
+{
+    smoothData[indexPosition].emplace_back(indexVertex);
+}
+
+void MCB::Model::CalculateSmoothedVertexNormals()
+{
+    auto itr = smoothData.begin();
+    for (; itr != smoothData.end(); ++itr)
+    {
+        std::vector<unsigned short>& v = itr->second;
+        Vector3D normal = {};
+        for (unsigned short index : v)
+        {
+            normal += vertices[index].normal;
+        }
+        normal = normal / (float)v.size();
+        normal.V3Norm();
+        for (unsigned short index : v)
+        {
+            vertices[index].normal = { normal.vec.x, normal.vec.y, normal.vec.z };
+        }
+    }
 }

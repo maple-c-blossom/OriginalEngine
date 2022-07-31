@@ -201,6 +201,31 @@ DirectX::XMMATRIX MCB::MCBMatrix::MatrixConvertXMMatrix(MCBMatrix mat)
 	return ans;
 }
 
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixConvertXMMatrix(XMMATRIX mat)
+{
+	MCBMatrix ans;
+	ans._11 = mat.r[0].m128_f32[0];
+	ans._12 = mat.r[0].m128_f32[1];
+	ans._13 = mat.r[0].m128_f32[2];
+	ans._14 = mat.r[0].m128_f32[3];
+						 
+	ans._21 = mat.r[1].m128_f32[0] ;
+	ans._22 = mat.r[1].m128_f32[1] ;
+	ans._23 = mat.r[1].m128_f32[2] ;
+	ans._24 = mat.r[1].m128_f32[3] ;
+						 
+	ans._31 = mat.r[2].m128_f32[0] ;
+	ans._32 = mat.r[2].m128_f32[1] ;
+	ans._33 = mat.r[2].m128_f32[2] ;
+	ans._34 = mat.r[2].m128_f32[3] ;
+						 
+	ans._41 = mat.r[3].m128_f32[0];
+	ans._42 = mat.r[3].m128_f32[1] ;
+	ans._43 = mat.r[3].m128_f32[2] ;
+	ans._44 = mat.r[3].m128_f32[3] ;
+	return MCBMatrix();
+}
+
 MCB::MCBMatrix MCB::MCBMatrix::operator*(float s)
 {
 	MCBMatrix ans;

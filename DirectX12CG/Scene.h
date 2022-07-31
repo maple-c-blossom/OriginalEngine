@@ -45,6 +45,7 @@
 #include "DebugText.h"
 #include "Sound.h"
 #include "Collider.h"
+#include "Light.h"
 
 #include "Human.h"
 #pragma endregion ©ì.h include
@@ -87,6 +88,8 @@ namespace MCB
 		PipelineRootSignature* obj3dPipelinePtr;
 
 		PipelineRootSignature* spritePipelinePtr;
+
+		Light* light = nullptr;
 
 		//•`‰æ‘Oˆ—‚Æ•`‰æŒãˆ—
 		MCB::Draw draw;

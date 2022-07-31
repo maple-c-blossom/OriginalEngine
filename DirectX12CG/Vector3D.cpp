@@ -162,3 +162,20 @@ Vector3D MCB::operator*(Vector3D& vecA, float k)
 	return temp;
 }
 
+Vector3D MCB::operator/(Vector3D& vecA, float k)
+{
+	Vector3D temp;
+	temp.vec.x = vecA.vec.x / k;
+	temp.vec.y = vecA.vec.y / k;
+	temp.vec.z = vecA.vec.z / k;
+	return temp;
+}
+
+Vector3D MCB::operator-(Vector3D& vecA)
+{
+	Vector3D temp;
+	temp.vec.x = vecA.vec.x * -1;
+	temp.vec.y = vecA.vec.y * -1;
+	temp.vec.z = vecA.vec.z * -1;
+	return temp;
+}

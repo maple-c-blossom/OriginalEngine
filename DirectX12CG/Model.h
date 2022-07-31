@@ -11,7 +11,8 @@
 #include <string>
 #include "MCBFloat.h"
 #include "Texture.h"
-
+#include <unordered_map>
+#include "Vector3D.h"
 namespace MCB
 {
     //頂点データ構造体-------------------------------------
@@ -26,7 +27,7 @@ namespace MCB
     {
     public:
 
-        Model(const std::string fileName);
+        Model(const std::string fileName, bool smooth = false);
         Model();
         ~Model();
 
@@ -41,6 +42,7 @@ namespace MCB
 
         std::vector<ObjectVertex> vertices;
         std::vector<unsigned short> indices;
+        std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
         unsigned int sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
         unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
@@ -67,7 +69,7 @@ namespace MCB
 
         HRESULT VertexMaping();
 
-        void CreateModel(const std::string fileName);
+        void CreateModel(const std::string fileName,bool smooth = false);
 
         void SetSizeIB();
 
@@ -75,8 +77,13 @@ namespace MCB
 
         void LoadMaterial(const std::string& directoryPath,const std::string& filename);
 
-        void Init(const std::string fileName);
+        void Init(const std::string fileName, bool smooth = false);
         
+        inline size_t GetVertexCount() { return vertices.size(); }
+
+        void AddSmoothData(unsigned short indexPosition, unsigned short indexVertex);
+
+        void CalculateSmoothedVertexNormals();
     };
 
 }
