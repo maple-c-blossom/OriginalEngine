@@ -10,7 +10,7 @@ void main(
 	{
 		GSOutput element;
 		element.svpos = input[i].svpos;
-		element.normal = input[i].normal;
+		element.color = input[i].color;
 		element.uv = input[i].uv;
 		output.Append(element);
 	}

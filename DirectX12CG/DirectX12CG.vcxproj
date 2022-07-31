@@ -40,6 +40,7 @@
     <ClCompile Include="ParticleMaterial.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="PIpelineRootSignature.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="RayObject.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="ParticleMaterial.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="PIpelineRootSignature.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="RayObject.h" />
