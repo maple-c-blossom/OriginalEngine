@@ -26,25 +26,22 @@ bool MCB::CalcRaySphere(Ray ray, Sphere sphere)
 	ray.rayVec.V3Norm();
 	float tempPos = rayToSphere.GetV3Dot(ray.rayVec);
 	ray.rayVec = ray.rayVec * tempPos;
-
+	Float3 Temp;
+	Temp.x = ray.rayVec.vec.x + ray.StartPosition.x;
+	Temp.y = ray.rayVec.vec.y + ray.StartPosition.y;
+	Temp.z = ray.rayVec.vec.z + ray.StartPosition.z;
 	//衝突地点がレイの射程を超えているかレイの逆方向だった場合
 	if (tempPos > ray.range || tempPos < 0)
 	{
 		return false;
 	}
+	Vector3D aVec;
 
-	Float3 rayHitPosition;
-	rayHitPosition.x = ray.rayVec.vec.x;
-	rayHitPosition.y = ray.rayVec.vec.y;
-	rayHitPosition.z = ray.rayVec.vec.z;
-	rayHitPosition += ray.StartPosition;
+	aVec.V3Get(sphere.centerPosition, Temp);
 
+	float a = aVec.V3Len();
 
-	Sphere Sray;
-	Sray.radius = ray.radius;
-	Sray.centerPosition = rayHitPosition;
-
-	return CalcSphere(Sray,sphere);
+	return a < sphere.radius + ray.radius;
 }
 
 
