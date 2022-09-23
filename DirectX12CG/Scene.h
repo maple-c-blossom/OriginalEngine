@@ -89,7 +89,7 @@ namespace MCB
 
 		PipelineRootSignature* spritePipelinePtr;
 
-		Light* light = nullptr;
+		//Light* light = nullptr;
 
 		//•`‰æ‘Oˆ—‚Æ•`‰æŒãˆ—
 		MCB::Draw draw;

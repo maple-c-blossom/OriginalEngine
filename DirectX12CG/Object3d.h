@@ -33,7 +33,7 @@ namespace MCB
         };
         //---------------------------------
 
-        static Light* light;
+        //static DirLight* light;
 
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
@@ -75,7 +75,7 @@ namespace MCB
 
         void Draw(unsigned short int incremant);
 
-        static void SetLight(Light* light);
+        //static void SetLight(DirLight* light);
         //void CreateModel(const char* fileName);
     };
 

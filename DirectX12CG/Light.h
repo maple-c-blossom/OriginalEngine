@@ -9,7 +9,7 @@
 
 namespace MCB
 {
-	class Light
+	class DirLight
 	{
 	public:
 		struct LightConstBuffData
@@ -20,19 +20,20 @@ namespace MCB
 		};
 		Microsoft::WRL::ComPtr<ID3D12Resource> lightConstBuff;
 
+	private:
 
 		Vector3D lightdir = { 1,0,0 };
 		Float3 lightColor = { 1,1,1 };
 		bool dirty = false;
 
-		static Light* LightCreate();
-		void SetLightDir(Vector3D lightdir);
-		void SetLightColor(Float3 lightColor);
-		void CreateLightBuff();
-		void MapingLightConstBuff();
-		void Init();
-		void Updata();
-		void Draw(UINT rootPramIndex);
+		//static DirLight* LightCreate();
+		//void SetLightDir(Vector3D lightdir);
+		//void SetLightColor(Float3 lightColor);
+		//void CreateLightBuff();
+		//void MapingLightConstBuff();
+		//void Init();
+		//void Updata();
+		//void Draw(UINT rootPramIndex);
 	};
 
 }

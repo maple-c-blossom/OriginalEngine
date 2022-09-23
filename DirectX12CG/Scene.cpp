@@ -10,7 +10,7 @@ MCB::Scene::~Scene()
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
-    delete light;
+    //delete light;
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
@@ -25,9 +25,9 @@ void MCB::Scene::Initialize()
     SpriteInit();
     InitRand();
     //soundManager.PlaySoundWave(testSound, loopFlag);
-    light = Light::LightCreate();
-    light->SetLightColor({ 1,1,1 });
-    Object3d::SetLight(light);
+    //light = DirLight::LightCreate();
+    //light->SetLightColor({ 1,1,1 });
+    //Object3d::SetLight(light);
 
 
 }
@@ -108,17 +108,17 @@ void MCB::Scene::Update()
 {
     box.rotasion.y += 0.01f;
    
-    Vector3D lightdir = light->lightdir;
+    //Vector3D lightdir = light->lightdir;
 
-    if (input->IsKeyDown(DIK_W))lightdir.vec.z++;
-    if (input->IsKeyDown(DIK_S))lightdir.vec.z--;
-    if (input->IsKeyDown(DIK_D))lightdir.vec.x++;
-    if (input->IsKeyDown(DIK_A))lightdir.vec.x--;
+    //if (input->IsKeyDown(DIK_W))lightdir.vec.z++;
+    //if (input->IsKeyDown(DIK_S))lightdir.vec.z--;
+    //if (input->IsKeyDown(DIK_D))lightdir.vec.x++;
+    //if (input->IsKeyDown(DIK_A))lightdir.vec.x--;
 
 
-    light->SetLightDir(lightdir);
+    //light->SetLightDir(lightdir);
 
-    light->Updata();
+    //light->Updata();
     //行列変換
     MatrixUpdate();
 }

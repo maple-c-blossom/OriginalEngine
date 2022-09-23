@@ -3,7 +3,7 @@
 using namespace MCB;
 using namespace std;
 
-Light* Object3d::light = nullptr;
+//DirLight* Object3d::light = nullptr;
 
 MCB::Object3d::Object3d()
 {
@@ -131,7 +131,7 @@ void Object3d::Draw()
 
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
-    light->Draw(3);
+    //light->Draw(3);
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -160,7 +160,7 @@ void Object3d::Draw(unsigned short int incremant)
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
-    light->Draw(3);
+    //light->Draw(3);
 
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
@@ -182,7 +182,7 @@ void Object3d::Draw(unsigned short int incremant)
 
 }
 
-void MCB::Object3d::SetLight(Light* light)
-{
-    Object3d::light = light;
-}
+//void MCB::Object3d::SetLight(DirLight* light)
+//{
+//    Object3d::light = light;
+//}
