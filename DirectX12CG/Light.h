@@ -17,6 +17,7 @@ namespace MCB
 			Vector3D lightV;
 			float pad1;
 			Float3 lightColor;
+			unsigned int active;
 		};
 		Microsoft::WRL::ComPtr<ID3D12Resource> lightConstBuff;
 		inline void SetLightDir(Vector3D lightdir) 
@@ -24,9 +25,9 @@ namespace MCB
 			lightdir.V3Norm();
 			this->lightdir = lightdir;
 		}
-		inline const Vector3D& GetLightDir() { return lightdir; }
+		inline Vector3D GetLightDir() { return lightdir; }
 		inline void SetLightColor(const Float3& lightcolor) { this->lightColor = lightcolor; }
-		inline const Float3& GetLightColor() { return lightColor; }
+		inline Float3 GetLightColor() { return lightColor; }
 		inline void SetActive(bool active) { this->active = active; }
 		inline bool IsActive() { return active; }
 	private:
