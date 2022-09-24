@@ -3,13 +3,12 @@
 using namespace MCB;
 using namespace std;
 
-//DirLight* Object3d::light = nullptr;
+LightGroup* Object3d::lights = nullptr;
 
 MCB::Object3d::Object3d()
 {
     NORM_FRONT_VEC.vec = { 0,0,1 };
     nowFrontVec = NORM_FRONT_VEC;
-    //model->material.Init(dx12);
     this->Init();
 }
 
@@ -17,10 +16,7 @@ MCB::Object3d::Object3d()
 
 MCB::Object3d::~Object3d()
 {
-    //delete vertex;
     constBuffTranceform->Unmap(0, nullptr);
-    //model->texture.scratchImg.Release();
-    //delete model;
 }
 
 void Object3d::Init()
@@ -131,7 +127,7 @@ void Object3d::Draw()
 
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
-    //light->Draw(3);
+    lights->Draw(3);
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -160,7 +156,7 @@ void Object3d::Draw(unsigned short int incremant)
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
 
-    //light->Draw(3);
+    lights->Draw(3);
 
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
@@ -182,7 +178,7 @@ void Object3d::Draw(unsigned short int incremant)
 
 }
 
-//void MCB::Object3d::SetLight(DirLight* light)
-//{
-//    Object3d::light = light;
-//}
+void MCB::Object3d::SetLights(LightGroup* lights)
+{
+    Object3d::lights = lights;
+}

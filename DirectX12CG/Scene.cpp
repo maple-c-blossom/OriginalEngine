@@ -10,7 +10,7 @@ MCB::Scene::~Scene()
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
-    //delete light;
+    delete lights;
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
@@ -25,9 +25,9 @@ void MCB::Scene::Initialize()
     SpriteInit();
     InitRand();
     //soundManager.PlaySoundWave(testSound, loopFlag);
-    //light = DirLight::LightCreate();
-    //light->SetLightColor({ 1,1,1 });
-    //Object3d::SetLight(light);
+    lights = LightGroup::LightsCreate();
+    lights->DefaultLightSet();
+    Object3d::SetLights(lights);
 
 
 }
@@ -118,7 +118,7 @@ void MCB::Scene::Update()
 
     //light->SetLightDir(lightdir);
 
-    //light->Updata();
+    lights->UpDate();;
     //行列変換
     MatrixUpdate();
 }

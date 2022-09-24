@@ -1,24 +1,24 @@
 #include "LightGroup.h"
 #include <assert.h>
-
+#include "Dx12.h"
 using namespace DirectX;
 using namespace MCB;
 
 
 ID3D12Device* MCB::LightGroup::device = nullptr;
 
-void LightGroup::StaticInitialize(ID3D12Device* device)
+void LightGroup::StaticInitialize()
 {
 	// 再初期化チェック
 	assert(!LightGroup::device);
 
 	// nullptrチェック
-	assert(device);
+	assert(Dx12::GetInstance()->device.Get());
 
-	LightGroup::device = device;
+	LightGroup::device = Dx12::GetInstance()->device.Get();
 }
 
-LightGroup* LightGroup::Create()
+LightGroup* LightGroup::LightsCreate()
 {
 	// 3Dオブジェクトのインスタンスを生成
 	LightGroup* instance = new LightGroup();
@@ -53,7 +53,7 @@ void LightGroup::Initialize()
 	TransferConstBuff();
 }
 
-void LightGroup::Update()
+void LightGroup::UpDate()
 {
 	// 値の更新があった時だけ定数バッファに転送する
 	if (isUpdate) {
@@ -62,10 +62,10 @@ void LightGroup::Update()
 	}
 }
 
-void LightGroup::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParameterIndex)
+void LightGroup::Draw(UINT rootParameterIndex)
 {
 	// 定数バッファビューをセット
-	cmdList->SetGraphicsRootConstantBufferView(rootParameterIndex, constBuff->GetGPUVirtualAddress());
+	Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(rootParameterIndex, constBuff->GetGPUVirtualAddress());
 }
 
 void LightGroup::TransferConstBuff()
@@ -82,6 +82,7 @@ void LightGroup::TransferConstBuff()
 				constMap->dirLights[i].active = 1;
 				constMap->dirLights[i].lightV = -dirLights[i].GetLightDir();
 				constMap->dirLights[i].lightColor = dirLights[i].GetLightColor();
+				constMap->dirLights[i].shininess = dirLights[i].GetLightShininess();
 			}
 			// ライトが無効ならライト色を0に
 			else {
@@ -94,17 +95,20 @@ void LightGroup::TransferConstBuff()
 
 void LightGroup::DefaultLightSet()
 {
-	dirLights[0].SetActive(true);
+	dirLights[0].SetIsActive(true);
 	dirLights[0].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[0].SetLightDir({ 0.0f, -1.0f, 0.0f});
+	dirLights[0].SetLightShininess(3.0f);
 
-	dirLights[1].SetActive(true);
+	dirLights[1].SetIsActive(true);
 	dirLights[1].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[1].SetLightDir({ +0.5f, +0.1f, +0.2f });
+	dirLights[1].SetLightShininess(3.0f);
 
-	dirLights[2].SetActive(true);
+	dirLights[2].SetIsActive(true);
 	dirLights[2].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[2].SetLightDir({ -0.5f, +0.1f, -0.2f });
+	dirLights[2].SetLightShininess(3.0f);
 }
 
 void LightGroup::SetAmbientColor(const Float3& color)
@@ -113,26 +117,34 @@ void LightGroup::SetAmbientColor(const Float3& color)
 	isUpdate = true;
 }
 
-void LightGroup::SetDirLightIsActive(int index, bool active)
+void LightGroup::SetDirLightIsActive(int lightindexNum, bool active)
 {
-	assert(0 <= index && index < DirLightNum);
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
 
-	dirLights[index].SetActive(active);
+	dirLights[lightindexNum].SetIsActive(active);
 	isUpdate = true;
 }
 
-void LightGroup::SetDirLightForLightDir(int index, const Vector3D& lightdir)
+void LightGroup::SetDirLightForLightDir(int lightindexNum, const Vector3D& lightdir)
 {
-	assert(0 <= index && index < DirLightNum);
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
 
-	dirLights[index].SetLightDir(lightdir);
+	dirLights[lightindexNum].SetLightDir(lightdir);
 	isUpdate = true;
 }
 
-void LightGroup::SetDirLightColor(int index, const Float3& lightcolor)
+void LightGroup::SetDirLightColor(int lightindexNum, const Float3& lightcolor)
 {
-	assert(0 <= index && index < DirLightNum);
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
 
-	dirLights[index].SetLightColor(lightcolor);
+	dirLights[lightindexNum].SetLightColor(lightcolor);
+	isUpdate = true;
+}
+
+void MCB::LightGroup::SetDirLightShininess(int lightindexNum, const float& lightShininess)
+{
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
+
+	dirLights[lightindexNum].SetLightShininess(lightShininess);
 	isUpdate = true;
 }

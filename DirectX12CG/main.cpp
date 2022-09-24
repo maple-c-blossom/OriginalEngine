@@ -36,6 +36,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Input* input = Input::GetInitInstance();
     Depth depth;
     ShaderResource::GetInitInstance();
+    LightGroup::StaticInitialize();
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
     RootParameter rootparams;
@@ -49,9 +50,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
     Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
     scene.Initialize();
-
-
-
 
 #pragma region ゲームループ
     while (true)

@@ -14,7 +14,7 @@
 #include <vector>
 #include "Model.h"
 #include "Quaternion.h"
-#include "Light.h"
+#include "LightGroup.h"
 
 namespace MCB
 {
@@ -33,7 +33,7 @@ namespace MCB
         };
         //---------------------------------
 
-        //static DirLight* light;
+        static LightGroup* lights;
 
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
@@ -75,7 +75,7 @@ namespace MCB
 
         void Draw(unsigned short int incremant);
 
-        //static void SetLight(DirLight* light);
+        static void SetLights(LightGroup* light);
         //void CreateModel(const char* fileName);
     };
 

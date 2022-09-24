@@ -15,7 +15,7 @@ namespace MCB
 		struct LightConstBuffData
 		{
 			Vector3D lightV;
-			float shininess = 3.0f;
+			float shininess;
 			Float3 lightColor;
 			unsigned int active;
 		};
@@ -28,12 +28,15 @@ namespace MCB
 		inline Vector3D GetLightDir() { return lightdir; }
 		inline void SetLightColor(const Float3& lightcolor) { this->lightColor = lightcolor; }
 		inline Float3 GetLightColor() { return lightColor; }
-		inline void SetActive(bool active) { this->active = active; }
+		inline void SetLightShininess(const float lightshininess) { this->shininess = lightshininess; }
+		inline float GetLightShininess() { return shininess; }
+		inline void SetIsActive(bool active) { this->active = active; }
 		inline bool IsActive() { return active; }
 	private:
 
 		Vector3D lightdir = { 1,0,0 };
 		Float3 lightColor = { 1,1,1 };
+		float shininess = 3.0f;
 		bool active = true;
 		//static DirLight* LightCreate();
 		//void SetLightDir(Vector3D lightdir);

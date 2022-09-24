@@ -5,11 +5,6 @@ SamplerState smp:register(s0);
 
 float4 main(GSOutput input) : SV_TARGET
 {
-	//float3 light = normalize(float3(1,-1,1));
-	//float light_diffuse = saturate(dot(-light, input.normal));
-	//float3 shader_color;
-	//shader_color = m_ambient;
-	//shader_color += m_diffuse * light_diffuse;
 	float4 texcolor = float4(tex.Sample(smp, input.uv));
 	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	float3 ambient = m_ambient;
