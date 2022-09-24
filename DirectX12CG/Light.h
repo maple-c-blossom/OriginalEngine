@@ -15,7 +15,7 @@ namespace MCB
 		struct LightConstBuffData
 		{
 			Vector3D lightV;
-			float pad1;
+			float shininess = 3.0f;
 			Float3 lightColor;
 			unsigned int active;
 		};
