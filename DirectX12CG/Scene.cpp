@@ -108,17 +108,8 @@ void MCB::Scene::Update()
 {
     box.rotasion.y += 0.01f;
    
-    //Vector3D lightdir = light->lightdir;
 
-    //if (input->IsKeyDown(DIK_W))lightdir.vec.z++;
-    //if (input->IsKeyDown(DIK_S))lightdir.vec.z--;
-    //if (input->IsKeyDown(DIK_D))lightdir.vec.x++;
-    //if (input->IsKeyDown(DIK_A))lightdir.vec.x--;
-
-
-    //light->SetLightDir(lightdir);
-
-    lights->UpDate();;
+    lights->UpDate();
     //s—ñ•ÏŠ·
     MatrixUpdate();
 }

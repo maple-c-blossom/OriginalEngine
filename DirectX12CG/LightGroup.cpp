@@ -148,3 +148,32 @@ void MCB::LightGroup::SetDirLightShininess(int lightindexNum, const float& light
 	dirLights[lightindexNum].SetLightShininess(lightShininess);
 	isUpdate = true;
 }
+
+Float3 MCB::LightGroup::GetAmbientColor()
+{
+	return ambientColor;
+}
+
+bool MCB::LightGroup::GetDirLightIsActive(int lightNum)
+{
+	assert(0 <= lightNum && lightNum < DirLightNum);
+	return dirLights[lightNum].IsActive();
+}
+
+Vector3D MCB::LightGroup::GetDirLightForLightDir(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
+	return dirLights[lightindexNum].GetLightDir();
+}
+
+Float3 MCB::LightGroup::GetDirLightColor(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
+	return dirLights[lightindexNum].GetLightColor();
+}
+
+float MCB::LightGroup::GetDirLightShininess(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
+	return dirLights[lightindexNum].GetLightShininess();
+}

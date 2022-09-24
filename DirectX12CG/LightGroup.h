@@ -35,6 +35,12 @@ namespace MCB
 		void SetDirLightColor(int lightindexNum, const Float3& lightcolor);
 		void SetDirLightShininess(int lightindexNum, const float& lightShininess);
 
+		Float3 GetAmbientColor();
+		bool GetDirLightIsActive(int lightNum);
+		Vector3D GetDirLightForLightDir(int lightindexNum);
+		Float3 GetDirLightColor(int lightindexNum);
+		float GetDirLightShininess(int lightindexNum);
+
 	private:
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 		Float3 ambientColor = { 1,1,1 };
