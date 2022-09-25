@@ -27,7 +27,7 @@ namespace MCB
 	private:
 		Float3 lightPos = {0,0,0};
 		Float3 lightColor = {1,1,1};
-		Float3 lightAtten = {1.0f,1.0f,1.0f};
+		Float3 lightAtten = {1.0f,1.0f,1.0f};//Œ¸Š‚Ì‹­‚³(‘å‚«‚¯‚ê‚Î‘å‚«‚¢‚Ú‚ÇŒ¸Š‚·‚é
 		bool isActive = false;
 
 	};
