@@ -89,26 +89,45 @@ void LightGroup::TransferConstBuff()
 				constMap->dirLights[i].active = 0;
 			}
 		}
+
+		for (int i = 0; i < PLightNum; i++) {
+			// ライトが有効なら設定を転送
+			if (PLights[i].IsActive()) {
+				constMap->PLights[i].active = 1;
+				constMap->PLights[i].lightPos = PLights[i].GetPLightPos();
+				constMap->PLights[i].lightColor = PLights[i].GetPLightColor();
+				constMap->PLights[i].lightAtten = PLights[i].GetPLightAtten();
+			}
+			// ライトが無効ならライト色を0に
+			else {
+				constMap->dirLights[i].active = 0;
+			}
+		}
 		constBuff->Unmap(0, nullptr);
 	}
 }
 
 void LightGroup::DefaultLightSet()
 {
-	dirLights[0].SetIsActive(true);
+	dirLights[0].SetIsActive(false);
 	dirLights[0].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[0].SetLightDir({ 0.0f, -1.0f, 0.0f});
 	dirLights[0].SetLightShininess(3.0f);
 
-	dirLights[1].SetIsActive(true);
+	dirLights[1].SetIsActive(false);
 	dirLights[1].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[1].SetLightDir({ +0.5f, +0.1f, +0.2f });
 	dirLights[1].SetLightShininess(3.0f);
 
-	dirLights[2].SetIsActive(true);
+	dirLights[2].SetIsActive(false);
 	dirLights[2].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights[2].SetLightDir({ -0.5f, +0.1f, -0.2f });
 	dirLights[2].SetLightShininess(3.0f);
+
+	PLights[0].SetIsActive(true);
+	PLights[0].SetPLightPos({ 10.0f,2.0f,20.0f });
+	PLights[0].SetPLightColor({ 1,1,1 });
+	PLights[0].SetPLightAtten({0.001,0.001,0.001});
 }
 
 void LightGroup::SetAmbientColor(const Float3& color)
@@ -154,10 +173,10 @@ Float3 MCB::LightGroup::GetAmbientColor()
 	return ambientColor;
 }
 
-bool MCB::LightGroup::GetDirLightIsActive(int lightNum)
+bool MCB::LightGroup::GetDirLightIsActive(int lightindexNum)
 {
-	assert(0 <= lightNum && lightNum < DirLightNum);
-	return dirLights[lightNum].IsActive();
+	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
+	return dirLights[lightindexNum].IsActive();
 }
 
 Vector3D MCB::LightGroup::GetDirLightForLightDir(int lightindexNum)
@@ -176,4 +195,56 @@ float MCB::LightGroup::GetDirLightShininess(int lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < DirLightNum);
 	return dirLights[lightindexNum].GetLightShininess();
+}
+
+void MCB::LightGroup::SetPLightIsActive(int lightindexNum, bool active)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	PLights[lightindexNum].SetIsActive(active);
+	isUpdate = true;
+}
+
+void MCB::LightGroup::SetPLightPos(int lightindexNum, const Float3& lightPos)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	PLights[lightindexNum].SetPLightPos(lightPos);
+	isUpdate = true;
+}
+
+void MCB::LightGroup::SetPLightColor(int lightindexNum, const Float3& lightColor)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	PLights[lightindexNum].SetPLightColor(lightColor);
+	isUpdate = true;
+}
+
+void MCB::LightGroup::SetPLightAtten(int lightindexNum, const Float3& lightAtten)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	PLights[lightindexNum].SetPLightAtten(lightAtten);
+	isUpdate = true;
+}
+
+bool MCB::LightGroup::GetPLightIsActive(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	return PLights[lightindexNum].IsActive();
+}
+
+Float3 MCB::LightGroup::GetPLightPos(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	return PLights[lightindexNum].GetPLightPos();
+}
+
+Float3 MCB::LightGroup::GetPLightColor(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	return PLights[lightindexNum].GetPLightColor();
+}
+
+Float3 MCB::LightGroup::GetPLightAtten(int lightindexNum)
+{
+	assert(0 <= lightindexNum && lightindexNum < PLightNum);
+	return PLights[lightindexNum].GetPLightAtten();
 }

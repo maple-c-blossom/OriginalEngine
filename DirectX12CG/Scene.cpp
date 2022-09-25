@@ -16,7 +16,7 @@ MCB::Scene::~Scene()
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
 void MCB::Scene::Initialize()
 {
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -10.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
     LoadModel();
@@ -41,26 +41,27 @@ void MCB::Scene::Object3DInit()
     ground.Init();
     ground.model = groundModel;
     ground.scale = { 4,4,4 };
-    ground.position = { 0,-15,0 };
+    ground.position = { 0,0,0 };
     ;
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
-    box.Init();
-    box.model = BoxModel;
-    box.scale = {3,3,3};
+    testSpher.Init();
+    testSpher.model = BoxModel;
+    testSpher.scale = {3,3,3};
+    testSpher.position.z = 5;
 
     ray.Init();
     ray.model = BoxModel;
     ray.scale = { 1,1,30 };
     ray.SetCollider(62, 1, { 0,0,1 });
 
-    sphere.Init();
-    sphere.model = BoxModel;
-    sphere.SetCollider(1);
-    sphere.position.x = 20;
+    //sphere.Init();
+    //sphere.model = BoxModel;
+    //sphere.SetCollider(1);
+    //sphere.position.z = 20;
 }
 
 #pragma endregion 通常変数の初期化
@@ -106,8 +107,8 @@ void MCB::Scene::SpriteInit()
 
 void MCB::Scene::Update()
 {
-    box.rotasion.y += 0.01f;
-   
+    testSpher.rotasion.y += 0.01f;
+    
 
     lights->UpDate();
     //行列変換
@@ -119,8 +120,9 @@ void MCB::Scene::Draw()
     draw.PreDraw(*depth, *obj3dPipelinePtr, clearColor);
     //3Dオブジェクト
     Skydorm.Draw();
+    ground.Draw();
     //human.Draw();
-    box.Draw();
+    //testSpher.Draw();
 
     //スプライト
     sprite.SpriteCommonBeginDraw(*spritePipelinePtr);
@@ -135,7 +137,7 @@ void MCB::Scene::MatrixUpdate()
     human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
-    box.Updata(matView, matProjection,true);
+    testSpher.Updata(matView, matProjection,true);
     ray.Updata(matView, matProjection);
     sphere.Updata(matView, matProjection);
 }

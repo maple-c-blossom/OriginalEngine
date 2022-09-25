@@ -37,7 +37,7 @@ namespace MCB
 		Vector3D lightdir = { 1,0,0 };
 		Float3 lightColor = { 1,1,1 };
 		float shininess = 3.0f;
-		bool active = true;
+		bool active = false;
 		//static DirLight* LightCreate();
 		//void SetLightDir(Vector3D lightdir);
 		//void SetLightColor(Float3 lightColor);

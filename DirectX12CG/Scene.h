@@ -137,7 +137,7 @@ namespace MCB
 		Human human;
 		Object3d ground;
 		Object3d Skydorm;
-		Object3d box;
+		Object3d testSpher;
 		RayObject ray;
 		SphereObj sphere;
 

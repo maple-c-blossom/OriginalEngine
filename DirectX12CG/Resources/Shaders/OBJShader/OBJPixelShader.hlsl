@@ -9,6 +9,7 @@ float4 main(GSOutput input) : SV_TARGET
 	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	float3 ambient = m_ambient;
 	float4 shadeColor = float4(ambientColor * ambient, m_alpha);
+    float shininess = 3.0f;
 	for (int i = 0; i < DIRLIGHT_NUM; i++)
 	{
 		if (dirLights[i].active)
@@ -19,6 +20,22 @@ float4 main(GSOutput input) : SV_TARGET
 			float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess) * m_specular;
 			shadeColor.rgb += (diffuse + speculer) * dirLights[i].lightcolor;
 		}
+	}
+
+	for (int i = 0; i < PLIGHT_NUM; i++)
+	{
+		if (pLights[i].active)
+		{
+			float3 lightVec = pLights[i].lightPos - input.worldpos.xyz;
+			float d = length(lightVec);
+			lightVec = normalize(lightVec);
+            float atten = 1.0f / (pLights[i].lightAtten.x + pLights[i].lightAtten.y * d + pLights[i].lightAtten.z * d * d);
+            float3 dotLightNormal = dot(lightVec, input.normal);
+            float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
+            float3 diffuse = dotLightNormal * m_diffuse;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+            shadeColor.rgb += atten * (diffuse + specular) * pLights[i].lightColor;
+        }
 	}
 	return shadeColor * texcolor * color;
 }
