@@ -51,7 +51,7 @@ void MCB::Scene::Object3DInit()
     testSpher.Init();
     testSpher.model = BoxModel;
     testSpher.scale = {3,3,3};
-    testSpher.position.z = 5;
+    testSpher.position = { 0,4,10 };
 
     ray.Init();
     ray.model = BoxModel;
@@ -108,7 +108,46 @@ void MCB::Scene::SpriteInit()
 void MCB::Scene::Update()
 {
     testSpher.rotasion.y += 0.01f;
-    
+    Float3 SLPos = lights->GetSLightPos(0);
+    Float3 PLPos = lights->GetPLightPos(0);
+    if (input->IsKeyDown(DIK_W))
+    {
+        SLPos.z += 0.01f;
+    }
+    if (input->IsKeyDown(DIK_S))
+    {
+        SLPos.z -= 0.01f;
+    }
+
+    if (input->IsKeyDown(DIK_A))
+    {
+        SLPos.y -= 0.01f;
+    }
+    if (input->IsKeyDown(DIK_D))
+    {
+        SLPos.y += 0.01f;
+    }
+
+    if (input->IsKeyDown(DIK_UP))
+    {
+        PLPos.z += 0.01f;
+    }
+    if (input->IsKeyDown(DIK_DOWN))
+    {
+        PLPos.z -= 0.01f;
+    }
+
+    if (input->IsKeyDown(DIK_LEFT))
+    {
+        PLPos.x -= 0.01f;
+    }
+    if (input->IsKeyDown(DIK_RIGHT))
+    {
+        PLPos.x += 0.01f;
+    }
+
+    lights->SetPLightPos(0, PLPos);
+    lights->SetSLightPos(0, SLPos);
 
     lights->UpDate();
     //行列変換
@@ -122,7 +161,7 @@ void MCB::Scene::Draw()
     Skydorm.Draw();
     ground.Draw();
     //human.Draw();
-    //testSpher.Draw();
+    testSpher.Draw();
 
     //スプライト
     sprite.SpriteCommonBeginDraw(*spritePipelinePtr);

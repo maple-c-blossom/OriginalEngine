@@ -9,7 +9,6 @@ float4 main(GSOutput input) : SV_TARGET
 	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	float3 ambient = m_ambient;
 	float4 shadeColor = float4(ambientColor * ambient, m_alpha);
-    float shininess = 3.0f;
 	for (int i = 0; i < DIRLIGHT_NUM; i++)
 	{
 		if (dirLights[i].active)
@@ -33,9 +32,29 @@ float4 main(GSOutput input) : SV_TARGET
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
             float3 diffuse = dotLightNormal * m_diffuse;
-            float3 specular = pow(saturate(dot(reflect, eyedir)), shininess) * m_specular;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[i].shininess) * m_specular;
             shadeColor.rgb += atten * (diffuse + specular) * pLights[i].lightColor;
         }
 	}
-	return shadeColor * texcolor * color;
+	
+    for (int i = 0; i < SLIGHT_NUM; i++)
+    {
+		if(sLights[i].active)
+        {
+            float3 lightVec = sLights[i].lightPos - input.worldpos.xyz;
+            float d = length(lightVec);
+            lightVec = normalize(lightVec);
+            float atten = saturate(1.0f / (sLights[i].lightAtten.x + sLights[i].lightAtten.y * d + sLights[i].lightAtten.z * d * d));
+            float cos = dot(lightVec, sLights[i].ligntVec);
+            float angleAtten = smoothstep(sLights[i].lightFactorAngleCos.y, sLights[i].lightFactorAngleCos.x, cos);
+            atten *= angleAtten;
+            float3 dotLightNormal = dot(lightVec, input.normal);
+            float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
+            float3 diffuse = dotLightNormal * m_diffuse;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[i].shininess) * m_specular;
+            shadeColor.rbg += atten * (diffuse + specular) * sLights[i].lightColor;
+
+        }
+    }
+        return shadeColor * texcolor * color;
 }

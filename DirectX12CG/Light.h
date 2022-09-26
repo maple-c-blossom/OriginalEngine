@@ -2,7 +2,6 @@
 #include "Vector3D.h"
 #include <wrl.h>
 #include <Windows.h>
-#include <wrl.h>
 #include "Dx12.h"
 #include <d3d12.h>
 #include <d3dx12.h>
@@ -12,14 +11,13 @@ namespace MCB
 	class DirLight
 	{
 	public:
-		struct LightConstBuffData
+		typedef struct LightConstBuffData
 		{
 			Vector3D lightV;
 			float shininess;
 			Float3 lightColor;
 			unsigned int active;
 		};
-		Microsoft::WRL::ComPtr<ID3D12Resource> lightConstBuff;
 		inline void SetLightDir(Vector3D lightdir) 
 		{
 			lightdir.V3Norm();

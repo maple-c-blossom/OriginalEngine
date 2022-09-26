@@ -52,6 +52,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SphereObj.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TexImgData.cpp" />
     <ClCompile Include="TexSample.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="SphereObj.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TexImgData.h" />
     <ClInclude Include="TexSample.h" />

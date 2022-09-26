@@ -26,9 +26,22 @@ static const int PLIGHT_NUM = 3;
 struct PLight
 {
 	float3 lightPos;
+    float shininess;
 	float3 lightColor;
 	float3 lightAtten;
 	uint active;
+};
+
+static const int SLIGHT_NUM = 3;
+struct SLight
+{
+    float3 ligntVec;
+    float shininess;
+    float3 lightPos;
+    float3 lightColor;
+    float3 lightAtten;
+    float2 lightFactorAngleCos;
+    uint active;
 };
 
 cbuffer cbuff2 : register(b2)
@@ -36,6 +49,7 @@ cbuffer cbuff2 : register(b2)
 	float3 ambientColor;
 	DirLight dirLights[DIRLIGHT_NUM];
 	PLight pLights[PLIGHT_NUM];
+	SLight sLights[SLIGHT_NUM];
 }
 
 struct VSOutput
