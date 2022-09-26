@@ -26,7 +26,7 @@ static const int PLIGHT_NUM = 3;
 struct PLight
 {
 	float3 lightPos;
-    float shininess;
+	float shininess;
 	float3 lightColor;
 	float3 lightAtten;
 	uint active;
@@ -35,13 +35,13 @@ struct PLight
 static const int SLIGHT_NUM = 3;
 struct SLight
 {
-    float3 ligntVec;
-    float shininess;
-    float3 lightPos;
-    float3 lightColor;
-    float3 lightAtten;
-    float2 lightFactorAngleCos;
-    uint active;
+	float3 ligntVec;
+	float shininess;
+	float3 lightPos;
+	float3 lightColor;
+	float3 lightAtten;
+	float2 lightFactorAngleCos;
+	uint active;
 };
 
 cbuffer cbuff2 : register(b2)
