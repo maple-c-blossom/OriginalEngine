@@ -22,13 +22,19 @@ namespace MCB
 		};
 	public:
 		static void StaticInitialize();
-		static LightGroup* LightsCreate();
 
 	private: 
 
 		static ID3D12Device* device;
-
+		LightGroup() {};
+		LightGroup(const LightGroup& dx12) {};
+		LightGroup& operator=(const LightGroup& dx12) {};
+		~LightGroup() {};
 	public: 
+
+		static LightGroup* GetInstance();
+		static void DeleteInstace();
+		static LightGroup* GetInitInstance();
 		void Initialize();
 		void UpDate();
 		void Draw( UINT rootParameterIndex);
@@ -63,6 +69,8 @@ namespace MCB
 		float GetPLightShininess(int lightindexNum);
 #pragma endregion PointL
 
+#pragma region SpotL
+
 		void SetSLightIsActive(int lightindexNum, bool active);
 		void SetSLightForLightDir(int lightindexNum, const Vector3D& lightdir);
 		void SetSLightPos(int lightindexNum, const Float3& lightPos);
@@ -76,6 +84,9 @@ namespace MCB
 		Float3 GetSLightColor(int lightindexNum);
 		Float3 GetSLightAtten(int lightindexNum);
 		float GetSLightShininess(int lightindexNum);
+
+#pragma endregion SpotL
+
 	private:
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 		Float3 ambientColor = { 1,1,1 };

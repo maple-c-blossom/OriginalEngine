@@ -18,17 +18,25 @@ void LightGroup::StaticInitialize()
 	LightGroup::device = Dx12::GetInstance()->device.Get();
 }
 
-LightGroup* LightGroup::LightsCreate()
+
+LightGroup* MCB::LightGroup::GetInstance()
 {
-	// 3Dオブジェクトのインスタンスを生成
-	LightGroup* instance = new LightGroup();
-
-	// 初期化
-	instance->Initialize();
-
+	static LightGroup* instance = new LightGroup;
 	return instance;
 }
 
+void MCB::LightGroup::DeleteInstace()
+{
+	delete LightGroup::GetInstance();
+}
+
+LightGroup* MCB::LightGroup::GetInitInstance()
+{
+	LightGroup* instance = LightGroup::GetInstance();
+	LightGroup::StaticInitialize();
+	instance->Initialize();
+	return instance;
+}
 void LightGroup::Initialize()
 {
 	// nullptrチェック

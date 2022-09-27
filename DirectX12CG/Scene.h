@@ -72,33 +72,7 @@ namespace MCB
 	class Scene :public IScene
 	{
 	private:
-		#pragma region DirectX基礎機能群
-		DxWindow* dxWindow = DxWindow::GetInstance();
-		//DirectXクラス生成
-		Dx12* dx = Dx12::GetInstance();
-		//inputクラス生成
-		Input* input = Input::GetInstance();
 
-		ShaderResource* descriptor = ShaderResource::GetInstance();
-
-		Depth* depth;
-		//ルートパラメータ
-		RootParameter* rootparamsPtr;
-
-		PipelineRootSignature* obj3dPipelinePtr;
-
-		PipelineRootSignature* spritePipelinePtr;
-
-		LightGroup* lights = nullptr;
-
-		//描画前処理と描画後処理
-		MCB::Draw draw;
-
-		//サウンドマネージャー
-		SoundManager soundManager;
-		//クリアカラー
-		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
-#pragma endregion DirectX基礎機能群
 
 		#pragma region 変換行列
 		//変換行列

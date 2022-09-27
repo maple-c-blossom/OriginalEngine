@@ -10,7 +10,6 @@ VSOutput main( float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOO
 	float4 wpos = mul(world, pos);
 
 
-
 	VSOutput output;
 	output.svpos = mul(mul(viewproj,world),pos);
 	output.worldpos = wpos;

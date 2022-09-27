@@ -36,7 +36,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Input* input = Input::GetInitInstance();
     Depth depth;
     ShaderResource::GetInitInstance();
-    LightGroup::StaticInitialize();
+    LightGroup::GetInitInstance();
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
     RootParameter rootparams;
@@ -61,6 +61,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         scene.Draw();
     }
 #pragma endregion ゲームループ
+    LightGroup::DeleteInstace();
     ShaderResource::DeleteInstace();
     DxWindow::DeleteInstance();
     Dx12::DeleteInstace();

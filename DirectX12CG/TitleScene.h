@@ -1,4 +1,8 @@
 #pragma once
+#include "IScene.h"
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 
 #pragma region 標準.h include
 
@@ -45,6 +49,14 @@
 
 #include "Human.h"
 #pragma endregion 自作.h include
+
+#pragma region ゲーム系.h include
+
+#include "RayObject.h"
+#include "SphereObj.h"
+
+#pragma endregion ゲーム系.h include
+
 #pragma region pragma comment
 
 #pragma comment(lib,"d3d12.lib")
@@ -57,47 +69,10 @@
 
 namespace MCB
 {
-	class IScene
+	class TitleScene :public IScene
 	{
 
-	protected:
-#pragma region DirectX基礎機能群
-		DxWindow* dxWindow = DxWindow::GetInstance();
-		//DirectXクラス生成
-		Dx12* dx = Dx12::GetInstance();
-		//inputクラス生成
-		Input* input = Input::GetInstance();
 
-		ShaderResource* descriptor = ShaderResource::GetInstance();
-
-		Depth* depth;
-		//ルートパラメータ
-		RootParameter* rootparamsPtr;
-
-		PipelineRootSignature* obj3dPipelinePtr;
-
-		PipelineRootSignature* spritePipelinePtr;
-
-		LightGroup* lights = LightGroup::GetInstance();
-
-		//描画前処理と描画後処理
-		MCB::Draw draw;
-
-		//サウンドマネージャー
-		SoundManager soundManager;
-		//クリアカラー
-		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
-#pragma endregion DirectX基礎機能群
-	public:
-		virtual void Initialize() = 0;
-		virtual void Update() = 0;
-		virtual void Draw() = 0;
-		virtual void LoadModel() = 0;
-		virtual void LoadTexture() = 0;
-		virtual void LoadSound() = 0;
-		virtual void Object3DInit() = 0;
-		virtual void SpriteInit() = 0;
 	};
-
 }
 
