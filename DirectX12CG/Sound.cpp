@@ -1,5 +1,5 @@
 #include "Sound.h"
-
+#include <combaseapi.h>
 
 using namespace MCB;
 
@@ -40,6 +40,8 @@ SoundManager::SoundManager()
 {
 	HRESULT result = S_FALSE;
 
+	//音でなかったら試してみろ！
+	//result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	result = XAudio2Create(&xAudio2, 0, XAUDIO2_DEFAULT_PROCESSOR);
 
 	assert(SUCCEEDED(result) && "XAudioインスタンス生成時エラー");
