@@ -9,6 +9,11 @@ namespace MCB
 {
 	class Draw
 	{
+	private:
+		Draw() {};
+		Draw(const Draw& draw) {};
+		Draw& operator=(const Draw& draw) {};
+		~Draw() {};
 	public:
 		D3D12_RESOURCE_BARRIER barrierDesc;
 		UINT bbIndex;
@@ -20,7 +25,9 @@ namespace MCB
 
 		D3D12_RESOURCE_BARRIER GetResouceBarrier();
 		UINT GetBbIndex();
-		
+
+		static Draw* GetInstance();
+		static void DeleteInstace();
 
 
 		void SetBeforeBbIndex();

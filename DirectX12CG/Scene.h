@@ -72,8 +72,6 @@ namespace MCB
 	class Scene :public IScene
 	{
 	private:
-
-
 		#pragma region •ÏŠ·s—ñ
 		//•ÏŠ·s—ñ
 		View matView;

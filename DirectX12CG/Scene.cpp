@@ -154,7 +154,7 @@ void MCB::Scene::Update()
 
 void MCB::Scene::Draw()
 {
-    draw.PreDraw(*depth, *obj3dPipelinePtr, clearColor);
+    draw->PreDraw(*depth, *obj3dPipelinePtr, clearColor);
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();
@@ -164,7 +164,7 @@ void MCB::Scene::Draw()
     //スプライト
     sprite.SpriteCommonBeginDraw(*spritePipelinePtr);
     debugText.AllDraw();
-    draw.PostDraw();
+    draw->PostDraw();
 }
 
 void MCB::Scene::MatrixUpdate()

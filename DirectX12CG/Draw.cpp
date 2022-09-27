@@ -56,6 +56,13 @@ void MCB::Draw::CloseDrawCommandOrder()
     //------------
 }
 
+MCB::Draw* MCB::Draw::GetInstance()
+{
+
+    static Draw* instance = new Draw;
+    return instance;
+}
+
 
 void MCB::Draw::SetRenderTargetView(Depth& depth)
 {
@@ -82,6 +89,11 @@ void MCB::Draw::SetViewPort()
     viewport.MaxDepth = 1.0f;
 
     dx12->commandList->RSSetViewports(1, &viewport);
+}
+
+void MCB::Draw::DeleteInstace()
+{
+    delete Draw::GetInstance();
 }
 
 void MCB::Draw::ClearScreen( const float* clearColor)

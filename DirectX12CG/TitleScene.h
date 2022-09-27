@@ -71,7 +71,20 @@ namespace MCB
 {
 	class TitleScene :public IScene
 	{
+	public:
+		void Initialize() override;
 
+		//Še‰Šú‰»ŒnŠÖ”ŒQ--------------------
+		void LoadModel()  override;
+		void LoadTexture()  override;
+		void LoadSound()  override;
+		void Object3DInit()  override;
+		void SpriteInit()  override;
+
+		//---------------
+		void MatrixUpdate();
+		void Update() override;
+		void Draw() override;
 
 	};
 }

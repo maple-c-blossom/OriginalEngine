@@ -27,8 +27,8 @@ namespace MCB
 
 		static ID3D12Device* device;
 		LightGroup() {};
-		LightGroup(const LightGroup& dx12) {};
-		LightGroup& operator=(const LightGroup& dx12) {};
+		LightGroup(const LightGroup& lghtGroup) {};
+		LightGroup& operator=(const LightGroup& lightGroup) {};
 		~LightGroup() {};
 	public: 
 

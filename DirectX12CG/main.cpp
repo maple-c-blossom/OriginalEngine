@@ -3,6 +3,7 @@
 #include <cstdlib>
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include "SceneManager.h"
 #include "Scene.h"
 using namespace MCB;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,

@@ -81,7 +81,7 @@ namespace MCB
 		LightGroup* lights = LightGroup::GetInstance();
 
 		//描画前処理と描画後処理
-		MCB::Draw draw;
+		MCB::Draw* draw = Draw::GetInstance();
 
 		//サウンドマネージャー
 		SoundManager soundManager;
