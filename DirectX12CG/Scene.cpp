@@ -1,20 +1,21 @@
 #include "Scene.h"
-
+#include "TitleScene.h"
 using namespace MCB;
 using namespace DirectX;
 
 MCB::Scene::~Scene()
 {
-    soundManager.ReleasexAudio2();
     soundManager.AllDeleteSound();
     delete BoxModel;
     delete skydomeModel;
     delete groundModel;
+    delete nextScene;
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
 void MCB::Scene::Initialize()
 {
+
     matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -10.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
@@ -22,11 +23,9 @@ void MCB::Scene::Initialize()
     LoadSound();
     Object3DInit();
     SpriteInit();
-    InitRand();
     //soundManager.PlaySoundWave(testSound, loopFlag);
     lights->DefaultLightSet();
     Object3d::SetLights(lights);
-
 
 }
 
@@ -101,70 +100,84 @@ void MCB::Scene::SpriteInit()
     debugText.Init(&debugTextTexture);
 
 }
+
+IScene* MCB::Scene::GetNextScene()
+{
+    return new TitleScene(rootparamsPtr,depth,obj3dPipelinePtr,spritePipelinePtr);
+}
+
 #pragma endregion 各種リソースの読み込みと初期化
 
 void MCB::Scene::Update()
 {
-    testSpher.rotasion.y += 0.01f;
-    Float3 SLPos = lights->GetSLightPos(0);
-    Float3 PLPos = lights->GetPLightPos(0);
-    if (input->IsKeyDown(DIK_W))
-    {
-        SLPos.z += 0.01f;
-    }
-    if (input->IsKeyDown(DIK_S))
-    {
-        SLPos.z -= 0.01f;
-    }
+        testSpher.rotasion.y += 0.01f;
+        Float3 SLPos = lights->GetSLightPos(0);
+        Float3 PLPos = lights->GetPLightPos(0);
+        if (input->IsKeyDown(DIK_W))
+        {
+            SLPos.z += 0.01f;
+        }
+        if (input->IsKeyDown(DIK_S))
+        {
+            SLPos.z -= 0.01f;
+        }
 
-    if (input->IsKeyDown(DIK_A))
-    {
-        SLPos.y -= 0.01f;
-    }
-    if (input->IsKeyDown(DIK_D))
-    {
-        SLPos.y += 0.01f;
-    }
+        if (input->IsKeyDown(DIK_A))
+        {
+            SLPos.y -= 0.01f;
+        }
+        if (input->IsKeyDown(DIK_D))
+        {
+            SLPos.y += 0.01f;
+        }
 
-    if (input->IsKeyDown(DIK_UP))
-    {
-        PLPos.z += 0.01f;
-    }
-    if (input->IsKeyDown(DIK_DOWN))
-    {
-        PLPos.z -= 0.01f;
-    }
+        if (input->IsKeyDown(DIK_UP))
+        {
+            PLPos.z += 0.01f;
+        }
+        if (input->IsKeyDown(DIK_DOWN))
+        {
+            PLPos.z -= 0.01f;
+        }
 
-    if (input->IsKeyDown(DIK_LEFT))
-    {
-        PLPos.x -= 0.01f;
-    }
-    if (input->IsKeyDown(DIK_RIGHT))
-    {
-        PLPos.x += 0.01f;
-    }
+        if (input->IsKeyDown(DIK_LEFT))
+        {
+            PLPos.x -= 0.01f;
+        }
+        if (input->IsKeyDown(DIK_RIGHT))
+        {
+            PLPos.x += 0.01f;
+        }
 
-    lights->SetPLightPos(0, PLPos);
-    lights->SetSLightPos(0, SLPos);
+        if (input->IsKeyTrigger(DIK_SPACE))
+        {
+            sceneEnd = true;
+        }
 
-    lights->UpDate();
+        lights->SetPLightPos(0, PLPos);
+        lights->SetSLightPos(0, SLPos);
+
+        lights->UpDate();
     //行列変換
     MatrixUpdate();
 }
 
 void MCB::Scene::Draw()
 {
-    draw->PreDraw(*depth, *obj3dPipelinePtr, clearColor);
+
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();
     //human.Draw();
     testSpher.Draw();
 
-    //スプライト
-    sprite.SpriteCommonBeginDraw(*spritePipelinePtr);
+
+}
+
+void MCB::Scene::SpriteDraw()
+{
+
     debugText.AllDraw();
-    draw->PostDraw();
 }
 
 void MCB::Scene::MatrixUpdate()

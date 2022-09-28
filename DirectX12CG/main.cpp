@@ -49,8 +49,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //------------------------
     PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(depth, rootparams);
     PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
-    Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
+    //Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
+    //scene.Initialize();
+    SceneManager scene(&rootparams, &depth, &obj3dPipeline, &spritePipeline);
     scene.Initialize();
+
 
 #pragma region ゲームループ
     while (true)
@@ -58,11 +61,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         input->UpDateInit();
         dxWindow->messageUpdate();
         if (input->IsKeyDown(DIK_ESCAPE) || dxWindow->breakFlag) break;
+        
         scene.Update();
         scene.Draw();
     }
 #pragma endregion ゲームループ
     LightGroup::DeleteInstace();
+    Draw::DeleteInstace();
     ShaderResource::DeleteInstace();
     DxWindow::DeleteInstance();
     Dx12::DeleteInstace();

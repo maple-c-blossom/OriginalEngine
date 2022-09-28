@@ -86,17 +86,33 @@ namespace MCB
 		//サウンドマネージャー
 		SoundManager soundManager;
 		//クリアカラー
-		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 #pragma endregion DirectX基礎機能群
+		bool sceneEnd = false;
+
+		IScene* nextScene = nullptr;
 	public:
+		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
+		virtual ~IScene() {};
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
+		virtual void SpriteDraw() = 0;
 		virtual void LoadModel() = 0;
 		virtual void LoadTexture() = 0;
 		virtual void LoadSound() = 0;
 		virtual void Object3DInit() = 0;
 		virtual void SpriteInit() = 0;
+		virtual void MatrixUpdate() = 0;
+		virtual IScene* GetNextScene() = 0;
+		bool GetIsSceneEnd() { return sceneEnd; }
+
+		Depth* GetDepth() { return depth; }
+		//ルートパラメータ
+		RootParameter* GetRootparamsPtr() { return rootparamsPtr; }
+
+		PipelineRootSignature* GetObj3dPipelinePtr() { return obj3dPipelinePtr; }
+
+		PipelineRootSignature* GetSpritePipelinePtr() { return spritePipelinePtr; }
 	};
 
 }

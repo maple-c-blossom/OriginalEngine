@@ -25,6 +25,7 @@ void MCB::SoundManager::AllDeleteSound()
 	{
 		if (sounds[i].pBuffer != nullptr)
 		{
+			if(sounds[i].pSourceVoice != nullptr) sounds[i].pSourceVoice->Stop();
 			delete[] sounds[i].pBuffer;
 
 			sounds[i].pBuffer = 0;
@@ -57,6 +58,7 @@ MCB::SoundManager::~SoundManager()
 	{
 		if (sounds[i].pBuffer != nullptr)
 		{
+			sounds[i].pSourceVoice->Stop();
 			delete[] sounds[i].pBuffer;
 
 			sounds[i].pBuffer = 0;

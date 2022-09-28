@@ -30,7 +30,6 @@
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightGroup.cpp" />
-    <ClCompile Include="LoadScene.cpp" />
     <ClCompile Include="MCBFloat.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
@@ -154,7 +153,6 @@
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightGroup.h" />
-    <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MCBFloat.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MCBMatrix.h" />
