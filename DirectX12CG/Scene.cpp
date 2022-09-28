@@ -25,6 +25,7 @@ void MCB::Scene::Initialize()
     SpriteInit();
     //soundManager.PlaySoundWave(testSound, loopFlag);
     lights->DefaultLightSet();
+    lights->UpDate();
     Object3d::SetLights(lights);
 
 }

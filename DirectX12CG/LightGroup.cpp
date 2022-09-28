@@ -198,6 +198,7 @@ void LightGroup::DefaultLightSet()
 	SLights[2].SetSLightAtten({ 0.001,0.001,0.001 });
 	SLights[2].SetSLightDir({ 0.001,0.001,0.001 });
 	SLights[2].SetSLightFactorAngle({ 0.001,0.001 });
+	isUpdate = true;
 }
 
 void LightGroup::SetAmbientColor(const Float3& color)
