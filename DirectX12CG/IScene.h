@@ -78,6 +78,8 @@ namespace MCB
 
 		PipelineRootSignature* spritePipelinePtr;
 
+		PipelineRootSignature* particlePipelinePtr;
+
 		LightGroup* lights = LightGroup::GetInstance();
 
 		//•`‰æ‘Oˆ—‚Æ•`‰æŒãˆ—
@@ -97,6 +99,7 @@ namespace MCB
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
 		virtual void SpriteDraw() = 0;
+		virtual void ParticleDraw() = 0;
 		virtual void LoadModel() = 0;
 		virtual void LoadTexture() = 0;
 		virtual void LoadSound() = 0;
@@ -113,6 +116,8 @@ namespace MCB
 		PipelineRootSignature* GetObj3dPipelinePtr() { return obj3dPipelinePtr; }
 
 		PipelineRootSignature* GetSpritePipelinePtr() { return spritePipelinePtr; }
+
+		PipelineRootSignature* GetParticlePipelinePtr() { return particlePipelinePtr; }
 	};
 
 }

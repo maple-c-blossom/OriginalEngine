@@ -80,7 +80,7 @@ void Particle::Draw()
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
-    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+
     ////定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(2,material.constBuffMaterialB1->GetGPUVirtualAddress());
 

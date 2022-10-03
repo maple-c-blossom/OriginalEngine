@@ -66,7 +66,7 @@ namespace MCB
 #pragma endregion í èÌïœêî
 	public:
 
-		TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1);
+		TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2);
 		~TitleScene();
 		void Initialize() override;
 
@@ -82,6 +82,7 @@ namespace MCB
 		void Update() override;
 		void Draw() override;
 		void SpriteDraw() override;
+		void ParticleDraw() override;
 	};
 }
 

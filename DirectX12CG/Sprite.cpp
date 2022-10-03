@@ -186,20 +186,20 @@ MCB::Sprite MCB::Sprite::CreateSprite()
     return tempSprite;
 }
 
-void MCB::Sprite::SpriteCommonBeginDraw(const PipelineRootSignature& pipeline)
-{
-    Dx12* dx12 = Dx12::GetInstance();
-    dx12->commandList->SetPipelineState(pipeline.pipeline.pipelinestate.Get());
-    dx12->commandList->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
-
-
-    //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
-    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-
-    //SRVヒープの設定コマンド
-    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { ShaderResource::GetInstance()->srvHeap};
-    dx12->commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
-}
+//void MCB::Sprite::SpriteCommonBeginDraw(const PipelineRootSignature& pipeline)
+//{
+//    Dx12* dx12 = Dx12::GetInstance();
+//    dx12->commandList->SetPipelineState(pipeline.pipeline.pipelinestate.Get());
+//    dx12->commandList->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
+//
+//
+//    //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
+//    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+//
+//    //SRVヒープの設定コマンド
+//    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { ShaderResource::GetInstance()->srvHeap};
+//    dx12->commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
+//}
 
 
 void MCB::Sprite::SpriteDraw(Sprite& sprite,Texture& tex, float positionX, float positionY,

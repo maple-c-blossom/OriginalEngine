@@ -3,11 +3,12 @@
 #include "Scene.h"
 #include "Draw.h"
 
-MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1)
+MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
 {
 	this->root = root;
 	this->pipeline = pipeline;
 	this->pipeline1 = pipeline1;
+	this->pipeline2 = pipeline2;
 	this->depth = depth;
 	loadTex.CreateTexture(L"Resources\\reimu.png");
 	loadBackGroundTex.CreateNoTextureFileIsTexture();
@@ -17,7 +18,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipelineRootS
 	loadSprite.InitMatProje();
 	loadSprite = loadSprite.CreateSprite();
 	InitRand();
-	scene = new Scene(this->root, this->depth, this->pipeline, this->pipeline1);
+	scene = new Scene(this->root, this->depth, this->pipeline, this->pipeline1,this->pipeline2);
 }
 
 MCB::SceneManager::~SceneManager()
@@ -97,14 +98,17 @@ void MCB::SceneManager::Draw()
 	{
 		//3D描画
 		scene->Draw();
+		//パーティクル
+		scene->GetParticlePipelinePtr()->CommonBeginDraw(true);
+		scene->ParticleDraw();
 		//スプライト
-		loadBackGround.SpriteCommonBeginDraw(*scene->GetSpritePipelinePtr());
+		scene->GetSpritePipelinePtr()->CommonBeginDraw();
 		scene->SpriteDraw();
 		loadBackGround.SpriteDraw(loadBackGround, loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ロード画面
 	{
-		loadBackGround.SpriteCommonBeginDraw(*scene->GetSpritePipelinePtr());
+		scene->GetSpritePipelinePtr()->CommonBeginDraw();
 		loadBackGround.SpriteDraw(loadBackGround, loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 		loadSprite.SpriteDraw(loadSprite, loadTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
 	}  

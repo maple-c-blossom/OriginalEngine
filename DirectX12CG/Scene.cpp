@@ -104,7 +104,7 @@ void MCB::Scene::SpriteInit()
 
 IScene* MCB::Scene::GetNextScene()
 {
-    return new TitleScene(rootparamsPtr,depth,obj3dPipelinePtr,spritePipelinePtr);
+    return new TitleScene(rootparamsPtr,depth,obj3dPipelinePtr,spritePipelinePtr,particlePipelinePtr);
 }
 
 #pragma endregion 各種リソースの読み込みと初期化
@@ -203,6 +203,10 @@ void MCB::Scene::SpriteDraw()
     debugText.AllDraw();
 }
 
+void MCB::Scene::ParticleDraw()
+{
+}
+
 void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
@@ -215,11 +219,12 @@ void MCB::Scene::MatrixUpdate()
     sphere.Updata(matView, matProjection);
 }
 
-MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1)
+MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
 {
 	rootparamsPtr = root;
 	obj3dPipelinePtr = pipeline;
 	spritePipelinePtr = pipeline1;
+    particlePipelinePtr = pipeline2;
     depth = depthptr;
 }
 

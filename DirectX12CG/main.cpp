@@ -52,7 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     PipelineRootSignature particlePipeline = particlePipeline.CreateParticlePipeline(depth, rootparams); 
     //Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
     //scene.Initialize();
-    SceneManager scene(&rootparams, &depth, &obj3dPipeline, &spritePipeline);
+    SceneManager scene(&rootparams, &depth, &obj3dPipeline, &spritePipeline,&particlePipeline);
     scene.Initialize();
 
 

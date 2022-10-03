@@ -17,7 +17,7 @@ void MCB::TitleScene::SpriteInit()
 
 MCB::IScene* MCB::TitleScene::GetNextScene()
 {
-	return new Scene(rootparamsPtr, depth, obj3dPipelinePtr, spritePipelinePtr);
+	return new Scene(rootparamsPtr, depth, obj3dPipelinePtr, spritePipelinePtr,particlePipelinePtr);
 }
 
 void MCB::TitleScene::MatrixUpdate()
@@ -57,11 +57,16 @@ void MCB::TitleScene::SpriteDraw()
     debugText.AllDraw();
 }
 
-MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1)
+void MCB::TitleScene::ParticleDraw()
+{
+}
+
+MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
 {
 	rootparamsPtr = root;
 	obj3dPipelinePtr = pipeline;
 	spritePipelinePtr = pipeline1;
+    particlePipelinePtr = pipeline2;
 	this->depth = depth;
 }
 

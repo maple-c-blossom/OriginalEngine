@@ -342,3 +342,24 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& 
 
     return pipelinerootsognature;
 }
+
+void MCB::PipelineRootSignature::CommonBeginDraw(bool toporogyTypeIsPoint)
+{
+    Dx12* dx12 = Dx12::GetInstance();
+    dx12->commandList->SetPipelineState(this->pipeline.pipelinestate.Get());
+    dx12->commandList->SetGraphicsRootSignature(this->rootsignature.rootsignature.Get());
+
+    if (toporogyTypeIsPoint)
+    {
+        dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+    }
+    else
+    {
+        dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+    }
+    //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
+
+    //SRVヒープの設定コマンド
+    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { ShaderResource::GetInstance()->srvHeap };
+    dx12->commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
+}

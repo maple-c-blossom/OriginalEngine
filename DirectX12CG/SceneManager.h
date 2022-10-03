@@ -12,6 +12,7 @@ namespace MCB
 		Depth* depth;
 		PipelineRootSignature* pipeline;//Obj3D
 		PipelineRootSignature* pipeline1;//Sprite
+		PipelineRootSignature* pipeline2;//particle
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 120;
 		int isChengeSceneTimer = 0;
@@ -19,10 +20,11 @@ namespace MCB
 		Texture loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
+
 		bool isInitialized = true;
 		int angle = 0;
 	public:
-		SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1);
+		SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2);
 		~SceneManager();
 		void Initialize();
 		void Update();

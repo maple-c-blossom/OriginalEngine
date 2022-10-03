@@ -13,6 +13,7 @@
 #include "Texture.h"
 #include <vector>
 #include "ParticleMaterial.h"
+#include "PIpelineRootSignature.h"
 
 namespace MCB
 {
@@ -51,6 +52,7 @@ namespace MCB
         Particle(Dx12& dx12);
 
         ~Particle();
+
 
         //親オブジェクトへのポインタ
         Particle* parent = nullptr;

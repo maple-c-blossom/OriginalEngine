@@ -54,7 +54,7 @@ namespace MCB
 		void SpriteUpdate(Sprite& sprite);
 		void InitMatProje();
 		Sprite CreateSprite();
-		void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
+		//void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
 		void SpriteDraw(Sprite& sprite,Texture& tex, float positionX = 0,float positionY = 0,
 						float size_x = 0, float size_y = 0);
