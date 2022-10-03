@@ -67,7 +67,7 @@ void MCB::Scene::Object3DInit()
 #pragma region 各種リソースの読み込みと初期化
 void MCB::Scene::LoadModel()
 {
-	BoxModel = new Model("sphere",true);
+	BoxModel = new Model("box");
 
 	groundModel = new Model("ground");
 
@@ -111,50 +111,69 @@ IScene* MCB::Scene::GetNextScene()
 
 void MCB::Scene::Update()
 {
-        testSpher.rotasion.y += 0.01f;
+        //testSpher.rotasion.y += 0.01f;
         Float3 SLPos = lights->GetSLightPos(0);
         Float3 PLPos = lights->GetPLightPos(0);
-        if (input->IsKeyDown(DIK_W))
-        {
-            SLPos.z += 0.01f;
-        }
-        if (input->IsKeyDown(DIK_S))
-        {
-            SLPos.z -= 0.01f;
-        }
+        //if (input->IsKeyDown(DIK_W))
+        //{
+        //    SLPos.z += 0.01f;
+        //}
+        //if (input->IsKeyDown(DIK_S))
+        //{
+        //    SLPos.z -= 0.01f;
+        //}
 
-        if (input->IsKeyDown(DIK_A))
-        {
-            SLPos.y -= 0.01f;
-        }
-        if (input->IsKeyDown(DIK_D))
-        {
-            SLPos.y += 0.01f;
-        }
+        //if (input->IsKeyDown(DIK_A))
+        //{
+        //    SLPos.y -= 0.01f;
+        //}
+        //if (input->IsKeyDown(DIK_D))
+        //{
+        //    SLPos.y += 0.01f;
+        //}
+
+        //if (input->IsKeyDown(DIK_UP))
+        //{
+        //    PLPos.z += 0.01f;
+        //}
+        //if (input->IsKeyDown(DIK_DOWN))
+        //{
+        //    PLPos.z -= 0.01f;
+        //}
+
+        //if (input->IsKeyDown(DIK_LEFT))
+        //{
+        //    PLPos.x -= 0.01f;
+        //}
+        //if (input->IsKeyDown(DIK_RIGHT))
+        //{
+        //    PLPos.x += 0.01f;
+        //}
+
+        //if (input->IsKeyTrigger(DIK_SPACE))
+        //{
+        //    sceneEnd = true;
+        //}
 
         if (input->IsKeyDown(DIK_UP))
         {
-            PLPos.z += 0.01f;
+            matView.eye.y += ConvertRadius(1);
         }
         if (input->IsKeyDown(DIK_DOWN))
         {
-            PLPos.z -= 0.01f;
+            matView.eye.y -= ConvertRadius(1);
         }
 
         if (input->IsKeyDown(DIK_LEFT))
         {
-            PLPos.x -= 0.01f;
+            matView.eye.x -= ConvertRadius(1);
         }
         if (input->IsKeyDown(DIK_RIGHT))
         {
-            PLPos.x += 0.01f;
+            matView.eye.x += ConvertRadius(1);
         }
 
-        if (input->IsKeyTrigger(DIK_SPACE))
-        {
-            sceneEnd = true;
-        }
-
+        matView.target = testSpher.position;
         lights->SetPLightPos(0, PLPos);
         lights->SetSLightPos(0, SLPos);
 
@@ -184,7 +203,7 @@ void MCB::Scene::SpriteDraw()
 void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
-    matView.UpDateMatrixView();
+    matView.UpDateMatrixView(true);
     human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);

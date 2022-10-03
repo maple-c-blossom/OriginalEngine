@@ -12,7 +12,7 @@ void View::CreateMatrixView(XMFLOAT3 eye, XMFLOAT3 target, XMFLOAT3 up)
 	mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
-void View::UpDateMatrixView()
+void View::UpDateMatrixView(bool billbordY)
 {
 	//mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 	XMVECTOR eyePosition = XMLoadFloat3(&eye);
@@ -52,8 +52,23 @@ void View::UpDateMatrixView()
 	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
 	mat.r[3] = translation;
 
-	billMat.r[0] = cameraAxisX;
-	billMat.r[1] = cameraAxisY;
-	billMat.r[2] = cameraAxisZ;
-	billMat.r[3] = XMVectorSet(0, 0, 0, 1);
+	if (billbordY)
+	{
+		XMVECTOR yBillAxisX, yBillAxisY, yBillAxisZ;
+		yBillAxisX = cameraAxisX;
+		yBillAxisY = XMVector3Normalize(XMVECTOR{up.x, up.y, up.z});
+		yBillAxisZ = XMVector3Cross(yBillAxisX, yBillAxisY);
+
+		billMat.r[0] = yBillAxisX;
+		billMat.r[1] = yBillAxisY;
+		billMat.r[2] = yBillAxisZ;
+		billMat.r[3] = XMVectorSet(0, 0, 0, 1);
+	}
+	else
+	{
+		billMat.r[0] = cameraAxisX;
+		billMat.r[1] = cameraAxisY;
+		billMat.r[2] = cameraAxisZ;
+		billMat.r[3] = XMVectorSet(0, 0, 0, 1);
+	}
 }

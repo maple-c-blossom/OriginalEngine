@@ -165,7 +165,7 @@ void LightGroup::DefaultLightSet()
 
 	PLights[0].SetIsActive(true);
 	PLights[0].SetPLightPos({ 0, 2, 10 });
-	PLights[0].SetPLightColor({ 1,1,1 });
+	PLights[0].SetPLightColor({ 0,1,1 });
 	PLights[0].SetPLightAtten({0.01,0.01,0.01});
 	
 	PLights[1].SetIsActive(false);

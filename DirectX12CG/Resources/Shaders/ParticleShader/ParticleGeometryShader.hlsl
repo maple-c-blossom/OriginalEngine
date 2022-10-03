@@ -22,4 +22,5 @@ void main(
 		//3“_–Ú
 		element.svpos = input[0].svpos + float4(10.0f,0,0,0);
 		output.Append(element);
+	
 }
