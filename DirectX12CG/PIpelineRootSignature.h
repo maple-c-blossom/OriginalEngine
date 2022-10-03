@@ -21,6 +21,7 @@ namespace MCB
 
 		PipelineRootSignature CreateSpritePipeline(Depth& depth, RootParameter& rootparam);
 
+		PipelineRootSignature CreateParticlePipeline(Depth& depth, RootParameter& rootparam);
 	};
 }
 

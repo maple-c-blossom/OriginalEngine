@@ -287,13 +287,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="ParticleGeometryShader.hlsl">
+    <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
       <Filter>リソース ファイル\ParticleShader\GeometoryShader</Filter>
     </FxCompile>
-    <FxCompile Include="ParticlePixelShader.hlsl">
+    <FxCompile Include="Resources\Shaders\ParticleShader\ParticlePixelShader.hlsl">
       <Filter>リソース ファイル\ParticleShader\PixelShader</Filter>
     </FxCompile>
-    <FxCompile Include="ParticleVertexShader.hlsl">
+    <FxCompile Include="Resources\Shaders\ParticleShader\ParticleVertexShader.hlsl">
       <Filter>リソース ファイル\ParticleShader\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\OBJShader\OBJGeometryShader.hlsl">
@@ -453,7 +453,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ParticleHeader.hlsli">
+    <None Include="Resources\Shaders\ParticleShader\ParticleHeader.hlsli">
       <Filter>リソース ファイル\ParticleShader\ShaderHeader</Filter>
     </None>
     <None Include="Resources\Shaders\OBJShader\OBJHeader.hlsli">
