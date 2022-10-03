@@ -155,6 +155,7 @@ void MCB::Scene::Update()
         //    sceneEnd = true;
         //}
 
+
         if (input->IsKeyDown(DIK_UP))
         {
             matView.eye.y += ConvertRadius(1);
@@ -172,6 +173,8 @@ void MCB::Scene::Update()
         {
             matView.eye.x += ConvertRadius(1);
         }
+
+        if (input->IsKeyTrigger(DIK_SPACE)) ybill = !ybill;
 
         matView.target = testSpher.position;
         lights->SetPLightPos(0, PLPos);
@@ -203,7 +206,7 @@ void MCB::Scene::SpriteDraw()
 void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
-    matView.UpDateMatrixView(true);
+    matView.UpDateMatrixView(ybill);
     human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);

@@ -299,7 +299,7 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& 
     //----------------------------
 
     //図形の形状を三角形に設定-------------------------
-    pipelinerootsognature.pipeline.SetPrimitiveTopologyType();
+    pipelinerootsognature.pipeline.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT);
     //------------------
 
     //その他の設定----------------
