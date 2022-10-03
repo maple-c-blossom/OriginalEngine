@@ -32,7 +32,7 @@ namespace MCB
 
 		void SetBeforeBbIndex();
 		void SetBeforeResourceBarrier();
-		void BeforeDraw(Depth depth,PipelineRootSignature pipeline);
+		void BeforeDraw(Depth depth, PipelineRootSignature pipeline);
 		void SetRenderTargetView(Depth& depth);
 		void ClearScreen(const float* clearColor);
 		void SetViewPort();

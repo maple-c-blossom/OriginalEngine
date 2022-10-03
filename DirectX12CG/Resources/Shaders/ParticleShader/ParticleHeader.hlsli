@@ -14,7 +14,6 @@ cbuffer cbuff1 : register(b1)
 struct VSOutput
 {
 	float4 svpos : SV_POSITION;
-	float3 normal :NORMAL;
 	//float4 color : COLOR;
 	float2 uv : TEXCOORD;
 };
@@ -22,6 +21,5 @@ struct VSOutput
 struct GSOutput
 {
 	float4 svpos : SV_POSITION;
-	float3 normal : NORMAL;
 	float2 uv :TEXCOORD;
 };

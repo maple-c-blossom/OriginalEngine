@@ -10,9 +10,9 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
-#include "Vertex.h"
+#include "Texture.h"
 #include <vector>
-
+#include "ParticleMaterial.h"
 
 namespace MCB
 {
@@ -46,14 +46,16 @@ namespace MCB
         Vector3D nowFrontVec = {};
         float frontAngle = 0;
         
-        Vertex vert;
-
+        int vertNum = 4;
+        Texture tex;
         Particle(Dx12& dx12);
 
         ~Particle();
 
         //親オブジェクトへのポインタ
         Particle* parent = nullptr;
+        
+        ParticleMaterial material;
 
         bool trackingFlag = false;
 
@@ -61,12 +63,14 @@ namespace MCB
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 
-        void Draw(Dx12& dx12);
+        void Draw();
 
         //void CreateModel(const char* fileName);
     };
 
 }
+
+
 
 
 

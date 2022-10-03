@@ -1,26 +1,36 @@
 #include "ParticleHeader.hlsli"
+static const uint vnum = 4;
 
-[maxvertexcount(3)]
+static const float4 offSetArray[vnum] =
+{
+    float4(-0.5f, -0.5f, 0, 0),
+    float4(-0.5f, +0.5f, 0, 0),
+    float4(+0.5f, -0.5f, 0, 0),
+    float4(+0.5f, +0.5f, 0, 0)
+};
+
+static const float2 uvArray[vnum] =
+{
+    float2(0, 1),
+    float2(0, 0),
+    float2(1, 1),
+    float2(1, 0)
+};
+
+
+[maxvertexcount(vnum)]
 void main(
 	point VSOutput input[1] : SV_POSITION,
 	inout TriangleStream< GSOutput > output
 )
 {
-		GSOutput element;
-		//‹¤’Ê
-		element.normal = input[0].normal;
-		element.uv = input[0].uv;
-
-		//1“_–Ú
-		element.svpos = input[0].svpos;
-		output.Append(element);
-
-		//2“_–Ú
-		element.svpos = input[0].svpos + float4(10.0f, 10.0f, 0, 0);
-		output.Append(element);
-
-		//3“_–Ú
-		element.svpos = input[0].svpos + float4(10.0f,0,0,0);
-		output.Append(element);
+	GSOutput element;
+    for (uint i = 0; i < vnum; i++)
+    {
+        element.svpos = input[0].svpos + offSetArray[i];
+        element.svpos = mul(mat, element.svpos);
+        element.uv = uvArray[i];
+        output.Append(element);
+    }
 	
 }

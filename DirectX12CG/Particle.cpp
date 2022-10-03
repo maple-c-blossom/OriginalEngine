@@ -42,6 +42,7 @@ void Particle::Init(Dx12& dx12)
     assert(SUCCEEDED(dx12.result));
 
     dx12.result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+    material.Init();
 }
 
 void Particle::Updata(View& view, Projection& projection, bool isBillBord)
@@ -73,16 +74,38 @@ void Particle::Updata(View& view, Projection& projection, bool isBillBord)
     constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
 }
 
-void Particle::Draw(Dx12& dx12)
+void Particle::Draw()
 {
+    //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
+    Dx12* dx12 = Dx12::GetInstance();
+    ShaderResource* descriptor = ShaderResource::GetInstance();
+
+    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+    ////定数バッファビュー(CBV)の設定コマンド
+    dx12->commandList->SetGraphicsRootConstantBufferView(2,material.constBuffMaterialB1->GetGPUVirtualAddress());
+
+    //lights->Draw(3);
+
+    //SRVヒープの先頭アドレスを取得
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+
+    srvGpuHandle.ptr += tex.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+
+    //SRVヒープの先頭にあるSRVをパラメータ1番に設定
+    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
+    //定数バッファビュー(CBV)の設定コマンド
+    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    //描画コマンド
+    dx12->commandList->DrawInstanced(vertNum, 1, 0, 0);
     //頂点データ
-    dx12.commandList->IASetVertexBuffers(0, 1, &vert.vbView);
+    //dx12.commandList->IASetVertexBuffers(0, 1, &vert.vbView);
     //インデックスデータ
     //dx12.commandList->IASetIndexBuffer(&model->ibView);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12.commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12.commandList->DrawInstanced(_countof(vert.vertices), 1, 0, 0);
+    //dx12.commandList->DrawInstanced(_countof(vert.vertices), 1, 0, 0);
 
 }
 

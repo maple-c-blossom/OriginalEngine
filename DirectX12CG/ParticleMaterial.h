@@ -64,7 +64,7 @@ namespace MCB
 
 		~ParticleMaterial();
 
-		void Init(Dx12& dx12);
+		void Init();
 
 		void SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
 
