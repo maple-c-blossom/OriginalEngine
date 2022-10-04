@@ -75,6 +75,7 @@ namespace MCB
 		void LoadSound()  override;
 		void Object3DInit()  override;
 		void SpriteInit()  override;
+		void ParticleInit()  override;
 		IScene* GetNextScene() override;
 		//---------------
 		void MatrixUpdate() override;

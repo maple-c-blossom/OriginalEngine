@@ -23,6 +23,7 @@ void MCB::Scene::Initialize()
     LoadSound();
     Object3DInit();
     SpriteInit();
+    ParticleInit();
     //soundManager.PlaySoundWave(testSound, loopFlag);
     lights->DefaultLightSet();
     lights->UpDate();
@@ -95,6 +96,13 @@ void MCB::Scene::SpriteInit()
     scopeSprite = scopeSprite.CreateSprite();
     debugText.Init(&debugTextTexture);
 
+}
+
+void MCB::Scene::ParticleInit()
+{
+    testParticle.Init(&scopeTex);
+    testParticle.position = { 0,0,100 };
+    testParticle.rotasion.x = ConvertRadius(-90);
 }
 
 IScene* MCB::Scene::GetNextScene()
@@ -189,7 +197,6 @@ void MCB::Scene::Draw()
     //human.Draw();
     testSpher.Draw();
 
-
 }
 
 void MCB::Scene::SpriteDraw()
@@ -200,6 +207,7 @@ void MCB::Scene::SpriteDraw()
 
 void MCB::Scene::ParticleDraw()
 {
+    //testParticle.Draw();
 }
 
 void MCB::Scene::CheckAllColision()
@@ -213,6 +221,7 @@ void MCB::Scene::MatrixUpdate()
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
     testSpher.Updata(matView, matProjection,true);
+    testParticle.Updata(matView, matProjection, true);
 }
 
 MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)

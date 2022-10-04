@@ -2,21 +2,22 @@
 
 using namespace MCB;
 using namespace std;
-MCB::Particle::Particle(Dx12& dx12)
+MCB::Particle::Particle()
 {
-    NORM_FRONT_VEC.vec = { 0,0,1 };
-    nowFrontVec = NORM_FRONT_VEC;
+
 }
 
 MCB::Particle::~Particle()
 {
     //delete vertex;
+    if (constBuffTranceform == nullptr) return;
     constBuffTranceform->Unmap(0, nullptr);
     //vert.material.constBuffMaterialB1->Unmap(0, nullptr);
 }
 
-void Particle::Init(Dx12& dx12)
+void Particle::Init(Texture* tex)
 {
+    Dx12* dx12 = Dx12::GetInstance();
     D3D12_HEAP_PROPERTIES HeapProp{};
     HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 
@@ -29,7 +30,7 @@ void Particle::Init(Dx12& dx12)
     Resdesc.SampleDesc.Count = 1;
     Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12.result = dx12.device->CreateCommittedResource
+    dx12->result = dx12->device->CreateCommittedResource
     (
         &HeapProp,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
@@ -39,10 +40,11 @@ void Particle::Init(Dx12& dx12)
         IID_PPV_ARGS(&constBuffTranceform)
     );
 
-    assert(SUCCEEDED(dx12.result));
+    assert(SUCCEEDED(dx12->result));
 
-    dx12.result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+    dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
     material.Init();
+    this->tex = tex;
 }
 
 void Particle::Updata(View& view, Projection& projection, bool isBillBord)
@@ -90,7 +92,7 @@ void Particle::Draw()
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);

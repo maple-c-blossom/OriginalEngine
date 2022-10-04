@@ -66,7 +66,11 @@ namespace MCB
 		DebugText debugText;
 
 #pragma endregion スプライト
+#pragma region パーティクル
+		Particle testParticle;
 
+
+#pragma endregion
 		#pragma region 通常変数
 		bool loopFlag = true;
 		bool startPositionReset = true;
@@ -84,6 +88,7 @@ namespace MCB
 		void LoadSound()  override;
 		void Object3DInit()  override;
 		void SpriteInit()  override;
+		void ParticleInit()  override;
 		IScene* GetNextScene() override;
 		//---------------
 		void MatrixUpdate()override;

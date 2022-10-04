@@ -15,6 +15,10 @@ void MCB::TitleScene::SpriteInit()
     debugText.Init(&debugTextTexture);
 }
 
+void MCB::TitleScene::ParticleInit()
+{
+}
+
 MCB::IScene* MCB::TitleScene::GetNextScene()
 {
 	return new Scene(rootparamsPtr, depth, obj3dPipelinePtr, spritePipelinePtr,particlePipelinePtr);
@@ -90,6 +94,7 @@ void MCB::TitleScene::Initialize()
     LoadSound();
     Object3DInit();
     SpriteInit();
+    ParticleInit();
     //soundManager.PlaySoundWave(testSound, loopFlag);
     lights->DefaultLightSet();
     lights->UpDate();

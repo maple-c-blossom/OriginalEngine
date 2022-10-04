@@ -48,8 +48,8 @@ namespace MCB
         float frontAngle = 0;
         
         int vertNum = 4;
-        Texture tex;
-        Particle(Dx12& dx12);
+        Texture* tex;
+        Particle();
 
         ~Particle();
 
@@ -61,7 +61,7 @@ namespace MCB
 
         bool trackingFlag = false;
 
-        void Init(Dx12& dx12);
+        void Init(Texture* tex);
 
         void Updata(View& view, Projection& projection, bool isBillBord = false);
 

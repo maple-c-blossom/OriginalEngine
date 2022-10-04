@@ -42,6 +42,8 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
+
+#include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #pragma endregion 自作.h include
 #pragma region pragma comment
 
@@ -103,6 +105,7 @@ namespace MCB
 		virtual void LoadSound() = 0;
 		virtual void Object3DInit() = 0;
 		virtual void SpriteInit() = 0;
+		virtual void ParticleInit() = 0;
 		virtual void MatrixUpdate() = 0;
 		virtual IScene* GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
