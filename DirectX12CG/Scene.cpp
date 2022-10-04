@@ -32,8 +32,6 @@ void MCB::Scene::Initialize()
 
 void MCB::Scene::Object3DInit()
 {
-    human;
-    human.Init(BoxModel);
 
     ground;
     ground.Init();
@@ -51,10 +49,7 @@ void MCB::Scene::Object3DInit()
     testSpher.scale = {3,3,3};
     testSpher.position = { 0,4,10 };
 
-    ray.Init();
-    ray.model = BoxModel;
-    ray.scale = { 1,1,30 };
-    ray.SetCollider(62, 1, { 0,0,1 });
+
 
     //sphere.Init();
     //sphere.model = BoxModel;
@@ -207,16 +202,17 @@ void MCB::Scene::ParticleDraw()
 {
 }
 
+void MCB::Scene::CheckAllColision()
+{
+}
+
 void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
     matView.UpDateMatrixView(ybill);
-    human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
     testSpher.Updata(matView, matProjection,true);
-    ray.Updata(matView, matProjection);
-    sphere.Updata(matView, matProjection);
 }
 
 MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)

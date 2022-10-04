@@ -41,7 +41,6 @@ namespace MCB
 
 #pragma region 3Dオブジェクト
 		SimpleFigure triangle;
-		Human human;
 		Object3d ground;
 		Object3d Skydorm;
 		Object3d testSpher;
@@ -83,6 +82,7 @@ namespace MCB
 		void Draw() override;
 		void SpriteDraw() override;
 		void ParticleDraw() override;
+		void CheckAllColision()override;
 	};
 }
 

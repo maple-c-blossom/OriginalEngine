@@ -42,8 +42,6 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
-
-#include "Human.h"
 #pragma endregion é©çÏ.h include
 #pragma region pragma comment
 
@@ -107,6 +105,7 @@ namespace MCB
 		virtual void SpriteInit() = 0;
 		virtual void MatrixUpdate() = 0;
 		virtual IScene* GetNextScene() = 0;
+		virtual void CheckAllColision() = 0;
 		bool GetIsSceneEnd() { return sceneEnd; }
 
 		Depth* GetDepth() { return depth; }

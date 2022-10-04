@@ -6,8 +6,6 @@
 
 #pragma region ゲーム系.h include
 
-#include "RayObject.h"
-#include "SphereObj.h"
 
 #pragma endregion ゲーム系.h include
 
@@ -51,12 +49,10 @@ namespace MCB
 
 		#pragma region 3Dオブジェクト
 		SimpleFigure triangle;
-		Human human;
+
 		Object3d ground;
 		Object3d Skydorm;
 		Object3d testSpher;
-		RayObject ray;
-		SphereObj sphere;
 
 #pragma endregion 3Dオブジェクト
 
@@ -95,6 +91,7 @@ namespace MCB
 		void Draw() override;
 		void SpriteDraw() override;
 		void ParticleDraw()override;
+		void CheckAllColision()override;
 	};
 
 }

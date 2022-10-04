@@ -26,7 +26,6 @@
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Dx12.cpp" />
     <ClCompile Include="DxWindow.cpp" />
-    <ClCompile Include="Human.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightGroup.cpp" />
@@ -45,14 +44,12 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Projection.cpp" />
     <ClCompile Include="Quaternion.cpp" />
-    <ClCompile Include="RayObject.cpp" />
     <ClCompile Include="RootParameter.cpp" />
     <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="SphereObj.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TexImgData.cpp" />
@@ -153,7 +150,6 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="Dx12.h" />
     <ClInclude Include="DxWindow.h" />
-    <ClInclude Include="Human.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightGroup.h" />
@@ -171,14 +167,12 @@
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="RayObject.h" />
     <ClInclude Include="RootParameter.h" />
     <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="SphereObj.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TexImgData.h" />

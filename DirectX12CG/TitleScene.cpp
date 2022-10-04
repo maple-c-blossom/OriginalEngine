@@ -24,7 +24,6 @@ void MCB::TitleScene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
     matView.UpDateMatrixView();
-    human.UpDate(matView, matProjection);
     Skydorm.Updata(matView, matProjection);
     ground.Updata(matView, matProjection);
     testSpher.Updata(matView, matProjection, true);
@@ -45,7 +44,6 @@ void MCB::TitleScene::Draw()
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();
-    //human.Draw();
     testSpher.Draw();
 
 
@@ -58,6 +56,10 @@ void MCB::TitleScene::SpriteDraw()
 }
 
 void MCB::TitleScene::ParticleDraw()
+{
+}
+
+void MCB::TitleScene::CheckAllColision()
 {
 }
 
@@ -120,8 +122,7 @@ void MCB::TitleScene::LoadSound()
 
 void MCB::TitleScene::Object3DInit()
 {
-    human;
-    human.Init(BoxModel);
+
 
     ground;
     ground.Init();
