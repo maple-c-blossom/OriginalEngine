@@ -50,19 +50,19 @@ namespace MCB
 		bool isFlipX = false;
 		bool isFlipY = false;
 
-		void SpriteTransferVertexBuffer(const Sprite& sprite, Texture* tex = nullptr);
-		void SpriteUpdate(Sprite& sprite);
+		void SpriteTransferVertexBuffer( Texture* tex = nullptr);
+		void SpriteUpdate();
 		void InitMatProje();
 		Sprite CreateSprite();
 		//void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
-		void SpriteDraw(Sprite& sprite,Texture& tex, float positionX = 0,float positionY = 0,
+		void SpriteDraw(Texture& tex, float positionX = 0,float positionY = 0,
 						float size_x = 0, float size_y = 0);
 
-		void SpriteFlipDraw(Sprite& sprite, Texture& tex, float positionX = 0, float positionY = 0, 
+		void SpriteFlipDraw( Texture& tex, float positionX = 0, float positionY = 0, 
 							bool isflipX = false, bool isflipY = false);
 
-		void SpriteCuttingDraw(Sprite& sprite,Texture& tex, float positionX = 0, float positionY = 0,
+		void SpriteCuttingDraw(Texture& tex, float positionX = 0, float positionY = 0,
 			Float2 cuttingsize = {0,0},Float2 CuttingLeftTop = {0,0});
 
 

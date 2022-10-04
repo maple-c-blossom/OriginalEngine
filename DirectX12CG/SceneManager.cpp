@@ -104,13 +104,13 @@ void MCB::SceneManager::Draw()
 		//スプライト
 		scene->GetSpritePipelinePtr()->CommonBeginDraw();
 		scene->SpriteDraw();
-		loadBackGround.SpriteDraw(loadBackGround, loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ロード画面
 	{
 		scene->GetSpritePipelinePtr()->CommonBeginDraw();
-		loadBackGround.SpriteDraw(loadBackGround, loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
-		loadSprite.SpriteDraw(loadSprite, loadTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
+		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadSprite.SpriteDraw(loadTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
 

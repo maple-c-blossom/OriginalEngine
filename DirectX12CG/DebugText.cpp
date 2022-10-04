@@ -37,9 +37,9 @@ void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
 		sprite[spriteIndex].size = {fontWidth * scale,fontHeight * scale};
 		sprite[spriteIndex].anchorPoint = {0,0};
 
-		sprite[spriteIndex].SpriteTransferVertexBuffer(sprite[spriteIndex], debugfont);
+		sprite[spriteIndex].SpriteTransferVertexBuffer(debugfont);
 
-		sprite[spriteIndex].SpriteUpdate(sprite[spriteIndex]);
+		sprite[spriteIndex].SpriteUpdate();
 
 
 		spriteIndex++;
