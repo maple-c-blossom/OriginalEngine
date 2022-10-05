@@ -252,10 +252,10 @@ void MCB::Sprite::SpriteDraw(Texture& tex, float positionX, float positionY,
 
 
 
-    if (tempsprite.size.x != size.x || tempsprite.size.y != size.y)
+    if (tempsprite.size.x != this->size.x || tempsprite.size.y != this->size.y)
     {
         tempsprite.SpriteTransferVertexBuffer();
-        size = tempsprite.size;
+        this->size = tempsprite.size;
     }
 
     //SRVヒープの先頭アドレスを取得
