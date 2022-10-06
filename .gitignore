@@ -97,6 +97,7 @@ x64/*/*.obj
 *.pidb
 *.svclog
 *.scc
+*.lib
 
 # Chutzpah Test files
 _Chutzpah*
