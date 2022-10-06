@@ -5,13 +5,15 @@
 #include <cmath>
 #include "SceneManager.h"
 #include "Scene.h"
+
 using namespace MCB;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
     _In_ int nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     {
-    DxWindow* dxWindow = DxWindow::GetInitInstance();
+
+        DxWindow* dxWindow = DxWindow::GetInitInstance();
 
     //デバック時のみ----------
 #pragma region デバック時のみ
@@ -73,6 +75,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     DxWindow::DeleteInstance();
     Dx12::DeleteInstace();
     Input::DeleteInstace();
+
 }   
     _CrtDumpMemoryLeaks();
 	return 0;
