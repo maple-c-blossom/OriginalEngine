@@ -68,6 +68,8 @@ void MCB::Scene::LoadModel()
 	groundModel = new Model("ground");
 
 	skydomeModel = new Model("skydome");
+
+    fbxLoader->LoadModelFromFile("cube");
 }
 
 void MCB::Scene::LoadTexture()

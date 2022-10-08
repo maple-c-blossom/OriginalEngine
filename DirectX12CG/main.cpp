@@ -40,6 +40,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Depth depth;
     ShaderResource::GetInitInstance();
     LightGroup::GetInitInstance();
+    FBXLoader::GetInitInstance();
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
     RootParameter rootparams;
@@ -75,7 +76,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     DxWindow::DeleteInstance();
     Dx12::DeleteInstace();
     Input::DeleteInstace();
-
+    FBXLoader::DeleteInstance();
 }   
     _CrtDumpMemoryLeaks();
 	return 0;
