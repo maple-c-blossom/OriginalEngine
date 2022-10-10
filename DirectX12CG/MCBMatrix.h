@@ -31,6 +31,8 @@ namespace MCB
 
 		MCBMatrix MCBMatrixRota(double angle,DirectX::XMFLOAT3 vector);
 
+		void SetRotaMatrix(Float3 angle);
+
 		MCBMatrix ReturnMatrixIdentity();
 
 		MCBMatrix MCBMatrixLookAtLH(Float3 eye, Float3 target, Float3 up);

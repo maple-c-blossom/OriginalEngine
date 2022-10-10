@@ -2,6 +2,7 @@
 #include "Dx12.h"
 #include "fbxsdk.h"
 #include <string>
+#include <memory>
 namespace MCB
 {
     class FBXLoader

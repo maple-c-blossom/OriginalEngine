@@ -277,7 +277,10 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="FBXLoader.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
+    </ClCompile>
+    <ClCompile Include="FBXModel.cpp">
+      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,8 +439,11 @@
     <ClInclude Include="TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="FBXModel.h">
+      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+    </ClInclude>
     <ClInclude Include="FBXLoader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

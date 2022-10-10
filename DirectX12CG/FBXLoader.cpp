@@ -1,4 +1,5 @@
 #include "FBXLoader.h"
+#include "FBXModel.h"
 
 using namespace MCB;
 
@@ -25,6 +26,8 @@ FBXLoader* FBXLoader::GetInitInstance()
 void FBXLoader::Initialize()
 {
 	assert(manager == nullptr);
+
+
 	this->device = Dx12::GetInstance()->device.Get();
 	manager = FbxManager::Create();
 
@@ -55,4 +58,10 @@ void MCB::FBXLoader::LoadModelFromFile(const string& modelName)
 	FbxScene* fbxScene = FbxScene::Create(manager, "fbxScene");
 
 	fbxImporter->Import(fbxScene);
+
+	std::unique_ptr<FBXModel> model = std::make_unique<FBXModel>();
+	model->name = modelName;
+	ParseNodeRecursive(model.get(), fbxScene->GetRootNode());
+	fbxScene->Destroy();
+	
 }

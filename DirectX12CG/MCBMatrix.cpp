@@ -130,6 +130,11 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(double angle, DirectX::XMFLOAT3 vec
 
 }
 
+void MCB::MCBMatrix::SetRotaMatrix(Float3 angle)
+{
+
+}
+
 MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 {
 	MCBMatrix ans;
