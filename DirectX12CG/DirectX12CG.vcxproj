@@ -28,6 +28,7 @@
     <ClCompile Include="DxWindow.cpp" />
     <ClCompile Include="FBXLoader.cpp" />
     <ClCompile Include="FBXModel.cpp" />
+    <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightGroup.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="DxWindow.h" />
     <ClInclude Include="FBXLoader.h" />
     <ClInclude Include="FBXModel.h" />
+    <ClInclude Include="GamePad.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightGroup.h" />

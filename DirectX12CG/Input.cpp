@@ -16,12 +16,16 @@ void Input::Init()
 	assert(SUCCEEDED(dx12->result));
 	//キーボードデバイスの生成-----------------
 #pragma region キーボードデバイスの生成
-
-
 	dx12->result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
 	assert(SUCCEEDED(dx12->result));
-
 #pragma endregion キーボードデバイスの生成
+	//--------------------------
+
+	//マウスデバイスの生成-----------------
+#pragma region マウスデバイスの生成
+	dx12->result = dinput->CreateDevice(GUID_SysKeyboard, &devmouse, NULL);
+	assert(SUCCEEDED(dx12->result));
+#pragma endregion マウスデバイスの生成
 	//--------------------------
 
 	//入力データ形式セット--------------------------------
@@ -43,18 +47,26 @@ void Input::UpDateInit()
 	//キーボード初期化-------------------------------------
 #pragma region キーボード初期化
 
-		//キーボード情報の取得開始-----------------
+	//キーボード情報の取得開始-----------------
 	devkeyboard->Acquire();
 	//----------------------------
-
 	//全キーの入力状態を取得する---------------------------
-	KeyInit();
+	KeyUpdate();
 	Dx12::GetInstance()->result = devkeyboard->GetDeviceState(sizeof(key), key);
 	//----------------------------
 
+	// マウス
+	devmouse->Acquire();	// マウス動作開始
+	MouseUpdate();
+	// マウスの入力
+	Dx12::GetInstance()->result = devmouse->GetDeviceState(sizeof(mouse), &mouse);
 #pragma endregion キーボード初期化
 		//----------------------------------------
-
+	gamePad->GetState();
+	gamePad->LStick = gamePad->IsInputLStick();
+	gamePad->RStick = gamePad->IsInputRStick();
+	gamePad->LTrriger = gamePad->IsInputLTrriger();
+	gamePad->RTrriger = gamePad->IsInputRTrriger();
 }
 
 //Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
@@ -97,6 +109,7 @@ Input* MCB::Input::GetInstance()
 
 void MCB::Input::DeleteInstace()
 {
+	GamePad::DeleteInstace();
 	delete Input::GetInstance();
 }
 
@@ -107,13 +120,18 @@ Input* MCB::Input::GetInitInstance()
 	return instance;
 }
 
-void Input::KeyInit()
+void Input::KeyUpdate()
 {
 	for (int i = 0; i < 256; i++)
 	{
 		oldkey[i] = key[i];
 	}
 
+}
+
+void MCB::Input::MouseUpdate()
+{
+	oldmouse = mouse;
 }
 
 bool Input::IsKeyDown(int keyNum)
@@ -159,5 +177,47 @@ bool Input::IsKeyRelease(int keyNum)
 		return true;
 	}
 	return false;
+}
+
+bool MCB::Input::IsMouseDown(int MouseBotton)
+{
+	if (mouse.rgbButtons[MouseBotton]) return true;
+	return false;
+}
+
+bool MCB::Input::IsMouseNDown(int MouseBotton)
+{
+	if (!mouse.rgbButtons[MouseBotton]) return true;
+	return false;
+}
+
+bool MCB::Input::IsMousePress(int MouseBotton)
+{
+	if (mouse.rgbButtons[MouseBotton] && oldmouse.rgbButtons[MouseBotton]) return true;
+	return false;
+}
+
+bool MCB::Input::IsMouseTrigger(int MouseBotton)
+{
+	if (mouse.rgbButtons[MouseBotton] && !oldmouse.rgbButtons[MouseBotton]) return true;
+	return false;
+}
+
+bool MCB::Input::IsMouseRelease(int MouseBotton)
+{
+	if (!mouse.rgbButtons[MouseBotton] && oldmouse.rgbButtons[MouseBotton])
+	{
+		return true;
+	}
+	return false;
+}
+
+MCB::Mouse MCB::Input::GetMousePosition()
+{
+	MCB::Mouse m;
+	m.x = mouse.lX;
+	m.y = mouse.lY;
+	m.z = mouse.lZ;
+	return m;
 }
 

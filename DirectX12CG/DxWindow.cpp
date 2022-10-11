@@ -18,6 +18,11 @@ LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
     
 }
 
+bool MCB::DxWindow::IsBreak()
+{
+    return breakFlag;
+}
+
 void DxWindow::messageUpdate()
 {
     //メッセージ関係------------------

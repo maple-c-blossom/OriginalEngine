@@ -64,7 +64,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     {
         input->UpDateInit();
         dxWindow->messageUpdate();
-        if (input->IsKeyDown(DIK_ESCAPE) || dxWindow->breakFlag) break;
+        if (input->IsKeyDown(DIK_ESCAPE) || dxWindow->IsBreak()) break;
         
         scene.Update();
         scene.Draw();

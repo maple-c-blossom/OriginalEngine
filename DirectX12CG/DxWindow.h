@@ -10,6 +10,7 @@ namespace MCB
         DxWindow(const DxWindow& dx12) {};
         DxWindow& operator=(const DxWindow& dx12) {};
         ~DxWindow();
+        bool breakFlag = false;
 
     public:
         static DxWindow* GetInstance();
@@ -19,7 +20,6 @@ namespace MCB
         // ウィンドウサイズ
         const int window_width = 1280;  // 横幅
         const int window_height = 720;  // 縦幅
-        bool breakFlag = false;
 
 
         MSG msg{}; //メッセージここから
@@ -32,7 +32,7 @@ namespace MCB
 
         // ウィンドウプロシージャ 
         static LRESULT WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
-
+        bool IsBreak();
         void messageUpdate();
         void Init();
 

@@ -282,6 +282,9 @@
     <ClCompile Include="FBXModel.cpp">
       <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
     </ClCompile>
+    <ClCompile Include="GamePad.cpp">
+      <Filter>ソース ファイル\Engin\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -444,6 +447,9 @@
     </ClInclude>
     <ClInclude Include="FBXLoader.h">
       <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+    </ClInclude>
+    <ClInclude Include="GamePad.h">
+      <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
