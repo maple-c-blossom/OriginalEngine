@@ -190,7 +190,6 @@ void MCB::Scene::Update()
 
 void MCB::Scene::Draw()
 {
-
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();

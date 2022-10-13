@@ -1,7 +1,7 @@
 #include "PIpelineRootSignature.h"
 using namespace MCB;
 
-PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParameter& rootparams)
+PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParameter& rootparams,int blendMode)
 {
     PipelineRootSignature pipelinerootsognature;
 
@@ -56,8 +56,24 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth&
     pipelinerootsognature.pipeline.SetRenderTargetWriteMask();
 
     pipelinerootsognature.pipeline.SetNormalBlendDesc();
-
-    pipelinerootsognature.pipeline.SetAlphaBlend();
+    switch (blendMode)
+    {
+    case 0:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    case 1:
+        pipelinerootsognature.pipeline.SetAddBlend();
+        break;
+    case 2:
+        pipelinerootsognature.pipeline.SetSubBlend();
+        break;
+    case 3:
+        pipelinerootsognature.pipeline.SetInvBlend();
+        break;
+    default:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    }
 
 
 #pragma endregion ブレンドステートの設定
@@ -117,7 +133,7 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth&
 	return pipelinerootsognature;
 }
 
-PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParameter& rootparams)
+PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParameter& rootparams, int blendMode)
 {
 
     PipelineRootSignature pipelinerootsognature;
@@ -166,8 +182,24 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& de
 
     pipelinerootsognature.pipeline.SetNormalBlendDesc();
 
-    pipelinerootsognature.pipeline.SetAlphaBlend();
-
+    switch (blendMode)
+    {
+    case 0:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    case 1:
+        pipelinerootsognature.pipeline.SetAddBlend();
+        break;
+    case 2:
+        pipelinerootsognature.pipeline.SetSubBlend();
+        break;
+    case 3:
+        pipelinerootsognature.pipeline.SetInvBlend();
+        break;
+    default:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    }
 
 #pragma endregion ブレンドステートの設定
     //--------------------------
@@ -226,7 +258,7 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& de
     return pipelinerootsognature;
 }
 
-PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParameter& rootparams)
+PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParameter& rootparams, int blendMode)
 {
 
     PipelineRootSignature pipelinerootsognature;
@@ -282,10 +314,24 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& 
     pipelinerootsognature.pipeline.SetRenderTargetWriteMask();
 
     pipelinerootsognature.pipeline.SetNormalBlendDesc();
-
-    pipelinerootsognature.pipeline.SetAlphaBlend();
-
-
+    switch (blendMode)
+    {
+    case 0:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    case 1:
+        pipelinerootsognature.pipeline.SetAddBlend();
+        break;
+    case 2:
+        pipelinerootsognature.pipeline.SetSubBlend();
+        break;
+    case 3:
+        pipelinerootsognature.pipeline.SetInvBlend();
+        break;
+    default:
+        pipelinerootsognature.pipeline.SetAlphaBlend();
+        break;
+    }
 #pragma endregion ブレンドステートの設定
     //--------------------------
 
@@ -341,6 +387,28 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& 
 
 
     return pipelinerootsognature;
+}
+
+void MCB::PipelineRootSignature::SetBrendMode(int blendMode)
+{
+    switch (blendMode)
+    {
+    case 0:
+        pipeline.SetAlphaBlend();
+        break;
+    case 1:
+        pipeline.SetAddBlend();
+        break;
+    case 2:
+        pipeline.SetSubBlend();
+        break;
+    case 3:
+        pipeline.SetInvBlend();
+        break;
+    default:
+        pipeline.SetAlphaBlend();
+        break;
+    }
 }
 
 void MCB::PipelineRootSignature::CommonBeginDraw(bool toporogyTypeIsPoint)

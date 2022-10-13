@@ -40,6 +40,8 @@ namespace MCB
 
 		void SetRenderTargetWriteMask(D3D12_COLOR_WRITE_ENABLE writeEnable = D3D12_COLOR_WRITE_ENABLE_ALL);
 
+
+
 		void SetNormalBlendDesc();
 
 		void SetNormalBlendDesc(bool blendEnable, D3D12_BLEND_OP blendOp, D3D12_BLEND srcBlend, D3D12_BLEND destBlend);
