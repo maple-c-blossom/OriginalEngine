@@ -68,7 +68,7 @@ namespace MCB
 #pragma endregion スプライト
 #pragma region パーティクル
 		Particle testParticle;
-
+		
 
 #pragma endregion
 		#pragma region 通常変数

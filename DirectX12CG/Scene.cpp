@@ -68,6 +68,8 @@ void MCB::Scene::LoadModel()
 	groundModel = new Model("ground");
 
 	skydomeModel = new Model("skydome");
+
+    fbxLoader->LoadModelFromFile("cube");
 }
 
 void MCB::Scene::LoadTexture()
@@ -153,10 +155,10 @@ void MCB::Scene::Update()
         //    PLPos.x += 0.01f;
         //}
 
-        if (input->IsKeyTrigger(DIK_SPACE))
-        {
-            sceneEnd = true;
-        }
+        //if (input->IsKeyTrigger(DIK_SPACE))
+        //{
+        //    sceneEnd = true;
+        //}
 
 
         if (input->IsKeyDown(DIK_UP))

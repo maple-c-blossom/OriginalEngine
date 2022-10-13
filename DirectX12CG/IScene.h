@@ -42,6 +42,7 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
+#include "FBXLoader.h"
 
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #pragma endregion 自作.h include
@@ -84,6 +85,8 @@ namespace MCB
 
 		//描画前処理と描画後処理
 		MCB::Draw* draw = Draw::GetInstance();
+
+		FBXLoader* fbxLoader = FBXLoader::GetInstance();
 
 		//サウンドマネージャー
 		SoundManager soundManager;
