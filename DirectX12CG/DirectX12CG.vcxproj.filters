@@ -451,6 +451,9 @@
     <ClInclude Include="GamePad.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
+    <ClInclude Include="PIpelines.h">
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\ParticleShader\ParticleHeader.hlsli">

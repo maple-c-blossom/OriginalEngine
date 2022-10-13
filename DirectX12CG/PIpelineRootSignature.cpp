@@ -58,16 +58,16 @@ PipelineRootSignature MCB::PipelineRootSignature::Create3DObjectPipeline( Depth&
     pipelinerootsognature.pipeline.SetNormalBlendDesc();
     switch (blendMode)
     {
-    case 0:
+    case Alpha:
         pipelinerootsognature.pipeline.SetAlphaBlend();
         break;
-    case 1:
+    case Add:
         pipelinerootsognature.pipeline.SetAddBlend();
         break;
-    case 2:
+    case Sub:
         pipelinerootsognature.pipeline.SetSubBlend();
         break;
-    case 3:
+    case Inv:
         pipelinerootsognature.pipeline.SetInvBlend();
         break;
     default:
@@ -184,16 +184,16 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateSpritePipeline(Depth& de
 
     switch (blendMode)
     {
-    case 0:
+    case Alpha:
         pipelinerootsognature.pipeline.SetAlphaBlend();
         break;
-    case 1:
+    case Add:
         pipelinerootsognature.pipeline.SetAddBlend();
         break;
-    case 2:
+    case Sub:
         pipelinerootsognature.pipeline.SetSubBlend();
         break;
-    case 3:
+    case Inv:
         pipelinerootsognature.pipeline.SetInvBlend();
         break;
     default:
@@ -316,16 +316,16 @@ PipelineRootSignature MCB::PipelineRootSignature::CreateParticlePipeline(Depth& 
     pipelinerootsognature.pipeline.SetNormalBlendDesc();
     switch (blendMode)
     {
-    case 0:
+    case Alpha:
         pipelinerootsognature.pipeline.SetAlphaBlend();
         break;
-    case 1:
+    case Add:
         pipelinerootsognature.pipeline.SetAddBlend();
         break;
-    case 2:
+    case Sub:
         pipelinerootsognature.pipeline.SetSubBlend();
         break;
-    case 3:
+    case Inv:
         pipelinerootsognature.pipeline.SetInvBlend();
         break;
     default:
@@ -393,16 +393,16 @@ void MCB::PipelineRootSignature::SetBrendMode(int blendMode)
 {
     switch (blendMode)
     {
-    case 0:
+    case Alpha:
         pipeline.SetAlphaBlend();
         break;
-    case 1:
+    case Add:
         pipeline.SetAddBlend();
         break;
-    case 2:
+    case Sub:
         pipeline.SetSubBlend();
         break;
-    case 3:
+    case Inv:
         pipeline.SetInvBlend();
         break;
     default:

@@ -170,6 +170,7 @@
     <ClInclude Include="ParticleMaterial.h" />
     <ClInclude Include="Pipeline.h" />
     <ClInclude Include="PIpelineRootSignature.h" />
+    <ClInclude Include="PIpelines.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Projection.h" />
     <ClInclude Include="Quaternion.h" />

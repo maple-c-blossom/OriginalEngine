@@ -8,12 +8,12 @@
 
 namespace MCB
 {
-	static enum BlendMode
+	enum BlendMode
 	{
-		Alpha,
-		Add,
-		Sub,
-		Inv
+		Alpha = 0,
+		Add = 1,
+		Sub = 2,
+		Inv = 3
 	};
 	class PipelineRootSignature
 	{
