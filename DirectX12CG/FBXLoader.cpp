@@ -7,6 +7,8 @@ const std::string FBXLoader::baseDirectory = "Resources\\";
 
 void FBXLoader::DeleteInstance()
 {
+	
+	GetInstance()->Finalize();
 	delete GetInstance();
 }
 

@@ -11,7 +11,7 @@ namespace MCB
         FBXLoader() {};
         FBXLoader(const FBXLoader& dx12) {};
         FBXLoader& operator=(const FBXLoader& dx12) {};
-        ~FBXLoader() { Finalize(); };
+        ~FBXLoader() {  };
         using string = std::string;
         ID3D12Device* device = nullptr;
         FbxManager* manager = nullptr;
