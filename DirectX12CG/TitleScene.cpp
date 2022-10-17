@@ -28,9 +28,9 @@ void MCB::TitleScene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
     matView.UpDateMatrixView();
-    Skydorm.Updata(matView, matProjection);
-    ground.Updata(matView, matProjection);
-    testSpher.Updata(matView, matProjection, true);
+    Skydorm.Update(matView, matProjection);
+    ground.Update(matView, matProjection);
+    testSpher.Update(matView, matProjection, true);
 }
 
 void MCB::TitleScene::Update()

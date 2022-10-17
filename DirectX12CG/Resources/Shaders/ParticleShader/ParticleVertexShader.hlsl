@@ -4,7 +4,8 @@ VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOOR
 {
 	VSOutput output;
 	output.svpos = pos;
-	output.uv = uv;
+	//output.uv = uv;
+	
 
 	return output;
 }

@@ -45,9 +45,22 @@ void Particle::Init(Texture* tex)
     dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
     material.Init();
     this->tex = tex;
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+        &HeapProp, // ヒープ設定
+        D3D12_HEAP_FLAG_NONE,
+        &Resdesc, // リソース設定
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&vertBuff));
+    assert(SUCCEEDED(Dx12::GetInstance()->result));
+
+    sizeVB = static_cast<unsigned int>(sizeof(Vertex));
+    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+    vbView.SizeInBytes = sizeVB;
+    vbView.StrideInBytes = sizeof(vertex);
 }
 
-void Particle::Updata(View& view, Projection& projection, bool isBillBord)
+void Particle::Update(View& view, Projection& projection, bool isBillBord)
 {
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
     matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
@@ -73,7 +86,12 @@ void Particle::Updata(View& view, Projection& projection, bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
+    //constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
+    constMapTranceform->world = matWorld.matWorld * view.mat;
+    constMapTranceform->viewproj = projection.mat;
+    constMapTranceform->cameraPos.x = view.eye.x;
+    constMapTranceform->cameraPos.y = view.eye.y;
+    constMapTranceform->cameraPos.z = view.eye.z;
 }
 
 void Particle::Draw()
@@ -99,10 +117,10 @@ void Particle::Draw()
 
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    //頂点データ
+    dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
     //描画コマンド
     dx12->commandList->DrawInstanced(vertNum, 1, 0, 0);
-    //頂点データ
-    //dx12.commandList->IASetVertexBuffers(0, 1, &vert.vbView);
     //インデックスデータ
     //dx12.commandList->IASetIndexBuffer(&model->ibView);
     //定数バッファビュー(CBV)の設定コマンド

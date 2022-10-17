@@ -25,10 +25,16 @@ namespace MCB
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
-            DirectX::XMMATRIX mat;
+            //DirectX::XMMATRIX mat;
+            DirectX::XMMATRIX viewproj;
+            DirectX::XMMATRIX world;
+            Float3 cameraPos;
         };
         //---------------------------------
-
+        typedef struct Vertex
+        {
+            Float3 pos;//xyz座標
+        };
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
 
@@ -42,12 +48,14 @@ namespace MCB
 
         //ワールド行列
         WorldMatrix matWorld = {};
-
+        unsigned int sizeVB;
         Vector3D NORM_FRONT_VEC = {};
         Vector3D nowFrontVec = {};
         float frontAngle = 0;
-        
-        int vertNum = 4;
+        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+        D3D12_VERTEX_BUFFER_VIEW vbView{};
+        Vertex vertex;
+        int vertNum = 1;
         Texture* tex;
         Particle();
 
@@ -63,7 +71,7 @@ namespace MCB
 
         void Init(Texture* tex);
 
-        void Updata(View& view, Projection& projection, bool isBillBord = false);
+        void Update(View& view, Projection& projection, bool isBillBord = false);
 
         void Draw();
 

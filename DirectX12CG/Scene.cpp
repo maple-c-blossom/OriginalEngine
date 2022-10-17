@@ -16,7 +16,7 @@ MCB::Scene::~Scene()
 void MCB::Scene::Initialize()
 {
 
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -10.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
     LoadModel();
@@ -77,7 +77,7 @@ void MCB::Scene::LoadTexture()
 	testTex.CreateTexture(L"Resources\\reimu.png");
 	debugTextTexture.CreateTexture(L"Resources\\debugfont.png");
     zoomTex.CreateTexture(L"Resources\\reticle.png");
-    scopeTex.CreateTexture(L"Resources\\scope.png");
+    scopeTex.CreateNoTextureFileIsTexture();
 
 }
 
@@ -102,9 +102,9 @@ void MCB::Scene::SpriteInit()
 
 void MCB::Scene::ParticleInit()
 {
-    testParticle.Init(&scopeTex);
-    testParticle.position = { 0,0,100 };
-    testParticle.rotasion.x = ConvertRadius(-90);
+    testParticle.Init(&testTex);
+    testParticle.position = { 0,0,10 };
+    //testParticle.rotasion.x = ConvertRadius(-90);
 }
 
 IScene* MCB::Scene::GetNextScene()
@@ -182,8 +182,8 @@ void MCB::Scene::Update()
         if (input->IsKeyTrigger(DIK_SPACE)) ybill = !ybill;
 
         matView.target = testSpher.position;
-        lights->SetPLightPos(0, PLPos);
-        lights->SetSLightPos(0, SLPos);
+        //lights->SetPLightPos(0, PLPos);
+        //lights->SetSLightPos(0, SLPos);
 
         lights->UpDate();
     //çsóÒïœä∑
@@ -196,7 +196,7 @@ void MCB::Scene::Draw()
     Skydorm.Draw();
     ground.Draw();
     //human.Draw();
-    testSpher.Draw();
+    
 
 }
 
@@ -208,7 +208,7 @@ void MCB::Scene::SpriteDraw()
 
 void MCB::Scene::ParticleDraw()
 {
-    //testParticle.Draw();
+    testParticle.Draw();
 }
 
 void MCB::Scene::CheckAllColision()
@@ -219,10 +219,11 @@ void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
     matView.UpDateMatrixView(ybill);
-    Skydorm.Updata(matView, matProjection);
-    ground.Updata(matView, matProjection);
-    testSpher.Updata(matView, matProjection,true);
-    testParticle.Updata(matView, matProjection, true);
+    Skydorm.Update(matView, matProjection);
+    ground.Update(matView, matProjection);
+    testSpher.Update(matView, matProjection,false);
+    testParticle.Update(matView, matProjection, true);
+    //testParticle.Updata(matView, matProjection, true);
 }
 
 MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)

@@ -28,7 +28,7 @@ void main(
     for (uint i = 0; i < vnum; i++)
     {
         element.svpos = input[0].svpos + offSetArray[i];
-        element.svpos = mul(mat, element.svpos);
+        element.svpos = mul(mul(viewproj, world), element.svpos);
         element.uv = uvArray[i];
         output.Append(element);
     }
