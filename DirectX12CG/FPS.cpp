@@ -24,9 +24,7 @@ void MCB::FPS::DeleteInstance()
 
 void MCB::FPS::Initialize()
 {
-    //timeBeginPeriod(1);
     reference = steady_clock::now();
-
 }
 
 void MCB::FPS::UpDate()
