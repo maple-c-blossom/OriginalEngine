@@ -1,6 +1,5 @@
 #include "DxWindow.h"
 #pragma comment(lib, "winmm.lib")
-#include <timeapi.h>
 using namespace MCB;
 
 LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
