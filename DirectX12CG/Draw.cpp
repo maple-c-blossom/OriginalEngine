@@ -1,5 +1,5 @@
 #include "Draw.h"
-
+#include "FPS.h"
 void MCB::Draw::SetBeforeResourceBarrier()
 {
     barrierDesc = {};
@@ -113,7 +113,7 @@ void MCB::Draw::CommandListExecution()
     dx12->commandQueue->ExecuteCommandLists(1, commandLists);
 
     // バッファをフリップ（裏表の入替え)-----------------------
-    dx12->result = dx12->swapchain->Present(0, 0);
+    dx12->result = dx12->swapchain->Present(1, 0);
     assert(SUCCEEDED(dx12->result) && "バッファフリップ段階でのエラー");
     //-----------------
 
@@ -177,6 +177,8 @@ void MCB::Draw::PostDraw()
     CloseDrawCommandOrder();
 
     CommandListExecution();
+
+    FPS::GetInstance()->UpDate();
 
     ResetQueAndCommandList();
 }

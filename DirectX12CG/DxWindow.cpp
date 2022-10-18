@@ -1,6 +1,6 @@
 #include "DxWindow.h"
-#include <Windows.h>
-
+#pragma comment(lib, "winmm.lib")
+#include <timeapi.h>
 using namespace MCB;
 
 LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -47,7 +47,7 @@ void DxWindow::messageUpdate()
 
 void DxWindow::Init()
 {
-
+    timeBeginPeriod(1);
     window.cbSize = sizeof(WNDCLASSEX);
     window.lpfnWndProc = (WNDPROC)WindowProc; // ウィンドウプロシージャを設定
     window.lpszClassName = windowName; // ウィンドウクラス名

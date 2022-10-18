@@ -196,7 +196,7 @@ void MCB::Scene::Draw()
     Skydorm.Draw();
     ground.Draw();
     //human.Draw();
-    
+    testSpher.Draw();
 
 }
 

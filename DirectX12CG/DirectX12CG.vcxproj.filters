@@ -285,6 +285,9 @@
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>ソース ファイル\Engin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -453,6 +456,9 @@
     </ClInclude>
     <ClInclude Include="PIpelines.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>ヘッダー ファイル\Engin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

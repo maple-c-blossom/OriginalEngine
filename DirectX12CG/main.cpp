@@ -5,6 +5,7 @@
 #include <cmath>
 #include "SceneManager.h"
 #include "Scene.h"
+#include "FPS.h"
 
 using namespace MCB;
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,
@@ -12,8 +13,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
     {
-
         DxWindow* dxWindow = DxWindow::GetInitInstance();
+        FPS* fps = FPS::GetInitInstance();
 
     //デバック時のみ----------
 #pragma region デバック時のみ
@@ -77,6 +78,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     Dx12::DeleteInstace();
     Input::DeleteInstace();
     FBXLoader::DeleteInstance();
+    FPS::DeleteInstance();
 }   
     _CrtDumpMemoryLeaks();
 	return 0;
