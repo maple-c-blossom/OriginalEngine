@@ -86,7 +86,7 @@ namespace MCB
 		//描画前処理と描画後処理
 		MCB::Draw* draw = Draw::GetInstance();
 
-		FBXLoader* fbxLoader = FBXLoader::GetInstance();
+		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
 
 		//サウンドマネージャー
 		SoundManager soundManager;
