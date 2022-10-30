@@ -17,19 +17,19 @@ namespace MCB
         //    switch (blendMode)
         //    {
         //    case Alpha:
-        //        pipelinerootsognature.pipeline.SetAlphaBlend();
+        //        pipeline.SetAlphaBlend();
         //        break;
         //    case Add:
-        //        pipelinerootsognature.pipeline.SetAddBlend();
+        //        pipeline.SetAddBlend();
         //        break;
         //    case Sub:
-        //        pipelinerootsognature.pipeline.SetSubBlend();
+        //        pipeline.SetSubBlend();
         //        break;
         //    case Inv:
-        //        pipelinerootsognature.pipeline.SetInvBlend();
+        //        pipeline.SetInvBlend();
         //        break;
         //    default:
-        //        pipelinerootsognature.pipeline.SetAlphaBlend();
+        //        pipeline.SetAlphaBlend();
         //        break;
         //    }
         //}
