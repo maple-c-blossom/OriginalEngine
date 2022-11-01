@@ -32,6 +32,7 @@ namespace MCB
 			float pad2;
 			Float3 specular;
 			float alpha;
+			Float4 color;
 		};
 
 
@@ -42,6 +43,7 @@ namespace MCB
 			Float3 diffuse;
 			Float3 specular;
 			float alpha;
+			Float4 color;
 			std::string textureFileName;
 
 			Material()
@@ -50,6 +52,7 @@ namespace MCB
 				diffuse = { 0.0f,0.0f,0.0f };
 				specular = { 0.0f,0.0f,0.0f };
 				alpha = 1.0f;
+				color = { 1.f,1.f,1.f,1.f };
 			}
 		};
 

@@ -23,11 +23,11 @@ namespace MCB
 		Shader shader;
 		TexSample texSample;
 
-		PipelineRootSignature Create3DObjectPipeline(Depth& depth, RootParameter& rootparam,int blendMode = Alpha );
+		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam,int blendMode = Alpha );
 
-		PipelineRootSignature CreateSpritePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
 
-		PipelineRootSignature CreateParticlePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
 
 		void SetBrendMode(int blendMode = Alpha);
 

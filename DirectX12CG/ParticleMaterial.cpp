@@ -41,7 +41,7 @@ void ParticleMaterial::Init()
     constMapMaterial->diffuse = material.diffuse;
     constMapMaterial->specular = material.specular;
     constMapMaterial->alpha = material.alpha;
-
+    constMapMaterial->color = material.color;
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
 

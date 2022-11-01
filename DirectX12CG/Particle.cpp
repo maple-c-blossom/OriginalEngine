@@ -15,6 +15,12 @@ MCB::Particle::~Particle()
     //vert.material.constBuffMaterialB1->Unmap(0, nullptr);
 }
 
+void MCB::Particle::SetColor(Float4 color)
+{
+    material.material.color = color;
+    material.constMapMaterial->color = material.material.color;
+}
+
 void Particle::Init(Texture* tex)
 {
     Dx12* dx12 = Dx12::GetInstance();

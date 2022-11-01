@@ -65,7 +65,7 @@ namespace MCB
 #pragma endregion ’Êí•Ï”
 	public:
 
-		TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2);
+		TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline);
 		~TitleScene();
 		void Initialize() override;
 

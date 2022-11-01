@@ -109,7 +109,7 @@ void MCB::Scene::ParticleInit()
 
 IScene* MCB::Scene::GetNextScene()
 {
-    return new TitleScene(rootparamsPtr,depth,obj3dPipelinePtr,spritePipelinePtr,particlePipelinePtr);
+    return new TitleScene(rootparamsPtr,depth,pipeline);
 }
 
 #pragma endregion 各種リソースの読み込みと初期化
@@ -226,12 +226,10 @@ void MCB::Scene::MatrixUpdate()
     //testParticle.Updata(matView, matProjection, true);
 }
 
-MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
+MCB::Scene::Scene(RootParameter* root, Depth* depthptr,PipeLineManager* pipeline)
 {
 	rootparamsPtr = root;
-	obj3dPipelinePtr = pipeline;
-	spritePipelinePtr = pipeline1;
-    particlePipelinePtr = pipeline2;
     depth = depthptr;
+    this->pipeline = pipeline;
 }
 

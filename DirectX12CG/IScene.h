@@ -43,6 +43,7 @@
 #include "Collider.h"
 #include "LightGroup.h"
 #include "FBXLoader.h"
+#include "PipeLineManager.h"
 
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #pragma endregion 自作.h include
@@ -75,11 +76,13 @@ namespace MCB
 		//ルートパラメータ
 		RootParameter* rootparamsPtr;
 
-		PipelineRootSignature* obj3dPipelinePtr;
+		PipeLineManager* pipeline;
 
-		PipelineRootSignature* spritePipelinePtr;
+		//PipelineRootSignature* obj3dPipelinePtr;
 
-		PipelineRootSignature* particlePipelinePtr;
+		//PipelineRootSignature* spritePipelinePtr;
+
+		//PipelineRootSignature* particlePipelinePtr;
 
 		LightGroup* lights = LightGroup::GetInstance();
 
@@ -117,12 +120,8 @@ namespace MCB
 		Depth* GetDepth() { return depth; }
 		//ルートパラメータ
 		RootParameter* GetRootparamsPtr() { return rootparamsPtr; }
-
-		PipelineRootSignature* GetObj3dPipelinePtr() { return obj3dPipelinePtr; }
-
-		PipelineRootSignature* GetSpritePipelinePtr() { return spritePipelinePtr; }
-
-		PipelineRootSignature* GetParticlePipelinePtr() { return particlePipelinePtr; }
+		
+		PipeLineManager* Getpipeline() { return pipeline; }
 	};
 
 }

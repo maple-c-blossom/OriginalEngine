@@ -54,12 +54,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
 #pragma endregion ルートパラメータの設定
     //------------------------
-    PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(depth, rootparams);
+ /*   PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(depth, rootparams);
     PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
-    PipelineRootSignature particlePipeline = particlePipeline.CreateParticlePipeline(depth, rootparams); 
-    //Scene scene(&rootparams,&depth ,&obj3dPipeline, &spritePipeline);
-    //scene.Initialize();
-    SceneManager scene(&rootparams, &depth, &obj3dPipeline, &spritePipeline,&particlePipeline);
+    PipelineRootSignature particlePipeline = particlePipeline.CreateParticlePipeline(depth, rootparams); */
+    PipeLineManager pipeline(&rootparams, &depth);
+    SceneManager scene(&rootparams, &depth, &pipeline);
     scene.Initialize();
 
 

@@ -3,12 +3,10 @@
 #include "Scene.h"
 #include "Draw.h"
 
-MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
+MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
 	this->root = root;
 	this->pipeline = pipeline;
-	this->pipeline1 = pipeline1;
-	this->pipeline2 = pipeline2;
 	this->depth = depth;
 	loadTex.CreateTexture(L"Resources\\reimu.png");
 	loadBackGroundTex.CreateNoTextureFileIsTexture();
@@ -18,7 +16,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipelineRootS
 	loadSprite.InitMatProje();
 	loadSprite = loadSprite.CreateSprite();
 	InitRand();
-	scene = new Scene(this->root, this->depth, this->pipeline, this->pipeline1,this->pipeline2);
+	scene = new Scene(this->root, this->depth, this->pipeline);
 }
 
 MCB::SceneManager::~SceneManager()
@@ -93,22 +91,22 @@ void MCB::SceneManager::Update()
 
 void MCB::SceneManager::Draw()
 {
-	Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->GetObj3dPipelinePtr(), scene->clearColor);
+	Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0,Alpha), scene->clearColor);
 	if (isInitialized)//ゲーム画面
 	{
 		//3D描画
 		scene->Draw();
 		//パーティクル
-		scene->GetParticlePipelinePtr()->CommonBeginDraw(true);
+		scene->Getpipeline()->SetParticlePipeLine(Alpha);
 		scene->ParticleDraw();
 		//スプライト
-		scene->GetSpritePipelinePtr()->CommonBeginDraw();
+		scene->Getpipeline()->SetSpritePipeLine(Alpha);
 		scene->SpriteDraw();
 		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ロード画面
 	{
-		scene->GetSpritePipelinePtr()->CommonBeginDraw();
+		scene->Getpipeline()->SetSpritePipeLine(Alpha);
 		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 		loadSprite.SpriteDraw(loadTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
 	}  

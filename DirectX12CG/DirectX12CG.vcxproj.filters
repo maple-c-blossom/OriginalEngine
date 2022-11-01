@@ -288,6 +288,9 @@
     <ClCompile Include="FPS.cpp">
       <Filter>ソース ファイル\Engin</Filter>
     </ClCompile>
+    <ClCompile Include="PipeLineManager.cpp">
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -459,6 +462,9 @@
     </ClInclude>
     <ClInclude Include="FPS.h">
       <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
+    <ClInclude Include="PipeLineManager.h">
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

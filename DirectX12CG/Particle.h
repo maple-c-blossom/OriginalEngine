@@ -69,6 +69,8 @@ namespace MCB
 
         bool trackingFlag = false;
 
+        void SetColor(Float4 color);
+
         void Init(Texture* tex);
 
         void Update(View& view, Projection& projection, bool isBillBord = false);

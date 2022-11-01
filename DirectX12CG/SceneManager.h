@@ -10,9 +10,7 @@ namespace MCB
 		IScene* scene;
 		RootParameter* root;
 		Depth* depth;
-		PipelineRootSignature* pipeline;//Obj3D
-		PipelineRootSignature* pipeline1;//Sprite
-		PipelineRootSignature* pipeline2;//particle
+		PipeLineManager* pipeline;
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 120;
 		int isChengeSceneTimer = 0;
@@ -24,7 +22,7 @@ namespace MCB
 		bool isInitialized = true;
 		int angle = 0;
 	public:
-		SceneManager(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2);
+		SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline);
 		~SceneManager();
 		void Initialize();
 		void Update();

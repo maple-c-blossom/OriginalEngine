@@ -21,7 +21,7 @@ void MCB::TitleScene::ParticleInit()
 
 MCB::IScene* MCB::TitleScene::GetNextScene()
 {
-	return new Scene(rootparamsPtr, depth, obj3dPipelinePtr, spritePipelinePtr,particlePipelinePtr);
+	return new Scene(rootparamsPtr, depth, pipeline);
 }
 
 void MCB::TitleScene::MatrixUpdate()
@@ -67,13 +67,11 @@ void MCB::TitleScene::CheckAllColision()
 {
 }
 
-MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth, PipelineRootSignature* pipeline, PipelineRootSignature* pipeline1, PipelineRootSignature* pipeline2)
+MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
 {
 	rootparamsPtr = root;
-	obj3dPipelinePtr = pipeline;
-	spritePipelinePtr = pipeline1;
-    particlePipelinePtr = pipeline2;
 	this->depth = depth;
+    this->pipeline = pipeline;
 }
 
 MCB::TitleScene::~TitleScene()
