@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "TitleScene.h"
+#include "Util.h"
 using namespace MCB;
 using namespace DirectX;
 
@@ -47,9 +48,9 @@ void MCB::Scene::Object3DInit()
 
     testSpher.Init();
     testSpher.model = BoxModel;
-    testSpher.scale = {3,3,3};
+    testSpher.scale = {1,1,1};
     testSpher.position = { 0,4,10 };
-
+    testSpher.rotasion = { ConvertRadius(90),0,0 };
 
 
     //sphere.Init();
@@ -63,7 +64,7 @@ void MCB::Scene::Object3DInit()
 #pragma region 各種リソースの読み込みと初期化
 void MCB::Scene::LoadModel()
 {
-	BoxModel = new Model("box");
+	BoxModel = new Model("hoge");
 
 	groundModel = new Model("ground");
 
