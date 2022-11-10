@@ -1,8 +1,6 @@
 #include "FBXLoader.h"
 #include "FBXModel.h"
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
+
 using namespace MCB;
 using namespace Assimp;
 const std::string AssimpLoader::baseDirectory = "Resources\\";
