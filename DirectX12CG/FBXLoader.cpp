@@ -1,8 +1,6 @@
 #include "FBXLoader.h"
 #include "FBXModel.h"
-#include <assimp/Importer.hpp>      // C++ importer interface
-#include <assimp/scene.h>           // Output data structure
-#include <assimp/postprocess.h>     // Post processing flags
+
 using namespace MCB;
 using namespace Assimp;
 const std::string AssimpLoader::baseDirectory = "Resources\\";
@@ -40,14 +38,15 @@ void MCB::AssimpLoader::Finalize()
 }
 
 
-bool MCB::AssimpLoader::DoTheImportThing(const std::string& pFile) {
+bool MCB::AssimpLoader::DoTheImportThing(ImportSetting importSetting) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
+	auto meshes = importSetting.meshies;
 	//importer.SetIOHandler(new MyIOSystem());
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
-	const aiScene* scene = importer.ReadFile(pFile,
+	const aiScene* scene = importer.ReadFile(importSetting.fileName,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
@@ -60,13 +59,55 @@ bool MCB::AssimpLoader::DoTheImportThing(const std::string& pFile) {
 		//DoTheErrorLogging(importer.GetErrorString());
 		return false;
 	}
-	aiMesh a;
+
+
+
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
 
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
+void MCB::AssimpLoader::CopyNodesWithMeshes(aiScene aiScene, aiNode ainode, Node targetParent) 
+{
+	//SceneObject parent;
+	//Matrix4x4 transform;
+
+	// if node has meshes, create a new scene object for it
+	if (ainode.mNumMeshes > 0) {
+		std::unique_ptr<Node> newObject = std::make_unique<Node>();
+		/*targetParent.addChild(newObject);*/
+		targetParent.parent = newObject.get();
+		// copy the meshes
+		//CopyMeshes(node, newObject);
+		for (int i = 0; i < ainode.mNumMeshes; i++)
+		{
+			//std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
+			FbxVertex vertex;
+			for (int j = 0; j < aiScene.mMeshes[ainode.mMeshes[j]]->mNumVertices; j++)
+			{
+				vertex.pos.x = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->x;
+				vertex.pos.y = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->y;
+				vertex.pos.z = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->z;
+			}
+		}
+		// the new object is the parent for all child nodes
+		//parent = newObject;
+		//transform.SetUnity();
+	}
+	else {
+		// if no meshes, skip the node, but keep its transformation
+		//parent = targetParent;
+		//transform = node.mTransformation * accTransform;
+	}
+
+	//// continue for all child nodes
+	//for (all node.mChildren) {
+	//	CopyNodesWithMeshes(node.mChildren[a], parent, transform);
+	//}
+}
+
+
 //
 //std::wstring GetDirectoryPath(const std::wstring& origin)
 //{
@@ -213,6 +254,5 @@ bool MCB::AssimpLoader::DoTheImportThing(const std::string& pFile) {
 //        dst.DiffuseMap.clear();
 //    }
 //}
-
 
 

@@ -180,7 +180,26 @@ void MCB::Scene::Update()
             matView.eye.x += ConvertRadius(1);
         }
 
-        if (input->IsKeyTrigger(DIK_SPACE)) ybill = !ybill;
+        if (input->IsKeyTrigger(DIK_SPACE))
+        {
+            if (testSpher.model == BoxModel)
+            {
+                testSpher.model = groundModel;
+            }
+            else
+            {
+                testSpher.model = BoxModel;
+            }
+        }
+
+        if (input->IsKeyDown(DIK_A))
+        {
+            testSpher.position.x += 1;
+        }
+        if (input->IsKeyDown(DIK_D))
+        {
+            testSpher.position.x -= 1;
+        }
 
         matView.target = testSpher.position;
         //lights->SetPLightPos(0, PLPos);
@@ -203,7 +222,7 @@ void MCB::Scene::Draw()
 
 void MCB::Scene::SpriteDraw()
 {
-
+    debugText.Print(20, 20, 1, "hogehoge");
     debugText.AllDraw();
 }
 

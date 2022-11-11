@@ -6,7 +6,9 @@
 #include "Texture.h"
 #include <assimp/IOStream.hpp>
 #include <assimp/IOSystem.hpp>
-
+#include <assimp/Importer.hpp>      // C++ importer interface
+#include <assimp/scene.h>           // Output data structure
+#include <assimp/postprocess.h>     // Post processing flags
 namespace MCB
 {
 
@@ -56,24 +58,36 @@ namespace MCB
         Float3 pos;//xyz座標
         Float3 normal;//法線ベクトル
         Float2 uv;//uv座標
-    };
+    }FbxVertex;
     //--------------------------------------
     typedef struct Mesh
     {
         std::vector<FbxVertex> vertices;
         std::vector<uint32_t> indices;
         std::wstring DiffuseMap;
-    };
+    }Mesh;
 
 
     typedef struct ImportSetting
     {
         const std::string fileName;//ファイルパス
-        std::vector<Mesh>& meshies; //出力先メッシュ配列
+        std::vector<Mesh> meshies; //出力先メッシュ配列
         bool inversU = false; //U座標反転フラグ
         bool inversV = false; //V座標反転フラグ
-    };
+    }ImportSetting;
 
+    typedef struct Node
+    {
+        std::string name;
+        std::vector<std::unique_ptr<Mesh>> meshies; //出力先メッシュ配列
+        DirectX::XMVECTOR scale = { 1,1,1,0 };
+        DirectX::XMVECTOR rotation = { 0,0,0,0 };
+        DirectX::XMVECTOR translation = { 0,0,0,1 };
+        DirectX::XMMATRIX transdorm;
+        DirectX::XMMATRIX globalTransform;
+        Node* parent = nullptr;
+
+    }Node;
     //struct aiMesh;
     //struct aiMaterial;
 
@@ -87,8 +101,8 @@ namespace MCB
         ~AssimpLoader() {  };
         using string = std::string;
         ID3D12Device* device = nullptr;
-        void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
-
+        //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
+        std::vector<std::unique_ptr<Node>> nodes;
     public:
         static const string baseDirectory;
         static void DeleteInstance();
@@ -96,7 +110,8 @@ namespace MCB
         static AssimpLoader* GetInitInstance();
         void Initialize();
         void Finalize();
-        bool MCB::AssimpLoader::DoTheImportThing(const std::string& pFile);
-        bool LoadFile(ImportSetting setting);
+        bool DoTheImportThing(ImportSetting importSetting);
+        void CopyNodesWithMeshes(aiScene aiScene, aiNode node, Node targetParent);
+        //bool LoadFile(ImportSetting setting);
     };
 }
