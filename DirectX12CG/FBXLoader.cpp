@@ -78,8 +78,10 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode, Node* targetParent,a
 	// if node has meshes, create a new scene object for it
 	if (ainode.mNumMeshes > 0) {
 		std::unique_ptr<Node> newObject = std::make_unique<Node>();
+
 		/*targetParent.addChild(newObject);*/
 		targetParent->parent = newObject.get();
+		newObject->name = ainode.mName.C_Str();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
 		for (int i = 0; i < ainode.mNumMeshes; i++)
