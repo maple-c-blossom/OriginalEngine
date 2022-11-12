@@ -68,191 +68,188 @@ bool MCB::AssimpLoader::DoTheImportThing(ImportSetting importSetting) {
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
-void MCB::AssimpLoader::CopyNodesWithMeshes(aiScene aiScene, aiNode ainode, Node targetParent) 
+void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode, Node* targetParent,aiScene* scene)
 {
-	//SceneObject parent;
+	Node* parent;
 	//Matrix4x4 transform;
+
+
 
 	// if node has meshes, create a new scene object for it
 	if (ainode.mNumMeshes > 0) {
 		std::unique_ptr<Node> newObject = std::make_unique<Node>();
 		/*targetParent.addChild(newObject);*/
-		targetParent.parent = newObject.get();
+		targetParent->parent = newObject.get();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
 		for (int i = 0; i < ainode.mNumMeshes; i++)
 		{
-			//std::unique_ptr<Mesh> mesh = std::make_unique<Mesh>();
-			FbxVertex vertex;
-			for (int j = 0; j < aiScene.mMeshes[ainode.mMeshes[j]]->mNumVertices; j++)
-			{
-				vertex.pos.x = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->x;
-				vertex.pos.y = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->y;
-				vertex.pos.z = aiScene.mMeshes[ainode.mMeshes[j]]->mVertices->z;
-			}
+
+			newObject->meshes.push_back(processMesh(scene->mMeshes[ainode.mMeshes[i]], scene));
+			
 		}
 		// the new object is the parent for all child nodes
-		//parent = newObject;
+		nodes.push_back(std::move(newObject));
+		parent = nodes.end()->get();
 		//transform.SetUnity();
 	}
 	else {
 		// if no meshes, skip the node, but keep its transformation
-		//parent = targetParent;
+		parent = targetParent;
 		//transform = node.mTransformation * accTransform;
 	}
 
 	//// continue for all child nodes
-	//for (all node.mChildren) {
-	//	CopyNodesWithMeshes(node.mChildren[a], parent, transform);
-	//}
+	for (int i = 0; i < ainode.mNumChildren; i++) {
+		CopyNodesWithMeshes(*ainode.mChildren[i], parent,scene);
+	}
 }
 
 
-//
-//std::wstring GetDirectoryPath(const std::wstring& origin)
-//{
-//    fileSys::path p = origin.c_str();
-//    return p.remove_filename().c_str();
-//}
-//
-//std::string ToUTF8(const std::wstring& value)
-//{
-//    auto length = WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, nullptr, 0, nullptr, nullptr);
-//    auto buffer = new char[length];
-//
-//    WideCharToMultiByte(CP_UTF8, 0U, value.data(), -1, buffer, length, nullptr, nullptr);
-//
-//    std::string result(buffer);
-//    delete[] buffer;
-//    buffer = nullptr;
-//
-//    return result;
-//}
-//
-//// std::string(マルチバイト文字列)からstd::wstring(ワイド文字列)を得る
-//std::wstring ToWideString(const std::string& str)
-//{
-//    auto num1 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, nullptr, 0);
-//
-//    std::wstring wstr;
-//    wstr.resize(num1);
-//
-//    auto num2 = MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED | MB_ERR_INVALID_CHARS, str.c_str(), -1, &wstr[0], num1);
-//
-//    assert(num1 == num2);
-//    return wstr;
-//}
-////
-//bool AssimpLoader::LoadFile(ImportSetting settings)
-//{
-//    //if (settings.fileName == nullptr)
-//    //{
-//    //    return false;
-//    //}
-//
-//    auto& meshes = settings.meshies;
-//    auto inverseU = settings.inversU;
-//    auto inverseV = settings.inversV;
-//
-//    //auto path = ToUTF8(settings.filename);
-//
-//    Assimp::Importer importer;
-//    int flag = 0;
-//    flag |= aiProcess_Triangulate;
-//    flag |= aiProcess_PreTransformVertices;
-//    flag |= aiProcess_CalcTangentSpace;
-//    flag |= aiProcess_GenSmoothNormals;
-//    flag |= aiProcess_GenUVCoords;
-//    flag |= aiProcess_RemoveRedundantMaterials;
-//    flag |= aiProcess_OptimizeMeshes;
-//
-//    auto scene = importer.ReadFile(path, flag);
-//
-//    if (scene == nullptr)
-//    {
-//        // もし読み込みエラーがでたら表示する
-//        printf(importer.GetErrorString());
-//        printf("\n");
-//        return false;
-//    }
-//
-//    // 読み込んだデータを自分で定義したMesh構造体に変換する
-//    meshes.clear();
-//    meshes.resize(scene->mNumMeshes);
-//    for (size_t i = 0; i < meshes.size(); ++i)
-//    {
-//        const auto pMesh = scene->mMeshes[i];
-//        LoadMesh(meshes[i], pMesh, inverseU, inverseV);
-//        const auto pMaterial = scene->mMaterials[i];
-//        //LoadTexture(settings.filename, meshes[i], pMaterial);
-//    }
-//
-//    scene = nullptr;
-//
-//    return true;
-////}
-////
-//void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV)
-//{
-//    aiVector3D zero3D(0.0f, 0.0f, 0.0f);
-//    aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
-//
-//    dst.Vertices.resize(src->mNumVertices);
-//
-//    for (auto i = 0u; i < src->mNumVertices; ++i)
-//    {
-//        auto position = &(src->mVertices[i]);
-//        auto normal = &(src->mNormals[i]);
-//        auto uv = (src->HasTextureCoords(0)) ? &(src->mTextureCoords[0][i]) : &zero3D;
-//        auto tangent = (src->HasTangentsAndBitangents()) ? &(src->mTangents[i]) : &zero3D;
-//        auto color = (src->HasVertexColors(0)) ? &(src->mColors[0][i]) : &zeroColor;
-//
-//        // 反転オプションがあったらUVを反転させる
-//        if (inverseU)
-//        {
-//            uv->x = 1 - uv->x;
-//        }
-//        if (inverseV)
-//        {
-//            uv->y = 1 - uv->y;
-//        }
-//
-//        Vertex vertex = {};
-//        vertex.Position = DirectX::XMFLOAT3(position->x, position->y, position->z);
-//        vertex.Normal = DirectX::XMFLOAT3(normal->x, normal->y, normal->z);
-//        vertex.UV = DirectX::XMFLOAT2(uv->x, uv->y);
-//        vertex.Tangent = DirectX::XMFLOAT3(tangent->x, tangent->y, tangent->z);
-//        vertex.Color = DirectX::XMFLOAT4(color->r, color->g, color->b, color->a);
-//
-//        dst.Vertices[i] = vertex;
-//    }
-//
-//    dst.Indices.resize(src->mNumFaces * 3);
-//
-//    for (auto i = 0u; i < src->mNumFaces; ++i)
-//    {
-//        const auto& face = src->mFaces[i];
-//
-//        dst.Indices[i * 3 + 0] = face.mIndices[0];
-//        dst.Indices[i * 3 + 1] = face.mIndices[1];
-//        dst.Indices[i * 3 + 2] = face.mIndices[2];
-//    }
-//}
+FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
+	// Data to fill
+	FBXModel tempmodel;
 
-//void AssimpLoader::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)
-//{
-//    aiString path;
-//    if (src->Get(AI_MATKEY_TEXTURE_DIFFUSE(0), path) == AI_SUCCESS)
-//    {
-//        // テクスチャパスは相対パスで入っているので、ファイルの場所とくっつける
-//        auto dir = GetDirectoryPath(filename);
-//        auto file = std::string(path.C_Str());
-//        dst.DiffuseMap = dir + ToWideString(file);
-//    }
-//    else
-//    {
-//        dst.DiffuseMap.clear();
-//    }
-//}
+	// Walk through each of the mesh's vertices
+	for (UINT i = 0; i < mesh->mNumVertices; i++) {
+		FBXVertex vertex;
+
+		vertex.pos.x = mesh->mVertices[i].x;
+		vertex.pos.y = mesh->mVertices[i].y;
+		vertex.pos.z = mesh->mVertices[i].z;
+		vertex.normal.x = mesh->mNormals[i].x;
+		vertex.normal.y = mesh->mNormals[i].y;
+		vertex.normal.z = mesh->mNormals[i].z;
+		if (mesh->mTextureCoords[0]) {
+			vertex.uv.x = (float)mesh->mTextureCoords[0][i].x;
+			vertex.uv.y = (float)mesh->mTextureCoords[0][i].y;
+		}
+
+		tempmodel.vertices.push_back(vertex);
+	}
 
 
+	for (UINT i = 0; i < mesh->mNumFaces; i++) {
+		aiFace face = mesh->mFaces[i];
+
+		for (UINT j = 0; j < face.mNumIndices; j++)
+			tempmodel.indices.push_back(face.mIndices[j]);
+	}
+
+	if (mesh->mMaterialIndex >= 0) {
+		aiColor3D color;
+		ObjectMaterial mat;
+		aiString name;
+
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE,color);
+		mat.material.diffuse.x = color.r;
+		mat.material.diffuse.y = color.g;
+		mat.material.diffuse.z = color.b;
+
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_SPECULAR, color);
+		mat.material.specular.x = color.r;
+		mat.material.specular.y = color.g;
+		mat.material.specular.z = color.b;
+
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_AMBIENT, color);
+		mat.material.ambient.x = color.r;
+		mat.material.ambient.y = color.g;
+		mat.material.ambient.z = color.b;
+
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_NAME, name);
+		mat.material.name = name.C_Str();
+
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_OPACITY, mat.material.alpha);
+		tempmodel.material.push_back(mat);
+		tempmodel.textures = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
+		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	}
+	tempmodel.Init();
+	return tempmodel;
+	//return Mesh(dev_, vertices, indices, textures);
+}
+//
+
+std::vector<Texture> AssimpLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+	std::vector<Texture> textures;
+	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
+		aiString str;
+		Texture tempTex;
+		std::string path;
+		mat->GetTexture(type, i, &str);
+		path = str.C_Str();
+		path = "Resources\\" + path;
+		wchar_t wfilepath[128];
+		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
+		tempTex.CreateTexture(wfilepath);
+		textures.push_back(tempTex);
+
+	}
+	return textures;
+}
+
+//void ModelLoader::Close() {
+//	for (auto& t : textures_loaded_)
+//		t.Release();
+//
+//	for (size_t i = 0; i < meshes_.size(); i++) {
+//		meshes_[i].Close();
+//	}
+//}
+//
+//void AssimpLoader::processNode(aiNode* node, const aiScene* scene) {
+//	for (UINT i = 0; i < node->mNumMeshes; i++) {
+//		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
+//		nodes.push_back(this->processMesh(mesh, scene));
+//	}
+//
+//	for (UINT i = 0; i < node->mNumChildren; i++) {
+//		this->processNode(node->mChildren[i], scene);
+//	}
+//}
+//
+//ID3D11ShaderResourceView* ModelLoader::loadEmbeddedTexture(const aiTexture* embeddedTexture) {
+//	HRESULT hr;
+//	ID3D11ShaderResourceView* texture = nullptr;
+//
+//	if (embeddedTexture->mHeight != 0) {
+//		// Load an uncompressed ARGB8888 embedded texture
+//		D3D11_TEXTURE2D_DESC desc;
+//		desc.Width = embeddedTexture->mWidth;
+//		desc.Height = embeddedTexture->mHeight;
+//		desc.MipLevels = 1;
+//		desc.ArraySize = 1;
+//		desc.SampleDesc.Count = 1;
+//		desc.SampleDesc.Quality = 0;
+//		desc.Usage = D3D11_USAGE_DEFAULT;
+//		desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+//		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+//		desc.CPUAccessFlags = 0;
+//		desc.MiscFlags = 0;
+//
+//		D3D11_SUBRESOURCE_DATA subresourceData;
+//		subresourceData.pSysMem = embeddedTexture->pcData;
+//		subresourceData.SysMemPitch = embeddedTexture->mWidth * 4;
+//		subresourceData.SysMemSlicePitch = embeddedTexture->mWidth * embeddedTexture->mHeight * 4;
+//
+//		ID3D11Texture2D* texture2D = nullptr;
+//		hr = dev_->CreateTexture2D(&desc, &subresourceData, &texture2D);
+//		if (FAILED(hr))
+//			MessageBox(hwnd_, "CreateTexture2D failed!", "Error!", MB_ICONERROR | MB_OK);
+//
+//		hr = dev_->CreateShaderResourceView(texture2D, nullptr, &texture);
+//		if (FAILED(hr))
+//			MessageBox(hwnd_, "CreateShaderResourceView failed!", "Error!", MB_ICONERROR | MB_OK);
+//
+//		return texture;
+//	}
+//
+//	// mHeight is 0, so try to load a compressed texture of mWidth bytes
+//	const size_t size = embeddedTexture->mWidth;
+//
+//	hr = CreateWICTextureFromMemory(dev_, devcon_, reinterpret_cast<const unsigned char*>(embeddedTexture->pcData), size, nullptr, &texture);
+//	if (FAILED(hr))
+//		MessageBox(hwnd_, "Texture couldn't be created from memory!", "Error!", MB_ICONERROR | MB_OK);
+//
+//	return texture;
+//}

@@ -1,21 +1,93 @@
 #pragma once
-#include <string>
-#include "Vector3D.h"
-#include "Quaternion.h"
-#include "MCBMatrix.h"
+#include <DirectXMath.h>
+#include <Windows.h>
+#include <wrl.h>
+#include "Dx12.h"
+#include <d3d12.h>
+#include "ObjectMaterial.h"
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include "MCBFloat.h"
+#include <unordered_map>
+#include "Vector3D.h"
+#include "Texture.h"
 
 namespace MCB
 {
 
 
+        //頂点データ構造体-------------------------------------
+        typedef struct FBXVertex
+        {
+            Float3 pos;//xyz座標
+            Float3 normal;//法線ベクトル
+            Float2 uv;//uv座標
+        };
+        //--------------------------------------
+
 
 	class FBXModel
 	{
-	public:	
-		std::string name;
+        public:
 
-	public:
+            //Model(const std::string fileName, bool smooth = false);
+            //FBXModel();
+            //~FBXModel();
+
+            Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
+
+            Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+
+
+            std::vector<Texture> textures;
+            //MCB::Texture textures;
+            std::vector<FBXVertex> vertices;
+            std::vector<unsigned short> indices;
+            std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
+
+            unsigned int sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
+            unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+
+            D3D12_INDEX_BUFFER_VIEW ibView{};
+
+            D3D12_VERTEX_BUFFER_VIEW vbView{};
+
+            //D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+
+            //D3D12_RESOURCE_DESC resdesc{};  // リソース設定
+
+            std::vector<ObjectMaterial> material;
+
+            void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+
+            void SetIbView(DXGI_FORMAT format);
+
+            void SetVbView();
+
+            void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+
+            HRESULT IndexMaping();
+
+            HRESULT VertexMaping();
+
+            void CreateModel(const std::string fileName, bool smooth = false);
+
+            void SetSizeIB();
+
+            void SetSizeVB();
+
+            void LoadMaterial(const std::string& directoryPath, const std::string& filename);
+
+            void Init();
+
+            inline size_t GetVertexCount() { return vertices.size(); }
+
+            void AddSmoothData(unsigned short indexPosition, unsigned short indexVertex);
+
+            void CalculateSmoothedVertexNormals();
+        };
 	};
 
 	//struct Node
@@ -28,5 +100,5 @@ namespace MCB
 //	DirectX::XMMATRIX  globalTransform;
 //	Node* parent = nullptr;
 //};
-}
+
 

@@ -9,6 +9,7 @@
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
+#include "FBXModel.h"
 namespace MCB
 {
 
@@ -79,7 +80,7 @@ namespace MCB
     typedef struct Node
     {
         std::string name;
-        std::vector<std::unique_ptr<Mesh>> meshies; //出力先メッシュ配列
+        std::vector<FBXModel> meshes; //出力先メッシュ配列
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
@@ -111,7 +112,9 @@ namespace MCB
         void Initialize();
         void Finalize();
         bool DoTheImportThing(ImportSetting importSetting);
-        void CopyNodesWithMeshes(aiScene aiScene, aiNode node, Node targetParent);
+        void CopyNodesWithMeshes( aiNode node, Node* targetParent, aiScene* scene);
+        FBXModel processMesh(aiMesh* mesh, const aiScene* scene);
+        std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene)
         //bool LoadFile(ImportSetting setting);
     };
 }

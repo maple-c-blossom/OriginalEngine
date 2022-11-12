@@ -1,40 +1,149 @@
-//#include "FBXModel.h"
-//#include "Util.h"
+#include "FBXModel.h"
+#include "Util.h"
 //using namespace MCB;
 //using namespace std;
-//
-//void MCB::ParseNodeRecursive(FBXModel* model, FbxNode* node)
+//MCB::FBXModel::FBXModel()
 //{
-//	//ノード名取得
-//	string name = node->GetName();
-//	//モデルにノードを追加
-//	model->nodes.emplace_back();
-//	Node& tempNode = model->nodes.back();
-//	//ノード名を取得
-//	tempNode.name = node->GetName();
-//	//FBXノードローカル移動情報
-//	FbxDouble3 rota = node->LclRotation.Get();
-//	FbxDouble3 scale = node->LclScaling.Get();
-//	FbxDouble3 trans = node->LclTranslation.Get();
-//	//形式変換後代入
-//	tempNode.rotation.vec = { (float)rota[0],(float)rota[1],(float)rota[2] };
-//	tempNode.scale.vec = { (float)scale[0],(float)scale[1],(float)scale[2] };
-//	tempNode.translasion.vec = { (float)trans[0],(float)trans[1],(float)trans[2] };
-//	//回転角をラジアンに変換
-//	tempNode.rotation.vec.x = ConvertRadius(tempNode.rotation.vec.x);
-//	tempNode.rotation.vec.y = ConvertRadius(tempNode.rotation.vec.y);
-//	tempNode.rotation.vec.z = ConvertRadius(tempNode.rotation.vec.z);
-//	//各種行列の計算
-//	DirectX::XMMATRIX scaleMat, transMat, rotaMat;
-//	//scaleMat = DirectX::XMMatrixScalingFromVector(DirectX::XMVECTOR{ tempNode.scale.vec.x, tempNode.scale.vec.y, tempNode.scale.vec.z });
+//    //material.Init();
+//}
 //
-//	//FbxNodeの情報を解析して記録
-//	
-//	//FbxNodeのメッシュ情報を解析
+//MCB::FBXModel::~FBXModel()
+//{
+//    //texture.texfile.scratchImg.Release();
+//}
+
+void MCB::FBXModel::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+{
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+        &HeapProp, // ヒープ設定
+        flag,
+        &Resdesc, // リソース設定
+        state,
+        nullptr,
+        IID_PPV_ARGS(&vertBuff));
+    assert(SUCCEEDED(Dx12::GetInstance()->result));
+}
+
+void MCB::FBXModel::SetIbView(DXGI_FORMAT format)
+{
+    ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
+    ibView.Format = format;
+    ibView.SizeInBytes = sizeIB;
+}
+
+void MCB::FBXModel::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+{
+    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+        &HeapProp,
+        flag,
+        &Resdesc,
+        state,
+        nullptr,
+        IID_PPV_ARGS(&indexBuff)
+    );
+
+}
+
+HRESULT MCB::FBXModel::IndexMaping()
+{
+    HRESULT result = S_OK;
+
+
+    uint16_t* indexMap = nullptr;
+    //GPU上のバッファに対応した仮想メモリを取得----------------------------
+    result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+    //---------------------------------------
+
+    std::copy(indices.begin(), indices.end(), indexMap);
+
+    //繋がりを解除---------------------
+    indexBuff->Unmap(0, nullptr);
+    //------------------------
+
+    return result;
+}
+
+void MCB::FBXModel::SetVbView()
+{
+    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
+    vbView.SizeInBytes = sizeVB;
+    vbView.StrideInBytes = sizeof(vertices[0]);
+}
+
+HRESULT MCB::FBXModel::VertexMaping()
+{
+    HRESULT result = S_OK;
+
+    FBXVertex* vertMap = nullptr;
+
+    result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+    assert(SUCCEEDED(result));
+
+    std::copy(vertices.begin(), vertices.end(), vertMap);
+
+    // マップを解除
+    vertBuff->Unmap(0, nullptr);
+
+    return result;
+}
+
+void MCB::FBXModel::SetSizeIB()
+{
+    sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+}
+
+
+
+void MCB::FBXModel::SetSizeVB()
+{
+    sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
+}
+
+void MCB::FBXModel::Init()
+{
+
+    SetSizeIB();
+    for (auto& itr : material)
+    {
+        itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+        CreateIndexBuffer(itr.HeapProp, D3D12_HEAP_FLAG_NONE, itr.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+
+    }
+    Dx12::GetInstance()->result = IndexMaping();
+    SetIbView(DXGI_FORMAT_R16_UINT);
+
+    SetSizeVB();
+    for (auto& itr : material)
+    {
+        itr.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+        CreateVertexBuffer(itr.HeapProp, D3D12_HEAP_FLAG_NONE, itr.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    }
+    VertexMaping();
+    SetVbView();
+
+}
+
+//void MCB::FBXModel::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
+//{
+//    smoothData[indexPosition].emplace_back(indexVertex);
+//}
 //
-//	//子ノードに対して再起呼び出し
-//	for (int i = 0; i < node->GetChildCount(); i++)
-//	{
-//		ParseNodeRecursive(model, node->GetChild(i));
-//	}
+//void MCB::FBXModel::CalculateSmoothedVertexNormals()
+//{
+//    auto itr = smoothData.begin();
+//    for (; itr != smoothData.end(); ++itr)
+//    {
+//        std::vector<unsigned short>& v = itr->second;
+//        Vector3D normal = {};
+//        for (unsigned short index : v)
+//        {
+//            normal += vertices[index].normal;
+//        }
+//        normal = normal / (float)v.size();
+//        normal.V3Norm();
+//        for (unsigned short index : v)
+//        {
+//            vertices[index].normal = { normal.vec.x, normal.vec.y, normal.vec.z };
+//        }
+//    }
 //}
