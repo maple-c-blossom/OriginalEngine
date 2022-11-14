@@ -84,7 +84,7 @@ namespace MCB
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
-        DirectX::XMMATRIX transdorm;
+        DirectX::XMMATRIX transform;
         DirectX::XMMATRIX globalTransform;
         Node* parent = nullptr;
 
@@ -112,7 +112,7 @@ namespace MCB
         void Initialize();
         void Finalize();
         bool DoTheImportThing(ImportSetting importSetting);
-        void CopyNodesWithMeshes( aiNode node, Node* targetParent, aiScene* scene);
+        void CopyNodesWithMeshes( aiNode node, aiScene* scene, Node* targetParent = nullptr);
         FBXModel processMesh(aiMesh* mesh, const aiScene* scene);
         std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene)
         //bool LoadFile(ImportSetting setting);
