@@ -1,6 +1,6 @@
 #include "FBXLoader.h"
 #include "FBXModel.h"
-
+#include "Dx12.h"
 using namespace MCB;
 using namespace Assimp;
 const std::string AssimpLoader::baseDirectory = "Resources\\";
@@ -55,20 +55,19 @@ bool MCB::AssimpLoader::DoTheImportThing(ImportSetting importSetting) {
 		aiProcess_FlipUVs);
 
 	// If the import failed, report it
-	if (nullptr != scene) {
+	if (nullptr == scene) {
 		//DoTheErrorLogging(importer.GetErrorString());
 		return false;
 	}
 
 
-
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
-
+	CopyNodesWithMeshes(*scene->mRootNode, scene);
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
-void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode, aiScene* scene, Node* targetParent)
+void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode,const aiScene* scene, Node* targetParent)
 {
 	Node* parent;
 	//Matrix4x4 transform;
@@ -114,7 +113,6 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode, aiScene* scene, Node
 		newObject->transform.r[3].m128_f32[3] = ainode.mTransformation.d4;
 
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
-
 		newObject->globalTransform = newObject->transform;
 		nodes.push_back(std::move(newObject));
 		parent = nodes.end()->get();
@@ -198,6 +196,11 @@ FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
 	tempmodel.Init();
 	return tempmodel;
 	//return Mesh(dev_, vertices, indices, textures);
+}
+void MCB::AssimpLoader::Draw()
+{
+	Dx12* dx12 = Dx12::GetInstance();
+
 }
 //
 
