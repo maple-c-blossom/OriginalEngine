@@ -38,15 +38,14 @@ void MCB::AssimpLoader::Finalize()
 }
 
 
-bool MCB::AssimpLoader::DoTheImportThing(ImportSetting importSetting) {
+bool MCB::AssimpLoader::Load(std::string fileName) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
-	auto meshes = importSetting.meshies;
 	//importer.SetIOHandler(new MyIOSystem());
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
-	const aiScene* scene = importer.ReadFile(importSetting.fileName,
+	const aiScene* scene = importer.ReadFile(fileName,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
@@ -64,6 +63,7 @@ bool MCB::AssimpLoader::DoTheImportThing(ImportSetting importSetting) {
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
 	CopyNodesWithMeshes(*scene->mRootNode, scene);
+	delete scene;//読み込み、変換が終わったらポインタを削除(中身はコピーで抜き取っているため、削除しても問題はない
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
