@@ -62,12 +62,11 @@ bool MCB::AssimpLoader::Load(std::string fileName) {
 
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
-	CopyNodesWithMeshes(*scene->mRootNode, scene);
-	delete scene;//読み込み、変換が終わったらポインタを削除(中身はコピーで抜き取っているため、削除しても問題はない
+	CopyNodesWithMeshes(scene->mRootNode, scene);//読み込み、変換が終わったらポインタを削除(中身はコピーで抜き取っているため、削除しても問題はない
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
-void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode,const aiScene* scene, Node* targetParent)
+void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, Node* targetParent)
 {
 	Node* parent;
 	//Matrix4x4 transform;
@@ -75,47 +74,47 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode,const aiScene* scene,
 
 
 	// if node has meshes, create a new scene object for it
-	if (ainode.mNumMeshes > 0) {
+	if (ainode->mNumMeshes > 0) {
 		std::unique_ptr<Node> newObject = std::make_unique<Node>();
 
 		/*targetParent.addChild(newObject);*/
 		//targetParent->parent = newObject.get();
-		newObject->name = ainode.mName.C_Str();
+		newObject->name = ainode->mName.C_Str();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
-		for (int i = 0; i < ainode.mNumMeshes; i++)
+		for (int i = 0; i < ainode->mNumMeshes; i++)
 		{
 
-			newObject->meshes.push_back(processMesh(scene->mMeshes[ainode.mMeshes[i]], scene));
+			newObject->meshes.push_back(processMesh(scene->mMeshes[ainode->mMeshes[i]], scene));
 			
 		}
 		// the new object is the parent for all child nodes
 
 		// the new object is the parent for all child nodes
-		newObject->transform.r[0].m128_f32[0] = ainode.mTransformation.a1;
-		newObject->transform.r[0].m128_f32[1] = ainode.mTransformation.a2;
-		newObject->transform.r[0].m128_f32[2] = ainode.mTransformation.a3;
-		newObject->transform.r[0].m128_f32[3] = ainode.mTransformation.a4;
+		newObject->transform.r[0].m128_f32[0] = ainode->mTransformation.a1;
+		newObject->transform.r[0].m128_f32[1] = ainode->mTransformation.a2;
+		newObject->transform.r[0].m128_f32[2] = ainode->mTransformation.a3;
+		newObject->transform.r[0].m128_f32[3] = ainode->mTransformation.a4;
 
-		newObject->transform.r[1].m128_f32[0] = ainode.mTransformation.b1;
-		newObject->transform.r[1].m128_f32[1] = ainode.mTransformation.b2;
-		newObject->transform.r[1].m128_f32[2] = ainode.mTransformation.b3;
-		newObject->transform.r[1].m128_f32[3] = ainode.mTransformation.b4;
+		newObject->transform.r[1].m128_f32[0] = ainode->mTransformation.b1;
+		newObject->transform.r[1].m128_f32[1] = ainode->mTransformation.b2;
+		newObject->transform.r[1].m128_f32[2] = ainode->mTransformation.b3;
+		newObject->transform.r[1].m128_f32[3] = ainode->mTransformation.b4;
 
-		newObject->transform.r[2].m128_f32[0] = ainode.mTransformation.c1;
-		newObject->transform.r[2].m128_f32[1] = ainode.mTransformation.c2;
-		newObject->transform.r[2].m128_f32[2] = ainode.mTransformation.c3;
-		newObject->transform.r[2].m128_f32[3] = ainode.mTransformation.c4;
+		newObject->transform.r[2].m128_f32[0] = ainode->mTransformation.c1;
+		newObject->transform.r[2].m128_f32[1] = ainode->mTransformation.c2;
+		newObject->transform.r[2].m128_f32[2] = ainode->mTransformation.c3;
+		newObject->transform.r[2].m128_f32[3] = ainode->mTransformation.c4;
 
-		newObject->transform.r[3].m128_f32[0] = ainode.mTransformation.d1;
-		newObject->transform.r[3].m128_f32[1] = ainode.mTransformation.d2;
-		newObject->transform.r[3].m128_f32[2] = ainode.mTransformation.d3;
-		newObject->transform.r[3].m128_f32[3] = ainode.mTransformation.d4;
+		newObject->transform.r[3].m128_f32[0] = ainode->mTransformation.d1;
+		newObject->transform.r[3].m128_f32[1] = ainode->mTransformation.d2;
+		newObject->transform.r[3].m128_f32[2] = ainode->mTransformation.d3;
+		newObject->transform.r[3].m128_f32[3] = ainode->mTransformation.d4;
 
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
 		nodes.push_back(std::move(newObject));
-		parent = nodes.end()->get();
+		parent = newObject.get();
 		//transform.SetUnity();
 	}
 	else {
@@ -129,8 +128,8 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode ainode,const aiScene* scene,
 		targetParent->globalTransform *= parent->globalTransform;
 	}
 	//// continue for all child nodes
-	for (int i = 0; i < ainode.mNumChildren; i++) {
-		CopyNodesWithMeshes(*ainode.mChildren[i], scene, parent);
+	for (int i = 0; i < ainode->mNumChildren; i++) {
+		CopyNodesWithMeshes(ainode->mChildren[i], scene, parent);
 	}
 }
 
@@ -189,6 +188,7 @@ FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
 		mat.material.name = name.C_Str();
 
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_OPACITY, mat.material.alpha);
+		mat.Init();
 		tempmodel.material.push_back(mat);
 		tempmodel.textures = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());

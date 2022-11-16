@@ -68,7 +68,7 @@ namespace MCB
         void Initialize();
         void Finalize();
         bool Load(std::string fileName);
-        void CopyNodesWithMeshes( aiNode node,const aiScene* scene, Node* targetParent = nullptr);
+        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         FBXModel processMesh(aiMesh* mesh, const aiScene* scene);
         std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
         //bool LoadFile(ImportSetting setting);
