@@ -71,12 +71,10 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene
 	Node* parent;
 	//Matrix4x4 transform;
 
+	std::unique_ptr<Node> newObject = std::make_unique<Node>();
 
 
 	// if node has meshes, create a new scene object for it
-	if (ainode->mNumMeshes > 0) {
-		std::unique_ptr<Node> newObject = std::make_unique<Node>();
-
 		/*targetParent.addChild(newObject);*/
 		//targetParent->parent = newObject.get();
 		newObject->name = ainode->mName.C_Str();
@@ -116,12 +114,7 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene
 		nodes.push_back(std::move(newObject));
 		parent = newObject.get();
 		//transform.SetUnity();
-	}
-	else {
-		// if no meshes, skip the node, but keep its transformation
-		parent = targetParent;
-		//transform = node.mTransformation * accTransform;
-	}
+
 	if (targetParent)
 	{
 		targetParent->parent = parent;
