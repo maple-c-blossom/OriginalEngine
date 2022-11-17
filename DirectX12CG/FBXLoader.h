@@ -62,9 +62,6 @@ namespace MCB
     public:
 
         static const string baseDirectory;
-        static void DeleteInstance();
-        static AssimpLoader* GetInstance();
-        static AssimpLoader* GetInitInstance();
         void Initialize();
         void Finalize();
         bool Load(std::string fileName);

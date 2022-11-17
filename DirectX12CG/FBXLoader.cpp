@@ -5,25 +5,7 @@ using namespace MCB;
 using namespace Assimp;
 const std::string AssimpLoader::baseDirectory = "Resources\\";
 
-void AssimpLoader::DeleteInstance()
-{
-	
-	GetInstance()->Finalize();
-	delete GetInstance();
-}
 
-AssimpLoader* AssimpLoader::GetInstance()
-{
-	static AssimpLoader* instance = new AssimpLoader;
-	return instance;
-}
-
-AssimpLoader* AssimpLoader::GetInitInstance()
-{
-	static AssimpLoader* instance = GetInstance();
-	instance->Initialize();
-	return instance;
-}
 
 void AssimpLoader::Initialize()
 {
@@ -62,7 +44,7 @@ bool MCB::AssimpLoader::Load(std::string fileName) {
 
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
-	CopyNodesWithMeshes(scene->mRootNode, scene);//読み込み、変換が終わったらポインタを削除(中身はコピーで抜き取っているため、削除しても問題はない
+	CopyNodesWithMeshes(scene->mRootNode, scene);
 	// We're done. Everything will be cleaned up by the importer destructor
 	return true;
 }
