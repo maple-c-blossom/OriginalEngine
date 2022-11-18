@@ -355,7 +355,7 @@ void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParame
 #pragma endregion その他の設定
     //----------------
 
-    depth.SetDepthStencilState( pipeline.pipelineDesc);
+    depth.SetParticleDepthStencilState( pipeline.pipelineDesc);
 
     //ルートシグネチャの生成--------------------------
 #pragma region ルートシグネチャの生成

@@ -75,3 +75,11 @@ void Depth::SetSpriteDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipel
     pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;
     pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
 }
+
+void Depth::SetParticleDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)
+{
+    pipelineDesc.DepthStencilState.DepthEnable = true;
+    pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+    pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
+    pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
+}
