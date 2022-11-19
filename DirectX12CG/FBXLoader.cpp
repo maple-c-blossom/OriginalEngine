@@ -175,6 +175,30 @@ FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
 void MCB::AssimpLoader::Draw()
 {
 	Dx12* dx12 = Dx12::GetInstance();
+	ShaderResource* descriptor = ShaderResource::GetInstance();
+	for (auto& itr : nodes)
+	{
+		for (auto& itr2 : itr->meshes)
+		{
+			//定数バッファビュー(CBV)の設定コマンド
+			dx12->commandList->SetGraphicsRootConstantBufferView(2, itr2.material.begin()->constBuffMaterialB1->GetGPUVirtualAddress());
+			//SRVヒープの先頭アドレスを取得
+			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+
+			srvGpuHandle.ptr += itr2.textures.begin()->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+
+			//SRVヒープの先頭にあるSRVをパラメータ1番に設定
+			dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
+			//頂点データ
+			dx12->commandList->IASetVertexBuffers(0, 1, &itr2.vbView);
+			//インデックスデータ
+			dx12->commandList->IASetIndexBuffer(&itr2.ibView);
+			//描画コマンド
+			dx12->commandList->DrawIndexedInstanced((unsigned int)itr2.indices.size(), 1, 0, 0, 0);
+		}
+	}
+
 
 }
 //
@@ -187,7 +211,7 @@ std::vector<Texture> AssimpLoader::loadMaterialTextures(aiMaterial* mat, aiTextu
 		std::string path;
 		mat->GetTexture(type, i, &str);
 		path = str.C_Str();
-		path = "Resources\\" + path;
+		//path = "Resources\\" + path;
 		wchar_t wfilepath[128];
 		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
 		tempTex.CreateTexture(wfilepath);
