@@ -99,6 +99,7 @@ namespace MCB
 		void SpriteDraw() override;
 		void ParticleDraw()override;
 		void CheckAllColision()override;
+		void ImGuiUpdate()override;
 	};
 
 }

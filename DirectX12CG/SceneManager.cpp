@@ -16,17 +16,20 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite.InitMatProje();
 	loadSprite = loadSprite.CreateSprite();
 	InitRand();
+
 	scene = new Scene(this->root, this->depth, this->pipeline);
 }
 
 MCB::SceneManager::~SceneManager()
 {
 	delete scene;
+
 }
 
 void MCB::SceneManager::Initialize()
 {
 	scene->Initialize();
+
 }
 
 void MCB::SceneManager::Update()
@@ -102,6 +105,13 @@ void MCB::SceneManager::Draw()
 		//スプライト
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
 		scene->SpriteDraw();
+
+#ifdef _DEBUG
+		scene->ImGuiUpdate();
+		scene->ImGuiDraw();
+#endif 
+
+
 		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ロード画面

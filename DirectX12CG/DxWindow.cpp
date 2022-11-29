@@ -1,9 +1,14 @@
 #include "DxWindow.h"
+#include <MyImgui/imgui_impl_win32.h>
 #pragma comment(lib, "winmm.lib")
 using namespace MCB;
-
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lparam);
 LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
+    {
+        return true;
+    }
      // メッセージに応じてゲーム固有の処理を行う 
         switch (msg) {
             // ウィンドウが破棄された 

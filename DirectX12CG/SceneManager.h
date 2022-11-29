@@ -18,7 +18,7 @@ namespace MCB
 		Texture loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
-
+		
 		bool isInitialized = true;
 		int angle = 0;
 	public:

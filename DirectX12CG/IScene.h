@@ -44,7 +44,7 @@
 #include "LightGroup.h"
 #include "FBXLoader.h"
 #include "PipeLineManager.h"
-
+#include "ImguiManager.h"
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #pragma endregion 自作.h include
 #pragma region pragma comment
@@ -90,7 +90,7 @@ namespace MCB
 		MCB::Draw* draw = Draw::GetInstance();
 
 		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
-
+	
 		//サウンドマネージャー
 		SoundManager soundManager;
 		//クリアカラー
@@ -99,6 +99,7 @@ namespace MCB
 
 		IScene* nextScene = nullptr;
 	public:
+		ImguiManager imgui;
 		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 		virtual ~IScene() {};
 		virtual void Initialize() = 0;
@@ -113,6 +114,8 @@ namespace MCB
 		virtual void SpriteInit() = 0;
 		virtual void ParticleInit() = 0;
 		virtual void MatrixUpdate() = 0;
+		void ImGuiDraw() { imgui.Draw(); }
+		virtual void ImGuiUpdate() = 0;
 		virtual IScene* GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
 		bool GetIsSceneEnd() { return sceneEnd; }

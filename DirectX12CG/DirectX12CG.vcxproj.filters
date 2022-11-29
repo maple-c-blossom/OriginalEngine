@@ -142,6 +142,12 @@
     <Filter Include="リソース ファイル\BasicShader\ShaderHeader">
       <UniqueIdentifier>{221cc362-ce73-4b12-b724-3af9f026f791}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engin\Util">
+      <UniqueIdentifier>{5c61fd7e-839e-4826-988a-362178ba54e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Util">
+      <UniqueIdentifier>{8a4651f9-15fc-4828-bda6-7022e24c09b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -243,12 +249,6 @@
     <ClCompile Include="Draw.cpp">
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>ソース ファイル\Engin</Filter>
-    </ClCompile>
-    <ClCompile Include="Util.cpp">
-      <Filter>ソース ファイル\Engin</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
@@ -285,11 +285,20 @@
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
-    <ClCompile Include="FPS.cpp">
-      <Filter>ソース ファイル\Engin</Filter>
-    </ClCompile>
     <ClCompile Include="PipeLineManager.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="FPS.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiManager.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Util.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -415,12 +424,6 @@
     <ClInclude Include="DebugText.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>ヘッダー ファイル\Engin</Filter>
-    </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>ヘッダー ファイル\Engin</Filter>
-    </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
@@ -460,11 +463,20 @@
     <ClInclude Include="PIpelines.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>ヘッダー ファイル\Engin</Filter>
-    </ClInclude>
     <ClInclude Include="PipeLineManager.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiManager.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Util.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="FPS.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

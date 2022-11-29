@@ -11,6 +11,7 @@ MCB::Scene::~Scene()
     delete skydomeModel;
     delete groundModel;
     delete nextScene;
+    imgui.Final();
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
@@ -29,7 +30,7 @@ void MCB::Scene::Initialize()
     lights->DefaultLightSet();
     lights->UpDate();
     Object3d::SetLights(lights);
-
+    imgui.Init();
 }
 
 void MCB::Scene::Object3DInit()
@@ -191,6 +192,7 @@ void MCB::Scene::Update()
             {
                 testSpher.model = BoxModel;
             }
+            sceneEnd = true;
         }
 
         if (input->IsKeyDown(DIK_A))
@@ -234,6 +236,13 @@ void MCB::Scene::ParticleDraw()
 
 void MCB::Scene::CheckAllColision()
 {
+}
+
+void MCB::Scene::ImGuiUpdate()
+{
+    imgui.Begin();
+
+    imgui.End();
 }
 
 void MCB::Scene::MatrixUpdate()

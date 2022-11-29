@@ -67,6 +67,10 @@ void MCB::TitleScene::CheckAllColision()
 {
 }
 
+void MCB::TitleScene::ImGuiUpdate()
+{
+}
+
 MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
 {
 	rootparamsPtr = root;
