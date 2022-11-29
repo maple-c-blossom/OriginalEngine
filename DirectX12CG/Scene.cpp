@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "TitleScene.h"
 #include "Util.h"
+#include <MyImgui/imgui.h>
 using namespace MCB;
 using namespace DirectX;
 
@@ -241,7 +242,7 @@ void MCB::Scene::CheckAllColision()
 void MCB::Scene::ImGuiUpdate()
 {
     imgui.Begin();
-
+    ImGui::ShowDemoWindow();
     imgui.End();
 }
 
