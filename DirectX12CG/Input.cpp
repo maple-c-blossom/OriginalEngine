@@ -11,7 +11,6 @@ void Input::Init()
 	//入力系初期化--------------
 #pragma region 入力系初期化
 
-
 	dx12->result = DirectInput8Create(dxWindow->window.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
 	assert(SUCCEEDED(dx12->result));
 	//キーボードデバイスの生成-----------------
@@ -19,14 +18,6 @@ void Input::Init()
 	dx12->result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
 	assert(SUCCEEDED(dx12->result));
 #pragma endregion キーボードデバイスの生成
-	//--------------------------
-
-	//マウスデバイスの生成-----------------
-#pragma region マウスデバイスの生成
-	dx12->result = dinput->CreateDevice(GUID_SysKeyboard, &devmouse, NULL);
-	assert(SUCCEEDED(dx12->result));
-#pragma endregion マウスデバイスの生成
-	//--------------------------
 
 	//入力データ形式セット--------------------------------
 	dx12->result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
@@ -35,6 +26,21 @@ void Input::Init()
 
 	//排他レベル制御-------------------------------------------------------------
 	dx12->result = devkeyboard->SetCooperativeLevel(dxWindow->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	assert(SUCCEEDED(dx12->result));
+	//--------------------------
+
+	//マウスデバイスの生成-----------------
+#pragma region マウスデバイスの生成
+	dx12->result = dinput->CreateDevice(GUID_SysMouse, &devmouse, NULL);
+	assert(SUCCEEDED(dx12->result));
+#pragma endregion マウスデバイスの生成
+	//--------------------------
+	// 入力データ形式のセット
+	dx12->result = devmouse->SetDataFormat(&c_dfDIMouse2); // 標準形式
+	assert(SUCCEEDED(dx12->result));
+	// 排他制御レベルのセット
+	dx12->result = devmouse->SetCooperativeLevel(
+		dxWindow->hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(dx12->result));
 
 #pragma endregion 入力系初期化

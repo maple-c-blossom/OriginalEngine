@@ -11,7 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugText.cpp" />
     <ClCompile Include="Depth.cpp" />
     <ClCompile Include="Descriptor.cpp" />
@@ -22,6 +24,7 @@
     <ClCompile Include="FBXModel.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GamePad.cpp" />
+    <ClCompile Include="ICamera.cpp" />
     <ClCompile Include="ImguiManager.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -57,6 +60,7 @@
     <ClCompile Include="TextureFile.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Util.cpp" />
+    <ClCompile Include="Vecter2D.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="View.cpp" />
@@ -113,7 +117,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugText.h" />
     <ClInclude Include="Depth.h" />
     <ClInclude Include="Descriptor.h" />
@@ -124,6 +130,7 @@
     <ClInclude Include="FBXModel.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GamePad.h" />
+    <ClInclude Include="ICamera.h" />
     <ClInclude Include="ImguiManager.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Light.h" />
@@ -159,6 +166,7 @@
     <ClInclude Include="TextureFile.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="Vecter2D.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="View.h" />

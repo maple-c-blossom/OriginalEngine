@@ -46,6 +46,7 @@
 #include "PipeLineManager.h"
 #include "ImguiManager.h"
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
+#include "ICamera.h"
 #pragma endregion 自作.h include
 #pragma region pragma comment
 
@@ -98,6 +99,8 @@ namespace MCB
 		bool sceneEnd = false;
 
 		IScene* nextScene = nullptr;
+
+		ICamera* viewCamera;
 	public:
 		ImguiManager imgui;
 		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色

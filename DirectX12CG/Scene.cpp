@@ -18,7 +18,8 @@ MCB::Scene::~Scene()
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
 void MCB::Scene::Initialize()
 {
-
+    debugCamera.Inilialize();
+    viewCamera = &debugCamera;
     matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
@@ -120,68 +121,9 @@ IScene* MCB::Scene::GetNextScene()
 
 void MCB::Scene::Update()
 {
-        //testSpher.rotasion.y += 0.01f;
         Float3 SLPos = lights->GetSLightPos(0);
         Float3 PLPos = lights->GetPLightPos(0);
-        //if (input->IsKeyDown(DIK_W))
-        //{
-        //    SLPos.z += 0.01f;
-        //}
-        //if (input->IsKeyDown(DIK_S))
-        //{
-        //    SLPos.z -= 0.01f;
-        //}
 
-        //if (input->IsKeyDown(DIK_A))
-        //{
-        //    SLPos.y -= 0.01f;
-        //}
-        //if (input->IsKeyDown(DIK_D))
-        //{
-        //    SLPos.y += 0.01f;
-        //}
-
-        //if (input->IsKeyDown(DIK_UP))
-        //{
-        //    PLPos.z += 0.01f;
-        //}
-        //if (input->IsKeyDown(DIK_DOWN))
-        //{
-        //    PLPos.z -= 0.01f;
-        //}
-
-        //if (input->IsKeyDown(DIK_LEFT))
-        //{
-        //    PLPos.x -= 0.01f;
-        //}
-        //if (input->IsKeyDown(DIK_RIGHT))
-        //{
-        //    PLPos.x += 0.01f;
-        //}
-
-        //if (input->IsKeyTrigger(DIK_SPACE))
-        //{
-        //    sceneEnd = true;
-        //}
-
-
-        if (input->IsKeyDown(DIK_UP))
-        {
-            matView.eye.y += ConvertRadius(1);
-        }
-        if (input->IsKeyDown(DIK_DOWN))
-        {
-            matView.eye.y -= ConvertRadius(1);
-        }
-
-        if (input->IsKeyDown(DIK_LEFT))
-        {
-            matView.eye.x -= ConvertRadius(1);
-        }
-        if (input->IsKeyDown(DIK_RIGHT))
-        {
-            matView.eye.x += ConvertRadius(1);
-        }
 
         if (input->IsKeyTrigger(DIK_SPACE))
         {
@@ -205,11 +147,8 @@ void MCB::Scene::Update()
             testSpher.position.x -= 1;
         }
 
-        matView.target = testSpher.position;
-        //lights->SetPLightPos(0, PLPos);
-        //lights->SetSLightPos(0, SLPos);
-
         lights->UpDate();
+        viewCamera->Update();
     //行列変換
     MatrixUpdate();
 }
@@ -250,10 +189,11 @@ void MCB::Scene::MatrixUpdate()
 {
     matProjection.UpdataMatrixProjection();
     matView.UpDateMatrixView(ybill);
-    Skydorm.Update(matView, matProjection);
-    ground.Update(matView, matProjection);
-    testSpher.Update(matView, matProjection,false);
-    testParticle.Update(matView, matProjection, true);
+    viewCamera->MatrixUpdate();
+    Skydorm.Update(*viewCamera->GetView(), *viewCamera->GetProjection());
+    ground.Update(*viewCamera->GetView(), *viewCamera->GetProjection());
+    testSpher.Update(*viewCamera->GetView(), *viewCamera->GetProjection(),false);
+    testParticle.Update(*viewCamera->GetView(), *viewCamera->GetProjection(), true);
     //testParticle.Updata(matView, matProjection, true);
 }
 
