@@ -28,7 +28,7 @@ namespace MCB
         //--------------------------------------
 
 
-	class FBXModel
+	class FBXMesh
 	{
         public:
 

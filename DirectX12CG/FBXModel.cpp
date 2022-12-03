@@ -12,7 +12,7 @@
 //    //texture.texfile.scratchImg.Release();
 //}
 
-void MCB::FBXModel::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::FBXMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp, // ƒq[ƒvÝ’è
@@ -24,14 +24,14 @@ void MCB::FBXModel::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3
     assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 
-void MCB::FBXModel::SetIbView(DXGI_FORMAT format)
+void MCB::FBXMesh::SetIbView(DXGI_FORMAT format)
 {
     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
     ibView.Format = format;
     ibView.SizeInBytes = sizeIB;
 }
 
-void MCB::FBXModel::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::FBXMesh::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp,
@@ -44,7 +44,7 @@ void MCB::FBXModel::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D
 
 }
 
-HRESULT MCB::FBXModel::IndexMaping()
+HRESULT MCB::FBXMesh::IndexMaping()
 {
     HRESULT result = S_OK;
 
@@ -63,14 +63,14 @@ HRESULT MCB::FBXModel::IndexMaping()
     return result;
 }
 
-void MCB::FBXModel::SetVbView()
+void MCB::FBXMesh::SetVbView()
 {
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
     vbView.SizeInBytes = sizeVB;
     vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
-HRESULT MCB::FBXModel::VertexMaping()
+HRESULT MCB::FBXMesh::VertexMaping()
 {
     HRESULT result = S_OK;
 
@@ -87,19 +87,19 @@ HRESULT MCB::FBXModel::VertexMaping()
     return result;
 }
 
-void MCB::FBXModel::SetSizeIB()
+void MCB::FBXMesh::SetSizeIB()
 {
     sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
 }
 
 
 
-void MCB::FBXModel::SetSizeVB()
+void MCB::FBXMesh::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
 }
 
-void MCB::FBXModel::Init()
+void MCB::FBXMesh::Init()
 {
 
     SetSizeIB();

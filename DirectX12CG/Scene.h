@@ -28,7 +28,7 @@ namespace MCB
 		Model* groundModel;
 		Model* skydomeModel;
 
-		AssimpLoader testModel;
+		FBXModel testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ

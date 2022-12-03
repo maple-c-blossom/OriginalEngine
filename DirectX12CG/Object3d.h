@@ -15,6 +15,7 @@
 #include "Model.h"
 #include "Quaternion.h"
 #include "LightGroup.h"
+#include "FBXLoader.h"
 
 namespace MCB
 {
@@ -54,7 +55,7 @@ namespace MCB
         float frontAngle = 0;
 
         Model* model = nullptr;
-
+        FBXModel* fbxModel = nullptr;
 
         Object3d();
 
@@ -74,6 +75,15 @@ namespace MCB
         void Draw();
 
         void Draw(unsigned short int incremant);
+
+
+        void FbxUpdate(View& view, Projection& projection, bool isBillBord = false);
+
+        void FbxUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
+
+        void FbxDraw();
+
+        void FbxDraw(unsigned short int incremant);
 
         static void SetLights(LightGroup* light);
         //void CreateModel(const char* fileName);

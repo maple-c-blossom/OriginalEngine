@@ -3,24 +3,24 @@
 #include "Dx12.h"
 using namespace MCB;
 using namespace Assimp;
-const std::string AssimpLoader::baseDirectory = "Resources\\";
+const std::string FBXModel::baseDirectory = "Resources\\";
 
 
 
-void AssimpLoader::Initialize()
+void FBXModel::Initialize()
 {
 ;
 
 
 }
 
-void MCB::AssimpLoader::Finalize()
+void MCB::FBXModel::Finalize()
 {
 
 }
 
 
-bool MCB::AssimpLoader::Load(std::string fileName) {
+bool MCB::FBXModel::Load(std::string fileName) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
 	//importer.SetIOHandler(new MyIOSystem());
@@ -46,9 +46,10 @@ bool MCB::AssimpLoader::Load(std::string fileName) {
 	//DoTheSceneProcessing(scene);
 	CopyNodesWithMeshes(scene->mRootNode, scene);
 	// We're done. Everything will be cleaned up by the importer destructor
+	//scene->~aiScene();
 	return true;
 }
-void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, Node* targetParent)
+void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, Node* targetParent)
 {
 	Node* parent;
 	//Matrix4x4 transform;
@@ -109,9 +110,9 @@ void MCB::AssimpLoader::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene
 }
 
 
-FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
+FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 	// Data to fill
-	FBXModel tempmodel;
+	FBXMesh tempmodel;
 
 	// Walk through each of the mesh's vertices
 	for (UINT i = 0; i < mesh->mNumVertices; i++) {
@@ -172,7 +173,7 @@ FBXModel AssimpLoader::processMesh(aiMesh* mesh, const aiScene* scene) {
 	return tempmodel;
 	//return Mesh(dev_, vertices, indices, textures);
 }
-void MCB::AssimpLoader::Draw()
+void MCB::FBXModel::Draw()
 {
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
@@ -203,7 +204,7 @@ void MCB::AssimpLoader::Draw()
 }
 //
 
-std::vector<Texture> AssimpLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+std::vector<Texture> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
 	std::vector<Texture> textures;
 	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
@@ -218,6 +219,14 @@ std::vector<Texture> AssimpLoader::loadMaterialTextures(aiMaterial* mat, aiTextu
 		textures.push_back(tempTex);
 
 	}
+
+	if (textures.empty())
+	{
+		Texture tempTex;
+		tempTex.CreateNoTextureFileIsTexture();
+		textures.push_back(tempTex);
+	}
+
 	return textures;
 }
 

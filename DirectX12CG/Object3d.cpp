@@ -122,6 +122,8 @@ void Object3d::Update(View& view, Projection& projection,Quaternion q, bool isBi
 
 void Object3d::Draw()
 {
+    if (model == nullptr)return;
+    if (model->material.constBuffMaterialB1 == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
@@ -150,6 +152,8 @@ void Object3d::Draw()
 
 void Object3d::Draw(unsigned short int incremant)
 {
+    if (model == nullptr)return;
+    if (model->material.constBuffMaterialB1 == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
@@ -176,6 +180,89 @@ void Object3d::Draw(unsigned short int incremant)
     //描画コマンド
     dx12->commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
 
+}
+
+void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBord)
+{
+    if (fbxModel == nullptr)return;
+    matWorld.SetMatScale(scale.x, scale.y, scale.z);
+    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
+    matWorld.SetMatTrans(position.x, position.y, position.z);
+    if (isBillBord)
+    {
+        if (parent == nullptr)
+        {
+            matWorld.UpdataBillBordMatrixWorld(view);
+        }
+        else
+        {
+            matWorld.UpdataMatrixWorld();
+        }
+    }
+    else
+    {
+        matWorld.UpdataMatrixWorld();
+    }
+
+    if (parent != nullptr)
+    {
+        matWorld.matWorld *= parent->matWorld.matWorld;
+    }
+
+    constMapTranceform->world = matWorld.matWorld * view.mat * fbxModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->viewproj = projection.mat;
+    constMapTranceform->cameraPos.x = view.eye.x;
+    constMapTranceform->cameraPos.y = view.eye.y;
+    constMapTranceform->cameraPos.z = view.eye.z;
+}
+
+void MCB::Object3d::FbxUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord)
+{
+    if (fbxModel == nullptr)return;
+    MCBMatrix matRot;
+    matRot.MCBMatrixIdentity();
+    matWorld.SetMatScale(scale.x, scale.y, scale.z);
+    matWorld.matRot = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
+    matWorld.SetMatTrans(position.x, position.y, position.z);
+    if (isBillBord)
+    {
+        if (parent == nullptr)
+        {
+            matWorld.UpdataBillBordMatrixWorld(view);
+        }
+        else
+        {
+            matWorld.UpdataMatrixWorld();
+        }
+    }
+    else
+    {
+        matWorld.UpdataMatrixWorld();
+    }
+
+    if (parent != nullptr)
+    {
+        matWorld.matWorld *= parent->matWorld.matWorld;
+    }
+
+    constMapTranceform->world = matWorld.matWorld * view.mat * fbxModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->viewproj = projection.mat;
+    constMapTranceform->cameraPos.x = view.eye.x;
+    constMapTranceform->cameraPos.y = view.eye.y;
+    constMapTranceform->cameraPos.z = view.eye.z;
+}
+
+void MCB::Object3d::FbxDraw()
+{
+    //定数バッファビュー(CBV)の設定コマンド
+    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    fbxModel->Draw();
+}
+
+void MCB::Object3d::FbxDraw(unsigned short int incremant)
+{
+    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    fbxModel->Draw();
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

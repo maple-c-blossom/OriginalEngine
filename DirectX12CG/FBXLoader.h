@@ -40,7 +40,7 @@ namespace MCB
     typedef struct Node
     {
         std::string name;
-        std::vector<FBXModel> meshes; //出力先メッシュ配列
+        std::vector<FBXMesh> meshes; //出力先メッシュ配列
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
@@ -52,21 +52,21 @@ namespace MCB
     //struct aiMesh;
     //struct aiMaterial;
 
-    class AssimpLoader
+    class FBXModel
     {
     private:
         using string = std::string;
         ID3D12Device* device = nullptr;
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
-        std::vector<std::unique_ptr<Node>> nodes;
     public:
+        std::vector<std::unique_ptr<Node>> nodes;
 
         static const string baseDirectory;
         void Initialize();
         void Finalize();
         bool Load(std::string fileName);
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
-        FBXModel processMesh(aiMesh* mesh, const aiScene* scene);
+        FBXMesh processMesh(aiMesh* mesh, const aiScene* scene);
         std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
         //bool LoadFile(ImportSetting setting);
         void Draw();

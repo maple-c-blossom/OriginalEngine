@@ -51,6 +51,7 @@ void MCB::Scene::Object3DInit()
 
     testSpher.Init();
     testSpher.model = BoxModel;
+    testSpher.fbxModel = &testModel;
     testSpher.scale = {1,1,1};
     testSpher.position = { 0,4,10 };
     testSpher.rotasion = { ConvertRadius(90),0,0 };
@@ -159,8 +160,8 @@ void MCB::Scene::Draw()
     Skydorm.Draw();
     ground.Draw();
     //human.Draw();
-    testSpher.Draw();
-
+    //testSpher.Draw();
+    testSpher.FbxDraw();
 }
 
 void MCB::Scene::SpriteDraw()
@@ -192,7 +193,8 @@ void MCB::Scene::MatrixUpdate()
     viewCamera->MatrixUpdate();
     Skydorm.Update(*viewCamera->GetView(), *viewCamera->GetProjection());
     ground.Update(*viewCamera->GetView(), *viewCamera->GetProjection());
-    testSpher.Update(*viewCamera->GetView(), *viewCamera->GetProjection(),false);
+    ground.Update(*viewCamera->GetView(), *viewCamera->GetProjection());
+    testSpher.FbxUpdate(*viewCamera->GetView(), *viewCamera->GetProjection(),false);
     testParticle.Update(*viewCamera->GetView(), *viewCamera->GetProjection(), true);
     //testParticle.Updata(matView, matProjection, true);
 }
