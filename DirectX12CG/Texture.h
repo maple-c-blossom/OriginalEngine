@@ -30,6 +30,8 @@ namespace MCB
 
 		void CreateNoTextureFileIsTexture();
 
+		void CreateNoTextureFileIsTexture(unsigned short int incrementNum);
+
 		void SetSrvHeap();
 
 	};
