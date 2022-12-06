@@ -12,10 +12,11 @@ namespace MCB
 			bool deleteFlag = false;
 		};
 		std::vector<std::unique_ptr<TextureCell>> textures;
+		std::vector<int> texincrement;
 	public:
-		int LoadTexture(const wchar_t* FileName, unsigned short int incrementNum);
+		//int LoadTexture(const wchar_t* FileName, unsigned short int incrementNum);
 
-		int LoadTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
+		//int LoadTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
 
 		int LoadTexture(const wchar_t* FileName);
 
