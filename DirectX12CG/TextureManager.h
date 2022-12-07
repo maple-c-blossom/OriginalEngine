@@ -4,13 +4,17 @@
 #include <memory>
 namespace MCB
 {
+
+	typedef struct TextureCell
+	{
+		std::unique_ptr<Texture> texture;
+		bool deleteFlag = false;
+		TextureCell() {};
+		TextureCell(const TextureCell& texture) {};
+	};
 	class TextureManager
 	{
-		typedef struct TextureCell
-		{
-			std::unique_ptr<Texture> texture;
-			bool deleteFlag = false;
-		};
+
 		std::vector<std::unique_ptr<TextureCell>> textures;
 		std::vector<int> texincrement;
 	public:

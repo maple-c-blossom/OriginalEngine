@@ -84,7 +84,7 @@ void MCB::TextureManager::Erase()
 	{
 		std::remove_if(texincrement.begin(), texincrement.end(), [&itr](int itr2) { return (itr2 == itr.get()->texture.get()->incrementNum) && itr.get()->deleteFlag; });
 	}
-	std::remove_if(textures.begin(), textures.end(), [](TextureCell itr) { return itr.deleteFlag; });
+	std::remove_if(textures.begin(), textures.end(), [](std::unique_ptr<TextureCell>& itr) { return itr->deleteFlag; });
 }
 
 Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
