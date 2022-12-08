@@ -28,13 +28,13 @@ bool MCB::FBXModel::Load(std::string fileName) {
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
 	const aiScene* scene = importer.ReadFile(fileName,
-		aiProcess_CalcTangentSpace |
-		aiProcess_Triangulate |
-		aiProcess_JoinIdenticalVertices |
-		aiProcess_SortByPType |
-		aiProcess_MakeLeftHanded |
-		aiProcess_FlipUVs |
-		aiProcess_FlipWindingOrder);
+		aiProcess_CalcTangentSpace | //インポートしたメッシュのタンジェントとかを計算
+		aiProcess_Triangulate | //三角面化
+		aiProcess_JoinIdenticalVertices | //インポートされたすべてのメッシュの中で、同一の頂点データセットを識別し、結合
+		aiProcess_SortByPType |//2つ以上のプリミティブタイプを持つメッシュを均質なサブメッシュに分割
+		aiProcess_ConvertToLeftHanded |//左手座標に必要な形に変換
+		aiProcess_GenNormals |//法線がない場合法線を計算
+		aiProcess_FixInfacingNormals);//法線が内側を向いている場合、法線を反転してくれる
 
 	// If the import failed, report it
 	if (nullptr == scene) {
