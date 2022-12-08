@@ -47,6 +47,7 @@
 #include "ImguiManager.h"
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #include "ICamera.h"
+#include "TextureManager.h"
 #pragma endregion 自作.h include
 #pragma region pragma comment
 
@@ -101,6 +102,8 @@ namespace MCB
 		IScene* nextScene = nullptr;
 
 		ICamera* viewCamera;
+
+		TextureManager* loader = TextureManager::GetInstance();
 	public:
 		ImguiManager imgui;
 		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色

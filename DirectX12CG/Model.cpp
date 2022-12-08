@@ -17,6 +17,7 @@ MCB::Model::Model()
 
 MCB::Model::~Model()
 {
+    Loader->SetDelete(texture);
     //texture.texfile.scratchImg.Release();
 }
 
@@ -271,7 +272,7 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
         {
             line_stream >> material.material.textureFileName;
 
-            texture.CreateTexture(directoryPath, material.material.textureFileName);
+            texture = Loader->LoadTexture(directoryPath, material.material.textureFileName);
         }
 
     }

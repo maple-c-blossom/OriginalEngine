@@ -10,12 +10,13 @@ namespace MCB
 		IScene* scene;
 		RootParameter* root;
 		Depth* depth;
+		TextureManager* texmanager = TextureManager::GetInstance();
 		PipeLineManager* pipeline;
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 120;
 		int isChengeSceneTimer = 0;
-		Texture loadTex;
-		Texture loadBackGroundTex;
+		int loadTex;
+		int loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
 		

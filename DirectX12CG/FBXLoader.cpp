@@ -186,7 +186,7 @@ void MCB::FBXModel::Draw()
 			//SRVヒープの先頭アドレスを取得
 			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
-			srvGpuHandle.ptr += itr2.textures.begin()->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+			srvGpuHandle.ptr += textureManager->GetTexture(*itr2.textures.begin())->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
 			//SRVヒープの先頭にあるSRVをパラメータ1番に設定
 			dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
@@ -204,26 +204,26 @@ void MCB::FBXModel::Draw()
 }
 //
 
-std::vector<Texture> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
-	std::vector<Texture> textures;
+std::vector<int> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+	std::vector<int> textures;
 	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
-		Texture tempTex;
+		int tempTex;
 		std::string path;
 		mat->GetTexture(type, i, &str);
 		path = str.C_Str();
 		//path = "Resources\\" + path;
 		wchar_t wfilepath[128];
 		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
-		tempTex.CreateTexture(wfilepath);
+		tempTex = textureManager->LoadTexture(wfilepath);
 		textures.push_back(tempTex);
 
 	}
 
 	if (textures.empty())
 	{
-		Texture tempTex;
-		tempTex.CreateNoTextureFileIsTexture();
+		int tempTex;
+		tempTex = textureManager->CreateNoTextureFileIsTexture();
 		textures.push_back(tempTex);
 	}
 

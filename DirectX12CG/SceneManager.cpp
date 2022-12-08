@@ -8,8 +8,8 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	this->root = root;
 	this->pipeline = pipeline;
 	this->depth = depth;
-	loadTex.CreateTexture(L"Resources\\reimu.png");
-	loadBackGroundTex.CreateNoTextureFileIsTexture();
+	loadTex = texmanager->LoadTexture(L"Resources\\reimu.png");
+	loadBackGroundTex = texmanager->CreateNoTextureFileIsTexture();
 	loadBackGround.InitMatProje();
 	loadBackGround = loadBackGround.CreateSprite();
 	loadBackGround.color = { 0,0,0,0 };
@@ -112,13 +112,13 @@ void MCB::SceneManager::Draw()
 #endif 
 
 
-		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ƒ[ƒh‰æ–Ê
 	{
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
-		loadBackGround.SpriteDraw(loadBackGroundTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
-		loadSprite.SpriteDraw(loadTex, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
+		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadSprite.SpriteDraw(*texmanager->GetTexture(loadTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
 

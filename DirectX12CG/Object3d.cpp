@@ -134,7 +134,7 @@ void Object3d::Draw()
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += model->texture.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += model->Loader->GetTexture(model->texture)->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);

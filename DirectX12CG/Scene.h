@@ -28,15 +28,15 @@ namespace MCB
 		Model* groundModel;
 		Model* skydomeModel;
 
-		FBXModel testModel;
+		FBXModel* testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
 		#pragma region テクスチャ
-		Texture testTex;
-		Texture debugTextTexture;
-		Texture zoomTex;
-		Texture scopeTex;
+		int testTex;
+		int debugTextTexture;
+		int zoomTex;
+		int scopeTex;
 #pragma endregion テクスチャ
 
 		//サウンド

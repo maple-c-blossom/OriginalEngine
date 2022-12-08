@@ -7,10 +7,14 @@
 //    //material.Init();
 //}
 //
-//MCB::FBXModel::~FBXModel()
-//{
-//    //texture.texfile.scratchImg.Release();
-//}
+MCB::FBXMesh::~FBXMesh()
+{
+    TextureManager* instance = TextureManager::GetInstance();
+    for (auto& itr : textures)
+    {
+        instance->SetDelete(itr);
+    }
+}
 
 void MCB::FBXMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {

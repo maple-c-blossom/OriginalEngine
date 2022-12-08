@@ -82,6 +82,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     //FBXLoader::DeleteInstance();
     FPS::DeleteInstance();
 }   
+    TextureManager::DeleteInstace();
     _CrtDumpMemoryLeaks();
 	return 0;
 }

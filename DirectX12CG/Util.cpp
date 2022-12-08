@@ -150,7 +150,7 @@ MCB::SimpleFigure::SimpleFigure()
 	triangleMaterial.VertexMaping();
 	triangleMaterial.SetVbView();
 	triangleMaterial.material.constMapMaterial->color = color;
-	triangle.model->texture.CreateNoTextureFileIsTexture();
+	triangle.model->texture = triangle.model->Loader->CreateNoTextureFileIsTexture();
 }
 
 void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
@@ -177,7 +177,7 @@ void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
 
 	//SRVヒープの先頭アドレスを取得
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
-	srvGpuHandle.ptr += triangle.model->texture.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+	srvGpuHandle.ptr += triangle.model->Loader->GetTexture(triangle.model->texture)->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 	//SRVヒープの先頭にあるSRVをパラメータ1番に設定
 	dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 

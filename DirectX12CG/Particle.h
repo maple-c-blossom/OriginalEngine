@@ -10,7 +10,7 @@
 #include "View.h"
 #include "Projection.h"
 #include "Vector3D.h"
-#include "Texture.h"
+#include "TextureManager.h"
 #include <vector>
 #include "ParticleMaterial.h"
 #include "PIpelineRootSignature.h"
@@ -45,7 +45,7 @@ namespace MCB
         DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
         DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
-
+        TextureManager* textureManager = TextureManager::GetInstance();
         //ÉèÅ[ÉãÉhçsóÒ
         WorldMatrix matWorld = {};
         unsigned int sizeVB;
@@ -56,7 +56,7 @@ namespace MCB
         D3D12_VERTEX_BUFFER_VIEW vbView{};
         Vertex vertex;
         int vertNum = 1;
-        Texture* tex;
+        int* tex;
         Particle();
 
         ~Particle();
@@ -71,7 +71,7 @@ namespace MCB
 
         void SetColor(Float4 color);
 
-        void Init(Texture* tex);
+        void Init(int* tex);
 
         void Update(View& view, Projection& projection, bool isBillBord = false);
 

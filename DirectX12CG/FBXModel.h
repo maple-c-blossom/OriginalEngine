@@ -34,14 +34,14 @@ namespace MCB
 
             //Model(const std::string fileName, bool smooth = false);
             //FBXModel();
-            //~FBXModel();
+            ~FBXMesh();
 
             Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 
             Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 
 
-            std::vector<Texture> textures;
+            std::vector<int> textures;
             //MCB::Texture textures;
             std::vector<FBXVertex> vertices;
             std::vector<unsigned short> indices;

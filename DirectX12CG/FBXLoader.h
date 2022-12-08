@@ -10,6 +10,7 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 #include "FBXModel.h"
+#include "TextureManager.h"
 namespace MCB
 {
 
@@ -57,6 +58,7 @@ namespace MCB
     private:
         using string = std::string;
         ID3D12Device* device = nullptr;
+        TextureManager* textureManager = TextureManager::GetInstance();
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
         std::vector<std::unique_ptr<Node>> nodes;
@@ -67,8 +69,10 @@ namespace MCB
         bool Load(std::string fileName);
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         FBXMesh processMesh(aiMesh* mesh, const aiScene* scene);
-        std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
+        std::vector<int> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
         //bool LoadFile(ImportSetting setting);
         void Draw();
     };
 }
+
+

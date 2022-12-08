@@ -12,6 +12,12 @@ MCB::Scene::~Scene()
     delete skydomeModel;
     delete groundModel;
     delete nextScene;
+    delete testModel;
+    loader->SetDelete(testTex);
+    loader->SetDelete(debugTextTexture);
+    loader->SetDelete(zoomTex);
+    loader->SetDelete(scopeTex);
+    loader->Erase();
     imgui.Final();
 }
 
@@ -51,7 +57,7 @@ void MCB::Scene::Object3DInit()
 
     testSpher.Init();
     testSpher.model = BoxModel;
-    testSpher.fbxModel = &testModel;
+    testSpher.fbxModel = testModel;
     testSpher.scale = {1,1,1};
     testSpher.position = { 0,4,10 };
     testSpher.rotasion = { ConvertRadius(90),0,0 };
@@ -73,17 +79,17 @@ void MCB::Scene::LoadModel()
 	groundModel = new Model("ground");
 
 	skydomeModel = new Model("skydome");
-
-    testModel.Load("Resources\\testFbx\\boneTest.fbx");
+    testModel = new FBXModel();
+    testModel->Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
 
 void MCB::Scene::LoadTexture()
 {
-	testTex.CreateTexture(L"Resources\\reimu.png");
-	debugTextTexture.CreateTexture(L"Resources\\debugfont.png");
-    zoomTex.CreateTexture(L"Resources\\reticle.png");
-    scopeTex.CreateNoTextureFileIsTexture();
+	testTex = loader->LoadTexture(L"Resources\\reimu.png");
+	debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
+    zoomTex = loader->LoadTexture(L"Resources\\reticle.png");
+    scopeTex = loader->CreateNoTextureFileIsTexture();
 
 }
 
@@ -102,7 +108,7 @@ void MCB::Scene::SpriteInit()
     zoomSprite = zoomSprite.CreateSprite();
     scopeSprite.InitMatProje();
     scopeSprite = scopeSprite.CreateSprite();
-    debugText.Init(&debugTextTexture);
+    debugText.Init(loader->GetTexture( debugTextTexture));
 
 }
 

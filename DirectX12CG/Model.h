@@ -10,7 +10,7 @@
 #include <sstream>
 #include <string>
 #include "MCBFloat.h"
-#include "Texture.h"
+#include "TextureManager.h"
 #include <unordered_map>
 #include "Vector3D.h"
 namespace MCB
@@ -38,8 +38,8 @@ namespace MCB
 
 
 
-        Texture texture;
-
+        TextureManager* Loader = TextureManager::GetInstance();
+        int texture;
         std::vector<ObjectVertex> vertices;
         std::vector<unsigned short> indices;
         std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
