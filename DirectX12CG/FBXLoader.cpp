@@ -33,7 +33,8 @@ bool MCB::FBXModel::Load(std::string fileName) {
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType |
 		aiProcess_MakeLeftHanded |
-		aiProcess_FlipUVs);
+		aiProcess_FlipUVs |
+		aiProcess_FlipWindingOrder);
 
 	// If the import failed, report it
 	if (nullptr == scene) {
