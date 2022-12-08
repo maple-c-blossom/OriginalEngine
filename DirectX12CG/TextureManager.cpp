@@ -100,8 +100,8 @@ void MCB::TextureManager::SetDelete(int index)
 
 TextureManager* MCB::TextureManager::GetInstance()
 {
-	static TextureManager instance;//‘½•ª‚±‚ê‚ªˆ«‚³‚µ‚Ä‚é
-	return &instance;
+	static TextureManager* instance = new TextureManager();//‘½•ª‚±‚ê‚ªˆ«‚³‚µ‚Ä‚é
+	return instance;
 }
 
 void MCB::TextureManager::DeleteInstace()
