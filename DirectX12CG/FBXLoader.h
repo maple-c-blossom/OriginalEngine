@@ -63,7 +63,7 @@ namespace MCB
     public:
         std::vector<std::unique_ptr<Node>> nodes;
 
-        static const string baseDirectory;
+        string fileName;
         void Initialize();
         void Finalize();
         bool Load(std::string fileName);

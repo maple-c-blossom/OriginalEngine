@@ -3,7 +3,6 @@
 #include "Dx12.h"
 using namespace MCB;
 using namespace Assimp;
-const std::string FBXModel::baseDirectory = "Resources\\";
 
 
 
@@ -27,14 +26,18 @@ bool MCB::FBXModel::Load(std::string fileName) {
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
+	this->fileName = fileName;
+	std::string baseDirectory = "Resources\\";
+	std::string extend = ".fbx";
+	fileName = baseDirectory + fileName + "\\" + fileName + extend;
 	const aiScene* scene = importer.ReadFile(fileName,
 		aiProcess_CalcTangentSpace | //インポートしたメッシュのタンジェントとかを計算
 		aiProcess_Triangulate | //三角面化
 		aiProcess_JoinIdenticalVertices | //インポートされたすべてのメッシュの中で、同一の頂点データセットを識別し、結合
 		aiProcess_SortByPType |//2つ以上のプリミティブタイプを持つメッシュを均質なサブメッシュに分割
-		aiProcess_ConvertToLeftHanded |//左手座標に必要な形に変換
 		aiProcess_GenNormals |//法線がない場合法線を計算
-		aiProcess_FixInfacingNormals);//法線が内側を向いている場合、法線を反転してくれる
+		aiProcess_FixInfacingNormals |//法線が内側を向いている場合、法線を反転してくれる
+		aiProcess_ConvertToLeftHanded);//左手座標に必要な形に変換
 
 	// If the import failed, report it
 	if (nullptr == scene) {
@@ -213,7 +216,7 @@ std::vector<int> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType t
 		std::string path;
 		mat->GetTexture(type, i, &str);
 		path = str.C_Str();
-		//path = "Resources\\" + path;
+		path = "Resources\\" + fileName + "\\" + path;
 		wchar_t wfilepath[128];
 		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
 		tempTex = textureManager->LoadTexture(wfilepath);

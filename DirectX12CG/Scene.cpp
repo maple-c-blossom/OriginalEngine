@@ -80,7 +80,7 @@ void MCB::Scene::LoadModel()
 
 	skydomeModel = new Model("skydome");
     testModel = new FBXModel();
-    testModel->Load("Resources\\testFbx\\boneTest.fbx");
+    testModel->Load("testFbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
 
