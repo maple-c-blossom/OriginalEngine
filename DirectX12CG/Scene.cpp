@@ -81,6 +81,7 @@ void MCB::Scene::LoadModel()
 	skydomeModel = new Model("skydome");
     testModel = new FBXModel();
     testModel->Load("testFbx");
+    //assert(testModel->textureManager->textures.size() < 20);
     //fbxLoader->LoadModelFromFile("cube");
 }
 

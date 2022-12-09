@@ -45,6 +45,7 @@ void Dx12::SetAdapter()
 
         if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE))
         {
+            
             tmpAdapter = adapters[i];
             break;
         }

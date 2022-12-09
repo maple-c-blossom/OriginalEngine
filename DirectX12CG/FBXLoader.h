@@ -57,10 +57,10 @@ namespace MCB
     {
     private:
         using string = std::string;
-        ID3D12Device* device = nullptr;
-        TextureManager* textureManager = TextureManager::GetInstance();
+        //ID3D12Device* device = nullptr;
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
+        TextureManager* textureManager = TextureManager::GetInstance();
         std::vector<std::unique_ptr<Node>> nodes;
         ~FBXModel();
         string fileName;

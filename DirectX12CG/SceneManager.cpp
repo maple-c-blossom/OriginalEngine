@@ -106,13 +106,13 @@ void MCB::SceneManager::Draw()
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
 		scene->SpriteDraw();
 
+
+
+		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 #ifdef _DEBUG
 		scene->ImGuiUpdate();
 		scene->ImGuiDraw();
 #endif 
-
-
-		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 	}
 	else//ƒ[ƒh‰æ–Ê
 	{

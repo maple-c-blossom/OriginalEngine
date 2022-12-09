@@ -32,6 +32,7 @@ int MCB::TextureManager::LoadTexture(const wchar_t* FileName)
 
 	temp->texture->CreateTexture(FileName,tempin);
 	textures.push_back(move(temp));
+	//assert(textures.size() < 20);
 	//texincrement.push_back(tempin);
 	return textures.size() - 1;
 }
@@ -68,6 +69,7 @@ int MCB::TextureManager::LoadTexture(const std::string& directoryPath, const std
 
 		temp->texture->CreateTexture(directoryPath, filename, tempin);
 		textures.push_back(move(temp));
+		//assert(textures.size() < 20);
 	}
 
 	//texincrement.push_back(tempin);
@@ -88,6 +90,7 @@ int MCB::TextureManager::CreateNoTextureFileIsTexture()
 	}
 	temp->texture->CreateNoTextureFileIsTexture(tempin);
 	textures.push_back(move(temp));
+	//assert(textures.size() < 20);
 	//texincrement.push_back(tempin);
 	return textures.size() - 1;
 }
@@ -120,11 +123,11 @@ void MCB::TextureManager::SetDelete(int index)
 
 TextureManager* MCB::TextureManager::GetInstance()
 {
-	static TextureManager* instance = new TextureManager();
-	return instance;
+	static TextureManager instance;// = new TextureManager();
+	return &instance;
 }
 
 void MCB::TextureManager::DeleteInstace()
 {
-	delete TextureManager::GetInstance();
+	//delete TextureManager::GetInstance();
 }
