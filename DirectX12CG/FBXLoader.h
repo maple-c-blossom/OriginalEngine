@@ -62,7 +62,7 @@ namespace MCB
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
         std::vector<std::unique_ptr<Node>> nodes;
-
+        ~FBXModel();
         string fileName;
         void Initialize();
         void Finalize();

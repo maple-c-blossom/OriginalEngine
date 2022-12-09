@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "TitleScene.h"
 #include "Util.h"
-#include <MyImgui/imgui.h>
+
 using namespace MCB;
 using namespace DirectX;
 
@@ -17,8 +17,8 @@ MCB::Scene::~Scene()
     loader->SetDelete(debugTextTexture);
     loader->SetDelete(zoomTex);
     loader->SetDelete(scopeTex);
-    loader->Erase();
-    imgui.Final();
+
+
 }
 
 #pragma region 通常変数の初期化と3Dオブジェクトの初期化
@@ -38,7 +38,7 @@ void MCB::Scene::Initialize()
     lights->DefaultLightSet();
     lights->UpDate();
     Object3d::SetLights(lights);
-    imgui.Init();
+
 }
 
 void MCB::Scene::Object3DInit()
@@ -134,14 +134,14 @@ void MCB::Scene::Update()
 
         if (input->IsKeyTrigger(DIK_SPACE))
         {
-            if (testSpher.model == BoxModel)
-            {
-                testSpher.model = groundModel;
-            }
-            else
-            {
-                testSpher.model = BoxModel;
-            }
+            //if (testSpher.model == BoxModel)
+            //{
+            //    testSpher.model = groundModel;
+            //}
+            //else
+            //{
+            //    testSpher.model = BoxModel;
+            //}
             sceneEnd = true;
         }
 

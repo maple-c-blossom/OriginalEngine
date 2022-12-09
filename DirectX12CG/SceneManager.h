@@ -19,7 +19,7 @@ namespace MCB
 		int loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
-		
+		ImguiManager imgui;
 		bool isInitialized = true;
 		int angle = 0;
 	public:

@@ -8,7 +8,7 @@ namespace MCB
 	typedef struct TextureCell
 	{
 		std::unique_ptr<Texture> texture;
-		bool deleteFlag = false;
+		bool free = false;
 		TextureCell() { texture = std::make_unique<Texture>(); }
 
 	};

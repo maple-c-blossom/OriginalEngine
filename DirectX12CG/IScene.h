@@ -48,6 +48,7 @@
 #include "Particle.h"//後々ParticleManagerに変更。Particle単体でテストする用
 #include "ICamera.h"
 #include "TextureManager.h"
+#include <MyImgui/imgui.h>
 #pragma endregion 自作.h include
 #pragma region pragma comment
 

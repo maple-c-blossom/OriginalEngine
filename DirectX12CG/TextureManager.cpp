@@ -94,7 +94,8 @@ Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
 
 void MCB::TextureManager::SetDelete(int index)
 {
-	textures[index]->deleteFlag = true;
+	textures[index]->free = true;
+	textures[index]->texture.reset();
 }
 
 

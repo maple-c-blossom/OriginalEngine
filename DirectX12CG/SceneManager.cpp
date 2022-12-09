@@ -16,14 +16,14 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite.InitMatProje();
 	loadSprite = loadSprite.CreateSprite();
 	InitRand();
-
+	imgui.Init();
 	scene = new Scene(this->root, this->depth, this->pipeline);
 }
 
 MCB::SceneManager::~SceneManager()
 {
 	delete scene;
-
+	imgui.Final();
 }
 
 void MCB::SceneManager::Initialize()
@@ -129,6 +129,7 @@ void MCB::SceneManager::sceneChenge()
 	IScene* nextScene = scene->GetNextScene();
 	nextScene->Initialize();
 	delete scene;
+	//texmanager->Erase();
 	scene = nextScene;
 	isInitialized = true;
 

@@ -6,6 +6,20 @@ using namespace Assimp;
 
 
 
+MCB::FBXModel::~FBXModel()
+{
+	for (int i = 0; i < nodes.size(); i++)
+	{
+		for (int j = 0; j < nodes[i]->meshes.size(); j++)
+		{
+			for (int k = 0; k < nodes[i]->meshes[j].textures.size(); k++)
+			{
+				textureManager->SetDelete(nodes[i]->meshes[j].textures[k]);
+			}
+		}
+	}
+}
+
 void FBXModel::Initialize()
 {
 ;

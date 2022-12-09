@@ -69,6 +69,9 @@ void MCB::TitleScene::CheckAllColision()
 
 void MCB::TitleScene::ImGuiUpdate()
 {
+    imgui.Begin();
+    ImGui::ShowDemoWindow();
+    imgui.End();
 }
 
 MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
@@ -85,6 +88,7 @@ MCB::TitleScene::~TitleScene()
     delete skydomeModel;
     delete groundModel;
     delete nextScene;
+
 }
 
 void MCB::TitleScene::Initialize()
@@ -101,6 +105,7 @@ void MCB::TitleScene::Initialize()
     lights->DefaultLightSet();
     lights->UpDate();
     Object3d::SetLights(lights);
+   
 }
 
 void MCB::TitleScene::LoadModel()
