@@ -84,7 +84,7 @@ void MCB::TextureManager::Erase()
 	//{
 	//	std::remove_if(texincrement.begin(), texincrement.end(), [&itr](int itr2) { return (itr2 == itr.get()->texture.get()->incrementNum) && itr.get()->deleteFlag; });
 	//}
-	std::remove_if(textures.begin(), textures.end(), [](std::unique_ptr<TextureCell>& itr) { return itr->deleteFlag; });
+	std::remove_if(textures.begin(), textures.end(), [](std::unique_ptr<TextureCell>& itr) { return itr->free; });
 }
 
 Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
@@ -95,13 +95,13 @@ Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
 void MCB::TextureManager::SetDelete(int index)
 {
 	textures[index]->free = true;
-	textures[index]->texture.reset();
+	//textures[index]->texture.reset();
 }
 
 
 TextureManager* MCB::TextureManager::GetInstance()
 {
-	static TextureManager* instance = new TextureManager();//‘½•ª‚±‚ê‚ªˆ«‚³‚µ‚Ä‚é
+	static TextureManager* instance = new TextureManager();
 	return instance;
 }
 
