@@ -8,8 +8,9 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	this->root = root;
 	this->pipeline = pipeline;
 	this->depth = depth;
-	loadTex = texmanager->LoadTexture(L"Resources\\reimu.png");
+	damyTexture = texmanager->CreateNoTextureFileIsTexture();
 	loadBackGroundTex = texmanager->CreateNoTextureFileIsTexture();
+	loadTex = texmanager->LoadTexture(L"Resources\\reimu.png");
 	loadBackGround.InitMatProje();
 	loadBackGround = loadBackGround.CreateSprite();
 	loadBackGround.color = { 0,0,0,0 };

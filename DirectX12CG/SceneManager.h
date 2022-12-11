@@ -15,6 +15,7 @@ namespace MCB
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 120;
 		int isChengeSceneTimer = 0;
+		TextureCell* damyTexture;
 		TextureCell* loadTex;
 		TextureCell* loadBackGroundTex;
 		Sprite loadSprite;
