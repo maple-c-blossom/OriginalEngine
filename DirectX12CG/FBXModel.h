@@ -12,7 +12,7 @@
 #include "MCBFloat.h"
 #include <unordered_map>
 #include "Vector3D.h"
-#include "Texture.h"
+#include "TextureManager.h"
 
 namespace MCB
 {
@@ -41,7 +41,7 @@ namespace MCB
             Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 
 
-            std::vector<int> textures;
+            std::vector<TextureCell*> textures;
             //MCB::Texture textures;
             std::vector<FBXVertex> vertices;
             std::vector<unsigned short> indices;
@@ -72,21 +72,14 @@ namespace MCB
 
             HRESULT VertexMaping();
 
-            void CreateModel(const std::string fileName, bool smooth = false);
-
             void SetSizeIB();
 
             void SetSizeVB();
-
-            void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
             void Init();
 
             inline size_t GetVertexCount() { return vertices.size(); }
 
-            void AddSmoothData(unsigned short indexPosition, unsigned short indexVertex);
-
-            void CalculateSmoothedVertexNormals();
         };
 	};
 

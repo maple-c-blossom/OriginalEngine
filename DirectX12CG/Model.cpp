@@ -17,7 +17,7 @@ MCB::Model::Model()
 
 MCB::Model::~Model()
 {
-    Loader->SetDelete(texture);
+    texture->free = true;
     //texture.texfile.scratchImg.Release();
 }
 

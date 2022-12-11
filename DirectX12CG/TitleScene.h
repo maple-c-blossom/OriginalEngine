@@ -23,10 +23,10 @@ namespace MCB
 
 		//テクスチャ
 #pragma region テクスチャ
-		Texture testTex;
-		Texture debugTextTexture;
-		Texture zoomTex;
-		Texture scopeTex;
+		TextureCell* testTex;
+		TextureCell* debugTextTexture;
+		TextureCell* zoomTex;
+		TextureCell* scopeTex;
 #pragma endregion テクスチャ
 
 		//サウンド

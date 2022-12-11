@@ -15,8 +15,8 @@ namespace MCB
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 120;
 		int isChengeSceneTimer = 0;
-		int loadTex;
-		int loadBackGroundTex;
+		TextureCell* loadTex;
+		TextureCell* loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
 		ImguiManager imgui;

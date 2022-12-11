@@ -17,7 +17,7 @@ using namespace std;
 //	textures.push_back(move(temp));
 //}
 
-int MCB::TextureManager::LoadTexture(const wchar_t* FileName)
+TextureCell* MCB::TextureManager::LoadTexture(const wchar_t* FileName)
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
 	int tempin = 0;
@@ -34,49 +34,30 @@ int MCB::TextureManager::LoadTexture(const wchar_t* FileName)
 	textures.push_back(move(temp));
 	//assert(textures.size() < 20);
 	//texincrement.push_back(tempin);
-	return textures.size() - 1;
+	return textures.rbegin()->get();
 }
 
-int MCB::TextureManager::LoadTexture(const std::string& directoryPath, const std::string& filename)
+TextureCell* MCB::TextureManager::LoadTexture(const std::string& directoryPath, const std::string& filename)
 {
-	
+	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
 	int tempin = 0;
-	bool loaded = false;
-	for (auto& itr2 : textures)
+	for (auto& itr : textures)
 	{
-		if (itr2->free)
+		if (tempin == itr->texture->incrementNum)
 		{
-			itr2->free = false;
-			tempin = itr2->texture->incrementNum;
-			itr2.reset();
-			itr2 = make_unique<TextureCell>();
-			itr2->texture->CreateTexture(directoryPath, filename, itr2->texture->incrementNum);
-			loaded = true;
-			break;
+			tempin++;
+			continue;
 		}
 	}
-	if (!loaded)
-	{
-		std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
-		for (auto& itr : textures)
-		{
-			if (tempin == itr->texture->incrementNum)
-			{
-				tempin++;
-				continue;
-			}
-		}
-
 		temp->texture->CreateTexture(directoryPath, filename, tempin);
 		textures.push_back(move(temp));
 		//assert(textures.size() < 20);
-	}
 
 	//texincrement.push_back(tempin);
-	return textures.size() - 1;
+	return textures.rbegin()->get();
 }
 
-int MCB::TextureManager::CreateNoTextureFileIsTexture()
+TextureCell* MCB::TextureManager::CreateNoTextureFileIsTexture()
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
 	int tempin = 0;
@@ -92,7 +73,7 @@ int MCB::TextureManager::CreateNoTextureFileIsTexture()
 	textures.push_back(move(temp));
 	//assert(textures.size() < 20);
 	//texincrement.push_back(tempin);
-	return textures.size() - 1;
+	return textures.rbegin()->get();
 }
 
 void MCB::TextureManager::Clear()
@@ -106,19 +87,19 @@ void MCB::TextureManager::Erase()
 	//{
 	//	std::remove_if(texincrement.begin(), texincrement.end(), [&itr](int itr2) { return (itr2 == itr.get()->texture.get()->incrementNum) && itr.get()->deleteFlag; });
 	//}
-	//std::remove_if(textures.begin(), textures.end(), [](std::unique_ptr<TextureCell>& itr) { return itr->free; });
+	textures.remove_if([](std::unique_ptr<TextureCell>& itr) { return itr->free; });
 }
 
-Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
-{
-	return textures[incrementNum]->texture.get();
-}
+//Texture* MCB::TextureManager::GetTexture(unsigned short int incrementNum)
+//{
+//	//return textures[incrementNum]->texture.get();
+//}
 
-void MCB::TextureManager::SetDelete(int index)
-{
-	textures[index]->free = true;
-	//textures[index]->texture.reset();
-}
+//void MCB::TextureManager::SetDelete(int index)
+//{
+//	//textures[index]->free = true;
+//	//textures[index]->texture.reset();
+//}
 
 
 TextureManager* MCB::TextureManager::GetInstance()

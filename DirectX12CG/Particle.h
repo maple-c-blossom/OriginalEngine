@@ -56,7 +56,7 @@ namespace MCB
         D3D12_VERTEX_BUFFER_VIEW vbView{};
         Vertex vertex;
         int vertNum = 1;
-        int* tex;
+        TextureCell* tex;
         Particle();
 
         ~Particle();
@@ -71,7 +71,7 @@ namespace MCB
 
         void SetColor(Float4 color);
 
-        void Init(int* tex);
+        void Init(TextureCell* tex);
 
         void Update(View& view, Projection& projection, bool isBillBord = false);
 

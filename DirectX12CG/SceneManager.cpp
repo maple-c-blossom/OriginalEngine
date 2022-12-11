@@ -108,7 +108,7 @@ void MCB::SceneManager::Draw()
 
 
 
-		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
 #ifdef _DEBUG
 		scene->ImGuiUpdate();
 		scene->ImGuiDraw();
@@ -117,8 +117,8 @@ void MCB::SceneManager::Draw()
 	else//ƒ[ƒh‰æ–Ê
 	{
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
-		loadBackGround.SpriteDraw(*texmanager->GetTexture(loadBackGroundTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
-		loadSprite.SpriteDraw(*texmanager->GetTexture(loadTex), DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
+		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadSprite.SpriteDraw(*loadTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
 

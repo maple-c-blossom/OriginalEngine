@@ -21,7 +21,7 @@ void MCB::Particle::SetColor(Float4 color)
     material.constMapMaterial->color = material.material.color;
 }
 
-void Particle::Init(int* tex)
+void Particle::Init(TextureCell* tex)
 {
     Dx12* dx12 = Dx12::GetInstance();
     D3D12_HEAP_PROPERTIES HeapProp{};
@@ -116,7 +116,7 @@ void Particle::Draw()
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += textureManager->GetTexture(*tex)->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);

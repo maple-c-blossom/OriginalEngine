@@ -13,11 +13,14 @@ MCB::Scene::~Scene()
     delete groundModel;
     delete nextScene;
     delete testModel;
-    loader->SetDelete(testTex);
-    loader->SetDelete(debugTextTexture);
-    loader->SetDelete(zoomTex);
-    loader->SetDelete(scopeTex);
-
+    //loader->SetDelete(testTex);
+    //loader->SetDelete(debugTextTexture);
+    //loader->SetDelete(zoomTex);
+    //loader->SetDelete(scopeTex);
+    testTex->free = true;
+    debugTextTexture->free = true;
+    zoomTex->free = true;
+    scopeTex->free = true;
 
 }
 
@@ -109,13 +112,13 @@ void MCB::Scene::SpriteInit()
     zoomSprite = zoomSprite.CreateSprite();
     scopeSprite.InitMatProje();
     scopeSprite = scopeSprite.CreateSprite();
-    debugText.Init(loader->GetTexture( debugTextTexture));
+    debugText.Init(debugTextTexture->texture.get());
 
 }
 
 void MCB::Scene::ParticleInit()
 {
-    testParticle.Init(&testTex);
+    testParticle.Init(testTex);
     testParticle.position = { 0,0,10 };
     //testParticle.rotasion.x = ConvertRadius(-90);
 }

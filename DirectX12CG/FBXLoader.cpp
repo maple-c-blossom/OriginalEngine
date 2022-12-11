@@ -14,22 +14,10 @@ MCB::FBXModel::~FBXModel()
 		{
 			for (int k = 0; k < nodes[i]->meshes[j].textures.size(); k++)
 			{
-				textureManager->SetDelete(nodes[i]->meshes[j].textures[k]);
+				nodes[i]->meshes[j].textures[k]->free = true;
 			}
 		}
 	}
-}
-
-void FBXModel::Initialize()
-{
-;
-
-
-}
-
-void MCB::FBXModel::Finalize()
-{
-
 }
 
 
@@ -204,7 +192,7 @@ void MCB::FBXModel::Draw()
 			//SRVヒープの先頭アドレスを取得
 			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
-			srvGpuHandle.ptr += textureManager->GetTexture(*itr2.textures.begin())->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+			srvGpuHandle.ptr += itr2.textures.front()->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
 			//SRVヒープの先頭にあるSRVをパラメータ1番に設定
 			dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
@@ -222,11 +210,11 @@ void MCB::FBXModel::Draw()
 }
 //
 
-std::vector<int> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
-	std::vector<int> textures;
+std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+	std::vector<TextureCell*> textures;
 	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
-		int tempTex;
+		TextureCell* tempTex;
 		std::string path;
 		mat->GetTexture(type, i, &str);
 		path = str.C_Str();
@@ -240,7 +228,7 @@ std::vector<int> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType t
 
 	if (textures.empty())
 	{
-		int tempTex;
+		TextureCell* tempTex;
 		tempTex = textureManager->CreateNoTextureFileIsTexture();
 		textures.push_back(tempTex);
 	}

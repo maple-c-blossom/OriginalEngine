@@ -39,7 +39,7 @@ namespace MCB
 
 
         TextureManager* Loader = TextureManager::GetInstance();
-        int texture;
+        TextureCell* texture;
         std::vector<ObjectVertex> vertices;
         std::vector<unsigned short> indices;
         std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;

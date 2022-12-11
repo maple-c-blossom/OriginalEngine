@@ -1,6 +1,6 @@
 #pragma once
 #include "Texture.h"
-#include <vector>
+#include <list>
 #include <memory>
 namespace MCB
 {
@@ -18,7 +18,7 @@ namespace MCB
 		TextureManager(const TextureManager& textureManager) = delete;
 		TextureManager& operator=(const TextureManager& textureManager) = delete;
 		~TextureManager() {};
-		 std::vector<std::unique_ptr<TextureCell>> textures;
+		 std::list<std::unique_ptr<TextureCell>> textures;
 		//std::vector<int> texincrement;
 	public:
 		//int LoadTexture(const wchar_t* FileName, unsigned short int incrementNum);
@@ -26,11 +26,11 @@ namespace MCB
 		static TextureManager* GetInstance();
 		//int LoadTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
 
-		int LoadTexture(const wchar_t* FileName);
+		TextureCell* LoadTexture(const wchar_t* FileName);
 
-		int LoadTexture(const std::string& directoryPath, const std::string& filename);
+		TextureCell* LoadTexture(const std::string& directoryPath, const std::string& filename);
 
-		int CreateNoTextureFileIsTexture();
+		TextureCell* CreateNoTextureFileIsTexture();
 
 		static TextureManager* instance;
 
@@ -38,8 +38,8 @@ namespace MCB
 		
 		void Erase();
 
-		void SetDelete(int index);
+		//void SetDelete(int index);
 
-		Texture* GetTexture(unsigned short int incrementNum);
+		//Texture* GetTexture(unsigned short int incrementNum);
 	};
 }

@@ -12,7 +12,7 @@ MCB::FBXMesh::~FBXMesh()
     TextureManager* instance = TextureManager::GetInstance();
     for (auto& itr : textures)
     {
-        instance->SetDelete(itr);
+        itr->free = true;;
     }
 }
 

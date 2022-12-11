@@ -12,7 +12,7 @@ void MCB::TitleScene::SpriteInit()
     zoomSprite = zoomSprite.CreateSprite();
     scopeSprite.InitMatProje();
     scopeSprite = scopeSprite.CreateSprite();
-    debugText.Init(&debugTextTexture);
+    debugText.Init(debugTextTexture->texture.get());
 }
 
 void MCB::TitleScene::ParticleInit()
@@ -119,10 +119,10 @@ void MCB::TitleScene::LoadModel()
 
 void MCB::TitleScene::LoadTexture()
 {
-    testTex.CreateTexture(L"Resources\\reimu.png");
-    debugTextTexture.CreateTexture(L"Resources\\debugfont.png");
-    zoomTex.CreateTexture(L"Resources\\reticle.png");
-    scopeTex.CreateTexture(L"Resources\\scope.png");
+    debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
+    testTex = loader->LoadTexture(L"Resources\\reimu.png");
+    zoomTex = loader->LoadTexture(L"Resources\\reticle.png");
+    scopeTex = loader->LoadTexture(L"Resources\\scope.png");
 }
 
 void MCB::TitleScene::LoadSound()
