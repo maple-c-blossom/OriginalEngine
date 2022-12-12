@@ -73,7 +73,13 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		{
 
 			newObject->meshes.push_back(processMesh(scene->mMeshes[ainode->mMeshes[i]], scene));
-			
+			for (auto& itr :newObject->meshes)//‚È‚º‚©return‚³‚ê‚é‚Ü‚Åfalse‚¾‚Á‚½texture‚Ìfree‚ªtrue‚É‚³‚ê‚Ä‚¢‚é‚Ì‚ÅC³
+			{
+				for (auto& itr2 : itr.textures)
+				{
+					itr2->free = false;
+				}
+			}
 		}
 		// the new object is the parent for all child nodes
 

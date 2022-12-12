@@ -130,8 +130,8 @@ void MCB::SceneManager::sceneChenge()
 	IScene* nextScene = scene->GetNextScene();
 	nextScene->Initialize();
 	delete scene;
-	//texmanager->Erase();
 	scene = nextScene;
+	texmanager->Erase();
 	isInitialized = true;
 
 }
