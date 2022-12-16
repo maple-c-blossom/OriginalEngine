@@ -59,8 +59,8 @@ void DxWindow::Init()
     window.lpszClassName = windowName; // ウィンドウクラス名
     window.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
     window.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
-    window.hIcon = LoadIcon(window.hInstance, MAKEINTRESOURCE(IDI_ICON1));
-    window.hIconSm = LoadIcon(window.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+    window.hIcon = LoadIcon(window.hInstance, MAKEINTRESOURCE(MapleIcon));
+    window.hIconSm = LoadIcon(window.hInstance, MAKEINTRESOURCE(MapleIcon));
     // ウィンドウクラスをOSに登録
     RegisterClassEx(&window);
 
