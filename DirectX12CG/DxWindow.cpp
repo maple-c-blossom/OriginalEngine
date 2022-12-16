@@ -1,7 +1,9 @@
 #include "DxWindow.h"
+#include "resource.h"
 #include <MyImgui/imgui_impl_win32.h>
 #pragma comment(lib, "winmm.lib")
 using namespace MCB;
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lparam);
 LRESULT DxWindow::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -57,7 +59,8 @@ void DxWindow::Init()
     window.lpszClassName = windowName; // ウィンドウクラス名
     window.hInstance = GetModuleHandle(nullptr); // ウィンドウハンドル
     window.hCursor = LoadCursor(NULL, IDC_ARROW); // カーソル指定
-
+    window.hIcon = LoadIcon(window.hInstance, MAKEINTRESOURCE(IDI_ICON1));
+    window.hIconSm = LoadIcon(window.hInstance, MAKEINTRESOURCE(IDI_ICON1));
     // ウィンドウクラスをOSに登録
     RegisterClassEx(&window);
 

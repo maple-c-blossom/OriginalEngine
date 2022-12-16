@@ -154,6 +154,9 @@
     <Filter Include="ヘッダー ファイル\Scene">
       <UniqueIdentifier>{9626c07b-d810-4c3a-a52f-1f3eb218727d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\Icon">
+      <UniqueIdentifier>{df513fd5-e626-477c-b461-66ad3c629032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -514,6 +517,9 @@
     <ClInclude Include="TextureManager.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\ParticleShader\ParticleHeader.hlsli">
@@ -525,5 +531,15 @@
     <None Include="Resources\Shaders\SpriteShader\SpriteShaderHeader.hlsli">
       <Filter>リソース ファイル\SpriteShader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\Maple.ico">
+      <Filter>リソース ファイル\Icon</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectX12CG.rc">
+      <Filter>リソース ファイル\Icon</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
