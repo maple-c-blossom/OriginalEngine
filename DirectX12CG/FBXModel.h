@@ -16,7 +16,7 @@
 
 namespace MCB
 {
-
+        static const unsigned short int NUM_BONES_PER_VERTEX = 4;
 
         //頂点データ構造体-------------------------------------
         typedef struct FBXVertex
@@ -24,9 +24,14 @@ namespace MCB
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
-        };
+        }FBXVertex;
         //--------------------------------------
 
+        typedef struct VertexBoneData
+        {
+            unsigned int ids[NUM_BONES_PER_VERTEX];
+            float weights[NUM_BONES_PER_VERTEX];
+        };
 
 	class FBXMesh
 	{
@@ -40,19 +45,24 @@ namespace MCB
 
             Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 
+            Microsoft::WRL::ComPtr<ID3D12Resource> boneBuff = nullptr;
 
             std::vector<TextureCell*> textures;
             //MCB::Texture textures;
             std::vector<FBXVertex> vertices;
             std::vector<unsigned short> indices;
+            std::vector<VertexBoneData> bones;
             std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
             unsigned int sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
             unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+            unsigned int sizeBB = static_cast<unsigned int>(sizeof(VertexBoneData) * bones.size());
 
             D3D12_INDEX_BUFFER_VIEW ibView{};
 
             D3D12_VERTEX_BUFFER_VIEW vbView{};
+
+ 
 
             //D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
 

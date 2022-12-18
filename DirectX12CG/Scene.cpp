@@ -63,7 +63,7 @@ void MCB::Scene::Object3DInit()
     testSpher.fbxModel = testModel;
     testSpher.scale = {1,1,1};
     testSpher.position = { 0,4,10 };
-    testSpher.rotasion = { ConvertRadius(90),0,0 };
+    testSpher.rotasion = { 0,0,0 };
 
 
     //sphere.Init();

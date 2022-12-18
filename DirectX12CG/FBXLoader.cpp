@@ -3,7 +3,7 @@
 #include "Dx12.h"
 using namespace MCB;
 using namespace Assimp;
-
+using namespace DirectX;
 
 
 MCB::FBXModel::~FBXModel()
@@ -106,6 +106,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
+		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
 		nodes.push_back(std::move(newObject));
 		parent = newObject.get();
 		//transform.SetUnity();
@@ -114,6 +115,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 	{
 		targetParent->parent = parent;
 		targetParent->globalTransform *= parent->globalTransform;
+		targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
 	//// continue for all child nodes
 	for (int i = 0; i < ainode->mNumChildren; i++) {

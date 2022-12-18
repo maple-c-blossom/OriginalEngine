@@ -11,6 +11,7 @@
 #include <assimp/postprocess.h>     // Post processing flags
 #include "FBXModel.h"
 #include "TextureManager.h"
+#include "Quaternion.h"
 namespace MCB
 {
 
@@ -38,6 +39,21 @@ namespace MCB
         bool inversV = false; //Vç¿ïWîΩì]ÉtÉâÉO
     }ImportSetting;
 
+    typedef struct NodeAnim
+    {
+        std::string name;
+        std::vector<MCB::Vector3D> position;
+        std::vector<MCB::Quaternion> rotation;
+        std::vector<MCB::Vector3D> scale;
+    }NodeAnim;
+
+    typedef struct Animation
+    {
+        double duration;
+        double ticksPerSecond;
+        std::vector<NodeAnim> channels;
+    }Animation;
+
     typedef struct Node
     {
         std::string name;
@@ -47,6 +63,7 @@ namespace MCB
         DirectX::XMVECTOR translation = { 0,0,0,1 };
         DirectX::XMMATRIX transform;
         DirectX::XMMATRIX globalTransform;
+        DirectX::XMMATRIX globalInverseTransform;
         Node* parent = nullptr;
 
     }Node;
@@ -62,6 +79,7 @@ namespace MCB
     public:
         TextureManager* textureManager = TextureManager::GetInstance();
         std::vector<std::unique_ptr<Node>> nodes;
+        std::vector<std::unique_ptr<Animation>> animations;
         ~FBXModel();
         string fileName;
         bool Load(std::string fileName);
