@@ -51,6 +51,15 @@ bool MCB::FBXModel::Load(std::string fileName) {
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
 	CopyNodesWithMeshes(scene->mRootNode, scene);
+	
+	if (scene->mNumAnimations > 0)
+	{
+		for (int i = 0; i < scene->mNumAnimations; i++)
+		{
+			
+		}
+	}
+
 	// We're done. Everything will be cleaned up by the importer destructor
 	//scene->~aiScene();
 	return true;
@@ -110,7 +119,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		nodes.push_back(std::move(newObject));
 		parent = newObject.get();
 		//transform.SetUnity();
-
+		
 	if (targetParent)
 	{
 		targetParent->parent = parent;
@@ -127,7 +136,6 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 	// Data to fill
 	FBXMesh tempmodel;
-
 	// Walk through each of the mesh's vertices
 	for (UINT i = 0; i < mesh->mNumVertices; i++) {
 		FBXVertex vertex;
@@ -182,6 +190,47 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 		tempmodel.material.push_back(mat);
 		tempmodel.textures = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	}
+
+	for (int i = 0; i < mesh->mNumBones; i++)
+	{
+		Bone temp;
+		temp.name = mesh->mBones[i]->mName.C_Str();
+		temp.offsetMatrix.r[0].m128_f32[0] = mesh->mBones[i]->mOffsetMatrix.a1;
+		temp.offsetMatrix.r[0].m128_f32[1] = mesh->mBones[i]->mOffsetMatrix.a2;
+		temp.offsetMatrix.r[0].m128_f32[2] = mesh->mBones[i]->mOffsetMatrix.a3;
+		temp.offsetMatrix.r[0].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.a4;
+											 
+		temp.offsetMatrix.r[1].m128_f32[0] = mesh->mBones[i]->mOffsetMatrix.b1;
+		temp.offsetMatrix.r[1].m128_f32[1] = mesh->mBones[i]->mOffsetMatrix.b2;
+		temp.offsetMatrix.r[1].m128_f32[2] = mesh->mBones[i]->mOffsetMatrix.b3;
+		temp.offsetMatrix.r[1].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.b4;
+										
+		temp.offsetMatrix.r[2].m128_f32[0] = mesh->mBones[i]->mOffsetMatrix.c1;
+		temp.offsetMatrix.r[2].m128_f32[1] = mesh->mBones[i]->mOffsetMatrix.c2;
+		temp.offsetMatrix.r[2].m128_f32[2] = mesh->mBones[i]->mOffsetMatrix.c3;
+		temp.offsetMatrix.r[2].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.c4;
+											 
+		temp.offsetMatrix.r[3].m128_f32[0] = mesh->mBones[i]->mOffsetMatrix.d1;
+		temp.offsetMatrix.r[3].m128_f32[1] = mesh->mBones[i]->mOffsetMatrix.d2;
+		temp.offsetMatrix.r[3].m128_f32[2] = mesh->mBones[i]->mOffsetMatrix.d3;
+		temp.offsetMatrix.r[3].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.d4;
+
+		temp.offsetMatrix = DirectX::XMMatrixTranspose(temp.offsetMatrix);
+		
+		for (int j = 0; j < mesh->mBones[i]->mNumWeights; j++)
+		{
+			if (j >= NUM_BONES_PER_VERTEX)
+			{
+				break;
+			}
+			VertexBoneData tempVer;
+			tempVer.ids[j] = mesh->mBones[i]->mWeights[j].mVertexId;
+			tempVer.weights[j] = mesh->mBones[i]->mWeights[j].mWeight;
+			tempmodel.vertexBones.push_back(tempVer);
+		}
+
+		tempmodel.bones.push_back(temp);
 	}
 	tempmodel.Init();
 	return tempmodel;

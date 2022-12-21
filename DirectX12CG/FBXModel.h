@@ -33,6 +33,12 @@ namespace MCB
             float weights[NUM_BONES_PER_VERTEX];
         };
 
+        typedef struct Bone
+        {
+            std::string name;
+            DirectX::XMMATRIX offsetMatrix;
+        };
+
 	class FBXMesh
 	{
         public:
@@ -51,7 +57,8 @@ namespace MCB
             //MCB::Texture textures;
             std::vector<FBXVertex> vertices;
             std::vector<unsigned short> indices;
-            std::vector<VertexBoneData> bones;
+            std::vector<VertexBoneData> vertexBones;
+            std::vector<Bone> bones;
             std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
             unsigned int sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
