@@ -43,12 +43,16 @@ namespace MCB
     {
         std::string name;
         std::vector<MCB::Vector3D> position;
+        std::vector<double> positionTime;
         std::vector<MCB::Quaternion> rotation;
+        std::vector<double> rotationTime;
         std::vector<MCB::Vector3D> scale;
+        std::vector<double> scaleTime;
     }NodeAnim;
 
     typedef struct Animation
     {
+        std::string name;
         double duration;
         double ticksPerSecond;
         std::vector<NodeAnim> channels;

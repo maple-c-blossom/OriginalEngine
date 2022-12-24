@@ -32,6 +32,12 @@ namespace MCB
             unsigned int ids[NUM_BONES_PER_VERTEX];
             float weights[NUM_BONES_PER_VERTEX];
         };
+        typedef struct SetWeight
+        {
+            unsigned int id;
+            float weight;
+        };
+
 
         typedef struct Bone
         {

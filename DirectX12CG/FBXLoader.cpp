@@ -1,6 +1,7 @@
 #include "FBXLoader.h"
 #include "FBXModel.h"
 #include "Dx12.h"
+#include <list>
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
@@ -56,7 +57,54 @@ bool MCB::FBXModel::Load(std::string fileName) {
 	{
 		for (int i = 0; i < scene->mNumAnimations; i++)
 		{
-			
+			std::unique_ptr<Animation> tempAnim = std::make_unique<Animation>();
+			tempAnim->duration = scene->mAnimations[i]->mDuration;
+			tempAnim->name = scene->mAnimations[i]->mName.C_Str();
+			tempAnim->ticksPerSecond = scene->mAnimations[i]->mTicksPerSecond;
+			for (int j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
+			{
+				NodeAnim tempNodeAnim;
+				tempNodeAnim.name = scene->mAnimations[i]->mChannels[j]->mNodeName.C_Str();
+				for (int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumPositionKeys; k++)
+				{
+					Vector3D tempPosition;
+					double time;
+					tempPosition.vec.x = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.x;
+					tempPosition.vec.y = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.y;
+					tempPosition.vec.z = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.z;
+					time = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mTime;
+
+					tempNodeAnim.position.push_back(tempPosition);
+					tempNodeAnim.positionTime.push_back(time);
+				}
+
+				for (int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumScalingKeys; k++)
+				{
+					Vector3D tempScale;
+					double time;
+					tempScale.vec.x = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.x;
+					tempScale.vec.y = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.y;
+					tempScale.vec.z = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.z;
+					time = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mTime;
+					tempNodeAnim.scale.push_back(tempScale);
+					tempNodeAnim.scaleTime.push_back(time);
+				}
+
+				for (int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumRotationKeys; k++)
+				{
+					Quaternion tempRotation;
+					double time;
+					tempRotation.x = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.x;
+					tempRotation.y = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.y;
+					tempRotation.z = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.z;
+					tempRotation.w = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.w;
+					time = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mTime;
+					tempNodeAnim.rotation.push_back(tempRotation);
+					tempNodeAnim.rotationTime.push_back(time);
+				}
+				tempAnim->channels.push_back(tempNodeAnim);
+			}
+			animations.push_back(move(tempAnim));
 		}
 	}
 
@@ -191,7 +239,7 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 		tempmodel.textures = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	}
-
+	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices.size());
 	for (int i = 0; i < mesh->mNumBones; i++)
 	{
 		Bone temp;
@@ -220,17 +268,39 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 		
 		for (int j = 0; j < mesh->mBones[i]->mNumWeights; j++)
 		{
-			if (j >= NUM_BONES_PER_VERTEX)
-			{
-				break;
-			}
-			VertexBoneData tempVer;
-			tempVer.ids[j] = mesh->mBones[i]->mWeights[j].mVertexId;
-			tempVer.weights[j] = mesh->mBones[i]->mWeights[j].mWeight;
-			tempmodel.vertexBones.push_back(tempVer);
+
+			SetWeight tempVer;
+			tempVer.id = i;
+			tempVer.weight = mesh->mBones[i]->mWeights[j].mWeight;
+			weightList[ mesh->mBones[i]->mWeights[j].mVertexId].push_back(tempVer);
 		}
 
+
 		tempmodel.bones.push_back(temp);
+	}
+	for (int i = 0; i < tempmodel.vertices.size(); i++)
+	{
+		auto& weightL = weightList[i];
+		weightL.sort([](auto const& lhs, auto const rhs) {return lhs.weight > rhs.weight; });
+		int weightArrayIndex = 0;
+		for (auto& weightSet : weightL)
+		{
+			VertexBoneData tempBoneData;
+			tempBoneData.ids[weightArrayIndex] = weightSet.id;
+			tempBoneData.weights[weightArrayIndex] = weightSet.weight;
+			if (++weightArrayIndex >= NUM_BONES_PER_VERTEX)
+			{
+				float weight = 0.0f;
+				for (int j = 1; j < NUM_BONES_PER_VERTEX; j++)
+				{
+					weight += tempBoneData.weights[j];
+
+				}
+				tempBoneData.weights[0] = 1.0f - weight;
+				tempmodel.vertexBones.push_back(tempBoneData);
+				break;
+			}
+		}
 	}
 	tempmodel.Init();
 	return tempmodel;
