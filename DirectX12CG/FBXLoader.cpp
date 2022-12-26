@@ -15,9 +15,9 @@ MCB::FBXModel::~FBXModel()
 	{
 		for (int j = 0; j < nodes[i]->meshes.size(); j++)
 		{
-			for (int k = 0; k < nodes[i]->meshes[j].textures.size(); k++)
+			for (int k = 0; k < nodes[i]->meshes[j]->textures.size(); k++)
 			{
-				nodes[i]->meshes[j].textures[k]->free = true;
+				nodes[i]->meshes[j]->textures[k]->free = true;
 			}
 		}
 	}
@@ -128,13 +128,16 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		newObject->name = ainode->mName.C_Str();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
-		for (int i = 0; i < ainode->mNumMeshes; i++)
+		for (int i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]の原因
 		{
-
-			newObject->meshes.push_back(processMesh(scene->mMeshes[ainode->mMeshes[i]], scene));
+			std::unique_ptr<FBXMesh> ansmodel = std::make_unique<FBXMesh>();
+			FBXMesh tempmodel;
+			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, tempmodel);
+			ansmodel.reset(&tempmodel);
+			newObject->meshes.push_back(move(ansmodel));
 			for (auto& itr :newObject->meshes)//なぜかreturnされるまでfalseだったtextureのfreeがtrueにされているので修正
 			{
-				for (auto& itr2 : itr.textures)
+				for (auto& itr2 : itr->textures)
 				{
 					itr2->free = false;
 				}
@@ -183,9 +186,9 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 }
 
 
-FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
+FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel) {
 	// Data to fill
-	FBXMesh tempmodel;
+
 	// Walk through each of the mesh's vertices
 	for (UINT i = 0; i < mesh->mNumVertices; i++) {
 		FBXVertex vertex;
@@ -317,21 +320,21 @@ void MCB::FBXModel::Draw()
 		for (auto& itr2 : itr->meshes)
 		{
 			//定数バッファビュー(CBV)の設定コマンド
-			dx12->commandList->SetGraphicsRootConstantBufferView(2, itr2.material.begin()->constBuffMaterialB1->GetGPUVirtualAddress());
+			dx12->commandList->SetGraphicsRootConstantBufferView(2, itr2->material.begin()->constBuffMaterialB1->GetGPUVirtualAddress());
 			//SRVヒープの先頭アドレスを取得
 			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
-			srvGpuHandle.ptr += itr2.textures.front()->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+			srvGpuHandle.ptr += itr2->textures.front()->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
 			//SRVヒープの先頭にあるSRVをパラメータ1番に設定
 			dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 			//頂点データ
-			dx12->commandList->IASetVertexBuffers(0, 1, &itr2.vbView);
+			dx12->commandList->IASetVertexBuffers(0, 1, &itr2->vbView);
 			//インデックスデータ
-			dx12->commandList->IASetIndexBuffer(&itr2.ibView);
+			dx12->commandList->IASetIndexBuffer(&itr2->ibView);
 			//描画コマンド
-			dx12->commandList->DrawIndexedInstanced((unsigned int)itr2.indices.size(), 1, 0, 0, 0);
+			dx12->commandList->DrawIndexedInstanced((unsigned int)itr2->indices.size(), 1, 0, 0, 0);
 		}
 	}
 

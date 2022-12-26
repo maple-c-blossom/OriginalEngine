@@ -61,7 +61,7 @@ namespace MCB
     typedef struct Node
     {
         std::string name;
-        std::vector<FBXMesh> meshes; //出力先メッシュ配列
+        std::vector< std::unique_ptr<FBXMesh>> meshes; //出力先メッシュ配列
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
@@ -89,7 +89,7 @@ namespace MCB
         string fileName;
         bool Load(std::string fileName);
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
-        FBXMesh processMesh(aiMesh* mesh, const aiScene* scene);
+        FBXMesh processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
 
         void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);
