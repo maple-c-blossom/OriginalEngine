@@ -84,12 +84,32 @@ namespace MCB
         TextureManager* textureManager = TextureManager::GetInstance();
         std::vector<std::unique_ptr<Node>> nodes;
         std::vector<std::unique_ptr<Animation>> animations;
+        std::vector<Bone> bones;
         ~FBXModel();
         string fileName;
         bool Load(std::string fileName);
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         FBXMesh processMesh(aiMesh* mesh, const aiScene* scene);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
+
+        void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);
+
+        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation = 0);
+
+        static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
+
+        static void calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+
+        static void calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+
+        static void calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+
+        static unsigned int findPosition(float AnimationTime, const NodeAnim* pNodeAnim);
+
+        static unsigned int findRotation(float AnimationTime, const NodeAnim* pNodeAnim);
+
+        static unsigned int findScaling(float AnimationTime, const NodeAnim* pNodeAnim);
+
         //bool LoadFile(ImportSetting setting);
         void Draw();
     };

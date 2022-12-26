@@ -267,3 +267,37 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 	ans.QuaternoinNorm();
 	return ans;
 }
+
+
+MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int time)//ŒW”‚ğ’¼‚Å“ü—Í‚·‚é—p
+{
+	Quaternion ans;
+	float angle = GetAngle(start, end);
+
+	if (angle < 0)
+	{
+		angle *= -1;
+	}
+
+
+	float st = sinf(angle);
+
+	if (st == 0)
+	{
+		return start;
+	}
+
+	float sut = sinf(angle * time);
+	float sout = sinf(angle * (1.0f - time));
+
+	float coeff1 = sout / st;
+	float coeff2 = sut / st;
+
+	ans.x = coeff1 * start.x + coeff2 * end.x;
+	ans.y = coeff1 * start.y + coeff2 * end.y;
+	ans.z = coeff1 * start.z + coeff2 * end.z;
+	ans.w = coeff1 * start.w + coeff2 * end.w;
+
+	ans.QuaternoinNorm();
+	return ans;
+}

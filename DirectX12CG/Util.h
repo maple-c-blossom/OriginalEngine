@@ -20,6 +20,7 @@ namespace MCB
 
 	void InitRand();
 	int GetRand(int min, int max);
+	float clamp(float f);
 
 	class SimpleFigure
 	{

@@ -157,6 +157,21 @@
     <Filter Include="リソース ファイル\Icon">
       <UniqueIdentifier>{df513fd5-e626-477c-b461-66ad3c629032}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\FbxShader">
+      <UniqueIdentifier>{ea7efe2b-7a35-4131-88eb-b89374452ad1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\FbxShader\ShaderHeader">
+      <UniqueIdentifier>{52e98903-2c1b-4c28-866c-c047c199a45d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\FbxShader\GeometryShader">
+      <UniqueIdentifier>{8b29f5ac-0dee-417d-8864-4740d4d4ad46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\FbxShader\PixelShader">
+      <UniqueIdentifier>{245cea3f-434b-46ed-8b25-7f65895cd721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\FbxShader\VertexShader">
+      <UniqueIdentifier>{ed8548ed-bf4c-43c1-9dad-c30ad5357442}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -350,6 +365,15 @@
     <FxCompile Include="Resources\Shaders\SpriteShader\SpriteVertexShader.hlsl">
       <Filter>リソース ファイル\SpriteShader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
+      <Filter>リソース ファイル\FbxShader\GeometryShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxShader\FbxPixelShader.hlsl">
+      <Filter>リソース ファイル\FbxShader\PixelShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxShader\FbxVertexShader.hlsl">
+      <Filter>リソース ファイル\FbxShader\VertexShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxWindow.h">
@@ -530,6 +554,9 @@
     </None>
     <None Include="Resources\Shaders\SpriteShader\SpriteShaderHeader.hlsli">
       <Filter>リソース ファイル\SpriteShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli">
+      <Filter>リソース ファイル\FbxShader\ShaderHeader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,7 @@ MCB::Object3d::Object3d()
 MCB::Object3d::~Object3d()
 {
     constBuffTranceform->Unmap(0, nullptr);
+    constBuffSkin->Unmap(0, nullptr);
 }
 
 void Object3d::Init()
@@ -50,6 +51,30 @@ void Object3d::Init()
     assert(SUCCEEDED(dx12->result));
 
     dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+
+    D3D12_RESOURCE_DESC ResdescFbx{};
+    ResdescFbx.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    ResdescFbx.Width = (sizeof(ConstBuffSkin) + 0xff) & ~0xff;
+    ResdescFbx.Height = 1;
+    ResdescFbx.DepthOrArraySize = 1;
+    ResdescFbx.MipLevels = 1;
+    ResdescFbx.SampleDesc.Count = 1;
+    ResdescFbx.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+    dx12->result = dx12->device->CreateCommittedResource
+    (
+        &HeapProp,        //ヒープ設定
+        D3D12_HEAP_FLAG_NONE,
+        &ResdescFbx,//リソース設定
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&constBuffSkin)
+    );
+
+    assert(SUCCEEDED(dx12->result));
+
+    dx12->result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
+
 }
 
 void Object3d::Update(View& view, Projection& projection,bool isBillBord)
@@ -214,6 +239,12 @@ void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBor
     constMapTranceform->cameraPos.x = view.eye.x;
     constMapTranceform->cameraPos.y = view.eye.y;
     constMapTranceform->cameraPos.z = view.eye.z;
+
+    fbxModel->boneAnimTransform(0);
+    for (int i = 0; i < fbxModel->bones.size(); i++)
+    {
+        constMapSkin->boneMats[i] = fbxModel->bones[i].finalMatrix;
+    }
 }
 
 void MCB::Object3d::FbxUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord)
@@ -256,12 +287,14 @@ void MCB::Object3d::FbxDraw()
 {
     //定数バッファビュー(CBV)の設定コマンド
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
     fbxModel->Draw();
 }
 
 void MCB::Object3d::FbxDraw(unsigned short int incremant)
 {
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
     fbxModel->Draw();
 }
 

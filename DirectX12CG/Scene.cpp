@@ -83,6 +83,7 @@ void MCB::Scene::LoadModel()
 
 	skydomeModel = new Model("skydome");
     testModel = new FBXModel();
+    //testModel->Load("flash");
     testModel->Load("testFbx");
     //assert(testModel->textureManager->textures.size() < 20);
     //fbxLoader->LoadModelFromFile("cube");
@@ -171,7 +172,9 @@ void MCB::Scene::Draw()
     ground.Draw();
     //human.Draw();
     //testSpher.Draw();
+    pipeline->SetFbxPipeLine();
     testSpher.FbxDraw();
+    pipeline->SetObjPipeLine();
 }
 
 void MCB::Scene::SpriteDraw()

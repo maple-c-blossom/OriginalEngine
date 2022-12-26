@@ -38,9 +38,10 @@ namespace MCB
 
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
-
+        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin = nullptr;
         //行列用定数バッファマップ
         ConstBufferDataTransform* constMapTranceform = nullptr;
+        ConstBuffSkin* constMapSkin = nullptr;
 
         //アフィン変換情報
         DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };

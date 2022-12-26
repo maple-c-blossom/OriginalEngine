@@ -29,6 +29,8 @@ namespace MCB
 
 		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
 
+		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+
 		void SetBrendMode(int blendMode = Alpha);
 
 		void CommonBeginDraw(bool toporogyTypeIsPoint = false);

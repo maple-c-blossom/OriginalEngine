@@ -2,6 +2,8 @@
 #include "FBXModel.h"
 #include "Dx12.h"
 #include <list>
+#include <algorithm>
+#include "Util.h"
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
@@ -69,10 +71,10 @@ bool MCB::FBXModel::Load(std::string fileName) {
 				{
 					Vector3D tempPosition;
 					double time;
-					tempPosition.vec.x = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.x;
-					tempPosition.vec.y = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.y;
-					tempPosition.vec.z = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mValue.z;
-					time = scene->mAnimations[i]->mChannels[k]->mPositionKeys[k].mTime;
+					tempPosition.vec.x = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.x;
+					tempPosition.vec.y = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.y;
+					tempPosition.vec.z = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.z;
+					time = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mTime;
 
 					tempNodeAnim.position.push_back(tempPosition);
 					tempNodeAnim.positionTime.push_back(time);
@@ -82,10 +84,10 @@ bool MCB::FBXModel::Load(std::string fileName) {
 				{
 					Vector3D tempScale;
 					double time;
-					tempScale.vec.x = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.x;
-					tempScale.vec.y = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.y;
-					tempScale.vec.z = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mValue.z;
-					time = scene->mAnimations[i]->mChannels[k]->mScalingKeys[k].mTime;
+					tempScale.vec.x = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.x;
+					tempScale.vec.y = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.y;
+					tempScale.vec.z = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.z;
+					time = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mTime;
 					tempNodeAnim.scale.push_back(tempScale);
 					tempNodeAnim.scaleTime.push_back(time);
 				}
@@ -94,11 +96,11 @@ bool MCB::FBXModel::Load(std::string fileName) {
 				{
 					Quaternion tempRotation;
 					double time;
-					tempRotation.x = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.x;
-					tempRotation.y = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.y;
-					tempRotation.z = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.z;
-					tempRotation.w = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mValue.w;
-					time = scene->mAnimations[i]->mChannels[k]->mRotationKeys[k].mTime;
+					tempRotation.x = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.x;
+					tempRotation.y = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.y;
+					tempRotation.z = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.z;
+					tempRotation.w = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.w;
+					time = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mTime;
 					tempNodeAnim.rotation.push_back(tempRotation);
 					tempNodeAnim.rotationTime.push_back(time);
 				}
@@ -165,7 +167,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		newObject->globalTransform = newObject->transform;
 		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
 		nodes.push_back(std::move(newObject));
-		parent = newObject.get();
+		parent = nodes.back().get();
 		//transform.SetUnity();
 		
 	if (targetParent)
@@ -276,7 +278,7 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 		}
 
 
-		tempmodel.bones.push_back(temp);
+		bones.push_back(temp);
 	}
 	for (int i = 0; i < tempmodel.vertices.size(); i++)
 	{
@@ -285,23 +287,23 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene) {
 		int weightArrayIndex = 0;
 		for (auto& weightSet : weightL)
 		{
-			VertexBoneData tempBoneData;
-			tempBoneData.ids[weightArrayIndex] = weightSet.id;
-			tempBoneData.weights[weightArrayIndex] = weightSet.weight;
+			
+			tempmodel.vertices[i].ids[weightArrayIndex] = weightSet.id;
+			tempmodel.vertices[i].weights[weightArrayIndex] = weightSet.weight;
 			if (++weightArrayIndex >= NUM_BONES_PER_VERTEX)
 			{
 				float weight = 0.0f;
 				for (int j = 1; j < NUM_BONES_PER_VERTEX; j++)
 				{
-					weight += tempBoneData.weights[j];
+					weight += tempmodel.vertices[i].weights[j];
 
 				}
-				tempBoneData.weights[0] = 1.0f - weight;
-				tempmodel.vertexBones.push_back(tempBoneData);
+				tempmodel.vertices[i].weights[0] = 1.0f - weight;
 				break;
 			}
 		}
 	}
+
 	tempmodel.Init();
 	return tempmodel;
 	//return Mesh(dev_, vertices, indices, textures);
@@ -345,6 +347,10 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		std::string path;
 		mat->GetTexture(type, i, &str);
 		path = str.C_Str();
+		while (path.find("\\") != std::string::npos)
+		{
+			path = path.substr(path.find("\\") + 1);
+		}
 		path = "Resources\\" + fileName + "\\" + path;
 		wchar_t wfilepath[128];
 		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
@@ -359,72 +365,224 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		tempTex = textureManager->CreateNoTextureFileIsTexture();
 		textures.push_back(tempTex);
 	}
-
+	
 	return textures;
 }
 
-//void ModelLoader::Close() {
-//	for (auto& t : textures_loaded_)
-//		t.Release();
-//
-//	for (size_t i = 0; i < meshes_.size(); i++) {
-//		meshes_[i].Close();
-//	}
-//}
-//
-//void AssimpLoader::processNode(aiNode* node, const aiScene* scene) {
-//	for (UINT i = 0; i < node->mNumMeshes; i++) {
-//		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-//		nodes.push_back(this->processMesh(mesh, scene));
-//	}
-//
-//	for (UINT i = 0; i < node->mNumChildren; i++) {
-//		this->processNode(node->mChildren[i], scene);
-//	}
-//}
-//
-//ID3D11ShaderResourceView* ModelLoader::loadEmbeddedTexture(const aiTexture* embeddedTexture) {
-//	HRESULT hr;
-//	ID3D11ShaderResourceView* texture = nullptr;
-//
-//	if (embeddedTexture->mHeight != 0) {
-//		// Load an uncompressed ARGB8888 embedded texture
-//		D3D11_TEXTURE2D_DESC desc;
-//		desc.Width = embeddedTexture->mWidth;
-//		desc.Height = embeddedTexture->mHeight;
-//		desc.MipLevels = 1;
-//		desc.ArraySize = 1;
-//		desc.SampleDesc.Count = 1;
-//		desc.SampleDesc.Quality = 0;
-//		desc.Usage = D3D11_USAGE_DEFAULT;
-//		desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-//		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-//		desc.CPUAccessFlags = 0;
-//		desc.MiscFlags = 0;
-//
-//		D3D11_SUBRESOURCE_DATA subresourceData;
-//		subresourceData.pSysMem = embeddedTexture->pcData;
-//		subresourceData.SysMemPitch = embeddedTexture->mWidth * 4;
-//		subresourceData.SysMemSlicePitch = embeddedTexture->mWidth * embeddedTexture->mHeight * 4;
-//
-//		ID3D11Texture2D* texture2D = nullptr;
-//		hr = dev_->CreateTexture2D(&desc, &subresourceData, &texture2D);
-//		if (FAILED(hr))
-//			MessageBox(hwnd_, "CreateTexture2D failed!", "Error!", MB_ICONERROR | MB_OK);
-//
-//		hr = dev_->CreateShaderResourceView(texture2D, nullptr, &texture);
-//		if (FAILED(hr))
-//			MessageBox(hwnd_, "CreateShaderResourceView failed!", "Error!", MB_ICONERROR | MB_OK);
-//
-//		return texture;
-//	}
-//
-//	// mHeight is 0, so try to load a compressed texture of mWidth bytes
-//	const size_t size = embeddedTexture->mWidth;
-//
-//	hr = CreateWICTextureFromMemory(dev_, devcon_, reinterpret_cast<const unsigned char*>(embeddedTexture->pcData), size, nullptr, &texture);
-//	if (FAILED(hr))
-//		MessageBox(hwnd_, "Texture couldn't be created from memory!", "Error!", MB_ICONERROR | MB_OK);
-//
-//	return texture;
-//}
+  void FBXModel::boneAnimTransform(float timeInSeconds, unsigned int currentAnimation,bool loop)
+  {
+
+    
+    //if(!nodeAnimMapPtr)
+    //{
+    //  nodeAnimMapPtr = new NodeAnimMap();
+    //}
+    
+    //NSLog(@"%d", scene->mNumAnimations);
+    
+    float ticksPerSecond = (float)(animations[currentAnimation]->ticksPerSecond != 0 ? animations[currentAnimation]->ticksPerSecond : 25.0f);
+    float timeInTicks = timeInSeconds * ticksPerSecond;
+    float animationTime = timeInTicks;
+    
+    if(loop)
+      animationTime = fmod(animationTime, animations[currentAnimation]->duration);
+    else
+      animationTime = min(animationTime, animations[currentAnimation]->duration -0.0001f);
+    
+	for (auto& itr : nodes)
+	{
+		if (itr->parent == nullptr) continue;
+		readAnimNodeHeirarchy(animationTime, itr.get(), itr->parent->globalTransform, itr->globalInverseTransform);
+	}
+    
+  /*  if(transforms->getCount() == 0)
+      transforms->addElements((int)boneMapping().size());
+    
+    for(uint i = 0; i < boneMapping().size(); i++)
+    {
+      memcpy(transforms->elementAtIndex(i), &((BoneTransformInfo *)editBoneTransforms->elementAtIndex(i))->finalTransform, sizeof(float16));
+    }*/
+  }
+
+  void FBXModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
+  {
+	  const string& nodeName = pNode->name;
+
+	  const Animation* pAnimation = animations[currentAnimation].get();
+
+	  XMMATRIX nodeTrans = pNode->transform;
+
+	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
+
+	  if (pNodeAnim)
+	  {
+		   //Interpolate scaling and generate scaling transformation matrix
+		  Vector3D scaling;
+		  calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
+		  XMMATRIX scalingM = XMMatrixScaling(scaling.vec.x, scaling.vec.y, scaling.vec.z);
+
+		  // Interpolate rotation and generate rotation transformation matrix
+		  Quaternion rotationQ;
+		  calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
+		  //quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
+		  XMVECTOR XMrotationQ = { rotationQ.x,rotationQ.y,rotationQ.z,rotationQ.w };
+		  XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
+
+		  // Interpolate translation and generate translation transformation matrix
+		  Vector3D translation;
+		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
+		  XMMATRIX translationM = XMMatrixTranslationFromVector({ translation.vec.x, translation.vec.y, translation.vec.z });
+
+		   //Combine the above transformations
+		  pNode->transform = (translationM * rotationM) * scalingM;
+	  }
+
+	  pNode->globalTransform = parentTransform * pNode->transform;
+
+	  Bone* bonePtr = nullptr;
+	  for (auto& itr : bones)
+	  {
+		  if (itr.name == pNode->name)
+		  {
+			  bonePtr = &itr;
+		  }
+	  }
+
+	  if (bonePtr != nullptr)
+	  {
+		  //unsigned int boneIndex = iter;
+		  //BoneTransformInfo* boneInfo = (BoneTransformInfo*)editBoneTransforms->elementAtIndex(boneIndex);
+
+		  XMMATRIX* boneOff = &bonePtr->offsetMatrix;
+		  XMMATRIX trans = (globalInverseTransform * pNode->globalTransform) * (*boneOff);
+		  bonePtr->finalMatrix = trans;
+		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
+	  }
+
+	  //for (uint i = 0; i < pNode->mNumChildren; i++)
+	  //{
+		 // readAnimNodeHeirarchy(animationTime, pNode->mChildren[i], globalTransformation, scene, globalInverseTransform);
+	  //}
+  }
+
+  const NodeAnim* FBXModel::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
+  {
+
+	  for (unsigned int i = 0; i < pAnimation->channels.size(); i++)
+	  {
+		  const NodeAnim* pNodeAnim = &pAnimation->channels[i];
+
+		  if (pNodeAnim->name == NodeName)
+		  {
+			  return pNodeAnim;
+		  }
+	  }
+
+	  return NULL;
+  }
+
+
+
+   void FBXModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+  {
+	  if (pNodeAnim->position.size() == 1)
+	  {
+		  Out = pNodeAnim->position[0];
+		  return;
+	  }
+
+	  unsigned int PositionIndex = findPosition(AnimationTime, pNodeAnim);
+	  unsigned int NextPositionIndex = (PositionIndex + 1);
+	  assert(NextPositionIndex < pNodeAnim->position.size());
+	  float DeltaTime = (float)(pNodeAnim->positionTime[NextPositionIndex] - pNodeAnim->positionTime[PositionIndex]);
+	  float Factor = clamp((AnimationTime - (float)pNodeAnim->positionTime[PositionIndex]) / DeltaTime);
+	  Vector3D Start = pNodeAnim->position[PositionIndex];
+	  Vector3D End = pNodeAnim->position[NextPositionIndex];
+	  Vector3D Delta = End - Start;
+	  Out = Start + Factor * Delta;
+  }
+
+   void FBXModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+  {
+	  // we need at least two values to interpolate...
+	  if (pNodeAnim->rotation.size() == 1) {
+		  Out = pNodeAnim->rotation[0];
+		  return;
+	  }
+
+	  unsigned int RotationIndex = findRotation(AnimationTime, pNodeAnim);
+	  unsigned int NextRotationIndex = (RotationIndex + 1);
+	  assert(NextRotationIndex < pNodeAnim->rotation.size());
+	  float DeltaTime = (float)(pNodeAnim->rotationTime[NextRotationIndex] - pNodeAnim->rotationTime[RotationIndex]);
+	  float Factor = clamp((AnimationTime - (float)pNodeAnim->rotationTime[RotationIndex]) / DeltaTime);
+
+	  const Quaternion& StartRotationQ = pNodeAnim->rotation[RotationIndex];
+	  const Quaternion& EndRotationQ = pNodeAnim->rotation[NextRotationIndex];
+	  Out = Out.Slerp(StartRotationQ, EndRotationQ, Factor);
+	  Out.QuaternoinNorm();
+  }
+
+
+   void FBXModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+  {
+	  if (pNodeAnim->scale.size() == 1) {
+		  Out = pNodeAnim->scale[0];
+		  return;
+	  }
+
+	  unsigned int ScalingIndex = findScaling(AnimationTime, pNodeAnim);
+	  unsigned int NextScalingIndex = (ScalingIndex + 1);
+	  assert(NextScalingIndex < pNodeAnim->scale.size());
+	  float DeltaTime = (float)(pNodeAnim->scaleTime[NextScalingIndex] - pNodeAnim->scaleTime[ScalingIndex]);
+	  float Factor = clamp((AnimationTime - (float)pNodeAnim->scaleTime[ScalingIndex]) / DeltaTime);
+	  //assert(Factor >= 0.0f && Factor <= 1.0f);
+	  Vector3D Start = pNodeAnim->scale[ScalingIndex];
+	  Vector3D End = pNodeAnim->scale[NextScalingIndex];
+	  Vector3D Delta = End - Start;
+	  Out = Start + Factor * Delta;
+  }
+
+    unsigned int FBXModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
+   {
+	   for (unsigned int i = 0; i < pNodeAnim->position.size() - 1; i++) {
+		   if (AnimationTime < (float)pNodeAnim->positionTime[i + 1]) {
+			   return i;
+		   }
+	   }
+
+	   assert(0);
+
+	   return 0;
+   }
+
+
+    unsigned int FBXModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
+   {
+	   assert(pNodeAnim->rotation.size() > 0);
+
+	   for (unsigned int i = 0; i < pNodeAnim->rotation.size() - 1; i++) {
+		   if (AnimationTime < (float)pNodeAnim->rotationTime[i + 1]) {
+			   return i;
+		   }
+	   }
+
+	   assert(0);
+
+	   return 0;
+   }
+
+
+    unsigned int FBXModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
+   {
+	   assert(pNodeAnim->scale.size() > 0);
+
+	   for (unsigned int i = 0; i < pNodeAnim->scale.size() - 1; i++) {
+		   if (AnimationTime < (float)pNodeAnim->scaleTime[i + 1]) {
+			   return i;
+		   }
+	   }
+
+	   assert(0);
+
+	   return 0;
+   }

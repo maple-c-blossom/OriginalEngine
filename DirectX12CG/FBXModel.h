@@ -17,20 +17,21 @@
 namespace MCB
 {
         static const unsigned short int NUM_BONES_PER_VERTEX = 4;
-
+        static const unsigned short int MAX_BONE = 128;
         //頂点データ構造体-------------------------------------
         typedef struct FBXVertex
         {
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
+            unsigned int ids[NUM_BONES_PER_VERTEX] = {};
+            float weights[NUM_BONES_PER_VERTEX] = {};
         }FBXVertex;
         //--------------------------------------
-
-        typedef struct VertexBoneData
+        
+        typedef struct ConstBuffSkin
         {
-            unsigned int ids[NUM_BONES_PER_VERTEX];
-            float weights[NUM_BONES_PER_VERTEX];
+            DirectX::XMMATRIX boneMats[MAX_BONE] = {};
         };
         typedef struct SetWeight
         {
@@ -43,6 +44,7 @@ namespace MCB
         {
             std::string name;
             DirectX::XMMATRIX offsetMatrix;
+            DirectX::XMMATRIX finalMatrix;
         };
 
 	class FBXMesh
@@ -57,19 +59,18 @@ namespace MCB
 
             Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> boneBuff = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin = nullptr;
 
             std::vector<TextureCell*> textures;
             //MCB::Texture textures;
             std::vector<FBXVertex> vertices;
             std::vector<unsigned short> indices;
-            std::vector<VertexBoneData> vertexBones;
-            std::vector<Bone> bones;
+            //std::vector<ConstBuffSkin> vertexBones;
+            
             std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
             unsigned int sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
             unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
-            unsigned int sizeBB = static_cast<unsigned int>(sizeof(VertexBoneData) * bones.size());
 
             D3D12_INDEX_BUFFER_VIEW ibView{};
 
