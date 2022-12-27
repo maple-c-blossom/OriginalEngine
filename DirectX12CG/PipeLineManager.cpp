@@ -11,7 +11,7 @@ MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 void MCB::PipeLineManager::SetObjPipeLine(int blend)
 {
 	if (blend >= objPipeline.size())return;
-	objPipeline[blend].CommonBeginDraw(TRIANGLELIST);
+	objPipeline[blend].CommonBeginDraw();
 }
 
 void MCB::PipeLineManager::SetFbxPipeLine(int blend)
@@ -29,7 +29,7 @@ void MCB::PipeLineManager::SetSpritePipeLine(int blend)
 void MCB::PipeLineManager::SetParticlePipeLine(int blend)
 {
 	if (blend >= particlePipeline.size())return;
-	particlePipeline[blend].CommonBeginDraw(true);
+	particlePipeline[blend].CommonBeginDraw(POINT);
 }
 
 MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(int pipelineSelect, int blend)
