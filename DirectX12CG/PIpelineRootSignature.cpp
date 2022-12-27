@@ -539,19 +539,25 @@ void MCB::PipelineRootSignature::SetBrendMode(int blendMode)
     }
 }
 
-void MCB::PipelineRootSignature::CommonBeginDraw(bool toporogyTypeIsPoint)
+void MCB::PipelineRootSignature::CommonBeginDraw(int toporogyType)
 {
     Dx12* dx12 = Dx12::GetInstance();
     dx12->commandList->SetPipelineState(this->pipeline.pipelinestate.Get());
     dx12->commandList->SetGraphicsRootSignature(this->rootsignature.rootsignature.Get());
 
-    if (toporogyTypeIsPoint)
+    switch (toporogyType)
     {
-        dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
-    }
-    else
-    {
+    case TRIANGLELIST:
+        dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        break;
+    case TRIANGLESTRIP:
         dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+        break;
+    case POINT:
+        dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
+        break;
+    default:
+        break;
     }
     //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
 

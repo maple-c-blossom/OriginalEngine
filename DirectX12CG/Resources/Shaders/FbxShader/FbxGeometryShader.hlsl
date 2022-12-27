@@ -14,6 +14,8 @@ void main(
         element.worldpos = input[i].worldpos;
         element.uv = input[i].uv;
 
+        //element.ids = input[i].ids;
+        //element.weights = input[i].weights;
 
 
         output.Append(element);

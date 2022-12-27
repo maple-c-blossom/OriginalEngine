@@ -63,12 +63,12 @@ cbuffer cbuff3 : register(b3)
 
 struct VSOutput
 {
-    float4 svpos : SV_POSITION;
     float3 normal : NORMAL;
     float4 worldpos : POSITION;
     float2 uv : TEXCOORD;
-    uint4 ids : BONEID;
-    float4 weights : BONEWEIGHT;
+    //uint4 ids : BONEID;
+    //float4 weights : BONEWEIGHT;
+    float4 svpos : SV_POSITION;
 };
 
 struct VSInput
@@ -82,10 +82,10 @@ struct VSInput
 
 struct GSOutput
 {
-    float4 svpos : SV_POSITION;
     float3 normal : NORMAL;
     float4 worldpos : POSITION;
     float2 uv : TEXCOORD;
-    uint4 ids : BONEID;
-    float4 weights : BONEWEIGHT;
+    //uint4 ids : BONEID;
+    //float4 weights : BONEWEIGHT;
+    float4 svpos : SV_POSITION;
 };

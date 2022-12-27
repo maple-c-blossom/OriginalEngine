@@ -15,6 +15,13 @@ namespace MCB
 		Sub = 2,
 		Inv = 3
 	};
+
+	enum Toporogy
+	{
+		TRIANGLESTRIP,
+		TRIANGLELIST,
+		POINT,
+	};
 	class PipelineRootSignature
 	{
 	public:
@@ -33,7 +40,7 @@ namespace MCB
 
 		void SetBrendMode(int blendMode = Alpha);
 
-		void CommonBeginDraw(bool toporogyTypeIsPoint = false);
+		void CommonBeginDraw(int toporogyType = TRIANGLESTRIP);
 
 	};
 }
