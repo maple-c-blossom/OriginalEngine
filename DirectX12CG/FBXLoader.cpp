@@ -130,16 +130,17 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		//CopyMeshes(node, newObject);
 		for (int i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]‚ÌŒ´ˆö
 		{
-			std::unique_ptr<FBXMesh> ansmodel = std::make_unique<FBXMesh>();
-			FBXMesh tempmodel;
-			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, tempmodel);
-			ansmodel.reset(&tempmodel);
-			newObject->meshes.push_back(move(ansmodel));
+			std::unique_ptr<FBXMesh> tempmodel = std::make_unique<FBXMesh>();
+			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, *tempmodel.get()); //D3D12 ERROR ŠÖ””²‚¯‚½uŠÔ
+			newObject->meshes.push_back(move(tempmodel));
 			for (auto& itr :newObject->meshes)//‚È‚º‚©return‚³‚ê‚é‚Ü‚Åfalse‚¾‚Á‚½texture‚Ìfree‚ªtrue‚É‚³‚ê‚Ä‚¢‚é‚Ì‚ÅC³(ã‹L‚Ì‚â‚Â‚ª“¯‚¶Œ´ˆö‚Á‚Û‚¢j
 			{
 				for (auto& itr2 : itr->textures)
 				{
-					itr2->free = false;
+					if (itr2->free)
+					{
+						itr2->free = false;
+					}
 				}
 			}
 		}
@@ -186,7 +187,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 }
 
 
-FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel) {
+void FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel) {
 	// Data to fill
 
 	// Walk through each of the mesh's vertices
@@ -308,7 +309,7 @@ FBXMesh FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempm
 	}
 
 	tempmodel.Init();
-	return tempmodel;
+	//return tempmodel;
 	//return Mesh(dev_, vertices, indices, textures);
 }
 void MCB::FBXModel::Draw()

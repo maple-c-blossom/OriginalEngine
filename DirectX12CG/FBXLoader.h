@@ -89,7 +89,7 @@ namespace MCB
         string fileName;
         bool Load(std::string fileName);
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
-        FBXMesh processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel);
+        void processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
 
         void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);

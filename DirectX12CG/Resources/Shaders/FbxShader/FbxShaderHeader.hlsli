@@ -67,8 +67,7 @@ struct VSOutput
     float3 normal : NORMAL;
     float4 worldpos : POSITION;
     float2 uv : TEXCOORD;
-    uint4 ids : BONEID;
-    float4 weights : BONEWEIGHT;
+
 };
 
 struct VSInput
@@ -86,6 +85,5 @@ struct GSOutput
     float3 normal : NORMAL;
     float4 worldpos : POSITION;
     float2 uv : TEXCOORD;
-    uint4 ids : BONEID;
-    float4 weights : BONEWEIGHT;
+
 };
