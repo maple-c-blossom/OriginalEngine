@@ -178,7 +178,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 	{
 		targetParent->parent = parent;
 		targetParent->globalTransform *= parent->globalTransform;
-		targetParent->globalInverseTransform *= parent->globalInverseTransform;
+		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
 	//// continue for all child nodes
 	for (int i = 0; i < ainode->mNumChildren; i++) {
@@ -395,8 +395,17 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     
 	for (auto& itr : nodes)
 	{
-		if (itr->parent == nullptr) continue;
-		readAnimNodeHeirarchy(animationTime, itr.get(), itr->parent->globalTransform, itr->globalInverseTransform);
+		XMMATRIX matParent;
+		if (itr->parent == nullptr)
+		{
+			matParent = XMMatrixIdentity();
+		}
+		else
+		{
+			matParent = itr->parent->transform;
+		}
+		
+		readAnimNodeHeirarchy(animationTime, itr.get(), matParent, itr->globalInverseTransform);
 	}
     
   /*  if(transforms->getCount() == 0)
@@ -435,13 +444,13 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		  // Interpolate translation and generate translation transformation matrix
 		  Vector3D translation;
 		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
-		  XMMATRIX translationM = XMMatrixTranslationFromVector({ translation.vec.x, translation.vec.y, translation.vec.z });
+		  XMMATRIX translationM = XMMatrixTranslation( translation.vec.x, translation.vec.y, translation.vec.z );
 
 		   //Combine the above transformations
-		  pNode->transform = (translationM * rotationM) * scalingM;
+		  nodeTrans = scalingM * rotationM * translationM;
 	  }
-
-	  pNode->globalTransform = parentTransform * pNode->transform;
+	  XMMATRIX mat;
+	  mat = pNode->globalTransform * parentTransform * nodeTrans;
 
 	  Bone* bonePtr = nullptr;
 	  for (auto& itr : bones)
@@ -458,7 +467,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		  //BoneTransformInfo* boneInfo = (BoneTransformInfo*)editBoneTransforms->elementAtIndex(boneIndex);
 
 		  XMMATRIX* boneOff = &bonePtr->offsetMatrix;
-		  XMMATRIX trans = (globalInverseTransform * pNode->globalTransform) * (*boneOff);
+		  XMMATRIX trans = (globalInverseTransform * mat) * (*boneOff);
 		  bonePtr->finalMatrix = trans;
 		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
 	  }
