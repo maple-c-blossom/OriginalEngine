@@ -54,7 +54,8 @@ VSOutput main(VSInput input)
     output.worldpos = wpos;
     output.normal = wnormal.xyz;
     output.uv = input.uv;
-
+    output.ids = input.ids;
+    output.weights = input.weights;
 
     
     

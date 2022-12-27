@@ -172,7 +172,7 @@ void MCB::Scene::Draw()
     ground.Draw();
     //human.Draw();
     //testSpher.Draw();
-    pipeline->SetFbxPipeLine();//FBX用のシェーダにすると穴ぼこになる
+    //pipeline->SetFbxPipeLine();//FBX用のシェーダにすると穴ぼこになる
     testSpher.FbxDraw();
     pipeline->SetObjPipeLine();
 }
