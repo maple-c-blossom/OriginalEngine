@@ -94,7 +94,7 @@ namespace MCB
 
         void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);
 
-        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation = 0);
+        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation = 0);
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 

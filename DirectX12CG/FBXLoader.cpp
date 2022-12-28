@@ -176,7 +176,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		
 	if (targetParent)
 	{
-		targetParent->parent = parent;
+		parent->parent = targetParent;
 		targetParent->globalTransform *= parent->globalTransform;
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
@@ -393,19 +393,10 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     else
       animationTime = min(animationTime, animations[currentAnimation]->duration -0.0001f);
     
+	XMMATRIX matParent = XMMatrixIdentity();
 	for (auto& itr : nodes)
 	{
-		XMMATRIX matParent;
-		if (itr->parent == nullptr)
-		{
-			matParent = XMMatrixIdentity();
-		}
-		else
-		{
-			matParent = itr->parent->transform;
-		}
-		
-		readAnimNodeHeirarchy(animationTime, itr.get(), matParent, itr->globalInverseTransform);
+		readAnimNodeHeirarchy(animationTime, itr.get(), &matParent, itr->globalInverseTransform);
 	}
     
   /*  if(transforms->getCount() == 0)
@@ -417,13 +408,13 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     }*/
   }
 
-  void FBXModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
+  void FBXModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
 	  const Animation* pAnimation = animations[currentAnimation].get();
 
-	  XMMATRIX nodeTrans = pNode->transform;
+	  XMMATRIX nodeTrans = XMMatrixIdentity();
 
 	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
 
@@ -450,8 +441,8 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		  nodeTrans = scalingM * rotationM * translationM;
 	  }
 	  XMMATRIX mat;
-	  mat = pNode->globalTransform * parentTransform * nodeTrans;
-
+	  *parentTransform = nodeTrans * (*parentTransform);
+	  mat = /*pNode->globalTransform **/ *parentTransform;
 	  Bone* bonePtr = nullptr;
 	  for (auto& itr : bones)
 	  {
@@ -467,7 +458,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		  //BoneTransformInfo* boneInfo = (BoneTransformInfo*)editBoneTransforms->elementAtIndex(boneIndex);
 
 		  XMMATRIX* boneOff = &bonePtr->offsetMatrix;
-		  XMMATRIX trans = (globalInverseTransform * mat) * (*boneOff);
+		  XMMATRIX trans = (*boneOff) * (/*globalInverseTransform **/ mat) ;
 		  bonePtr->finalMatrix = trans;
 		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
 	  }
