@@ -446,9 +446,11 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	  Bone* bonePtr = nullptr;
 	  for (auto& itr : bones)
 	  {
-		  if (itr.name == pNode->name)
+		  std::string name = nodeName.substr(0, itr.name.size());
+		  if (itr.name == name)
 		  {
 			  bonePtr = &itr;
+			  break;
 		  }
 	  }
 
