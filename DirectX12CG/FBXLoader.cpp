@@ -393,10 +393,11 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     else
       animationTime = min(animationTime, animations[currentAnimation]->duration -0.0001f);
     
-	XMMATRIX matParent = XMMatrixIdentity();
+	
+	for (auto& itr : nodes) itr->AnimaetionParentMat = XMMatrixIdentity();
 	for (auto& itr : nodes)
 	{
-		readAnimNodeHeirarchy(animationTime, itr.get(), &matParent, itr->globalInverseTransform);
+		readAnimNodeHeirarchy(animationTime, itr.get(), &itr->AnimaetionParentMat, itr->globalInverseTransform);
 	}
     
   /*  if(transforms->getCount() == 0)
@@ -441,13 +442,14 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 		  nodeTrans = scalingM * rotationM * translationM;
 	  }
 	  XMMATRIX mat;
-	  *parentTransform = nodeTrans * (*parentTransform);
-	  mat = /*pNode->globalTransform **/ *parentTransform;
+	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
+	  else pNode->AnimaetionParentMat = nodeTrans;
+	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
 	  Bone* bonePtr = nullptr;
 	  for (auto& itr : bones)
 	  {
-		  std::string name = nodeName.substr(0, itr.name.size());
-		  if (itr.name == name)
+		  //std::string name = nodeName.substr(0, itr.name.size());
+		  if (itr.name == nodeName)
 		  {
 			  bonePtr = &itr;
 			  break;
@@ -550,8 +552,8 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 
     unsigned int FBXModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
    {
-	   for (unsigned int i = 0; i < pNodeAnim->position.size() - 1; i++) {
-		   if (AnimationTime < (float)pNodeAnim->positionTime[i + 1]) {
+	   for (unsigned int i = 0; i < pNodeAnim->position.size(); i++) {
+		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
 			   return i;
 		   }
 	   }

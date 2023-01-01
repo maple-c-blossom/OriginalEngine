@@ -65,9 +65,10 @@ namespace MCB
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
-        DirectX::XMMATRIX transform;
-        DirectX::XMMATRIX globalTransform;
-        DirectX::XMMATRIX globalInverseTransform;
+        DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity();
+        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();
+        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();
+        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
         Node* parent = nullptr;
 
     }Node;
