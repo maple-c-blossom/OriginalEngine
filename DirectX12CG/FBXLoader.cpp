@@ -271,7 +271,7 @@ void FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmode
 		temp.offsetMatrix.r[3].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.d4;
 
 		temp.offsetMatrix = DirectX::XMMatrixTranspose(temp.offsetMatrix);
-		
+		temp.finalMatrix = temp.offsetMatrix;
 		for (int j = 0; j < mesh->mBones[i]->mNumWeights; j++)
 		{
 
@@ -395,6 +395,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     
 	
 	for (auto& itr : nodes) itr->AnimaetionParentMat = XMMatrixIdentity();
+	for (auto& itr : bones) itr.finalMatrix = itr.offsetMatrix;
 	for (auto& itr : nodes)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(), &itr->AnimaetionParentMat, itr->globalInverseTransform);
