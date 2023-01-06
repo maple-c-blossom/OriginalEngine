@@ -88,7 +88,7 @@ namespace MCB
         std::vector<Bone> bones;
         ~FBXModel();
         string fileName;
-        bool Load(std::string fileName);
+        bool Load(std::string fileName,std::string fileType = "fbx");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);

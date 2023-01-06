@@ -30,9 +30,6 @@
     <Filter Include="ソース ファイル\Engin">
       <UniqueIdentifier>{57fffc77-ead1-4762-a8af-898a64d8e478}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engin\Vertices&amp;Index">
-      <UniqueIdentifier>{bde88a0d-bf14-4210-ad52-b644a1616865}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engin\Texture">
       <UniqueIdentifier>{fff0c284-4827-4ebc-afcb-873631b9bb46}</UniqueIdentifier>
     </Filter>
@@ -115,9 +112,6 @@
     <Filter Include="ヘッダー ファイル\Engin\Texture">
       <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engin\Vertices&amp;Index">
-      <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Math">
       <UniqueIdentifier>{ae8be9eb-5e9f-499c-a461-2979f9f27ae3}</UniqueIdentifier>
     </Filter>
@@ -172,6 +166,12 @@
     <Filter Include="リソース ファイル\FbxShader\VertexShader">
       <UniqueIdentifier>{ed8548ed-bf4c-43c1-9dad-c30ad5357442}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engin\Model">
+      <UniqueIdentifier>{bde88a0d-bf14-4210-ad52-b644a1616865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Model">
+      <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -223,7 +223,7 @@
       <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
     <ClCompile Include="Vertex.cpp">
-      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
     <ClCompile Include="MCBMatrix.cpp">
       <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
@@ -235,7 +235,7 @@
       <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
@@ -301,10 +301,10 @@
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="FBXLoader.cpp">
-      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
     <ClCompile Include="FBXModel.cpp">
-      <Filter>ソース ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
     <ClCompile Include="GamePad.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
@@ -422,7 +422,7 @@
       <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
     <ClInclude Include="MCBMatrix.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
@@ -434,7 +434,7 @@
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
@@ -500,10 +500,10 @@
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
     <ClInclude Include="FBXModel.h">
-      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
     <ClInclude Include="FBXLoader.h">
-      <Filter>ヘッダー ファイル\Engin\Vertices&amp;Index</Filter>
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
     <ClInclude Include="GamePad.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>

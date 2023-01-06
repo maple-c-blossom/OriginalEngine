@@ -84,7 +84,7 @@ void MCB::Scene::LoadModel()
 	skydomeModel = new Model("skydome");
     testModel = new FBXModel();
     //testModel->Load("flash");
-    testModel->Load("testFbx");
+    testModel->Load("simple","gltf");
     //assert(testModel->textureManager->textures.size() < 20);
     //fbxLoader->LoadModelFromFile("cube");
 }

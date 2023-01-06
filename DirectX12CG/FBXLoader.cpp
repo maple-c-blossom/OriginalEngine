@@ -24,7 +24,7 @@ MCB::FBXModel::~FBXModel()
 }
 
 
-bool MCB::FBXModel::Load(std::string fileName) {
+bool MCB::FBXModel::Load(std::string fileName,std::string fileType) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
 	//importer.SetIOHandler(new MyIOSystem());
@@ -33,7 +33,7 @@ bool MCB::FBXModel::Load(std::string fileName) {
 	// probably to request more postprocessing than we do in this example.
 	this->fileName = fileName;
 	std::string baseDirectory = "Resources\\";
-	std::string extend = ".fbx";
+	std::string extend = "." + fileType;
 	fileName = baseDirectory + fileName + "\\" + fileName + extend;
 	const aiScene* scene = importer.ReadFile(fileName,
 		aiProcess_CalcTangentSpace | //インポートしたメッシュのタンジェントとかを計算
@@ -417,7 +417,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 
 	  const Animation* pAnimation = animations[currentAnimation].get();
 
-	  XMMATRIX nodeTrans = XMMatrixIdentity();
+	  XMMATRIX nodeTrans = pNode->transform;
 
 	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
 
