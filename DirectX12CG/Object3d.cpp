@@ -234,7 +234,7 @@ void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBor
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat * fbxModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->world = matWorld.matWorld * view.mat /** fbxModel->nodes.begin()->get()->globalTransform*/;
     constMapTranceform->viewproj = projection.mat;
     constMapTranceform->cameraPos.x = view.eye.x;
     constMapTranceform->cameraPos.y = view.eye.y;
