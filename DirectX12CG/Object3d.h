@@ -54,7 +54,7 @@ namespace MCB
         Vector3D NORM_FRONT_VEC = {};
         Vector3D nowFrontVec = {0,0,1};
         float frontAngle = 0;
-
+        float animeTime;
         Model* model = nullptr;
         FBXModel* fbxModel = nullptr;
 

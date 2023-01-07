@@ -239,8 +239,12 @@ void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBor
     constMapTranceform->cameraPos.x = view.eye.x;
     constMapTranceform->cameraPos.y = view.eye.y;
     constMapTranceform->cameraPos.z = view.eye.z;
-
-    fbxModel->boneAnimTransform(0);
+    animeTime += 0.01f;
+    if (animeTime > fbxModel->animations[0]->duration)
+    {
+        animeTime = 0;
+    }
+    fbxModel->boneAnimTransform(animeTime);
     for (int i = 0; i < fbxModel->bones.size(); i++)
     {
         constMapSkin->boneMats[i] = fbxModel->bones[i].finalMatrix;
