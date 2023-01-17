@@ -5,7 +5,7 @@ using namespace DirectX;
 
 MCB::ObjectMaterial::~ObjectMaterial()
 {
-    constBuffMaterialB1->Unmap(0, nullptr);
+    //constBuffMaterialB1->Unmap(0, nullptr);
 }
 
 void ObjectMaterial::Init()
