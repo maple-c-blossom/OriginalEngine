@@ -45,5 +45,6 @@ namespace MCB
 	bool CalcSphere(Sphere sphereA,Sphere sphereB);
 	bool CalcPlaneSpher(Plane plane,Sphere sphere);
 	bool CalcTriangleSpher(Triangle plane,Sphere sphere);
+	bool CalcTrianglePoint(Triangle plane, Vector3D sphere, Vector3D& point);
 }
 

@@ -33,6 +33,11 @@ bool MCB::CalcTriangleSpher(Triangle plane, Sphere sphere)
 	return false;
 }
 
+bool MCB::CalcTrianglePoint(Triangle plane, Vector3D sphere, Vector3D& point)
+{
+	return false;
+}
+
 bool MCB::CalcRaySphere(Ray ray, Sphere sphere)
 {
 	Vector3D rayToSphere(ray.StartPosition, sphere.centerPosition.vec);
@@ -56,5 +61,4 @@ bool MCB::CalcRaySphere(Ray ray, Sphere sphere)
 
 	return a < sphere.radius + ray.radius;
 }
-
 

@@ -269,7 +269,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int time)//ŒW”‚ğ’¼‚Å“ü—Í‚·‚é—p
+MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ğ’¼‚Å“ü—Í‚·‚é—p
 {
 	Quaternion ans;
 	float angle = GetAngle(start, end);
