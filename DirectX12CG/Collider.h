@@ -1,10 +1,16 @@
 #pragma once
 #include <cmath>
 #include "Vector3D.h"
+#include <array>
 
 namespace MCB
 {
+	class Triangle
+	{
+		std::array<Vector3D,3> vertexPoint;
+		Vector3D normal;
 
+	};
 	class Ray
 	{
 	public:
@@ -24,7 +30,7 @@ namespace MCB
 	class Sphere
 	{
 	public:
-		Float3 centerPosition;
+		Vector3D centerPosition;
 		float radius;
 	};
 
@@ -37,5 +43,8 @@ namespace MCB
 
 	bool CalcRaySphere(Ray ray,Sphere sphere);
 	bool CalcSphere(Sphere sphereA,Sphere sphereB);
+	bool CalcPlaneSpher(Plane plane,Sphere sphere);
+	bool CalcTriangleSpher(Triangle plane,Sphere sphere);
+	bool CalcTrianglePoint(Triangle plane, Vector3D sphere, Vector3D& point);
 }
 

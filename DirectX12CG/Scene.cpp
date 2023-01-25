@@ -159,6 +159,17 @@ void MCB::Scene::Update()
             testSpher.position.x -= 1;
         }
 
+        testRotaPos[0].SetRota({ 0.71f,0.71f,0.0f }, 0.3f);
+        testRotaPos[1].SetRota({ 0.71f,0.0f,0.71f }, 3.141592f);
+
+        testRota[0] = testRota[0].Slerp(testRotaPos[0], testRotaPos[1], 0.0f);
+        testRota[1] = testRota[1].Slerp(testRotaPos[0], testRotaPos[1], 0.3f);
+        testRota[2] = testRota[2].Slerp(testRotaPos[0], testRotaPos[1], 0.5f);
+        testRota[3] = testRota[3].Slerp(testRotaPos[0], testRotaPos[1], 0.7f);
+        testRota[4] = testRota[4].Slerp(testRotaPos[0], testRotaPos[1], 1.0f);
+
+
+
         lights->UpDate();
         viewCamera->Update();
     //çsóÒïœä∑
@@ -195,7 +206,17 @@ void MCB::Scene::CheckAllColision()
 void MCB::Scene::ImGuiUpdate()
 {
     imgui.Begin();
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
+    if (ImGui::CollapsingHeader("debug"))
+    {
+        ImGui::Text("testRota[0]:%f,%f,%f,%f", testRota[0].x, testRota[0].y, testRota[0].z, testRota[0].w);
+        ImGui::Text("testRota[1]:%f,%f,%f,%f", testRota[1].x, testRota[1].y, testRota[1].z, testRota[1].w);
+        ImGui::Text("testRota[2]:%f,%f,%f,%f", testRota[2].x, testRota[2].y, testRota[2].z, testRota[2].w);
+        ImGui::Text("testRota[3]:%f,%f,%f,%f", testRota[3].x, testRota[3].y, testRota[3].z, testRota[3].w);
+        ImGui::Text("testRota[4]:%f,%f,%f,%f", testRota[4].x, testRota[4].y, testRota[4].z, testRota[4].w);
+    }
+
+
     imgui.End();
 }
 

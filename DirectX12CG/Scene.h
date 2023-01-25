@@ -70,7 +70,9 @@ namespace MCB
 #pragma endregion スプライト
 #pragma region パーティクル
 		Particle testParticle;
-		
+		std::array<Quaternion, 5>testRota;
+		std::array<Quaternion, 2>testRotaPos;
+
 
 #pragma endregion
 		#pragma region 通常変数
