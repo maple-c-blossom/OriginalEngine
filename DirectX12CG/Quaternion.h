@@ -31,7 +31,7 @@ namespace MCB
 		//球面線形補間
 		Quaternion Slerp(Quaternion start, Quaternion end, int time,int maxTime);
 		//球面線形補間
-		MCB::Quaternion Slerp(Quaternion start, Quaternion end, int time);
+		Quaternion Slerp(Quaternion start, Quaternion end, float time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える
 		Vector3D SetRotationVector(Vector3D rotationAxisVec, Vector3D PositionVec, float angle);
 		//与えられたクォータニオンの回転をPositionVecに与える
