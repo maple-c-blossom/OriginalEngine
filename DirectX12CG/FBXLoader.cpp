@@ -528,7 +528,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	  const Quaternion& StartRotationQ = pNodeAnim->rotation[RotationIndex];
 	  const Quaternion& EndRotationQ = pNodeAnim->rotation[NextRotationIndex];
 	  Out = Out.Slerp(StartRotationQ, EndRotationQ, Factor);
-	  Out.QuaternoinNorm();
+	  Out.Normalize();
   }
 
 
