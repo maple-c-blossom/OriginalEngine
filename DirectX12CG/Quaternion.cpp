@@ -73,7 +73,12 @@ float MCB::Quaternion::Dot(Quaternion a, Quaternion b)
 
 float MCB::Quaternion::GetAngle(Quaternion a, Quaternion b)
 {
-	return acosf(Dot(a, b));;
+	float dot = Dot(a, b);
+	if (dot < 0)
+	{
+		dot *= -1;
+	}
+	return acosf(dot);
 }
 
 Vector3D MCB::Quaternion::SetRotationVector(Vector3D rotationAxisVec, Vector3D PositionVec, float angle)
@@ -267,6 +272,11 @@ bool MCB::Quaternion::operator==(Quaternion q)
 	return false;
 }
 
+Quaternion MCB::Quaternion::operator-()
+{
+	return {-x,-y,-z,-w};
+}
+
 Quaternion MCB::Quaternion::Identity()
 {
 	return Quaternion(0,0,0,1);
@@ -276,19 +286,23 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 {
 	float Time = (float)time / (float)maxTime;
 	Quaternion ans;
+	float dot = Dot(start, end);
 	float angle = GetAngle(start, end);
 
-	if (angle < 0)
+	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		angle *= -1;
+		ans.x = (1.f - Time) * start.x + Time * end.x;
+		ans.y = (1.f - Time) * start.y + Time * end.y;
+		ans.z = (1.f - Time) * start.z + Time * end.z;
+		ans.w = (1.f - Time) * start.w + Time * end.w;
+		return ans;
 	}
-
 
 	float st = sinf(angle);
 
 	if (st == 0)
 	{
-		return start;
+		return -start;
 	}
 
 	float sut = sinf(angle * Time);
@@ -310,19 +324,23 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ğ’¼‚Å“ü—Í‚·‚é—p
 {
 	Quaternion ans;
+	float dot = Dot(start, end);
 	float angle = GetAngle(start, end);
 
-	if (angle < 0)
+	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		angle *= -1;
+		ans.x = (1.f - time) * start.x + time * end.x;
+		ans.y = (1.f - time) * start.y + time * end.y;
+		ans.z = (1.f - time) * start.z + time * end.z;
+		ans.w = (1.f - time) * start.w + time * end.w;
+		return ans;
 	}
-
 
 	float st = sinf(angle);
 
 	if (st == 0)
 	{
-		return start;
+		return -start;
 	}
 
 	float sut = sinf(angle * time);

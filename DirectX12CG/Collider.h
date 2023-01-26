@@ -7,6 +7,7 @@ namespace MCB
 {
 	class Triangle
 	{
+	public:
 		std::array<Vector3D,3> vertexPoint;
 		Vector3D normal;
 

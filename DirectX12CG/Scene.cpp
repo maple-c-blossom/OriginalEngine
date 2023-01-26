@@ -133,40 +133,39 @@ IScene* MCB::Scene::GetNextScene()
 
 void MCB::Scene::Update()
 {
-        Float3 SLPos = lights->GetSLightPos(0);
-        Float3 PLPos = lights->GetPLightPos(0);
+    Float3 SLPos = lights->GetSLightPos(0);
+    Float3 PLPos = lights->GetPLightPos(0);
 
 
-        if (input->IsKeyTrigger(DIK_SPACE))
-        {
-            //if (testSpher.model == BoxModel)
-            //{
-            //    testSpher.model = groundModel;
-            //}
-            //else
-            //{
-            //    testSpher.model = BoxModel;
-            //}
-            sceneEnd = true;
-        }
+    if (input->IsKeyTrigger(DIK_SPACE))
+    {
+        //if (testSpher.model == BoxModel)
+        //{
+        //    testSpher.model = groundModel;
+        //}
+        //else
+        //{
+        //    testSpher.model = BoxModel;
+        //}
+        sceneEnd = true;
+    }
 
-        if (input->IsKeyDown(DIK_A))
-        {
-            testSpher.position.x += 1;
-        }
-        if (input->IsKeyDown(DIK_D))
-        {
-            testSpher.position.x -= 1;
-        }
+    if (input->IsKeyDown(DIK_A))
+    {
+        testSpher.position.x += 1;
+    }
+    if (input->IsKeyDown(DIK_D))
+    {
+        testSpher.position.x -= 1;
+    }
 
-        testRotaPos[0].SetRota({ 0.71f,0.71f,0.0f }, 0.3f);
-        testRotaPos[1].SetRota({ 0.71f,0.0f,0.71f }, 3.141592f);
-
-        testRota[0] = testRota[0].Slerp(testRotaPos[0], testRotaPos[1], 0.0f);
-        testRota[1] = testRota[1].Slerp(testRotaPos[0], testRotaPos[1], 0.3f);
-        testRota[2] = testRota[2].Slerp(testRotaPos[0], testRotaPos[1], 0.5f);
-        testRota[3] = testRota[3].Slerp(testRotaPos[0], testRotaPos[1], 0.7f);
-        testRota[4] = testRota[4].Slerp(testRotaPos[0], testRotaPos[1], 1.0f);
+    testRotaPos[0].SetRota({ 0.71f,0.71f,0.0f }, 0.3f);
+    testRotaPos[1] = {-testRotaPos[0].x, -testRotaPos[0].y,-testRotaPos[0].z,-testRotaPos[0].w};
+    testRota[0] = testRota[0].Slerp(testRotaPos[0], testRotaPos[1], 0.0f);
+    testRota[1] = testRota[1].Slerp(testRotaPos[0], testRotaPos[1], 0.3f);
+    testRota[2] = testRota[2].Slerp(testRotaPos[0], testRotaPos[1], 0.5f);
+    testRota[3] = testRota[3].Slerp(testRotaPos[0], testRotaPos[1], 0.7f);
+    testRota[4] = testRota[4].Slerp(testRotaPos[0], testRotaPos[1], 1.0f);
 
 
 

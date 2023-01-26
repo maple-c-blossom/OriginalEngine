@@ -61,6 +61,7 @@ namespace MCB
 		float SafeAcos(float a);
 
 		bool operator== (Quaternion q);
+		Quaternion operator-();
 	};
 	Quaternion SetRota(Vector3D vec, float angle);
 }

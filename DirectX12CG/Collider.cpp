@@ -33,8 +33,78 @@ bool MCB::CalcTriangleSpher(Triangle plane, Sphere sphere)
 	return false;
 }
 
-bool MCB::CalcTrianglePoint(Triangle plane, Vector3D sphere, Vector3D& point)
+bool MCB::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector3D& closest)
 {
+	//// 資料領域チェック①の前準備
+	//Vector3D p0p1 = triangle.vertexPoint[1] - triangle.vertexPoint[0];
+	//Vector3D p0p2 = triangle.vertexPoint[2] - triangle.vertexPoint[0];
+	//Vector3D p0pt = point - triangle.vertexPoint[0];
+	////資料領域チェック①
+	//float d1 = p0p1.GetV3Dot(p0pt);
+	//float d2 = p0p2.GetV3Dot(p0pt);
+
+	//if (d1 <= 0.0f && d2 <= 0.0f)
+	//{
+	//	// p0が最近傍
+	//	closest = triangle.vertexPoint[0];
+	//	return;
+	//}
+	////-------------
+	//// 資料領域チェック②の前準備
+	//Vector3D p1pt = point - triangle.vertexPoint[1];
+
+	//float d3 = XMVector3Dot(p0p1, p1pt);
+	//float d4 = XMVector3Dot(p0p2, p1pt);
+
+	//if (d3.m128_f32[0] >= 0.0f && d4.m128_f32[0] <= d3.m128_f32[0])
+	//{
+	//	// p1が最近傍
+	//	*closest = triangle.p1;
+	//	return;
+	//}
+
+	//// pointがp0_p1の辺領域の中にあるかどうかチェックし、あればpointのp0_p1上に対する射影を返す
+	//float vc = d1.m128_f32[0] * d4.m128_f32[0] - d3.m128_f32[0] * d2.m128_f32[0];
+	//if (vc <= 0.0f && d1.m128_f32[0] >= 0.0f && d3.m128_f32[0] <= 0.0f)
+	//{
+	//	float v = d1.m128_f32[0] / (d1.m128_f32[0] - d3.m128_f32[0]);
+	//	*closest = triangle.p0 + v * p0_p1;
+	//	return;
+	//}
+
+	//// pointがp2の外側の頂点領域の中にあるかどうかチェック
+	//XMVECTOR p2_pt = point - triangle.p2;
+
+	//XMVECTOR d5 = XMVector3Dot(p0_p1, p2_pt);
+	//XMVECTOR d6 = XMVector3Dot(p0_p2, p2_pt);
+	//if (d6.m128_f32[0] >= 0.0f && d5.m128_f32[0] <= d6.m128_f32[0])
+	//{
+	//	*closest = triangle.p2;
+	//	return;
+	//}
+
+	//// pointがp0_p2の辺領域の中にあるかどうかチェックし、あればpointのp0_p2上に対する射影を返す
+	//float vb = d5.m128_f32[0] * d2.m128_f32[0] - d1.m128_f32[0] * d6.m128_f32[0];
+	//if (vb <= 0.0f && d2.m128_f32[0] >= 0.0f && d6.m128_f32[0] <= 0.0f)
+	//{
+	//	float w = d2.m128_f32[0] / (d2.m128_f32[0] - d6.m128_f32[0]);
+	//	*closest = triangle.p0 + w * p0_p2;
+	//	return;
+	//}
+
+	//// pointがp1_p2の辺領域の中にあるかどうかチェックし、あればpointのp1_p2上に対する射影を返す
+	//float va = d3.m128_f32[0] * d6.m128_f32[0] - d5.m128_f32[0] * d4.m128_f32[0];
+	//if (va <= 0.0f && (d4.m128_f32[0] - d3.m128_f32[0]) >= 0.0f && (d5.m128_f32[0] - d6.m128_f32[0]) >= 0.0f)
+	//{
+	//	float w = (d4.m128_f32[0] - d3.m128_f32[0]) / ((d4.m128_f32[0] - d3.m128_f32[0]) + (d5.m128_f32[0] - d6.m128_f32[0]));
+	//	*closest = triangle.p1 + w * (triangle.p2 - triangle.p1);
+	//	return;
+	//}
+
+	//float denom = 1.0f / (va + vb + vc);
+	//float v = vb * denom;
+	//float w = vc * denom;
+	//*closest = triangle.p0 + p0_p1 * v + p0_p2 * w;
 	return false;
 }
 
