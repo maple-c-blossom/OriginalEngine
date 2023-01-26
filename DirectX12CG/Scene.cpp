@@ -160,7 +160,7 @@ void MCB::Scene::Update()
     }
 
     testRotaPos[0].SetRota({ 0.71f,0.71f,0.0f }, 0.3f);
-    testRotaPos[1] = {-testRotaPos[0].x, -testRotaPos[0].y,-testRotaPos[0].z,-testRotaPos[0].w};
+    testRotaPos[1].SetRota({ 0.71f,0.0f,0.71f }, 3.141592f);
     testRota[0] = testRota[0].Slerp(testRotaPos[0], testRotaPos[1], 0.0f);
     testRota[1] = testRota[1].Slerp(testRotaPos[0], testRotaPos[1], 0.3f);
     testRota[2] = testRota[2].Slerp(testRotaPos[0], testRotaPos[1], 0.5f);
@@ -208,11 +208,11 @@ void MCB::Scene::ImGuiUpdate()
     //ImGui::ShowDemoWindow();
     if (ImGui::CollapsingHeader("debug"))
     {
-        ImGui::Text("testRota[0]:%f,%f,%f,%f", testRota[0].x, testRota[0].y, testRota[0].z, testRota[0].w);
-        ImGui::Text("testRota[1]:%f,%f,%f,%f", testRota[1].x, testRota[1].y, testRota[1].z, testRota[1].w);
-        ImGui::Text("testRota[2]:%f,%f,%f,%f", testRota[2].x, testRota[2].y, testRota[2].z, testRota[2].w);
-        ImGui::Text("testRota[3]:%f,%f,%f,%f", testRota[3].x, testRota[3].y, testRota[3].z, testRota[3].w);
-        ImGui::Text("testRota[4]:%f,%f,%f,%f", testRota[4].x, testRota[4].y, testRota[4].z, testRota[4].w);
+        ImGui::Text("testRota[0]:%0.2f,%0.2f,%0.2f,%0.2f", testRota[0].x, testRota[0].y, testRota[0].z, testRota[0].w);
+        ImGui::Text("testRota[1]:%0.2f,%0.2f,%0.2f,%0.2f", testRota[1].x, testRota[1].y, testRota[1].z, testRota[1].w);
+        ImGui::Text("testRota[2]:%0.2f,%0.2f,%0.2f,%0.2f", testRota[2].x, testRota[2].y, testRota[2].z, testRota[2].w);
+        ImGui::Text("testRota[3]:%0.2f,%0.2f,%0.2f,%0.2f", testRota[3].x, testRota[3].y, testRota[3].z, testRota[3].w);
+        ImGui::Text("testRota[4]:%0.2f,%0.2f,%0.2f,%0.2f", testRota[4].x, testRota[4].y, testRota[4].z, testRota[4].w);
     }
 
 

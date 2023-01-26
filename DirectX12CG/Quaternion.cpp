@@ -11,10 +11,10 @@ MCB::Quaternion::Quaternion(Vector3D vec, float angle)
 void MCB::Quaternion::SetRota(Vector3D vec, float angle)
 {
 	vec.V3Norm();
-	float s = (sinf(angle / 2));
-	x = vec.vec.x * s;
-	y = vec.vec.y * s;
-	z = vec.vec.z * s;
+	float s = sinf(angle / 2);
+	x = s * vec.vec.x;
+	y = s * vec.vec.y;
+	z = s * vec.vec.z;
 	w = cosf(angle / 2);
 	this->Normalize();
 }
@@ -69,6 +69,17 @@ float MCB::Quaternion::Dot(Quaternion a, Quaternion b)
 {
 	
 	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
+}
+
+float MCB::Quaternion::GetAngle(Quaternion a, Quaternion b,float& dot,bool& nan)
+{
+	dot = Dot(a, b);
+	if (dot < 0)
+	{
+		dot *= -1;
+		nan = true;
+	}
+	return acosf(dot);
 }
 
 float MCB::Quaternion::GetAngle(Quaternion a, Quaternion b)
@@ -286,15 +297,21 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 {
 	float Time = (float)time / (float)maxTime;
 	Quaternion ans;
-	float dot = Dot(start, end);
-	float angle = GetAngle(start, end);
-
+	Quaternion startDemo = start;
+	float dot;
+	bool isNan = false;
+	float angle = GetAngle(start, end, dot,isNan);
+	if (isNan)
+	{
+		startDemo = -start;
+	}
 	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		ans.x = (1.f - Time) * start.x + Time * end.x;
-		ans.y = (1.f - Time) * start.y + Time * end.y;
-		ans.z = (1.f - Time) * start.z + Time * end.z;
-		ans.w = (1.f - Time) * start.w + Time * end.w;
+		ans.x = (1.f - Time) * startDemo.x + Time * end.x;
+		ans.y = (1.f - Time) * startDemo.y + Time * end.y;
+		ans.z = (1.f - Time) * startDemo.z + Time * end.z;
+		ans.w = (1.f - Time) * startDemo.w + Time * end.w;
+		ans.Normalize();
 		return ans;
 	}
 
@@ -302,7 +319,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 
 	if (st == 0)
 	{
-		return -start;
+		return -startDemo;
 	}
 
 	float sut = sinf(angle * Time);
@@ -324,15 +341,22 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int tim
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
 {
 	Quaternion ans;
-	float dot = Dot(start, end);
-	float angle = GetAngle(start, end);
+	float dot;
+	Quaternion startDemo = start;
+	bool isNan = false;
+	float angle = GetAngle(start, end, dot, isNan);
+	if (isNan)
+	{
+		startDemo = -start;
+	}
 
 	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		ans.x = (1.f - time) * start.x + time * end.x;
-		ans.y = (1.f - time) * start.y + time * end.y;
-		ans.z = (1.f - time) * start.z + time * end.z;
-		ans.w = (1.f - time) * start.w + time * end.w;
+		ans.x = (1.f - time) * startDemo.x + time * end.x;
+		ans.y = (1.f - time) * startDemo.y + time * end.y;
+		ans.z = (1.f - time) * startDemo.z + time * end.z;
+		ans.w = (1.f - time) * startDemo.w + time * end.w;
+		ans.Normalize();
 		return ans;
 	}
 

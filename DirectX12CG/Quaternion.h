@@ -27,6 +27,7 @@ namespace MCB
 		//内積
 		float Dot(Quaternion a, Quaternion b);
 		//二つのクォータニオンの角度差
+		float GetAngle(Quaternion a, Quaternion b, float& dot,bool& nan);
 		float GetAngle(Quaternion a, Quaternion b);
 		//球面線形補間
 		Quaternion Slerp(Quaternion start, Quaternion end, int time,int maxTime);
