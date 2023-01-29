@@ -160,7 +160,7 @@ void MCB::Scene::Update()
     }
 
     testRotaPos[0].SetRota({ 0.71f,0.71f,0.0f }, 0.3f);
-    testRotaPos[1].SetRota({ 0.71f,0.0f,0.71f }, 3.141592f);
+    testRotaPos[1] = { -testRotaPos[0].x,-testRotaPos[0].y,-testRotaPos[0].z,-testRotaPos[0].w};
     testRota[0] = testRota[0].Slerp(testRotaPos[0], testRotaPos[1], 0.0f);
     testRota[1] = testRota[1].Slerp(testRotaPos[0], testRotaPos[1], 0.3f);
     testRota[2] = testRota[2].Slerp(testRotaPos[0], testRotaPos[1], 0.5f);
