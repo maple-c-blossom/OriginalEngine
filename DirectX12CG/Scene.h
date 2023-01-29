@@ -15,32 +15,33 @@ namespace MCB
 	class Scene :public IScene
 	{
 	private:
-		#pragma region 変換行列
 		//変換行列
 		View matView;
 		Projection matProjection;
 #pragma endregion 変換行列
-		
-		#pragma region 各種リソース
+
+#pragma region 各種リソース
 		//3Dモデル
-		#pragma region 3Dモデル
-		Model* BoxModel;
+#pragma region 3Dモデル
+		Model* SpherModel;
+		Model* SpherModel2;
 		Model* groundModel;
 		Model* skydomeModel;
 
-		FBXModel* testModel;
+		//AssimpLoader testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
-		#pragma region テクスチャ
+#pragma region テクスチャ
 		TextureCell* testTex;
 		TextureCell* debugTextTexture;
 		TextureCell* zoomTex;
 		TextureCell* scopeTex;
+		TextureCell* grassTex;
 #pragma endregion テクスチャ
 
 		//サウンド
-		#pragma region サウンド
+#pragma region サウンド
 		int testSound;
 		int test2Sound;
 
@@ -49,7 +50,7 @@ namespace MCB
 
 #pragma endregion 各種リソース
 
-		#pragma region 3Dオブジェクト
+#pragma region 3Dオブジェクト
 		SimpleFigure triangle;
 
 		Object3d ground;
@@ -58,7 +59,7 @@ namespace MCB
 
 #pragma endregion 3Dオブジェクト
 
-		#pragma region スプライト
+#pragma region スプライト
 		Sprite sprite;
 
 		Sprite zoomSprite;
@@ -69,17 +70,12 @@ namespace MCB
 
 #pragma endregion スプライト
 #pragma region パーティクル
-		Particle testParticle;
-		std::array<Quaternion, 5>testRota;
-		std::array<Quaternion, 2>testRotaPos;
-
 
 #pragma endregion
-		#pragma region 通常変数
+#pragma region 通常変数
 		bool loopFlag = true;
 		bool startPositionReset = true;
 		bool ybill = false;
-		DebugCamera debugCamera;
 #pragma endregion 通常変数
 
 	public:
