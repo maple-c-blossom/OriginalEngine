@@ -28,7 +28,7 @@ namespace MCB
 		Model* groundModel;
 		Model* skydomeModel;
 
-		FBXModel* testModel;
+		AnimationModel* testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ

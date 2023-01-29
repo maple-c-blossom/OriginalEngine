@@ -56,7 +56,7 @@ namespace MCB
         float frontAngle = 0;
         float animeTime;
         Model* model = nullptr;
-        FBXModel* fbxModel = nullptr;
+        AnimationModel* fbxModel = nullptr;
 
         Object3d();
 

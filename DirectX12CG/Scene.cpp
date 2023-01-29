@@ -82,7 +82,7 @@ void MCB::Scene::LoadModel()
 	groundModel = new Model("ground");
 
 	skydomeModel = new Model("skydome");
-    testModel = new FBXModel();
+    testModel = new AnimationModel();
     //testModel->Load("flash");
     testModel->Load("simple","gltf");
     //assert(testModel->textureManager->textures.size() < 20);

@@ -2,12 +2,12 @@
 #include "Util.h"
 //using namespace MCB;
 //using namespace std;
-//MCB::FBXModel::FBXModel()
+//MCB::AnimationModel::AnimationModel()
 //{
 //    //material.Init();
 //}
 //
-MCB::FBXMesh::~FBXMesh()
+MCB::AnimationMesh::~AnimationMesh()
 {
     for (auto& itr : textures)
     {
@@ -15,7 +15,7 @@ MCB::FBXMesh::~FBXMesh()
     }
 }
 
-void MCB::FBXMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::AnimationMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp, // ƒq[ƒvÝ’è
@@ -27,14 +27,14 @@ void MCB::FBXMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D
     assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 
-void MCB::FBXMesh::SetIbView(DXGI_FORMAT format)
+void MCB::AnimationMesh::SetIbView(DXGI_FORMAT format)
 {
     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
     ibView.Format = format;
     ibView.SizeInBytes = sizeIB;
 }
 
-void MCB::FBXMesh::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::AnimationMesh::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
 {
     Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
         &HeapProp,
@@ -47,7 +47,7 @@ void MCB::FBXMesh::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D1
 
 }
 
-HRESULT MCB::FBXMesh::IndexMaping()
+HRESULT MCB::AnimationMesh::IndexMaping()
 {
     HRESULT result = S_OK;
 
@@ -66,14 +66,14 @@ HRESULT MCB::FBXMesh::IndexMaping()
     return result;
 }
 
-void MCB::FBXMesh::SetVbView()
+void MCB::AnimationMesh::SetVbView()
 {
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
     vbView.SizeInBytes = sizeVB;
     vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
-HRESULT MCB::FBXMesh::VertexMaping()
+HRESULT MCB::AnimationMesh::VertexMaping()
 {
     HRESULT result = S_OK;
 
@@ -90,19 +90,19 @@ HRESULT MCB::FBXMesh::VertexMaping()
     return result;
 }
 
-void MCB::FBXMesh::SetSizeIB()
+void MCB::AnimationMesh::SetSizeIB()
 {
     sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
 }
 
 
 
-void MCB::FBXMesh::SetSizeVB()
+void MCB::AnimationMesh::SetSizeVB()
 {
     sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
 }
 
-void MCB::FBXMesh::Init()
+void MCB::AnimationMesh::Init()
 {
 
     SetSizeIB();
@@ -126,12 +126,12 @@ void MCB::FBXMesh::Init()
 
 }
 
-//void MCB::FBXModel::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
+//void MCB::AnimationModel::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
 //{
 //    smoothData[indexPosition].emplace_back(indexVertex);
 //}
 //
-//void MCB::FBXModel::CalculateSmoothedVertexNormals()
+//void MCB::AnimationModel::CalculateSmoothedVertexNormals()
 //{
 //    auto itr = smoothData.begin();
 //    for (; itr != smoothData.end(); ++itr)

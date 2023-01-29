@@ -47,13 +47,13 @@ namespace MCB
             DirectX::XMMATRIX finalMatrix;
         };
 
-	class FBXMesh
+	class AnimationMesh
 	{
         public:
 
             //Model(const std::string fileName, bool smooth = false);
-            //FBXModel();
-            ~FBXMesh();
+            //AnimationModel();
+            ~AnimationMesh();
 
             Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 

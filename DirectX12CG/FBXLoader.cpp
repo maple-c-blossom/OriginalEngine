@@ -9,7 +9,7 @@ using namespace Assimp;
 using namespace DirectX;
 
 
-MCB::FBXModel::~FBXModel()
+MCB::AnimationModel::~AnimationModel()
 {
 	for (int i = 0; i < nodes.size(); i++)
 	{
@@ -24,7 +24,7 @@ MCB::FBXModel::~FBXModel()
 }
 
 
-bool MCB::FBXModel::Load(std::string fileName,std::string fileType) {
+bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
 	//importer.SetIOHandler(new MyIOSystem());
@@ -114,7 +114,7 @@ bool MCB::FBXModel::Load(std::string fileName,std::string fileType) {
 	//scene->~aiScene();
 	return true;
 }
-void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, Node* targetParent)
+void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, Node* targetParent)
 {
 	Node* parent;
 	//Matrix4x4 transform;
@@ -130,7 +130,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 		//CopyMeshes(node, newObject);
 		for (int i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]ÇÃå¥àˆ
 		{
-			std::unique_ptr<FBXMesh> tempmodel = std::make_unique<FBXMesh>();
+			std::unique_ptr<AnimationMesh> tempmodel = std::make_unique<AnimationMesh>();
 			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, *tempmodel.get()); //D3D12 ERROR ä÷êîî≤ÇØÇΩèuä‘
 			newObject->meshes.push_back(move(tempmodel));
 			for (auto& itr :newObject->meshes)//Ç»Ç∫Ç©returnÇ≥ÇÍÇÈÇ‹Ç≈falseÇæÇ¡ÇΩtextureÇÃfreeÇ™trueÇ…Ç≥ÇÍÇƒÇ¢ÇÈÇÃÇ≈èCê≥(è„ãLÇÃÇ‚Ç¬Ç™ìØÇ∂å¥àˆÇ¡Ç€Ç¢Åj
@@ -187,7 +187,7 @@ void MCB::FBXModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* scene, No
 }
 
 
-void FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmodel) {
+void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel) {
 	// Data to fill
 
 	// Walk through each of the mesh's vertices
@@ -313,7 +313,7 @@ void FBXModel::processMesh(aiMesh* mesh, const aiScene* scene, FBXMesh& tempmode
 	//return tempmodel;
 	//return Mesh(dev_, vertices, indices, textures);
 }
-void MCB::FBXModel::Draw()
+void MCB::AnimationModel::Draw()
 {
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
@@ -344,7 +344,7 @@ void MCB::FBXModel::Draw()
 }
 //
 
-std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
 	std::vector<TextureCell*> textures;
 	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
@@ -374,7 +374,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	return textures;
 }
 
-  void FBXModel::boneAnimTransform(float timeInSeconds, unsigned int currentAnimation,bool loop)
+  void AnimationModel::boneAnimTransform(float timeInSeconds, unsigned int currentAnimation,bool loop)
   {
 
     
@@ -411,7 +411,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
     }*/
   }
 
-  void FBXModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
@@ -474,7 +474,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	  //}
   }
 
-  const NodeAnim* FBXModel::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
+  const NodeAnim* AnimationModel::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
   {
 
 	  for (unsigned int i = 0; i < pAnimation->channels.size(); i++)
@@ -492,7 +492,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 
 
 
-   void FBXModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->position.size() == 1)
 	  {
@@ -511,7 +511,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	  Out = Start + Factor * Delta;
   }
 
-   void FBXModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  // we need at least two values to interpolate...
 	  if (pNodeAnim->rotation.size() == 1) {
@@ -532,7 +532,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
   }
 
 
-   void FBXModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->scale.size() == 1) {
 		  Out = pNodeAnim->scale[0];
@@ -551,7 +551,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
 	  Out = Start + Factor * Delta;
   }
 
-    unsigned int FBXModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
+    unsigned int AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   for (unsigned int i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
@@ -565,7 +565,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
    }
 
 
-    unsigned int FBXModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
+    unsigned int AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
@@ -581,7 +581,7 @@ std::vector<TextureCell*> FBXModel::loadMaterialTextures(aiMaterial* mat, aiText
    }
 
 
-    unsigned int FBXModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
+    unsigned int AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 
