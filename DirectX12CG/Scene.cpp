@@ -116,14 +116,16 @@ IScene* MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-
+    testSpher.rotasion.y += 0.15f;
     if (input->IsKeyDown(DIK_UP))
     {
-
+        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
+        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z + 1 });
     }
     if (input->IsKeyDown(DIK_DOWN))
     {
-        matView.eye.y -= ConvertRadius(5);
+        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z - 1 });
+        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z - 1 });
     }
 
     if (input->IsKeyDown(DIK_LEFT))
@@ -206,8 +208,8 @@ void MCB::Scene::Draw()
 
 void MCB::Scene::SpriteDraw()
 {
-    debugText.Print(20, 20, 1, "SPACE:SceneChange Arrow:CameraMove");
-    debugText.Print(20, 40, 1, "1or2or3 LightChenge 5or6 smooth");
+    debugText.Print(20, 20, 1, "SPACE:SceneChange UpOrDown LightMove RightOrLeft:CameraMove");
+    debugText.Print(20, 40, 1, "1or2or3 LightChenge(1:Dir 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
     debugText.Print(20, 60, 1, "AD:spherMove");
     debugText.AllDraw();
 }
