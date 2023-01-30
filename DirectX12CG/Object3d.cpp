@@ -207,9 +207,9 @@ void Object3d::Draw(unsigned short int incremant)
 
 }
 
-void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isBillBord)
 {
-    if (fbxModel == nullptr)return;
+    if (animationModel == nullptr)return;
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
     matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
     matWorld.SetMatTrans(position.x, position.y, position.z);
@@ -234,26 +234,26 @@ void MCB::Object3d::FbxUpdate(View& view, Projection& projection, bool isBillBor
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat /** fbxModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform->world = matWorld.matWorld * view.mat /** animationModel->nodes.begin()->get()->globalTransform*/;
     constMapTranceform->viewproj = projection.mat;
     constMapTranceform->cameraPos.x = view.eye.x;
     constMapTranceform->cameraPos.y = view.eye.y;
     constMapTranceform->cameraPos.z = view.eye.z;
-    animeTime += 0.01f;
-    if (animeTime > fbxModel->animations[0]->duration)
+    animeTime += 0.1f;
+    if (animeTime > animationModel->animations[0]->duration)
     {
         animeTime = 0;
     }
-    fbxModel->boneAnimTransform(animeTime);
-    for (int i = 0; i < fbxModel->bones.size(); i++)
+    animationModel->boneAnimTransform(animeTime);
+    for (int i = 0; i < animationModel->bones.size(); i++)
     {
-        constMapSkin->boneMats[i] = fbxModel->bones[i].finalMatrix;
+        constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
     }
 }
 
-void MCB::Object3d::FbxUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord)
 {
-    if (fbxModel == nullptr)return;
+    if (animationModel == nullptr)return;
     MCBMatrix matRot;
     matRot.MCBMatrixIdentity();
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
@@ -280,26 +280,26 @@ void MCB::Object3d::FbxUpdate(View& view, Projection& projection, Quaternion q, 
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat * fbxModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->world = matWorld.matWorld * view.mat * animationModel->nodes.begin()->get()->globalTransform;
     constMapTranceform->viewproj = projection.mat;
     constMapTranceform->cameraPos.x = view.eye.x;
     constMapTranceform->cameraPos.y = view.eye.y;
     constMapTranceform->cameraPos.z = view.eye.z;
 }
 
-void MCB::Object3d::FbxDraw()
+void MCB::Object3d::AnimationDraw()
 {
     //定数バッファビュー(CBV)の設定コマンド
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
-    fbxModel->Draw();
+    animationModel->Draw();
 }
 
-void MCB::Object3d::FbxDraw(unsigned short int incremant)
+void MCB::Object3d::AnimationDraw(unsigned short int incremant)
 {
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
-    fbxModel->Draw();
+    animationModel->Draw();
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

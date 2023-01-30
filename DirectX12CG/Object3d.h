@@ -56,7 +56,7 @@ namespace MCB
         float frontAngle = 0;
         float animeTime;
         Model* model = nullptr;
-        AnimationModel* fbxModel = nullptr;
+        AnimationModel* animationModel = nullptr;
 
         Object3d();
 
@@ -78,13 +78,13 @@ namespace MCB
         void Draw(unsigned short int incremant);
 
 
-        void FbxUpdate(View& view, Projection& projection, bool isBillBord = false);
+        void AnimationUpdate(View& view, Projection& projection, bool isBillBord = false);
 
-        void FbxUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
+        void AnimationUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
 
-        void FbxDraw();
+        void AnimationDraw();
 
-        void FbxDraw(unsigned short int incremant);
+        void AnimationDraw(unsigned short int incremant);
 
         static void SetLights(LightGroup* light);
         //void CreateModel(const char* fileName);

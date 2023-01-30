@@ -30,7 +30,7 @@ void MCB::TitleScene::MatrixUpdate()
     matView.UpDateMatrixView();
     Skydorm.Update(matView, matProjection);
     ground.Update(matView, matProjection);
-    testSpher.Update(matView, matProjection, true);
+    testAnimation.AnimationUpdate(matView, matProjection);
 }
 
 void MCB::TitleScene::Update()
@@ -48,8 +48,9 @@ void MCB::TitleScene::Draw()
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();
-    testSpher.Draw();
-
+    pipeline->SetFbxPipeLine();
+    testAnimation.AnimationDraw();
+    pipeline->SetObjPipeLine();
 
 }
 
@@ -70,7 +71,20 @@ void MCB::TitleScene::CheckAllColision()
 void MCB::TitleScene::ImGuiUpdate()
 {
     imgui.Begin();
-    ImGui::ShowDemoWindow();
+    //ImGui::ShowDemoWindow();
+    if (ImGui::CollapsingHeader("Infomation"))
+    {
+        if (ImGui::TreeNode("operation"))
+        {
+            ImGui::Text("SPACE:SceneChange");
+            ImGui::TreePop();
+        }
+        if (ImGui::TreeNode("Point"))
+        {
+            ImGui::Text("1:Animation");
+            ImGui::TreePop();
+        }
+    }
     imgui.End();
 }
 
@@ -93,7 +107,7 @@ MCB::TitleScene::~TitleScene()
 
 void MCB::TitleScene::Initialize()
 {
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -10.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+    matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -100.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
     matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
     LoadTexture();
     LoadModel();
@@ -115,6 +129,10 @@ void MCB::TitleScene::LoadModel()
     groundModel = new Model("ground");
 
     skydomeModel = new Model("skydome");
+
+    animModel = std::make_unique<AnimationModel>();
+    animModel->Load("gamewsdsa");
+
 }
 
 void MCB::TitleScene::LoadTexture()
@@ -147,9 +165,11 @@ void MCB::TitleScene::Object3DInit()
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
-    testSpher.Init();
-    testSpher.model = BoxModel;
-    testSpher.scale = { 3,3,3 };
-    testSpher.position = { 0,4,10 };
+    testAnimation.Init();
+    //testAnimation.model = BoxModel;
+    testAnimation.animationModel = animModel.get();
+    testAnimation.scale = { 3,3,3 };
+    testAnimation.position = { 0,4,10 };
+    testAnimation.rotasion.y = ConvertRadius(90);
 
 }

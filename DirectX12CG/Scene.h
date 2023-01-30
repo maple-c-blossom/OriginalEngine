@@ -55,7 +55,7 @@ namespace MCB
 		
 		Object3d ground;
 		Object3d Skydorm;
-		Object3d testSpher;
+		Object3d testAnimation;
 
 #pragma endregion 3Dオブジェクト
 

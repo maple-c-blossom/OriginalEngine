@@ -88,7 +88,7 @@ namespace MCB
         std::vector<Bone> bones;
         ~AnimationModel();
         string fileName;
-        bool Load(std::string fileName,std::string fileType = "fbx");
+        bool Load(std::string fileName,std::string fileType = "gltf");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);

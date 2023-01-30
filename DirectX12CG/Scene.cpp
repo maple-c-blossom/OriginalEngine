@@ -45,11 +45,11 @@ void MCB::Scene::Object3DInit()
     Skydorm.model = skydomeModel;
     Skydorm.scale = { 4,4,4 };
 
-    testSpher.Init();
-    testSpher.model = SpherModel;
-    testSpher.scale = { 1,1,1 };
-    testSpher.position = { -4,-2,5 };
-    testSpher.rotasion = { ConvertRadius(90),0,0 };
+    testAnimation.Init();
+    testAnimation.model = SpherModel;
+    testAnimation.scale = { 1,1,1 };
+    testAnimation.position = { -4,-2,5 };
+    testAnimation.rotasion = { ConvertRadius(90),0,0 };
 
 
     //sphere.Init();
@@ -116,7 +116,7 @@ IScene* MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-    testSpher.rotasion.y += 0.15f;
+    testAnimation.rotasion.y += 0.15f;
     if (input->IsKeyDown(DIK_UP))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
@@ -141,23 +141,23 @@ void MCB::Scene::Update()
 
     if (input->IsKeyTrigger(DIK_SPACE))
     {
-        if (testSpher.model == SpherModel)
+        if (testAnimation.model == SpherModel)
         {
-            testSpher.model = groundModel;
+            testAnimation.model = groundModel;
         }
         else
         {
-            testSpher.model = SpherModel;
+            testAnimation.model = SpherModel;
         }
     }
 
     if (input->IsKeyDown(DIK_A))
     {
-        testSpher.position.x -= 1;
+        testAnimation.position.x -= 1;
     }
     if (input->IsKeyDown(DIK_D))
     {
-        testSpher.position.x += 1;
+        testAnimation.position.x += 1;
     }
 
     if (input->IsKeyTrigger(DIK_1))
@@ -172,13 +172,14 @@ void MCB::Scene::Update()
     {
         lights->SetSLightIsActive(0, !lights->GetSLightIsActive(0));
     }
+
     if (input->IsKeyTrigger(DIK_5))
     {
-        testSpher.model = SpherModel;
+        testAnimation.model = SpherModel;
     }
     else if (input->IsKeyTrigger(DIK_6))
     {
-        testSpher.model = SpherModel2;
+        testAnimation.model = SpherModel2;
     }
     lights->UpDate();
 
@@ -196,15 +197,13 @@ void MCB::Scene::Draw()
     Skydorm.Draw();
     ground.Draw();
 
-    testSpher.Draw();
+    testAnimation.Draw();
 
 }
 
 void MCB::Scene::SpriteDraw()
 {
-    debugText.Print(20, 20, 1, "SPACE:SceneChange UpOrDown LightMove RightOrLeft:CameraMove");
-    debugText.Print(20, 40, 1, "1or2or3 LightChenge(1:Dir 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
-    debugText.Print(20, 60, 1, "AD:spherMove");
+
     debugText.AllDraw();
 }
 
@@ -222,11 +221,30 @@ void MCB::Scene::ImGuiUpdate()
 {
     imgui.Begin();
     //ImGui::ShowDemoWindow();
-    if (ImGui::CollapsingHeader("debug"))
+    if (ImGui::CollapsingHeader("Infomation"))
     {
+        if (ImGui::TreeNode("operation"))
+        {
+            ImGui::Text("SPACE:SceneChange UpOrDown LightMove RightOrLeft : CameraMove");
+            ImGui::Text("1or2or3 LightChenge(1:Dir 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
+            ImGui::Text("AD:spherMove");
+            ImGui::TreePop();
+        }
+        if (ImGui::TreeNode("Point"))
+        {
+            ImGui::Text("1:Phong reflection model");
+            ImGui::Text("2:Smoothing");
+            ImGui::Text("3:Light data separation");
+            ImGui::Text("4:Phong shading ");
+            ImGui::Text("5:MultipleLight ");
+            ImGui::Text("6:PointLight ");
+            ImGui::Text("7:SpotLight");
+            ImGui::Text("8:SceneChenge");
+            ImGui::Text("9:AsynchronousLoad");
+
+            ImGui::TreePop();
+        }
     }
-
-
     imgui.End();
 }
 
@@ -236,7 +254,7 @@ void MCB::Scene::MatrixUpdate()
     matView.UpDateMatrixView(ybill);
     Skydorm.Update(matView, matProjection);
     ground.Update(matView, matProjection);
-    testSpher.Update(matView, matProjection, false);
+    testAnimation.Update(matView, matProjection, false);
 
     matView.UpDateMatrixView(true);
 

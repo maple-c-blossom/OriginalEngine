@@ -19,6 +19,8 @@ namespace MCB
 		Model* BoxModel;
 		Model* groundModel;
 		Model* skydomeModel;
+
+		std::unique_ptr<AnimationModel> animModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
@@ -43,7 +45,7 @@ namespace MCB
 		SimpleFigure triangle;
 		Object3d ground;
 		Object3d Skydorm;
-		Object3d testSpher;
+		Object3d testAnimation;
 
 
 #pragma endregion 3Dオブジェクト

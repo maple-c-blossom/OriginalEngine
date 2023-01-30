@@ -46,7 +46,7 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 
 	// If the import failed, report it
 	if (nullptr == scene) {
-		//DoTheErrorLogging(importer.GetErrorString());
+		assert(1, "animationModel NotFound");
 		return false;
 	}
 

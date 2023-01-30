@@ -110,10 +110,10 @@ void MCB::SceneManager::Draw()
 
 
 		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		scene->ImGuiUpdate();
 		scene->ImGuiDraw();
-#endif 
+//#endif 
 	}
 	else//ƒ[ƒh‰æ–Ê
 	{

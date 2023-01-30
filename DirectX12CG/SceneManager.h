@@ -13,7 +13,7 @@ namespace MCB
 		TextureManager* texmanager = TextureManager::GetInstance();
 		PipeLineManager* pipeline;
 		std::future<void> sceneInitialize;
-		static const int isChengeSceneTime = 120;
+		static const int isChengeSceneTime = 30;
 		int isChengeSceneTimer = 0;
 		TextureCell* damyTexture;
 		TextureCell* loadTex;
