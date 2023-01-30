@@ -240,10 +240,12 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isB
     constMapTranceform->cameraPos.y = view.eye.y;
     constMapTranceform->cameraPos.z = view.eye.z;
     animeTime += 0.1f;
-    if (animeTime > animationModel->animations[0]->duration)
+
+    if (animeTime >= animationModel->animations[0]->duration)
     {
         animeTime = 0;
     }
+    
     animationModel->boneAnimTransform(animeTime);
     for (int i = 0; i < animationModel->bones.size(); i++)
     {

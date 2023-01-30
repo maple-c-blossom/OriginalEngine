@@ -139,17 +139,6 @@ void MCB::Scene::Update()
         matView.eye.z += sin(ConvertRadius(5));
     }
 
-    if (input->IsKeyTrigger(DIK_SPACE))
-    {
-        if (testAnimation.model == SpherModel)
-        {
-            testAnimation.model = groundModel;
-        }
-        else
-        {
-            testAnimation.model = SpherModel;
-        }
-    }
 
     if (input->IsKeyDown(DIK_A))
     {
@@ -226,7 +215,8 @@ void MCB::Scene::ImGuiUpdate()
         if (ImGui::TreeNode("operation"))
         {
             ImGui::Text("SPACE:SceneChange UpOrDown LightMove RightOrLeft : CameraMove");
-            ImGui::Text("1or2or3 LightChenge(1:Dir 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
+            ImGui::Text("1or2or3 LightChenge(1:Dir: 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
+            ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
             ImGui::Text("AD:spherMove");
             ImGui::TreePop();
         }

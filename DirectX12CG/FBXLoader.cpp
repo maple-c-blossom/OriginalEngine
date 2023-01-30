@@ -46,7 +46,7 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 
 	// If the import failed, report it
 	if (nullptr == scene) {
-		assert(1, "animationModel NotFound");
+		assert(0, "animationModel NotFound");
 		return false;
 	}
 
@@ -376,7 +376,6 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
   void AnimationModel::boneAnimTransform(float timeInSeconds, unsigned int currentAnimation,bool loop)
   {
-
     
     //if(!nodeAnimMapPtr)
     //{
@@ -502,7 +501,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
 	  unsigned int PositionIndex = findPosition(AnimationTime, pNodeAnim);
 	  unsigned int NextPositionIndex = (PositionIndex + 1);
-	  assert(NextPositionIndex < pNodeAnim->position.size());
+	  if(NextPositionIndex >= pNodeAnim->position.size()) NextPositionIndex = pNodeAnim->position.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->positionTime[NextPositionIndex] - pNodeAnim->positionTime[PositionIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->positionTime[PositionIndex]) / DeltaTime);
 	  Vector3D Start = pNodeAnim->position[PositionIndex];
@@ -521,7 +520,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
 	  unsigned int RotationIndex = findRotation(AnimationTime, pNodeAnim);
 	  unsigned int NextRotationIndex = (RotationIndex + 1);
-	  assert(NextRotationIndex < pNodeAnim->rotation.size());
+	  if (NextRotationIndex >= pNodeAnim->rotation.size()) NextRotationIndex = pNodeAnim->rotation.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->rotationTime[NextRotationIndex] - pNodeAnim->rotationTime[RotationIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->rotationTime[RotationIndex]) / DeltaTime);
 
@@ -541,7 +540,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
 	  unsigned int ScalingIndex = findScaling(AnimationTime, pNodeAnim);
 	  unsigned int NextScalingIndex = (ScalingIndex + 1);
-	  assert(NextScalingIndex < pNodeAnim->scale.size());
+	  if(NextScalingIndex >= pNodeAnim->scale.size()) NextScalingIndex = pNodeAnim->scale.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->scaleTime[NextScalingIndex] - pNodeAnim->scaleTime[ScalingIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->scaleTime[ScalingIndex]) / DeltaTime);
 	  //assert(Factor >= 0.0f && Factor <= 1.0f);
