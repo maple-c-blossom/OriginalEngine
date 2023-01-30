@@ -162,21 +162,15 @@ void MCB::Scene::Update()
 
     if (input->IsKeyTrigger(DIK_1))
     {
-        lights->SetPLightIsActive(0, false);
-        lights->SetSLightIsActive(0, false);
-        lights->SetDirLightIsActive(0, true);
+        lights->SetDirLightIsActive(0, !lights->GetDirLightIsActive(0));
     }
     else if (input->IsKeyTrigger(DIK_2))
     {
-        lights->SetPLightIsActive(0, true);
-        lights->SetSLightIsActive(0, false);
-        lights->SetDirLightIsActive(0, false);
+        lights->SetPLightIsActive(0, !lights->GetPLightIsActive(0));
     }
     else if (input->IsKeyTrigger(DIK_3))
     {
-        lights->SetPLightIsActive(0, false);
-        lights->SetSLightIsActive(0, true);
-        lights->SetDirLightIsActive(0, false);
+        lights->SetSLightIsActive(0, !lights->GetSLightIsActive(0));
     }
     if (input->IsKeyTrigger(DIK_5))
     {

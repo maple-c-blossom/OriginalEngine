@@ -52,7 +52,7 @@ namespace MCB
 
 #pragma region 3Dオブジェクト
 		SimpleFigure triangle;
-
+		
 		Object3d ground;
 		Object3d Skydorm;
 		Object3d testSpher;
