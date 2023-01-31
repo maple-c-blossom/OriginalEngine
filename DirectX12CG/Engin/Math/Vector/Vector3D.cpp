@@ -8,6 +8,12 @@ MCB::Vector3D::Vector3D(Float3 start, Float3 end)
 	vec = end - start;
 }
 
+MCB::Vector3D::Vector3D(Vector3D start, Vector3D end)
+{
+	Vector3D temp = end - start;
+	vec = temp.vec;
+}
+
 
 
 MCB::Vector3D::Vector3D()
