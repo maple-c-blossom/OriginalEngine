@@ -11,64 +11,64 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="DebugCamera.cpp" />
-    <ClCompile Include="DebugText.cpp" />
-    <ClCompile Include="Depth.cpp" />
-    <ClCompile Include="Descriptor.cpp" />
-    <ClCompile Include="Draw.cpp" />
-    <ClCompile Include="Dx12.cpp" />
-    <ClCompile Include="DxWindow.cpp" />
-    <ClCompile Include="FBXLoader.cpp" />
-    <ClCompile Include="FBXModel.cpp" />
-    <ClCompile Include="FPS.cpp" />
-    <ClCompile Include="GamePad.cpp" />
-    <ClCompile Include="ICamera.cpp" />
-    <ClCompile Include="ImguiManager.cpp" />
-    <ClCompile Include="IScene.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="LightGroup.cpp" />
-    <ClCompile Include="MCBFloat.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MCBMatrix.cpp" />
-    <ClCompile Include="MipMap.cpp" />
-    <ClCompile Include="Object3d.cpp" />
-    <ClCompile Include="ObjectMaterial.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="ParticleMaterial.cpp" />
-    <ClCompile Include="Pipeline.cpp" />
-    <ClCompile Include="PipeLineManager.cpp" />
-    <ClCompile Include="PIpelineRootSignature.cpp" />
-    <ClCompile Include="PointLight.cpp" />
-    <ClCompile Include="Projection.cpp" />
-    <ClCompile Include="Quaternion.cpp" />
-    <ClCompile Include="RootParameter.cpp" />
-    <ClCompile Include="RootSignature.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="SpotLight.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="TexImgData.cpp" />
-    <ClCompile Include="TexSample.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="TextureBuffer.cpp" />
-    <ClCompile Include="TextureFile.cpp" />
-    <ClCompile Include="TextureManager.cpp">
+    <ClCompile Include="Engin\Camera\Camera.cpp" />
+    <ClCompile Include="Engin\Collide\Collider.cpp" />
+    <ClCompile Include="Engin\Camera\DebugCamera.cpp" />
+    <ClCompile Include="Engin\Sprite\DebugText.cpp" />
+    <ClCompile Include="Engin\Pipeline\Depth.cpp" />
+    <ClCompile Include="Engin\Pipeline\Descriptor.cpp" />
+    <ClCompile Include="Engin\DirectX\Draw.cpp" />
+    <ClCompile Include="Engin\DirectX\Dx12.cpp" />
+    <ClCompile Include="Engin\DirectX\DxWindow.cpp" />
+    <ClCompile Include="Engin\Model\FBXLoader.cpp" />
+    <ClCompile Include="Engin\Model\FBXModel.cpp" />
+    <ClCompile Include="Engin\Util\FPS.cpp" />
+    <ClCompile Include="Engin\DirectX\GamePad.cpp" />
+    <ClCompile Include="Engin\Camera\ICamera.cpp" />
+    <ClCompile Include="Engin\Sprite\ImguiManager.cpp" />
+    <ClCompile Include="App\Scene\IScene.cpp" />
+    <ClCompile Include="Engin\Light\Light.cpp" />
+    <ClCompile Include="Engin\Light\LightGroup.cpp" />
+    <ClCompile Include="Engin\Math\Util\MCBFloat.cpp" />
+    <ClCompile Include="Engin\DirectX\Input.cpp" />
+    <ClCompile Include="App\main.cpp" />
+    <ClCompile Include="Engin\Math\Matrix\MCBMatrix.cpp" />
+    <ClCompile Include="Engin\Texture\MipMap.cpp" />
+    <ClCompile Include="Engin\Object\Object3d.cpp" />
+    <ClCompile Include="Engin\Model\ObjectMaterial.cpp" />
+    <ClCompile Include="Engin\Model\Model.cpp" />
+    <ClCompile Include="Engin\Particle\Particle.cpp" />
+    <ClCompile Include="Engin\Particle\ParticleMaterial.cpp" />
+    <ClCompile Include="Engin\Pipeline\Pipeline.cpp" />
+    <ClCompile Include="Engin\Pipeline\PipeLineManager.cpp" />
+    <ClCompile Include="Engin\Pipeline\PIpelineRootSignature.cpp" />
+    <ClCompile Include="Engin\Light\PointLight.cpp" />
+    <ClCompile Include="Engin\Math\Matrix\Projection.cpp" />
+    <ClCompile Include="Engin\Math\Vector\Quaternion.cpp" />
+    <ClCompile Include="Engin\Pipeline\RootParameter.cpp" />
+    <ClCompile Include="Engin\Pipeline\RootSignature.cpp" />
+    <ClCompile Include="App\Scene\Scene.cpp" />
+    <ClCompile Include="App\Scene\SceneManager.cpp" />
+    <ClCompile Include="Engin\Pipeline\Shader.cpp" />
+    <ClCompile Include="Engin\Sound\Sound.cpp" />
+    <ClCompile Include="Engin\Light\SpotLight.cpp" />
+    <ClCompile Include="Engin\Sprite\Sprite.cpp" />
+    <ClCompile Include="Engin\Texture\TexImgData.cpp" />
+    <ClCompile Include="Engin\Texture\TexSample.cpp" />
+    <ClCompile Include="Engin\Texture\Texture.cpp" />
+    <ClCompile Include="Engin\Texture\TextureBuffer.cpp" />
+    <ClCompile Include="Engin\Texture\TextureFile.cpp" />
+    <ClCompile Include="Engin\Texture\TextureManager.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</LanguageStandard>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp" />
-    <ClCompile Include="Util.cpp" />
-    <ClCompile Include="Vecter2D.cpp" />
-    <ClCompile Include="Vector3D.cpp" />
-    <ClCompile Include="Vertex.cpp" />
-    <ClCompile Include="View.cpp" />
-    <ClCompile Include="WorldMatrix.cpp" />
+    <ClCompile Include="App\Scene\TitleScene.cpp" />
+    <ClCompile Include="Engin\Util\Util.cpp" />
+    <ClCompile Include="Engin\Math\Vector\Vecter2D.cpp" />
+    <ClCompile Include="Engin\Math\Vector\Vector3D.cpp" />
+    <ClCompile Include="Engin\Model\Vertex.cpp" />
+    <ClCompile Include="Engin\Math\Matrix\View.cpp" />
+    <ClCompile Include="Engin\Math\Matrix\WorldMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -139,62 +139,62 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="DebugCamera.h" />
-    <ClInclude Include="DebugText.h" />
-    <ClInclude Include="Depth.h" />
-    <ClInclude Include="Descriptor.h" />
-    <ClInclude Include="Draw.h" />
-    <ClInclude Include="Dx12.h" />
-    <ClInclude Include="DxWindow.h" />
-    <ClInclude Include="FBXLoader.h" />
-    <ClInclude Include="FBXModel.h" />
-    <ClInclude Include="FPS.h" />
-    <ClInclude Include="GamePad.h" />
-    <ClInclude Include="ICamera.h" />
-    <ClInclude Include="ImguiManager.h" />
-    <ClInclude Include="IScene.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="LightGroup.h" />
-    <ClInclude Include="MCBFloat.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="MCBMatrix.h" />
-    <ClInclude Include="MipMap.h" />
-    <ClInclude Include="Object3d.h" />
-    <ClInclude Include="ObjectMaterial.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="ParticleMaterial.h" />
-    <ClInclude Include="Pipeline.h" />
-    <ClInclude Include="PipeLineManager.h" />
-    <ClInclude Include="PIpelineRootSignature.h" />
-    <ClInclude Include="PIpelines.h" />
-    <ClInclude Include="PointLight.h" />
-    <ClInclude Include="Projection.h" />
-    <ClInclude Include="Quaternion.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="RootParameter.h" />
-    <ClInclude Include="RootSignature.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Sound.h" />
-    <ClInclude Include="SpotLight.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="TexImgData.h" />
-    <ClInclude Include="TexSample.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureBuffer.h" />
-    <ClInclude Include="TextureFile.h" />
-    <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="TitleScene.h" />
-    <ClInclude Include="Util.h" />
-    <ClInclude Include="Vecter2D.h" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="Vertex.h" />
-    <ClInclude Include="View.h" />
-    <ClInclude Include="WorldMatrix.h" />
+    <ClInclude Include="Engin\Camera\Camera.h" />
+    <ClInclude Include="Engin\Collide\Collider.h" />
+    <ClInclude Include="Engin\Camera\DebugCamera.h" />
+    <ClInclude Include="Engin\Sprite\DebugText.h" />
+    <ClInclude Include="Engin\Pipeline\Depth.h" />
+    <ClInclude Include="Engin\Pipeline\Descriptor.h" />
+    <ClInclude Include="Engin\DirectX\Draw.h" />
+    <ClInclude Include="Engin\DirectX\Dx12.h" />
+    <ClInclude Include="Engin\DirectX\DxWindow.h" />
+    <ClInclude Include="Engin\Model\FBXLoader.h" />
+    <ClInclude Include="Engin\Model\FBXModel.h" />
+    <ClInclude Include="Engin\Util\FPS.h" />
+    <ClInclude Include="Engin\DirectX\GamePad.h" />
+    <ClInclude Include="Engin\Camera\ICamera.h" />
+    <ClInclude Include="Engin\Sprite\ImguiManager.h" />
+    <ClInclude Include="App\Scene\IScene.h" />
+    <ClInclude Include="Engin\Light\Light.h" />
+    <ClInclude Include="Engin\Light\LightGroup.h" />
+    <ClInclude Include="Engin\Math\Util\MCBFloat.h" />
+    <ClInclude Include="Engin\DirectX\Input.h" />
+    <ClInclude Include="Engin\Math\Matrix\MCBMatrix.h" />
+    <ClInclude Include="Engin\Texture\MipMap.h" />
+    <ClInclude Include="Engin\Object\Object3d.h" />
+    <ClInclude Include="Engin\Model\ObjectMaterial.h" />
+    <ClInclude Include="Engin\Model\Model.h" />
+    <ClInclude Include="Engin\Particle\Particle.h" />
+    <ClInclude Include="Engin\Particle\ParticleMaterial.h" />
+    <ClInclude Include="Engin\Pipeline\Pipeline.h" />
+    <ClInclude Include="Engin\Pipeline\PipeLineManager.h" />
+    <ClInclude Include="Engin\Pipeline\PIpelineRootSignature.h" />
+    <ClInclude Include="Engin\Pipeline\PIpelines.h" />
+    <ClInclude Include="Engin\Light\PointLight.h" />
+    <ClInclude Include="Engin\Math\Matrix\Projection.h" />
+    <ClInclude Include="Engin\Math\Vector\Quaternion.h" />
+    <ClInclude Include="Engin\Util\resource.h" />
+    <ClInclude Include="Engin\Pipeline\RootParameter.h" />
+    <ClInclude Include="Engin\Pipeline\RootSignature.h" />
+    <ClInclude Include="App\Scene\Scene.h" />
+    <ClInclude Include="App\Scene\SceneManager.h" />
+    <ClInclude Include="Engin\Pipeline\Shader.h" />
+    <ClInclude Include="Engin\Sound\Sound.h" />
+    <ClInclude Include="Engin\Light\SpotLight.h" />
+    <ClInclude Include="Engin\Sprite\Sprite.h" />
+    <ClInclude Include="Engin\Texture\TexImgData.h" />
+    <ClInclude Include="Engin\Texture\TexSample.h" />
+    <ClInclude Include="Engin\Texture\Texture.h" />
+    <ClInclude Include="Engin\Texture\TextureBuffer.h" />
+    <ClInclude Include="Engin\Texture\TextureFile.h" />
+    <ClInclude Include="Engin\Texture\TextureManager.h" />
+    <ClInclude Include="App\Scene\TitleScene.h" />
+    <ClInclude Include="Engin\Util\Util.h" />
+    <ClInclude Include="Engin\Math\Vector\Vecter2D.h" />
+    <ClInclude Include="Engin\Math\Vector\Vector3D.h" />
+    <ClInclude Include="Engin\Model\Vertex.h" />
+    <ClInclude Include="Engin\Math\Matrix\View.h" />
+    <ClInclude Include="Engin\Math\Matrix\WorldMatrix.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
@@ -203,18 +203,18 @@
     <None Include="Resources\Shaders\SpriteShader\SpriteShaderHeader.hlsli" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
-      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\MyImgui\MyImgui\MyImgui.vcxproj">
-      <Project>{47dcf9ab-1928-483f-b5b4-71afbe878b00}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="DirectX12CG.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\Maple.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\External\DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\External\MyImgui\MyImgui\MyImgui.vcxproj">
+      <Project>{47dcf9ab-1928-483f-b5b4-71afbe878b00}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -251,12 +251,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex;$(SolutionDir)MyImgui</IncludePath>
+    <IncludePath>$(ProjectDir)lib\assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
     <LibraryPath>$(ProjectDir)lib\assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)DirectXTex;$(SolutionDir)MyImgui</IncludePath>
+    <IncludePath>$(ProjectDir)lib\assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
     <LibraryPath>$(ProjectDir)lib\assimp\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

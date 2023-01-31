@@ -174,169 +174,169 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="App\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Object3d.cpp">
+    <ClCompile Include="Engin\Object\Object3d.cpp">
       <Filter>ソース ファイル\Engin\Object</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectMaterial.cpp">
+    <ClCompile Include="Engin\Model\ObjectMaterial.cpp">
       <Filter>ソース ファイル\Engin\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Dx12.cpp">
+    <ClCompile Include="Engin\DirectX\Dx12.cpp">
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="DxWindow.cpp">
+    <ClCompile Include="Engin\DirectX\DxWindow.cpp">
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Projection.cpp">
+    <ClCompile Include="Engin\Math\Matrix\Projection.cpp">
       <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
-    <ClCompile Include="View.cpp">
+    <ClCompile Include="Engin\Math\Matrix\View.cpp">
       <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
-    <ClCompile Include="WorldMatrix.cpp">
+    <ClCompile Include="Engin\Math\Matrix\WorldMatrix.cpp">
       <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
+    <ClCompile Include="Engin\DirectX\Input.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Depth.cpp">
+    <ClCompile Include="Engin\Pipeline\Depth.cpp">
       <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
-    <ClCompile Include="MipMap.cpp">
+    <ClCompile Include="Engin\Texture\MipMap.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="TexImgData.cpp">
+    <ClCompile Include="Engin\Texture\TexImgData.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="TextureFile.cpp">
+    <ClCompile Include="Engin\Texture\TextureFile.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="TextureBuffer.cpp">
+    <ClCompile Include="Engin\Texture\TextureBuffer.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Descriptor.cpp">
+    <ClCompile Include="Engin\Pipeline\Descriptor.cpp">
       <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
-    <ClCompile Include="RootParameter.cpp">
+    <ClCompile Include="Engin\Pipeline\RootParameter.cpp">
       <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
-    <ClCompile Include="Vertex.cpp">
+    <ClCompile Include="Engin\Model\Vertex.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
-    <ClCompile Include="MCBMatrix.cpp">
+    <ClCompile Include="Engin\Math\Matrix\MCBMatrix.cpp">
       <Filter>ソース ファイル\Engin\Math\Matrix</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3D.cpp">
+    <ClCompile Include="Engin\Math\Vector\Vector3D.cpp">
       <Filter>ソース ファイル\Engin\Math\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="MCBFloat.cpp">
+    <ClCompile Include="Engin\Math\Util\MCBFloat.cpp">
       <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
+    <ClCompile Include="Engin\Model\Model.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
+    <ClCompile Include="Engin\Pipeline\Shader.cpp">
       <Filter>ソース ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClCompile>
-    <ClCompile Include="Pipeline.cpp">
+    <ClCompile Include="Engin\Pipeline\Pipeline.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="TexSample.cpp">
+    <ClCompile Include="Engin\Texture\TexSample.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="RootSignature.cpp">
+    <ClCompile Include="Engin\Pipeline\RootSignature.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Quaternion.cpp">
+    <ClCompile Include="Engin\Math\Vector\Quaternion.cpp">
       <Filter>ソース ファイル\Engin\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Particle.cpp">
+    <ClCompile Include="Engin\Particle\Particle.cpp">
       <Filter>ソース ファイル\Engin\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleMaterial.cpp">
+    <ClCompile Include="Engin\Particle\ParticleMaterial.cpp">
       <Filter>ソース ファイル\Engin\Particle</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="Engin\Texture\Texture.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="PIpelineRootSignature.cpp">
+    <ClCompile Include="Engin\Pipeline\PIpelineRootSignature.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="Engin\Sprite\Sprite.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="DebugText.cpp">
+    <ClCompile Include="Engin\Sprite\DebugText.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="Draw.cpp">
+    <ClCompile Include="Engin\DirectX\Draw.cpp">
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="Engin\Collide\Collider.cpp">
       <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
-    <ClCompile Include="IScene.cpp">
+    <ClCompile Include="App\Scene\IScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
+    <ClCompile Include="App\Scene\Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp">
+    <ClCompile Include="Engin\Light\PointLight.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
     </ClCompile>
-    <ClCompile Include="Light.cpp">
+    <ClCompile Include="Engin\Light\Light.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
     </ClCompile>
-    <ClCompile Include="LightGroup.cpp">
+    <ClCompile Include="Engin\Light\LightGroup.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
     </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
+    <ClCompile Include="Engin\Light\SpotLight.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
+    <ClCompile Include="App\Scene\SceneManager.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="TitleScene.cpp">
+    <ClCompile Include="App\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="FBXLoader.cpp">
+    <ClCompile Include="Engin\Model\FBXLoader.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
-    <ClCompile Include="FBXModel.cpp">
+    <ClCompile Include="Engin\Model\FBXModel.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
-    <ClCompile Include="GamePad.cpp">
+    <ClCompile Include="Engin\DirectX\GamePad.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
-    <ClCompile Include="PipeLineManager.cpp">
+    <ClCompile Include="Engin\Pipeline\PipeLineManager.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="FPS.cpp">
+    <ClCompile Include="Engin\Util\FPS.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
+    <ClCompile Include="Engin\Sound\Sound.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ImguiManager.cpp">
+    <ClCompile Include="Engin\Sprite\ImguiManager.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="Util.cpp">
+    <ClCompile Include="Engin\Util\Util.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="ICamera.cpp">
+    <ClCompile Include="Engin\Camera\ICamera.cpp">
       <Filter>ソース ファイル\Engin\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="DebugCamera.cpp">
+    <ClCompile Include="Engin\Camera\DebugCamera.cpp">
       <Filter>ソース ファイル\Engin\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="Engin\Camera\Camera.cpp">
       <Filter>ソース ファイル\Engin\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Vecter2D.cpp">
+    <ClCompile Include="Engin\Math\Vector\Vecter2D.cpp">
       <Filter>ソース ファイル\Engin\Math\Vector</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
+    <ClCompile Include="Engin\Texture\TextureManager.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
   </ItemGroup>
@@ -376,172 +376,172 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DxWindow.h">
+    <ClInclude Include="Engin\DirectX\DxWindow.h">
       <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="Dx12.h">
+    <ClInclude Include="Engin\DirectX\Dx12.h">
       <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="Projection.h">
+    <ClInclude Include="Engin\Math\Matrix\Projection.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
-    <ClInclude Include="View.h">
+    <ClInclude Include="Engin\Math\Matrix\View.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
-    <ClInclude Include="WorldMatrix.h">
+    <ClInclude Include="Engin\Math\Matrix\WorldMatrix.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
-    <ClInclude Include="Depth.h">
+    <ClInclude Include="Engin\Pipeline\Depth.h">
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
+    <ClInclude Include="Engin\DirectX\Input.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
-    <ClInclude Include="Object3d.h">
+    <ClInclude Include="Engin\Object\Object3d.h">
       <Filter>ヘッダー ファイル\Engin\Object</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectMaterial.h">
+    <ClInclude Include="Engin\Model\ObjectMaterial.h">
       <Filter>ヘッダー ファイル\Engin\Object</Filter>
     </ClInclude>
-    <ClInclude Include="MipMap.h">
+    <ClInclude Include="Engin\Texture\MipMap.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="TexImgData.h">
+    <ClInclude Include="Engin\Texture\TexImgData.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="TextureFile.h">
+    <ClInclude Include="Engin\Texture\TextureFile.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="TextureBuffer.h">
+    <ClInclude Include="Engin\Texture\TextureBuffer.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Descriptor.h">
+    <ClInclude Include="Engin\Pipeline\Descriptor.h">
       <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
-    <ClInclude Include="RootParameter.h">
+    <ClInclude Include="Engin\Pipeline\RootParameter.h">
       <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
+    <ClInclude Include="Engin\Model\Vertex.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
-    <ClInclude Include="MCBMatrix.h">
+    <ClInclude Include="Engin\Math\Matrix\MCBMatrix.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
     </ClInclude>
-    <ClInclude Include="Vector3D.h">
+    <ClInclude Include="Engin\Math\Vector\Vector3D.h">
       <Filter>ヘッダー ファイル\Engin\Math\Vector</Filter>
     </ClInclude>
-    <ClInclude Include="MCBFloat.h">
+    <ClInclude Include="Engin\Math\Util\MCBFloat.h">
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
+    <ClInclude Include="Engin\Model\Model.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
+    <ClInclude Include="Engin\Pipeline\Shader.h">
       <Filter>ヘッダー ファイル\Engin\Descriptor&amp;Sheader</Filter>
     </ClInclude>
-    <ClInclude Include="Pipeline.h">
+    <ClInclude Include="Engin\Pipeline\Pipeline.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="TexSample.h">
+    <ClInclude Include="Engin\Texture\TexSample.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="RootSignature.h">
+    <ClInclude Include="Engin\Pipeline\RootSignature.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Quaternion.h">
+    <ClInclude Include="Engin\Math\Vector\Quaternion.h">
       <Filter>ヘッダー ファイル\Engin\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Particle.h">
+    <ClInclude Include="Engin\Particle\Particle.h">
       <Filter>ヘッダー ファイル\Engin\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleMaterial.h">
+    <ClInclude Include="Engin\Particle\ParticleMaterial.h">
       <Filter>ヘッダー ファイル\Engin\Particle</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
+    <ClInclude Include="Engin\Texture\Texture.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="PIpelineRootSignature.h">
+    <ClInclude Include="Engin\Pipeline\PIpelineRootSignature.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Draw.h">
+    <ClInclude Include="Engin\DirectX\Draw.h">
       <Filter>ヘッダー ファイル\Engin\DirectX</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="Engin\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="DebugText.h">
+    <ClInclude Include="Engin\Sprite\DebugText.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="Engin\Collide\Collider.h">
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
+    <ClInclude Include="App\Scene\IScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
+    <ClInclude Include="App\Scene\Scene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="LightGroup.h">
+    <ClInclude Include="Engin\Light\LightGroup.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
     </ClInclude>
-    <ClInclude Include="Light.h">
+    <ClInclude Include="Engin\Light\Light.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.h">
+    <ClInclude Include="Engin\Light\PointLight.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
     </ClInclude>
-    <ClInclude Include="SpotLight.h">
+    <ClInclude Include="Engin\Light\SpotLight.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager.h">
+    <ClInclude Include="App\Scene\SceneManager.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="TitleScene.h">
+    <ClInclude Include="App\Scene\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="FBXModel.h">
+    <ClInclude Include="Engin\Model\FBXModel.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
-    <ClInclude Include="FBXLoader.h">
+    <ClInclude Include="Engin\Model\FBXLoader.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
-    <ClInclude Include="GamePad.h">
+    <ClInclude Include="Engin\DirectX\GamePad.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
-    <ClInclude Include="PIpelines.h">
+    <ClInclude Include="Engin\Pipeline\PIpelines.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="PipeLineManager.h">
+    <ClInclude Include="Engin\Pipeline\PipeLineManager.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="ImguiManager.h">
+    <ClInclude Include="Engin\Sprite\ImguiManager.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Util.h">
+    <ClInclude Include="Engin\Util\Util.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
+    <ClInclude Include="Engin\Sound\Sound.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="FPS.h">
+    <ClInclude Include="Engin\Util\FPS.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Engin\Camera\Camera.h">
       <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="DebugCamera.h">
+    <ClInclude Include="Engin\Camera\DebugCamera.h">
       <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="ICamera.h">
+    <ClInclude Include="Engin\Camera\ICamera.h">
       <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Vecter2D.h">
+    <ClInclude Include="Engin\Math\Vector\Vecter2D.h">
       <Filter>ヘッダー ファイル\Engin\Math\Vector</Filter>
     </ClInclude>
-    <ClInclude Include="TextureManager.h">
+    <ClInclude Include="Engin\Texture\TextureManager.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin</Filter>
     </ClInclude>
   </ItemGroup>
