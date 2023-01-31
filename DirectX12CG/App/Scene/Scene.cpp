@@ -83,7 +83,7 @@ void MCB::Scene::LoadTexture()
 void MCB::Scene::LoadSound()
 {
     testSound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
-    test2Sound = soundManager.LoadWaveSound("Resources\\titleBGM.wav");
+    test2Sound = soundManager.LoadWaveSound("Resources\\cat1.wav");
     soundManager.SetVolume(100, testSound);
     volume = 100;
     soundManager.SetVolume(volume, test2Sound);
@@ -166,17 +166,18 @@ void MCB::Scene::Update()
 
     if (input->gamePad->IsButtonTrigger(GAMEPAD_B))
     {
-        soundManager.PlaySoundWave(testSound);
+        soundManager.PlaySoundWave(testSound, input->gamePad->IsButtonDown(GAMEPAD_LB));
     }
 
     if (input->gamePad->IsButtonTrigger(GAMEPAD_X))
     {
+        soundManager.StopSoundWave(testSound);
         soundManager.StopSoundWave(test2Sound);
     }
 
     if (input->gamePad->IsButtonTrigger(GAMEPAD_Y))
     {
-        soundManager.PlaySoundWave(test2Sound,true);
+        soundManager.PlaySoundWave(test2Sound, input->gamePad->IsButtonDown(GAMEPAD_LB));
     }
     if (input->gamePad->LStick.y)
     {
@@ -247,8 +248,9 @@ void MCB::Scene::ImGuiUpdate()
             ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
             ImGui::Text("SmoothChange:[5 (NoSmooth)] or [6 (Smooth)]");
             ImGui::Text("SpherMove:[A],[D]");
-            ImGui::Text("SoundPlay:[GamePad B (NoLoop)] or [GamePad Y (Loop)]");
-            ImGui::Text("LoopSoundStop:[GamePad X]");
+            ImGui::Text("SoundPlay:[GamePad B] or [GamePad Y]");
+            ImGui::Text("SoundLoopPlay:SoundPlayButtom + [GamePad LeftButtom]");
+            ImGui::Text("SoundStop:[GamePad X]");
             ImGui::Text("LoopSoundVolume:[GamePad LStick] {Volume = %d (Max:255,Min:0)}",volume);
 
 
