@@ -91,19 +91,19 @@ DxWindow::~DxWindow()
 
 DxWindow* MCB::DxWindow::GetInstance()
 {
-    static DxWindow* instance = new DxWindow;
-    return instance;
+    static DxWindow instance;
+    return &instance;
 }
 
 DxWindow* MCB::DxWindow::GetInitInstance()
 {
-    static DxWindow* instance = DxWindow::GetInstance();
+    static DxWindow* instance = GetInstance();
     instance->Init();
     return instance;
 }
 
 void MCB::DxWindow::DeleteInstance()
 {
-    delete DxWindow::GetInstance();
+    //delete DxWindow::GetInstance();
 }
 

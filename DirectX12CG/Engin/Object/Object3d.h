@@ -31,7 +31,7 @@ namespace MCB
             DirectX::XMMATRIX world;
             Float3 cameraPos;
 
-        };
+        }ConstBufferDataTransform;
         //---------------------------------
 
         static LightGroup* lights;

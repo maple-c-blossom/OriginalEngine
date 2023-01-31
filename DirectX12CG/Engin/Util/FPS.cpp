@@ -6,8 +6,8 @@ using namespace std;
 
 FPS* MCB::FPS::GetInstance()
 {
-    static FPS* instance = new FPS;
-    return instance;
+    static FPS instance;
+    return &instance;
 }
 
 FPS* MCB::FPS::GetInitInstance()
@@ -19,7 +19,7 @@ FPS* MCB::FPS::GetInitInstance()
 
 void MCB::FPS::DeleteInstance()
 {
-    delete FPS::GetInstance();
+    //delete FPS::GetInstance();
 }
 
 void MCB::FPS::Initialize()

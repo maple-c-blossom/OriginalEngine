@@ -77,7 +77,7 @@ HRESULT MCB::AnimationMesh::VertexMaping()
 {
     HRESULT result = S_OK;
 
-    FBXVertex* vertMap = nullptr;
+    AnimationVertex* vertMap = nullptr;
 
     result = vertBuff->Map(0, nullptr, (void**)&vertMap);
     assert(SUCCEEDED(result));
@@ -99,7 +99,7 @@ void MCB::AnimationMesh::SetSizeIB()
 
 void MCB::AnimationMesh::SetSizeVB()
 {
-    sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
+    sizeVB = static_cast<unsigned int>(sizeof(AnimationVertex) * vertices.size());
 }
 
 void MCB::AnimationMesh::Init()

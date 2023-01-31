@@ -5,14 +5,14 @@ using namespace MCB;
 bool MCB::CalcSphere(Sphere sphereA, Sphere sphereB)
 {
 
-	int hitX = (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x) * (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x);
-	int hitY = (sphereA.centerPosition.vec.y - sphereB.centerPosition.vec.y) * (sphereA.centerPosition.vec.y - sphereB.centerPosition.vec.y);
-	int hitZ = (sphereA.centerPosition.vec.z - sphereB.centerPosition.vec.z) * (sphereA.centerPosition.vec.z - sphereB.centerPosition.vec.z);
-	int hitR = (sphereB.radius + sphereA.radius) * (sphereB.radius + sphereA.radius);
+	float hitX = (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x) * (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x);
+	float hitY = (sphereA.centerPosition.vec.y - sphereB.centerPosition.vec.y) * (sphereA.centerPosition.vec.y - sphereB.centerPosition.vec.y);
+	float hitZ = (sphereA.centerPosition.vec.z - sphereB.centerPosition.vec.z) * (sphereA.centerPosition.vec.z - sphereB.centerPosition.vec.z);
+	float hitR = (sphereB.radius + sphereA.radius) * (sphereB.radius + sphereA.radius);
 	hitX = Abs(hitX);
 	hitY = Abs(hitY);
 	hitZ = Abs(hitZ);
-	int hit = hitX + hitY + hitZ;
+	float hit = hitX + hitY + hitZ;
 	if (hit <= hitR)
 	{
 		return true;

@@ -33,9 +33,9 @@ namespace MCB
             LEFT = 0,
             RIGHT = 1,
             MIDDLE = 2
-        };
+        }MouseBotton;
         static Input* GetInstance();
-        static void DeleteInstace();
+        static void AllStopVibration();
         static Input* GetInitInstance();
         GamePad* gamePad = GamePad::GetInitInstance();
 

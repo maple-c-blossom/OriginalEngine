@@ -21,7 +21,7 @@ namespace MCB
         Float3 pos;//xyz座標
         Float3 normal;//法線ベクトル
         Float2 uv;//uv座標
-    };
+    }ObjectVertex;
     //--------------------------------------
     class Model
     {

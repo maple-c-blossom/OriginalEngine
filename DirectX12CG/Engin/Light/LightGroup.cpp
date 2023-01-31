@@ -21,14 +21,10 @@ void LightGroup::StaticInitialize()
 
 LightGroup* MCB::LightGroup::GetInstance()
 {
-	static LightGroup* instance = new LightGroup;
-	return instance;
+	static LightGroup instance;
+	return &instance;
 }
 
-void MCB::LightGroup::DeleteInstace()
-{
-	delete LightGroup::GetInstance();
-}
 
 LightGroup* MCB::LightGroup::GetInitInstance()
 {
@@ -166,7 +162,7 @@ void LightGroup::DefaultLightSet()
 	PLights[0].SetIsActive(true);
 	PLights[0].SetPLightPos({ 0, 2, 10 });
 	PLights[0].SetPLightColor({ 0,1,1 });
-	PLights[0].SetPLightAtten({0.01,0.01,0.01});
+	PLights[0].SetPLightAtten({0.01f,0.01f,0.01f});
 	
 	PLights[1].SetIsActive(false);
 	PLights[1].SetPLightPos({ 10.0f,2.0f,20.0f });
@@ -176,7 +172,7 @@ void LightGroup::DefaultLightSet()
 	PLights[2].SetIsActive(false);
 	PLights[2].SetPLightPos({ 10.0f,2.0f,20.0f });
 	PLights[2].SetPLightColor({ 1,1,1 });
-	PLights[2].SetPLightAtten({ 0.001,0.001,0.001 });
+	PLights[2].SetPLightAtten({ 0.001f,0.001f,0.001f });
 
 	SLights[0].SetIsActive(true);
 	SLights[0].SetSLightPos({ 0.0f,3.0f,20.0f });
@@ -188,16 +184,16 @@ void LightGroup::DefaultLightSet()
 	SLights[1].SetIsActive(false);
 	SLights[1].SetSLightPos({ 10.0f,2.0f,20.0f });
 	SLights[1].SetSLightColor({ 1,1,1 });
-	SLights[1].SetSLightAtten({ 0.001,0.001,0.001 });
+	SLights[1].SetSLightAtten({ 0.001f,0.001f,0.001f });
 	SLights[1].SetSLightDir({ 0.0,0.0,0.0 });
-	SLights[1].SetSLightFactorAngle({ 0.001,0.001 });
+	SLights[1].SetSLightFactorAngle({ 0.001f,0.001f });
 
 	SLights[2].SetIsActive(false);
 	SLights[2].SetSLightPos({ 10.0f,2.0f,20.0f });
 	SLights[2].SetSLightColor({ 1,1,1 });
-	SLights[2].SetSLightAtten({ 0.001,0.001,0.001 });
-	SLights[2].SetSLightDir({ 0.001,0.001,0.001 });
-	SLights[2].SetSLightFactorAngle({ 0.001,0.001 });
+	SLights[2].SetSLightAtten({ 0.001f,0.001f,0.001f });
+	SLights[2].SetSLightDir({ 0.001f,0.001f,0.001f });
+	SLights[2].SetSLightFactorAngle({ 0.001f,0.001f });
 	isUpdate = true;
 }
 

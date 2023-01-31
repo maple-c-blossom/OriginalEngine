@@ -14,7 +14,7 @@ namespace MCB
 			float pad2;
 			Float3 lightAtten;
 			unsigned int active;
-		};
+		}PointLConstBuffData;
 		inline void SetPLightPos(Float3 pos) { lightPos = pos; }
 		inline void SetPLightColor(Float3 color) { lightColor = color; }
 		inline void SetPLightAtten(Float3 atten) { lightAtten = atten; }

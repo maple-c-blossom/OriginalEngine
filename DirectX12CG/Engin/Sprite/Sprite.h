@@ -20,14 +20,14 @@ namespace MCB
 		{
 			Float4 color;
 			DirectX::XMMATRIX mat;
-		};
+		}SpriteConstBufferDataTransform;
 		//---------------------------------
 
 		typedef struct SpriteVertex
 		{
 			Float3 pos;
 			Float2 uv;
-		};
+		}SpriteVertex;
 
 
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;

@@ -19,25 +19,25 @@ namespace MCB
         static const unsigned short int NUM_BONES_PER_VERTEX = 4;
         static const unsigned short int MAX_BONE = 128;
         //頂点データ構造体-------------------------------------
-        typedef struct FBXVertex
+        typedef struct AnimationVertex
         {
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
             unsigned int ids[NUM_BONES_PER_VERTEX] = {};
             float weights[NUM_BONES_PER_VERTEX] = {};
-        }FBXVertex;
+        }AnimationVertex;
         //--------------------------------------
         
         typedef struct ConstBuffSkin
         {
             DirectX::XMMATRIX boneMats[MAX_BONE] = {};
-        };
+        }ConstBuffSkin;
         typedef struct SetWeight
         {
             unsigned int id;
             float weight;
-        };
+        }SetWeight;
 
 
         typedef struct Bone
@@ -45,7 +45,7 @@ namespace MCB
             std::string name;
             DirectX::XMMATRIX offsetMatrix;
             DirectX::XMMATRIX finalMatrix;
-        };
+        }Bone;
 
 	class AnimationMesh
 	{
@@ -63,13 +63,13 @@ namespace MCB
 
             std::vector<TextureCell*> textures;
             //MCB::Texture textures;
-            std::vector<FBXVertex> vertices;
+            std::vector<AnimationVertex> vertices;
             std::vector<unsigned short> indices;
             //std::vector<ConstBuffSkin> vertexBones;
             
             std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
-            unsigned int sizeVB = static_cast<unsigned int>(sizeof(FBXVertex) * vertices.size());
+            unsigned int sizeVB = static_cast<unsigned int>(sizeof(AnimationVertex) * vertices.size());
             unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
 
             D3D12_INDEX_BUFFER_VIEW ibView{};

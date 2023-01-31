@@ -13,7 +13,7 @@ namespace MCB
         DirectX::XMFLOAT3 pos;//xyz座標
         DirectX::XMFLOAT3 normal;//法線ベクトル
         DirectX::XMFLOAT2 uv;//uv座標
-    };
+    }StructVertex;
     //--------------------------------------
     class Vertex
     {

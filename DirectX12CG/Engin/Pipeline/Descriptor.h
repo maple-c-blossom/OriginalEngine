@@ -37,7 +37,7 @@ namespace MCB
 
 
             static ShaderResource* GetInstance();
-            static void DeleteInstace();
+
             static ShaderResource* GetInitInstance();
 
 

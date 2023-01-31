@@ -126,7 +126,7 @@ float MCB::ConvertRadius(float angle)
 
 void MCB::InitRand()
 {
-	srand(time(nullptr));
+	srand((unsigned int)time(nullptr));
 }
 
 int MCB::GetRand(int min, int max)
@@ -191,5 +191,5 @@ void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.constBuffTranceform->GetGPUVirtualAddress());
 	//描画コマンド
-	dx12->commandList->DrawInstanced(triangleMaterial.vertices.size(), 1, 0, 0);
+	dx12->commandList->DrawInstanced((UINT)triangleMaterial.vertices.size(), 1, 0, 0);
 }

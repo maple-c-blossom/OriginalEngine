@@ -29,7 +29,7 @@ namespace MCB
 			Float2 lightFactorAngleCos;
 			unsigned int active;
 			float pad5;
-		};
+		}SpotLConstBuffData;
 		inline void SetSLightDir(Vector3D lightDir){ this->ligntDir = lightDir; }
 		inline void SetSLightColor(const Float3& lightcolor) { this->lightColor = lightcolor; }
 		inline void SetSLightPos(Float3 pos) { lightPos = pos; }

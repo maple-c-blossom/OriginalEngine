@@ -17,7 +17,7 @@ namespace MCB
 			float shininess;
 			Float3 lightColor;
 			unsigned int active;
-		};
+		}LightConstBuffData;
 		inline void SetLightDir(Vector3D lightdir) 
 		{
 			lightdir.V3Norm();

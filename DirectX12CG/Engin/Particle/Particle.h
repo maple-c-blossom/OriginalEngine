@@ -29,12 +29,12 @@ namespace MCB
             DirectX::XMMATRIX viewproj;
             DirectX::XMMATRIX world;
             Float3 cameraPos;
-        };
+        }ConstBufferDataTransform;
         //---------------------------------
         typedef struct Vertex
         {
             Float3 pos;//xyz座標
-        };
+        }Vertex;
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
 

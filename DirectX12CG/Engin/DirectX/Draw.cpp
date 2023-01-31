@@ -59,8 +59,8 @@ void MCB::Draw::CloseDrawCommandOrder()
 MCB::Draw* MCB::Draw::GetInstance()
 {
 
-    static Draw* instance = new Draw;
-    return instance;
+    static Draw instance;
+    return &instance;
 }
 
 
@@ -81,8 +81,8 @@ void MCB::Draw::SetViewPort()
 
     viewport = {};
 
-    viewport.Width = dxWindow->window_width;
-    viewport.Height = dxWindow->window_height;
+    viewport.Width = (FLOAT)dxWindow->window_width;
+    viewport.Height = (FLOAT)dxWindow->window_height;
     viewport.TopLeftX = 0;
     viewport.TopLeftY = 0;
     viewport.MinDepth = 0.0f;
@@ -91,10 +91,7 @@ void MCB::Draw::SetViewPort()
     dx12->commandList->RSSetViewports(1, &viewport);
 }
 
-void MCB::Draw::DeleteInstace()
-{
-    delete Draw::GetInstance();
-}
+
 
 void MCB::Draw::ClearScreen( const float* clearColor)
 {

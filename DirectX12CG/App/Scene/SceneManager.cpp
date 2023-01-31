@@ -23,8 +23,8 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 
 MCB::SceneManager::~SceneManager()
 {
-	delete scene;
 	imgui.Final();
+	delete scene;
 }
 
 void MCB::SceneManager::Initialize()
@@ -56,7 +56,7 @@ void MCB::SceneManager::Update()
 			{
 				isChengeSceneTimer++;
 				if (isChengeSceneTimer >= isChengeSceneTime)isChengeSceneTimer = isChengeSceneTime;
-				loadBackGround.color.w = Lerp(0, 1, isChengeSceneTime, isChengeSceneTimer);
+				loadBackGround.color.w = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime, (float)isChengeSceneTimer);
 				loadSprite.color.w = loadBackGround.color.w;
 				
 				angle = 0;
@@ -69,14 +69,14 @@ void MCB::SceneManager::Update()
 				scene->MatrixUpdate();
 				isChengeSceneTimer--;
 				if (isChengeSceneTimer <= 0)isChengeSceneTimer = 0;
-				loadBackGround.color.w = Lerp(0, 1, isChengeSceneTime, isChengeSceneTimer);
+				loadBackGround.color.w = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime, (float)isChengeSceneTimer);
 				loadSprite.color.w = loadBackGround.color.w;
 				angle++;
 				if (angle >= 360)
 				{
 					angle = 0;
 				}
-				loadSprite.rotation = angle;
+				loadSprite.rotation = (float)angle;
 			}
 		}
 	}
@@ -89,7 +89,7 @@ void MCB::SceneManager::Update()
 		{
 			angle = 0;
 		}
-		loadSprite.rotation = angle;
+		loadSprite.rotation = (float)angle;
 	}
 }
 
@@ -109,7 +109,7 @@ void MCB::SceneManager::Draw()
 
 
 
-		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
+		loadBackGround.SpriteDraw(*loadBackGroundTex->texture,(float) DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2, (float)DxWindow::GetInstance()->window_width, (float)DxWindow::GetInstance()->window_height);
 //#ifdef _DEBUG
 		scene->ImGuiUpdate();
 		scene->ImGuiDraw();
@@ -118,8 +118,8 @@ void MCB::SceneManager::Draw()
 	else//ƒ[ƒh‰æ–Ê
 	{
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
-		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2, DxWindow::GetInstance()->window_width, DxWindow::GetInstance()->window_height);
-		loadSprite.SpriteDraw(*loadTex->texture, DxWindow::GetInstance()->window_width / 2, DxWindow::GetInstance()->window_height / 2);
+		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2, (float)DxWindow::GetInstance()->window_width, (float)DxWindow::GetInstance()->window_height);
+		loadSprite.SpriteDraw(*loadTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
 

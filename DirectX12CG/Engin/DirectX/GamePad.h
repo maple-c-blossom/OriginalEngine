@@ -30,7 +30,7 @@ namespace MCB
 		GamePad& operator= (const GamePad& Input) {};
 	public:
 		static GamePad* GetInstance();
-		static void DeleteInstace();
+		static void AllStopVibration();
 		static GamePad* GetInitInstance();
 
 		Float3 LStick{ 0,0,0 };

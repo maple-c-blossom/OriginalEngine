@@ -54,26 +54,23 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     }
 #endif
     Input* input = Input::GetInitInstance();
-    Depth depth;
+    std::unique_ptr<Depth> depth = std::make_unique<Depth>();
     ShaderResource::GetInitInstance();
     LightGroup::GetInitInstance();
     //FBXLoader::GetInitInstance();
     //ルートパラメータの設定---------------------------
 #pragma region ルートパラメータの設定
-    RootParameter rootparams;
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL,  0);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams.SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 3, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    std::unique_ptr <RootParameter> rootparams = std::make_unique<RootParameter>();
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL,  0);
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1);
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 3, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
 #pragma endregion ルートパラメータの設定
     //------------------------
- /*   PipelineRootSignature obj3dPipeline = obj3dPipeline.Create3DObjectPipeline(depth, rootparams);
-    PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
-    PipelineRootSignature particlePipeline = particlePipeline.CreateParticlePipeline(depth, rootparams); */
-    PipeLineManager pipeline(&rootparams, &depth);
-    SceneManager scene(&rootparams, &depth, &pipeline);
-    scene.Initialize();
+    std::unique_ptr <PipeLineManager> pipeline = std::make_unique<PipeLineManager>(rootparams.get(), depth.get());
+    std::unique_ptr <SceneManager> scene = std::make_unique<SceneManager>(rootparams.get(), depth.get(), pipeline.get());
+    scene->Initialize();
 
 
 #pragma region ゲームループ
@@ -83,20 +80,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
         dxWindow->messageUpdate();
         if (input->IsKeyDown(DIK_ESCAPE) || dxWindow->IsBreak()) break;
         
-        scene.Update();
-        scene.Draw();
+        scene->Update();
+        scene->Draw();
     }
 #pragma endregion ゲームループ
-    LightGroup::DeleteInstace();
-    Draw::DeleteInstace();
-    ShaderResource::DeleteInstace();
-    DxWindow::DeleteInstance();
-    Dx12::DeleteInstace();
-    Input::DeleteInstace();
-    //FBXLoader::DeleteInstance();
-    FPS::DeleteInstance();
+   Input::AllStopVibration();
 }   
-    TextureManager::DeleteInstace();
     _CrtDumpMemoryLeaks();
 	return 0;
 }

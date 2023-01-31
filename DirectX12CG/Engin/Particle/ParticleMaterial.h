@@ -33,7 +33,7 @@ namespace MCB
 			Float3 specular;
 			float alpha;
 			Float4 color;
-		};
+		}ConstBufferDataMaterialB1;
 
 
 		typedef struct Material
@@ -54,7 +54,7 @@ namespace MCB
 				alpha = 1.0f;
 				color = { 1.f,1.f,1.f,1.f };
 			}
-		};
+		}Material;
 
 
 

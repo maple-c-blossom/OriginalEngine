@@ -105,14 +105,10 @@ void Dx12::SetCommandListAndQueue()
 
 Dx12* MCB::Dx12::GetInstance()
 {
-    static Dx12* instance = new Dx12;
-    return instance;
+    static Dx12 instance;
+    return &instance;
 }
 
-void MCB::Dx12::DeleteInstace()
-{
-    delete Dx12::GetInstance();
-}
 
 Dx12* MCB::Dx12::GetInitInstance()
 {

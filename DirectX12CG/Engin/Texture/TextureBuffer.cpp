@@ -52,6 +52,6 @@ void MCB::TextureBuffer::TransferMipmatToTexBuff(TexImgData teximg,HRESULT& resu
 {
 
     //テクスチャバッファにデータ転送
-    result = texbuff->WriteToSubresource(0, nullptr, &teximg.imageData[0], sizeof(Float4) * teximg.textureWidth, sizeof(Float4) * teximg.imageDataCount);
+    result = texbuff->WriteToSubresource(0, nullptr, &teximg.imageData[0], sizeof(Float4) * (UINT)teximg.textureWidth, sizeof(Float4) * (UINT)teximg.imageDataCount);
     assert(SUCCEEDED(result));
 }

@@ -109,14 +109,14 @@ void Input::UpDateInit()
 
 Input* MCB::Input::GetInstance()
 {
-	static Input* instance = new Input;
-	return instance;
+	static Input instance ;
+	return &instance;
 }
 
-void MCB::Input::DeleteInstace()
+void MCB::Input::AllStopVibration()
 {
-	GamePad::DeleteInstace();
-	delete Input::GetInstance();
+	GamePad::AllStopVibration();
+	//delete Input::GetInstance();
 }
 
 Input* MCB::Input::GetInitInstance()

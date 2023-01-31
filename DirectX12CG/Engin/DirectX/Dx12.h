@@ -80,7 +80,6 @@ namespace MCB
         //Dx12(DxWindow dxWindow);
 
         static Dx12* GetInstance();
-        static void DeleteInstace();
         static Dx12* GetInitInstance();
 
         void Init();

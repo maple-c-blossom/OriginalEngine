@@ -223,18 +223,18 @@ void MCB::GamePad::StopVibration( short int Userindex)
 
 GamePad* MCB::GamePad::GetInstance()
 {
-	static GamePad* instance = new GamePad;
-	return instance;
+	static GamePad instance;
+	return &instance;
 }
 
-void MCB::GamePad::DeleteInstace()
+void MCB::GamePad::AllStopVibration()
 {
 	for (int i = 0; i < 4; i++)
 	{
 		GamePad::GetInstance()->StopVibration(i);
 	}
 
-	delete GamePad::GetInstance();
+	//delete GamePad::GetInstance();
 }
 
 GamePad* MCB::GamePad::GetInitInstance()

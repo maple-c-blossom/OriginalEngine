@@ -72,7 +72,7 @@ MCB::SoundManager::~SoundManager()
 
 unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 {
-	HRESULT result;
+
 	unsigned int handleNum = 0;
 
 	for (int i = 0; i < MaxSound; i++)

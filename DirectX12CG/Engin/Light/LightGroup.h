@@ -33,7 +33,7 @@ namespace MCB
 	public: 
 
 		static LightGroup* GetInstance();
-		static void DeleteInstace();
+
 		static LightGroup* GetInitInstance();
 		void Initialize();
 		void UpDate();

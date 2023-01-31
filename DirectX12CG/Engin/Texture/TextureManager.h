@@ -11,7 +11,7 @@ namespace MCB
 		bool free = false;
 		TextureCell() { texture = std::make_unique<Texture>(); }
 
-	};
+	}TextureCell;
 	class TextureManager
 	{
 		TextureManager() { };

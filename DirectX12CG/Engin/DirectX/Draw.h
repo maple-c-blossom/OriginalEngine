@@ -27,7 +27,7 @@ namespace MCB
 		UINT GetBbIndex();
 
 		static Draw* GetInstance();
-		static void DeleteInstace();
+
 
 
 		void SetBeforeBbIndex();

@@ -89,7 +89,7 @@ void MCB::Sprite::InitMatProje()
 {
     DxWindow* dxWindow = DxWindow::GetInstance();
     Sprite::matProje = DirectX::XMMatrixOrthographicOffCenterLH(
-        0.0f, dxWindow->window_width, dxWindow->window_height, 0.0f, 0.0f, 1.0f);
+        0.0f, (float)dxWindow->window_width, (float)dxWindow->window_height, 0.0f, 0.0f, 1.0f);
 
 }
 
@@ -211,7 +211,6 @@ void MCB::Sprite::SpriteDraw(Texture& tex, float positionX, float positionY,
     Sprite tempsprite = *this;
 
     Float2 size;
-    Float2 anchorPoint;
 
     size.x = size_x;
     size.y = size_y;
