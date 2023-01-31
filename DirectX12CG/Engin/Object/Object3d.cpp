@@ -1,5 +1,5 @@
 #include "Object3d.h"
-
+#include "ICamera.h"
 using namespace MCB;
 using namespace std;
 
@@ -77,7 +77,7 @@ void Object3d::Init()
 
 }
 
-void Object3d::Update(View& view, Projection& projection,bool isBillBord)
+void Object3d::Update(ICamera* camera,bool isBillBord)
 {
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
     matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z,false);
@@ -86,7 +86,7 @@ void Object3d::Update(View& view, Projection& projection,bool isBillBord)
     {
         if (parent == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(view);
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
         }
         else
         {
@@ -103,14 +103,14 @@ void Object3d::Update(View& view, Projection& projection,bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
     
-    constMapTranceform->world = matWorld.matWorld * view.mat;
-    constMapTranceform->viewproj = projection.mat;
-    constMapTranceform->cameraPos.x = view.eye.x;
-    constMapTranceform->cameraPos.y = view.eye.y;
-    constMapTranceform->cameraPos.z = view.eye.z;
+    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat;
+    constMapTranceform->viewproj = camera->GetProjection()->mat;
+    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
+    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
+    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
 }
 
-void Object3d::Update(View& view, Projection& projection,Quaternion q, bool isBillBord)
+void Object3d::Update(ICamera* camera,Quaternion q, bool isBillBord)
 {
     MCBMatrix matRot;
     matRot.MCBMatrixIdentity();
@@ -121,7 +121,7 @@ void Object3d::Update(View& view, Projection& projection,Quaternion q, bool isBi
     {
         if (parent == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(view);
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
         }
         else
         {
@@ -138,11 +138,11 @@ void Object3d::Update(View& view, Projection& projection,Quaternion q, bool isBi
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat;
-    constMapTranceform->viewproj = projection.mat;
-    constMapTranceform->cameraPos.x = view.eye.x;
-    constMapTranceform->cameraPos.y = view.eye.y;
-    constMapTranceform->cameraPos.z = view.eye.z;
+    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat;
+    constMapTranceform->viewproj = camera->GetProjection()->mat;
+    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
+    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
+    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
 }
 
 void Object3d::Draw()
@@ -207,7 +207,7 @@ void Object3d::Draw(unsigned short int incremant)
 
 }
 
-void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
 {
     if (animationModel == nullptr)return;
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
@@ -217,7 +217,7 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isB
     {
         if (parent == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(view);
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
         }
         else
         {
@@ -234,11 +234,11 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isB
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform->viewproj = projection.mat;
-    constMapTranceform->cameraPos.x = view.eye.x;
-    constMapTranceform->cameraPos.y = view.eye.y;
-    constMapTranceform->cameraPos.z = view.eye.z;
+    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform->viewproj = camera->GetProjection()->mat;
+    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
+    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
+    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     animeTime += 0.1f;
 
     if (animeTime >= animationModel->animations[0]->duration)
@@ -253,7 +253,7 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, bool isB
     }
 }
 
-void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord)
 {
     if (animationModel == nullptr)return;
     MCBMatrix matRot;
@@ -265,7 +265,7 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, Quaterni
     {
         if (parent == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(view);
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
         }
         else
         {
@@ -282,11 +282,11 @@ void MCB::Object3d::AnimationUpdate(View& view, Projection& projection, Quaterni
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * view.mat * animationModel->nodes.begin()->get()->globalTransform;
-    constMapTranceform->viewproj = projection.mat;
-    constMapTranceform->cameraPos.x = view.eye.x;
-    constMapTranceform->cameraPos.y = view.eye.y;
-    constMapTranceform->cameraPos.z = view.eye.z;
+    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat * animationModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->viewproj = camera->GetProjection()->mat;
+    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
+    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
+    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
 }
 
 void MCB::Object3d::AnimationDraw()

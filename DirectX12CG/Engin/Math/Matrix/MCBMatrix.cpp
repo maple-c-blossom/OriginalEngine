@@ -77,11 +77,11 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(float angle)
 	MCBMatrix matrix;
 
 	matrix.MCBMatrixIdentity();
-	matrix,_11 = cosf(angle);
-	matrix._31 = -sin(angle);
+	matrix,_11 = (float)cosf(angle);
+	matrix._31 = (float)-sin(angle);
 
-	matrix._13 = sinf(angle);
-	matrix._33 = cosf(angle);
+	matrix._13 = (float)sinf(angle);
+	matrix._33 = (float)cosf(angle);
 
 	return matrix;
 }
@@ -91,11 +91,11 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(float angle)
 	MCBMatrix matrix;
 	matrix.MCBMatrixIdentity();
 
-	matrix._11 = cos(angle);
-	matrix._12 = sin(angle);
+	matrix._11 = (float)cos(angle);
+	matrix._12 = (float)sin(angle);
 
-	matrix._21 = -sin(angle);
-	matrix._22 = cos(angle);
+	matrix._21 = (float)-sin(angle);
+	matrix._22 = (float)cos(angle);
 
 	return matrix;
 }
@@ -105,19 +105,19 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(double angle, DirectX::XMFLOAT3 vec
 {
 	MCBMatrix matRot = ReturnMatrixIdentity();
 
-	matRot._11 = (vector.x * vector.x) * (1 - cos(angle)) + cos(angle);
-	matRot._12 = vector.x * vector.y * (1 - cos(angle)) - vector.z * sin(angle);
-	matRot._13 = vector.x * vector.z * (1 - cos(angle)) + vector.y * sin(angle);
+	matRot._11 = (vector.x * vector.x) * (1 - (float)cos(angle)) + (float)cos(angle);
+	matRot._12 = vector.x * vector.y * (1 - (float)cos(angle)) - vector.z * (float)sin(angle);
+	matRot._13 = vector.x * vector.z * (1 - (float)cos(angle)) + vector.y * (float)sin(angle);
 	matRot._14 = 0;
 
-	matRot._21 = vector.x * vector.y * (1 - cos(angle)) + vector.z * sin(angle);
-	matRot._22 = (vector.y * vector.y) * (1 - cos(angle)) + cos(angle);
-	matRot._23 = vector.y * vector.z * (1 - cos(angle)) + vector.x * sin(angle);
+	matRot._21 = vector.x * vector.y * (1 - (float)cos(angle)) + vector.z * (float)sin(angle);
+	matRot._22 = (vector.y * vector.y) * (1 - (float)cos(angle)) + (float)cos(angle);
+	matRot._23 = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
 	matRot._24 = 0;
 
-	matRot._31 = vector.x * vector.z * (1 - cos(angle)) - vector.y * sin(angle);
-	matRot._32 = vector.y * vector.z * (1 - cos(angle)) + vector.x * sin(angle);
-	matRot._33 = (vector.z * vector.z) * (1 - cos(angle)) + cos(angle);
+	matRot._31 = vector.x * vector.z * (1 - (float)cos(angle)) - vector.y * (float)sin(angle);
+	matRot._32 = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
+	matRot._33 = (vector.z * vector.z) * (1 - (float)cos(angle)) + (float)cos(angle);
 	matRot._34 = 0;
 
 	matRot._41 = 0;

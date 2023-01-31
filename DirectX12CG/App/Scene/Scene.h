@@ -16,28 +16,26 @@ namespace MCB
 	{
 	private:
 		//変換行列
-		View matView;
-		Projection matProjection;
+		DebugCamera debugCamera;
+		
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
 		//3Dモデル
 #pragma region 3Dモデル
-		Model* SpherModel;
-		Model* SpherModel2;
-		Model* groundModel;
-		Model* skydomeModel;
+		std::unique_ptr<Model> SpherModel;
+		std::unique_ptr<Model> SpherModel2;
+		std::unique_ptr<Model> groundModel;
+		std::unique_ptr<Model> skydomeModel;
 
 		//AssimpLoader testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
 #pragma region テクスチャ
-		TextureCell* testTex;
 		TextureCell* debugTextTexture;
 		TextureCell* zoomTex;
-		TextureCell* scopeTex;
-		TextureCell* grassTex;
+
 #pragma endregion テクスチャ
 
 		//サウンド

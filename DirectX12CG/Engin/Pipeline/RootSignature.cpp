@@ -4,7 +4,7 @@ void MCB::RootSignature::InitRootSignatureDesc(RootParameter& rootparams, TexSam
 {
     rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
     rootSignatureDesc.pParameters = &rootparams.rootparams.front(); //ルートパラメータの先頭アドレス
-    rootSignatureDesc.NumParameters = rootparams.rootparams.size(); //ルートパラメータ数
+    rootSignatureDesc.NumParameters = (UINT)rootparams.rootparams.size(); //ルートパラメータ数
     rootSignatureDesc.pStaticSamplers = &sample.samplerDesc;
     rootSignatureDesc.NumStaticSamplers = 1;
 }

@@ -31,7 +31,7 @@ namespace MCB
 
 		Float3 PointA = { -0.5f,-0.5f,1.0f }; Float3 PointB = { -0.5f,0.5f,1.0f };
 		Float3 PointC = { 0.5f,-0.5f,1.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
-		void  DrawTriangle(View view, Projection proj);
+		void  DrawTriangle(ICamera* camera);
 
 	};
 }

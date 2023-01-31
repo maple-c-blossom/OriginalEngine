@@ -7,8 +7,6 @@
 #include <wrl.h>
 #include "WorldMatrix.h"
 #include "Dx12.h"
-#include "View.h"
-#include "Projection.h"
 #include "Vector3D.h"
 #include "Descriptor.h"
 #include <vector>
@@ -16,9 +14,10 @@
 #include "Quaternion.h"
 #include "LightGroup.h"
 #include "FBXLoader.h"
-
 namespace MCB
 {
+    class ICamera;
+
     class Object3d
     {
     public:
@@ -69,18 +68,18 @@ namespace MCB
 
         void Init();
 
-        void Update(View& view, Projection& projection, bool isBillBord = false);
+        void Update(ICamera* camera, bool isBillBord = false);
 
-        void Update(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
+        void Update(ICamera* camera, Quaternion q, bool isBillBord = false);
 
         void Draw();
 
         void Draw(unsigned short int incremant);
 
 
-        void AnimationUpdate(View& view, Projection& projection, bool isBillBord = false);
+        void AnimationUpdate(ICamera* camera, bool isBillBord = false);
 
-        void AnimationUpdate(View& view, Projection& projection, Quaternion q, bool isBillBord = false);
+        void AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord = false);
 
         void AnimationDraw();
 

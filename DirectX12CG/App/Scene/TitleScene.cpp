@@ -26,61 +26,18 @@ MCB::IScene* MCB::TitleScene::GetNextScene()
 
 void MCB::TitleScene::MatrixUpdate()
 {
-    matProjection.UpdataMatrixProjection();
-    matView.UpDateMatrixView();
-    Skydorm.Update(matView, matProjection);
-    ground.Update(matView, matProjection);
-    testAnimation.AnimationUpdate(matView, matProjection);
-    test2Animation.AnimationUpdate(matView, matProjection);
+ 
+    Skydorm.Update(viewCamera);
+    ground.Update(viewCamera);
+    testAnimation.AnimationUpdate(viewCamera);
+    test2Animation.AnimationUpdate(viewCamera);
 }
 
 void MCB::TitleScene::Update()
 {
-    if (input->IsKeyDown(DIK_UP))
-    {
-        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
-        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z + 1 });
-    }
-    if (input->IsKeyDown(DIK_DOWN))
-    {
-        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z - 1 });
-        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z - 1 });
-    }
 
-    if (input->IsKeyDown(DIK_LEFT))
-    {
-        matView.eye.x -= cos(ConvertRadius(5));
-        matView.eye.z -= sin(ConvertRadius(5));
-    }
-    if (input->IsKeyDown(DIK_RIGHT))
-    {
-        matView.eye.x += cos(ConvertRadius(5));
-        matView.eye.z += sin(ConvertRadius(5));
-    }
-
-    if (input->IsKeyDown(DIK_A))
-    {
-        testAnimation.position.x -= 1;
-    }
-    if (input->IsKeyDown(DIK_D))
-    {
-        testAnimation.position.x += 1;
-    }
-
-    if (input->IsKeyTrigger(DIK_1))
-    {
-        lights->SetDirLightIsActive(0, !lights->GetDirLightIsActive(0));
-    }
-    else if (input->IsKeyTrigger(DIK_2))
-    {
-        lights->SetPLightIsActive(0, !lights->GetPLightIsActive(0));
-    }
-    else if (input->IsKeyTrigger(DIK_3))
-    {
-        lights->SetSLightIsActive(0, !lights->GetSLightIsActive(0));
-    }
     lights->UpDate();
-    if (input->IsKeyTrigger(DIK_SPACE))
+    if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
     }
@@ -122,14 +79,7 @@ void MCB::TitleScene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("SPACE:SceneChange UpOrDown LightMove RightOrLeft : CameraMove");
-            ImGui::Text("1or2or3 LightChenge(1:Dir 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
-            ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s", lights->GetDirLightIsActive(0) ? "true" : "false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
-            ImGui::TreePop();
-        }
-        if (ImGui::TreeNode("Point"))
-        {
-            ImGui::Text("1:Animation");
+            ImGui::Text("SceneChange: [SPACE] or [GamePad A]");
             ImGui::TreePop();
         }
     }
@@ -146,17 +96,15 @@ MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* p
 MCB::TitleScene::~TitleScene()
 {
     soundManager.AllDeleteSound();
-    delete BoxModel;
-    delete skydomeModel;
-    delete groundModel;
+    debugTextTexture->free = true;
     delete nextScene;
-
+    loader->Erase();
 }
 
 void MCB::TitleScene::Initialize()
 {
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 3.0f, -100.0f), XMFLOAT3(0.0f, 1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-    matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
+    camera.Inilialize();
+    viewCamera = &camera;
     LoadTexture();
     LoadModel();
     LoadSound();
@@ -172,11 +120,11 @@ void MCB::TitleScene::Initialize()
 
 void MCB::TitleScene::LoadModel()
 {
-    BoxModel = new Model("sphere", true);
 
-    groundModel = new Model("ground");
+    groundModel = std::make_unique<Model>("ground");
 
-    skydomeModel = new Model("skydome");
+    skydomeModel = std::make_unique<Model>("skydome");
+
 
     animModel = std::make_unique<AnimationModel>();
     animModel->Load("gamewsdsa");
@@ -188,9 +136,6 @@ void MCB::TitleScene::LoadModel()
 void MCB::TitleScene::LoadTexture()
 {
     debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
-    testTex = loader->LoadTexture(L"Resources\\reimu.png");
-    zoomTex = loader->LoadTexture(L"Resources\\reticle.png");
-    scopeTex = loader->LoadTexture(L"Resources\\scope.png");
 }
 
 void MCB::TitleScene::LoadSound()
@@ -206,13 +151,13 @@ void MCB::TitleScene::Object3DInit()
 
     ground;
     ground.Init();
-    ground.model = groundModel;
+    ground.model = groundModel.get();
     ground.scale = { 4,4,4 };
     ground.position = { 0,0,0 };
     ;
     Skydorm;
     Skydorm.Init();
-    Skydorm.model = skydomeModel;
+    Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
 
     testAnimation.Init();

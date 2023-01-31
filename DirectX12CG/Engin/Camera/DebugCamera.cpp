@@ -87,5 +87,8 @@ void MCB::DebugCamera::Update()
 	view.eye.x = target.vec.x - disEyeTarget * cosf(angle.y) * sinf(angle.x);
 	view.eye.y = target.vec.y + disEyeTarget * sinf(angle.y);
 	view.eye.z = target.vec.z - disEyeTarget * cosf(angle.y) * cosf(angle.x);
+	view.UpDateMatrixView();
+	projection.UpdataMatrixProjection();
+
 #pragma endregion
 }

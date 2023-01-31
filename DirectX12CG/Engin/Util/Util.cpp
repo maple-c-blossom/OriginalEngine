@@ -158,7 +158,7 @@ MCB::SimpleFigure::SimpleFigure()
 	triangle.model->texture = triangle.model->Loader->CreateNoTextureFileIsTexture();
 }
 
-void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
+void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 {
 
 	Dx12* dx12 = Dx12::GetInstance();
@@ -175,7 +175,7 @@ void MCB::SimpleFigure::DrawTriangle(View view, Projection proj)
 
 
 
-	triangle.Update(view,proj);
+	triangle.Update(camera);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList->SetGraphicsRootConstantBufferView(2, triangleMaterial.material.constBuffMaterialB1->GetGPUVirtualAddress());

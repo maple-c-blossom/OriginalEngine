@@ -2,6 +2,7 @@
 #include "IScene.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include "Camera.h"
 namespace MCB
 {
 	class TitleScene :public IScene
@@ -9,16 +10,14 @@ namespace MCB
 	private:
 #pragma region 変換行列
 		//変換行列
-		View matView;
-		Projection matProjection;
+		Camera camera;
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
 		//3Dモデル
 #pragma region 3Dモデル
-		Model* BoxModel;
-		Model* groundModel;
-		Model* skydomeModel;
+		std::unique_ptr<Model> groundModel;
+		std::unique_ptr<Model> skydomeModel;
 
 		std::unique_ptr<AnimationModel> animModel;
 		std::unique_ptr<AnimationModel> anim2Model;
@@ -26,10 +25,8 @@ namespace MCB
 
 		//テクスチャ
 #pragma region テクスチャ
-		TextureCell* testTex;
 		TextureCell* debugTextTexture;
-		TextureCell* zoomTex;
-		TextureCell* scopeTex;
+
 #pragma endregion テクスチャ
 
 		//サウンド

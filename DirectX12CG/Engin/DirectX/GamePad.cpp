@@ -67,7 +67,7 @@ Float3 MCB::GamePad::IsInputLStick(short int Userindex)
 	float LY = state[Userindex].Gamepad.sThumbLY;
 
 	//determine how far the controller is pushed
-	float magnitude = sqrt(LX * LX + LY * LY);
+	float magnitude = (float)sqrt(LX * LX + LY * LY);
 
 	//determine the direction the controller is pushed
 	float normalizedLX = LX / magnitude;
@@ -105,7 +105,7 @@ Float3 MCB::GamePad::IsInputRStick(short int Userindex)
 	float RY = state[Userindex].Gamepad.sThumbRY;
 
 	//determine how far the controller is pushed
-	float magnitude = sqrt(RX * RX + RY * RY);
+	float magnitude = (float)sqrt(RX * RX + RY * RY);
 
 	//determine the direction the controller is pushed
 	float normalizedRX = RX / magnitude;
@@ -141,7 +141,7 @@ Float2 MCB::GamePad::IsInputLTrriger(short int Userindex)
 {
 	float LT = state[Userindex].Gamepad.bLeftTrigger;
 	//determine how far the controller is pushed
-	float magnitude = sqrt(LT* LT);
+	float magnitude =(float)sqrt(LT* LT);
 
 	//determine the direction the controller is pushed
 	float normalizedLT = LT / magnitude;
@@ -174,7 +174,7 @@ Float2 MCB::GamePad::IsInputRTrriger(short int Userindex)
 {
 	float RT = state[Userindex].Gamepad.bRightTrigger;
 	//determine how far the controller is pushed
-	float magnitude = sqrt(RT * RT);
+	float magnitude = (float)sqrt(RT * RT);
 
 	//determine the direction the controller is pushed
 	float normalizedRT = RT / magnitude;

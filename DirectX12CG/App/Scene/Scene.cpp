@@ -7,17 +7,17 @@ using namespace DirectX;
 MCB::Scene::~Scene()
 {
     soundManager.AllDeleteSound();
-    delete SpherModel;
-    delete skydomeModel;
-    delete groundModel;
+    zoomTex->free = true;
+    debugTextTexture->free = true;
     delete nextScene;
+    loader->Erase();
 }
 
 void MCB::Scene::Initialize()
 {
 
-    matView.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-    matProjection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)dxWindow->window_width / dxWindow->window_height, 0.1f, 4000.0f);
+    debugCamera.Inilialize();
+    viewCamera = &debugCamera;
     LoadTexture();
     LoadModel();
     LoadSound();
@@ -36,17 +36,17 @@ void MCB::Scene::Object3DInit()
 
     ground;
     ground.Init();
-    ground.model = groundModel;
+    ground.model = groundModel.get();
     ground.scale = { 4,4,4 };
     ground.position = { 0,-3,0 };
     ;
     Skydorm;
     Skydorm.Init();
-    Skydorm.model = skydomeModel;
+    Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
 
     testAnimation.Init();
-    testAnimation.model = SpherModel;
+    testAnimation.model = SpherModel.get();
     testAnimation.scale = { 1,1,1 };
     testAnimation.position = { -4,-2,5 };
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
@@ -61,12 +61,12 @@ void MCB::Scene::Object3DInit()
 
 void MCB::Scene::LoadModel()
 {
-    SpherModel = new Model("sphere");
-    SpherModel2 = new Model("sphere", true);
+    SpherModel = std::make_unique<Model>("sphere");
+    SpherModel2 = std::make_unique<Model>("sphere", true);
 
-    groundModel = new Model("ground");
+    groundModel = std::make_unique<Model>("ground");
 
-    skydomeModel = new Model("skydome");
+    skydomeModel = std::make_unique<Model>("skydome");
 
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
@@ -75,16 +75,18 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
-    zoomTex = loader->LoadTexture(L"Resources\\debugfont.png");
-    scopeTex = loader->LoadTexture(L"Resources\\debugfont.png");
+    zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
+
 
 }
 
 void MCB::Scene::LoadSound()
 {
-    testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
-    test2Sound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
+    testSound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
+    test2Sound = soundManager.LoadWaveSound("Resources\\titleBGM.wav");
     soundManager.SetVolume(100, testSound);
+    volume = 100;
+    soundManager.SetVolume(volume, test2Sound);
 }
 
 void MCB::Scene::SpriteInit()
@@ -117,27 +119,18 @@ void MCB::Scene::Update()
 {
 
     testAnimation.rotasion.y += 0.15f;
-    if (input->IsKeyDown(DIK_UP))
+    if (input->IsKeyDown(DIK_W))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
         lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z + 1 });
     }
-    if (input->IsKeyDown(DIK_DOWN))
+    if (input->IsKeyDown(DIK_S))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z - 1 });
         lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z - 1 });
     }
 
-    if (input->IsKeyDown(DIK_LEFT))
-    {
-        matView.eye.x -= cos(ConvertRadius(5));
-        matView.eye.z -= sin(ConvertRadius(5));
-    }
-    if (input->IsKeyDown(DIK_RIGHT))
-    {
-        matView.eye.x += cos(ConvertRadius(5));
-        matView.eye.z += sin(ConvertRadius(5));
-    }
+ 
 
 
     if (input->IsKeyDown(DIK_A))
@@ -164,17 +157,48 @@ void MCB::Scene::Update()
 
     if (input->IsKeyTrigger(DIK_5))
     {
-        testAnimation.model = SpherModel;
+        testAnimation.model = SpherModel.get();
     }
     else if (input->IsKeyTrigger(DIK_6))
     {
-        testAnimation.model = SpherModel2;
+        testAnimation.model = SpherModel2.get();
     }
+
+    if (input->gamePad->IsButtonTrigger(GAMEPAD_B))
+    {
+        soundManager.PlaySoundWave(testSound);
+    }
+
+    if (input->gamePad->IsButtonTrigger(GAMEPAD_X))
+    {
+        soundManager.StopSoundWave(test2Sound);
+    }
+
+    if (input->gamePad->IsButtonTrigger(GAMEPAD_Y))
+    {
+        soundManager.PlaySoundWave(test2Sound,true);
+    }
+    if (input->gamePad->LStick.y)
+    {
+        volume += (int)(input->gamePad->LStick.y * 4);
+        if (volume < 0)
+        {
+            volume = 0;
+        }
+        else if (volume > 255)
+        {
+            volume = 255;
+        }
+        soundManager.SetVolume(volume, test2Sound);
+    }
+
     lights->UpDate();
+
+
 
     MatrixUpdate();
 
-    if (input->IsKeyTrigger(DIK_SPACE))
+    if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
     }
@@ -192,7 +216,8 @@ void MCB::Scene::Draw()
 
 void MCB::Scene::SpriteDraw()
 {
-
+    sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
+    debugText.Print(300, 300,2, "hogehoge");
     debugText.AllDraw();
 }
 
@@ -214,23 +239,18 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("SPACE:SceneChange UpOrDown LightMove RightOrLeft : CameraMove");
-            ImGui::Text("1or2or3 LightChenge(1:Dir: 2:Point 3:Spot) 5or6 smooth(5:NoSmooth 6:Smooth)");
+            ImGui::Text("SceneChange: [SPACE] or [GamePad A]");
+            ImGui::Text("LightMove: [W],[S]");
+            ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
+            ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");
+            ImGui::Text("LightChenge:[1 (Dir)] or [2 (Point)] or [3 (Spot)] ");
             ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
-            ImGui::Text("AD:spherMove");
-            ImGui::TreePop();
-        }
-        if (ImGui::TreeNode("Point"))
-        {
-            ImGui::Text("1:Phong reflection model");
-            ImGui::Text("2:Smoothing");
-            ImGui::Text("3:Light data separation");
-            ImGui::Text("4:Phong shading ");
-            ImGui::Text("5:MultipleLight ");
-            ImGui::Text("6:PointLight ");
-            ImGui::Text("7:SpotLight");
-            ImGui::Text("8:SceneChenge");
-            ImGui::Text("9:AsynchronousLoad");
+            ImGui::Text("SmoothChange:[5 (NoSmooth)] or [6 (Smooth)]");
+            ImGui::Text("SpherMove:[A],[D]");
+            ImGui::Text("SoundPlay:[GamePad B (NoLoop)] or [GamePad Y (Loop)]");
+            ImGui::Text("LoopSoundStop:[GamePad X]");
+            ImGui::Text("LoopSoundVolume:[GamePad LStick] {Volume = %d (Max:255,Min:0)}",volume);
+
 
             ImGui::TreePop();
         }
@@ -240,13 +260,11 @@ void MCB::Scene::ImGuiUpdate()
 
 void MCB::Scene::MatrixUpdate()
 {
-    matProjection.UpdataMatrixProjection();
-    matView.UpDateMatrixView(ybill);
-    Skydorm.Update(matView, matProjection);
-    ground.Update(matView, matProjection);
-    testAnimation.Update(matView, matProjection, false);
+    viewCamera->Update();
+    Skydorm.Update(viewCamera);
+    ground.Update(viewCamera);
+    testAnimation.Update(viewCamera, false);
 
-    matView.UpDateMatrixView(true);
 
     //testParticle.Updata(matView, matProjection, true);
 }
