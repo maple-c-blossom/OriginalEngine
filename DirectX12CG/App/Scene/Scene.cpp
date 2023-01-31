@@ -249,7 +249,7 @@ void MCB::Scene::ImGuiUpdate()
             ImGui::Text("SmoothChange:[5 (NoSmooth)] or [6 (Smooth)]");
             ImGui::Text("SpherMove:[A],[D]");
             ImGui::Text("SoundPlay:[GamePad B] or [GamePad Y]");
-            ImGui::Text("SoundLoopPlay:SoundPlayButtom + [GamePad LeftButtom]");
+            ImGui::Text("SoundLoopPlay:SoundPlayButtom + [GamePad LB]");
             ImGui::Text("SoundStop:[GamePad X]");
             ImGui::Text("LoopSoundVolume:[GamePad LStick] {Volume = %d (Max:255,Min:0)}",volume);
 
