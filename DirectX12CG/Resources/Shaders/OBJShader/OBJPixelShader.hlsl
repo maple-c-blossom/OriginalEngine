@@ -15,10 +15,24 @@ float4 main(GSOutput input) : SV_TARGET
 		{
 			float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
 			float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
-			float3 diffuse = dotlightnormal * m_diffuse;
+            float3 diffuse = dotlightnormal * m_diffuse;
 			float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess) * m_specular;
-			shadeColor.rgb += (diffuse + speculer) * dirLights[i].lightcolor;
-		}
+            float3 color = (diffuse + speculer) * dirLights[i].lightcolor;
+            if (color.r < 0)
+            {
+                color.r = 0;
+            }
+            if (color.g < 0)
+            {
+                color.g = 0;
+            }
+            if (color.b < 0)
+            {
+                color.b = 0;
+            }
+            shadeColor.rgb += color.rgb;
+
+        }
 	}
 
 	for (int i = 0; i < PLIGHT_NUM; i++)
@@ -33,8 +47,21 @@ float4 main(GSOutput input) : SV_TARGET
 			float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
 			float3 diffuse = dotLightNormal * m_diffuse;
 			float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[i].shininess) * m_specular;
-			shadeColor.rgb += atten * (diffuse + specular) * pLights[i].lightColor;
-		}
+            float3 color = (diffuse + specular) * pLights[i].lightColor;
+            if (color.r < 0)
+            {
+                color.r = 0;
+            }
+            if (color.g < 0)
+            {
+                color.g = 0;
+            }
+            if (color.b < 0)
+            {
+                color.b = 0;
+            }
+            shadeColor.rgb += color.rgb;
+        }
 	}
 	
 	for (int i = 0; i < SLIGHT_NUM; i++)
@@ -52,9 +79,23 @@ float4 main(GSOutput input) : SV_TARGET
 			float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
 			float3 diffuse = dotLightNormal * m_diffuse;
 			float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[i].shininess) * m_specular;
-			shadeColor.rbg += atten * (diffuse + specular) * sLights[i].lightColor;
+            float3 color = (diffuse + specular) * sLights[i].lightColor;
+            if (color.r < 0)
+            {
+                color.r = 0;
+            }
+            if (color.g < 0)
+            {
+                color.g = 0;
+            }
+            if (color.b < 0)
+            {
+                color.b = 0;
+            }
+            shadeColor.rgb += color.rgb;
 
 		}
 	}
+	
 		return shadeColor * texcolor * color;
 }
