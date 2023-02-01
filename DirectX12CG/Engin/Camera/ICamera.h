@@ -13,7 +13,7 @@ namespace MCB
 		View view;
 		Projection projection;
 	public:
-
+		virtual ~ICamera() {};
 		virtual void Inilialize() = 0;
 		virtual void Update() = 0;
 		View* GetView()

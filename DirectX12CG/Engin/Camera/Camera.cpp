@@ -55,11 +55,11 @@ void Camera::WorldPositionUpdate(DirectX::XMMATRIX playerMatrix, DirectX::XMFLOA
 		object3d->matWorld.matWorld *= object3d->parent->matWorld.matWorld;
 	}
 
-	object3d->constMapTranceform->world = object3d->matWorld.matWorld * view.mat;
-	object3d->constMapTranceform->viewproj = projection.mat;
-	object3d->constMapTranceform->cameraPos.x = view.eye.x;
-	object3d->constMapTranceform->cameraPos.y = view.eye.y;
-	object3d->constMapTranceform->cameraPos.z = view.eye.z;
+	object3d->GetConstMapTrans()->world = object3d->matWorld.matWorld * view.mat;
+	object3d->GetConstMapTrans()->viewproj = projection.mat;
+	object3d->GetConstMapTrans()->cameraPos.x = view.eye.x;
+	object3d->GetConstMapTrans()->cameraPos.y = view.eye.y;
+	object3d->GetConstMapTrans()->cameraPos.z = view.eye.z;
 
 	/*object3d->constMapTranceform->cameraPos.x = playerPosition.x;
 	object3d->constMapTranceform->cameraPos.y = playerPosition.y;

@@ -5,6 +5,15 @@
 
 namespace MCB
 {
+	enum class PrimitiveType
+	{
+		SPHERE,
+		RAY,
+		TRIANGLE,
+		BOX,
+		PLANE
+	};
+
 	class Triangle
 	{
 	public:
@@ -42,13 +51,14 @@ namespace MCB
 		float originDistance = 0;//Œ´“_‚©‚ç‚Ì‹——£
 	};
 
-	class Corider
+
+	class Collision
 	{
 
 	public:
 		static bool CalcRaySphere(Ray ray,Sphere sphere, float* distance = nullptr, Vector3D* inter = nullptr);
 		static bool CalcRaySphere(Ray ray,Sphere sphere);
-		static bool CalcSphere(Sphere sphereA,Sphere sphereB);
+		static bool CalcSphere(Sphere sphereA,Sphere sphereB, Vector3D* inter = nullptr);
 		static bool CalcPlaneRay(Plane plane,Ray ray, float* distance = nullptr,Vector3D* inter = nullptr);
 		static bool CalcTriangleRay(Triangle triangle,Ray ray, float* distance = nullptr,Vector3D* inter = nullptr);
 		static bool CalcPlaneSpher(Plane plane,Sphere sphere,Vector3D* inter = nullptr);

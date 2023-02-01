@@ -10,6 +10,12 @@ double MCB::Lerp(double startPos, double endPos, double maxTime, double time)
 	double change = endPos - startPos;
 	return change * time + startPos;
 }
+
+double MCB::Lerp(double startPos, double endPos, double time)
+{
+	double change = endPos - startPos;
+	return change * time + startPos;
+}
 double MCB::InQuad(double startPos, double endPos, double maxTime, double time)
 {
 	time /= maxTime;
@@ -154,7 +160,6 @@ MCB::SimpleFigure::SimpleFigure()
 	triangleMaterial.CreateVertexBuffer(triangleMaterial.material.HeapProp, D3D12_HEAP_FLAG_NONE, triangleMaterial.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 	triangleMaterial.VertexMaping();
 	triangleMaterial.SetVbView();
-	triangleMaterial.material.constMapMaterial->color = color;
 	triangle.model->texture = triangle.model->Loader->CreateNoTextureFileIsTexture();
 }
 
@@ -171,7 +176,6 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 	};
 
 	triangleMaterial.VertexMaping();
-	triangleMaterial.material.constMapMaterial->color = color;
 
 
 
@@ -189,7 +193,7 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 	//頂点データ
 	dx12->commandList->IASetVertexBuffers(0, 1, &triangleMaterial.vbView);
 	//定数バッファビュー(CBV)の設定コマンド
-	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.constBuffTranceform->GetGPUVirtualAddress());
+	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.GetConstBuffTrans()->GetGPUVirtualAddress());
 	//描画コマンド
 	dx12->commandList->DrawInstanced((UINT)triangleMaterial.vertices.size(), 1, 0, 0);
 }

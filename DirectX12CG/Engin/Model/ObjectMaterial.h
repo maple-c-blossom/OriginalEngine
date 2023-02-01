@@ -31,7 +31,6 @@ namespace MCB
 			float pad2;
 			Float3 specular;
 			float alpha;
-			Float4 color;
 		}ConstBufferDataMaterialB1;
 
 

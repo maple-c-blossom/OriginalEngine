@@ -11,6 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engin\Collide\CollisionManager.cpp" />
+    <ClCompile Include="Engin\Collide\BoxCollider.cpp" />
+    <ClCompile Include="Engin\Collide\BaseCollider.cpp" />
+    <ClCompile Include="Engin\Collide\CollisionInfomation.cpp" />
     <ClCompile Include="Engin\Camera\Camera.cpp" />
     <ClCompile Include="Engin\Collide\Collider.cpp" />
     <ClCompile Include="Engin\Camera\DebugCamera.cpp" />
@@ -69,6 +73,10 @@
     <ClCompile Include="Engin\Model\Vertex.cpp" />
     <ClCompile Include="Engin\Math\Matrix\View.cpp" />
     <ClCompile Include="Engin\Math\Matrix\WorldMatrix.cpp" />
+    <ClCompile Include="Engin\Collide\SphereCollider.cpp" />
+    <ClCompile Include="Engin\Collide\PlaneCollider.cpp" />
+    <ClCompile Include="Engin\Collide\RayCollider.cpp" />
+    <ClCompile Include="Engin\Collide\TriangleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -139,6 +147,10 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engin\Collide\CollisionManager.h" />
+    <ClInclude Include="Engin\Collide\BoxCollider.h" />
+    <ClInclude Include="Engin\Collide\BaseCollider.h" />
+    <ClInclude Include="Engin\Collide\CollisionInfomation.h" />
     <ClInclude Include="Engin\Camera\Camera.h" />
     <ClInclude Include="Engin\Collide\Collider.h" />
     <ClInclude Include="Engin\Camera\DebugCamera.h" />
@@ -195,6 +207,10 @@
     <ClInclude Include="Engin\Model\Vertex.h" />
     <ClInclude Include="Engin\Math\Matrix\View.h" />
     <ClInclude Include="Engin\Math\Matrix\WorldMatrix.h" />
+    <ClInclude Include="Engin\Collide\SphereCollider.h" />
+    <ClInclude Include="Engin\Collide\PlaneCollider.h" />
+    <ClInclude Include="Engin\Collide\RayCollider.h" />
+    <ClInclude Include="Engin\Collide\TriangleCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

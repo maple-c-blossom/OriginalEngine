@@ -1,5 +1,7 @@
 #include "Object3d.h"
 #include "ICamera.h"
+#include "BaseCollider.h"
+#include "CollisionManager.h"
 using namespace MCB;
 using namespace std;
 
@@ -7,20 +9,30 @@ LightGroup* Object3d::lights = nullptr;
 
 MCB::Object3d::Object3d()
 {
-    NORM_FRONT_VEC.vec = { 0,0,1 };
-    nowFrontVec = NORM_FRONT_VEC;
-    this->Init();
+    this->CreateBuff();
 }
 
 
 
 MCB::Object3d::~Object3d()
 {
+    if (collider)
+    {
+        CollisionManager::GetInstance()->RemoveCollider(collider);
+        delete collider;
+        collider = nullptr;
+    }
     constBuffTranceform->Unmap(0, nullptr);
     constBuffSkin->Unmap(0, nullptr);
 }
 
 void Object3d::Init()
+{
+    name = typeid(*this).name();
+
+}
+
+void MCB::Object3d::CreateBuff()
 {
     Dx12* dx12 = Dx12::GetInstance();
     NORM_FRONT_VEC.vec = { 0,0,1 };
@@ -74,7 +86,6 @@ void Object3d::Init()
     assert(SUCCEEDED(dx12->result));
 
     dx12->result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
-
 }
 
 void Object3d::Update(ICamera* camera,bool isBillBord)
@@ -108,6 +119,8 @@ void Object3d::Update(ICamera* camera,bool isBillBord)
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->color = color;
+    if(collider)collider->Update();
 }
 
 void Object3d::Update(ICamera* camera,Quaternion q, bool isBillBord)
@@ -143,6 +156,8 @@ void Object3d::Update(ICamera* camera,Quaternion q, bool isBillBord)
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->color = color;
+    if (collider)collider->Update();
 }
 
 void Object3d::Draw()
@@ -239,6 +254,8 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->color = color;
+    if (collider)collider->Update();
     animeTime += 0.1f;
 
     if (animeTime >= animationModel->animations[0]->duration)
@@ -287,6 +304,8 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->color = color;
+    if (collider)collider->Update();
 }
 
 void MCB::Object3d::AnimationDraw()
@@ -302,6 +321,14 @@ void MCB::Object3d::AnimationDraw(unsigned short int incremant)
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
     animationModel->Draw();
+}
+
+void MCB::Object3d::SetCollider(BaseCollider* collider)
+{
+    collider->SetObject(this);
+    this->collider = collider;
+    CollisionManager::GetInstance()->AddCollider(collider);
+    collider->Update();
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

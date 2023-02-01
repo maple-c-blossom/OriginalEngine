@@ -2,7 +2,7 @@
 #include "Util.h"
 using namespace MCB;
 
-bool MCB::Corider::CalcSphere(Sphere sphereA, Sphere sphereB)
+bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter)
 {
 
 	float hitX = (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x) * (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x);
@@ -13,14 +13,23 @@ bool MCB::Corider::CalcSphere(Sphere sphereA, Sphere sphereB)
 	hitY = Abs(hitY);
 	hitZ = Abs(hitZ);
 	float hit = hitX + hitY + hitZ;
+
+
 	if (hit <= hitR)
 	{
+		if (inter)
+		{
+			float t = sphereB.radius / (sphereA.radius + sphereB.radius);
+			inter->vec.x = (float)Lerp(sphereA.centerPosition.vec.x, sphereB.centerPosition.vec.x, t);
+			inter->vec.y = (float)Lerp(sphereA.centerPosition.vec.y, sphereB.centerPosition.vec.y, t);
+			inter->vec.z = (float)Lerp(sphereA.centerPosition.vec.z, sphereB.centerPosition.vec.z, t);
+		}
 		return true;
 	}
 	return false;
 }
 
-bool MCB::Corider::CalcPlaneRay(Plane plane, Ray ray, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcPlaneRay(Plane plane, Ray ray, float* distance, Vector3D* inter)
 {
 	const float epsilon = 1.0e-5f;
 	float d1 = plane.normal.GetV3Dot(ray.rayVec);
@@ -38,7 +47,7 @@ bool MCB::Corider::CalcPlaneRay(Plane plane, Ray ray, float* distance, Vector3D*
 	return true;
 }
 
-bool MCB::Corider::CalcTriangleRay(Triangle triangle, Ray ray, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcTriangleRay(Triangle triangle, Ray ray, float* distance, Vector3D* inter)
 {
 	Plane plane;
 	Vector3D interPlane;
@@ -67,7 +76,7 @@ bool MCB::Corider::CalcTriangleRay(Triangle triangle, Ray ray, float* distance, 
 	return true;
 }
 
-bool MCB::Corider::CalcPlaneSpher(Plane plane, Sphere sphere, Vector3D* inter)
+bool MCB::Collision::CalcPlaneSpher(Plane plane, Sphere sphere, Vector3D* inter)
 {
 	float dist = sphere.centerPosition.GetV3Dot(plane.normal);
 	dist = dist - plane.originDistance;
@@ -76,7 +85,7 @@ bool MCB::Corider::CalcPlaneSpher(Plane plane, Sphere sphere, Vector3D* inter)
 	return true;
 }
 
-bool MCB::Corider::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3D* inter)
+bool MCB::Collision::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3D* inter)
 {
 	Vector3D p;
 	CalcTrianglePoint(triangle, sphere.centerPosition, p);
@@ -87,7 +96,7 @@ bool MCB::Corider::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3D*
 	return true;
 }
 
-void MCB::Corider::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector3D& closest)
+void MCB::Collision::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector3D& closest)
 {
 	// 資料領域チェック①の前準備
 	Vector3D p0p1 = triangle.vertexPoint[1] - triangle.vertexPoint[0];
@@ -164,7 +173,7 @@ void MCB::Corider::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector3D
 
 }
 
-bool MCB::Corider::CalcRaySphere(Ray ray, Sphere sphere, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere, float* distance, Vector3D* inter)
 {
 	Vector3D m(sphere.centerPosition, ray.StartPosition);
 	float b = m.GetV3Dot(ray.rayVec);
@@ -183,7 +192,7 @@ bool MCB::Corider::CalcRaySphere(Ray ray, Sphere sphere, float* distance, Vector
 		return true;
 }
 
-bool MCB::Corider::CalcRaySphere(Ray ray, Sphere sphere)
+bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere)
 {
 	Vector3D rayToSphere(ray.StartPosition, sphere.centerPosition.vec);
 	ray.rayVec.V3Norm();

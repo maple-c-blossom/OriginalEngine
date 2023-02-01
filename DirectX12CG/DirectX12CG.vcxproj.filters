@@ -339,6 +339,30 @@
     <ClCompile Include="Engin\Texture\TextureManager.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Collide\BaseCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\CollisionInfomation.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\SphereCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\BoxCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\RayCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\PlaneCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\TriangleCollider.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\CollisionManager.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -543,6 +567,30 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\BaseCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\CollisionInfomation.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\SphereCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\BoxCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\RayCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\PlaneCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\TriangleCollider.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

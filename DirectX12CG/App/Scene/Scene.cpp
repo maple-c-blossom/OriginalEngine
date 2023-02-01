@@ -39,7 +39,8 @@ void MCB::Scene::Object3DInit()
     ground.model = groundModel.get();
     ground.scale = { 4,4,4 };
     ground.position = { 0,-3,0 };
-    ;
+    ground.SetCollider(new PlaneCollider({0,1,0},-3));
+
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel.get();
@@ -50,7 +51,7 @@ void MCB::Scene::Object3DInit()
     testAnimation.scale = { 1,1,1 };
     testAnimation.position = { -4,-2,5 };
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
-
+    testAnimation.SetCollider(new SphereCollider);
 
     //sphere.Init();
     //sphere.model = BoxModel;
@@ -118,6 +119,8 @@ IScene* MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
+
+
     testAnimation.rotasion.y += 0.15f;
     if (input->IsKeyDown(DIK_W))
     {
@@ -135,11 +138,11 @@ void MCB::Scene::Update()
 
     if (input->IsKeyDown(DIK_A))
     {
-        testAnimation.position.x -= 1;
+        testAnimation.position.y -= 1;
     }
     if (input->IsKeyDown(DIK_D))
     {
-        testAnimation.position.x += 1;
+        testAnimation.position.y += 1;
     }
 
     if (input->IsKeyTrigger(DIK_1))
@@ -198,7 +201,7 @@ void MCB::Scene::Update()
 
 
     MatrixUpdate();
-
+    CollisionManager::GetInstance()->CheckAllCollision();
     if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;

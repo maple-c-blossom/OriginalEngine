@@ -14,42 +14,43 @@
 #include "Quaternion.h"
 #include "LightGroup.h"
 #include "FBXLoader.h"
+#include "CollisionInfomation.h"
 namespace MCB
 {
     class ICamera;
+    class BaseCollider;
 
     class Object3d
     {
-    public:
-
+    protected:
+        std::string name;
+        BaseCollider* collider;
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
             //DirectX::XMMATRIX mat;
             DirectX::XMMATRIX viewproj;
             DirectX::XMMATRIX world;
+            Float4 color = {1.f,1.f,1.f,1.f};
             Float3 cameraPos;
 
         }ConstBufferDataTransform;
         //---------------------------------
-
-        static LightGroup* lights;
-
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin = nullptr;
         //行列用定数バッファマップ
         ConstBufferDataTransform* constMapTranceform = nullptr;
         ConstBuffSkin* constMapSkin = nullptr;
-
+    public:
+        static LightGroup* lights;
         //アフィン変換情報
         DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
         DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
-
+        Float4 color = { 1.f,1.f,1.f,1.f };
         //ワールド行列
         WorldMatrix matWorld = {};
-
         Vector3D NORM_FRONT_VEC = {};
         Vector3D nowFrontVec = {0,0,1};
         float frontAngle = 0;
@@ -59,33 +60,35 @@ namespace MCB
 
         Object3d();
 
-        ~Object3d();
+        virtual ~Object3d();
 
         //親オブジェクトへのポインタ
         Object3d* parent = nullptr;
-
         bool trackingFlag = false;
+        virtual void Init();
+        virtual void CreateBuff();
+        virtual void Update(ICamera* camera, bool isBillBord = false);
 
-        void Init();
+        virtual void Update(ICamera* camera, Quaternion q, bool isBillBord = false);
 
-        void Update(ICamera* camera, bool isBillBord = false);
+        virtual void Draw();
 
-        void Update(ICamera* camera, Quaternion q, bool isBillBord = false);
+        virtual void Draw(unsigned short int incremant);
 
-        void Draw();
+        virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
 
-        void Draw(unsigned short int incremant);
+        virtual void AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord = false);
 
+        virtual void AnimationDraw();
 
-        void AnimationUpdate(ICamera* camera, bool isBillBord = false);
-
-        void AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord = false);
-
-        void AnimationDraw();
-
-        void AnimationDraw(unsigned short int incremant);
-
-        static void SetLights(LightGroup* light);
+       virtual void AnimationDraw(unsigned short int incremant);
+       const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
+       void SetCollider(BaseCollider* collider);
+       virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; }
+       virtual void OffCollision(const CollisionInfomation& info) { color = { 1,1,1,1 }; }
+       static void SetLights(LightGroup* light);
+       ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform; };
+       ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform.Get(); };
         //void CreateModel(const char* fileName);
     };
 

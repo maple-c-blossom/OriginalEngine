@@ -138,6 +138,17 @@ Vector3D MCB::Quaternion::SetRotationVector(Quaternion rotationQuaternion, Quate
 	return Vector3D(position.x, position.y, position.z);
 }
 
+Quaternion MCB::Quaternion::DirToDir(Vector3D u, Vector3D v)
+{
+	u.V3Norm();
+	v.V3Norm();
+	float angle = u.GetV3Dot(v);
+	Vector3D axis = u.GetV3Cross(v);
+	axis.V3Norm();
+	float theta = acosf(angle);
+	return Quaternion(axis,theta);
+}
+
 
 void MCB::Quaternion::Normalize()
 {
