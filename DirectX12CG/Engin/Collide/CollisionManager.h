@@ -1,6 +1,7 @@
 #pragma once
 #include <forward_list>
 #include "RayCastHit.h"
+#include "MeshCollider.h"
 namespace MCB
 {
 	class BaseCollider;

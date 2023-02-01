@@ -53,6 +53,10 @@ void MCB::Scene::Object3DInit()
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
     testAnimation.SetCollider(new SphereCollider);
 
+
+    triangle.triangle.SetCollider(new TriangleCollider({0,0,0},{0,0,-1},{triangle.PointA,triangle.PointB,triangle.PointC}));
+    
+   
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -138,11 +142,27 @@ void MCB::Scene::Update()
 
     if (input->IsKeyDown(DIK_A))
     {
-        testAnimation.position.y -= 1;
+        testAnimation.position.x -= 1;
     }
     if (input->IsKeyDown(DIK_D))
     {
+        testAnimation.position.x += 1;
+    }
+    if (input->IsKeyDown(DIK_W))
+    {
         testAnimation.position.y += 1;
+    }
+    if (input->IsKeyDown(DIK_S))
+    {
+        testAnimation.position.y -= 1;
+    }
+    if (input->IsKeyDown(DIK_Z))
+    {
+        testAnimation.position.z += 1;
+    }
+    if (input->IsKeyDown(DIK_X))
+    {
+        testAnimation.position.z -= 1;
     }
 
     if (input->IsKeyTrigger(DIK_1))
@@ -213,7 +233,7 @@ void MCB::Scene::Draw()
 
     Skydorm.Draw();
     ground.Draw();
-
+    triangle.DrawTriangle(viewCamera);
     testAnimation.Draw();
 
 }

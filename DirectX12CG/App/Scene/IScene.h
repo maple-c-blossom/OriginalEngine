@@ -54,7 +54,7 @@
 #include "RayCollider.h"
 #include "TriangleCollider.h"
 #include "BoxCollider.h"
-
+#include "MeshCollider.h"
 
 
 #pragma endregion é©çÏ.h include

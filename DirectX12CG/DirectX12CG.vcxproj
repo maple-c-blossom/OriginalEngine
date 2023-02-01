@@ -78,6 +78,7 @@
     <ClCompile Include="Engin\Collide\RayCollider.cpp" />
     <ClCompile Include="Engin\Collide\TriangleCollider.cpp" />
     <ClCompile Include="Engin\Collide\RayCastHit.cpp" />
+    <ClCompile Include="Engin\Collide\MeshCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -213,6 +214,7 @@
     <ClInclude Include="Engin\Collide\RayCollider.h" />
     <ClInclude Include="Engin\Collide\TriangleCollider.h" />
     <ClInclude Include="Engin\Collide\RayCastHit.h" />
+    <ClInclude Include="Engin\Collide\MeshCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
