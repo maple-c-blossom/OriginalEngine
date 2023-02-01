@@ -363,6 +363,9 @@
     <ClCompile Include="Engin\Collide\CollisionManager.cpp">
       <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Collide\RayCastHit.cpp">
+      <Filter>ソース ファイル\Engin\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -590,6 +593,9 @@
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\CollisionManager.h">
+      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\RayCastHit.h">
       <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
   </ItemGroup>

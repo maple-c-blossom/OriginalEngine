@@ -11,7 +11,8 @@ namespace MCB
 		RAY,
 		TRIANGLE,
 		BOX,
-		PLANE
+		PLANE,
+		MESH
 	};
 
 	class Triangle

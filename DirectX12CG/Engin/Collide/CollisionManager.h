@@ -1,5 +1,6 @@
 #pragma once
 #include <forward_list>
+#include "RayCastHit.h"
 namespace MCB
 {
 	class BaseCollider;
@@ -10,6 +11,7 @@ namespace MCB
 		inline void AddCollider(BaseCollider* coll) { colliders.push_front(coll); }
 		inline void RemoveCollider(BaseCollider* coll) { colliders.remove(coll); }
 		void CheckAllCollision();
+		bool Raycast(const Ray& ray, RayCastHit* hitinfo = nullptr, float maxDistance = D3D12_FLOAT32_MAX);
 	private:
 		CollisionManager() = default;
 		CollisionManager(const CollisionManager&) = delete;

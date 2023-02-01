@@ -2,6 +2,7 @@
 #include "CollisionInfomation.h"
 #include "CollisionManager.h"
 
+
 MCB::CollisionManager* MCB::CollisionManager::GetInstance()
 {
     static CollisionManager inst;
@@ -184,4 +185,63 @@ void MCB::CollisionManager::CheckAllCollision()
             }
         }
     }
+}
+
+bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float maxDistance)
+{
+    bool result = false;
+    std::forward_list<BaseCollider*>::iterator itr;
+    std::forward_list<BaseCollider*>::iterator itr_hit;
+    float dist = maxDistance;
+    Vector3D inter;
+    itr = colliders.begin();
+    for (; itr != colliders.end(); ++itr)
+    {
+        BaseCollider* col = *itr;
+        if (col->GetPrimitive() == PrimitiveType::SPHERE)
+        {
+            Sphere* prim = dynamic_cast<Sphere*>(col);
+            float disttemp;
+            Vector3D intertemp;
+            if (!Collision::CalcRaySphere(ray, *prim, &disttemp, &intertemp))continue;
+            if (disttemp >= dist)continue;
+            result = true;
+            dist = disttemp;
+            inter = intertemp;
+            itr_hit = itr;
+        }
+        else if (col->GetPrimitive() == PrimitiveType::PLANE)
+        {
+            Plane* prim = dynamic_cast<Plane*>(col);
+            float disttemp;
+            Vector3D intertemp;
+            if (!Collision::CalcPlaneRay(*prim,ray, &disttemp, &intertemp))continue;
+            if (disttemp >= dist)continue;
+            result = true;
+            dist = disttemp;
+            inter = intertemp;
+            itr_hit = itr;
+        }
+        else if (col->GetPrimitive() == PrimitiveType::TRIANGLE)
+        {
+            Triangle* prim = dynamic_cast<Triangle*>(col);
+            float disttemp;
+            Vector3D intertemp;
+            if (!Collision::CalcTriangleRay(*prim, ray, &disttemp, &intertemp))continue;
+            if (disttemp >= dist)continue;
+            result = true;
+            dist = disttemp;
+            inter = intertemp;
+            itr_hit = itr;
+        }
+
+    }
+    if (result && hitinfo)
+    {
+        hitinfo->dist = dist;
+        hitinfo->collPtr = *itr_hit;
+        hitinfo->inter = inter;
+        hitinfo->objctPtr = hitinfo->collPtr->GetObject3D();
+    }
+    return result;
 }
