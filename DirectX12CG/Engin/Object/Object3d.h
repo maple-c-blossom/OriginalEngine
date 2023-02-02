@@ -57,7 +57,7 @@ namespace MCB
         float animeTime;
         Model* model = nullptr;
         AnimationModel* animationModel = nullptr;
-
+        bool hited = false;
         Object3d();
 
         virtual ~Object3d();
@@ -84,8 +84,8 @@ namespace MCB
        virtual void AnimationDraw(unsigned short int incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
        void SetCollider(BaseCollider* collider);
-       virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; }
-       virtual void OffCollision(const CollisionInfomation& info) { color = { 1,1,1,1 }; }
+       virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; hited = true; }
+       virtual void OffCollision(const CollisionInfomation& info) { color = { 1,1,1,1 };  hited = false;}
        static void SetLights(LightGroup* light);
        ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform; };
        ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform.Get(); };

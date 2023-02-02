@@ -60,9 +60,6 @@
     <Filter Include="ソース ファイル\Engin\Descriptor&amp;Sheader">
       <UniqueIdentifier>{ec728e33-bec1-4c91-a324-352353a52725}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engin\3D">
-      <UniqueIdentifier>{eb6ba388-9701-4e70-b923-48144367fc89}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Game">
       <UniqueIdentifier>{5b01ddb0-0d69-4f0c-88e3-5984c0578527}</UniqueIdentifier>
     </Filter>
@@ -130,9 +127,6 @@
     <Filter Include="ヘッダー ファイル\Engin\Descriptor&amp;Sheader">
       <UniqueIdentifier>{e5df687b-8a73-4eef-a7f7-edd7747db1ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engin\3D">
-      <UniqueIdentifier>{82d29c91-4bed-4af8-99fe-360042030ac8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Light">
       <UniqueIdentifier>{2c8a91e2-59a7-4813-ba8a-ee7c5fd55405}</UniqueIdentifier>
     </Filter>
@@ -172,6 +166,12 @@
     <Filter Include="ヘッダー ファイル\Engin\Model">
       <UniqueIdentifier>{3c706f9d-d6b8-4bc0-bec0-c1c8e30e3cec}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engin\Collider">
+      <UniqueIdentifier>{eb6ba388-9701-4e70-b923-48144367fc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Collider">
+      <UniqueIdentifier>{82d29c91-4bed-4af8-99fe-360042030ac8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\main.cpp">
@@ -200,9 +200,6 @@
     </ClCompile>
     <ClCompile Include="Engin\DirectX\Input.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Engin\Pipeline\Depth.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Texture\MipMap.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
@@ -274,7 +271,7 @@
       <Filter>ソース ファイル\Engin\DirectX</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\Collider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="App\Scene\IScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -340,34 +337,37 @@
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\BaseCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\CollisionInfomation.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\SphereCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\BoxCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\RayCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\PlaneCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\TriangleCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\CollisionManager.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\RayCastHit.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Collide\MeshCollider.cpp">
-      <Filter>ソース ファイル\Engin\3D</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Pipeline\Depth.cpp">
+      <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,9 +420,6 @@
     </ClInclude>
     <ClInclude Include="Engin\Math\Matrix\WorldMatrix.h">
       <Filter>ヘッダー ファイル\Engin\Math\Matrix</Filter>
-    </ClInclude>
-    <ClInclude Include="Engin\Pipeline\Depth.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
     </ClInclude>
     <ClInclude Include="Engin\DirectX\Input.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
@@ -503,7 +500,7 @@
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\Collider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="App\Scene\IScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
@@ -575,34 +572,37 @@
       <Filter>ヘッダー ファイル\Engin</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\BaseCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\CollisionInfomation.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\SphereCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\BoxCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\RayCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\PlaneCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\TriangleCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\CollisionManager.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\RayCastHit.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Collide\MeshCollider.h">
-      <Filter>ヘッダー ファイル\Engin\3D</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Pipeline\Depth.h">
+      <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

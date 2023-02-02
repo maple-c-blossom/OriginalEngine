@@ -7,11 +7,7 @@ namespace MCB
 	class MeshCollider:public BaseCollider
 	{
 	public:
-		MeshCollider() {
-			primitive = PrimitiveType::MESH;
-			sphere.SetObject(this->object3d);
-			sphere.SetRadius(1.5f);
-		}
+		MeshCollider();
 		void ConstractTriangle(Model* model);
 		void ConstractTriangle(AnimationModel* model);
 		void Update()override;

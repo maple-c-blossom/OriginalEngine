@@ -6,4 +6,5 @@ void MCB::BoxCollider::Update()
 	Box::position.y = mat.r[3].m128_f32[1] + offset.vec.y;
 	Box::position.z = mat.r[3].m128_f32[2] + offset.vec.z;
 	Box::size = size;
+	GetObject3D()->hited = false;
 }

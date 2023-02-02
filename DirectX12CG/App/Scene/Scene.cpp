@@ -51,8 +51,14 @@ void MCB::Scene::Object3DInit()
     testAnimation.scale = { 1,1,1 };
     testAnimation.position = { -4,-2,5 };
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
-    testAnimation.SetCollider(new SphereCollider);
+    testAnimation.SetCollider(new MeshCollider);
 
+    testRay.Init();
+    testRay.model = SpherModel.get();
+    testRay.scale = { 0.005f,0.005f,30 };
+    testRay.position = { 0,0,0 };
+    testRay.rotasion = { 0,0,0 };
+    testRay.SetCollider(new RayCollider({0,0,0},{0,0,1}));
 
     triangle.triangle.SetCollider(new TriangleCollider({0,0,0},{0,0,-1},{triangle.PointA,triangle.PointB,triangle.PointC}));
     
@@ -142,20 +148,38 @@ void MCB::Scene::Update()
 
     if (input->IsKeyDown(DIK_A))
     {
-        testAnimation.position.x -= 1;
+        testAnimation.position.x -= 0.1f;
     }
     if (input->IsKeyDown(DIK_D))
     {
-        testAnimation.position.x += 1;
+        testAnimation.position.x += 0.1f;
     }
     if (input->IsKeyDown(DIK_W))
     {
-        testAnimation.position.y += 1;
+        testAnimation.position.y += 0.1f;
     }
     if (input->IsKeyDown(DIK_S))
     {
-        testAnimation.position.y -= 1;
+        testAnimation.position.y -= 0.1f;
     }
+
+    if (input->IsKeyDown(DIK_J))
+    {
+        testRay.position.x -= 0.1f;
+    }
+    if (input->IsKeyDown(DIK_L))
+    {
+        testRay.position.x += 0.1f;
+    }
+    if (input->IsKeyDown(DIK_K))
+    {
+        testRay.position.y += 0.1f;
+    }
+    if (input->IsKeyDown(DIK_I))
+    {
+        testRay.position.y -= 0.1f;
+    }
+
     if (input->IsKeyDown(DIK_Z))
     {
         testAnimation.position.z += 1;
@@ -235,6 +259,7 @@ void MCB::Scene::Draw()
     ground.Draw();
     triangle.DrawTriangle(viewCamera);
     testAnimation.Draw();
+    testRay.Draw();
 
 }
 
@@ -289,6 +314,7 @@ void MCB::Scene::MatrixUpdate()
     Skydorm.Update(viewCamera);
     ground.Update(viewCamera);
     testAnimation.Update(viewCamera, false);
+    testRay.Update(viewCamera, false);
 
 
     //testParticle.Updata(matView, matProjection, true);

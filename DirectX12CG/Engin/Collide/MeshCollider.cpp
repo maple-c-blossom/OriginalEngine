@@ -1,5 +1,10 @@
 #include "MeshCollider.h"
+#include "CollisionManager.h"
 using namespace DirectX;
+MCB::MeshCollider::MeshCollider()
+{
+		primitive = PrimitiveType::MESH;
+}
 void MCB::MeshCollider::ConstractTriangle(Model* model)
 {
 	triangles.clear();
@@ -53,8 +58,17 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 
 void MCB::MeshCollider::Update()
 {
-	invWorldMat = DirectX::XMMatrixInverse(nullptr, GetObject3D()->GetMatWorld());
+	XMMATRIX mat = GetObject3D()->GetMatWorld();
+	invWorldMat = DirectX::XMMatrixInverse(nullptr,mat);
+	GetObject3D()->hited = false;
+	if (sphere.GetObject3D() == nullptr)
+	{
+		sphere.SetObject(GetObject3D());
+		sphere.SetRadius(1.5f);
+		CollisionManager::GetInstance()->AddCollider(&sphere);
+	}
 	sphere.Update();
+
 }
 
 bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter)

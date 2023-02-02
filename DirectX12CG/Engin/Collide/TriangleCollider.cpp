@@ -11,4 +11,5 @@ void MCB::TriangleCollider::Update()
 	Triangle::vertexPoint[1] = position + vertexPoint[1];
 	Triangle::vertexPoint[2] = position + vertexPoint[2];
 	Triangle::NormalCalculation();
+	GetObject3D()->hited = false;
 }
