@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "DebugCamera.h"
-
+#include "Player.h"
 #pragma region ゲーム系.h include
 
 
@@ -55,7 +55,7 @@ namespace MCB
 		Object3d Skydorm;
 		Object3d testAnimation;
 		Object3d testRay;
-
+		Player play;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

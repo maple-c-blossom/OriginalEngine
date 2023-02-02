@@ -15,9 +15,9 @@ namespace MCB
 		MESH
 	};
 
-	const unsigned short LANDSHAPE = 0b1 << 0;//’n–Ê
-	const unsigned short FLENDRY = 0b1 << 1;//–¡•û
-	const unsigned short ENEMY = 0b1 << 2;//“G
+	const unsigned short attributeLANDSHAPE = 0b1 << 0;//’n–Ê
+	const unsigned short attributeFLENDRY = 0b1 << 1;//–¡•û
+	const unsigned short attributeENEMY = 0b1 << 2;//“G
 
 	class Triangle
 	{

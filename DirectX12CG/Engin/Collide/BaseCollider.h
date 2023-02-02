@@ -37,7 +37,7 @@ namespace MCB
 		}
 		inline Object3d* GetObject3D() { return object3d; }
 	protected:
-		unsigned short attribute = 0b1111111111111111;
+		unsigned short attribute = attributeLANDSHAPE;
 		Object3d* object3d = nullptr;
 		MCB::PrimitiveType primitive = MCB::PrimitiveType::SPHERE;
 

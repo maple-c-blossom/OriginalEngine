@@ -248,7 +248,11 @@ void MCB::CollisionManager::CheckAllCollision()
 
 bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDistance)
 {
-    ray.rayCasted = true;
+    return Raycast(ray,0xffff,hitinfo,maxDistance);
+}
+
+bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastHit* hitinfo, float maxDistance)
+{
     const Ray& raytemp = ray;
     bool result = false;
     std::forward_list<BaseCollider*>::iterator itr;
@@ -256,9 +260,11 @@ bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDis
     float dist = maxDistance;
     Vector3D inter;
     itr = colliders.begin();
+
     for (; itr != colliders.end(); ++itr)
     {
         BaseCollider* col = *itr;
+        if (!(col->attribute & attribute))continue;
         if (col->GetPrimitive() == PrimitiveType::SPHERE)
         {
             Sphere* prim = dynamic_cast<Sphere*>(col);
@@ -301,7 +307,7 @@ bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDis
             float disttemp;
             Vector3D intertemp;
             if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
-            if (prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
+            if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -317,6 +323,6 @@ bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDis
         hitinfo->inter = inter;
         hitinfo->objctPtr = hitinfo->collPtr->GetObject3D();
     }
-
+    ray.rayCasted = true;
     return result;
 }

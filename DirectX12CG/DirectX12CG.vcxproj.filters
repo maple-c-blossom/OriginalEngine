@@ -369,6 +369,9 @@
     <ClCompile Include="Engin\Pipeline\Depth.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="App\Player.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -603,6 +606,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Pipeline\Depth.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Player.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

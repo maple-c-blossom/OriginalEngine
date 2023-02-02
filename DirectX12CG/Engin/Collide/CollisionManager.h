@@ -14,6 +14,7 @@ namespace MCB
 		inline void RemoveCollider(BaseCollider* coll) { colliders.remove(coll); }
 		void CheckAllCollision();
 		bool Raycast( Ray& ray, RayCastHit* hitinfo = nullptr, float maxDistance = D3D12_FLOAT32_MAX);
+		bool Raycast( Ray& ray,unsigned short attribute, RayCastHit* hitinfo = nullptr, float maxDistance = D3D12_FLOAT32_MAX);
 		
 	private:
 		CollisionManager() = default;

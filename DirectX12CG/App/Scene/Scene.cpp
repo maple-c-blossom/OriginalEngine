@@ -39,8 +39,13 @@ void MCB::Scene::Object3DInit()
     ground.model = groundModel.get();
     ground.scale = { 4,4,4 };
     ground.position = { 0,-3,0 };
-    ground.SetCollider(new PlaneCollider({0,1,0},-3));
+    ground.rotasion = { 0,0,ConvertRadius(45)};
+    ground.SetCollider(new PlaneCollider({-1,1,0},-3));
     ground.camera = viewCamera;
+    play.Init();
+    play.model = SpherModel.get();
+    play.position = { 0,3,0 };
+    play.camera = viewCamera;
 
     Skydorm;
     Skydorm.Init();
@@ -53,7 +58,7 @@ void MCB::Scene::Object3DInit()
     testAnimation.scale = { 1,1,1 };
     testAnimation.position = { -4,-2,5 };
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
-    testAnimation.SetCollider(new MeshCollider);
+    testAnimation.SetCollider(new SphereCollider);
     testAnimation.camera = viewCamera;
 
     testRay.Init();
@@ -61,7 +66,7 @@ void MCB::Scene::Object3DInit()
     testRay.scale = { 0.005f,0.005f,30 };
     testRay.position = { 0,0,0 };
     testRay.rotasion = { 0,0,0 };
-    testRay.SetCollider(new RayCollider({0,0,0},{0,0,1}));
+    testRay.SetCollider(new RayCollider({0,0,-15},{0,0,1}));
     testRay.camera = viewCamera;
 
     triangle.triangle.SetCollider(new TriangleCollider({0,0,0},{0,0,-1},{triangle.PointA,triangle.PointB,triangle.PointC}));
@@ -151,22 +156,7 @@ void MCB::Scene::Update()
  
 
 
-    if (input->IsKeyDown(DIK_A))
-    {
-        testAnimation.position.x -= 0.1f;
-    }
-    if (input->IsKeyDown(DIK_D))
-    {
-        testAnimation.position.x += 0.1f;
-    }
-    if (input->IsKeyDown(DIK_W))
-    {
-        testAnimation.position.y += 0.1f;
-    }
-    if (input->IsKeyDown(DIK_S))
-    {
-        testAnimation.position.y -= 0.1f;
-    }
+    
 
     if (input->IsKeyDown(DIK_J))
     {
@@ -248,8 +238,8 @@ void MCB::Scene::Update()
     lights->UpDate();
 
 
-
     MatrixUpdate();
+    play.Update();
     if (input->IsKeyDown(DIK_P))
     {
         RayCastHit info;
@@ -264,7 +254,7 @@ void MCB::Scene::Update()
         }
     }
     CollisionManager::GetInstance()->CheckAllCollision();
-    if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
     }
@@ -278,6 +268,7 @@ void MCB::Scene::Draw()
     triangle.DrawTriangle(viewCamera);
     testAnimation.Draw();
     testRay.Draw();
+    play.Draw();
 
 }
 

@@ -154,11 +154,13 @@ void MCB::TitleScene::Object3DInit()
     ground.model = groundModel.get();
     ground.scale = { 4,4,4 };
     ground.position = { 0,0,0 };
-    ;
+    ; ground.camera = viewCamera;
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
+
+    ; Skydorm.camera = viewCamera;
 
     testAnimation.Init();
     //testAnimation.model = BoxModel;
@@ -166,9 +168,10 @@ void MCB::TitleScene::Object3DInit()
     testAnimation.scale = { 3,3,3 };
     testAnimation.position = { 0,4,10 };
     testAnimation.rotasion.y = ConvertRadius(90);
-    
+    testAnimation.camera = viewCamera;
     test2Animation.animationModel = anim2Model.get();
     test2Animation.scale = { 3,3,3 };
     test2Animation.position = { 10,4,10 };
     test2Animation.rotasion.y = ConvertRadius(90);
+    test2Animation.camera = viewCamera;
 }
