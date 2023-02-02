@@ -88,7 +88,7 @@ void MCB::Object3d::CreateBuff()
     dx12->result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
 }
 
-void Object3d::Update(ICamera* camera,bool isBillBord)
+void Object3d::Update(bool isBillBord)
 {
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
     matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z,false);
@@ -123,7 +123,34 @@ void Object3d::Update(ICamera* camera,bool isBillBord)
     if(collider)collider->Update();
 }
 
-void Object3d::Update(ICamera* camera,Quaternion q, bool isBillBord)
+void MCB::Object3d::UpdateMatrix( bool isBillBord)
+{
+    matWorld.SetMatScale(scale.x, scale.y, scale.z);
+    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
+    matWorld.SetMatTrans(position.x, position.y, position.z);
+    if (isBillBord)
+    {
+        if (parent == nullptr)
+        {
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
+        }
+        else
+        {
+            matWorld.UpdataMatrixWorld();
+        }
+    }
+    else
+    {
+        matWorld.UpdataMatrixWorld();
+    }
+
+    if (parent != nullptr)
+    {
+        matWorld.matWorld *= parent->matWorld.matWorld;
+    }
+}
+
+void Object3d::Update(Quaternion q, bool isBillBord)
 {
     MCBMatrix matRot;
     matRot.MCBMatrixIdentity();
@@ -158,6 +185,35 @@ void Object3d::Update(ICamera* camera,Quaternion q, bool isBillBord)
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->color = color;
     if (collider)collider->Update();
+}
+
+void MCB::Object3d::UpdateMatrix( Quaternion q, bool isBillBord)
+{
+    MCBMatrix matRot;
+    matRot.MCBMatrixIdentity();
+    matWorld.SetMatScale(scale.x, scale.y, scale.z);
+    matWorld.matRot = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
+    matWorld.SetMatTrans(position.x, position.y, position.z);
+    if (isBillBord)
+    {
+        if (parent == nullptr)
+        {
+            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
+        }
+        else
+        {
+            matWorld.UpdataMatrixWorld();
+        }
+    }
+    else
+    {
+        matWorld.UpdataMatrixWorld();
+    }
+
+    if (parent != nullptr)
+    {
+        matWorld.matWorld *= parent->matWorld.matWorld;
+    }
 }
 
 void Object3d::Draw()

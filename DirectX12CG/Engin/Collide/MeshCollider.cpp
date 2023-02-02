@@ -71,7 +71,7 @@ void MCB::MeshCollider::Update()
 
 }
 
-bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter)
+bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter, Vector3D* reject)
 {
 	Sphere local;
 	local.centerPosition = XMVector3Transform(XMVECTOR{ sphere.centerPosition.vec.x, sphere.centerPosition.vec.y, sphere.centerPosition.vec.z }, invWorldMat);
@@ -81,11 +81,17 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 	for (; itr != triangles.cend(); ++itr)
 	{
 		const Triangle& tri = *itr;
-		if (Collision::CalcTriangleSpher(tri, sphere, inter))
+		if (Collision::CalcTriangleSpher(tri, sphere, inter,reject))
 		{
+			const XMMATRIX& temp = object3d->GetMatWorld();
+			if (reject)
+			{
+				*reject = XMVector3Transform(reject->ConvertXMVEC(), temp);
+			}
+
 			if (inter)
 			{
-				const XMMATRIX& temp = object3d->GetMatWorld();
+	
 				*inter = XMVector3Transform(inter->ConvertXMVEC(), temp);
 			}
 			return true;

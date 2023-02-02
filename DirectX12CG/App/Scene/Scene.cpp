@@ -40,11 +40,13 @@ void MCB::Scene::Object3DInit()
     ground.scale = { 4,4,4 };
     ground.position = { 0,-3,0 };
     ground.SetCollider(new PlaneCollider({0,1,0},-3));
+    ground.camera = viewCamera;
 
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
+    Skydorm.camera = viewCamera;
 
     testAnimation.Init();
     testAnimation.model = SpherModel.get();
@@ -52,6 +54,7 @@ void MCB::Scene::Object3DInit()
     testAnimation.position = { -4,-2,5 };
     testAnimation.rotasion = { ConvertRadius(90),0,0 };
     testAnimation.SetCollider(new MeshCollider);
+    testAnimation.camera = viewCamera;
 
     testRay.Init();
     testRay.model = SpherModel.get();
@@ -59,9 +62,11 @@ void MCB::Scene::Object3DInit()
     testRay.position = { 0,0,0 };
     testRay.rotasion = { 0,0,0 };
     testRay.SetCollider(new RayCollider({0,0,0},{0,0,1}));
+    testRay.camera = viewCamera;
 
     triangle.triangle.SetCollider(new TriangleCollider({0,0,0},{0,0,-1},{triangle.PointA,triangle.PointB,triangle.PointC}));
-    
+    triangle.triangle.camera = viewCamera;
+
    
     //sphere.Init();
     //sphere.model = BoxModel;
@@ -245,6 +250,19 @@ void MCB::Scene::Update()
 
 
     MatrixUpdate();
+    if (input->IsKeyDown(DIK_P))
+    {
+        RayCastHit info;
+        Ray* rayA = dynamic_cast<Ray*>(testRay.GetCollider());
+        if (CollisionManager::GetInstance()->Raycast(*rayA, &info))
+        {
+            info.objctPtr->OnCollision(CollisionInfomation(info.objctPtr, info.collPtr, info.inter));
+        }
+        else
+        {
+
+        }
+    }
     CollisionManager::GetInstance()->CheckAllCollision();
     if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
@@ -311,10 +329,10 @@ void MCB::Scene::ImGuiUpdate()
 void MCB::Scene::MatrixUpdate()
 {
     viewCamera->Update();
-    Skydorm.Update(viewCamera);
-    ground.Update(viewCamera);
-    testAnimation.Update(viewCamera, false);
-    testRay.Update(viewCamera, false);
+    Skydorm.Update();
+    ground.Update();
+    testAnimation.Update(false);
+    testRay.Update(false);
 
 
     //testParticle.Updata(matView, matProjection, true);

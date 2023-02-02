@@ -2,7 +2,7 @@
 #include "Util.h"
 using namespace MCB;
 
-bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter)
+bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter,Vector3D* reject)
 {
 
 	float hitX = (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x) * (sphereA.centerPosition.vec.x - sphereB.centerPosition.vec.x);
@@ -17,6 +17,15 @@ bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter)
 
 	if (hit <= hitR)
 	{
+		if (reject)
+		{
+			float reLen = sphereA.radius + sphereB.radius - sqrt(hit);
+			Vector3D hoge(sphereB.centerPosition, sphereA.centerPosition);
+			hoge.V3Norm();
+			*reject = hoge;
+			*reject *= reLen;
+		}
+
 		if (inter)
 		{
 			float t = sphereB.radius / (sphereA.radius + sphereB.radius);
@@ -85,13 +94,20 @@ bool MCB::Collision::CalcPlaneSpher(Plane plane, Sphere sphere, Vector3D* inter)
 	return true;
 }
 
-bool MCB::Collision::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3D* inter)
+bool MCB::Collision::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3D* inter,Vector3D* reject)
 {
 	Vector3D p;
 	CalcTrianglePoint(triangle, sphere.centerPosition, p);
 	Vector3D v(sphere.centerPosition, p);
 	float vDot = v.GetV3Dot(v);
 	if (vDot > sphere.radius * sphere.radius) return false;
+	if (reject)
+	{
+		float ds = sphere.centerPosition.GetV3Dot(triangle.normal);
+		float dt = triangle.vertexPoint[0].GetV3Dot(triangle.normal);
+		float rejectLen = dt - ds + sphere.radius;
+		*reject = triangle.normal * rejectLen;
+	}
 	if (inter) *inter = p;
 	return true;
 }
@@ -215,6 +231,8 @@ bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere)
 
 	return a < sphere.radius + ray.radius;
 }
+
+
 
 void MCB::Triangle::NormalCalculation()
 {

@@ -11,5 +11,6 @@ void MCB::RayCollider::Update()
 	Ray::rayVec.vec.z = rayVec.vec.z;
 	Ray::radius = radius;
 	Ray::range = range;
+	Ray::rayCasted = false;
 	GetObject3D()->hited = false;
 }

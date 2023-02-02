@@ -61,15 +61,17 @@ namespace MCB
         Object3d();
 
         virtual ~Object3d();
-
+        ICamera* camera;
         //親オブジェクトへのポインタ
         Object3d* parent = nullptr;
         bool trackingFlag = false;
         virtual void Init();
         virtual void CreateBuff();
-        virtual void Update(ICamera* camera, bool isBillBord = false);
+        virtual void Update( bool isBillBord = false);
+        virtual void UpdateMatrix( bool isBillBord = false);
 
-        virtual void Update(ICamera* camera, Quaternion q, bool isBillBord = false);
+        virtual void Update( Quaternion q, bool isBillBord = false);
+        virtual void UpdateMatrix( Quaternion q, bool isBillBord = false);
 
         virtual void Draw();
 
@@ -84,8 +86,9 @@ namespace MCB
        virtual void AnimationDraw(unsigned short int incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
        void SetCollider(BaseCollider* collider);
+       BaseCollider* GetCollider() { return collider; };
        virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; hited = true; }
-       virtual void OffCollision(const CollisionInfomation& info) { color = { 1,1,1,1 };  hited = false;}
+       virtual void OffCollision(const CollisionInfomation* info = nullptr) { color = { 1,1,1,1 };  hited = false;}
        static void SetLights(LightGroup* light);
        ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform; };
        ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform.Get(); };

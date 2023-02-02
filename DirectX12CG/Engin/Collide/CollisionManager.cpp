@@ -11,6 +11,7 @@ MCB::CollisionManager* MCB::CollisionManager::GetInstance()
 
 void MCB::CollisionManager::CheckAllCollision()
 {
+
     std::forward_list<BaseCollider*>::iterator itrA;
     std::forward_list<BaseCollider*>::iterator itrB;
 
@@ -23,6 +24,26 @@ void MCB::CollisionManager::CheckAllCollision()
         {
             BaseCollider* itrCollA = *itrA;
             BaseCollider* itrCollB = *itrB;
+            if (itrCollA->GetPrimitive() == PrimitiveType::RAY || itrCollB->GetPrimitive() == PrimitiveType::RAY)
+            {
+                if (itrCollA->GetPrimitive() == PrimitiveType::RAY)
+                {
+                    Ray* rayA = dynamic_cast<Ray*>(itrCollA);
+                    if (rayA->rayCasted)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    Ray* rayA = dynamic_cast<Ray*>(itrCollB);
+                    if (rayA->rayCasted)
+                    {
+                        continue;
+                    }
+                }
+               
+            }
             if (itrCollA->GetPrimitive() == PrimitiveType::SPHERE && itrCollB->GetPrimitive() == PrimitiveType::SPHERE)
             {
                 Sphere* sphereA = dynamic_cast<Sphere*>(itrCollA);
@@ -225,8 +246,10 @@ void MCB::CollisionManager::CheckAllCollision()
     }
 }
 
-bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float maxDistance)
+bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDistance)
 {
+    ray.rayCasted = true;
+    const Ray& raytemp = ray;
     bool result = false;
     std::forward_list<BaseCollider*>::iterator itr;
     std::forward_list<BaseCollider*>::iterator itr_hit;
@@ -241,7 +264,7 @@ bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float m
             Sphere* prim = dynamic_cast<Sphere*>(col);
             float disttemp;
             Vector3D intertemp;
-            if (!Collision::CalcRaySphere(ray, *prim, &disttemp, &intertemp))continue;
+            if (!Collision::CalcRaySphere(raytemp, *prim, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -253,7 +276,7 @@ bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float m
             Plane* prim = dynamic_cast<Plane*>(col);
             float disttemp;
             Vector3D intertemp;
-            if (!Collision::CalcPlaneRay(*prim,ray, &disttemp, &intertemp))continue;
+            if (!Collision::CalcPlaneRay(*prim, raytemp, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -265,7 +288,7 @@ bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float m
             Triangle* prim = dynamic_cast<Triangle*>(col);
             float disttemp;
             Vector3D intertemp;
-            if (!Collision::CalcTriangleRay(*prim, ray, &disttemp, &intertemp))continue;
+            if (!Collision::CalcTriangleRay(*prim, raytemp, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -277,8 +300,8 @@ bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float m
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;
-            if (!Collision::CalcRaySphere(ray, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
-            if (prim->ChakeCollisionRay(ray, &disttemp, &intertemp))continue;
+            if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
+            if (prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -294,5 +317,6 @@ bool MCB::CollisionManager::Raycast(const Ray& ray, RayCastHit* hitinfo, float m
         hitinfo->inter = inter;
         hitinfo->objctPtr = hitinfo->collPtr->GetObject3D();
     }
+
     return result;
 }

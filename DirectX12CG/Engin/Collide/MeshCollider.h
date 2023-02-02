@@ -11,8 +11,8 @@ namespace MCB
 		void ConstractTriangle(Model* model);
 		void ConstractTriangle(AnimationModel* model);
 		void Update()override;
-		bool ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter);
-		bool ChakeCollisionRay(const Ray& ray,float* dist ,Vector3D* inter);
+		bool ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter = nullptr,Vector3D* reject = nullptr);
+		bool ChakeCollisionRay(const Ray& ray,float* dist ,Vector3D* inter = nullptr);
 
 		SphereCollider sphere;
 	private:
