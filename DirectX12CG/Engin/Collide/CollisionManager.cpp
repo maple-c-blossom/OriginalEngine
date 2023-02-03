@@ -209,14 +209,14 @@ void MCB::CollisionManager::CheckAllCollision()
                 Sphere* sphereA = dynamic_cast<Sphere*>(itrCollA);
                 MeshCollider* meshB = dynamic_cast<MeshCollider*>(itrCollB);
                 Vector3D inter;
-                if (Collision::CalcSphere(meshB->sphere, *sphereA, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
-                {
+                //if (Collision::CalcSphere(meshB->sphere, *sphereA, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
+                //{
                     if (meshB->ChakeCollisionSphere(*sphereA, &inter))//–{”Ô
                     {
                         itrCollA->OnCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                         itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                     }
-                }
+                //}
                 else {
                     if (!itrCollA->GetObject3D()->hited)itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                     if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
@@ -228,14 +228,14 @@ void MCB::CollisionManager::CheckAllCollision()
             MeshCollider* meshA = dynamic_cast<MeshCollider*>(itrCollA);
             Sphere* sphereB = dynamic_cast<Sphere*>(itrCollB);
             Vector3D inter;
-            if (Collision::CalcSphere(meshA->sphere, *sphereB, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
-            {
+            //if (Collision::CalcSphere(meshA->sphere, *sphereB, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
+            //{
                 if (meshA->ChakeCollisionSphere(*sphereB, &inter))//–{”Ô
                 {
                     itrCollA->OnCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
-            }
+            //}
             else {
                 if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                 if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
@@ -306,7 +306,7 @@ bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastH
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;
-            if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
+            //if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
             if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
             if (disttemp >= dist)continue;
             result = true;

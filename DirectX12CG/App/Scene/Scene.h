@@ -53,9 +53,15 @@ namespace MCB
 		
 		Object3d ground;
 		Object3d Skydorm;
-		Object3d testAnimation;
+		Object3d testsphere;
+		Object3d testsphere2;
+		Object3d testsphere3;
+		Object3d testsphere4;
 		Object3d testRay;
-		Player play;
+		Object3d rayStart;
+		bool isDown = true;
+		bool isRight = true;
+		bool SphereisDown = true;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

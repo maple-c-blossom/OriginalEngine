@@ -30,8 +30,8 @@ namespace MCB
 		Model triangleMaterial;
 		Object3d triangle;
 
-		Float3 PointA = { -0.5f,-0.5f,1.0f }; Float3 PointB = { -0.5f,0.5f,1.0f };
-		Float3 PointC = { 0.5f,-0.5f,1.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
+		Float3 PointA = { -1.5f,-0.5f,4.0f }; Float3 PointB = { 4.5f,0.5f,1.0f };
+		Float3 PointC = { 0.5f,-3.5f,-4.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
 		void  DrawTriangle(ICamera* camera);
 
 	};

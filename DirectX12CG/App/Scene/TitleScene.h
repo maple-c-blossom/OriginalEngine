@@ -2,7 +2,8 @@
 #include "IScene.h"
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "Camera.h"
+#include "DebugCamera.h"
+#include "Player.h"
 namespace MCB
 {
 	class TitleScene :public IScene
@@ -10,7 +11,7 @@ namespace MCB
 	private:
 #pragma region 変換行列
 		//変換行列
-		Camera camera;
+		DebugCamera camera;
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
@@ -18,6 +19,7 @@ namespace MCB
 #pragma region 3Dモデル
 		std::unique_ptr<Model> groundModel;
 		std::unique_ptr<Model> skydomeModel;
+		std::unique_ptr<Model> sphereModel;
 
 		std::unique_ptr<AnimationModel> animModel;
 		std::unique_ptr<AnimationModel> anim2Model;
@@ -43,9 +45,9 @@ namespace MCB
 		SimpleFigure triangle;
 		Object3d ground;
 		Object3d Skydorm;
-		Object3d testAnimation;
+		Object3d testsphere;
 		Object3d test2Animation;
-
+		Player play;
 
 #pragma endregion 3Dオブジェクト
 

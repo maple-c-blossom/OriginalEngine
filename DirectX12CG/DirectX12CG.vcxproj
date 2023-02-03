@@ -80,6 +80,7 @@
     <ClCompile Include="Engin\Collide\RayCastHit.cpp" />
     <ClCompile Include="Engin\Collide\MeshCollider.cpp" />
     <ClCompile Include="App\Player.cpp" />
+    <ClCompile Include="Query.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -217,6 +218,7 @@
     <ClInclude Include="Engin\Collide\RayCastHit.h" />
     <ClInclude Include="Engin\Collide\MeshCollider.h" />
     <ClInclude Include="App\Player.h" />
+    <ClInclude Include="Query.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

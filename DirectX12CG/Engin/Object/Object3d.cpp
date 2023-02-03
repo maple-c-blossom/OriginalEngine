@@ -382,9 +382,9 @@ void MCB::Object3d::AnimationDraw(unsigned short int incremant)
 void MCB::Object3d::SetCollider(BaseCollider* collider)
 {
     collider->SetObject(this);
-    this->collider = collider;
-    CollisionManager::GetInstance()->AddCollider(collider);
     collider->Update();
+    this->collider = collider;
+    CollisionManager::GetInstance()->AddCollider(this->collider);
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

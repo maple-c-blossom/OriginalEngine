@@ -5,6 +5,17 @@ MCB::MeshCollider::MeshCollider()
 {
 		primitive = PrimitiveType::MESH;
 }
+MCB::MeshCollider::MeshCollider(Model* model)
+{
+	primitive = PrimitiveType::MESH;
+	ConstractTriangle(model);
+}
+
+MCB::MeshCollider::MeshCollider(AnimationModel* model)
+{
+	primitive = PrimitiveType::MESH;
+	ConstractTriangle(model);
+}
 void MCB::MeshCollider::ConstractTriangle(Model* model)
 {
 	triangles.clear();
@@ -22,7 +33,6 @@ void MCB::MeshCollider::ConstractTriangle(Model* model)
 		tri.vertexPoint[1].vec = { model->vertices[idx1].pos.x,model->vertices[idx1].pos.y,model->vertices[idx1].pos.z };
 		tri.vertexPoint[2].vec = { model->vertices[idx2].pos.x,model->vertices[idx2].pos.y,model->vertices[idx2].pos.z };
 		tri.NormalCalculation();
-
 	}
 }
 
@@ -61,13 +71,13 @@ void MCB::MeshCollider::Update()
 	XMMATRIX mat = GetObject3D()->GetMatWorld();
 	invWorldMat = DirectX::XMMatrixInverse(nullptr,mat);
 	GetObject3D()->hited = false;
-	if (sphere.GetObject3D() == nullptr)
-	{
-		sphere.SetObject(GetObject3D());
-		sphere.SetRadius(1.5f);
-		CollisionManager::GetInstance()->AddCollider(&sphere);
-	}
-	sphere.Update();
+	//if (sphere.GetObject3D() == nullptr)
+	//{
+	//	sphere.SetObject(GetObject3D());
+	//	sphere.SetRadius(1.5f);
+	//	CollisionManager::GetInstance()->AddCollider(&sphere);
+	//}
+	//sphere.Update();
 
 }
 
@@ -103,21 +113,22 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 bool MCB::MeshCollider::ChakeCollisionRay(const Ray& ray, float* dist, Vector3D* inter)
 {
 	Ray local;
-	local.StartPosition = XMVector3Transform(XMVECTOR{ ray.StartPosition.vec.x,ray.StartPosition.vec.y, ray.StartPosition.vec.z }, invWorldMat);
-	local.rayVec = XMVector3TransformNormal(XMVECTOR{ ray.rayVec.vec.x,ray.rayVec.vec.y, ray.rayVec.vec.z },invWorldMat);
+	local.StartPosition = XMVector3Transform(XMVECTOR{ ray.StartPosition.vec.x,ray.StartPosition.vec.y, ray.StartPosition.vec.z,1 }, invWorldMat);
+	local.rayVec = XMVector3TransformNormal(XMVECTOR{ ray.rayVec.vec.x,ray.rayVec.vec.y, ray.rayVec.vec.z,1 },invWorldMat);
 
 	std::vector<Triangle>::const_iterator itr = triangles.cbegin();
 	for (; itr != triangles.cend(); ++itr)
 	{
 		const Triangle& tri = *itr;
 		Vector3D tempinter;
-		if (Collision::CalcTriangleRay(tri, ray, nullptr,inter))
+		if (Collision::CalcTriangleRay(tri, local, nullptr, &tempinter))
 		{
 			const XMMATRIX& temp = object3d->GetMatWorld();
 			tempinter = XMVector3Transform(tempinter.ConvertXMVEC(), temp);
 			if (dist)
 			{
-				Vector3D sub(ray.StartPosition, tempinter);
+				Vector3D tempV = ray.StartPosition;
+				Vector3D sub = tempinter - tempV;
 				*dist = sub.GetV3Dot(ray.rayVec);
 			}
 			if (inter)

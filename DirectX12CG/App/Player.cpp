@@ -14,11 +14,11 @@ void MCB::Player::Update()
 
 	if (Input::GetInstance()->IsKeyDown(DIK_A))
 	{
-		position.x -= 0.1f;
+		position.x -= 0.05f;
 	}
 	if (Input::GetInstance()->IsKeyDown(DIK_D))
 	{
-		position.x += 0.1f;
+		position.x += 0.05f;
 	}
 	if (Input::GetInstance()->IsKeyDown(DIK_W))
 	{
@@ -43,6 +43,7 @@ void MCB::Player::Update()
 		const float jumpVYFist = 0.2f;
 		fallV = { 0,jumpVYFist,0,0};
 	}
+
 	Object3d::Update();
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider);
 	assert(sphere);
@@ -77,6 +78,8 @@ void MCB::Player::Update()
 		}
 	}
 }
+
+
 
 
 void MCB::Player::Draw()
