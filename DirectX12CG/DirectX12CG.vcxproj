@@ -69,6 +69,7 @@
     <ClCompile Include="Engin\Model\Vertex.cpp" />
     <ClCompile Include="Engin\Math\Matrix\View.cpp" />
     <ClCompile Include="Engin\Math\Matrix\WorldMatrix.cpp" />
+    <ClCompile Include="Engin\Sprite\PostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -195,6 +196,7 @@
     <ClInclude Include="Engin\Model\Vertex.h" />
     <ClInclude Include="Engin\Math\Matrix\View.h" />
     <ClInclude Include="Engin\Math\Matrix\WorldMatrix.h" />
+    <ClInclude Include="Engin\Sprite\PostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

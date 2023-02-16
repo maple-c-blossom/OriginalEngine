@@ -1,5 +1,5 @@
 #include "TextureBuffer.h"
-
+#include <d3dx12.h>
 using namespace DirectX;
 
 HRESULT MCB::TextureBuffer::CommitResouce(D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue)
@@ -24,6 +24,9 @@ void MCB::TextureBuffer::SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE
     texHeapProp.Type = heaptype;
     texHeapProp.CPUPageProperty = cpuPagePropety;
     texHeapProp.MemoryPoolPreference = memorypool;
+    
+    //texHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+
 }
 
 void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, D3D12_RESOURCE_DIMENSION resouceDimenSion, int SampleDescCount)

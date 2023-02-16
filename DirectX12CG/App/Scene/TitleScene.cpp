@@ -6,12 +6,7 @@ using namespace DirectX;
 
 void MCB::TitleScene::SpriteInit()
 {
-    sprite.InitMatProje();
-    sprite = sprite.CreateSprite();
-    zoomSprite.InitMatProje();
-    zoomSprite = zoomSprite.CreateSprite();
-    scopeSprite.InitMatProje();
-    scopeSprite = scopeSprite.CreateSprite();
+
     debugText.Init(debugTextTexture->texture.get());
 }
 

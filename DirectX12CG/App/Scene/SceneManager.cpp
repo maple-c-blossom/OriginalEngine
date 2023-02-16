@@ -12,10 +12,8 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadBackGroundTex = texmanager->CreateNoTextureFileIsTexture();
 	loadTex = texmanager->LoadTexture(L"Resources\\reimu.png");
 	loadBackGround.InitMatProje();
-	loadBackGround = loadBackGround.CreateSprite();
 	loadBackGround.color = { 0,0,0,0 };
 	loadSprite.InitMatProje();
-	loadSprite = loadSprite.CreateSprite();
 	InitRand();
 	imgui.Init();
 	scene = new Scene(this->root, this->depth, this->pipeline);

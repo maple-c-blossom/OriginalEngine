@@ -5,6 +5,11 @@ using namespace DirectX;
 
 DirectX::XMMATRIX Sprite::matProje{};
 
+MCB::Sprite::Sprite()
+{
+    CreateSprite();
+}
+
 void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
 {
     HRESULT result = S_FALSE;
@@ -93,13 +98,11 @@ void MCB::Sprite::InitMatProje()
 
 }
 
-MCB::Sprite MCB::Sprite::CreateSprite()
+void MCB::Sprite::CreateSprite()
 {
     Dx12* dx12 = Dx12::GetInstance();
 
     HRESULT result = S_FALSE;
-
-    Sprite tempSprite = {};
 
 
     SpriteVertex vertices[] =
@@ -110,29 +113,29 @@ MCB::Sprite MCB::Sprite::CreateSprite()
         {{100.0f,0.0f, 0.0f},{1.0f,0.0f}}
     };
 
-    tempSprite.HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    this->HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
 
 
-    tempSprite.Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    tempSprite.Resdesc.Width = (sizeof(vertices));
-    tempSprite.Resdesc.Height = 1;
-    tempSprite.Resdesc.DepthOrArraySize = 1;
-    tempSprite.Resdesc.MipLevels = 1;
-    tempSprite.Resdesc.SampleDesc.Count = 1;
-    tempSprite.Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    this->Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    this->Resdesc.Width = (sizeof(vertices));
+    this->Resdesc.Height = 1;
+    this->Resdesc.DepthOrArraySize = 1;
+    this->Resdesc.MipLevels = 1;
+    this->Resdesc.SampleDesc.Count = 1;
+    this->Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
     result = dx12->device.Get()->CreateCommittedResource(
-        &tempSprite.HeapProp,
+        &this->HeapProp,
         D3D12_HEAP_FLAG_NONE,
-        &tempSprite.Resdesc,
-        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&tempSprite.vertBuff));
+        &this->Resdesc,
+        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->vertBuff));
 
     assert(SUCCEEDED(result) && "Sprite生成時の頂点バッファCommittedResourceエラー");
 
-    float left = (0.0f - tempSprite.anchorPoint.x) * tempSprite.size.x;
-    float right = (1.0f - tempSprite.anchorPoint.x) * tempSprite.size.x;
-    float top = (0.0f - tempSprite.anchorPoint.y) * tempSprite.size.y;
-    float bottom = (1.0f - tempSprite.anchorPoint.y) * tempSprite.size.y;
+    float left = (0.0f - this->anchorPoint.x) * this->size.x;
+    float right = (1.0f - this->anchorPoint.x) * this->size.x;
+    float top = (0.0f - this->anchorPoint.y) * this->size.y;
+    float bottom = (1.0f - this->anchorPoint.y) * this->size.y;
 
 
     enum { LB, LT, RB, RT };
@@ -144,14 +147,14 @@ MCB::Sprite MCB::Sprite::CreateSprite()
 
 
     SpriteVertex* vertexMap = nullptr;
-    result = tempSprite.vertBuff->Map(0, nullptr, (void**)&vertexMap);
+    result = this->vertBuff->Map(0, nullptr, (void**)&vertexMap);
     assert(SUCCEEDED(result) && "Sprite生成時のvertBuff->Mapエラー");
     memcpy(vertexMap, vertices, sizeof(vertices));
-    tempSprite.vertBuff->Unmap(0, nullptr);
+    this->vertBuff->Unmap(0, nullptr);
 
-    tempSprite.vbView.BufferLocation = tempSprite.vertBuff->GetGPUVirtualAddress();
-    tempSprite.vbView.SizeInBytes = sizeof(vertices);
-    tempSprite.vbView.StrideInBytes = sizeof(vertices[0]);
+    this->vbView.BufferLocation = this->vertBuff->GetGPUVirtualAddress();
+    this->vbView.SizeInBytes = sizeof(vertices);
+    this->vbView.StrideInBytes = sizeof(vertices[0]);
 
     D3D12_HEAP_PROPERTIES constHeapProp{};
     constHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -170,20 +173,17 @@ MCB::Sprite MCB::Sprite::CreateSprite()
         &constHeapProp,
         D3D12_HEAP_FLAG_NONE,
         &constResdesc,
-        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&tempSprite.constBuff)
+        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->constBuff)
     );
 
     assert(SUCCEEDED(result) && "Sprite生成時の定数バッファのCommittedResourceエラー");
     SpriteConstBufferDataTransform* constMap = nullptr;
-    result = tempSprite.constBuff->Map(0, nullptr, (void**)&constMap);
+    result = this->constBuff->Map(0, nullptr, (void**)&constMap);
     assert(SUCCEEDED(result) && "Sprite生成時のconstBuff->Mapエラー");
     Float4 tempcolor; tempcolor.x = 1; tempcolor.y = 1;tempcolor.z = 1;tempcolor.w = 1;
     constMap->color = tempcolor;
     constMap->mat = Sprite::matProje;
-    tempSprite.constBuff->Unmap(0,nullptr);
-
-
-    return tempSprite;
+    this->constBuff->Unmap(0,nullptr);
 }
 
 //void MCB::Sprite::SpriteCommonBeginDraw(const PipelineRootSignature& pipeline)
@@ -205,6 +205,7 @@ MCB::Sprite MCB::Sprite::CreateSprite()
 void MCB::Sprite::SpriteDraw(Texture& tex, float positionX, float positionY,
                             float size_x, float size_y)
 {
+    if (&tex == nullptr) return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 

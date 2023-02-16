@@ -28,7 +28,7 @@ namespace MCB
 			Float3 pos;
 			Float2 uv;
 		}SpriteVertex;
-
+		Sprite();
 
 		Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
 		D3D12_VERTEX_BUFFER_VIEW vbView{};
@@ -50,10 +50,11 @@ namespace MCB
 		bool isFlipX = false;
 		bool isFlipY = false;
 
+
 		void SpriteTransferVertexBuffer( Texture* tex = nullptr);
 		void SpriteUpdate();
 		void InitMatProje();
-		Sprite CreateSprite();
+		void CreateSprite();
 		//void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
 		void SpriteDraw(Texture& tex, float positionX = 0,float positionY = 0,

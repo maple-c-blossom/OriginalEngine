@@ -91,12 +91,7 @@ void MCB::Scene::LoadSound()
 
 void MCB::Scene::SpriteInit()
 {
-    sprite.InitMatProje();
-    sprite = sprite.CreateSprite();
-    zoomSprite.InitMatProje();
-    zoomSprite = zoomSprite.CreateSprite();
-    scopeSprite.InitMatProje();
-    scopeSprite = scopeSprite.CreateSprite();
+    postEffect->tex = debugTextTexture;
     debugText.Init(debugTextTexture->texture.get());
 
 }
@@ -208,15 +203,16 @@ void MCB::Scene::Update()
 void MCB::Scene::Draw()
 {
 
-    Skydorm.Draw();
-    ground.Draw();
+    //Skydorm.Draw();
+    //ground.Draw();
 
-    testAnimation.Draw();
+    //testAnimation.Draw();
 
 }
 
 void MCB::Scene::SpriteDraw()
 {
+    postEffect->Draw();
     sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
     debugText.Print(300, 300,2, "hogehoge");
     debugText.AllDraw();

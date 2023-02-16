@@ -339,6 +339,9 @@
     <ClCompile Include="Engin\Texture\TextureManager.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Sprite\PostEffect.cpp">
+      <Filter>ソース ファイル\Engin\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -543,6 +546,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Sprite\PostEffect.h">
+      <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
