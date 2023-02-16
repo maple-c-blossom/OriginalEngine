@@ -2,6 +2,7 @@ cbuffer cbuff0 : register(b0)
 {
     matrix viewproj;
     matrix world;
+    float4 color;
     float3 cameraPos;
 }
 
@@ -11,7 +12,6 @@ cbuffer cbuff1 : register(b1)
     float3 m_diffuse : packoffset(c1);
     float3 m_specular : packoffset(c2);
     float m_alpha : packoffset(c2.w);
-    float4 color : packoffset(c3);
 }
 static const int DIRLIGHT_NUM = 3;
 struct DirLight

@@ -34,24 +34,73 @@ void MCB::Scene::Initialize()
 void MCB::Scene::Object3DInit()
 {
 
-    ground;
     ground.Init();
     ground.model = groundModel.get();
-    ground.scale = { 4,4,4 };
+    ground.scale = { 1,1,1 };
     ground.position = { 0,-3,0 };
-    ;
+    ground.rotasion = { 0,0,ConvertRadius(5)};
+    ground.SetCollider(new PlaneCollider{{0,1,0},-3});
+    ground.camera = viewCamera;
+
+
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
+    Skydorm.camera = viewCamera;
 
-    testAnimation.Init();
-    testAnimation.model = SpherModel.get();
-    testAnimation.scale = { 1,1,1 };
-    testAnimation.position = { -4,-2,5 };
-    testAnimation.rotasion = { ConvertRadius(90),0,0 };
+    testsphere.Init();
+    testsphere.model = SpherModel.get();
+    testsphere.scale = { 1,1,1 };
+    testsphere.position = { -4,0,0 };
+    testsphere.rotasion = { ConvertRadius(90),0,0 };
+    testsphere.SetCollider(new SphereCollider);
+    testsphere.camera = viewCamera;
 
+    testsphere2.Init();
+    testsphere2.model = SpherModel.get();
+    testsphere2.scale = { 1,1,1 };
+    testsphere2.position = { 0,0,0 };
+    testsphere2.rotasion = { 0,0,0 };
+    testsphere2.SetCollider(new SphereCollider);
+    testsphere2.camera = viewCamera;
 
+    testsphere3.Init();
+    testsphere3.model = SpherModel.get();
+    testsphere3.scale = { 1,1,1 };
+    testsphere3.position = { -4,0,0 };
+    testsphere3.rotasion = { 0,0,0 };
+    testsphere3.SetCollider(new SphereCollider);
+    testsphere3.camera = viewCamera;
+
+    testsphere4.Init();
+    testsphere4.model = SpherModel.get();
+    testsphere4.scale = { 1,1,1 };
+    testsphere4.position = { 0,3,0 };
+    testsphere4.rotasion = { 0,0,0 };
+    testsphere4.SetCollider(new SphereCollider);
+    testsphere4.camera = viewCamera;
+
+    testRay.Init();
+    testRay.model = SpherModel.get();
+    testRay.scale = { 0.02f,20,0.02f };
+    testRay.position = { 0,0,0 };
+    testRay.rotasion = { 0,0,0 };
+    testRay.SetCollider(new RayCollider({0,+20,0},{0,-1,0}));
+    testRay.camera = viewCamera;
+
+    rayStart.Init();
+    rayStart.model = SpherModel.get();
+    rayStart.scale = { 1.0f,1,1.0f };
+    rayStart.position = { 0,  testRay.position.y + 20,0 };
+    rayStart.rotasion = { 0,0,0 };
+    //rayStart.SetCollider(new RayCollider({ 0,+10,0 }, { 0,-1,0 }));
+    rayStart.camera = viewCamera;
+
+    triangle.triangle.SetCollider(new TriangleCollider({0,0,0},{0,0,-1},{triangle.PointA,triangle.PointB,triangle.PointC}));
+    triangle.triangle.camera = viewCamera;
+    triangle.triangle.position = { 0,3,0 };
+   
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -113,7 +162,9 @@ IScene* MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-    testAnimation.rotasion.y += 0.15f;
+
+
+    testsphere.rotasion.y += 0.15f;
     if (input->IsKeyDown(DIK_W))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
@@ -128,13 +179,76 @@ void MCB::Scene::Update()
  
 
 
-    if (input->IsKeyDown(DIK_A))
+    
+
+    if (input->IsKeyDown(DIK_J))
     {
-        testAnimation.position.x -= 1;
+        testRay.position.x -= 0.1f;
     }
+    if (input->IsKeyDown(DIK_L))
+    {
+        testRay.position.x += 0.1f;
+    }
+
+    if (isDown) { 
+        testRay.position.y -= 0.1f; 
+        if (testRay.position.y <= -30)
+        {
+            isDown = false;
+        }
+    }
+    else {
+        testRay.position.y += 0.1f;
+        if (testRay.position.y >= 0)
+        {
+            isDown = true;
+        }
+    }
+    if (!isRight) {
+        testsphere4.position.x -= 0.15f;
+        if (testsphere4.position.x <= 0)
+        {
+            isRight = true;
+        }
+    }
+    else {
+        testsphere4.position.x += 0.15f;
+        if (testsphere4.position.x >= 6)
+        {
+            isRight = false;
+        }
+    }
+    if (SphereisDown) {
+        testsphere.position.y -= 0.05f;
+        if (testsphere.position.y <= -5)
+        {
+            SphereisDown = false;
+        }
+    }
+    else {
+        testsphere.position.y += 0.05f;
+        if (testsphere.position.y >= 0)
+        {
+            SphereisDown = true;
+        }
+    }
+
+    if (input->IsKeyDown(DIK_W))
+    {
+        testsphere.position.z += 0.1f;
+    }
+    if (input->IsKeyDown(DIK_S))
+    {
+        testsphere.position.z -= 0.1f;
+    }
+    
     if (input->IsKeyDown(DIK_D))
     {
-        testAnimation.position.x += 1;
+        testsphere.position.x += 0.1f;
+    }
+    if (input->IsKeyDown(DIK_A))
+    {   
+        testsphere.position.x -= 0.1f;
     }
 
     if (input->IsKeyTrigger(DIK_1))
@@ -152,11 +266,11 @@ void MCB::Scene::Update()
 
     if (input->IsKeyTrigger(DIK_5))
     {
-        testAnimation.model = SpherModel.get();
+        testsphere.model = SpherModel.get();
     }
     else if (input->IsKeyTrigger(DIK_6))
     {
-        testAnimation.model = SpherModel2.get();
+        testsphere.model = SpherModel2.get();
     }
 
     if (input->gamePad->IsButtonTrigger(GAMEPAD_B))
@@ -187,14 +301,26 @@ void MCB::Scene::Update()
         }
         soundManager.SetVolume(volume, test2Sound);
     }
-
+    rayStart.position = { 0,  testRay.position.y + 20,0 };
     lights->UpDate();
 
 
-
     MatrixUpdate();
+    if (!input->IsKeyDown(DIK_P))
+    {
+        RayCastHit info;
+        Ray* rayA = dynamic_cast<Ray*>(testRay.GetCollider());
+        if (CollisionManager::GetInstance()->Raycast(*rayA, &info))
+        {
+            info.objctPtr->OnCollision(CollisionInfomation(info.objctPtr, info.collPtr, info.inter));
+        }
+        else
+        {
 
-    if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+        }
+    }
+    CollisionManager::GetInstance()->CheckAllCollision();
+    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
     }
@@ -203,10 +329,16 @@ void MCB::Scene::Update()
 void MCB::Scene::Draw()
 {
 
-    //Skydorm.Draw();
-    //ground.Draw();
-
-    //testAnimation.Draw();
+    Skydorm.Draw();
+    ground.Draw();
+    triangle.DrawTriangle(viewCamera);
+    testsphere.Draw();
+    testsphere2.Draw();
+    testsphere3.Draw();
+    testsphere4.Draw();
+    testRay.Draw();
+    rayStart.Draw();
+    
 
 }
 
@@ -236,14 +368,14 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("SceneChange: [SPACE] or [GamePad A]");
+            ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
             ImGui::Text("LightMove: [W],[S]");
             ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
             ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");
             ImGui::Text("LightChenge:[1 (Dir)] or [2 (Point)] or [3 (Spot)] ");
             ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
             ImGui::Text("SmoothChange:[5 (NoSmooth)] or [6 (Smooth)]");
-            ImGui::Text("SpherMove:[A],[D]");
+            ImGui::Text("RayCastOff[P]");
             ImGui::Text("SoundPlay:[GamePad B] or [GamePad Y]");
             ImGui::Text("SoundLoopPlay:SoundPlayButtom + [GamePad LB]");
             ImGui::Text("SoundStop:[GamePad X]");
@@ -259,10 +391,15 @@ void MCB::Scene::ImGuiUpdate()
 void MCB::Scene::MatrixUpdate()
 {
     viewCamera->Update();
-    Skydorm.Update(viewCamera);
-    ground.Update(viewCamera);
-    testAnimation.Update(viewCamera, false);
-
+    Skydorm.Update();
+    ground.Update();
+    testsphere.Update(false);
+    testsphere2.Update(false);
+    testsphere3.Update(false);
+    testsphere4.Update(false);
+    testRay.Update(false);
+    rayStart.Update(false);
+    
 
     //testParticle.Updata(matView, matProjection, true);
 }

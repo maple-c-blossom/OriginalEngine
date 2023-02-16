@@ -5,6 +5,7 @@
 namespace MCB
 {
 	double Lerp(double startPos, double endPos, double maxTime, double time);
+	double Lerp(double startPos, double endPos, double time);
 	double InQuad(double startPos, double endPos, double maxTime, double time);
 	double OutQuad(double startPos, double endPos, double maxTime, double time);
 	double InOutQuad(double startPos, double endPos, double maxTime, double time);
@@ -29,8 +30,8 @@ namespace MCB
 		Model triangleMaterial;
 		Object3d triangle;
 
-		Float3 PointA = { -0.5f,-0.5f,1.0f }; Float3 PointB = { -0.5f,0.5f,1.0f };
-		Float3 PointC = { 0.5f,-0.5f,1.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
+		Float3 PointA = { -1.5f,-0.5f,4.0f }; Float3 PointB = { 4.5f,0.5f,1.0f };
+		Float3 PointC = { 0.5f,-3.5f,-4.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
 		void  DrawTriangle(ICamera* camera);
 
 	};

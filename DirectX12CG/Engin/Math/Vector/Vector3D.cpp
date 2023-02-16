@@ -8,6 +8,12 @@ MCB::Vector3D::Vector3D(Float3 start, Float3 end)
 	vec = end - start;
 }
 
+MCB::Vector3D::Vector3D(Vector3D start, Vector3D end)
+{
+	Vector3D temp = end - start;
+	vec = temp.vec;
+}
+
 
 
 MCB::Vector3D::Vector3D()
@@ -74,6 +80,15 @@ Vector3D MCB::Vector3D::GetV3Cross(Vector3D avector, Vector3D bvector)
 	return temp;
 }
 
+DirectX::XMVECTOR MCB::Vector3D::ConvertXMVEC()
+{
+	DirectX::XMVECTOR temp;
+	temp.m128_f32[0] = this->vec.x;
+	temp.m128_f32[1] = this->vec.y;
+	temp.m128_f32[2] = this->vec.z;
+	return temp;
+}
+
 Vector3D MCB::Vector3D::GetUpVec(Vector3D RightVec, Vector3D frontVec)
 {
 	Vector3D ans;
@@ -135,6 +150,14 @@ Vector3D& MCB::Vector3D::operator=(const Float3 a)
 	this->vec.x = a.x;
 	this->vec.y = a.y;
 	this->vec.z = a.z;
+	return *this;
+}
+
+Vector3D& MCB::Vector3D::operator=(const DirectX::XMVECTOR a)
+{
+	this->vec.x = a.m128_f32[0];
+	this->vec.y = a.m128_f32[1];
+	this->vec.z = a.m128_f32[2];
 	return *this;
 }
 

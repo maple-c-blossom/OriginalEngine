@@ -39,6 +39,8 @@ namespace MCB
 		Vector3D SetRotationVector(Quaternion rotationQuaternion, Vector3D PositionVec);
 		//âΩÇÃÇΩÇﬂÇ…çÏÇ¡ÇΩÇÃçÏÇ¡ÇΩÇÒÇ≈ÇµÇÂÇ§Ç©ÇÀ
 		Vector3D SetRotationVector(Quaternion rotationQuaternion, Quaternion PositionVec);
+
+		Quaternion DirToDir(Vector3D u, Vector3D v);
 		//ê≥ãKâªÇ∑ÇÈ
 		void Normalize();
 		//ê≥ãKâªÇµÇΩílÇï‘Ç∑

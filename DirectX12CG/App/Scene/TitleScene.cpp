@@ -21,10 +21,11 @@ MCB::IScene* MCB::TitleScene::GetNextScene()
 
 void MCB::TitleScene::MatrixUpdate()
 {
- 
+    //play.UpdateMatrix();
+    camera.Update();
     Skydorm.Update(viewCamera);
     ground.Update(viewCamera);
-    testAnimation.AnimationUpdate(viewCamera);
+    testsphere.AnimationUpdate(viewCamera);
     test2Animation.AnimationUpdate(viewCamera);
 }
 
@@ -32,11 +33,11 @@ void MCB::TitleScene::Update()
 {
 
     lights->UpDate();
-    if (input->IsKeyTrigger(DIK_SPACE) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
     }
-
+    play.Update();
     MatrixUpdate();
 }
 
@@ -45,8 +46,9 @@ void MCB::TitleScene::Draw()
     //3Dオブジェクト
     Skydorm.Draw();
     ground.Draw();
+    play.Draw();
     pipeline->SetFbxPipeLine();
-    testAnimation.AnimationDraw();
+    testsphere.AnimationDraw();
     test2Animation.AnimationDraw();
     pipeline->SetObjPipeLine();
 
@@ -74,7 +76,8 @@ void MCB::TitleScene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("SceneChange: [SPACE] or [GamePad A]");
+            ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
+            ImGui::Text("sphereMove: [WASD]");
             ImGui::TreePop();
         }
     }
@@ -120,6 +123,8 @@ void MCB::TitleScene::LoadModel()
 
     skydomeModel = std::make_unique<Model>("skydome");
 
+    sphereModel = std::make_unique<Model>("sphere");
+
 
     animModel = std::make_unique<AnimationModel>();
     animModel->Load("gamewsdsa");
@@ -143,27 +148,36 @@ void MCB::TitleScene::LoadSound()
 void MCB::TitleScene::Object3DInit()
 {
 
-
-    ground;
     ground.Init();
     ground.model = groundModel.get();
-    ground.scale = { 4,4,4 };
-    ground.position = { 0,0,0 };
-    ;
+    ground.scale = { 1,1,1 };
+    ground.position = { 0,-3,0 };
+    ground.rotasion = { 0,0,ConvertRadius(5) };
+    ground.SetCollider(new MeshCollider(groundModel.get()));
+    ground.camera = viewCamera;
+
+    play.Init();
+    play.model = sphereModel.get();
+    play.position = { 0,3,0 };
+    play.camera = viewCamera;
+
     Skydorm;
     Skydorm.Init();
     Skydorm.model = skydomeModel.get();
     Skydorm.scale = { 4,4,4 };
+    Skydorm.camera = viewCamera;
 
-    testAnimation.Init();
-    //testAnimation.model = BoxModel;
-    testAnimation.animationModel = animModel.get();
-    testAnimation.scale = { 3,3,3 };
-    testAnimation.position = { 0,4,10 };
-    testAnimation.rotasion.y = ConvertRadius(90);
-    
+    testsphere.Init();
+    //testsphere.model = BoxModel;
+    testsphere.animationModel = animModel.get();
+    testsphere.scale = { 3,3,3 };
+    testsphere.position = { 0,4,30 };
+    testsphere.rotasion.y = ConvertRadius(90);
+    testsphere.camera = viewCamera;
+
     test2Animation.animationModel = anim2Model.get();
     test2Animation.scale = { 3,3,3 };
-    test2Animation.position = { 10,4,10 };
+    test2Animation.position = { 10,4,30 };
     test2Animation.rotasion.y = ConvertRadius(90);
+    test2Animation.camera = viewCamera;
 }

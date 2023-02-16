@@ -18,7 +18,7 @@
 #pragma endregion ïWèÄ.h include
 
 #pragma region é©çÏ.h include
-
+#include "CollisionManager.h"
 #include "Input.h"
 #include "DxWindow.h"
 #include "Dx12.h"
@@ -49,6 +49,14 @@
 #include "ICamera.h"
 #include "TextureManager.h"
 #include <MyImgui/imgui.h>
+#include "SphereCollider.h"
+#include "PlaneCollider.h"
+#include "RayCollider.h"
+#include "TriangleCollider.h"
+#include "BoxCollider.h"
+#include "MeshCollider.h"
+
+
 #include "PostEffect.h"
 #pragma endregion é©çÏ.h include
 #pragma region pragma comment
