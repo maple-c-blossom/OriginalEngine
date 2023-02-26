@@ -348,3 +348,5 @@ void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positi
     //•`‰æƒRƒ}ƒ“ƒh
     dx12->commandList->DrawInstanced(4, 1, 0, 0);
 }
+
+

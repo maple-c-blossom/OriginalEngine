@@ -106,9 +106,6 @@
     <Filter Include="ヘッダー ファイル\Engin\Pipeline">
       <UniqueIdentifier>{c3dcf2c8-3deb-430d-9685-43005fac84c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engin\Texture">
-      <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Math">
       <UniqueIdentifier>{ae8be9eb-5e9f-499c-a461-2979f9f27ae3}</UniqueIdentifier>
     </Filter>
@@ -171,6 +168,9 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Engin\Collider">
       <UniqueIdentifier>{82d29c91-4bed-4af8-99fe-360042030ac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engin\Texture">
+      <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -376,7 +376,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Query.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,7 +620,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Query.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
