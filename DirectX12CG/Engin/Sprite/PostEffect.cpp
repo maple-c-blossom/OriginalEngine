@@ -21,7 +21,9 @@ void MCB::PostEffect::Init()
 {
 	HRESULT result = S_FALSE;
 
-	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+
+	tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);
+	/*CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM,
 		(UINT)DxWindow::window_width,
 		(UINT)DxWindow::window_height,
@@ -63,7 +65,7 @@ void MCB::PostEffect::Init()
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
-	Dx12::GetInstance()->device->CreateShaderResourceView(texBuff.Get(), &srvDesc,descHeapSRV->GetCPUDescriptorHandleForHeapStart());
+	Dx12::GetInstance()->device->CreateShaderResourceView(texBuff.Get(), &srvDesc,descHeapSRV->GetCPUDescriptorHandleForHeapStart());*/
 
 
 
@@ -72,22 +74,26 @@ void MCB::PostEffect::Init()
 void MCB::PostEffect::Draw()
 {
 
+    if (&tex == nullptr) return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
     Sprite tempsprite = *this;
+
     tempsprite.position.x = 0;
     tempsprite.position.y = 0;
     tempsprite.position.z = 0;
+
     tempsprite.SpriteUpdate();
 
 
-      D3D12_RESOURCE_DESC resdesc = tex->texture->texBuff.texbuff->GetDesc();
-     tempsprite.size.x = (float)resdesc.Width;
-    tempsprite.size.y = (float)resdesc.Height;
+        D3D12_RESOURCE_DESC resdesc = tex->texture->texBuff.texbuff->GetDesc();
 
-    if (size.x != 0 || size.y != 0)
-    {
+            tempsprite.size.x = (float)resdesc.Width;
+
+            tempsprite.size.y = (float)resdesc.Height;
+
+
         if (size.x != 0)
         {
             tempsprite.size.x = size.x;
@@ -97,7 +103,7 @@ void MCB::PostEffect::Draw()
         {
             tempsprite.size.y = size.y;
         }
-    }
+
 
 
 
@@ -108,10 +114,10 @@ void MCB::PostEffect::Draw()
     }
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descHeapSRV->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    //srvGpuHandle.ptr += tex->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);

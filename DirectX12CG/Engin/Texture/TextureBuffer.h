@@ -28,7 +28,10 @@ namespace MCB
 
         void SetNoTextureFileTexResourceDesc();
 
+        void SetNoTextureFileTexResourceDescForPostEffect();
+
         void TransferMipmatToTexBuff(TexImgData teximg,HRESULT& result);
+        void TransferMipmatToTexBuff(HRESULT& result);
     };
 }
 

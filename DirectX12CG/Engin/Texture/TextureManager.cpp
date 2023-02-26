@@ -57,7 +57,7 @@ TextureCell* MCB::TextureManager::LoadTexture(const std::string& directoryPath, 
 	return textures.rbegin()->get();
 }
 
-TextureCell* MCB::TextureManager::CreateNoTextureFileIsTexture()
+TextureCell* MCB::TextureManager::CreateNoTextureFileIsTexture(bool postEffect)
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
 	int tempin = 0;
@@ -69,7 +69,7 @@ TextureCell* MCB::TextureManager::CreateNoTextureFileIsTexture()
 			continue;
 		}
 	}
-	temp->texture->CreateNoTextureFileIsTexture(tempin);
+	temp->texture->CreateNoTextureFileIsTexture(tempin, postEffect);
 	textures.push_back(move(temp));
 	//assert(textures.size() < 20);
 	//texincrement.push_back(tempin);

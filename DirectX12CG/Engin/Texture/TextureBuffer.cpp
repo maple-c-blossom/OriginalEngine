@@ -1,7 +1,9 @@
 #include "TextureBuffer.h"
 #include <d3dx12.h>
+#include <memory>
+#include <array>
 using namespace DirectX;
-
+using namespace std;
 HRESULT MCB::TextureBuffer::CommitResouce(D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue)
 {
     return Dx12::GetInstance()->device->CreateCommittedResource(&texHeapProp, flags, &texresDesc, resouceState, clearValue, IID_PPV_ARGS(&texbuff));
@@ -51,10 +53,37 @@ void MCB::TextureBuffer::SetNoTextureFileTexResourceDesc()
     texresDesc.SampleDesc.Count = 1;
 }
 
+void MCB::TextureBuffer::SetNoTextureFileTexResourceDescForPostEffect()
+{
+    texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
+        DXGI_FORMAT_R8G8B8A8_UNORM,
+        (UINT)DxWindow::window_width,
+        (UINT)DxWindow::window_height,
+        1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
+    );
+}
+
+
 void MCB::TextureBuffer::TransferMipmatToTexBuff(TexImgData teximg,HRESULT& result)
 {
-
     //テクスチャバッファにデータ転送
     result = texbuff->WriteToSubresource(0, nullptr, &teximg.imageData[0], sizeof(Float4) * (UINT)teximg.textureWidth, sizeof(Float4) * (UINT)teximg.imageDataCount);
     assert(SUCCEEDED(result));
+}
+
+
+void MCB::TextureBuffer::TransferMipmatToTexBuff(HRESULT& result)
+{
+    const UINT pixelCount = DxWindow::window_width * DxWindow::window_height;
+    const UINT rowPitch = sizeof(UINT) * DxWindow::window_width;
+    const UINT depthPitch = rowPitch * DxWindow::window_height;
+    unique_ptr<std::array<unique_ptr<UINT>, pixelCount>> imgs = make_unique<std::array<unique_ptr<UINT>, pixelCount>>();;
+    for (auto& itr : *imgs.get())
+    {
+        itr = make_unique<UINT>();
+        *itr = 0xff0000ff;
+    }
+
+    result = texbuff->WriteToSubresource(0, nullptr, imgs.get(), rowPitch, depthPitch);
+    assert(SUCCEEDED(result) && "PostEffectImgError");
 }

@@ -141,7 +141,7 @@ void MCB::Scene::LoadSound()
 
 void MCB::Scene::SpriteInit()
 {
-    postEffect->tex = debugTextTexture;
+    //postEffect->tex = debugTextTexture;
     debugText.Init(debugTextTexture->texture.get());
 
 }
@@ -330,7 +330,7 @@ void MCB::Scene::Update()
 void MCB::Scene::Draw()
 {
 
-  /*  Skydorm.Draw();
+    Skydorm.Draw();
     ground.Draw();
     triangle.DrawTriangle(viewCamera);
     testsphere.Draw();
@@ -338,7 +338,7 @@ void MCB::Scene::Draw()
     testsphere3.Draw();
     testsphere4.Draw();
     testRay.Draw();
-    rayStart.Draw();*/
+    rayStart.Draw();
     
 
 }
