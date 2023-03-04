@@ -77,11 +77,10 @@ void MCB::TextureBuffer::TransferMipmatToTexBuff(HRESULT& result)
     const UINT pixelCount = DxWindow::window_width * DxWindow::window_height;
     const UINT rowPitch = sizeof(UINT) * DxWindow::window_width;
     const UINT depthPitch = rowPitch * DxWindow::window_height;
-    unique_ptr<std::array<unique_ptr<UINT>, pixelCount>> imgs = make_unique<std::array<unique_ptr<UINT>, pixelCount>>();;
+    unique_ptr<std::array<UINT, pixelCount>> imgs = make_unique<std::array<UINT, pixelCount>>();;
     for (auto& itr : *imgs.get())
     {
-        itr = make_unique<UINT>();
-        *itr = 0xff0000ff;
+        itr = 0xff0000ff;
     }
 
     result = texbuff->WriteToSubresource(0, nullptr, imgs.get(), rowPitch, depthPitch);

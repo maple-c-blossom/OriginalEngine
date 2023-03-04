@@ -8,7 +8,7 @@ using namespace std;
 using namespace DirectX;
 MCB::PostEffect::PostEffect()
 {
-	size = { 500,500 };
+	size = { 0,0 };
 	position = { 0,0,0 };
 	color = { 1,1,1,1 };
 	anchorPoint = { 0,0 };
@@ -20,7 +20,7 @@ MCB::PostEffect::PostEffect()
 void MCB::PostEffect::Init()
 {
 	HRESULT result = S_FALSE;
-
+	
 
 	tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);
 	/*CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -87,29 +87,29 @@ void MCB::PostEffect::Draw()
     tempsprite.SpriteUpdate();
 
 
-        D3D12_RESOURCE_DESC resdesc = tex->texture->texBuff.texbuff->GetDesc();
+    D3D12_RESOURCE_DESC resdesc = tex->texture->texBuff.texbuff->GetDesc();
 
-            tempsprite.size.x = (float)resdesc.Width;
+    tempsprite.size.x = (float)resdesc.Width;
 
-            tempsprite.size.y = (float)resdesc.Height;
+    tempsprite.size.y = (float)resdesc.Height;
 
 
-        if (size.x != 0)
-        {
-            tempsprite.size.x = size.x;
-        }
+    if (size.x != 0)
+    {
+        tempsprite.size.x = size.x;
+    }
 
-        if (size.y != 0)
-        {
-            tempsprite.size.y = size.y;
-        }
+    if (size.y != 0)
+    {
+        tempsprite.size.y = size.y;
+    }
 
 
 
 
     if (tempsprite.size.x != this->size.x || tempsprite.size.y != this->size.y)
     {
-        tempsprite.SpriteTransferVertexBuffer();
+        tempsprite.SpriteTransferVertexBuffer(tex->texture.get());
         this->size = tempsprite.size;
     }
 

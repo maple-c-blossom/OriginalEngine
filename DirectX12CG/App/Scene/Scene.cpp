@@ -330,15 +330,15 @@ void MCB::Scene::Update()
 void MCB::Scene::Draw()
 {
 
-    Skydorm.Draw();
-    ground.Draw();
-    triangle.DrawTriangle(viewCamera);
-    testsphere.Draw();
-    testsphere2.Draw();
-    testsphere3.Draw();
-    testsphere4.Draw();
-    testRay.Draw();
-    rayStart.Draw();
+    //Skydorm.Draw();
+    //ground.Draw();
+    //triangle.DrawTriangle(viewCamera);
+    //testsphere.Draw();
+    //testsphere2.Draw();
+    //testsphere3.Draw();
+    //testsphere4.Draw();
+    //testRay.Draw();
+    //rayStart.Draw();
     
 
 }
@@ -346,8 +346,8 @@ void MCB::Scene::Draw()
 void MCB::Scene::SpriteDraw()
 {
     postEffect->Draw();
-    sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
-    debugText.Print(300, 300,2, "hogehoge");
+    //sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
+    //debugText.Print(300, 300,2, "hogehoge");
     debugText.AllDraw();
 }
 
