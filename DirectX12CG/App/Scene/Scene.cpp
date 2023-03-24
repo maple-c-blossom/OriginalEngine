@@ -329,17 +329,17 @@ void MCB::Scene::Update()
 
 void MCB::Scene::Draw()
 {
-
-    //Skydorm.Draw();
-    //ground.Draw();
-    //triangle.DrawTriangle(viewCamera);
-    //testsphere.Draw();
-    //testsphere2.Draw();
-    //testsphere3.Draw();
-    //testsphere4.Draw();
-    //testRay.Draw();
-    //rayStart.Draw();
-    
+    postEffect->PreDraw();
+    Skydorm.Draw();
+    ground.Draw();
+    triangle.DrawTriangle(viewCamera);
+    testsphere.Draw();
+    testsphere2.Draw();
+    testsphere3.Draw();
+    testsphere4.Draw();
+    testRay.Draw();
+    rayStart.Draw();
+    postEffect->PostDraw();
 
 }
 

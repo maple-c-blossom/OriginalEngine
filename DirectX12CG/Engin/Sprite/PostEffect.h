@@ -13,12 +13,14 @@ namespace MCB
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV;
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV;
 		Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff;
-
+		const float clearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
 	public:
 		PostEffect();
 		TextureCell* tex;
 		void Init();
+		void PreDraw();
 		void Draw();
+		void PostDraw();
 	};
 }
 

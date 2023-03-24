@@ -80,7 +80,7 @@ void MCB::TextureBuffer::TransferMipmatToTexBuff(HRESULT& result)
     unique_ptr<std::array<UINT, pixelCount>> imgs = make_unique<std::array<UINT, pixelCount>>();;
     for (auto& itr : *imgs.get())
     {
-        itr = 0xff0000ff;
+        itr = 0x00EEEEff;
     }
 
     result = texbuff->WriteToSubresource(0, nullptr, imgs.get(), rowPitch, depthPitch);
