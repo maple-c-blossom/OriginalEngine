@@ -21,53 +21,26 @@ void MCB::PostEffect::Init()
 {
 	HRESULT result = S_FALSE;
 	
+    ID3D12Device* device = Dx12::GetInstance()->device.Get();//毎回GetInstance呼ぶのは非効率なのでポインタ確保
+	tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//レンダーテクスチャ用のテクスチャを生成(これもTextureManager管理。SRVHeap複数作ったら動かなくなったため)
+    D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
+    rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+    rtvDescHeapDesc.NumDescriptors = 1;
+    result = device->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
+    assert(SUCCEEDED(result));
+    device->CreateRenderTargetView(tex->texture->texBuff.texbuff.Get(), nullptr, descHeapRTV->GetCPUDescriptorHandleForHeapStart());
+    //深度バッファ作成
+    CD3DX12_RESOURCE_DESC depthResDesc =
+        CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
+            DxWindow::GetInstance()->window_width,
+            DxWindow::GetInstance()->window_height,
+            1,0,
+            1,0,
+            D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+    //result = device->CreateCommittedResource(
+    //    &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
 
-	tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);
-	/*CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-		DXGI_FORMAT_R8G8B8A8_UNORM,
-		(UINT)DxWindow::window_width,
-		(UINT)DxWindow::window_height,
-		1, 0, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
-	);
-	result = Dx12::GetInstance()->device->CreateCommittedResource(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
-			D3D12_MEMORY_POOL_L0),
-		D3D12_HEAP_FLAG_NONE,
-		&texresDesc,
-		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-		nullptr,
-		IID_PPV_ARGS(&texBuff));
-	assert(SUCCEEDED(result));
-
-	{
-		const UINT pixelCount = DxWindow::window_width * DxWindow::window_height;
-		const UINT rowPitch = sizeof(UINT) * DxWindow::window_width;
-		const UINT depthPitch = rowPitch * DxWindow::window_height;
-		unique_ptr<std::array<unique_ptr<UINT>, pixelCount>> imgs = make_unique<std::array<unique_ptr<UINT>, pixelCount>>();;
-		for (auto& itr : *imgs.get())
-		{
-			itr = make_unique<UINT>();
-			*itr = 0xff0000ff;
-		}
-
-		result = texBuff->WriteToSubresource(0, nullptr, imgs.get(), rowPitch, depthPitch);
-		assert(SUCCEEDED(result) && "PostEffectImgError");
-	}
-
-	D3D12_DESCRIPTOR_HEAP_DESC srvDescheapDesc = {};
-	srvDescheapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-	srvDescheapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	srvDescheapDesc.NumDescriptors = 1;
-	result = Dx12::GetInstance()->device->CreateDescriptorHeap(&srvDescheapDesc, IID_PPV_ARGS(&descHeapSRV));
-	assert(SUCCEEDED(result) && "PostEffectCreateDescriptorHeapError");
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
-	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = 1;
-	Dx12::GetInstance()->device->CreateShaderResourceView(texBuff.Get(), &srvDesc,descHeapSRV->GetCPUDescriptorHandleForHeapStart());*/
-
-
+    //)
 
 }
 
