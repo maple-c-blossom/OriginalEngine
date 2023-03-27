@@ -56,7 +56,7 @@ void MCB::TextureBuffer::SetNoTextureFileTexResourceDesc()
 void MCB::TextureBuffer::SetNoTextureFileTexResourceDescForPostEffect()
 {
     texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
-        DXGI_FORMAT_R8G8B8A8_UNORM,
+        DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
         (UINT)DxWindow::window_width,
         (UINT)DxWindow::window_height,
         1, 1, 1, 0, D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET
