@@ -372,11 +372,14 @@
     <ClCompile Include="Engin\Pipeline\Depth.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="App\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Query.cpp">
       <Filter>ソース ファイル\Engin\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Util\App.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Player.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -577,9 +580,6 @@
     <ClInclude Include="Engin\Texture\TextureManager.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="Engin\Util\resource.h">
-      <Filter>ヘッダー ファイル\Engin</Filter>
-    </ClInclude>
     <ClInclude Include="Engin\Sprite\PostEffect.h">
       <Filter>ヘッダー ファイル\Engin\Texture</Filter>
     </ClInclude>
@@ -616,11 +616,17 @@
     <ClInclude Include="Engin\Pipeline\Depth.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="App\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Query.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Player.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Util\App.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Util\resource.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
