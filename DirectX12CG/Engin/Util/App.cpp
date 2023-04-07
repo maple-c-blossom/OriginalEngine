@@ -1,3 +1,6 @@
+#define _CRTDBG_MAP_ALLOC 
+#include <crtdbg.h>
+#include <cstdlib>
 #include "App.h"
 
 void MCB::App::Init()
@@ -63,7 +66,11 @@ void MCB::App::Final()
 
 void MCB::App::Run()
 {
-    Init();
-    MainLoop();
-    Final();
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+    {
+        Init();
+        MainLoop();
+        Final();
+    }
+    _CrtDumpMemoryLeaks();
 }
