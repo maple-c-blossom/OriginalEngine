@@ -100,6 +100,7 @@ namespace MCB
 		void MatrixUpdate()override;
 		void Update() override;
 		void Draw() override;
+		void PostEffectDraw() override;
 		void SpriteDraw() override;
 		void ParticleDraw()override;
 		void CheckAllColision()override;

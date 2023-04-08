@@ -41,9 +41,9 @@ void MCB::TitleScene::Update()
     MatrixUpdate();
 }
 
-void MCB::TitleScene::Draw()
+void MCB::TitleScene::PostEffectDraw()
 {
-    //3Dオブジェクト
+    postEffect->PreDraw();
     Skydorm.Draw();
     ground.Draw();
     play.Draw();
@@ -51,12 +51,19 @@ void MCB::TitleScene::Draw()
     testsphere.AnimationDraw();
     test2Animation.AnimationDraw();
     pipeline->SetObjPipeLine();
+    postEffect->PostDraw();
+}
+
+void MCB::TitleScene::Draw()
+{
+    //3Dオブジェクト
+
 
 }
 
 void MCB::TitleScene::SpriteDraw()
 {
-
+    postEffect->Draw();
     debugText.AllDraw();
 }
 
@@ -113,7 +120,7 @@ void MCB::TitleScene::Initialize()
     lights->DefaultLightSet();
     lights->UpDate();
     Object3d::SetLights(lights);
-   
+    postEffect->Init();
 }
 
 void MCB::TitleScene::LoadModel()

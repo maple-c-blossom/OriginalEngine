@@ -329,6 +329,12 @@ void MCB::Scene::Update()
 
 void MCB::Scene::Draw()
 {
+  
+
+}
+
+void MCB::Scene::PostEffectDraw()
+{
     postEffect->PreDraw();
     Skydorm.Draw();
     ground.Draw();
@@ -340,13 +346,12 @@ void MCB::Scene::Draw()
     testRay.Draw();
     rayStart.Draw();
     postEffect->PostDraw();
-
 }
 
 void MCB::Scene::SpriteDraw()
 {
     postEffect->Draw();
-    //sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
+    sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
     //debugText.Print(300, 300,2, "hogehoge");
     debugText.AllDraw();
 }

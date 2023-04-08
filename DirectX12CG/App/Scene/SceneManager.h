@@ -20,6 +20,7 @@ namespace MCB
 		TextureCell* loadBackGroundTex;
 		Sprite loadSprite;
 		Sprite loadBackGround;
+		PostEffect postEffect;
 		ImguiManager imgui;
 		bool isInitialized = true;
 		int angle = 0;

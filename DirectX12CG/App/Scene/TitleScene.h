@@ -83,6 +83,7 @@ namespace MCB
 		//---------------
 		void MatrixUpdate() override;
 		void Update() override;
+		void PostEffectDraw() override;
 		void Draw() override;
 		void SpriteDraw() override;
 		void ParticleDraw() override;

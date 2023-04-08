@@ -26,6 +26,7 @@ void MCB::PostEffect::Init()
 	
     ID3D12Device* device = Dx12::GetInstance()->device.Get();//毎回GetInstance呼ぶのは非効率なのでポインタ確保
 	tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//レンダーテクスチャ用のテクスチャを生成(これもTextureManager管理。SRVHeap複数作ったら動かなくなったため)
+
     D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
     rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvDescHeapDesc.NumDescriptors = 1;
@@ -118,7 +119,7 @@ void MCB::PostEffect::Draw()
 
     if (tempsprite.size.x != this->size.x || tempsprite.size.y != this->size.y)
     {
-        tempsprite.SpriteTransferVertexBuffer(tex->texture.get());
+        tempsprite.SpriteTransferVertexBuffer(/*tex->texture.get()*/);
         this->size = tempsprite.size;
     }
 
