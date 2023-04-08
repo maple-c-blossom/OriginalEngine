@@ -93,7 +93,8 @@ void MCB::SceneManager::Update()
 
 void MCB::SceneManager::Draw()
 {
-	Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0,Alpha), scene->clearColor);
+		Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0, Alpha), scene->clearColor);
+
 	if (isInitialized)//ゲーム画面
 	{
 		//3D描画
@@ -102,6 +103,7 @@ void MCB::SceneManager::Draw()
 		scene->Getpipeline()->SetParticlePipeLine(Alpha);
 		scene->ParticleDraw();
 		//スプライト
+		Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0, Alpha), scene->clearColor);
 		scene->Getpipeline()->SetSpritePipeLine(Alpha);
 		scene->SpriteDraw();
 
