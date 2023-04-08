@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engin\Util\App.cpp" />
     <ClCompile Include="Engin\Collide\CollisionManager.cpp" />
     <ClCompile Include="Engin\Collide\BoxCollider.cpp" />
     <ClCompile Include="Engin\Collide\BaseCollider.cpp" />
@@ -152,6 +153,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engin\Util\App.h" />
     <ClInclude Include="Engin\Collide\CollisionManager.h" />
     <ClInclude Include="Engin\Collide\BoxCollider.h" />
     <ClInclude Include="Engin\Collide\BaseCollider.h" />
