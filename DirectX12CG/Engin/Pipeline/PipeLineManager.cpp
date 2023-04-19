@@ -6,7 +6,7 @@ MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 	for (int i = 0; i < spritePipeline.size(); i++) spritePipeline[i].CreateSpritePipeline(*depth, *rootpamrams, i);
 	for (int i = 0; i < particlePipeline.size(); i++) particlePipeline[i].CreateParticlePipeline(*depth, *rootpamrams, i);
 	for (int i = 0; i < fbxPipeline.size(); i++) fbxPipeline[i].CreateFbxPipeline(*depth, *rootpamrams, i);
-	for (int i = 0; i < fbxPipeline.size(); i++) postEffectPipeline[i].CreateFbxPipeline(*depth, *rootpamrams, i);
+	for (int i = 0; i < fbxPipeline.size(); i++) postEffectPipeline[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
 }
 
 void MCB::PipeLineManager::SetObjPipeLine(int blend)
@@ -54,6 +54,9 @@ MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(int pipelineSelect
 		break;
 	case 4:
 		return &fbxPipeline[blend];
+		break;
+	case 5:
+		return &postEffectPipeline[blend];
 		break;
 	default:
 		return &objPipeline[blend];

@@ -38,6 +38,8 @@ namespace MCB
 
 		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
 
+		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, int blendMode);
+
 		void SetBrendMode(int blendMode = Alpha);
 
 		void CommonBeginDraw(int toporogyType = TRIANGLESTRIP);

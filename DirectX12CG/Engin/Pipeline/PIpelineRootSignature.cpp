@@ -517,7 +517,7 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
 
 }
 
-void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& rootparam, int blendMode)
+void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, int blendMode)
 {
 
 
@@ -526,7 +526,7 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
     // 頂点シェーダの読み込みとコンパイル--------------------------------
 #pragma region 頂点シェーダの読み込みとコンパイル
 
-    shader.ShaderCompile(L"Resources\\Shaders\\FbxShader\\PostEffectVertexShader.hlsl", "main", VS);
+    shader.ShaderCompile(L"Resources\\Shaders\\PostEffectShader\\PostEffectVertexShader.hlsl", "main", VS);
 
 #pragma endregion 頂点シェーダの読み込みとコンパイル
     //------------------------------------------
@@ -542,7 +542,7 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
 
 #pragma region 頂点シェーダとピクセルシェーダをパイプラインに設定
 
-    pipeline.SetGpipleneDescAll(&shader);
+    pipeline.SetSpriteGpipleneDescAll(&shader);
 
 #pragma endregion 頂点シェーダとピクセルシェーダをパイプラインに設定
     //-----------------------------------

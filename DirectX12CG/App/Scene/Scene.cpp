@@ -346,6 +346,9 @@ void MCB::Scene::PostEffectDraw()
     testRay.Draw();
     rayStart.Draw();
     postEffect->PostDraw();
+
+    pipeline->SetPostEffectPipeLine();
+    postEffect->Draw();
 }
 
 void MCB::Scene::SpriteDraw()
