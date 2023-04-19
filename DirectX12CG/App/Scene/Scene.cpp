@@ -352,10 +352,12 @@ void MCB::Scene::PostEffectDraw()
 
 void MCB::Scene::SpriteDraw()
 {
-
     pipeline->SetPostEffectPipeLine();
     postEffect->Draw();
-    postEffect->Draw();
+
+    pipeline->SetSpritePipeLine();
+
+    //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
 
     //debugText.Print(300, 300,2, "hogehoge");

@@ -521,6 +521,7 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 {
 
 
+
     texSample.Init();
 
     // 頂点シェーダの読み込みとコンパイル--------------------------------
@@ -551,7 +552,8 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 #pragma region サンプルマスクとラスタライザステートの設定
     pipeline.SetSampleMask();
 
-    pipeline.SetAllAddRasterizerState();
+    pipeline.SetSpriteAllAddRasterizerState();
+
 #pragma endregion サンプルマスクとラスタライザステートの設定
     //------------------------------------
 
@@ -564,6 +566,7 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
     pipeline.SetRenderTargetWriteMask();
 
     pipeline.SetNormalBlendDesc();
+
     switch (blendMode)
     {
     case Alpha:
@@ -583,15 +586,14 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
         break;
     }
 
-
 #pragma endregion ブレンドステートの設定
     //--------------------------
 
     //頂点レイアウトの設定------------------
 #pragma region 頂点レイアウトの設定
 
-    pipeline.pipelineDesc.InputLayout.pInputElementDescs = shader.fbxinputLayout;
-    pipeline.pipelineDesc.InputLayout.NumElements = _countof(shader.fbxinputLayout);
+    pipeline.pipelineDesc.InputLayout.pInputElementDescs = shader.SpriteinputLayout;
+    pipeline.pipelineDesc.InputLayout.NumElements = _countof(shader.SpriteinputLayout);
 
 #pragma endregion 頂点レイアウトの設定
     //----------------------------
@@ -610,7 +612,7 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 #pragma endregion その他の設定
     //----------------
 
-    depth.SetDepthStencilState(pipeline.pipelineDesc);
+    depth.SetSpriteDepthStencilState(pipeline.pipelineDesc);
 
     //ルートシグネチャの生成--------------------------
 #pragma region ルートシグネチャの生成
