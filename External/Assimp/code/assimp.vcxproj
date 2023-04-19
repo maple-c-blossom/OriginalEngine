@@ -76,9 +76,21 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">assimp-vc143-mt</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)\External\Assimp\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <IncludePath>$(SolutionDir)\External\Assimp\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)\External\Assimp\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <IncludePath>$(SolutionDir)\External\Assimp\;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -117,7 +129,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -155,7 +167,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
@@ -194,7 +206,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
