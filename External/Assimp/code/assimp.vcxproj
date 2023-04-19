@@ -113,7 +113,7 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;OPENDDL_STATIC_LIBARY;ASSIMP_BUILD_NO_M3D_IMPORTER;ASSIMP_BUILD_NO_M3D_EXPORTER;WIN32_LEAN_AND_MEAN;UNICODE;_UNICODE;ASSIMP_BUILD_NO_C4D_IMPORTER;MINIZ_USE_UNALIGNED_LOADS_AND_STORES=0;ASSIMP_IMPORTER_GLTF_USE_OPEN3DGC=1;RAPIDJSON_HAS_STDSTRING=1;RAPIDJSON_NOMEMBERITERATORCLASS;_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;OPENDDLPARSER_BUILD;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
       <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\pugixml\src;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\rapidjson\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\unzip;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\contrib\openddlparser\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -245,9 +245,9 @@
   <ItemGroup>
     <CustomBuild Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)code/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" "-S$(SolutionDir)" "-B$(SolutionDir)" --check-stamp-file "$(SolutionDir)code/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -256,7 +256,7 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)code\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
@@ -880,15 +880,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Compiler\pstdint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\ZERO_CHECK.vcxproj">
-      <Project>{F00781C0-CD15-35BD-8F16-A75DCAA264FD}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <ProjectReference Include="..\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{5f06992f-a929-3789-b207-421f1e27339c}</Project>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{5F06992F-A929-3789-B207-421F1E27339C}</Project>
-      <Name>zlibstatic</Name>
+    <ProjectReference Include="..\ZERO_CHECK.vcxproj">
+      <Project>{f00781c0-cd15-35bd-8f16-a75dcaa264fd}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
