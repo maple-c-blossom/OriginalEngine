@@ -347,14 +347,17 @@ void MCB::Scene::PostEffectDraw()
     rayStart.Draw();
     postEffect->PostDraw();
 
-    pipeline->SetPostEffectPipeLine();
-    postEffect->Draw();
+
 }
 
 void MCB::Scene::SpriteDraw()
 {
+
+    pipeline->SetPostEffectPipeLine();
     postEffect->Draw();
-    sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);
+    postEffect->Draw();
+ /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
+
     //debugText.Print(300, 300,2, "hogehoge");
     debugText.AllDraw();
 }

@@ -36,7 +36,7 @@ void MCB::PipeLineManager::SetParticlePipeLine(int blend)
 void MCB::PipeLineManager::SetPostEffectPipeLine(int blend)
 {
 	if (blend >= spritePipeline.size())return;
-	spritePipeline[blend].CommonBeginDraw();
+	postEffectPipeline[blend].CommonBeginDraw();
 }
 
 MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(int pipelineSelect, int blend)
