@@ -172,6 +172,9 @@
     <Filter Include="ヘッダー ファイル\Engin\Texture">
       <UniqueIdentifier>{83cb4850-f526-4ed5-8554-d1dbc7d76fa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\PostEffectShader">
+      <UniqueIdentifier>{f19b099e-cf18-4a24-aaeb-75204cd701b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\main.cpp">
@@ -416,6 +419,12 @@
     <FxCompile Include="Resources\Shaders\FbxShader\FbxVertexShader.hlsl">
       <Filter>リソース ファイル\FbxShader\VertexShader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\PostEffectShader\postEffectPixelShader.hlsl">
+      <Filter>リソース ファイル\PostEffectShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\PostEffectShader\PostEffectVertexShader.hlsl">
+      <Filter>リソース ファイル\PostEffectShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engin\DirectX\DxWindow.h">
@@ -641,6 +650,9 @@
     </None>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli">
       <Filter>リソース ファイル\FbxShader\ShaderHeader</Filter>
+    </None>
+    <None Include="Resources\Shaders\PostEffectShader\PostEffectShaderHeader.hlsli">
+      <Filter>リソース ファイル\PostEffectShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
