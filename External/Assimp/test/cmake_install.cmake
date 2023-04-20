@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/test
+# Install script for directory: C:/K021G1118/CG2/DirectX12CG/External/Assimp/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/test/headercheck/cmake_install.cmake")
+  include("C:/K021G1118/CG2/DirectX12CG/External/Assimp/test/headercheck/cmake_install.cmake")
 
 endif()
 

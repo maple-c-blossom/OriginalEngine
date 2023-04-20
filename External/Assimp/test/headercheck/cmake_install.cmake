@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/test/headercheck
+# Install script for directory: C:/K021G1118/CG2/DirectX12CG/External/Assimp/test/headercheck
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

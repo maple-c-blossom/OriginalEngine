@@ -25,7 +25,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2BCF779C-2DAE-3BDE-B5C6-5F9F77FF65FA}</ProjectGuid>
+    <ProjectGuid>{A10CF591-00BD-3B5F-BA9E-4B62A1FFD29C}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\K021G1118\CG2\DirectX12CG\External\Assimp\include;C:\K021G1118\CG2\DirectX12CG\External\Assimp;C:\K021G1118\CG2\DirectX12CG\External\Assimp\code;C:\K021G1118\CG2\DirectX12CG\External\Assimp\.;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\K021G1118\CG2\DirectX12CG\External\Assimp\include;C:\K021G1118\CG2\DirectX12CG\External\Assimp;C:\K021G1118\CG2\DirectX12CG\External\Assimp\code;C:\K021G1118\CG2\DirectX12CG\External\Assimp\.;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -89,7 +89,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\K021G1118\CG2\DirectX12CG\External\Assimp\include;C:\K021G1118\CG2\DirectX12CG\External\Assimp;C:\K021G1118\CG2\DirectX12CG\External\Assimp\code;C:\K021G1118\CG2\DirectX12CG\External\Assimp\.;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -99,7 +99,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\.;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\K021G1118\CG2\DirectX12CG\External\Assimp\include;C:\K021G1118\CG2\DirectX12CG\External\Assimp;C:\K021G1118\CG2\DirectX12CG\External\Assimp\code;C:\K021G1118\CG2\DirectX12CG\External\Assimp\.;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -108,11 +108,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\CMakeLists.txt">
+    <CustomBuild Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/K021G1118/CG2/DirectX12CG/External/Assimp -BC:/K021G1118/CG2/DirectX12CG/External/Assimp --check-stamp-file C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -120,12 +120,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zconf.h.cmakein;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zconf.h.cmakein;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zlib.pc.cmakein;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/K021G1118/CG2/DirectX12CG/External/Assimp -BC:/K021G1118/CG2/DirectX12CG/External/Assimp --check-stamp-file C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -133,12 +133,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zconf.h.cmakein;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zconf.h.cmakein;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zlib.pc.cmakein;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/K021G1118/CG2/DirectX12CG/External/Assimp -BC:/K021G1118/CG2/DirectX12CG/External/Assimp --check-stamp-file C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -146,12 +146,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zconf.h.cmakein;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zconf.h.cmakein;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zlib.pc.cmakein;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/K021G1118/CG2/DirectX12CG/External/Assimp -BC:/K021G1118/CG2/DirectX12CG/External/Assimp --check-stamp-file C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -159,22 +159,22 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zconf.h.cmakein;C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlib.pc.cmakein;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zconf.h.cmakein;C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zlib.pc.cmakein;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckIncludeFileCXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckTypeSize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\ZERO_CHECK.vcxproj">
-      <Project>{F00781C0-CD15-35BD-8F16-A75DCAA264FD}</Project>
+    <ProjectReference Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\ZERO_CHECK.vcxproj">
+      <Project>{A2B18496-CDA4-36F6-8EED-0BDA87AEBDEB}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{5F06992F-A929-3789-B207-421F1E27339C}</Project>
+    <ProjectReference Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{E62DE168-957A-3088-9014-7E5679E4AD45}</Project>
       <Name>zlibstatic</Name>
     </ProjectReference>
   </ItemGroup>

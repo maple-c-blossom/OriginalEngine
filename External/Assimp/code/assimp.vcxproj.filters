@@ -1,1967 +1,1964 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Assimp.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Assimp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CApi\CInterfaceIOWrapper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\CApi\CInterfaceIOWrapper.cpp">
       <Filter>CApi</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Compression.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Compression.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\BaseImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\BaseImporter.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\BaseProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\BaseProcess.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\PostStepRegistry.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\PostStepRegistry.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\ImporterRegistry.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\ImporterRegistry.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\DefaultIOStream.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\DefaultIOStream.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\IOSystem.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\IOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\DefaultIOSystem.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\DefaultIOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\ZipArchiveIOSystem.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\ZipArchiveIOSystem.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Importer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Importer.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\SGSpatialSort.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\SGSpatialSort.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\VertexTriangleAdjacency.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\VertexTriangleAdjacency.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\SpatialSort.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\SpatialSort.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\SceneCombiner.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\SceneCombiner.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\ScenePreprocessor.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\ScenePreprocessor.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\SkeletonMeshBuilder.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\SkeletonMeshBuilder.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\StandardShapes.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\StandardShapes.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\TargetAnimation.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\TargetAnimation.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\RemoveComments.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\RemoveComments.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Subdivision.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Subdivision.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\scene.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\scene.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Bitmap.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Bitmap.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Version.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Version.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\CreateAnimMesh.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\CreateAnimMesh.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\simd.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\simd.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\material.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\material.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\AssertHandler.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\AssertHandler.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Exceptional.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Exceptional.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Base64.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Base64.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\DefaultLogger.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\DefaultLogger.cpp">
       <Filter>Logging</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Exporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Exporter.cpp">
       <Filter>Exporter</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CApi\AssimpCExport.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\CApi\AssimpCExport.cpp">
       <Filter>Exporter</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\CalcTangentsProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\CalcTangentsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ComputeUVMappingProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ComputeUVMappingProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ConvertToLHProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ConvertToLHProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\EmbedTexturesProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\EmbedTexturesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindDegenerates.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindDegenerates.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindInstancesProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindInstancesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindInvalidDataProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindInvalidDataProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FixNormalsStep.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FixNormalsStep.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\DropFaceNormalsProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\DropFaceNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenFaceNormalsProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenFaceNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenVertexNormalsProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenVertexNormalsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\PretransformVertices.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\PretransformVertices.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ImproveCacheLocality.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ImproveCacheLocality.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\JoinVerticesProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\JoinVerticesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\LimitBoneWeightsProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\LimitBoneWeightsProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\RemoveRedundantMaterials.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\RemoveRedundantMaterials.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\RemoveVCProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\RemoveVCProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SortByPTypeProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SortByPTypeProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SplitLargeMeshes.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SplitLargeMeshes.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\TextureTransform.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\TextureTransform.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\TriangulateProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\TriangulateProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ValidateDataStructure.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ValidateDataStructure.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\OptimizeGraph.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\OptimizeGraph.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\OptimizeMeshes.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\OptimizeMeshes.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\DeboneProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\DeboneProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ProcessHelper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ProcessHelper.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\MakeVerboseFormat.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\MakeVerboseFormat.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ScaleProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ScaleProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ArmaturePopulate.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ArmaturePopulate.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenBoundingBoxesProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenBoundingBoxesProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SplitByBoneCountProcess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SplitByBoneCountProcess.cpp">
       <Filter>PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Material\MaterialSystem.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Material\MaterialSystem.cpp">
       <Filter>MaterialSystem</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STEPParser\STEPFileReader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STEPParser\STEPFileReader.cpp">
       <Filter>STEPParser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STEPParser\STEPFileEncoding.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STEPParser\STEPFileEncoding.cpp">
       <Filter>STEPParser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter_Geometry.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter_Geometry.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter_Material.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter_Material.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter_Postprocess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter_Postprocess.cpp">
       <Filter>AssetLib\AMF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSConverter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSConverter.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSLoader.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AC\ACLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AC\ACLoader.cpp">
       <Filter>AssetLib\AC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\ASE\ASELoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\ASE\ASELoader.cpp">
       <Filter>AssetLib\ASE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\ASE\ASEParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\ASE\ASEParser.cpp">
       <Filter>AssetLib\ASE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinLoader.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\B3D\B3DImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\B3D\B3DImporter.cpp">
       <Filter>AssetLib\B3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\BVH\BVHLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\BVH\BVHLoader.cpp">
       <Filter>AssetLib\BVH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaHelper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaHelper.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaLoader.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaParser.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\DXF\DXFLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\DXF\DXFLoader.cpp">
       <Filter>AssetLib\DXF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\CSM\CSMLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\CSM\CSMLoader.cpp">
       <Filter>AssetLib\CSM</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\HMP\HMPLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\HMP\HMPLoader.cpp">
       <Filter>AssetLib\HMP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRMeshLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRMeshLoader.cpp">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRShared.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRShared.cpp">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IQM\IQMImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IQM\IQMImporter.cpp">
       <Filter>AssetLib\IQM</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRLoader.cpp">
       <Filter>AssetLib\IRR</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOAnimation.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOAnimation.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOBLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOBLoader.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOLoader.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOMaterial.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOMaterial.cpp">
       <Filter>AssetLib\LWO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWS\LWSLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWS\LWSLoader.cpp">
       <Filter>AssetLib\LWS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DImporter.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DWrapper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DWrapper.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD2\MD2Loader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD2\MD2Loader.cpp">
       <Filter>AssetLib\MD2</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD3\MD3Loader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD3\MD3Loader.cpp">
       <Filter>AssetLib\MD3</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD5\MD5Loader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD5\MD5Loader.cpp">
       <Filter>AssetLib\MD5</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD5\MD5Parser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD5\MD5Parser.cpp">
       <Filter>AssetLib\MD5</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDC\MDCLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDC\MDCLoader.cpp">
       <Filter>AssetLib\MDC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\MDLLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\MDLLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\MDLMaterialLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\MDLMaterialLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1MDLLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1MDLLoader.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.cpp">
       <Filter>AssetLib\MDL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\NFF\NFFLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\NFF\NFFLoader.cpp">
       <Filter>AssetLib\NFF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\NDO\NDOLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\NDO\NDOLoader.cpp">
       <Filter>AssetLib\NDO</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OFF\OFFLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OFF\OFFLoader.cpp">
       <Filter>AssetLib\OFF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileImporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileMtlImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileMtlImporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileParser.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreImporter.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreStructs.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreStructs.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreBinarySerializer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreBinarySerializer.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreXmlSerializer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreXmlSerializer.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreMaterial.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreMaterial.cpp">
       <Filter>AssetLib\OGRE</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OpenGEX\OpenGEXImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OpenGEX\OpenGEXImporter.cpp">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyLoader.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyParser.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MS3D\MS3DLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MS3D\MS3DLoader.cpp">
       <Filter>AssetLib\MS3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\COB\COBLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\COB\COBLoader.cpp">
       <Filter>AssetLib\COB</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderLoader.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderDNA.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderDNA.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderScene.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderScene.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderModifier.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderModifier.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderBMesh.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderBMesh.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderTessellator.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderTessellator.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderCustomData.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderCustomData.cpp">
       <Filter>AssetLib\BLEND</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCLoader.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCReaderGen1_2x3.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCReaderGen1_2x3.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCReaderGen2_2x3.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCReaderGen2_2x3.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCUtil.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCUtil.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCGeometry.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCGeometry.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCMaterial.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCMaterial.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCProfile.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCProfile.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCCurve.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCCurve.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCBoolean.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCBoolean.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCOpenings.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCOpenings.cpp">
       <Filter>AssetLib\IFC</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\XGL\XGLLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\XGL\XGLLoader.cpp">
       <Filter>AssetLib\XGL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXImporter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXParser.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXTokenizer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXTokenizer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXConverter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXConverter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXUtil.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXUtil.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXDocument.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXDocument.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXProperties.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXProperties.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXMeshGeometry.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXMeshGeometry.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXMaterial.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXMaterial.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXModel.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXModel.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXAnimation.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXAnimation.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXNodeAttribute.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXNodeAttribute.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXDeformer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXDeformer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXBinaryTokenizer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXBinaryTokenizer.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXDocumentUtil.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXDocumentUtil.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3D\Q3DLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3D\Q3DLoader.cpp">
       <Filter>AssetLib\Q3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3BSP\Q3BSPFileParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3BSP\Q3BSPFileParser.cpp">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3BSP\Q3BSPFileImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3BSP\Q3BSPFileImporter.cpp">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Raw\RawLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Raw\RawLoader.cpp">
       <Filter>AssetLib\RAW</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\SIB\SIBImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\SIB\SIBImporter.cpp">
       <Filter>AssetLib\SIB</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\SMD\SMDLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\SMD\SMDLoader.cpp">
       <Filter>AssetLib\SMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STL\STLLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STL\STLLoader.cpp">
       <Filter>AssetLib\STL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Terragen\TerragenLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Terragen\TerragenLoader.cpp">
       <Filter>AssetLib\TERRAGEN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Unreal\UnrealLoader.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Unreal\UnrealLoader.cpp">
       <Filter>AssetLib\3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileImporter.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileParser.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Geometry2D.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Geometry2D.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Geometry3D.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Geometry3D.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Group.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Group.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Light.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Light.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Metadata.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Metadata.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Networking.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Networking.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Postprocess.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Postprocess.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Rendering.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Rendering.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Shape.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Shape.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Texturing.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Texturing.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DGeoHelper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DGeoHelper.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DXmlHelper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DXmlHelper.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFCommon.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFCommon.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFImporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Importer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Importer.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\XmlSerializer.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\XmlSerializer.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFImporter.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFOpcPackage.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFOpcPackage.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDImporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDImporter.cpp">
       <Filter>AssetLib\MMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDPmxParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDPmxParser.cpp">
       <Filter>AssetLib\MMD</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjExporter.cpp">
       <Filter>AssetLib\OBJ</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OpenGEX\OpenGEXExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OpenGEX\OpenGEXExporter.cpp">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyExporter.cpp">
       <Filter>AssetLib\PLY</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSExporter.cpp">
       <Filter>AssetLib\3DS</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinExporter.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinFileWriter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinFileWriter.cpp">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assxml\AssxmlExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assxml\AssxmlExporter.cpp">
       <Filter>AssetLib\ASSXML</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assxml\AssxmlFileWriter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assxml\AssxmlFileWriter.cpp">
       <Filter>AssetLib\ASSXML</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DExporter.cpp">
       <Filter>AssetLib\M3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaExporter.cpp">
       <Filter>AssetLib\COLLADA</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExporter.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExportNode.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExportNode.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExportProperty.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExportProperty.cpp">
       <Filter>AssetLib\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STL\STLExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STL\STLExporter.cpp">
       <Filter>AssetLib\STL</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileExporter.cpp">
       <Filter>AssetLib\X</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DExporter.cpp">
       <Filter>AssetLib\X3D</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFExporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Exporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Exporter.cpp">
       <Filter>AssetLib\GLTF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFExporter.cpp">
       <Filter>AssetLib\3MF</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Pbrt\PbrtExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Pbrt\PbrtExporter.cpp">
       <Filter>AssetLib\PBRT</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assjson\cencode.c">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assjson\cencode.c">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assjson\json_exporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assjson\json_exporter.cpp">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assjson\mesh_splitter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assjson\mesh_splitter.cpp">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Step\StepExporter.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Step\StepExporter.cpp">
       <Filter>AssetLib\STEP</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\crypt.c">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\crypt.c">
       <Filter>Contrib\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\ioapi.c">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\ioapi.c">
       <Filter>Contrib\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\unzip.c">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\unzip.c">
       <Filter>Contrib\unzip</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\common\shapes.cc">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\common\shapes.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\advancing_front.cc">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\cdt.cc">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\cdt.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\sweep.cc">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\sweep.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\sweep_context.cc">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.cc">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\clipper\clipper.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\clipper\clipper.cpp">
       <Filter>Contrib\Clipper</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\OpenDDLParser.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\OpenDDLParser.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\DDLNode.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\DDLNode.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\OpenDDLCommon.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\OpenDDLCommon.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\OpenDDLExport.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\OpenDDLExport.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\Value.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\Value.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\code\OpenDDLStream.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\code\OpenDDLStream.cpp">
       <Filter>Contrib\openddl_parser</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcArithmeticCodec.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcArithmeticCodec.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDynamicVectorDecoder.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDynamicVectorDecoder.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDynamicVectorEncoder.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDynamicVectorEncoder.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTools.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTools.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleFans.cpp">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleFans.cpp">
       <Filter>Contrib\open3dgc</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zip\src\zip.c">
+    <ClCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zip\src\zip.c">
       <Filter>ziplib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CApi\CInterfaceIOWrapper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\CApi\CInterfaceIOWrapper.h">
       <Filter>CApi</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\StbCommon.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\StbCommon.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Compression.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Compression.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\BaseProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\BaseProcess.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Importer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Importer.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\ScenePrivate.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\ScenePrivate.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\DefaultProgressHandler.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\DefaultProgressHandler.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\PolyTools.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\PolyTools.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Maybe.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Maybe.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\IFF.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\IFF.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\VertexTriangleAdjacency.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\VertexTriangleAdjacency.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\ScenePreprocessor.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\ScenePreprocessor.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\TargetAnimation.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\TargetAnimation.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\simd.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\simd.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\DefaultLogger.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\DefaultLogger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\LogStream.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\LogStream.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Logger.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Logger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\NullLogger.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\NullLogger.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Win32DebugLogStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\Win32DebugLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\FileLogStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\FileLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\StdOStreamLogStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Common\StdOStreamLogStream.h">
       <Filter>Logging</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\BlobIOSystem.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\BlobIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\CalcTangentsProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\CalcTangentsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ComputeUVMappingProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ComputeUVMappingProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ConvertToLHProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ConvertToLHProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\EmbedTexturesProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\EmbedTexturesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindDegenerates.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindDegenerates.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindInstancesProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindInstancesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FindInvalidDataProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FindInvalidDataProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\FixNormalsStep.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\FixNormalsStep.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\DropFaceNormalsProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\DropFaceNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenFaceNormalsProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenFaceNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenVertexNormalsProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenVertexNormalsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\PretransformVertices.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\PretransformVertices.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ImproveCacheLocality.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ImproveCacheLocality.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\JoinVerticesProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\JoinVerticesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\LimitBoneWeightsProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\LimitBoneWeightsProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\RemoveRedundantMaterials.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\RemoveRedundantMaterials.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\RemoveVCProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\RemoveVCProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SortByPTypeProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SortByPTypeProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SplitLargeMeshes.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SplitLargeMeshes.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\TextureTransform.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\TextureTransform.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\TriangulateProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\TriangulateProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ValidateDataStructure.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ValidateDataStructure.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\OptimizeGraph.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\OptimizeGraph.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\OptimizeMeshes.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\OptimizeMeshes.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\DeboneProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\DeboneProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ProcessHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ProcessHelper.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\MakeVerboseFormat.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\MakeVerboseFormat.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ScaleProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ScaleProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\ArmaturePopulate.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\ArmaturePopulate.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\GenBoundingBoxesProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\GenBoundingBoxesProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\PostProcessing\SplitByBoneCountProcess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\PostProcessing\SplitByBoneCountProcess.h">
       <Filter>PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Material\MaterialSystem.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Material\MaterialSystem.h">
       <Filter>MaterialSystem</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STEPParser\STEPFileReader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STEPParser\STEPFileReader.h">
       <Filter>STEPParser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STEPParser\STEPFileEncoding.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STEPParser\STEPFileEncoding.h">
       <Filter>STEPParser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter.hpp">
       <Filter>AssetLib\AMF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AMF\AMFImporter_Node.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AMF\AMFImporter_Node.hpp">
       <Filter>AssetLib\AMF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSHelper.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSLoader.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\AC\ACLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\AC\ACLoader.h">
       <Filter>AssetLib\AC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\ASE\ASELoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\ASE\ASELoader.h">
       <Filter>AssetLib\ASE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\ASE\ASEParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\ASE\ASEParser.h">
       <Filter>AssetLib\ASE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinLoader.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\B3D\B3DImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\B3D\B3DImporter.h">
       <Filter>AssetLib\B3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\BVH\BVHLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\BVH\BVHLoader.h">
       <Filter>AssetLib\BVH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaHelper.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaLoader.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaParser.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\DXF\DXFLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\DXF\DXFLoader.h">
       <Filter>AssetLib\DXF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\DXF\DXFHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\DXF\DXFHelper.h">
       <Filter>AssetLib\DXF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\CSM\CSMLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\CSM\CSMLoader.h">
       <Filter>AssetLib\CSM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\HMP\HMPFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\HMP\HMPFileData.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\HMP\HMPLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\HMP\HMPLoader.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\HMP\HalfLifeFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\HMP\HalfLifeFileData.h">
       <Filter>AssetLib\HMP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRMeshLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRMeshLoader.h">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRShared.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRShared.h">
       <Filter>AssetLib\IRRMESH</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IQM\iqm.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IQM\iqm.h">
       <Filter>AssetLib\IQM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IQM\IQMImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IQM\IQMImporter.h">
       <Filter>AssetLib\IQM</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Irr\IRRLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Irr\IRRLoader.h">
       <Filter>AssetLib\IRR</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOAnimation.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOAnimation.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOFileData.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWO\LWOLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWO\LWOLoader.h">
       <Filter>AssetLib\LWO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\LWS\LWSLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\LWS\LWSLoader.h">
       <Filter>AssetLib\LWS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DMaterials.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DMaterials.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DImporter.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DWrapper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DWrapper.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\m3d.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\m3d.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD2\MD2FileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD2\MD2FileData.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD2\MD2Loader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD2\MD2Loader.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD2\MD2NormalTable.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD2\MD2NormalTable.h">
       <Filter>AssetLib\MD2</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD3\MD3FileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD3\MD3FileData.h">
       <Filter>AssetLib\MD3</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD3\MD3Loader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD3\MD3Loader.h">
       <Filter>AssetLib\MD3</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD5\MD5Loader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD5\MD5Loader.h">
       <Filter>AssetLib\MD5</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MD5\MD5Parser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MD5\MD5Parser.h">
       <Filter>AssetLib\MD5</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDC\MDCFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDC\MDCFileData.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDC\MDCLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDC\MDCLoader.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDC\MDCNormalTable.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDC\MDCNormalTable.h">
       <Filter>AssetLib\MDC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\MDLDefaultColorMap.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\MDLDefaultColorMap.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\MDLFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\MDLFileData.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\MDLLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\MDLLoader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HalfLifeMDLBaseHeader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HalfLifeMDLBaseHeader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1FileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1FileData.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1MDLLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1MDLLoader.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1ImportDefinitions.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1ImportDefinitions.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1ImportSettings.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1ImportSettings.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\HL1MeshTrivert.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\HL1MeshTrivert.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\LogFunctions.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\LogFunctions.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MDL\HalfLife\UniqueNameGenerator.h">
       <Filter>AssetLib\MDL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\NFF\NFFLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\NFF\NFFLoader.h">
       <Filter>AssetLib\NFF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\NDO\NDOLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\NDO\NDOLoader.h">
       <Filter>AssetLib\NDO</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OFF\OFFLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OFF\OFFLoader.h">
       <Filter>AssetLib\OFF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileData.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileImporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileMtlImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileMtlImporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjFileParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjFileParser.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjTools.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjTools.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreImporter.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreStructs.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreStructs.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreParsingUtils.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreParsingUtils.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreBinarySerializer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreBinarySerializer.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ogre\OgreXmlSerializer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ogre\OgreXmlSerializer.h">
       <Filter>AssetLib\OGRE</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OpenGEX\OpenGEXImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OpenGEX\OpenGEXImporter.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OpenGEX\OpenGEXStructs.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OpenGEX\OpenGEXStructs.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyLoader.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyParser.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MS3D\MS3DLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MS3D\MS3DLoader.h">
       <Filter>AssetLib\MS3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\COB\COBLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\COB\COBLoader.h">
       <Filter>AssetLib\COB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\COB\COBScene.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\COB\COBScene.h">
       <Filter>AssetLib\COB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderLoader.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderDNA.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderDNA.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderDNA.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderDNA.inl">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderScene.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderScene.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderSceneGen.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderSceneGen.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderIntermediate.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderIntermediate.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderModifier.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderModifier.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderBMesh.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderBMesh.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderTessellator.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderTessellator.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Blender\BlenderCustomData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Blender\BlenderCustomData.h">
       <Filter>AssetLib\BLEND</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCLoader.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCReaderGen_2x3.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCReaderGen_2x3.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\IFC\IFCUtil.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\IFC\IFCUtil.h">
       <Filter>AssetLib\IFC</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\XGL\XGLLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\XGL\XGLLoader.h">
       <Filter>AssetLib\XGL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXCompileConfig.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXCompileConfig.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXImporter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXParser.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXTokenizer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXTokenizer.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXImportSettings.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXImportSettings.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXConverter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXConverter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXUtil.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXUtil.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXDocument.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXDocument.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXProperties.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXProperties.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXMeshGeometry.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXMeshGeometry.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXCommon.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXCommon.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3D\Q3DLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3D\Q3DLoader.h">
       <Filter>AssetLib\Q3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3BSP\Q3BSPFileData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3BSP\Q3BSPFileData.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3BSP\Q3BSPFileParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3BSP\Q3BSPFileParser.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Q3BSP\Q3BSPFileImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Q3BSP\Q3BSPFileImporter.h">
       <Filter>AssetLib\Q3BSP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Raw\RawLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Raw\RawLoader.h">
       <Filter>AssetLib\RAW</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\SIB\SIBImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\SIB\SIBImporter.h">
       <Filter>AssetLib\SIB</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\SMD\SMDLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\SMD\SMDLoader.h">
       <Filter>AssetLib\SMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STL\STLLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STL\STLLoader.h">
       <Filter>AssetLib\STL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Terragen\TerragenLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Terragen\TerragenLoader.h">
       <Filter>AssetLib\TERRAGEN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Unreal\UnrealLoader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Unreal\UnrealLoader.h">
       <Filter>AssetLib\3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileHelper.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileImporter.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileParser.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Macro.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Macro.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DImporter_Node.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DImporter_Node.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DGeoHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DGeoHelper.h">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DXmlHelper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DXmlHelper.h">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFCommon.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFCommon.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFAsset.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFAsset.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFAsset.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFAsset.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFAssetWriter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFAssetWriter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFAssetWriter.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFAssetWriter.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFImporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Asset.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Asset.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Asset.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Asset.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2AssetWriter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2AssetWriter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2AssetWriter.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2AssetWriter.inl">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Importer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Importer.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\3MFTypes.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\3MFTypes.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\XmlSerializer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\XmlSerializer.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFImporter.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFOpcPackage.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFOpcPackage.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\3MFXmlTags.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\3MFXmlTags.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDCpp14.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDCpp14.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDImporter.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDPmdParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDPmdParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDPmxParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDPmxParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\MMD\MMDVmdParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\MMD\MMDVmdParser.h">
       <Filter>AssetLib\MMD</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Obj\ObjExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Obj\ObjExporter.h">
       <Filter>AssetLib\OBJ</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\OpenGEX\OpenGEXExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\OpenGEX\OpenGEXExporter.h">
       <Filter>AssetLib\OPENGEX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Ply\PlyExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Ply\PlyExporter.h">
       <Filter>AssetLib\PLY</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3DS\3DSExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3DS\3DSExporter.h">
       <Filter>AssetLib\3DS</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinExporter.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assbin\AssbinFileWriter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assbin\AssbinFileWriter.h">
       <Filter>AssetLib\ASSBIN</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assxml\AssxmlExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assxml\AssxmlExporter.h">
       <Filter>AssetLib\ASSXML</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assxml\AssxmlFileWriter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assxml\AssxmlFileWriter.h">
       <Filter>AssetLib\ASSXML</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\M3D\M3DExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\M3D\M3DExporter.h">
       <Filter>AssetLib\M3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Collada\ColladaExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Collada\ColladaExporter.h">
       <Filter>AssetLib\COLLADA</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExporter.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExportNode.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExportNode.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\FBX\FBXExportProperty.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\FBX\FBXExportProperty.h">
       <Filter>AssetLib\FBX</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\STL\STLExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\STL\STLExporter.h">
       <Filter>AssetLib\STL</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X\XFileExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X\XFileExporter.h">
       <Filter>AssetLib\X</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\X3D\X3DExporter.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\X3D\X3DExporter.hpp">
       <Filter>AssetLib\X3D</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF\glTFExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF\glTFExporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\glTF2\glTF2Exporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\glTF2\glTF2Exporter.h">
       <Filter>AssetLib\GLTF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\3MF\D3MFExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\3MF\D3MFExporter.h">
       <Filter>AssetLib\3MF</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Pbrt\PbrtExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\Pbrt\PbrtExporter.h">
       <Filter>AssetLib\PBRT</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assjson\cencode.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assjson\cencode.h">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Assjson\mesh_splitter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Assjson\mesh_splitter.h">
       <Filter>AssetLib\ASSJSON</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\AssetLib\Step\StepExporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\AssetLib\Step\StepExporter.h">
       <Filter>AssetLib\STEP</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\crypt.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\crypt.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\ioapi.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\ioapi.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\unzip\unzip.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\unzip\unzip.h">
       <Filter>Contrib\unzip</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\common\shapes.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\common\shapes.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\common\utils.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\common\utils.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\advancing_front.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\advancing_front.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\cdt.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\cdt.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\sweep.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\sweep.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\poly2tri\poly2tri\sweep\sweep_context.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\poly2tri\poly2tri\sweep\sweep_context.h">
       <Filter>Contrib\Poly2Tri</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\clipper\clipper.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\clipper\clipper.hpp">
       <Filter>Contrib\Clipper</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\OpenDDLParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\OpenDDLParser.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\OpenDDLParserUtils.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\OpenDDLCommon.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\OpenDDLExport.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\OpenDDLExport.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\OpenDDLStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\OpenDDLStream.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\DDLNode.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\DDLNode.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\openddlparser\include\openddlparser\Value.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\openddlparser\include\openddlparser\Value.h">
       <Filter>Contrib\openddl_parser</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcAdjacencyInfo.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcAdjacencyInfo.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcArithmeticCodec.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcArithmeticCodec.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcBinaryStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcBinaryStream.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcCommon.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcCommon.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDVEncodeParams.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDVEncodeParams.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDynamicVectorDecoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDynamicVectorDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDynamicVectorEncoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDynamicVectorEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcDynamicVector.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcDynamicVector.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcFIFO.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcFIFO.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcIndexedFaceSet.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcIndexedFaceSet.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcIndexedFaceSet.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcIndexedFaceSet.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcSC3DMCDecoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcSC3DMCDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcSC3DMCDecoder.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcSC3DMCDecoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcSC3DMCEncodeParams.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcSC3DMCEncodeParams.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcSC3DMCEncoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcSC3DMCEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcSC3DMCEncoder.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcSC3DMCEncoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTimer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTimer.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleFans.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleFans.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleListDecoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleListDecoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleListDecoder.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleListDecoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleListEncoder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleListEncoder.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcTriangleListEncoder.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcTriangleListEncoder.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcVector.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcVector.h">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\Open3DGC\o3dgcVector.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\Open3DGC\o3dgcVector.inl">
       <Filter>Contrib\open3dgc</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zip\src\miniz.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zip\src\miniz.h">
       <Filter>ziplib</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\zip\src\zip.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\zip\src\zip.h">
       <Filter>ziplib</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\pugixml\src\pugiconfig.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\pugixml\src\pugiconfig.hpp">
       <Filter>Contrib\Pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\pugixml\src\pugixml.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\pugixml\src\pugixml.hpp">
       <Filter>Contrib\Pugixml</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\contrib\stb\stb_image.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\contrib\stb\stb_image.h">
       <Filter>Contrib\stb</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\anim.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\anim.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\aabb.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\aabb.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ai_assert.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ai_assert.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\camera.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\camera.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\color4.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\color4.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\color4.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\color4.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\config.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\config.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ColladaMetaData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ColladaMetaData.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\commonMetaData.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\commonMetaData.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\defs.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\defs.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\cfileio.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\cfileio.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\light.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\light.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\material.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\material.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\material.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\material.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\matrix3x3.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\matrix3x3.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\matrix3x3.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\matrix3x3.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\matrix4x4.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\matrix4x4.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\matrix4x4.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\matrix4x4.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\mesh.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\mesh.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ObjMaterial.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ObjMaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\pbrmaterial.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\pbrmaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\GltfMaterial.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\GltfMaterial.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\postprocess.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\postprocess.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\quaternion.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\quaternion.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\quaternion.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\quaternion.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\scene.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\scene.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\metadata.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\metadata.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\texture.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\texture.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\types.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\types.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\vector2.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\vector2.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\vector2.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\vector2.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\vector3.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\vector3.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\vector3.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\vector3.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\version.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\version.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\cimport.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\cimport.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\importerdesc.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\importerdesc.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Importer.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Importer.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ProgressHandler.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ProgressHandler.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\IOStream.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\IOStream.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\IOSystem.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\IOSystem.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\cexport.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\cexport.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Exporter.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Exporter.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\DefaultIOStream.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\DefaultIOStream.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\DefaultIOSystem.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\DefaultIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ZipArchiveIOSystem.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ZipArchiveIOSystem.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SceneCombiner.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SceneCombiner.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\fast_atof.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\fast_atof.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\qnan.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\qnan.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\BaseImporter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\BaseImporter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Hash.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Hash.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\MemoryIOWrapper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\MemoryIOWrapper.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ParsingUtils.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ParsingUtils.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\StreamReader.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\StreamReader.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\StreamWriter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\StreamWriter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\StringComparison.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\StringComparison.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\StringUtils.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\StringUtils.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SGSpatialSort.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SGSpatialSort.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\GenericProperty.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\GenericProperty.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SpatialSort.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SpatialSort.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SkeletonMeshBuilder.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SkeletonMeshBuilder.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SmallVector.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SmallVector.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SmoothingGroups.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SmoothingGroups.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\SmoothingGroups.inl">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\SmoothingGroups.inl">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\StandardShapes.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\StandardShapes.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\RemoveComments.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\RemoveComments.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Subdivision.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Subdivision.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Vertex.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Vertex.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\LineSplitter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\LineSplitter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\TinyFormatter.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\TinyFormatter.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Profiler.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Profiler.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\LogAux.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\LogAux.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Bitmap.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Bitmap.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\XMLTools.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\XMLTools.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\IOStreamBuffer.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\IOStreamBuffer.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\CreateAnimMesh.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\CreateAnimMesh.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\XmlParser.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\XmlParser.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\MathFunctions.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\MathFunctions.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Exceptional.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Exceptional.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\ByteSwapper.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\ByteSwapper.h">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Base64.hpp">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Base64.hpp">
       <Filter>include\assimp</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Compiler\pushpack1.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Compiler\pushpack1.h">
       <Filter>Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Compiler\poppack1.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Compiler\poppack1.h">
       <Filter>Compiler</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\include\assimp\Compiler\pstdint.h">
+    <ClInclude Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\include\assimp\Compiler\pstdint.h">
       <Filter>Compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\res\assimp.rc">
+    <ResourceCompile Include="C:\K021G1118\CG2\DirectX12CG\External\Assimp\code\res\assimp.rc">
       <Filter>Source Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AssetLib">
-      <UniqueIdentifier>{7431A008-9E0B-378A-9747-349E3784861E}</UniqueIdentifier>
+      <UniqueIdentifier>{D31493A2-616C-36A5-85AC-547CAFA96EB3}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3D">
-      <UniqueIdentifier>{8364296B-4F66-331A-9B3F-C0573A25713E}</UniqueIdentifier>
+      <UniqueIdentifier>{6635AA07-78AB-30C6-A3BB-D5CEB5F4C47E}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3DS">
-      <UniqueIdentifier>{A250762A-F20B-354A-B2E2-99617613FAEB}</UniqueIdentifier>
+      <UniqueIdentifier>{537C514D-8BE1-377A-B051-EFEC5EF38C22}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\3MF">
-      <UniqueIdentifier>{4051FB76-C60B-348B-A912-9DAB08965D90}</UniqueIdentifier>
+      <UniqueIdentifier>{05C04C84-357D-31E0-A4D0-CD91101658CE}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\AC">
-      <UniqueIdentifier>{D09D0983-80E5-30A2-A18C-0F75B1920AB8}</UniqueIdentifier>
+      <UniqueIdentifier>{79B56E7D-AB72-37C1-B8FD-756492FD6F84}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\AMF">
-      <UniqueIdentifier>{C4A731B2-BA0F-3BCE-99FF-40D5436AB892}</UniqueIdentifier>
+      <UniqueIdentifier>{336F86A0-F138-3A0C-B7E1-484673F6A0DF}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASE">
-      <UniqueIdentifier>{65F74D4A-E998-31CC-9A2A-5A048DF2F8B1}</UniqueIdentifier>
+      <UniqueIdentifier>{66444B5A-615F-3690-80A6-DE1649F90786}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSBIN">
-      <UniqueIdentifier>{1DB2C65A-0921-3AFD-BD78-583901452B47}</UniqueIdentifier>
+      <UniqueIdentifier>{E0B50622-CB57-3B2B-B584-B80804F6B895}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSJSON">
-      <UniqueIdentifier>{0DEDA9CE-2446-3C30-96AD-148EF51BF4DA}</UniqueIdentifier>
+      <UniqueIdentifier>{EFA46558-5889-3BA2-B933-E98B62DE68FE}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\ASSXML">
-      <UniqueIdentifier>{A090DFE3-9A39-3E63-8BAD-423D4E28511B}</UniqueIdentifier>
+      <UniqueIdentifier>{5DA4D331-9429-3926-8A44-C251B8C08AD7}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\B3D">
-      <UniqueIdentifier>{A2CCA447-EFE3-3384-B7F3-C86275092879}</UniqueIdentifier>
+      <UniqueIdentifier>{D7BFF723-4CD1-341A-945E-371C5708BA2D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\BLEND">
-      <UniqueIdentifier>{A94D4B6F-E6D3-320F-8F1F-2C3B364989AD}</UniqueIdentifier>
+      <UniqueIdentifier>{182C9369-F95C-3FCD-8F93-A96CE656C21F}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\BVH">
-      <UniqueIdentifier>{030DCFDF-472A-31FD-A442-05B2EBD26C18}</UniqueIdentifier>
+      <UniqueIdentifier>{231735D1-CB26-3A5A-95CB-A4A9982E87A6}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\COB">
-      <UniqueIdentifier>{526D3913-B216-3416-84DD-9C6F3E6C22DE}</UniqueIdentifier>
+      <UniqueIdentifier>{7F73ED1A-5111-396D-A17F-DF213B03B075}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\COLLADA">
-      <UniqueIdentifier>{035AEBA5-427F-3C88-BF0F-458A6137F797}</UniqueIdentifier>
+      <UniqueIdentifier>{A1753FBC-1DD7-3B8D-BE00-E3A9AA1F600D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\CSM">
-      <UniqueIdentifier>{C12A0195-C40E-3322-B872-67CFE47E9DB6}</UniqueIdentifier>
+      <UniqueIdentifier>{E1F29F05-FAD3-3060-A3BE-6851C0CAB5C2}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\DXF">
-      <UniqueIdentifier>{FDC1E0C3-F25C-321F-BC71-3A2DC87AFE47}</UniqueIdentifier>
+      <UniqueIdentifier>{7B90CF2D-1ECC-3C52-BDB9-900088DAB05D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\FBX">
-      <UniqueIdentifier>{A2E1CDCC-FCBA-34E2-805D-4AFE4B5FA558}</UniqueIdentifier>
+      <UniqueIdentifier>{0E6D2765-F637-31B3-A5FD-E214D6FC6F3B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\GLTF">
-      <UniqueIdentifier>{0507EA03-E16D-3C10-9687-5E683BCC7E58}</UniqueIdentifier>
+      <UniqueIdentifier>{A4533A1E-2AB3-35A4-AB73-B50F058D5781}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\HMP">
-      <UniqueIdentifier>{724DE4D3-348C-3C39-B8F0-7D14B8E767E9}</UniqueIdentifier>
+      <UniqueIdentifier>{3488695E-CED8-303A-B774-79E047B6B6B8}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IFC">
-      <UniqueIdentifier>{21FC494D-3EB5-3DC1-93EE-D9E763150D21}</UniqueIdentifier>
+      <UniqueIdentifier>{E8027CDF-60F6-3BF1-ACD6-183A3D0492BB}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IQM">
-      <UniqueIdentifier>{DA107840-307B-3996-976E-C622D2F8EA8D}</UniqueIdentifier>
+      <UniqueIdentifier>{BA6F6FA9-77DC-372E-9CC9-55710188C15A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IRR">
-      <UniqueIdentifier>{3EFE6FD0-26DD-3DF9-8D40-8F4C727FC6C7}</UniqueIdentifier>
+      <UniqueIdentifier>{7C485FF3-D8C2-32DF-8829-AD27106AC96B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\IRRMESH">
-      <UniqueIdentifier>{434A1B72-3BE4-3D7A-A4B1-737CB4F87C6F}</UniqueIdentifier>
+      <UniqueIdentifier>{BAFF75FD-E367-33EF-950E-ED67E6B17F54}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\LWO">
-      <UniqueIdentifier>{A0FDFEFB-D1A2-3C91-BCE3-5CA016E60D08}</UniqueIdentifier>
+      <UniqueIdentifier>{94747DCF-6A7E-3B38-BFA3-4FB09FBF4E3D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\LWS">
-      <UniqueIdentifier>{9D4555CF-20A7-31E6-9B26-592B05E8A9C4}</UniqueIdentifier>
+      <UniqueIdentifier>{493B320C-F807-3515-B5D0-366EAFEAAB61}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\M3D">
-      <UniqueIdentifier>{35929D9F-4317-3D29-92B0-8847503BEA37}</UniqueIdentifier>
+      <UniqueIdentifier>{8C4B823C-A743-3FCD-A596-B43958FEF11B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD2">
-      <UniqueIdentifier>{C009CF0B-124F-3DC9-A809-9365601086DE}</UniqueIdentifier>
+      <UniqueIdentifier>{452226FE-7E3C-3927-9028-586536E9E0FE}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD3">
-      <UniqueIdentifier>{F26F9B2B-1053-3E3E-9950-2CBDAC63CBB0}</UniqueIdentifier>
+      <UniqueIdentifier>{DB0DB0D4-597E-3249-B1F4-7B67F9364F00}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MD5">
-      <UniqueIdentifier>{DC5C9E4B-469C-3247-8865-8E9311A1DF72}</UniqueIdentifier>
+      <UniqueIdentifier>{59D8BA08-7818-365F-8853-68CAB3F7A1F5}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MDC">
-      <UniqueIdentifier>{FAE4AF24-4662-323C-9051-0CEEE29A4ECE}</UniqueIdentifier>
+      <UniqueIdentifier>{D821F127-873D-3B80-AC80-D631D31F1D44}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MDL">
-      <UniqueIdentifier>{8D3E16FF-12A2-372D-A2F5-B4DCE82ABA27}</UniqueIdentifier>
+      <UniqueIdentifier>{93CE5725-364A-3E99-9A84-8EC6E69BB554}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MMD">
-      <UniqueIdentifier>{E03D2983-2208-3FE8-A9E2-454955304E0F}</UniqueIdentifier>
+      <UniqueIdentifier>{0EC35A42-2DE5-396E-BD4E-D97EFB449A22}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\MS3D">
-      <UniqueIdentifier>{24786683-CC07-347C-BAFC-68F75F5725D6}</UniqueIdentifier>
+      <UniqueIdentifier>{AD020550-96B7-3301-AF5F-E0DE6F76F312}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\NDO">
-      <UniqueIdentifier>{44DF7982-CCDA-3578-96BD-175A572A7B19}</UniqueIdentifier>
+      <UniqueIdentifier>{68E3C58B-126D-333A-B4A1-51104FB32FB3}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\NFF">
-      <UniqueIdentifier>{5B5AE622-E14E-3C74-827C-102E705C92BD}</UniqueIdentifier>
+      <UniqueIdentifier>{A930FE35-3927-387C-9CFF-BBD8028F4AEA}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OBJ">
-      <UniqueIdentifier>{155999BE-5D7D-31D5-9DBC-AF64B94A2896}</UniqueIdentifier>
+      <UniqueIdentifier>{0D3FDDB4-2ACB-3F4C-9B6B-3086549D4D30}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OFF">
-      <UniqueIdentifier>{38D45355-51CE-3E8F-895E-2E9C6541598F}</UniqueIdentifier>
+      <UniqueIdentifier>{3BF8D1EE-CAD3-3196-9C60-48070F9948E4}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OGRE">
-      <UniqueIdentifier>{6FFC20F3-959D-3CC1-BA49-2C4BADEADA18}</UniqueIdentifier>
+      <UniqueIdentifier>{897663CA-C127-3DF3-8100-B98566B98846}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\OPENGEX">
-      <UniqueIdentifier>{A01A2937-D808-3011-9AE6-6AF65A483ACB}</UniqueIdentifier>
+      <UniqueIdentifier>{AB988560-0CB1-31C5-B1A0-2715755D6A3A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\PBRT">
-      <UniqueIdentifier>{3AC38DD4-0A88-3620-A88F-73A64E515CF5}</UniqueIdentifier>
+      <UniqueIdentifier>{1BDB78F6-A2C6-3003-8783-DB512228ECDA}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\PLY">
-      <UniqueIdentifier>{AB54CDB9-319A-3858-A792-3B408768EF1C}</UniqueIdentifier>
+      <UniqueIdentifier>{540C8351-AD1C-3C66-AFA2-606F9A210F4B}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\Q3BSP">
-      <UniqueIdentifier>{EF538882-3FC6-3CB9-82D3-2215270CB1A1}</UniqueIdentifier>
+      <UniqueIdentifier>{D9603CAE-5E81-3E27-94E7-9C36869EEA35}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\Q3D">
-      <UniqueIdentifier>{E0E85658-8CE3-3486-9B05-8713E2464168}</UniqueIdentifier>
+      <UniqueIdentifier>{EA51FC9D-F1F7-3EA3-BDA8-E7B3C577DF5D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\RAW">
-      <UniqueIdentifier>{AC38EFAA-2DD7-3C08-8A0C-347C77347637}</UniqueIdentifier>
+      <UniqueIdentifier>{7580A75C-8670-301D-99F4-E9B7ED3D0773}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\SIB">
-      <UniqueIdentifier>{DE884563-EE2F-3E91-BF47-D453F1941EFE}</UniqueIdentifier>
+      <UniqueIdentifier>{71793063-4A93-3F0F-BB17-C90DEAA43C47}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\SMD">
-      <UniqueIdentifier>{5666CB66-F4F4-3440-99F7-D89B25FEDDA1}</UniqueIdentifier>
+      <UniqueIdentifier>{755D8023-FC57-3638-9147-F63126F88606}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\STEP">
-      <UniqueIdentifier>{8F1A4192-B248-361A-B0C4-499213CA6121}</UniqueIdentifier>
+      <UniqueIdentifier>{3F8D7C66-22F3-3645-A4BA-01D13A8F709D}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\STL">
-      <UniqueIdentifier>{081966F4-B137-338B-BBCF-60F45510E18C}</UniqueIdentifier>
+      <UniqueIdentifier>{C3F4B73A-F212-3717-BF20-D7633C076BE3}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\TERRAGEN">
-      <UniqueIdentifier>{0D518CBB-9B2B-339A-8303-78BB6D9DDF5A}</UniqueIdentifier>
+      <UniqueIdentifier>{78663266-92A2-3A4A-AE35-F904577B409F}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\X">
-      <UniqueIdentifier>{FF291F68-5D5A-36A9-8011-1D4D5BECBF3F}</UniqueIdentifier>
+      <UniqueIdentifier>{215B4766-647E-3668-91F3-DEA8BC608697}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\X3D">
-      <UniqueIdentifier>{91262853-F656-3E63-958F-6DB8F6D705A6}</UniqueIdentifier>
+      <UniqueIdentifier>{D9F6CE43-904A-32B7-AA13-2D963C75CC9A}</UniqueIdentifier>
     </Filter>
     <Filter Include="AssetLib\XGL">
-      <UniqueIdentifier>{985E00D1-D349-3C3A-82B0-B2E5CBC9E67A}</UniqueIdentifier>
+      <UniqueIdentifier>{3423B2F2-6618-300C-A3E8-BFC3FD373977}</UniqueIdentifier>
     </Filter>
     <Filter Include="CApi">
-      <UniqueIdentifier>{4ADDC932-9674-3F9F-AB5C-0398341F3696}</UniqueIdentifier>
+      <UniqueIdentifier>{B7693DFE-B914-3D84-B123-2AD735B7CA19}</UniqueIdentifier>
     </Filter>
     <Filter Include="Common">
-      <UniqueIdentifier>{DF63BEAC-C12C-3B18-86BD-98FA6129C0AE}</UniqueIdentifier>
+      <UniqueIdentifier>{0CAD9EC1-D711-3ECA-98EE-E0F049FC5F8C}</UniqueIdentifier>
     </Filter>
     <Filter Include="Compiler">
-      <UniqueIdentifier>{145863BB-7BA2-341C-AA49-2A8200A0DD05}</UniqueIdentifier>
+      <UniqueIdentifier>{ACA7F72B-F721-319E-902C-E58357C2FAF6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib">
-      <UniqueIdentifier>{0E550861-D70D-300D-9A81-E82D5C345EE7}</UniqueIdentifier>
+      <UniqueIdentifier>{CB88C1B0-9919-3B0A-853B-1109042BDB62}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Clipper">
-      <UniqueIdentifier>{CA37FA44-10E4-3AC2-84CA-B0B9BF9FD4AE}</UniqueIdentifier>
+      <UniqueIdentifier>{8D3F7A56-9153-30E3-89B6-7AC40D015636}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Poly2Tri">
-      <UniqueIdentifier>{60F68B91-B700-3DF1-B0FD-3215699A1A60}</UniqueIdentifier>
+      <UniqueIdentifier>{AED5D4AC-6310-3007-8401-E0B1C741B9C6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\Pugixml">
-      <UniqueIdentifier>{2AB848BD-B905-332B-AAF7-7EB154D15944}</UniqueIdentifier>
+      <UniqueIdentifier>{78E22F78-76FD-3C66-B209-B1E80717BD40}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\open3dgc">
-      <UniqueIdentifier>{988CA892-CC65-37C3-8DE6-41CC73948DC9}</UniqueIdentifier>
+      <UniqueIdentifier>{E5572BD3-3B49-394A-9AB1-1A6CEC7AE1E2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\openddl_parser">
-      <UniqueIdentifier>{BCDD3F7A-99BD-30D8-9B3E-7C00641EDBF0}</UniqueIdentifier>
+      <UniqueIdentifier>{D24BC9B7-CE63-3785-9F22-C9F73E056E48}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\stb">
-      <UniqueIdentifier>{73D52C00-0CF5-34ED-BC39-B088B0DF6E5D}</UniqueIdentifier>
+      <UniqueIdentifier>{A1917650-B333-3705-A2CF-CDAA7739D8D6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contrib\unzip">
-      <UniqueIdentifier>{BC6D0D97-30B0-3DF3-94EE-EDEA02636E3F}</UniqueIdentifier>
+      <UniqueIdentifier>{482C0554-082A-3C0F-B997-5AE971444093}</UniqueIdentifier>
     </Filter>
     <Filter Include="Exporter">
-      <UniqueIdentifier>{1849715A-9928-3EE6-9E3A-AB5AF4F621A6}</UniqueIdentifier>
+      <UniqueIdentifier>{77D18655-A830-390E-A997-E0EFCDDEF55D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Logging">
-      <UniqueIdentifier>{9F197B6D-02E9-32D4-BB60-C8B78658187C}</UniqueIdentifier>
+      <UniqueIdentifier>{24DFAF8F-DA41-3DCC-85BB-5EBEEAA398A4}</UniqueIdentifier>
     </Filter>
     <Filter Include="MaterialSystem">
-      <UniqueIdentifier>{06298B83-58E5-3F64-8FF0-66A5BDF202B8}</UniqueIdentifier>
+      <UniqueIdentifier>{E0DC6D4C-8F8C-3914-BBEB-7B47DD85FAF8}</UniqueIdentifier>
     </Filter>
     <Filter Include="PostProcessing">
-      <UniqueIdentifier>{1DF4055D-E440-3EE8-8B76-31C4FC8E15C0}</UniqueIdentifier>
+      <UniqueIdentifier>{7118373A-CB8D-3780-9296-405A11E73DB8}</UniqueIdentifier>
     </Filter>
     <Filter Include="STEPParser">
-      <UniqueIdentifier>{E5FDD4FF-B4CC-3A9A-A59A-1A57981044FE}</UniqueIdentifier>
+      <UniqueIdentifier>{89C34FD9-0354-3903-9DA5-9EDBA8F1CC01}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{ABE23643-4B2C-3965-9674-394E316AB24D}</UniqueIdentifier>
+      <UniqueIdentifier>{A9C2D560-3D97-3C56-ACBD-73270BFC703B}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{4622A05F-9B14-3422-85F5-3EB7324A8542}</UniqueIdentifier>
+      <UniqueIdentifier>{E7542666-2F44-31C1-933C-A23B52E5A6E4}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\assimp">
-      <UniqueIdentifier>{FEDE8441-EF01-3027-97AB-B4579B7AD32A}</UniqueIdentifier>
+      <UniqueIdentifier>{CAE7D2EA-6704-3E4C-8ABF-75B8CD582853}</UniqueIdentifier>
     </Filter>
     <Filter Include="ziplib">
-      <UniqueIdentifier>{D45BE409-CB4C-386E-AC92-7F48A9CAC9E3}</UniqueIdentifier>
+      <UniqueIdentifier>{72472795-E054-3DB4-9848-E55DB33F41CA}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

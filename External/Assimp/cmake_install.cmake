@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5
+# Install script for directory: C:/K021G1118/CG2/DirectX12CG/External/Assimp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,8 +34,8 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.2.4-dev" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES
-    "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/generated/assimpConfig.cmake"
-    "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/generated/assimpConfigVersion.cmake"
+    "C:/K021G1118/CG2/DirectX12CG/External/Assimp/generated/assimpConfig.cmake"
+    "C:/K021G1118/CG2/DirectX12CG/External/Assimp/generated/assimpConfigVersion.cmake"
     )
 endif()
 
@@ -43,7 +43,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.2.4-dev" OR NOT CMAKE_INSTALL_CO
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2/assimpTargets.cmake")
     file(DIFFERENT _cmake_export_file_changed FILES
          "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2/assimpTargets.cmake"
-         "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets.cmake")
+         "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets.cmake")
     if(_cmake_export_file_changed)
       file(GLOB _cmake_old_config_files "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2/assimpTargets-*.cmake")
       if(_cmake_old_config_files)
@@ -56,30 +56,30 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.2.4-dev" OR NOT CMAKE_INSTALL_CO
     endif()
     unset(_cmake_export_file_changed)
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets.cmake")
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-debug.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-debug.cmake")
   endif()
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-minsizerel.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-minsizerel.cmake")
   endif()
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-relwithdebinfo.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-relwithdebinfo.cmake")
   endif()
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-release.cmake")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/assimp-5.2" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/CMakeFiles/Export/f1f86f75407ff2a2c6a2eadbb93d9f6f/assimpTargets-release.cmake")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "libassimp5.2.4-dev" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/assimp.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/assimp.pc")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/cmake_install.cmake")
-  include("C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/cmake_install.cmake")
-  include("C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/test/cmake_install.cmake")
+  include("C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/cmake_install.cmake")
+  include("C:/K021G1118/CG2/DirectX12CG/External/Assimp/code/cmake_install.cmake")
+  include("C:/K021G1118/CG2/DirectX12CG/External/Assimp/test/cmake_install.cmake")
 
 endif()
 
@@ -91,5 +91,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/K021G1118/CG2/DirectX12CG/External/Assimp/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

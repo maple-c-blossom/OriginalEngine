@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib
+# Install script for directory: C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,13 +34,13 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/Debug/zlibstaticd.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/Debug/zlibstaticd.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/Release/zlibstatic.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/Release/zlibstatic.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/MinSizeRel/zlibstatic.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/MinSizeRel/zlibstatic.lib")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/contrib/zlib/RelWithDebInfo/zlibstatic.lib")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "C:/K021G1118/CG2/DirectX12CG/External/Assimp/contrib/zlib/RelWithDebInfo/zlibstatic.lib")
   endif()
 endif()
 
