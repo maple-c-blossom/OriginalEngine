@@ -247,7 +247,7 @@
       <UseUtf8Encoding>Always</UseUtf8Encoding>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)code/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-S$(SolutionDir)" "-B$(SolutionDir)" --check-stamp-file "$(SolutionDir)code/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" "-S$(SolutionDir)\External\Assimp\" "-B$(SolutionDir)\External\Assimp\" --check-stamp-file "$(SolutionDir)\External\Assimp\code/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -256,11 +256,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)code\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\External\Assimp\code\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" "-BC:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5" --check-stamp-file "C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeFiles/generate.stamp"
+"C:\Program Files\CMake\bin\cmake.exe" "-S$(SolutionDir)\External\Assimp\" "-B$(SolutionDir)\External\Assimp\" --check-stamp-file "$(SolutionDir)\External\Assimp\code/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -269,7 +269,7 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\External\Assimp\code\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/K021G1118/Downloads/assimp-5.2.5 (1)/assimp-5.2.5/code/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
@@ -301,7 +301,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\Assimp.cpp" />
-    <ResourceCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\res\assimp.rc" />
+    <ResourceCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\res\assimp.rc">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\External\Assimp\include;$(SolutionDir)\External\Assimp\;$(SolutionDir)\External\Assimp\code;$(SolutionDir)\External\Assimp\.;$(SolutionDir)\External\Assimp\contrib\zlib;$(SolutionDir)\External\Assimp\code\..\contrib\pugixml\src;$(SolutionDir)\External\Assimp\code\..\contrib\rapidjson\include;$(SolutionDir)\External\Assimp\code\..\contrib;$(SolutionDir)\External\Assimp\code\..\contrib\unzip;$(SolutionDir)\External\Assimp\\code\..\contrib\openddlparser\include;$(SolutionDir)\External\Assimp\code\..\include;$(SolutionDir)\External\Assimp\code\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
     <ClCompile Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CApi\CInterfaceIOWrapper.cpp" />
     <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\CApi\CInterfaceIOWrapper.h" />
     <ClInclude Include="C:\Users\K021G1118\Downloads\assimp-5.2.5 (1)\assimp-5.2.5\code\Common\StbCommon.h" />
