@@ -251,14 +251,6 @@
     <ClInclude Include="$(SolutionDir)External\Assimp\contrib\zlib\trees.h" />
     <ClInclude Include="$(SolutionDir)External\Assimp\contrib\zlib\zutil.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)External\Assimp\ZERO_CHECK.vcxproj">
-      <Project>{A2B18496-CDA4-36F6-8EED-0BDA87AEBDEB}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -857,15 +857,8 @@
     <ClInclude Include="$(SolutionDir)External\Assimp\include\assimp\Compiler\pstdint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)External\Assimp\ZERO_CHECK.vcxproj">
-      <Project>{A2B18496-CDA4-36F6-8EED-0BDA87AEBDEB}</Project>
-      <Name>ZERO_CHECK</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </ProjectReference>
-    <ProjectReference Include="$(SolutionDir)External\Assimp\contrib\zlib\zlibstatic.vcxproj">
-      <Project>{E62DE168-957A-3088-9014-7E5679E4AD45}</Project>
-      <Name>zlibstatic</Name>
+    <ProjectReference Include="..\contrib\zlib\zlibstatic.vcxproj">
+      <Project>{5f06992f-a929-3789-b207-421f1e27339c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
