@@ -12,6 +12,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MyImgui", "External\MyImgui\MyImgui\MyImgui.vcxproj", "{47DCF9AB-1928-483F-B5B4-71AFBE878B00}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "assimp", "External\Assimp\code\assimp.vcxproj", "{EA24240A-4BB5-3315-8BBD-19399F8C3028}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5F06992F-A929-3789-B207-421F1E27339C} = {5F06992F-A929-3789-B207-421F1E27339C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlibstatic", "External\Assimp\contrib\zlib\zlibstatic.vcxproj", "{5F06992F-A929-3789-B207-421F1E27339C}"
 EndProject
