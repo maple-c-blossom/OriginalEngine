@@ -9,21 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル\ParticleShader">
-      <UniqueIdentifier>{e72dba48-f07e-4874-b269-9cef8007657c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\ParticleShader\GeometoryShader">
-      <UniqueIdentifier>{daa2cbbf-1ac3-4c7d-85e8-b1629cb111ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\ParticleShader\PixelShader">
-      <UniqueIdentifier>{469f5d74-e2d0-4c6b-aa92-95a8413b68a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\ParticleShader\ShaderHeader">
-      <UniqueIdentifier>{b4b5eb7f-d159-499e-a0ec-e135aebbf67a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\ParticleShader\VertexShader">
-      <UniqueIdentifier>{47a71b20-3487-4592-bf1c-9fbd3d7a5592}</UniqueIdentifier>
-    </Filter>
     <Filter Include="リソース ファイル\SpriteShader">
       <UniqueIdentifier>{e3e36a56-89e5-4d0e-ba24-74e15967b994}</UniqueIdentifier>
     </Filter>
@@ -174,6 +159,21 @@
     </Filter>
     <Filter Include="リソース ファイル\PostEffectShader">
       <UniqueIdentifier>{f19b099e-cf18-4a24-aaeb-75204cd701b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader">
+      <UniqueIdentifier>{e72dba48-f07e-4874-b269-9cef8007657c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\GeometoryShader">
+      <UniqueIdentifier>{daa2cbbf-1ac3-4c7d-85e8-b1629cb111ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\PixelShader">
+      <UniqueIdentifier>{469f5d74-e2d0-4c6b-aa92-95a8413b68a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\ShaderHeader">
+      <UniqueIdentifier>{b4b5eb7f-d159-499e-a0ec-e135aebbf67a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ParticleShader\VertexShader">
+      <UniqueIdentifier>{47a71b20-3487-4592-bf1c-9fbd3d7a5592}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

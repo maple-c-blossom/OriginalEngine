@@ -3,8 +3,9 @@
 Texture2D<float4> tex:register(t0);
 SamplerState smp:register(s0);
 
-float4 main(GSOutput input) : SV_TARGET
+PSOutput main(GSOutput input)
 {
+    PSOutput output;
 	float4 texcolor = float4(tex.Sample(smp, input.uv));
 	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	float3 ambient = m_ambient;
@@ -97,5 +98,7 @@ float4 main(GSOutput input) : SV_TARGET
 		}
 	}
 	
-		return shadeColor * texcolor * color;
+    output.target0 = shadeColor + texcolor * color;
+    output.target1 = float4(1 - (shadeColor + texcolor * color).rgb,1);
+	return output;
 }

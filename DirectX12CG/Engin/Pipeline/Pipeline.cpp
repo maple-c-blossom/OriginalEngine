@@ -137,7 +137,7 @@ void MCB::Pipeline::SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE topol
 
 void MCB::Pipeline::SetNumRenderTargets(unsigned int numRenderTarget)
 {
-	pipelineDesc.NumRenderTargets = numRenderTarget; // •`‰æ‘ÎÛ‚Í1‚Â
+	pipelineDesc.NumRenderTargets = numRenderTarget;
 }
 
 void MCB::Pipeline::SetRTVFormats(DXGI_FORMAT RTVFormat, unsigned int FormatNum)

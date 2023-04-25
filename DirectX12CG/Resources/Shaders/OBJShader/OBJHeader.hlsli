@@ -68,3 +68,9 @@ struct GSOutput
 	float4 worldpos : POSITION;
 	float2 uv :TEXCOORD;
 };
+
+struct PSOutput
+{
+    float4 target0 : SV_TARGET0;
+    float4 target1 : SV_TARGET1;
+};

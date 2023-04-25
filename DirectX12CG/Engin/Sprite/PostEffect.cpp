@@ -102,7 +102,7 @@ void MCB::PostEffect::PreDraw()
     for (auto& itr : viewports)itr = CD3DX12_VIEWPORT(0.f, 0.f, static_cast<FLOAT>(DxWindow::GetInstance()->window_width), static_cast<FLOAT>(DxWindow::GetInstance()->window_height));
     for (auto& itr : rects)itr = CD3DX12_RECT(static_cast<LONG>(0.f), static_cast<LONG>(0.f), static_cast<LONG>(DxWindow::GetInstance()->window_width), static_cast<LONG>(DxWindow::GetInstance()->window_height));
     
-    cmdList->OMSetRenderTargets(2, &rtvH.front(), false, &dsvH);
+    cmdList->OMSetRenderTargets(2, &rtvH.front(), true, &dsvH);
     cmdList->RSSetViewports(2, &viewports.front());
     cmdList->RSSetScissorRects(2, &rects.front());
     for (auto& itr : rtvH) cmdList->ClearRenderTargetView(itr, clearColor, 0, nullptr);
