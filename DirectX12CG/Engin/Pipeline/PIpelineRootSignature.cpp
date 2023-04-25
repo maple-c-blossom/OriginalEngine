@@ -605,8 +605,8 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
     //‚»‚Ì‘¼‚Ìİ’è----------------
 #pragma region ‚»‚Ì‘¼‚Ìİ’è
 
-    pipeline.SetNumRenderTargets();
-    pipeline.SetRTVFormats();
+    pipeline.SetNumRenderTargets(2);
+    pipeline.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,2);
     pipeline.SetSampleDescCount();
 
 #pragma endregion ‚»‚Ì‘¼‚Ìİ’è
