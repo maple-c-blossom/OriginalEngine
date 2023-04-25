@@ -17,8 +17,8 @@ MCB::PostEffect::PostEffect()
 	anchorPoint = { 0,0 };
 	isFlipX = false;
 	isFlipY = false;
-	tex[0] = nullptr;
-	tex[1] = nullptr;
+	tex = nullptr;
+	//tex[1] = nullptr;
 }
 
 void MCB::PostEffect::Init()
@@ -27,18 +27,18 @@ void MCB::PostEffect::Init()
 	
     ID3D12Device* device = Dx12::GetInstance()->device.Get();//毎回GetInstance呼ぶのは非効率なのでポインタ確保
 	
-    for (auto& itr : tex)
-    {
+    //for (auto& itr : tex)
+    //{
 
-        itr = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//レンダーテクスチャ用のテクスチャを生成(これもTextureManager管理。SRVHeap複数作ったら動かなくなったため)
+    tex = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//レンダーテクスチャ用のテクスチャを生成(これもTextureManager管理。SRVHeap複数作ったら動かなくなったため)
 
         D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
         rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
         rtvDescHeapDesc.NumDescriptors = 1;
         result = device->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
         assert(SUCCEEDED(result));
-        device->CreateRenderTargetView(itr->texture->texBuff.texbuff.Get(), nullptr, descHeapRTV->GetCPUDescriptorHandleForHeapStart());
-    }
+        device->CreateRenderTargetView(tex->texture->texBuff.texbuff.Get(), nullptr, descHeapRTV->GetCPUDescriptorHandleForHeapStart());
+    //}
     //深度バッファ作成
     CD3DX12_RESOURCE_DESC depthResDesc =
         CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
@@ -74,7 +74,7 @@ void MCB::PostEffect::PreDraw()
 {
     ID3D12GraphicsCommandList* cmdList = Dx12::GetInstance()->commandList.Get();
         cmdList->ResourceBarrier(
-        1, &CD3DX12_RESOURCE_BARRIER::Transition(tex[0]->texture.get()->texBuff.texbuff.Get(),
+        1, &CD3DX12_RESOURCE_BARRIER::Transition(tex->texture.get()->texBuff.texbuff.Get(),
             D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
             D3D12_RESOURCE_STATE_RENDER_TARGET));
     D3D12_CPU_DESCRIPTOR_HANDLE rtvH = descHeapRTV->GetCPUDescriptorHandleForHeapStart();
@@ -103,7 +103,7 @@ void MCB::PostEffect::Draw()
     tempsprite.SpriteUpdate();
 
 
-    D3D12_RESOURCE_DESC resdesc = tex[0]->texture->texBuff.texbuff->GetDesc();
+    D3D12_RESOURCE_DESC resdesc = tex->texture->texBuff.texbuff->GetDesc();
 
     tempsprite.size.x = (float)resdesc.Width;
 
@@ -133,7 +133,7 @@ void MCB::PostEffect::Draw()
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex[0]->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
@@ -150,7 +150,7 @@ void MCB::PostEffect::Draw()
 void MCB::PostEffect::PostDraw()
 {
     ID3D12GraphicsCommandList* cmdList = Dx12::GetInstance()->commandList.Get();
-    cmdList->ResourceBarrier(1,&CD3DX12_RESOURCE_BARRIER::Transition(tex[0]->texture.get()->texBuff.texbuff.Get(),
+    cmdList->ResourceBarrier(1,&CD3DX12_RESOURCE_BARRIER::Transition(tex->texture.get()->texBuff.texbuff.Get(),
         D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
         D3D12_RESOURCE_STATE_RENDER_TARGET));
 

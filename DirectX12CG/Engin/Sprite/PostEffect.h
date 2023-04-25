@@ -16,7 +16,7 @@ namespace MCB
 		const float clearColor[4] = { 0.25f,0.5f,0.1f,1.0f };
 	public:
 		PostEffect();
-		std::array < TextureCell*,2> tex;
+		TextureCell* tex;
 		void Init();
 		void PreDraw();
 		void Draw();
