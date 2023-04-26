@@ -35,15 +35,14 @@ void MCB::PostEffect::Init()
 	
     ID3D12Device* device = Dx12::GetInstance()->device.Get();//毎回GetInstance呼ぶのは非効率なのでポインタ確保
     int i = 0;
+    D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
+    rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+    rtvDescHeapDesc.NumDescriptors = 2;
+    result = device->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
+    assert(SUCCEEDED(result));
     for (auto& itr : tex)
     {
         itr = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//レンダーテクスチャ用のテクスチャを生成(これもTextureManager管理。SRVHeap複数作ったら動かなくなったため)
-
-        D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
-        rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-        rtvDescHeapDesc.NumDescriptors = 2;
-        result = device->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
-        assert(SUCCEEDED(result));
         device->CreateRenderTargetView(itr->texture->texBuff.texbuff.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
         i++;
     }
@@ -156,7 +155,7 @@ void MCB::PostEffect::Draw()
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex[0]->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex[1]->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
