@@ -160,6 +160,11 @@ void MCB::PostEffect::Draw()
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
     dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
+
+    srvGpuHandle.ptr += tex[1]->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    //SRVヒープの先頭にあるSRVをパラメータ1番に設定
+    dx12->commandList->SetGraphicsRootDescriptorTable(5, srvGpuHandle);
+
     //頂点データ
     dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
     //定数バッファビュー(CBV)の設定コマンド

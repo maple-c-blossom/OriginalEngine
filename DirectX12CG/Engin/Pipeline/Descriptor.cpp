@@ -1,5 +1,5 @@
 #include "Descriptor.h"
-
+#include <algorithm>
 using namespace MCB;
 
 unsigned short int MCB::ShaderResource::AllincrementNum = 0;
@@ -9,6 +9,7 @@ void MCB::ShaderResource::Init()
     SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
     Dx12::GetInstance()->result = SetDescriptorHeap();
     SetDescriptorRange(1, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0);
+    SetDescriptorRange(2, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1,1);
 }
 
 void MCB::ShaderResource::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags)
@@ -29,12 +30,13 @@ void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
     Dx12::GetInstance()->device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
 }
 
-void MCB::ShaderResource::SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int BaseShaderRegister)
+void MCB::ShaderResource::SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int BaseShaderRegister,unsigned int index)
 {
-    descriptorRange.NumDescriptors = NumDescriptors;
-    descriptorRange.RangeType = type;
-    descriptorRange.BaseShaderRegister = BaseShaderRegister;
-    descriptorRange.OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    index = min(static_cast<unsigned int>(descriptorRange.size()) - 1, index);
+    descriptorRange[index].NumDescriptors = NumDescriptors;
+    descriptorRange[index].RangeType = type;
+    descriptorRange[index].BaseShaderRegister = BaseShaderRegister;
+    descriptorRange[index].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 }
 
 void MCB::ShaderResource::SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension)

@@ -11,6 +11,14 @@ void MCB::RootSignature::InitRootSignatureDesc(RootParameter& rootparams, TexSam
 void MCB::RootSignature::SetSerializeRootSignature(Shader& shader)
 {
     Dx12::GetInstance()->result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0, &rootSigBlob, &shader.errorBlob);
+    //std::string error;
+    //error.resize(shader.errorBlob->GetBufferSize());
+    //copy_n((char*)shader.errorBlob->GetBufferPointer(),
+    //    shader.errorBlob->GetBufferSize(),
+    //    error.begin());
+    //error += "\n";
+    //// エラー内容を出力ウィンドウに表示
+    //OutputDebugStringA(error.c_str());
     assert(SUCCEEDED(Dx12::GetInstance()->result));
 }
 

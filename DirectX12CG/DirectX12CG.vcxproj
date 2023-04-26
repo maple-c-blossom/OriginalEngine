@@ -21,7 +21,10 @@
     <ClCompile Include="Engin\Camera\DebugCamera.cpp" />
     <ClCompile Include="Engin\Sprite\DebugText.cpp" />
     <ClCompile Include="Engin\Pipeline\Depth.cpp" />
-    <ClCompile Include="Engin\Pipeline\Descriptor.cpp" />
+    <ClCompile Include="Engin\Pipeline\Descriptor.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
+    </ClCompile>
     <ClCompile Include="Engin\DirectX\Draw.cpp" />
     <ClCompile Include="Engin\DirectX\Dx12.cpp" />
     <ClCompile Include="Engin\DirectX\DxWindow.cpp" />

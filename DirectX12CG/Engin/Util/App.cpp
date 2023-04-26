@@ -41,6 +41,7 @@ void MCB::App::Init()
     rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
     rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
     rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 3, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1,1);
     pipeline = std::make_unique<PipeLineManager>(rootparams.get(), depth.get());
     scene = std::make_unique<SceneManager>(rootparams.get(), depth.get(), pipeline.get());
     scene->Initialize();

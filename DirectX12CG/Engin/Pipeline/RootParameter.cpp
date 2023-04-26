@@ -5,7 +5,7 @@ MCB::RootParameter::~RootParameter()
     rootparams.clear();
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, int NumDescriptorRanges)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, int NumDescriptorRanges,unsigned int descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -13,7 +13,9 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
-        rootparam.DescriptorTable.pDescriptorRanges = &ShaderResource::GetInstance()->descriptorRange;
+        auto& descriptorRange = ShaderResource::GetInstance()->descriptorRange;
+        descriptorIndex = min(static_cast<unsigned int>(descriptorRange.size() - 1), descriptorIndex);
+        rootparam.DescriptorTable.pDescriptorRanges = &descriptorRange[descriptorIndex];
         rootparam.DescriptorTable.NumDescriptorRanges = NumDescriptorRanges;
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
@@ -30,7 +32,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, unsigned int descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -38,8 +40,10 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
-        rootparam.DescriptorTable.pDescriptorRanges = &ShaderResource::GetInstance()->descriptorRange;
-        rootparam.DescriptorTable.NumDescriptorRanges = 0;
+        auto& descriptorRange = ShaderResource::GetInstance()->descriptorRange;
+        descriptorIndex = min(static_cast<unsigned int>(descriptorRange.size() - 1), descriptorIndex);
+        rootparam.DescriptorTable.pDescriptorRanges = &descriptorRange[descriptorIndex];
+        rootparam.DescriptorTable.NumDescriptorRanges = descriptorIndex;
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
     {

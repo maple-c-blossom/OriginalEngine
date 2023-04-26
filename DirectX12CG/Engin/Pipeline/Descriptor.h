@@ -4,6 +4,7 @@
 #include <wrl.h>
 #include "Dx12.h"
 #include "TextureBuffer.h"
+#include <array>
 
 namespace MCB
 {
@@ -29,7 +30,7 @@ namespace MCB
             D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 
             //デスクリプタレンジの設定
-            D3D12_DESCRIPTOR_RANGE descriptorRange{};
+            std::array<D3D12_DESCRIPTOR_RANGE, 2> descriptorRange = {};
 
             static unsigned short int AllincrementNum;
 
@@ -57,7 +58,7 @@ namespace MCB
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int BaseShaderRegister);
+            void SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int BaseShaderRegister, unsigned int index = 0);
 	};
 }
 
