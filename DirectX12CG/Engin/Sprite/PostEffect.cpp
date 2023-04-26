@@ -23,10 +23,10 @@ MCB::PostEffect::PostEffect()
 
 MCB::PostEffect::~PostEffect()
 {
-    for (auto& itr: tex)
-    {
-        itr->free = true;
-    }
+    //for (auto& itr: tex)
+    //{
+    //    itr->free = true;
+    //}
 }
 
 void MCB::PostEffect::Init()

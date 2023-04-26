@@ -99,6 +99,7 @@ PSOutput main(GSOutput input)
 	}
 	
     output.target0 = (shadeColor + texcolor) * color;
-    output.target1 = float4(1 - ((shadeColor + texcolor) * color).rgb, 1);
+    //output.target1 = float4(1 - ((shadeColor + texcolor) * color).rgb, 1);
+    output.target1 = output.target0;
 	return output;
 }
