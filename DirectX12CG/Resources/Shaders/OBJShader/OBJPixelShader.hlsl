@@ -3,20 +3,25 @@
 Texture2D<float4> tex:register(t0);
 SamplerState smp:register(s0);
 
+float4 toonShader(float4 color,float x)
+{
+    return step(color, x);
+}
+
 PSOutput main(GSOutput input)
 {
     PSOutput output;
 	float4 texcolor = float4(tex.Sample(smp, input.uv));
 	float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 	float3 ambient = m_ambient;
-	float4 shadeColor = float4(ambientColor * ambient, m_alpha);
+    float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor * color;
 	for (int i = 0; i < DIRLIGHT_NUM; i++)
 	{
 		if (dirLights[i].active)
 		{
-            float3 dotlightnormal = saturate(dot(dirLights[i].lightv, input.normal));
+            float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
 			float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
-            float3 diffuse = dotlightnormal * m_diffuse;
+            float3 diffuse = saturate(dotlightnormal) * m_diffuse * texcolor.rgb * color.rgb;
 			float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess) * m_specular;
             float3 color = saturate((diffuse + speculer) * dirLights[i].lightcolor);
 
@@ -33,9 +38,9 @@ PSOutput main(GSOutput input)
 			float d = length(lightVec);
 			lightVec = normalize(lightVec);
 			float atten = 1.0f / (pLights[i].lightAtten.x + pLights[i].lightAtten.y * d + pLights[i].lightAtten.z * d * d);
-            float3 dotLightNormal = saturate(dot(lightVec, input.normal));
+            float3 dotLightNormal = dot(lightVec, input.normal);
 			float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
-			float3 diffuse = dotLightNormal * m_diffuse;
+            float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;
 			float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[i].shininess) * m_specular;
             float3 color = saturate((diffuse + specular) * pLights[i].lightColor);
             shadeColor.rgb += color.rgb;
@@ -53,18 +58,19 @@ PSOutput main(GSOutput input)
 			float cos = dot(lightVec, sLights[i].ligntVec);
 			float angleAtten = smoothstep(sLights[i].lightFactorAngleCos.y, sLights[i].lightFactorAngleCos.x, cos);
 			atten *= angleAtten;
-            float3 dotLightNormal = saturate(dot(lightVec, input.normal));
+            float3 dotLightNormal = dot(lightVec, input.normal);
 			float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
-			float3 diffuse = dotLightNormal * m_diffuse;
+            float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;;
 			float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[i].shininess) * m_specular;
             float3 color = saturate((diffuse + specular) * sLights[i].lightColor);
-            shadeColor.rgb += color.rgb;
+            shadeColor.rgb += color.rgb ;
 
 		}
 	}
 	
-    output.target0 = (shadeColor * texcolor) * color;
+    output.target0 = shadeColor;
     //output.target1 = float4(1 - ((shadeColor * texcolor) * color).rgb, 1);
     output.target1 = output.target0;
 	return output;
 }
+

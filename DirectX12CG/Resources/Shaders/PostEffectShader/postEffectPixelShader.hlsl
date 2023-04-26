@@ -24,5 +24,6 @@ float4 main(VSOutput input) : SV_TARGET
         return texColor1sum / (uForRange * vForRange);
     }
     float4 texColor0 = float4(1 - tex0.Sample(smp, input.uv).rgb, 1);
-    return texColor0;
+    float4 texColor1 = float4(tex1.Sample(smp, input.uv));
+    return texColor1;
 }

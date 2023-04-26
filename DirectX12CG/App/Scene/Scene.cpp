@@ -125,7 +125,8 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
-    zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
+    //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
+    zoomTex = loader->CreateNoTextureFileIsTexture();
 
 
 }
@@ -219,20 +220,20 @@ void MCB::Scene::Update()
             isRight = false;
         }
     }
-    if (SphereisDown) {
-        testsphere.position.y -= 0.05f;
-        if (testsphere.position.y <= -5)
-        {
-            SphereisDown = false;
-        }
-    }
-    else {
-        testsphere.position.y += 0.05f;
-        if (testsphere.position.y >= 0)
-        {
-            SphereisDown = true;
-        }
-    }
+    //if (SphereisDown) {
+    //    testsphere.position.y -= 0.05f;
+    //    if (testsphere.position.y <= -5)
+    //    {
+    //        SphereisDown = false;
+    //    }
+    //}
+    //else {
+    //    testsphere.position.y += 0.05f;
+    //    if (testsphere.position.y >= 0)
+    //    {
+    //        SphereisDown = true;
+    //    }
+    //}
 
     if (input->IsKeyDown(DIK_W))
     {
@@ -320,7 +321,7 @@ void MCB::Scene::Update()
 
         }
     }
-    CollisionManager::GetInstance()->CheckAllCollision();
+    //CollisionManager::GetInstance()->CheckAllCollision();
     if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd = true;
@@ -338,13 +339,13 @@ void MCB::Scene::PostEffectDraw()
     postEffect->PreDraw();
     Skydorm.Draw();
     ground.Draw();
-    triangle.DrawTriangle(viewCamera);
-    testsphere.Draw();
-    testsphere2.Draw();
-    testsphere3.Draw();
-    testsphere4.Draw();
-    testRay.Draw();
-    rayStart.Draw();
+    //triangle.DrawTriangle(viewCamera);
+    testsphere.Draw(zoomTex->texture.get()->incrementNum);
+    //testsphere2.Draw();
+    //testsphere3.Draw();
+    //testsphere4.Draw();
+    //testRay.Draw();
+    //rayStart.Draw();
     postEffect->PostDraw();
 
 

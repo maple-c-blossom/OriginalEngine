@@ -146,8 +146,8 @@ void LightGroup::DefaultLightSet()
 {
 	dirLights[0].SetIsActive(true);
 	dirLights[0].SetLightColor({ 1.0f, 1.0f, 1.0f });
-	dirLights[0].SetLightDir({ 0.0f, -1.0f, 0.0f});
-	dirLights[0].SetLightShininess(3.0f);
+	dirLights[0].SetLightDir({ -1.0f, -1.0f, 0.0f});
+	dirLights[0].SetLightShininess(4.0f);
 
 	dirLights[1].SetIsActive(false);
 	dirLights[1].SetLightColor({ 1.0f, 1.0f, 1.0f });
@@ -159,7 +159,7 @@ void LightGroup::DefaultLightSet()
 	dirLights[2].SetLightDir({ -0.5f, +0.1f, -0.2f });
 	dirLights[2].SetLightShininess(3.0f);
 
-	PLights[0].SetIsActive(true);
+	PLights[0].SetIsActive(false);
 	PLights[0].SetPLightPos({ 0, 2, 10 });
 	PLights[0].SetPLightColor({ 0,1,1 });
 	PLights[0].SetPLightAtten({0.01f,0.01f,0.01f});
@@ -174,7 +174,7 @@ void LightGroup::DefaultLightSet()
 	PLights[2].SetPLightColor({ 1,1,1 });
 	PLights[2].SetPLightAtten({ 0.001f,0.001f,0.001f });
 
-	SLights[0].SetIsActive(true);
+	SLights[0].SetIsActive(false);
 	SLights[0].SetSLightPos({ 0.0f,3.0f,20.0f });
 	SLights[0].SetSLightColor({ 1,0,0 });
 	SLights[0].SetSLightAtten({ 0.0,0.0,0.0 });

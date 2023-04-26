@@ -262,7 +262,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(unsigned short int incrementNum,
         ShaderResource* srv = ShaderResource::GetInstance();
 
         //画像イメージデータの作成----------------------
-        texImg.SetImageDataRGBA(Float4(1.0f, 1.0f, 1.0f, 1.0f));
+        texImg.SetImageDataRGBA(Float4(1.0f, 0.0f, 0.0f, 1.0f));
         //------------------------------------
 
          //テクスチャバッファ設定---------------------------------------
