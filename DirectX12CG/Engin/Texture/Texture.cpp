@@ -190,9 +190,11 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
         texBuff.SetNoTextureFileTexResourceDescForPostEffect();
         //--------------------------------------
 
-
+        D3D12_CLEAR_VALUE val;
+        val.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+        val.Color[0] = 0.25f; val.Color[1] = 0.5f; val.Color[2] = 0.1f; val.Color[3] = 1.0f;
         //テクスチャバッファの生成----------------------
-        HRESULT result = texBuff.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, nullptr);
+        HRESULT result = texBuff.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff.TransferMipmatToTexBuff(texImg, result);
         //-----------------------------------
         this->incrementNum = ShaderResource::AllincrementNum;
@@ -244,9 +246,11 @@ void MCB::Texture::CreateNoTextureFileIsTexture(unsigned short int incrementNum,
         texBuff.SetNoTextureFileTexResourceDescForPostEffect();
         //--------------------------------------
 
-
+        D3D12_CLEAR_VALUE val;
+        val.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+        val.Color[0] = 0.25f; val.Color[1] = 0.5f; val.Color[2] = 0.1f; val.Color[3] = 1.0f;
         //テクスチャバッファの生成----------------------
-        HRESULT result = texBuff.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, nullptr);
+        HRESULT result = texBuff.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff.TransferMipmatToTexBuff(result);
         //-----------------------------------
         this->incrementNum = ShaderResource::AllincrementNum;
