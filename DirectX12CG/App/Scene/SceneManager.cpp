@@ -93,20 +93,20 @@ void MCB::SceneManager::Update()
 
 void MCB::SceneManager::Draw()
 {
-		Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0, Alpha), scene->clearColor);
+		Draw::GetInstance()->PreDraw(scene->GetDepth(), *scene->Getpipeline().Getpipeline(0, Alpha), scene->clearColor);
 
 	if (isInitialized)//ゲーム画面
 	{
 		scene->PostEffectDraw();
-		Draw::GetInstance()->PreDraw(*scene->GetDepth(), *scene->Getpipeline()->Getpipeline(0, Alpha), scene->clearColor);
+		Draw::GetInstance()->PreDraw(scene->GetDepth(), *scene->Getpipeline().Getpipeline(0, Alpha), scene->clearColor);
 		//3D描画
 		scene->Draw();
 		//パーティクル
-		scene->Getpipeline()->SetParticlePipeLine(Alpha);
+		scene->Getpipeline().SetParticlePipeLine(Alpha);
 		scene->ParticleDraw();
 		//スプライト
 	
-		scene->Getpipeline()->SetSpritePipeLine(Alpha);
+		scene->Getpipeline().SetSpritePipeLine(Alpha);
 		scene->SpriteDraw();
 
 
@@ -119,7 +119,7 @@ void MCB::SceneManager::Draw()
 	}
 	else//ロード画面
 	{
-		scene->Getpipeline()->SetSpritePipeLine(Alpha);
+		scene->Getpipeline().SetSpritePipeLine(Alpha);
 		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2, (float)DxWindow::GetInstance()->window_width, (float)DxWindow::GetInstance()->window_height);
 		loadSprite.SpriteDraw(*loadTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2);
 	}  

@@ -32,12 +32,12 @@ namespace MCB
 
 		void SetBeforeBbIndex();
 		void SetBeforeResourceBarrier();
-		void BeforeDraw(Depth depth, PipelineRootSignature pipeline);
-		void SetRenderTargetView(Depth& depth);
+		void BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline);
+		void SetRenderTargetView(const Depth& depth);
 		void ClearScreen(const float* clearColor);
 		void SetViewPort();
 		void SetScissorrect();
-		void PreDraw(Depth depth,PipelineRootSignature pipeline, const float* clearColor);
+		void PreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor);
 
 
 		void SetAfterResourceBarrier();

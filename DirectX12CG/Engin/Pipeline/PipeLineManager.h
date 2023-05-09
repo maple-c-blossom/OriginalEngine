@@ -22,7 +22,7 @@ namespace MCB
 		void SetSpritePipeLine(int blend = 0);
 		void SetParticlePipeLine(int blend = 0);
 		void SetPostEffectPipeLine(int blend = 0);
-		PipelineRootSignature* Getpipeline(int pipelineSelect, int blend);
+		PipelineRootSignature* Getpipeline(const int& pipelineSelect,const int& blend);
 	};
 
 }

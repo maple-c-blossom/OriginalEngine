@@ -39,7 +39,7 @@ void MCB::PipeLineManager::SetPostEffectPipeLine(int blend)
 	postEffectPipeline[blend].CommonBeginDraw();
 }
 
-MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(int pipelineSelect, int blend)
+MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(const int& pipelineSelect,const int& blend)
 {
 	switch (pipelineSelect)
 	{

@@ -139,11 +139,13 @@ namespace MCB
 		virtual void CheckAllColision() = 0;
 		bool GetIsSceneEnd() { return sceneEnd; }
 
-		Depth* GetDepth() { return depth; }
+		Depth* GetDepthPtr() { return depth; }
+		Depth& GetDepth() { return *depth; }
 		//ルートパラメータ
 		RootParameter* GetRootparamsPtr() { return rootparamsPtr; }
 		
-		PipeLineManager* Getpipeline() { return pipeline; }
+		PipeLineManager* GetpipelinePtr() { return pipeline; }
+		PipeLineManager& Getpipeline() { return *pipeline; }
 	};
 
 }

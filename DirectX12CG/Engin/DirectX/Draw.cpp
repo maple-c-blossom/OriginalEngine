@@ -9,7 +9,7 @@ void MCB::Draw::SetBeforeResourceBarrier()
     Dx12::GetInstance()->commandList->ResourceBarrier(1, &barrierDesc);
 }
 
-void MCB::Draw::BeforeDraw( Depth depth, PipelineRootSignature pipeline)
+void MCB::Draw::BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
@@ -64,7 +64,7 @@ MCB::Draw* MCB::Draw::GetInstance()
 }
 
 
-void MCB::Draw::SetRenderTargetView(Depth& depth)
+void MCB::Draw::SetRenderTargetView(const Depth& depth)
 {
     Dx12* dx12 = Dx12::GetInstance();
     rtvHandle = dx12->rtvHeaps->GetCPUDescriptorHandleForHeapStart();
@@ -155,7 +155,7 @@ void MCB::Draw::ResetQueAndCommandList()
     assert(SUCCEEDED(dx12->result) && "コマンドリスト再貯蓄準備段階でのエラー");
 }
 
-void MCB::Draw::PreDraw(Depth depth, PipelineRootSignature pipeline, const float* clearColor)
+void MCB::Draw::PreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor)
 {
     SetBeforeBbIndex();
     SetBeforeResourceBarrier();
