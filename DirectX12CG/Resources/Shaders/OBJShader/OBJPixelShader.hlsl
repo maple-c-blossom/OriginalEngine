@@ -140,7 +140,7 @@ PSOutput PhoneShader(GSOutput input)
 PSOutput rimLight(GSOutput input)
 {
     PSOutput output;
-    float3 rimColor = (0.05, 0.25, 0.25);
+    float3 rimColor = float3(0.05, 0.25, 0.25);
     float4 texcolor = float4(tex.Sample(smp, input.uv));
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
     float3 ambient = m_ambient;
@@ -208,8 +208,19 @@ PSOutput rimLight(GSOutput input)
 PSOutput main(GSOutput input)
 {
     PSOutput output;
-    output = toonShader(input);
-	return output;
+    switch (shaderNum)
+    {
+        case 1:
+            return PhoneShader(input);
+            break;
+        case 2:
+            return toonShader(input);
+            break;
+        case 3:
+            return rimLight(input);
+            break;
+    }
+    return PhoneShader(input);
 }
 
 

@@ -33,6 +33,7 @@ namespace MCB
             DirectX::XMMATRIX world;
             Float4 color = {1.f,1.f,1.f,1.f};
             Float3 cameraPos;
+            float shaderNum;
 
         }ConstBufferDataTransform;
         //---------------------------------
@@ -49,6 +50,7 @@ namespace MCB
         DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
         DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
         Float4 color = { 1.f,1.f,1.f,1.f };
+        float shaderNum = 1.f;
         //ÉèÅ[ÉãÉhçsóÒ
         WorldMatrix matWorld = {};
         Vector3D NORM_FRONT_VEC = {};

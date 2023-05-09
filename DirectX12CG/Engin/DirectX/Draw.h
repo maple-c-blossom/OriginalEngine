@@ -15,12 +15,12 @@ namespace MCB
 		Draw& operator=(const Draw& draw) {};
 		~Draw() {};
 	public:
-		D3D12_RESOURCE_BARRIER barrierDesc;
-		UINT bbIndex;
-		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
-		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle;
-		D3D12_VIEWPORT viewport;
-		D3D12_RECT scissorrect;
+		D3D12_RESOURCE_BARRIER barrierDesc = {};
+		UINT bbIndex = {};
+		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = {};
+		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = {};
+		D3D12_VIEWPORT viewport = {};
+		D3D12_RECT scissorrect = {};
 
 
 		D3D12_RESOURCE_BARRIER GetResouceBarrier();

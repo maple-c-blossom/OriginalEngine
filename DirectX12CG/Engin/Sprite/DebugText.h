@@ -18,8 +18,8 @@ namespace MCB
 	public:
 		Sprite sprite[maxCharCount];
 		int spriteIndex = 0;
-		Texture* debugfont;
-		Dx12* dx12;
+		Texture* debugfont = nullptr;
+		Dx12* dx12 = nullptr;
 
 		void Init(Texture* texture);
 		void Print( float x, float y, float scale, const char* text, ... );

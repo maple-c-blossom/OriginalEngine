@@ -22,32 +22,32 @@ namespace MCB
 	class Triangle
 	{
 	public:
-		std::array<Vector3D,3> vertexPoint;
-		Vector3D normal;
+		std::array<Vector3D,3> vertexPoint = {};
+		Vector3D normal = {};
 		void NormalCalculation();
 	};
 	class Ray
 	{
 	public:
-		Vector3D StartPosition;
-		Vector3D rayVec;
-		float range;
-		float radius;
+		Vector3D StartPosition = {};
+		Vector3D rayVec = {};
+		float range = 0;
+		float radius = 0;
 		bool rayCasted = false;
 	};
 
 	class Box
 	{
 	public:
-		Float3 position;
-		Float3 size;
+		Float3 position = {};
+		Float3 size = {};
 	};
 
 	class Sphere
 	{
 	public:
-		Vector3D centerPosition;
-		float radius;
+		Vector3D centerPosition = {};
+		float radius = {};
 	};
 
 	class Plane

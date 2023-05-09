@@ -208,7 +208,7 @@ PSOutput rimLight(GSOutput input)
 PSOutput main(GSOutput input)
 {
     PSOutput output;
-    output = toonShader(input);
+    output = PhoneShader(input);
     return output;
 }
 

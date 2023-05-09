@@ -119,6 +119,7 @@ void Object3d::Update(bool isBillBord)
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
     if(collider)collider->Update();
 }
@@ -183,6 +184,7 @@ void Object3d::Update(Quaternion q, bool isBillBord)
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
     if (collider)collider->Update();
 }
@@ -311,6 +313,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->color = color;
+    constMapTranceform->shaderNum = shaderNum;
     if (collider)collider->Update();
     animeTime += 0.1f;
 
@@ -360,6 +363,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
+    constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
     if (collider)collider->Update();
 }

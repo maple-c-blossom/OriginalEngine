@@ -74,12 +74,11 @@ float4 main(VSOutput input) : SV_TARGET
     switch (color.r)
     {
         case 1:
-            //if (fmod(input.uv.y, 0.1f) < 0.05f)
-            //{
-            //    return AverageBlur(input, tex0);
-            //}
-            //return inv(input, tex1);
-            return sepia(input, tex0, 0.024f);
+            if (fmod(input.uv.y, 0.1f) < 0.05f)
+            {
+                return AverageBlur(input, tex0);
+            }
+            return inv(input, tex1);
             break;
         case 2:
             return AverageBlur(input, tex0);
@@ -95,6 +94,9 @@ float4 main(VSOutput input) : SV_TARGET
             break;
         case 6:
             return sepia(input, tex0,0.024f);
+            break;
+        case 7:
+            return float4(tex1.Sample(smp, input.uv));;
             break;
         default:
             if (fmod(input.uv.y, 0.1f) < 0.05f)
