@@ -1,9 +1,10 @@
 cbuffer cbuff0 : register(b0)
 {
-    matrix viewproj;
-    matrix world;
-    float4 color;
-    float3 cameraPos;
+    matrix viewproj : packoffset(c0);
+    matrix cameraMat : packoffset(c4);
+    matrix world : packoffset(c8);
+    float4 color : packoffset(c12);
+    float3 cameraPos : packoffset(c13);
 }
 
 cbuffer cbuff1 : register(b1)
@@ -28,6 +29,7 @@ struct PLight
     float3 lightPos;
     float shininess;
     float3 lightColor;
+    float pad1;
     float3 lightAtten;
     uint active;
 };
@@ -38,10 +40,14 @@ struct SLight
     float3 ligntVec;
     float shininess;
     float3 lightPos;
+    float pad;
     float3 lightColor;
+    float pad2;
     float3 lightAtten;
+    float pad3;
     float2 lightFactorAngleCos;
     uint active;
+    float pad4;
 };
 
 cbuffer cbuff2 : register(b2)
@@ -63,12 +69,12 @@ cbuffer cbuff3 : register(b3)
 
 struct VSOutput
 {
-    float3 normal : NORMAL;
     float4 worldpos : POSITION;
+    float4 svpos : SV_POSITION;
+    float3 normal : NORMAL;
     float2 uv : TEXCOORD;
     //uint4 ids : BONEID;
     //float4 weights : BONEWEIGHT;
-    float4 svpos : SV_POSITION;
 };
 
 struct VSInput

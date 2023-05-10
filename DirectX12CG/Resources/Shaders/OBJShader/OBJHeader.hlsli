@@ -1,10 +1,11 @@
 cbuffer cbuff0 : register(b0)
 {
     matrix viewproj : packoffset(c0);
-	matrix world : packoffset(c4);
-    float4 color : packoffset(c8);
-    float3 cameraPos : packoffset(c9);
-    float shaderNum : packoffset(c9.w);
+    matrix cameraMat : packoffset(c4);
+	matrix world : packoffset(c8);
+    float4 color : packoffset(c12);
+    float3 cameraPos : packoffset(c13);
+    float shaderNum : packoffset(c13.w);
 }
 
 cbuffer cbuff1 : register(b1)

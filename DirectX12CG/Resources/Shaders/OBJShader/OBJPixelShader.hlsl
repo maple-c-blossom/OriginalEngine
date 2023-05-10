@@ -151,9 +151,11 @@ PSOutput rimLight(GSOutput input)
     PSOutput output;
     float3 rimColor = float3(0.1, 0.5, 0.5);
     float4 texcolor = float4(tex.Sample(smp, input.uv));
-    float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
+    float3 eyedir = normalize(cameraPos.xyz - input.worldpos.xyz);
     float3 ambient = m_ambient;
-    float4 rimLight = smoothstep(0.45f,0.455f,(0.8f - pow(saturate(dot(input.normal, eyedir)), 1)));
+    float4 rimLight = smoothstep(0.45f, 0.455f, (0.8f - pow(saturate(dot(input.normal, eyedir)), 1)));
+    //rimLight = dot(input.normal, eyedir);
+    
     float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor * color;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {

@@ -6,14 +6,14 @@ VSOutput main( float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOO
 	//lightdir = normalize(lightdir);
 	//float3 lightcolor = float3(1, 1, 1);
 
-	float4 wnormal = normalize(mul(world, float4(normal, 0)));
+	float4 wnormal = (mul(world, float4(normal, 0)));
 	float4 wpos = mul(world, pos);
-
+    float4x4 wcMat = mul(cameraMat,world);
 
 	VSOutput output;
-	output.svpos = mul(mul(viewproj,world),pos);
+    output.svpos = mul(mul(viewproj, wcMat), pos);
 	output.worldpos = wpos;
-	output.normal = wnormal.xyz;
+    output.normal = normalize(wnormal.xyz);
 	output.uv = uv;
 
 	return output;

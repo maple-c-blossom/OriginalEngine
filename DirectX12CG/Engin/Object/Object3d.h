@@ -30,6 +30,7 @@ namespace MCB
         {
             //DirectX::XMMATRIX mat;
             DirectX::XMMATRIX viewproj;
+            DirectX::XMMATRIX cameraMat;
             DirectX::XMMATRIX world;
             Float4 color = {1.f,1.f,1.f,1.f};
             Float3 cameraPos;

@@ -114,7 +114,8 @@ void Object3d::Update(bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
     
-    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat;
+    constMapTranceform->world = matWorld.matWorld;
+    constMapTranceform->cameraMat = camera->GetView()->mat;
     constMapTranceform->viewproj = camera->GetProjection()->mat;
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
@@ -179,7 +180,8 @@ void Object3d::Update(Quaternion q, bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat;
+    constMapTranceform->world = matWorld.matWorld;
+    constMapTranceform->cameraMat = camera->GetView()->mat;
     constMapTranceform->viewproj = camera->GetProjection()->mat;
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
@@ -282,6 +284,7 @@ void Object3d::Draw(unsigned short int incremant)
 
 void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
 {
+    
     if (animationModel == nullptr)return;
     matWorld.SetMatScale(scale.x, scale.y, scale.z);
     matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
@@ -307,7 +310,8 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform->world = matWorld.matWorld;
+    constMapTranceform->cameraMat = camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
     constMapTranceform->viewproj = camera->GetProjection()->mat;
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
@@ -358,7 +362,8 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
         matWorld.matWorld *= parent->matWorld.matWorld;
     }
 
-    constMapTranceform->world = matWorld.matWorld * camera->GetView()->mat * animationModel->nodes.begin()->get()->globalTransform;
+    constMapTranceform->world = matWorld.matWorld;
+    constMapTranceform->cameraMat = camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
     constMapTranceform->viewproj = camera->GetProjection()->mat;
     constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
     constMapTranceform->cameraPos.y = camera->GetView()->eye.y;

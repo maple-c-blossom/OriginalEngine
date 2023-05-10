@@ -261,7 +261,8 @@ void MCB::Scene::ImGuiUpdate()
             ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
             ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");
             ImGui::Text("SmoothChange:[O (NoSmooth)] or [P (Smooth)]");
-
+            ImGui::Text("%f,%f,%f,", viewCamera->GetView()->eye.x, viewCamera->GetView()->eye.y, viewCamera->GetView()->eye.z);
+            ImGui::Text("%f,%f,%f,", testsphere.position.x, testsphere.position.y, testsphere.position.z);
 
             ImGui::TreePop();
         }
