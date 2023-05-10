@@ -10,16 +10,16 @@ PSOutput toonShader(GSOutput input)
     float4 texcolor = float4(tex.Sample(smp, input.uv));
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
     float3 ambient = m_ambient;
-    float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor * color;
+    float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor/* * color*/;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {
             float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
             float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
-            float3 diffuse = saturate(dotlightnormal) * m_diffuse * texcolor.rgb * color.rgb;
-            float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess) * m_specular;
-            float3 color = saturate((smoothstep(threshold.x, threshold.y, diffuse) + smoothstep(0.5f, 0.55f, speculer)) * dirLights[i].lightcolor);
+            float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotlightnormal)) * m_diffuse * texcolor.rgb;
+            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess)) * m_specular;
+            float3 color = saturate((diffuse + speculer) * dirLights[i].lightcolor);
 
             shadeColor.rgb += color.rgb;
 
@@ -36,9 +36,10 @@ PSOutput toonShader(GSOutput input)
             float atten = 1.0f / (pLights[j].lightAtten.x + pLights[j].lightAtten.y * d + pLights[j].lightAtten.z * d * d);
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
-            float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;
-            float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[j].shininess) * m_specular;
-            float3 color = saturate((smoothstep(threshold.x, threshold.y, diffuse) + smoothstep(0.5f, 0.55f, specular)) * dirLights[j].lightcolor);
+            float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotLightNormal)) * m_diffuse * texcolor.rgb;
+            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), pLights[j].shininess)) * m_specular;
+            float3 color = saturate((diffuse + speculer) * pLights[j].lightColor);
+
             shadeColor.rgb += color.rgb;
         }
     }
@@ -56,10 +57,10 @@ PSOutput toonShader(GSOutput input)
             atten *= angleAtten;
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
-            float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;;
-            float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[k].shininess) * m_specular;
-            float3 color = saturate((smoothstep(threshold.x, threshold.y, diffuse) + smoothstep(0.5f, 0.55f, specular)) * dirLights[k].lightcolor);
-            shadeColor.rgb += color.rgb;
+            float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotLightNormal)) * m_diffuse * texcolor.rgb;
+            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), sLights[k].shininess)) * m_specular;
+            float3 color = saturate((diffuse + speculer) * sLights[k].lightColor);
+
 
         }
     }
@@ -140,11 +141,11 @@ PSOutput PhoneShader(GSOutput input)
 PSOutput rimLight(GSOutput input)
 {
     PSOutput output;
-    float3 rimColor = float3(0.05, 0.25, 0.25);
+    float3 rimColor = float3(0.1, 0.5, 0.5);
     float4 texcolor = float4(tex.Sample(smp, input.uv));
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
     float3 ambient = m_ambient;
-    float4 rimLight = (1 - pow(saturate(dot(input.normal, eyedir)), 1));
+    float4 rimLight = step(0.45f,(0.7f - pow(saturate(dot(input.normal, eyedir)), 1)));
     float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor * color;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {

@@ -29,6 +29,7 @@ void MCB::Scene::Initialize()
     lights->UpDate();
     Object3d::SetLights(lights);
     postEffect->Init();
+    postEffect->color.x = static_cast<float>(PostEffectNum::NONE);
 
 }
 
@@ -81,8 +82,9 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
+    zoomTex = loader->LoadTexture(L"Resources\\09_Test_Texture2.jpg");
     //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
-    zoomTex = loader->CreateNoTextureFileIsTexture();
+    //zoomTex = loader->CreateNoTextureFileIsTexture();
 
 
 }
@@ -122,7 +124,7 @@ void MCB::Scene::Update()
 
 
 
-    testsphere.rotasion.y += 0.15f;
+    testsphere.rotasion.y += 0.05f;
     if (input->IsKeyDown(DIK_W))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
