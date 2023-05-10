@@ -10,18 +10,20 @@ PSOutput toonShader(GSOutput input)
     float4 texcolor = float4(tex.Sample(smp, input.uv));
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
     float3 ambient = m_ambient;
-    float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor/* * color*/;
+    float4 ambientcolor = float4(ambientColor * ambient, m_alpha) * texcolor;
+    float4 shadeColor = { 0, 0, 0, 1 };
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {
         if (dirLights[i].active)
         {
-            float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
+            float dotlightnormal = dot(dirLights[i].lightv, input.normal);
             float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
             float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotlightnormal)) * m_diffuse * texcolor.rgb;
-            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess)) * m_specular;
-            float3 color = saturate((diffuse + speculer) * dirLights[i].lightcolor);
-
-            shadeColor.rgb += color.rgb;
+            float dotref = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess));
+            float3 speculer =  dotref * m_specular;
+            float3 color = saturate((lerp(diffuse, speculer,
+            smoothstep(0.5f, 0.55f, dotref))) * dirLights[i].lightcolor);
+            shadeColor.rgb += saturate(lerp(ambientcolor.rgb,color.rgb, smoothstep(0.5f, 0.55f, dotlightnormal))).rgb;
 
         }
     }
@@ -37,8 +39,11 @@ PSOutput toonShader(GSOutput input)
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
             float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotLightNormal)) * m_diffuse * texcolor.rgb;
-            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), pLights[j].shininess)) * m_specular;
-            float3 color = saturate((diffuse + speculer) * pLights[j].lightColor);
+            float dotref = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), sLights[j].shininess));
+            float3 speculer = dotref * m_specular;
+            float3 color = saturate((lerp(diffuse, speculer,
+            smoothstep(0.5f, 0.55f, dotref))) * sLights[j].lightColor);
+            shadeColor.rgb += saturate(lerp(ambientcolor.rgb, color.rgb, smoothstep(0.5f, 0.55f, dotLightNormal))).rgb;
 
             shadeColor.rgb += color.rgb;
         }
@@ -58,9 +63,12 @@ PSOutput toonShader(GSOutput input)
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
             float3 diffuse = smoothstep(threshold.x, threshold.y, saturate(dotLightNormal)) * m_diffuse * texcolor.rgb;
-            float3 speculer = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), sLights[k].shininess)) * m_specular;
-            float3 color = saturate((diffuse + speculer) * sLights[k].lightColor);
-
+            float dotref = smoothstep(0.5f, 0.55f, pow(saturate(dot(reflect, eyedir)), sLights[k].shininess));
+            float3 speculer = dotref * m_specular;
+            float3 color = saturate((lerp(diffuse, speculer,
+            smoothstep(0.5f, 0.55f, dotref))) * sLights[k].lightColor);
+            shadeColor.rgb += saturate(lerp(ambientcolor.rgb, color.rgb, smoothstep(0.5f, 0.55f, dotLightNormal))).rgb;
+            shadeColor.rgb += color.rgb;
 
         }
     }
@@ -145,7 +153,7 @@ PSOutput rimLight(GSOutput input)
     float4 texcolor = float4(tex.Sample(smp, input.uv));
     float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
     float3 ambient = m_ambient;
-    float4 rimLight = step(0.45f,(0.7f - pow(saturate(dot(input.normal, eyedir)), 1)));
+    float4 rimLight = smoothstep(0.45f,0.455f,(0.8f - pow(saturate(dot(input.normal, eyedir)), 1)));
     float4 shadeColor = float4(ambientColor * ambient, m_alpha) * texcolor * color;
     for (int i = 0; i < DIRLIGHT_NUM; i++)
     {

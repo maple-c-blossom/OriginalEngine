@@ -54,7 +54,7 @@ void MCB::Scene::Object3DInit()
     testsphere.Init();
     testsphere.model = SpherModel2.get();
     testsphere.scale = { 1,1,1 };
-    testsphere.position = { -4,0,0 };
+    testsphere.position = { 0,0,3 };
     testsphere.rotasion = { ConvertRadius(90),0,0 };
     testsphere.SetCollider(new SphereCollider);
     testsphere.camera = viewCamera;
@@ -124,7 +124,7 @@ void MCB::Scene::Update()
 
 
 
-    testsphere.rotasion.y += 0.05f;
+    //testsphere.rotasion.y += 0.05f;
     if (input->IsKeyDown(DIK_W))
     {
         lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
@@ -169,46 +169,17 @@ void MCB::Scene::Update()
         lights->SetSLightIsActive(0, !lights->GetSLightIsActive(0));
     }
 
+
+
     if (input->IsKeyTrigger(DIK_1))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::STRIPE);
-    }
-    else if (input->IsKeyTrigger(DIK_2))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::AVARAGEBLER);
-    }
-    else if (input->IsKeyTrigger(DIK_3))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::INV);
-    }
-    else if (input->IsKeyTrigger(DIK_4))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::GAUSSIANBLUR);
-    }
-    else if (input->IsKeyTrigger(DIK_5))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::GRAY);
-    }
-    else if (input->IsKeyTrigger(DIK_6))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::SEPIA);
-    }
-    else if (input->IsKeyTrigger(DIK_0))
-    {
-        postEffect->color.x = static_cast<float>(PostEffectNum::NONE);
-    }
-
-
-
-    if (input->IsKeyTrigger(DIK_7))
     {
         testsphere.shaderNum = 1.f;
     }
-    else if (input->IsKeyTrigger(DIK_8))
+    else if (input->IsKeyTrigger(DIK_2))
     {
         testsphere.shaderNum = 2.f;
     }
-    else if (input->IsKeyTrigger(DIK_9))
+    else if (input->IsKeyTrigger(DIK_3))
     {
         testsphere.shaderNum = 3.f;
     }
@@ -227,10 +198,10 @@ void MCB::Scene::Update()
 
     MatrixUpdate();
    
-    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
-    {
-        sceneEnd = true;
-    }
+    //if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+    //{
+    //    sceneEnd = true;
+    //}
 }
 
 void MCB::Scene::Draw()
@@ -282,13 +253,10 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("PostEffectChange: [num 1 = stripe], [num 2 = avarageBler]");
-            ImGui::Text("[num 3 = inv], [num 4 = GAUSSIANBLUR], [num 5 = gray]");
-            ImGui::Text("[num 6 = sepia], [num 0 = NoEffect]");
-            ImGui::Text("ObjectShadeChange: [num 7 = Phone], [num 8 = Toon],[num9 = rimLight]");
+            ImGui::Text("ObjectShaderChange: [num 1 = Phone], [num 2 = Toon],[num3 = rimLight]");
             ImGui::Text("LightChenge:[T (Dir)] or [Y (Point)] or [U (Spot)] ");
             ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
-            ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
+            //ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
             ImGui::Text("LightMove: [W],[S]");
             ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
             ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");

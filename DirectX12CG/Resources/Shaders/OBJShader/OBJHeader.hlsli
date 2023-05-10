@@ -30,6 +30,7 @@ struct PLight
 	float3 lightPos;
 	float shininess;
 	float3 lightColor;
+    float pad;
 	float3 lightAtten;
 	uint active;
 };
@@ -40,10 +41,14 @@ struct SLight
 	float3 ligntVec;
 	float shininess;
 	float3 lightPos;
+    float pad;
 	float3 lightColor;
+    float pad2;
 	float3 lightAtten;
+    float pad3;
 	float2 lightFactorAngleCos;
 	uint active;
+    float pad4;
 };
 
 cbuffer cbuff2 : register(b2)
