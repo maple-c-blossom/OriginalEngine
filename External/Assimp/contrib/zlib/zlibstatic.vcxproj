@@ -78,7 +78,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)External\Assimp\include;C:\K021G1118\CG2\DirectX12CG\External\Assimp;$(SolutionDir)External\Assimp\code;$(SolutionDir)External\Assimp\.;$(SolutionDir)External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\Assimp\include;$(SolutionDir)External\Assimp;$(SolutionDir)External\Assimp\code;$(SolutionDir)External\Assimp\.;$(SolutionDir)External\Assimp\contrib\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
