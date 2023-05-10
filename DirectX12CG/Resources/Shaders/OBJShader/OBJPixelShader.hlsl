@@ -93,7 +93,7 @@ PSOutput PhoneShader(GSOutput input)
             float3 dotlightnormal = dot(dirLights[i].lightv, input.normal);
             float3 reflect = normalize(-dirLights[i].lightv + 2 * dotlightnormal * input.normal);
             float3 diffuse = saturate(dotlightnormal) * m_diffuse * texcolor.rgb * color.rgb;
-            float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess) * m_specular;
+            float3 speculer = pow(saturate(dot(reflect, eyedir)), dirLights[i].shininess + 10) * m_specular;
             float3 color = saturate((diffuse + speculer) * dirLights[i].lightcolor);
 
             shadeColor.rgb += color.rgb;
@@ -112,7 +112,7 @@ PSOutput PhoneShader(GSOutput input)
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
             float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;
-            float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[j].shininess) * m_specular;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), pLights[j].shininess + 10) * m_specular;
             float3 color = saturate((diffuse + specular) * pLights[j].lightColor);
             shadeColor.rgb += color.rgb;
         }
@@ -132,7 +132,7 @@ PSOutput PhoneShader(GSOutput input)
             float3 dotLightNormal = dot(lightVec, input.normal);
             float3 reflect = normalize(-lightVec + 2 * dotLightNormal * input.normal);
             float3 diffuse = saturate(dotLightNormal) * m_diffuse * texcolor.rgb * color.rgb;;
-            float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[k].shininess) * m_specular;
+            float3 specular = pow(saturate(dot(reflect, eyedir)), sLights[k].shininess + 10) * m_specular;
             float3 color = saturate((diffuse + specular) * sLights[k].lightColor);
             shadeColor.rgb += color.rgb;
 
