@@ -319,7 +319,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     constMapTranceform->color = color;
     constMapTranceform->shaderNum = shaderNum;
     if (collider)collider->Update();
-    animeTime += 0.1f;
+    animeTime += animationSpeed;
 
     if (animeTime >= animationModel->animations[0]->duration)
     {
@@ -371,6 +371,18 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
     constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
     if (collider)collider->Update();
+    animeTime += animationSpeed;
+
+    if (animeTime >= animationModel->animations[0]->duration)
+    {
+        animeTime = 0;
+    }
+
+    animationModel->boneAnimTransform(animeTime);
+    for (int i = 0; i < animationModel->bones.size(); i++)
+    {
+        constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
+    }
 }
 
 void MCB::Object3d::AnimationDraw()

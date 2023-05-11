@@ -20,6 +20,11 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName, unsigned short int inc
     HRESULT result = texfile.LoadTexture(FileName, WIC_FLAGS_NONE);
 
     assert(SUCCEEDED(result) && "テクスチャ読み込みエラー");
+ /*   if (!SUCCEEDED(result))
+    {
+        CreateNoTextureFileIsTexture();
+        return;
+    }*/
 
     result = mipMap.GenerateMipMap(&texfile, TEX_FILTER_DEFAULT, 0);
     //----------------------------

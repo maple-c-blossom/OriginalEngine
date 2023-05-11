@@ -198,10 +198,10 @@ void MCB::Scene::Update()
 
     MatrixUpdate();
    
-    //if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
-    //{
-    //    sceneEnd = true;
-    //}
+    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+    {
+        sceneEnd = true;
+    }
 }
 
 void MCB::Scene::Draw()
