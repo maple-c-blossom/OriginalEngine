@@ -298,7 +298,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\Assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
+    <IncludePath>$(SolutionDir)External\Assimp\include;$(SolutionDir)External\nlohmann_json;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
