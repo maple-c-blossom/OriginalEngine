@@ -76,7 +76,7 @@ void MCB::Scene::LoadModel()
     skydomeModel = std::make_unique<Model>("skydome");
 
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
-    //fbxLoader->LoadModelFromFile("cube");
+    //AnimationModel->LoadModelFromFile("cube");
 }
 
 void MCB::Scene::LoadTexture()

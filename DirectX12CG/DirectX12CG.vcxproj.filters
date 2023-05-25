@@ -300,10 +300,7 @@
     <ClCompile Include="App\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engin\Model\FBXLoader.cpp">
-      <Filter>ソース ファイル\Engin\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Engin\Model\FBXModel.cpp">
+    <ClCompile Include="Engin\Model\AnimatoinModel.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
     <ClCompile Include="Engin\DirectX\GamePad.cpp">
@@ -375,7 +372,7 @@
     <ClCompile Include="Engin\Pipeline\Depth.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Query.cpp">
+    <ClCompile Include="Engin\Util\Query.cpp">
       <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Util\App.cpp">
@@ -383,6 +380,12 @@
     </ClCompile>
     <ClCompile Include="App\Player.cpp">
       <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Model\ModelManager.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Model\AnimationMesh.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -547,12 +550,6 @@
     <ClInclude Include="App\Scene\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engin\Model\FBXModel.h">
-      <Filter>ヘッダー ファイル\Engin\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engin\Model\FBXLoader.h">
-      <Filter>ヘッダー ファイル\Engin\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Engin\DirectX\GamePad.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
@@ -625,7 +622,7 @@
     <ClInclude Include="Engin\Pipeline\Depth.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Query.h">
+    <ClInclude Include="Engin\Util\Query.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
     <ClInclude Include="App\Player.h">
@@ -636,6 +633,15 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\ModelManager.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\AnimationMesh.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\AnimationModel.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
