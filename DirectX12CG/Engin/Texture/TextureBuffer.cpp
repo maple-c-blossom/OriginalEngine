@@ -27,7 +27,15 @@ void MCB::TextureBuffer::SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE
     texHeapProp.CPUPageProperty = cpuPagePropety;
     texHeapProp.MemoryPoolPreference = memorypool;
     
-    //texHeapProp = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    texHeapProp = CD3DX12_HEAP_PROPERTIES(heaptype);
+
+}
+
+
+void MCB::TextureBuffer::SetTexHeapProp(D3D12_HEAP_TYPE heaptype)
+{
+
+    texHeapProp = CD3DX12_HEAP_PROPERTIES(heaptype);
 
 }
 

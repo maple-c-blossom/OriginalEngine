@@ -24,6 +24,8 @@ namespace MCB
         
         void SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE_PROPERTY cpuPagePropety, D3D12_MEMORY_POOL memorypool);
 
+        void SetTexHeapProp(D3D12_HEAP_TYPE heaptype);
+
         void SetTexResourceDesc(TextureFile& texFile, D3D12_RESOURCE_DIMENSION resouceDimension, int SampleDescCount);
 
         void SetNoTextureFileTexResourceDesc();

@@ -1,7 +1,11 @@
 #pragma once
 #include "Model.h"
-class ModelManager
+#include "AnimationModel.h"
+
+namespace MCB
 {
+	class ModelManager
+	{
 
-};
-
+	};
+}

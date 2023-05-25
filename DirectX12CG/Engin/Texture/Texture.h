@@ -1,9 +1,13 @@
 #pragma once
+#include <d3dx12.h>
 #include "MipMap.h"
 #include "TexImgData.h"
 #include "TextureBuffer.h"
 #include "TextureFile.h"
 #include "Descriptor.h"
+#include "Dx12.h"
+#include "MCBFloat.h"
+#include <assert.h>
 
 namespace MCB
 {
@@ -14,6 +18,7 @@ namespace MCB
 		TexImgData texImg = {};
 		TextureBuffer texBuff = {};
 		TextureFile texfile = {};
+		Dx12* dx12 = Dx12::GetInstance();
 		ShaderResource* srvptr = nullptr;
 		unsigned short int incrementNum = 0;
 		Texture() {};
@@ -31,6 +36,8 @@ namespace MCB
 		void CreateNoTextureFileIsTexture(bool postEffect = false);
 
 		void CreateNoTextureFileIsTexture(unsigned short int incrementNum, bool postEffect = false);
+		
+		[[nodiscard]] ID3D12Resource* UploadTexData();
 
 		void SetSrvHeap();
 
