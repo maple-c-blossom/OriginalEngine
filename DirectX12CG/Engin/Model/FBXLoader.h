@@ -9,7 +9,7 @@
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
-#include "AnimationMesh.h"
+#include "FBXModel.h"
 #include "TextureManager.h"
 #include "Quaternion.h"
 namespace MCB

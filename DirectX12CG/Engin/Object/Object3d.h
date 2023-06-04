@@ -13,7 +13,7 @@
 #include "Model.h"
 #include "Quaternion.h"
 #include "LightGroup.h"
-#include "AnimationModel.h"
+#include "FBXLoader.h"
 #include "CollisionInfomation.h"
 namespace MCB
 {

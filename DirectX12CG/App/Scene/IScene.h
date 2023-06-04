@@ -42,7 +42,7 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
-#include "AnimationModel.h"
+#include "FBXLoader.h"
 #include "PipeLineManager.h"
 #include "ImguiManager.h"
 #include "Particle.h"
@@ -90,12 +90,18 @@ namespace MCB
 
 		PipeLineManager* pipeline;
 
+		//PipelineRootSignature* obj3dPipelinePtr;
+
+		//PipelineRootSignature* spritePipelinePtr;
+
+		//PipelineRootSignature* particlePipelinePtr;
+
 		LightGroup* lights = LightGroup::GetInstance();
 
 		//描画前処理と描画後処理
 		MCB::Draw* draw = Draw::GetInstance();
 
-		
+		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
 	
 		//サウンドマネージャー
 		SoundManager soundManager;
