@@ -179,11 +179,6 @@
     <TargetName>DirectXTex</TargetName>
     <GenerateManifest>true</GenerateManifest>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(SpectreMitigation)'!='' AND '$(SpectreMitigation)'!='false'">
-    <OutDir>Bin\Desktop_2019_Win10\$(Platform)\$(Configuration)Spectre\</OutDir>
-    <IntDir>Bin\Desktop_2019_Win10\$(Platform)\$(Configuration)Spectre\</IntDir>
-    <TargetName>DirectXTex_Spectre</TargetName>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>EnableAllWarnings</WarningLevel>
@@ -192,7 +187,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;_DEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -219,7 +214,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;_DEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -246,7 +241,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;_DEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -273,7 +268,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -299,7 +294,7 @@
       <Optimization>MaxSpeed</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -308,7 +303,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level4</ExternalWarningLevel>
-      <GuardEHContMetadata>true</GuardEHContMetadata>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -326,7 +320,7 @@
       <Optimization>MaxSpeed</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -335,7 +329,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level4</ExternalWarningLevel>
-      <GuardEHContMetadata>true</GuardEHContMetadata>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -354,7 +347,7 @@
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;PROFILE;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -380,7 +373,7 @@
       <Optimization>MaxSpeed</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;PROFILE;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -389,7 +382,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level4</ExternalWarningLevel>
-      <GuardEHContMetadata>true</GuardEHContMetadata>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -407,7 +399,7 @@
       <Optimization>MaxSpeed</Optimization>
       <OpenMPSupport>true</OpenMPSupport>
       <FloatingPointModel>Fast</FloatingPointModel>
-      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus /ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:twoPhase- /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>_UNICODE;UNICODE;WIN32;NDEBUG;PROFILE;_LIB;_WIN32_WINNT=0x0A00;_CRT_STDIO_ARBITRARY_WIDE_SPECIFIERS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DirectXTexP.h</PrecompiledHeaderFile>
@@ -416,7 +408,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <ExternalWarningLevel>Level4</ExternalWarningLevel>
-      <GuardEHContMetadata>true</GuardEHContMetadata>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>

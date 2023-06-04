@@ -14,7 +14,7 @@
 using namespace DirectX;
 using namespace DirectX::Internal;
 
-#ifndef _WIN32
+#ifndef WIN32
 namespace
 {
     inline void * _aligned_malloc(size_t size, size_t alignment)
@@ -23,7 +23,7 @@ namespace
         return std::aligned_alloc(alignment, size);
     }
 
-#define _aligned_free free
+    #define _aligned_free free
 }
 #endif
 
@@ -31,7 +31,7 @@ namespace
 // Determines number of image array entries and pixel size
 //-------------------------------------------------------------------------------------
 _Use_decl_annotations_
-HRESULT DirectX::Internal::DetermineImageArray(
+bool DirectX::Internal::DetermineImageArray(
     const TexMetadata& metadata,
     CP_FLAGS cpFlags,
     size_t& nImages,
@@ -56,11 +56,10 @@ HRESULT DirectX::Internal::DetermineImageArray(
             for (size_t level = 0; level < metadata.mipLevels; ++level)
             {
                 size_t rowPitch, slicePitch;
-                HRESULT hr = ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags);
-                if (FAILED(hr))
+                if (FAILED(ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags)))
                 {
                     nImages = pixelSize = 0;
-                    return hr;
+                    return false;
                 }
 
                 totalPixelSize += uint64_t(slicePitch);
@@ -76,42 +75,41 @@ HRESULT DirectX::Internal::DetermineImageArray(
         break;
 
     case TEX_DIMENSION_TEXTURE3D:
+    {
+        size_t w = metadata.width;
+        size_t h = metadata.height;
+        size_t d = metadata.depth;
+
+        for (size_t level = 0; level < metadata.mipLevels; ++level)
         {
-            size_t w = metadata.width;
-            size_t h = metadata.height;
-            size_t d = metadata.depth;
-
-            for (size_t level = 0; level < metadata.mipLevels; ++level)
+            size_t rowPitch, slicePitch;
+            if (FAILED(ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags)))
             {
-                size_t rowPitch, slicePitch;
-                HRESULT hr = ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags);
-                if (FAILED(hr))
-                {
-                    nImages = pixelSize = 0;
-                    return hr;
-                }
-
-                for (size_t slice = 0; slice < d; ++slice)
-                {
-                    totalPixelSize += uint64_t(slicePitch);
-                    ++nimages;
-                }
-
-                if (h > 1)
-                    h >>= 1;
-
-                if (w > 1)
-                    w >>= 1;
-
-                if (d > 1)
-                    d >>= 1;
+                nImages = pixelSize = 0;
+                return false;
             }
+
+            for (size_t slice = 0; slice < d; ++slice)
+            {
+                totalPixelSize += uint64_t(slicePitch);
+                ++nimages;
+            }
+
+            if (h > 1)
+                h >>= 1;
+
+            if (w > 1)
+                w >>= 1;
+
+            if (d > 1)
+                d >>= 1;
         }
-        break;
+    }
+    break;
 
     default:
         nImages = pixelSize = 0;
-        return E_INVALIDARG;
+        return false;
     }
 
 #if defined(_M_IX86) || defined(_M_ARM) || defined(_M_HYBRID_X86_ARM64)
@@ -119,7 +117,7 @@ HRESULT DirectX::Internal::DetermineImageArray(
     if (totalPixelSize > UINT32_MAX)
     {
         nImages = pixelSize = 0;
-        return HRESULT_E_ARITHMETIC_OVERFLOW;
+        return false;
     }
 #else
     static_assert(sizeof(size_t) == 8, "Not a 64-bit platform!");
@@ -128,7 +126,7 @@ HRESULT DirectX::Internal::DetermineImageArray(
     nImages = nimages;
     pixelSize = static_cast<size_t>(totalPixelSize);
 
-    return S_OK;
+    return true;
 }
 
 
@@ -204,57 +202,57 @@ bool DirectX::Internal::SetupImageArray(
         return true;
 
     case TEX_DIMENSION_TEXTURE3D:
+    {
+        if (metadata.mipLevels == 0 || metadata.depth == 0)
         {
-            if (metadata.mipLevels == 0 || metadata.depth == 0)
-            {
+            return false;
+        }
+
+        size_t w = metadata.width;
+        size_t h = metadata.height;
+        size_t d = metadata.depth;
+
+        for (size_t level = 0; level < metadata.mipLevels; ++level)
+        {
+            size_t rowPitch, slicePitch;
+            if (FAILED(ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags)))
                 return false;
-            }
 
-            size_t w = metadata.width;
-            size_t h = metadata.height;
-            size_t d = metadata.depth;
-
-            for (size_t level = 0; level < metadata.mipLevels; ++level)
+            for (size_t slice = 0; slice < d; ++slice)
             {
-                size_t rowPitch, slicePitch;
-                if (FAILED(ComputePitch(metadata.format, w, h, rowPitch, slicePitch, cpFlags)))
-                    return false;
-
-                for (size_t slice = 0; slice < d; ++slice)
+                if (index >= nImages)
                 {
-                    if (index >= nImages)
-                    {
-                        return false;
-                    }
-
-                    // We use the same memory organization that Direct3D 11 needs for D3D11_SUBRESOURCE_DATA
-                    // with all slices of a given miplevel being continuous in memory
-                    images[index].width = w;
-                    images[index].height = h;
-                    images[index].format = metadata.format;
-                    images[index].rowPitch = rowPitch;
-                    images[index].slicePitch = slicePitch;
-                    images[index].pixels = pixels;
-                    ++index;
-
-                    pixels += slicePitch;
-                    if (pixels > pEndBits)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
 
-                if (h > 1)
-                    h >>= 1;
+                // We use the same memory organization that Direct3D 11 needs for D3D11_SUBRESOURCE_DATA
+                // with all slices of a given miplevel being continuous in memory
+                images[index].width = w;
+                images[index].height = h;
+                images[index].format = metadata.format;
+                images[index].rowPitch = rowPitch;
+                images[index].slicePitch = slicePitch;
+                images[index].pixels = pixels;
+                ++index;
 
-                if (w > 1)
-                    w >>= 1;
-
-                if (d > 1)
-                    d >>= 1;
+                pixels += slicePitch;
+                if (pixels > pEndBits)
+                {
+                    return false;
+                }
             }
+
+            if (h > 1)
+                h >>= 1;
+
+            if (w > 1)
+                w >>= 1;
+
+            if (d > 1)
+                d >>= 1;
         }
-        return true;
+    }
+    return true;
 
     default:
         return false;
@@ -350,9 +348,8 @@ HRESULT ScratchImage::Initialize(const TexMetadata& mdata, CP_FLAGS flags) noexc
     m_metadata.dimension = mdata.dimension;
 
     size_t pixelSize, nimages;
-    HRESULT hr = DetermineImageArray(m_metadata, flags, nimages, pixelSize);
-    if (FAILED(hr))
-        return hr;
+    if (!DetermineImageArray(m_metadata, flags, nimages, pixelSize))
+        return HRESULT_E_ARITHMETIC_OVERFLOW;
 
     m_image = new (std::nothrow) Image[nimages];
     if (!m_image)
@@ -367,9 +364,7 @@ HRESULT ScratchImage::Initialize(const TexMetadata& mdata, CP_FLAGS flags) noexc
         Release();
         return E_OUTOFMEMORY;
     }
-    memset(m_memory, 0, pixelSize);
     m_size = pixelSize;
-
     if (!SetupImageArray(m_memory, pixelSize, m_metadata, flags, m_image, nimages))
     {
         Release();
@@ -420,9 +415,8 @@ HRESULT ScratchImage::Initialize2D(DXGI_FORMAT fmt, size_t width, size_t height,
     m_metadata.dimension = TEX_DIMENSION_TEXTURE2D;
 
     size_t pixelSize, nimages;
-    HRESULT hr = DetermineImageArray(m_metadata, flags, nimages, pixelSize);
-    if (FAILED(hr))
-        return hr;
+    if (!DetermineImageArray(m_metadata, flags, nimages, pixelSize))
+        return HRESULT_E_ARITHMETIC_OVERFLOW;
 
     m_image = new (std::nothrow) Image[nimages];
     if (!m_image)
@@ -437,9 +431,7 @@ HRESULT ScratchImage::Initialize2D(DXGI_FORMAT fmt, size_t width, size_t height,
         Release();
         return E_OUTOFMEMORY;
     }
-    memset(m_memory, 0, pixelSize);
     m_size = pixelSize;
-
     if (!SetupImageArray(m_memory, pixelSize, m_metadata, flags, m_image, nimages))
     {
         Release();
@@ -474,9 +466,8 @@ HRESULT ScratchImage::Initialize3D(DXGI_FORMAT fmt, size_t width, size_t height,
     m_metadata.dimension = TEX_DIMENSION_TEXTURE3D;
 
     size_t pixelSize, nimages;
-    HRESULT hr = DetermineImageArray(m_metadata, flags, nimages, pixelSize);
-    if (FAILED(hr))
-        return hr;
+    if (!DetermineImageArray(m_metadata, flags, nimages, pixelSize))
+        return HRESULT_E_ARITHMETIC_OVERFLOW;
 
     m_image = new (std::nothrow) Image[nimages];
     if (!m_image)
@@ -493,7 +484,6 @@ HRESULT ScratchImage::Initialize3D(DXGI_FORMAT fmt, size_t width, size_t height,
         Release();
         return E_OUTOFMEMORY;
     }
-    memset(m_memory, 0, pixelSize);
     m_size = pixelSize;
 
     if (!SetupImageArray(m_memory, pixelSize, m_metadata, flags, m_image, nimages))
@@ -811,7 +801,7 @@ bool ScratchImage::IsAlphaAllOpaque() const noexcept
 
         for (size_t index = 0; index < m_nimages; ++index)
         {
-        #pragma warning( suppress : 6011 )
+#pragma warning( suppress : 6011 )
             const Image& img = m_image[index];
 
             const uint8_t *pPixels = img.pixels;

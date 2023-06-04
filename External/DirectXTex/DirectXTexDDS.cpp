@@ -1256,9 +1256,8 @@ namespace
         }
 
         size_t pixelSize, nimages;
-        HRESULT hr = DetermineImageArray(metadata, cpFlags, nimages, pixelSize);
-        if (FAILED(hr))
-            return hr;
+        if (!DetermineImageArray(metadata, cpFlags, nimages, pixelSize))
+            return HRESULT_E_ARITHMETIC_OVERFLOW;
 
         if ((nimages == 0) || (nimages != image.GetImageCount()))
         {
@@ -1306,198 +1305,198 @@ namespace
         {
         case TEX_DIMENSION_TEXTURE1D:
         case TEX_DIMENSION_TEXTURE2D:
+        {
+            size_t index = 0;
+            for (size_t item = 0; item < metadata.arraySize; ++item)
             {
-                size_t index = 0;
-                for (size_t item = 0; item < metadata.arraySize; ++item)
+                size_t lastgood = 0;
+                for (size_t level = 0; level < metadata.mipLevels; ++level, ++index)
                 {
-                    size_t lastgood = 0;
-                    for (size_t level = 0; level < metadata.mipLevels; ++level, ++index)
+                    if (index >= nimages)
+                        return E_FAIL;
+
+                    if (images[index].height != timages[index].height)
+                        return E_FAIL;
+
+                    size_t dpitch = images[index].rowPitch;
+                    const size_t spitch = timages[index].rowPitch;
+
+                    const uint8_t *pSrc = timages[index].pixels;
+                    if (!pSrc)
+                        return E_POINTER;
+
+                    uint8_t *pDest = images[index].pixels;
+                    if (!pDest)
+                        return E_POINTER;
+
+                    if (IsCompressed(metadata.format))
                     {
-                        if (index >= nimages)
-                            return E_FAIL;
+                        size_t csize = std::min<size_t>(images[index].slicePitch, timages[index].slicePitch);
+                        memcpy(pDest, pSrc, csize);
 
-                        if (images[index].height != timages[index].height)
-                            return E_FAIL;
-
-                        size_t dpitch = images[index].rowPitch;
-                        const size_t spitch = timages[index].rowPitch;
-
-                        const uint8_t *pSrc = timages[index].pixels;
-                        if (!pSrc)
-                            return E_POINTER;
-
-                        uint8_t *pDest = images[index].pixels;
-                        if (!pDest)
-                            return E_POINTER;
-
-                        if (IsCompressed(metadata.format))
+                        if (cpFlags & CP_FLAGS_BAD_DXTN_TAILS)
                         {
-                            size_t csize = std::min<size_t>(images[index].slicePitch, timages[index].slicePitch);
+                            if (images[index].width < 4 || images[index].height < 4)
+                            {
+                                csize = std::min<size_t>(images[index].slicePitch, timages[lastgood].slicePitch);
+                                memcpy(pDest, timages[lastgood].pixels, csize);
+                            }
+                            else
+                            {
+                                lastgood = index;
+                            }
+                        }
+                    }
+                    else if (IsPlanar(metadata.format))
+                    {
+                        const size_t count = ComputeScanlines(metadata.format, images[index].height);
+                        if (!count)
+                            return E_UNEXPECTED;
+
+                        const size_t csize = std::min<size_t>(dpitch, spitch);
+                        for (size_t h = 0; h < count; ++h)
+                        {
                             memcpy(pDest, pSrc, csize);
-
-                            if (cpFlags & CP_FLAGS_BAD_DXTN_TAILS)
+                            pSrc += spitch;
+                            pDest += dpitch;
+                        }
+                    }
+                    else
+                    {
+                        for (size_t h = 0; h < images[index].height; ++h)
+                        {
+                            if (convFlags & CONV_FLAGS_EXPAND)
                             {
-                                if (images[index].width < 4 || images[index].height < 4)
+                                if (convFlags & (CONV_FLAGS_565 | CONV_FLAGS_5551 | CONV_FLAGS_4444))
                                 {
-                                    csize = std::min<size_t>(images[index].slicePitch, timages[lastgood].slicePitch);
-                                    memcpy(pDest, timages[lastgood].pixels, csize);
+                                    if (!ExpandScanline(pDest, dpitch, DXGI_FORMAT_R8G8B8A8_UNORM,
+                                        pSrc, spitch,
+                                        (convFlags & CONV_FLAGS_565) ? DXGI_FORMAT_B5G6R5_UNORM : DXGI_FORMAT_B5G5R5A1_UNORM,
+                                        tflags))
+                                        return E_FAIL;
                                 }
                                 else
                                 {
-                                    lastgood = index;
+                                    const TEXP_LEGACY_FORMAT lformat = FindLegacyFormat(convFlags);
+                                    if (!LegacyExpandScanline(pDest, dpitch, metadata.format,
+                                        pSrc, spitch, lformat, pal8,
+                                        tflags))
+                                        return E_FAIL;
                                 }
                             }
-                        }
-                        else if (IsPlanar(metadata.format))
-                        {
-                            const size_t count = ComputeScanlines(metadata.format, images[index].height);
-                            if (!count)
-                                return E_UNEXPECTED;
-
-                            const size_t csize = std::min<size_t>(dpitch, spitch);
-                            for (size_t h = 0; h < count; ++h)
+                            else if (convFlags & CONV_FLAGS_SWIZZLE)
                             {
-                                memcpy(pDest, pSrc, csize);
-                                pSrc += spitch;
-                                pDest += dpitch;
+                                SwizzleScanline(pDest, dpitch, pSrc, spitch,
+                                    metadata.format, tflags);
                             }
-                        }
-                        else
-                        {
-                            for (size_t h = 0; h < images[index].height; ++h)
+                            else
                             {
-                                if (convFlags & CONV_FLAGS_EXPAND)
-                                {
-                                    if (convFlags & (CONV_FLAGS_565 | CONV_FLAGS_5551 | CONV_FLAGS_4444))
-                                    {
-                                        if (!ExpandScanline(pDest, dpitch, DXGI_FORMAT_R8G8B8A8_UNORM,
-                                            pSrc, spitch,
-                                            (convFlags & CONV_FLAGS_565) ? DXGI_FORMAT_B5G6R5_UNORM : DXGI_FORMAT_B5G5R5A1_UNORM,
-                                            tflags))
-                                            return E_FAIL;
-                                    }
-                                    else
-                                    {
-                                        const TEXP_LEGACY_FORMAT lformat = FindLegacyFormat(convFlags);
-                                        if (!LegacyExpandScanline(pDest, dpitch, metadata.format,
-                                            pSrc, spitch, lformat, pal8,
-                                            tflags))
-                                            return E_FAIL;
-                                    }
-                                }
-                                else if (convFlags & CONV_FLAGS_SWIZZLE)
-                                {
-                                    SwizzleScanline(pDest, dpitch, pSrc, spitch,
-                                        metadata.format, tflags);
-                                }
-                                else
-                                {
-                                    CopyScanline(pDest, dpitch, pSrc, spitch,
-                                        metadata.format, tflags);
-                                }
-
-                                pSrc += spitch;
-                                pDest += dpitch;
+                                CopyScanline(pDest, dpitch, pSrc, spitch,
+                                    metadata.format, tflags);
                             }
+
+                            pSrc += spitch;
+                            pDest += dpitch;
                         }
                     }
                 }
             }
-            break;
+        }
+        break;
 
         case TEX_DIMENSION_TEXTURE3D:
+        {
+            size_t index = 0;
+            size_t d = metadata.depth;
+
+            size_t lastgood = 0;
+            for (size_t level = 0; level < metadata.mipLevels; ++level)
             {
-                size_t index = 0;
-                size_t d = metadata.depth;
-
-                size_t lastgood = 0;
-                for (size_t level = 0; level < metadata.mipLevels; ++level)
+                for (size_t slice = 0; slice < d; ++slice, ++index)
                 {
-                    for (size_t slice = 0; slice < d; ++slice, ++index)
+                    if (index >= nimages)
+                        return E_FAIL;
+
+                    if (images[index].height != timages[index].height)
+                        return E_FAIL;
+
+                    size_t dpitch = images[index].rowPitch;
+                    const size_t spitch = timages[index].rowPitch;
+
+                    const uint8_t *pSrc = timages[index].pixels;
+                    if (!pSrc)
+                        return E_POINTER;
+
+                    uint8_t *pDest = images[index].pixels;
+                    if (!pDest)
+                        return E_POINTER;
+
+                    if (IsCompressed(metadata.format))
                     {
-                        if (index >= nimages)
-                            return E_FAIL;
+                        size_t csize = std::min<size_t>(images[index].slicePitch, timages[index].slicePitch);
+                        memcpy(pDest, pSrc, csize);
 
-                        if (images[index].height != timages[index].height)
-                            return E_FAIL;
-
-                        size_t dpitch = images[index].rowPitch;
-                        const size_t spitch = timages[index].rowPitch;
-
-                        const uint8_t *pSrc = timages[index].pixels;
-                        if (!pSrc)
-                            return E_POINTER;
-
-                        uint8_t *pDest = images[index].pixels;
-                        if (!pDest)
-                            return E_POINTER;
-
-                        if (IsCompressed(metadata.format))
+                        if (cpFlags & CP_FLAGS_BAD_DXTN_TAILS)
                         {
-                            size_t csize = std::min<size_t>(images[index].slicePitch, timages[index].slicePitch);
-                            memcpy(pDest, pSrc, csize);
-
-                            if (cpFlags & CP_FLAGS_BAD_DXTN_TAILS)
+                            if (images[index].width < 4 || images[index].height < 4)
                             {
-                                if (images[index].width < 4 || images[index].height < 4)
-                                {
-                                    csize = std::min<size_t>(images[index].slicePitch, timages[lastgood + slice].slicePitch);
-                                    memcpy(pDest, timages[lastgood + slice].pixels, csize);
-                                }
-                                else if (!slice)
-                                {
-                                    lastgood = index;
-                                }
+                                csize = std::min<size_t>(images[index].slicePitch, timages[lastgood + slice].slicePitch);
+                                memcpy(pDest, timages[lastgood + slice].pixels, csize);
                             }
-                        }
-                        else if (IsPlanar(metadata.format))
-                        {
-                            // Direct3D does not support any planar formats for Texture3D
-                            return HRESULT_E_NOT_SUPPORTED;
-                        }
-                        else
-                        {
-                            for (size_t h = 0; h < images[index].height; ++h)
+                            else if (!slice)
                             {
-                                if (convFlags & CONV_FLAGS_EXPAND)
-                                {
-                                    if (convFlags & (CONV_FLAGS_565 | CONV_FLAGS_5551 | CONV_FLAGS_4444))
-                                    {
-                                        if (!ExpandScanline(pDest, dpitch, DXGI_FORMAT_R8G8B8A8_UNORM,
-                                            pSrc, spitch,
-                                            (convFlags & CONV_FLAGS_565) ? DXGI_FORMAT_B5G6R5_UNORM : DXGI_FORMAT_B5G5R5A1_UNORM,
-                                            tflags))
-                                            return E_FAIL;
-                                    }
-                                    else
-                                    {
-                                        const TEXP_LEGACY_FORMAT lformat = FindLegacyFormat(convFlags);
-                                        if (!LegacyExpandScanline(pDest, dpitch, metadata.format,
-                                            pSrc, spitch, lformat, pal8,
-                                            tflags))
-                                            return E_FAIL;
-                                    }
-                                }
-                                else if (convFlags & CONV_FLAGS_SWIZZLE)
-                                {
-                                    SwizzleScanline(pDest, dpitch, pSrc, spitch, metadata.format, tflags);
-                                }
-                                else
-                                {
-                                    CopyScanline(pDest, dpitch, pSrc, spitch, metadata.format, tflags);
-                                }
-
-                                pSrc += spitch;
-                                pDest += dpitch;
+                                lastgood = index;
                             }
                         }
                     }
+                    else if (IsPlanar(metadata.format))
+                    {
+                        // Direct3D does not support any planar formats for Texture3D
+                        return HRESULT_E_NOT_SUPPORTED;
+                    }
+                    else
+                    {
+                        for (size_t h = 0; h < images[index].height; ++h)
+                        {
+                            if (convFlags & CONV_FLAGS_EXPAND)
+                            {
+                                if (convFlags & (CONV_FLAGS_565 | CONV_FLAGS_5551 | CONV_FLAGS_4444))
+                                {
+                                    if (!ExpandScanline(pDest, dpitch, DXGI_FORMAT_R8G8B8A8_UNORM,
+                                        pSrc, spitch,
+                                        (convFlags & CONV_FLAGS_565) ? DXGI_FORMAT_B5G6R5_UNORM : DXGI_FORMAT_B5G5R5A1_UNORM,
+                                        tflags))
+                                        return E_FAIL;
+                                }
+                                else
+                                {
+                                    const TEXP_LEGACY_FORMAT lformat = FindLegacyFormat(convFlags);
+                                    if (!LegacyExpandScanline(pDest, dpitch, metadata.format,
+                                        pSrc, spitch, lformat, pal8,
+                                        tflags))
+                                        return E_FAIL;
+                                }
+                            }
+                            else if (convFlags & CONV_FLAGS_SWIZZLE)
+                            {
+                                SwizzleScanline(pDest, dpitch, pSrc, spitch, metadata.format, tflags);
+                            }
+                            else
+                            {
+                                CopyScanline(pDest, dpitch, pSrc, spitch, metadata.format, tflags);
+                            }
 
-                    if (d > 1)
-                        d >>= 1;
+                            pSrc += spitch;
+                            pDest += dpitch;
+                        }
+                    }
                 }
+
+                if (d > 1)
+                    d >>= 1;
             }
-            break;
+        }
+        break;
 
         default:
             return E_FAIL;
@@ -1584,7 +1583,7 @@ HRESULT DirectX::GetMetadataFromDDSFile(
     if (!szFile)
         return E_INVALIDARG;
 
-#ifdef _WIN32
+#ifdef WIN32
 #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
 #else
@@ -1638,7 +1637,7 @@ HRESULT DirectX::GetMetadataFromDDSFile(
     // Read the header in (including extended header if present)
     uint8_t header[MAX_HEADER_SIZE] = {};
 
-#ifdef _WIN32
+#ifdef WIN32
     DWORD bytesRead = 0;
     if (!ReadFile(hFile.get(), header, MAX_HEADER_SIZE, &bytesRead, nullptr))
     {
@@ -1747,7 +1746,7 @@ HRESULT DirectX::LoadFromDDSFile(
 
     image.Release();
 
-#ifdef _WIN32
+#ifdef WIN32
 #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(szFile, GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr)));
 #else
@@ -1799,7 +1798,7 @@ HRESULT DirectX::LoadFromDDSFile(
     // Read the header in (including extended header if present)
     uint8_t header[MAX_HEADER_SIZE] = {};
 
-#ifdef _WIN32
+#ifdef WIN32
     DWORD bytesRead = 0;
     if (!ReadFile(hFile.get(), header, MAX_HEADER_SIZE, &bytesRead, nullptr))
     {
@@ -1825,18 +1824,18 @@ HRESULT DirectX::LoadFromDDSFile(
 
     if (!(convFlags & CONV_FLAGS_DX10))
     {
-    #ifdef _WIN32
-            // Must reset file position since we read more than the standard header above
+#ifdef WIN32
+        // Must reset file position since we read more than the standard header above
         const LARGE_INTEGER filePos = { { sizeof(uint32_t) + sizeof(DDS_HEADER), 0 } };
         if (!SetFilePointerEx(hFile.get(), filePos, nullptr, FILE_BEGIN))
         {
             return HRESULT_FROM_WIN32(GetLastError());
         }
-    #else
+#else
         inFile.seekg(sizeof(uint32_t) + sizeof(DDS_HEADER), std::ios::beg);
         if (!inFile)
             return E_FAIL;
-    #endif
+#endif
 
         offset = sizeof(uint32_t) + sizeof(DDS_HEADER);
     }
@@ -1850,7 +1849,7 @@ HRESULT DirectX::LoadFromDDSFile(
             return E_OUTOFMEMORY;
         }
 
-    #ifdef _WIN32
+#ifdef WIN32
         if (!ReadFile(hFile.get(), pal8.get(), 256 * sizeof(uint32_t), &bytesRead, nullptr))
         {
             return HRESULT_FROM_WIN32(GetLastError());
@@ -1860,11 +1859,11 @@ HRESULT DirectX::LoadFromDDSFile(
         {
             return E_FAIL;
         }
-    #else
+#else
         inFile.read(reinterpret_cast<char*>(pal8.get()), 256 * sizeof(uint32_t));
         if (!inFile)
             return E_FAIL;
-    #endif
+#endif
 
         offset += (256 * sizeof(uint32_t));
     }
@@ -1886,7 +1885,7 @@ HRESULT DirectX::LoadFromDDSFile(
             return E_OUTOFMEMORY;
         }
 
-    #ifdef _WIN32
+#ifdef WIN32
         if (!ReadFile(hFile.get(), temp.get(), static_cast<DWORD>(remaining), &bytesRead, nullptr))
         {
             image.Release();
@@ -1898,14 +1897,14 @@ HRESULT DirectX::LoadFromDDSFile(
             image.Release();
             return E_FAIL;
         }
-    #else
+#else
         inFile.read(reinterpret_cast<char*>(temp.get()), remaining);
         if (!inFile)
         {
             image.Release();
             return E_FAIL;
         }
-    #endif
+#endif
 
         CP_FLAGS cflags = CP_FLAGS_NONE;
         if (flags & DDS_FLAGS_LEGACY_DWORD)
@@ -1944,27 +1943,20 @@ HRESULT DirectX::LoadFromDDSFile(
             return HRESULT_E_ARITHMETIC_OVERFLOW;
         }
 
-    #ifdef _WIN32
-        auto const pixelBytes = static_cast<DWORD>(image.GetPixelsSize());
-        if (!ReadFile(hFile.get(), image.GetPixels(), pixelBytes, &bytesRead, nullptr))
+#ifdef WIN32
+        if (!ReadFile(hFile.get(), image.GetPixels(), static_cast<DWORD>(image.GetPixelsSize()), &bytesRead, nullptr))
         {
             image.Release();
             return HRESULT_FROM_WIN32(GetLastError());
         }
-
-        if (bytesRead != pixelBytes)
-        {
-            image.Release();
-            return E_FAIL;
-        }
-    #else
+#else
         inFile.read(reinterpret_cast<char*>(image.GetPixels()), image.GetPixelsSize());
         if (!inFile)
         {
             image.Release();
             return E_FAIL;
         }
-    #endif
+#endif
 
         if (convFlags & (CONV_FLAGS_SWIZZLE | CONV_FLAGS_NOALPHA))
         {
@@ -2062,143 +2054,143 @@ HRESULT DirectX::SaveToDDSMemory(
     {
     case DDS_DIMENSION_TEXTURE1D:
     case DDS_DIMENSION_TEXTURE2D:
+    {
+        size_t index = 0;
+        for (size_t item = 0; item < metadata.arraySize; ++item)
         {
-            size_t index = 0;
-            for (size_t item = 0; item < metadata.arraySize; ++item)
-            {
-                for (size_t level = 0; level < metadata.mipLevels; ++level)
-                {
-                    if (index >= nimages)
-                    {
-                        blob.Release();
-                        return E_FAIL;
-                    }
-
-                    if (fastpath)
-                    {
-                        size_t pixsize = images[index].slicePitch;
-                        memcpy(pDestination, images[index].pixels, pixsize);
-
-                        pDestination += pixsize;
-                        remaining -= pixsize;
-                    }
-                    else
-                    {
-                        size_t ddsRowPitch, ddsSlicePitch;
-                        hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
-                        if (FAILED(hr))
-                        {
-                            blob.Release();
-                            return hr;
-                        }
-
-                        const size_t rowPitch = images[index].rowPitch;
-
-                        const uint8_t * __restrict sPtr = images[index].pixels;
-                        uint8_t * __restrict dPtr = pDestination;
-
-                        const size_t lines = ComputeScanlines(metadata.format, images[index].height);
-                        const size_t csize = std::min<size_t>(rowPitch, ddsRowPitch);
-                        size_t tremaining = remaining;
-                        for (size_t j = 0; j < lines; ++j)
-                        {
-                            if (tremaining < csize)
-                            {
-                                blob.Release();
-                                return E_FAIL;
-                            }
-
-                            memcpy(dPtr, sPtr, csize);
-
-                            sPtr += rowPitch;
-                            dPtr += ddsRowPitch;
-                            tremaining -= ddsRowPitch;
-                        }
-
-                        pDestination += ddsSlicePitch;
-                        remaining -= ddsSlicePitch;
-                    }
-
-                    ++index;
-                }
-            }
-        }
-        break;
-
-    case DDS_DIMENSION_TEXTURE3D:
-        {
-            if (metadata.arraySize != 1)
-            {
-                blob.Release();
-                return E_FAIL;
-            }
-
-            size_t d = metadata.depth;
-
-            size_t index = 0;
             for (size_t level = 0; level < metadata.mipLevels; ++level)
             {
-                for (size_t slice = 0; slice < d; ++slice)
+                if (index >= nimages)
                 {
-                    if (index >= nimages)
-                    {
-                        blob.Release();
-                        return E_FAIL;
-                    }
-
-                    if (fastpath)
-                    {
-                        size_t pixsize = images[index].slicePitch;
-                        memcpy(pDestination, images[index].pixels, pixsize);
-
-                        pDestination += pixsize;
-                        remaining -= pixsize;
-                    }
-                    else
-                    {
-                        size_t ddsRowPitch, ddsSlicePitch;
-                        hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
-                        if (FAILED(hr))
-                        {
-                            blob.Release();
-                            return hr;
-                        }
-
-                        const size_t rowPitch = images[index].rowPitch;
-
-                        const uint8_t * __restrict sPtr = images[index].pixels;
-                        uint8_t * __restrict dPtr = pDestination;
-
-                        const size_t lines = ComputeScanlines(metadata.format, images[index].height);
-                        const size_t csize = std::min<size_t>(rowPitch, ddsRowPitch);
-                        size_t tremaining = remaining;
-                        for (size_t j = 0; j < lines; ++j)
-                        {
-                            if (tremaining < csize)
-                            {
-                                blob.Release();
-                                return E_FAIL;
-                            }
-
-                            memcpy(dPtr, sPtr, csize);
-
-                            sPtr += rowPitch;
-                            dPtr += ddsRowPitch;
-                            tremaining -= ddsRowPitch;
-                        }
-
-                        pDestination += ddsSlicePitch;
-                        remaining -= ddsSlicePitch;
-                    }
-
-                    ++index;
+                    blob.Release();
+                    return E_FAIL;
                 }
 
-                if (d > 1)
-                    d >>= 1;
+                if (fastpath)
+                {
+                    size_t pixsize = images[index].slicePitch;
+                    memcpy(pDestination, images[index].pixels, pixsize);
+
+                    pDestination += pixsize;
+                    remaining -= pixsize;
+                }
+                else
+                {
+                    size_t ddsRowPitch, ddsSlicePitch;
+                    hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
+                    if (FAILED(hr))
+                    {
+                        blob.Release();
+                        return hr;
+                    }
+
+                    const size_t rowPitch = images[index].rowPitch;
+
+                    const uint8_t * __restrict sPtr = images[index].pixels;
+                    uint8_t * __restrict dPtr = pDestination;
+
+                    const size_t lines = ComputeScanlines(metadata.format, images[index].height);
+                    const size_t csize = std::min<size_t>(rowPitch, ddsRowPitch);
+                    size_t tremaining = remaining;
+                    for (size_t j = 0; j < lines; ++j)
+                    {
+                        if (tremaining < csize)
+                        {
+                            blob.Release();
+                            return E_FAIL;
+                        }
+
+                        memcpy(dPtr, sPtr, csize);
+
+                        sPtr += rowPitch;
+                        dPtr += ddsRowPitch;
+                        tremaining -= ddsRowPitch;
+                    }
+
+                    pDestination += ddsSlicePitch;
+                    remaining -= ddsSlicePitch;
+                }
+
+                ++index;
             }
         }
-        break;
+    }
+    break;
+
+    case DDS_DIMENSION_TEXTURE3D:
+    {
+        if (metadata.arraySize != 1)
+        {
+            blob.Release();
+            return E_FAIL;
+        }
+
+        size_t d = metadata.depth;
+
+        size_t index = 0;
+        for (size_t level = 0; level < metadata.mipLevels; ++level)
+        {
+            for (size_t slice = 0; slice < d; ++slice)
+            {
+                if (index >= nimages)
+                {
+                    blob.Release();
+                    return E_FAIL;
+                }
+
+                if (fastpath)
+                {
+                    size_t pixsize = images[index].slicePitch;
+                    memcpy(pDestination, images[index].pixels, pixsize);
+
+                    pDestination += pixsize;
+                    remaining -= pixsize;
+                }
+                else
+                {
+                    size_t ddsRowPitch, ddsSlicePitch;
+                    hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
+                    if (FAILED(hr))
+                    {
+                        blob.Release();
+                        return hr;
+                    }
+
+                    const size_t rowPitch = images[index].rowPitch;
+
+                    const uint8_t * __restrict sPtr = images[index].pixels;
+                    uint8_t * __restrict dPtr = pDestination;
+
+                    const size_t lines = ComputeScanlines(metadata.format, images[index].height);
+                    const size_t csize = std::min<size_t>(rowPitch, ddsRowPitch);
+                    size_t tremaining = remaining;
+                    for (size_t j = 0; j < lines; ++j)
+                    {
+                        if (tremaining < csize)
+                        {
+                            blob.Release();
+                            return E_FAIL;
+                        }
+
+                        memcpy(dPtr, sPtr, csize);
+
+                        sPtr += rowPitch;
+                        dPtr += ddsRowPitch;
+                        tremaining -= ddsRowPitch;
+                    }
+
+                    pDestination += ddsSlicePitch;
+                    remaining -= ddsSlicePitch;
+                }
+
+                ++index;
+            }
+
+            if (d > 1)
+                d >>= 1;
+        }
+    }
+    break;
 
     default:
         blob.Release();
@@ -2231,7 +2223,7 @@ HRESULT DirectX::SaveToDDSFile(
         return hr;
 
     // Create file and write header
-#ifdef _WIN32
+#ifdef WIN32
 #if (_WIN32_WINNT >= _WIN32_WINNT_WIN8)
     ScopedHandle hFile(safe_handle(CreateFile2(szFile,
         GENERIC_WRITE | DELETE, 0, CREATE_ALWAYS, nullptr)));
@@ -2271,177 +2263,177 @@ HRESULT DirectX::SaveToDDSFile(
     {
     case DDS_DIMENSION_TEXTURE1D:
     case DDS_DIMENSION_TEXTURE2D:
+    {
+        size_t index = 0;
+        for (size_t item = 0; item < metadata.arraySize; ++item)
         {
-            size_t index = 0;
-            for (size_t item = 0; item < metadata.arraySize; ++item)
+            for (size_t level = 0; level < metadata.mipLevels; ++level, ++index)
             {
-                for (size_t level = 0; level < metadata.mipLevels; ++level, ++index)
+                if (index >= nimages)
+                    return E_FAIL;
+
+                if (!images[index].pixels)
+                    return E_POINTER;
+
+                assert(images[index].rowPitch > 0);
+                assert(images[index].slicePitch > 0);
+
+                size_t ddsRowPitch, ddsSlicePitch;
+                hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
+                if (FAILED(hr))
+                    return hr;
+
+                if ((images[index].slicePitch == ddsSlicePitch) && (ddsSlicePitch <= UINT32_MAX))
                 {
-                    if (index >= nimages)
-                        return E_FAIL;
-
-                    if (!images[index].pixels)
-                        return E_POINTER;
-
-                    assert(images[index].rowPitch > 0);
-                    assert(images[index].slicePitch > 0);
-
-                    size_t ddsRowPitch, ddsSlicePitch;
-                    hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
-                    if (FAILED(hr))
-                        return hr;
-
-                    if ((images[index].slicePitch == ddsSlicePitch) && (ddsSlicePitch <= UINT32_MAX))
+#ifdef WIN32
+                    if (!WriteFile(hFile.get(), images[index].pixels, static_cast<DWORD>(ddsSlicePitch), &bytesWritten, nullptr))
                     {
-                    #ifdef _WIN32
-                        if (!WriteFile(hFile.get(), images[index].pixels, static_cast<DWORD>(ddsSlicePitch), &bytesWritten, nullptr))
+                        return HRESULT_FROM_WIN32(GetLastError());
+                    }
+
+                    if (bytesWritten != ddsSlicePitch)
+                    {
+                        return E_FAIL;
+                    }
+#else
+                    outFile.write(reinterpret_cast<char*>(images[index].pixels), static_cast<std::streamsize>(ddsSlicePitch));
+                    if (!outFile)
+                        return E_FAIL;
+#endif
+                }
+                else
+                {
+                    const size_t rowPitch = images[index].rowPitch;
+                    if (rowPitch < ddsRowPitch)
+                    {
+                        // DDS uses 1-byte alignment, so if this is happening then the input pitch isn't actually a full line of data
+                        return E_FAIL;
+                    }
+
+                    if (ddsRowPitch > UINT32_MAX)
+                        return HRESULT_E_ARITHMETIC_OVERFLOW;
+
+                    const uint8_t * __restrict sPtr = images[index].pixels;
+
+                    const size_t lines = ComputeScanlines(metadata.format, images[index].height);
+                    for (size_t j = 0; j < lines; ++j)
+                    {
+#ifdef WIN32
+                        if (!WriteFile(hFile.get(), sPtr, static_cast<DWORD>(ddsRowPitch), &bytesWritten, nullptr))
                         {
                             return HRESULT_FROM_WIN32(GetLastError());
                         }
 
-                        if (bytesWritten != ddsSlicePitch)
+                        if (bytesWritten != ddsRowPitch)
                         {
                             return E_FAIL;
                         }
-                    #else
-                        outFile.write(reinterpret_cast<char*>(images[index].pixels), static_cast<std::streamsize>(ddsSlicePitch));
+#else
+                        outFile.write(reinterpret_cast<const char*>(sPtr), static_cast<std::streamsize>(ddsRowPitch));
                         if (!outFile)
                             return E_FAIL;
-                    #endif
-                    }
-                    else
-                    {
-                        const size_t rowPitch = images[index].rowPitch;
-                        if (rowPitch < ddsRowPitch)
-                        {
-                            // DDS uses 1-byte alignment, so if this is happening then the input pitch isn't actually a full line of data
-                            return E_FAIL;
-                        }
+#endif
 
-                        if (ddsRowPitch > UINT32_MAX)
-                            return HRESULT_E_ARITHMETIC_OVERFLOW;
-
-                        const uint8_t * __restrict sPtr = images[index].pixels;
-
-                        const size_t lines = ComputeScanlines(metadata.format, images[index].height);
-                        for (size_t j = 0; j < lines; ++j)
-                        {
-                        #ifdef _WIN32
-                            if (!WriteFile(hFile.get(), sPtr, static_cast<DWORD>(ddsRowPitch), &bytesWritten, nullptr))
-                            {
-                                return HRESULT_FROM_WIN32(GetLastError());
-                            }
-
-                            if (bytesWritten != ddsRowPitch)
-                            {
-                                return E_FAIL;
-                            }
-                        #else
-                            outFile.write(reinterpret_cast<const char*>(sPtr), static_cast<std::streamsize>(ddsRowPitch));
-                            if (!outFile)
-                                return E_FAIL;
-                        #endif
-
-                            sPtr += rowPitch;
-                        }
+                        sPtr += rowPitch;
                     }
                 }
             }
         }
-        break;
+    }
+    break;
 
     case DDS_DIMENSION_TEXTURE3D:
+    {
+        if (metadata.arraySize != 1)
+            return E_FAIL;
+
+        size_t d = metadata.depth;
+
+        size_t index = 0;
+        for (size_t level = 0; level < metadata.mipLevels; ++level)
         {
-            if (metadata.arraySize != 1)
-                return E_FAIL;
-
-            size_t d = metadata.depth;
-
-            size_t index = 0;
-            for (size_t level = 0; level < metadata.mipLevels; ++level)
+            for (size_t slice = 0; slice < d; ++slice, ++index)
             {
-                for (size_t slice = 0; slice < d; ++slice, ++index)
+                if (index >= nimages)
+                    return E_FAIL;
+
+                if (!images[index].pixels)
+                    return E_POINTER;
+
+                assert(images[index].rowPitch > 0);
+                assert(images[index].slicePitch > 0);
+
+                size_t ddsRowPitch, ddsSlicePitch;
+                hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
+                if (FAILED(hr))
+                    return hr;
+
+                if ((images[index].slicePitch == ddsSlicePitch) && (ddsSlicePitch <= UINT32_MAX))
                 {
-                    if (index >= nimages)
-                        return E_FAIL;
-
-                    if (!images[index].pixels)
-                        return E_POINTER;
-
-                    assert(images[index].rowPitch > 0);
-                    assert(images[index].slicePitch > 0);
-
-                    size_t ddsRowPitch, ddsSlicePitch;
-                    hr = ComputePitch(metadata.format, images[index].width, images[index].height, ddsRowPitch, ddsSlicePitch, CP_FLAGS_NONE);
-                    if (FAILED(hr))
-                        return hr;
-
-                    if ((images[index].slicePitch == ddsSlicePitch) && (ddsSlicePitch <= UINT32_MAX))
+#ifdef WIN32
+                    if (!WriteFile(hFile.get(), images[index].pixels, static_cast<DWORD>(ddsSlicePitch), &bytesWritten, nullptr))
                     {
-                    #ifdef _WIN32
-                        if (!WriteFile(hFile.get(), images[index].pixels, static_cast<DWORD>(ddsSlicePitch), &bytesWritten, nullptr))
+                        return HRESULT_FROM_WIN32(GetLastError());
+                    }
+
+                    if (bytesWritten != ddsSlicePitch)
+                    {
+                        return E_FAIL;
+                    }
+#else
+                    outFile.write(reinterpret_cast<char*>(images[index].pixels), static_cast<std::streamsize>(ddsSlicePitch));
+                    if (!outFile)
+                        return E_FAIL;
+#endif
+                }
+                else
+                {
+                    const size_t rowPitch = images[index].rowPitch;
+                    if (rowPitch < ddsRowPitch)
+                    {
+                        // DDS uses 1-byte alignment, so if this is happening then the input pitch isn't actually a full line of data
+                        return E_FAIL;
+                    }
+
+                    if (ddsRowPitch > UINT32_MAX)
+                        return HRESULT_E_ARITHMETIC_OVERFLOW;
+
+                    const uint8_t * __restrict sPtr = images[index].pixels;
+
+                    const size_t lines = ComputeScanlines(metadata.format, images[index].height);
+                    for (size_t j = 0; j < lines; ++j)
+                    {
+#ifdef WIN32
+                        if (!WriteFile(hFile.get(), sPtr, static_cast<DWORD>(ddsRowPitch), &bytesWritten, nullptr))
                         {
                             return HRESULT_FROM_WIN32(GetLastError());
                         }
 
-                        if (bytesWritten != ddsSlicePitch)
+                        if (bytesWritten != ddsRowPitch)
                         {
                             return E_FAIL;
                         }
-                    #else
-                        outFile.write(reinterpret_cast<char*>(images[index].pixels), static_cast<std::streamsize>(ddsSlicePitch));
+#else
+                        outFile.write(reinterpret_cast<const char*>(sPtr), static_cast<std::streamsize>(ddsRowPitch));
                         if (!outFile)
                             return E_FAIL;
-                    #endif
-                    }
-                    else
-                    {
-                        const size_t rowPitch = images[index].rowPitch;
-                        if (rowPitch < ddsRowPitch)
-                        {
-                            // DDS uses 1-byte alignment, so if this is happening then the input pitch isn't actually a full line of data
-                            return E_FAIL;
-                        }
-
-                        if (ddsRowPitch > UINT32_MAX)
-                            return HRESULT_E_ARITHMETIC_OVERFLOW;
-
-                        const uint8_t * __restrict sPtr = images[index].pixels;
-
-                        const size_t lines = ComputeScanlines(metadata.format, images[index].height);
-                        for (size_t j = 0; j < lines; ++j)
-                        {
-                        #ifdef _WIN32
-                            if (!WriteFile(hFile.get(), sPtr, static_cast<DWORD>(ddsRowPitch), &bytesWritten, nullptr))
-                            {
-                                return HRESULT_FROM_WIN32(GetLastError());
-                            }
-
-                            if (bytesWritten != ddsRowPitch)
-                            {
-                                return E_FAIL;
-                            }
-                        #else
-                            outFile.write(reinterpret_cast<const char*>(sPtr), static_cast<std::streamsize>(ddsRowPitch));
-                            if (!outFile)
-                                return E_FAIL;
-                        #endif
-                            sPtr += rowPitch;
-                        }
+#endif
+                        sPtr += rowPitch;
                     }
                 }
-
-                if (d > 1)
-                    d >>= 1;
             }
+
+            if (d > 1)
+                d >>= 1;
         }
-        break;
+    }
+    break;
 
     default:
         return E_FAIL;
     }
 
-#ifdef _WIN32
+#ifdef WIN32
     delonfail.clear();
 #endif
 
