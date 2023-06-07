@@ -109,7 +109,7 @@ namespace MCB
 #pragma endregion DirectXŠî‘b‹@”\ŒQ
 		bool sceneEnd = false;
 
-		IScene* nextScene = nullptr;
+		std::shared_ptr<IScene> nextScene = nullptr;
 
 		ICamera* viewCamera;
 
@@ -135,7 +135,7 @@ namespace MCB
 		virtual void MatrixUpdate() = 0;
 		void ImGuiDraw() { imgui.Draw(); }
 		virtual void ImGuiUpdate() = 0;
-		virtual IScene* GetNextScene() = 0;
+		virtual std::shared_ptr<IScene> GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
 		bool GetIsSceneEnd() { return sceneEnd; }
 

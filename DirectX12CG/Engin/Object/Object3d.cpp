@@ -16,11 +16,10 @@ MCB::Object3d::Object3d()
 
 MCB::Object3d::~Object3d()
 {
-    if (collider)
+    if (collider_)
     {
-        CollisionManager::GetInstance()->RemoveCollider(collider);
-        delete collider;
-        collider = nullptr;
+        CollisionManager::GetInstance()->RemoveCollider(collider_);
+        collider_ = nullptr;
     }
     constBuffTranceform->Unmap(0, nullptr);
     constBuffSkin->Unmap(0, nullptr);
@@ -122,7 +121,7 @@ void Object3d::Update(bool isBillBord)
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
-    if(collider)collider->Update();
+    if(collider_)collider_->Update();
 }
 
 void MCB::Object3d::UpdateMatrix( bool isBillBord)
@@ -188,7 +187,7 @@ void Object3d::Update(Quaternion q, bool isBillBord)
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
-    if (collider)collider->Update();
+    if (collider_)collider_->Update();
 }
 
 void MCB::Object3d::UpdateMatrix( Quaternion q, bool isBillBord)
@@ -318,7 +317,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->color = color;
     constMapTranceform->shaderNum = shaderNum;
-    if (collider)collider->Update();
+    if (collider_)collider_->Update();
     animeTime += animationSpeed;
 
     if (animeTime >= animationModel->animations[0]->duration)
@@ -370,7 +369,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
     constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
     constMapTranceform->shaderNum = shaderNum;
     constMapTranceform->color = color;
-    if (collider)collider->Update();
+    if (collider_)collider_->Update();
     animeTime += animationSpeed;
 
     if (animeTime >= animationModel->animations[0]->duration)
@@ -400,12 +399,12 @@ void MCB::Object3d::AnimationDraw(unsigned short int incremant)
     animationModel->Draw();
 }
 
-void MCB::Object3d::SetCollider(BaseCollider* collider)
+void MCB::Object3d::SetCollider(shared_ptr<BaseCollider> collider)
 {
     collider->SetObject(this);
     collider->Update();
-    this->collider = collider;
-    CollisionManager::GetInstance()->AddCollider(this->collider);
+    collider_ = collider;
+    CollisionManager::GetInstance()->AddCollider(collider_);
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

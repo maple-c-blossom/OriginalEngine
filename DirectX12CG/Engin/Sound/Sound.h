@@ -4,6 +4,7 @@
 #include "Dx12.h"
 #include <wrl.h>
 #include <array>
+#include <memory>
 
 #pragma comment(lib,"xaudio2.lib")
 
@@ -33,7 +34,7 @@ namespace MCB
 		typedef struct SoundData
 		{
 			WAVEFORMATEX wfex;
-			BYTE* pBuffer;
+			std::unique_ptr<BYTE> pBuffer;
 			unsigned int bufferSize;
 			bool free = true;
 			const char* name;
@@ -45,7 +46,7 @@ namespace MCB
 		IXAudio2MasteringVoice* masterVoice;
 		static const int MaxSound = 1026;
 
-		std::array<SoundData, MaxSound> sounds;
+		std::vector<SoundData> sounds;
 
 		void ReleasexAudio2();
 

@@ -79,7 +79,7 @@ namespace MCB
 		void Object3DInit()  override;
 		void SpriteInit()  override;
 		void ParticleInit()  override;
-		IScene* GetNextScene() override;
+		std::shared_ptr<IScene> GetNextScene() override;
 		//---------------
 		void MatrixUpdate() override;
 		void Update() override;

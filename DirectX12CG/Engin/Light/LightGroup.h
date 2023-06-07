@@ -8,17 +8,17 @@ namespace MCB
 	class LightGroup
 	{
 	public:
-		static const int DirLightNum = 3;
-		static const int PLightNum = 3;
-		static const int SLightNum = 3;
+		static const int32_t sDIR_LIGHT_NUM_ = 3;
+		static const int32_t sP_LIGHT_NUM_ = 3;
+		static const int32_t sS_LIGHT_NUM_ = 3;
 
 		struct LightGroupConstBuff
 		{
 			Float3 ambientColor;
 			float pad1;
-			DirLight::LightConstBuffData dirLights[DirLightNum];
-			PointLight::PointLConstBuffData PLights[PLightNum];
-			SpotLight::SpotLConstBuffData SLights[SLightNum];
+			DirLight::LightConstBuffData dirLights[sDIR_LIGHT_NUM_];
+			PointLight::PointLConstBuffData PLights[sP_LIGHT_NUM_];
+			SpotLight::SpotLConstBuffData SLights[sS_LIGHT_NUM_];
 		};
 	public:
 		static void StaticInitialize();
@@ -90,9 +90,9 @@ namespace MCB
 	private:
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
 		Float3 ambientColor = { 1,1,1 };
-		DirLight dirLights[DirLightNum];
-		PointLight PLights[PLightNum];
-		SpotLight SLights[SLightNum];
+		DirLight dirLights[sDIR_LIGHT_NUM_];
+		PointLight PLights[sP_LIGHT_NUM_];
+		SpotLight SLights[sS_LIGHT_NUM_];
 		bool isUpdate = false;
 	};
 

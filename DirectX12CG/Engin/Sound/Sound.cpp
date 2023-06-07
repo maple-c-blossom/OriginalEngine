@@ -1,7 +1,9 @@
 #include "Sound.h"
 #include <combaseapi.h>
-
+#include <memory>
+#include <vector>
 using namespace MCB;
+using namespace std;
 
 void MCB::SoundManager::ReleasexAudio2()
 {
@@ -10,7 +12,6 @@ void MCB::SoundManager::ReleasexAudio2()
 
 void MCB::SoundManager::DeleteSound(unsigned int SoundHandle)
 {
-	delete[] sounds[SoundHandle].pBuffer;
 
 	sounds[SoundHandle].pBuffer = 0;
 	sounds[SoundHandle].bufferSize = 0;
@@ -26,7 +27,6 @@ void MCB::SoundManager::AllDeleteSound()
 		if (sounds[i].pBuffer != nullptr)
 		{
 			if(sounds[i].pSourceVoice != nullptr) sounds[i].pSourceVoice->Stop();
-			delete[] sounds[i].pBuffer;
 
 			sounds[i].pBuffer = 0;
 			sounds[i].bufferSize = 0;
@@ -59,7 +59,6 @@ MCB::SoundManager::~SoundManager()
 		if (sounds[i].pBuffer != nullptr)
 		{
 			sounds[i].pSourceVoice->Stop();
-			delete[] sounds[i].pBuffer;
 
 			sounds[i].pBuffer = 0;
 			sounds[i].bufferSize = 0;
@@ -141,7 +140,7 @@ unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 	file.close();
 
 	sounds[handleNum].wfex = format.fmt;
-	sounds[handleNum].pBuffer = reinterpret_cast<BYTE*>(pBuffer);
+	sounds[handleNum].pBuffer = move(reinterpret_cast<BYTE*>(pBuffer));
 	sounds[handleNum].bufferSize = data.size;
 	sounds[handleNum].name = fileName;
 
@@ -158,7 +157,7 @@ void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop, unsi
 	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = sounds[soundHandle].pBuffer;
+	buf.pAudioData = sounds[soundHandle].pBuffer.get();
 	buf.AudioBytes = sounds[soundHandle].bufferSize;
 	if (isLoop) buf.LoopCount = loopCount;
 	else 

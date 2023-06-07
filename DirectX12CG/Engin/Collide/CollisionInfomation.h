@@ -8,15 +8,15 @@ namespace MCB
 	class CollisionInfomation
 	{
 	public:
-		CollisionInfomation(Object3d* object, BaseCollider* collider, const Vector3D& inter,float distance = 0)
+		CollisionInfomation(Object3d* object, BaseCollider* collider_, const Vector3D& inter,float distance = 0)
 		{
 			this->object3d = object;
-			this->collider = collider;
+			this->collider_ = collider_;
 			this->inter = inter;
 			this->distance = distance;
 		}
 		Object3d* object3d = nullptr;
-		BaseCollider* collider = nullptr;
+		BaseCollider* collider_ = nullptr;
 		Vector3D inter;
 		float distance;
 	};

@@ -208,14 +208,14 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
 
 void MCB::Model::SetSizeIB()
 {
-    sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+    sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());
 }
 
 
 
 void MCB::Model::SetSizeVB()
 {
-    sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
+    sizeVB = static_cast<uint32_t>(sizeof(ObjectVertex) * vertices.size());
 }
 
 void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)

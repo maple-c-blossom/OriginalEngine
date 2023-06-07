@@ -3,6 +3,7 @@
 #include "RayCastHit.h"
 #include "MeshCollider.h"
 #include "RayCollider.h"
+#include <memory>
 namespace MCB
 {
 	class BaseCollider;
@@ -10,8 +11,8 @@ namespace MCB
 	{
 	public:
 		static CollisionManager* GetInstance();
-		inline void AddCollider(BaseCollider* coll) { colliders.push_front(coll); }
-		inline void RemoveCollider(BaseCollider* coll) { colliders.remove(coll); }
+		inline void AddCollider(std::shared_ptr<BaseCollider> coll) { colliders.push_front(coll); }
+		inline void RemoveCollider(std::shared_ptr<BaseCollider> coll) { colliders.remove(coll); }
 		void CheckAllCollision();
 		bool Raycast( Ray& ray, RayCastHit* hitinfo = nullptr, float maxDistance = D3D12_FLOAT32_MAX);
 		bool Raycast( Ray& ray,unsigned short attribute, RayCastHit* hitinfo = nullptr, float maxDistance = D3D12_FLOAT32_MAX);
@@ -22,6 +23,6 @@ namespace MCB
 		~CollisionManager() = default;
 		CollisionManager& operator= (const CollisionManager&) = delete;
 
-		std::forward_list<BaseCollider*>colliders;
+		std::forward_list<std::shared_ptr<BaseCollider>>colliders;
 	};
 }

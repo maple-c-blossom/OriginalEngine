@@ -1,11 +1,12 @@
 #include "Player.h"
 #include "Input.h"
 #include "CollisionManager.h"
+using namespace std;
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	SetCollider(new SphereCollider);
-	collider->SetAttribute(attributeFLENDRY);
+	SetCollider(make_shared<BaseCollider>());
+	collider_->SetAttribute(attributeFLENDRY);
 }
 
 void MCB::Player::Update()
@@ -45,7 +46,7 @@ void MCB::Player::Update()
 	}
 
 	Object3d::Update();
-	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider);
+	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_.get());
 	assert(sphere);
 
 	Ray ray;

@@ -2,6 +2,7 @@
 #include "DxWindow.h"
 #include "Scene.h"
 #include "Draw.h"
+using namespace std;
 
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
@@ -16,13 +17,13 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite.InitMatProje();
 	InitRand();
 	imgui.Init();
-	scene = new Scene(this->root, this->depth, this->pipeline);
+	scene = make_shared<Scene>(this->root, this->depth, this->pipeline);
 }
 
 MCB::SceneManager::~SceneManager()
 {
 	imgui.Final();
-	delete scene;
+	
 }
 
 void MCB::SceneManager::Initialize()
@@ -129,9 +130,8 @@ void MCB::SceneManager::Draw()
 
 void MCB::SceneManager::sceneChenge()
 {
-	IScene* nextScene = scene->GetNextScene();
+	shared_ptr<IScene> nextScene = scene->GetNextScene();
 	nextScene->Initialize();
-	delete scene;
 	scene = nextScene;
 	texmanager->Erase();
 	isInitialized = true;
@@ -140,5 +140,5 @@ void MCB::SceneManager::sceneChenge()
 
 MCB::IScene* MCB::SceneManager::GetScene()
 {
-	return scene;
+	return scene.get();
 }

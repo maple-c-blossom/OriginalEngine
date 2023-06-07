@@ -15,12 +15,12 @@ void MCB::CollisionManager::CheckAllCollision()
     std::forward_list<BaseCollider*>::iterator itrA;
     std::forward_list<BaseCollider*>::iterator itrB;
 
-    itrA = colliders.begin();
-    for (; itrA != colliders.end(); ++itrA)
+    *itrA = colliders.begin()->get();
+    for (; *itrA != colliders.end()->get(); ++itrA)
     {
         itrB = itrA;
         ++itrB;
-        for (; itrB != colliders.end(); ++itrB)
+        for (; *itrB != colliders.end()->get(); ++itrB)
         {
             BaseCollider* itrCollA = *itrA;
             BaseCollider* itrCollB = *itrB;
@@ -259,9 +259,9 @@ bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastH
     std::forward_list<BaseCollider*>::iterator itr_hit;
     float dist = maxDistance;
     Vector3D inter;
-    itr = colliders.begin();
+    *itr = colliders.begin()->get();
 
-    for (; itr != colliders.end(); ++itr)
+    for (; *itr != colliders.end()->get(); ++itr)
     {
         BaseCollider* col = *itr;
         if (!(col->attribute & attribute))continue;

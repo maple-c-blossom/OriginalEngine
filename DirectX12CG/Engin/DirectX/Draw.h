@@ -4,6 +4,7 @@
 #include "Descriptor.h"
 #include "PIpelineRootSignature.h"
 #include "DxWindow.h"
+#include <memory>
 
 namespace MCB
 {

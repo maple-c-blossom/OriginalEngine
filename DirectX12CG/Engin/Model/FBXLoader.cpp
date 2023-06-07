@@ -11,11 +11,11 @@ using namespace DirectX;
 
 MCB::AnimationModel::~AnimationModel()
 {
-	for (int i = 0; i < nodes.size(); i++)
+	for (uint32_t i = 0; i < nodes.size(); i++)
 	{
-		for (int j = 0; j < nodes[i]->meshes.size(); j++)
+		for (uint32_t j = 0; j < nodes[i]->meshes.size(); j++)
 		{
-			for (int k = 0; k < nodes[i]->meshes[j]->textures.size(); k++)
+			for (uint32_t k = 0; k < nodes[i]->meshes[j]->textures.size(); k++)
 			{
 				nodes[i]->meshes[j]->textures[k]->free = true;
 			}
@@ -56,17 +56,17 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 	
 	if (scene->mNumAnimations > 0)
 	{
-		for (unsigned int i = 0; i < scene->mNumAnimations; i++)
+		for (uint32_t i = 0; i < scene->mNumAnimations; i++)
 		{
 			std::unique_ptr<Animation> tempAnim = std::make_unique<Animation>();
 			tempAnim->duration = scene->mAnimations[i]->mDuration;
 			tempAnim->name = scene->mAnimations[i]->mName.C_Str();
 			tempAnim->ticksPerSecond = scene->mAnimations[i]->mTicksPerSecond;
-			for (unsigned int j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
+			for (uint32_t j = 0; j < scene->mAnimations[i]->mNumChannels; j++)
 			{
 				NodeAnim tempNodeAnim;
 				tempNodeAnim.name = scene->mAnimations[i]->mChannels[j]->mNodeName.C_Str();
-				for (unsigned int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumPositionKeys; k++)
+				for (uint32_t k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumPositionKeys; k++)
 				{
 					Vector3D tempPosition;
 					double time;
@@ -79,7 +79,7 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 					tempNodeAnim.positionTime.push_back(time);
 				}
 
-				for (unsigned int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumScalingKeys; k++)
+				for (uint32_t k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumScalingKeys; k++)
 				{
 					Vector3D tempScale;
 					double time;
@@ -91,7 +91,7 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 					tempNodeAnim.scaleTime.push_back(time);
 				}
 
-				for (unsigned int k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumRotationKeys; k++)
+				for (uint32_t k = 0; k < scene->mAnimations[i]->mChannels[j]->mNumRotationKeys; k++)
 				{
 					Quaternion tempRotation;
 					double time;
@@ -127,7 +127,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->name = ainode->mName.C_Str();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
-		for (unsigned int i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]の原因
+		for (uint32_t i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]の原因
 		{
 			std::unique_ptr<AnimationMesh> tempmodel = std::make_unique<AnimationMesh>();
 			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, *tempmodel.get()); //D3D12 ERROR 関数抜けた瞬間
@@ -180,7 +180,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
 	//// continue for all child nodes
-	for (unsigned int i = 0; i < ainode->mNumChildren; i++) {
+	for (uint32_t i = 0; i < ainode->mNumChildren; i++) {
 		CopyNodesWithMeshes(ainode->mChildren[i], scene, parent);
 	}
 }
@@ -190,7 +190,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 	// Data to fill
 
 	// Walk through each of the mesh's vertices
-	for (UINT i = 0; i < mesh->mNumVertices; i++) {
+	for (uint32_t i = 0; i < mesh->mNumVertices; i++) {
 		AnimationVertex vertex;
 
 		vertex.pos.x = mesh->mVertices[i].x;
@@ -208,10 +208,10 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 	}
 
 
-	for (UINT i = 0; i < mesh->mNumFaces; i++) {
+	for (uint32_t i = 0; i < mesh->mNumFaces; i++) {
 		aiFace face = mesh->mFaces[i];
 
-		for (UINT j = 0; j < face.mNumIndices; j++)
+		for (uint32_t j = 0; j < face.mNumIndices; j++)
 			tempmodel.indices.push_back(face.mIndices[j]);
 	}
 
@@ -245,7 +245,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	}
 	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices.size());
-	for (unsigned int i = 0; i < mesh->mNumBones; i++)
+	for (uint32_t i = 0; i < mesh->mNumBones; i++)
 	{
 		Bone temp;
 		temp.name = mesh->mBones[i]->mName.C_Str();
@@ -272,7 +272,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 
 		temp.offsetMatrix = DirectX::XMMatrixTranspose(temp.offsetMatrix);
 		temp.finalMatrix = temp.offsetMatrix;
-		for (unsigned int j = 0; j < mesh->mBones[i]->mNumWeights; j++)
+		for (uint32_t j = 0; j < mesh->mBones[i]->mNumWeights; j++)
 		{
 
 			SetWeight tempVer;
@@ -284,11 +284,11 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 
 		bones.push_back(temp);
 	}
-	for (int i = 0; i < tempmodel.vertices.size(); i++)
+	for (int32_t i = 0; i < tempmodel.vertices.size(); i++)
 	{
 		auto& weightL = weightList[i];
 		weightL.sort([](auto const& lhs, auto const rhs) {return lhs.weight > rhs.weight; });
-		int weightArrayIndex = 0;
+		int32_t weightArrayIndex = 0;
 		for (auto& weightSet : weightL)
 		{
 			
@@ -297,7 +297,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 			if (++weightArrayIndex >= NUM_BONES_PER_VERTEX)
 			{
 				float weight = 0.0f;
-				for (int j = 1; j < NUM_BONES_PER_VERTEX; j++)
+				for (int32_t j = 1; j < NUM_BONES_PER_VERTEX; j++)
 				{
 					weight += tempmodel.vertices[i].weights[j];
 
@@ -335,7 +335,7 @@ void MCB::AnimationModel::Draw()
 			//インデックスデータ
 			dx12->commandList->IASetIndexBuffer(&itr2->ibView);
 			//描画コマンド
-			dx12->commandList->DrawIndexedInstanced((unsigned int)itr2->indices.size(), 1, 0, 0, 0);
+			dx12->commandList->DrawIndexedInstanced((uint32_t)itr2->indices.size(), 1, 0, 0, 0);
 		}
 	}
 
@@ -345,7 +345,7 @@ void MCB::AnimationModel::Draw()
 
 std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
 	std::vector<TextureCell*> textures;
-	for (UINT i = 0; i < mat->GetTextureCount(type); i++) {
+	for (uint32_t i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
 		TextureCell* tempTex;
 		std::string path;
@@ -357,7 +357,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		}
 		path = "Resources\\" + fileName + "\\" + path;
 		wchar_t wfilepath[128];
-		int iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
+		int32_t iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
 		tempTex = textureManager->LoadTexture(wfilepath);
 		textures.push_back(tempTex);
 
@@ -409,7 +409,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, uint32_t currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
@@ -475,7 +475,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
   const NodeAnim* AnimationModel::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
   {
 
-	  for (unsigned int i = 0; i < pAnimation->channels.size(); i++)
+	  for (uint32_t i = 0; i < pAnimation->channels.size(); i++)
 	  {
 		  const NodeAnim* pNodeAnim = &pAnimation->channels[i];
 
@@ -498,9 +498,9 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  unsigned int PositionIndex = findPosition(AnimationTime, pNodeAnim);
-	  unsigned int NextPositionIndex = (PositionIndex + 1);
-	  if(NextPositionIndex >= pNodeAnim->position.size()) NextPositionIndex = (unsigned int)pNodeAnim->position.size() - 1;
+	  uint32_t PositionIndex = findPosition(AnimationTime, pNodeAnim);
+	  uint32_t NextPositionIndex = (PositionIndex + 1);
+	  if(NextPositionIndex >= pNodeAnim->position.size()) NextPositionIndex = (uint32_t)pNodeAnim->position.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->positionTime[NextPositionIndex] - pNodeAnim->positionTime[PositionIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->positionTime[PositionIndex]) / DeltaTime);
 	  Vector3D Start = pNodeAnim->position[PositionIndex];
@@ -517,9 +517,9 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  unsigned int RotationIndex = findRotation(AnimationTime, pNodeAnim);
-	  unsigned int NextRotationIndex = (RotationIndex + 1);
-	  if (NextRotationIndex >= pNodeAnim->rotation.size()) NextRotationIndex = (unsigned int)pNodeAnim->rotation.size() - 1;
+	  uint32_t RotationIndex = findRotation(AnimationTime, pNodeAnim);
+	  uint32_t NextRotationIndex = (RotationIndex + 1);
+	  if (NextRotationIndex >= pNodeAnim->rotation.size()) NextRotationIndex = (uint32_t)pNodeAnim->rotation.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->rotationTime[NextRotationIndex] - pNodeAnim->rotationTime[RotationIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->rotationTime[RotationIndex]) / DeltaTime);
 
@@ -537,9 +537,9 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  unsigned int ScalingIndex = findScaling(AnimationTime, pNodeAnim);
-	  unsigned int NextScalingIndex = (ScalingIndex + 1);
-	  if(NextScalingIndex >= pNodeAnim->scale.size()) NextScalingIndex = (unsigned int)pNodeAnim->scale.size() - 1;
+	  uint32_t ScalingIndex = findScaling(AnimationTime, pNodeAnim);
+	  uint32_t NextScalingIndex = (ScalingIndex + 1);
+	  if(NextScalingIndex >= pNodeAnim->scale.size()) NextScalingIndex = (uint32_t)pNodeAnim->scale.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->scaleTime[NextScalingIndex] - pNodeAnim->scaleTime[ScalingIndex]);
 	  float Factor = clamp((AnimationTime - (float)pNodeAnim->scaleTime[ScalingIndex]) / DeltaTime);
 	  //assert(Factor >= 0.0f && Factor <= 1.0f);
@@ -549,9 +549,9 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	  Out = Start + Factor * Delta;
   }
 
-    unsigned int AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
+   uint32_t AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
    {
-	   for (unsigned int i = 0; i < pNodeAnim->position.size(); i++) {
+	   for (uint32_t i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
 			   return i;
 		   }
@@ -563,11 +563,11 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-    unsigned int AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
+   uint32_t AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
-	   for (unsigned int i = 0; i < pNodeAnim->rotation.size() - 1; i++) {
+	   for (uint32_t i = 0; i < pNodeAnim->rotation.size() - 1; i++) {
 		   if (AnimationTime < (float)pNodeAnim->rotationTime[i + 1]) {
 			   return i;
 		   }
@@ -579,11 +579,11 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-    unsigned int AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
+   uint32_t AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 
-	   for (unsigned int i = 0; i < pNodeAnim->scale.size() - 1; i++) {
+	   for (uint32_t i = 0; i < pNodeAnim->scale.size() - 1; i++) {
 		   if (AnimationTime < (float)pNodeAnim->scaleTime[i + 1]) {
 			   return i;
 		   }

@@ -14,9 +14,9 @@ void MCB::TitleScene::ParticleInit()
 {
 }
 
-MCB::IScene* MCB::TitleScene::GetNextScene()
+shared_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
 {
-	return new Scene(rootparamsPtr, depth, pipeline);
+	return make_shared<Scene>(rootparamsPtr, depth, pipeline);
 }
 
 void MCB::TitleScene::MatrixUpdate()
@@ -102,7 +102,6 @@ MCB::TitleScene::~TitleScene()
 {
     soundManager.AllDeleteSound();
     debugTextTexture->free = true;
-    delete nextScene;
     loader->Erase();
 }
 
@@ -160,7 +159,7 @@ void MCB::TitleScene::Object3DInit()
     ground.scale = { 1,1,1 };
     ground.position = { 0,-3,0 };
     ground.rotasion = { 0,0,ConvertRadius(5) };
-    ground.SetCollider(new MeshCollider(groundModel.get()));
+    ground.SetCollider(std::move(std::make_shared<MeshCollider>(groundModel.get())));
     ground.camera = viewCamera;
 
     play.Init();

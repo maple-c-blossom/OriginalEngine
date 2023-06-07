@@ -15,6 +15,7 @@
 #include "LightGroup.h"
 #include "FBXLoader.h"
 #include "CollisionInfomation.h"
+#include <memory>
 namespace MCB
 {
     class ICamera;
@@ -24,7 +25,7 @@ namespace MCB
     {
     protected:
         std::string name;
-        BaseCollider* collider;
+        std::shared_ptr<BaseCollider> collider_;
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
@@ -89,8 +90,8 @@ namespace MCB
 
        virtual void AnimationDraw(unsigned short int incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
-       void SetCollider(BaseCollider* collider);
-       BaseCollider* GetCollider() { return collider; };
+       void SetCollider(std::shared_ptr<BaseCollider> collider);
+       BaseCollider* GetCollider() { return collider_.get(); };
        virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; hited = true; }
        virtual void OffCollision(const CollisionInfomation* info = nullptr) { color = { 1,1,1,1 };  hited = false;}
        static void SetLights(LightGroup* light);

@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "Util.h"
 using namespace MCB;
+using namespace std;
 using namespace DirectX;
 
 MCB::Scene::~Scene()
@@ -9,7 +10,6 @@ MCB::Scene::~Scene()
     soundManager.AllDeleteSound();
     zoomTex->free = true;
     debugTextTexture->free = true;
-    delete nextScene;
     loader->Erase();
 }
 
@@ -41,7 +41,7 @@ void MCB::Scene::Object3DInit()
     ground.scale = { 1,1,1 };
     ground.position = { 0,-3,0 };
     ground.rotasion = { 0,0,ConvertRadius(5)};
-    ground.SetCollider(new PlaneCollider{{0,1,0},-3});
+    ground.SetCollider(make_shared<PlaneCollider>((Vector3D{0,1,0},-3.f)));
     ground.camera = viewCamera;
 
 
@@ -56,7 +56,7 @@ void MCB::Scene::Object3DInit()
     testsphere.scale = { 1,1,1 };
     testsphere.position = { 0,0,3 };
     testsphere.rotasion = { ConvertRadius(90),0,0 };
-    testsphere.SetCollider(new SphereCollider);
+    testsphere.SetCollider(move(make_shared<SphereCollider>()));
     testsphere.camera = viewCamera;
    
     //sphere.Init();
@@ -112,9 +112,10 @@ void MCB::Scene::ParticleInit()
     //testParticle.rotasion.x = ConvertRadius(-90);
 }
 
-IScene* MCB::Scene::GetNextScene()
+
+shared_ptr<IScene> MCB::Scene::GetNextScene()
 {
-    return new TitleScene(rootparamsPtr, depth, pipeline);
+    return make_shared<TitleScene>(rootparamsPtr, depth, pipeline);
 }
 
 
