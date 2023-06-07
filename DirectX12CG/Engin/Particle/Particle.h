@@ -48,7 +48,7 @@ namespace MCB
         TextureManager* textureManager = TextureManager::GetInstance();
         //ƒ[ƒ‹ƒhs—ñ
         WorldMatrix matWorld = {};
-        unsigned int sizeVB;
+        size_t sizeVB;
         Vector3D NORM_FRONT_VEC = {};
         Vector3D nowFrontVec = {};
         float frontAngle = 0;

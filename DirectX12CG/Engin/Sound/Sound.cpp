@@ -10,10 +10,10 @@ void MCB::SoundManager::ReleasexAudio2()
 	xAudio2.Reset();
 }
 
-void MCB::SoundManager::DeleteSound(unsigned int SoundHandle)
+void MCB::SoundManager::DeleteSound(size_t SoundHandle)
 {
 
-	sounds[SoundHandle].pBuffer = 0;
+
 	sounds[SoundHandle].bufferSize = 0;
 	sounds[SoundHandle].wfex = {};
 	sounds[SoundHandle].free = true;
@@ -22,13 +22,13 @@ void MCB::SoundManager::DeleteSound(unsigned int SoundHandle)
 
 void MCB::SoundManager::AllDeleteSound()
 {
-	for (int i = 0; i < MaxSound; i++)
+	for (size_t i = 0; i < sounds.size(); i++)
 	{
 		if (sounds[i].pBuffer != nullptr)
 		{
 			if(sounds[i].pSourceVoice != nullptr) sounds[i].pSourceVoice->Stop();
 
-			sounds[i].pBuffer = 0;
+			
 			sounds[i].bufferSize = 0;
 			sounds[i].wfex = {};
 			sounds[i].free = true;
@@ -53,35 +53,36 @@ SoundManager::SoundManager()
 
 MCB::SoundManager::~SoundManager()
 {
-	xAudio2.Reset();
-	for (int i = 0; i < MaxSound; i++)
+	for (size_t i = 0; i < sounds.size(); i++)
 	{
 		if (sounds[i].pBuffer != nullptr)
 		{
-			sounds[i].pSourceVoice->Stop();
-
-			sounds[i].pBuffer = 0;
+			if(sounds[i].pSourceVoice)sounds[i].pSourceVoice->Stop();
 			sounds[i].bufferSize = 0;
 			sounds[i].wfex = {};
 			sounds[i].pSourceVoice = nullptr;
 		}
 	}
+	xAudio2.Reset();
 
 }
 
-unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
+size_t MCB::SoundManager::LoadWaveSound(const char* fileName)
 {
 
-	unsigned int handleNum = 0;
+	size_t handleNum = 0;
+	SoundData temp;
 
-	for (int i = 0; i < MaxSound; i++)
+	for (size_t i = 0; i < sounds.size(); i++)
 	{
+		if (sounds.empty())break;
 		if (sounds[i].free)continue;
 		if (sounds[i].name == fileName) return i;
 	}
 
-	for (int i = 0; i < MaxSound; i++)
+	for (size_t i = 0; i < sounds.size(); i++)
 	{
+		if (sounds.empty())break;
 		if (sounds[i].free)
 		{
  			handleNum = i;
@@ -139,18 +140,19 @@ unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 
 	file.close();
 
-	sounds[handleNum].wfex = format.fmt;
-	sounds[handleNum].pBuffer = reinterpret_cast<BYTE*>(pBuffer);
-	sounds[handleNum].bufferSize = data.size;
-	sounds[handleNum].name = fileName;
-
-
+	temp.wfex = format.fmt;
+	temp.pBuffer.reset((reinterpret_cast<BYTE*>(pBuffer.data())));
+	temp.bufferSize = data.size;
+	temp.name = fileName;
+	sounds.push_back(move(temp));
+	handleNum = sounds.size() - 1;
 	return handleNum;
 
 }
 
-void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop, unsigned short loopCount)
+void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, unsigned short loopCount)
 {
+	if (soundHandle >= sounds.size())return;
 	HRESULT result = S_FALSE;
 	
 	result = xAudio2.Get()->CreateSourceVoice(&sounds[soundHandle].pSourceVoice, &sounds[soundHandle].wfex);
@@ -158,7 +160,7 @@ void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop, unsi
 
 	XAUDIO2_BUFFER buf{};
 	buf.pAudioData = sounds[soundHandle].pBuffer.get();
-	buf.AudioBytes = sounds[soundHandle].bufferSize;
+	buf.AudioBytes =static_cast<uint32_t>( sounds[soundHandle].bufferSize);
 	if (isLoop) buf.LoopCount = loopCount;
 	else 
 	{
@@ -176,18 +178,20 @@ void MCB::SoundManager::PlaySoundWave(unsigned int soundHandle,bool isLoop, unsi
 
 }
 
-void MCB::SoundManager::StopSoundWave(unsigned int soundHandle,bool startPosReset)
+void MCB::SoundManager::StopSoundWave(size_t soundHandle,bool startPosReset)
 {
 	HRESULT result = S_FALSE;
+	if (soundHandle >= sounds.size())return;
 	if (sounds[soundHandle].pSourceVoice == nullptr)return;
 	result = sounds[soundHandle].pSourceVoice->Stop();
 	sounds[soundHandle].pSourceVoice = nullptr;
 
 }
 
-void MCB::SoundManager::SetVolume(unsigned int volume,unsigned int soundHandle)
+void MCB::SoundManager::SetVolume(size_t volume,size_t soundHandle)
 {
 	float tempVolume = volume / 100.0f;
+	if (soundHandle >= sounds.size())return;
 	this->sounds[soundHandle].volume = tempVolume;
 	if (sounds[soundHandle].pSourceVoice != nullptr)
 	{

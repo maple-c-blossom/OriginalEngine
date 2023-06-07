@@ -35,7 +35,7 @@ namespace MCB
 		{
 			WAVEFORMATEX wfex;
 			std::unique_ptr<BYTE> pBuffer;
-			unsigned int bufferSize;
+			size_t bufferSize;
 			bool free = true;
 			const char* name;
 			IXAudio2SourceVoice* pSourceVoice = nullptr;
@@ -50,14 +50,14 @@ namespace MCB
 
 		void ReleasexAudio2();
 
-		unsigned int LoadWaveSound(const char* fileName);
-		void DeleteSound(unsigned int SoundHandle);
+		size_t LoadWaveSound(const char* fileName);
+		void DeleteSound(size_t SoundHandle);
 		void AllDeleteSound();
 
-		void PlaySoundWave(unsigned int soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE);
-		void StopSoundWave(unsigned int soundHandle, bool startPosReset = true);
-		//void SetVolume(unsigned int volume, unsigned int soundHandle);
-		void SetVolume(unsigned int volume, unsigned int soundHandle);
+		void PlaySoundWave(size_t soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE);
+		void StopSoundWave(size_t soundHandle, bool startPosReset = true);
+		//void SetVolume(size_t volume, size_t soundHandle);
+		void SetVolume(size_t volume, size_t soundHandle);
 		SoundManager();
 		~SoundManager();
 

@@ -44,8 +44,8 @@ namespace MCB
         std::vector<unsigned short> indices;
         std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
-        unsigned int sizeVB = static_cast<unsigned int>(sizeof(ObjectVertex) * vertices.size());
-        unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+        size_t sizeVB = static_cast<size_t>(sizeof(ObjectVertex) * vertices.size());
+        size_t sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
 
         D3D12_INDEX_BUFFER_VIEW ibView{};
 

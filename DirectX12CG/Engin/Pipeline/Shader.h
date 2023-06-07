@@ -54,12 +54,12 @@ namespace MCB
      //--------------------
 
 
-        void ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint,unsigned int ShaderName);
+        void ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint,size_t ShaderName);
 
         /*void SetInputLayout(const char* semanticName, DXGI_FORMAT format);
 
-        void SetInputLayout(const char* semanticName, DXGI_FORMAT format, unsigned int semanticIndex,  unsigned int inputSlot, 
-            unsigned int AlignedByteOffset, D3D12_INPUT_CLASSIFICATION InputSlotClass, unsigned int InstanceDataStepRate);*/
+        void SetInputLayout(const char* semanticName, DXGI_FORMAT format, size_t semanticIndex,  size_t inputSlot, 
+            size_t AlignedByteOffset, D3D12_INPUT_CLASSIFICATION InputSlotClass, size_t InstanceDataStepRate);*/
 
     };
 

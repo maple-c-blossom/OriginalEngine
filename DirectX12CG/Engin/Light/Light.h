@@ -16,7 +16,7 @@ namespace MCB
 			Vector3D lightV;
 			float shininess;
 			Float3 lightColor;
-			unsigned int active;
+			uint32_t active;
 		}LightConstBuffData;
 		inline void SetLightDir(Vector3D lightdir) 
 		{

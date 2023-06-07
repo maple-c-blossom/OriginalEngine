@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, unsigned int ShaderName)
+void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, size_t ShaderName)
 {
     HRESULT result;
 
@@ -94,7 +94,7 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
 
 }
 //
-//void MCB::Shader::SetInputLayout(const char* semanticName, DXGI_FORMAT format, unsigned int semanticIndex, unsigned int inputSlot, unsigned int AlignedByteOffset, D3D12_INPUT_CLASSIFICATION InputSlotClass, unsigned int InstanceDataStepRate)
+//void MCB::Shader::SetInputLayout(const char* semanticName, DXGI_FORMAT format, size_t semanticIndex, size_t inputSlot, size_t AlignedByteOffset, D3D12_INPUT_CLASSIFICATION InputSlotClass, size_t InstanceDataStepRate)
 //{
 //    D3D12_INPUT_ELEMENT_DESC temp = { semanticName,semanticIndex,format,inputSlot,AlignedByteOffset,InputSlotClass,InstanceDataStepRate };
 //

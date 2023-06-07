@@ -60,9 +60,9 @@ void Particle::Init(TextureCell* tex)
         IID_PPV_ARGS(&vertBuff));
     assert(SUCCEEDED(Dx12::GetInstance()->result));
 
-    sizeVB = static_cast<unsigned int>(sizeof(Vertex));
+    sizeVB = static_cast<size_t>(sizeof(Vertex));
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = sizeVB;
+    vbView.SizeInBytes = static_cast<uint32_t>(sizeVB);
     vbView.StrideInBytes = sizeof(vertex);
 }
 

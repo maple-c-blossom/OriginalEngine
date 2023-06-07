@@ -58,7 +58,7 @@ namespace MCB
 		MCBMatrix& operator+=(MCBMatrix matrix);
 		MCBMatrix& operator-=(MCBMatrix matrix);
 
-		float operator[](unsigned int n);
+		float operator[](size_t n);
 
 	};
 		MCBMatrix operator*(MCBMatrix matrix1,MCBMatrix matrix2);

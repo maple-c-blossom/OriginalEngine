@@ -132,7 +132,7 @@ float MCB::ConvertRadius(float angle)
 
 void MCB::InitRand()
 {
-	srand((unsigned int)time(nullptr));
+	srand((static_cast<uint32_t>(time(nullptr))));
 }
 
 int MCB::GetRand(int min, int max)
@@ -156,7 +156,7 @@ MCB::SimpleFigure::SimpleFigure()
 		{PointC,{1,1,1},{0,0}}
 	};
 	triangleMaterial.SetSizeVB();
-	triangleMaterial.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangleMaterial.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+	triangleMaterial.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(triangleMaterial.sizeVB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
 	triangleMaterial.CreateVertexBuffer(triangleMaterial.material.HeapProp, D3D12_HEAP_FLAG_NONE, triangleMaterial.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 	triangleMaterial.VertexMaping();
 	triangleMaterial.SetVbView();

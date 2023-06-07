@@ -16,7 +16,7 @@ namespace MCB
 
 		void SetSampleMask();
 
-		void SetSampleMask(unsigned int sampleMask);
+		void SetSampleMask(size_t sampleMask);
 
 		void SetRasterizerState(bool DepthClipEnable = true, D3D12_CULL_MODE cullmode = D3D12_CULL_MODE_BACK, D3D12_FILL_MODE fillmode = D3D12_FILL_MODE_SOLID);
 
@@ -56,11 +56,11 @@ namespace MCB
 
 		void SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE topologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE);
 
-		void SetNumRenderTargets(unsigned int numRenderTarget = 1);
+		void SetNumRenderTargets(size_t numRenderTarget = 1);
 
-		void SetRTVFormats(DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, unsigned int FormatNum = 0);
+		void SetRTVFormats(DXGI_FORMAT RTVFormat = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, size_t FormatNum = 0);
 
-		void SetSampleDescCount(unsigned int count = 1);
+		void SetSampleDescCount(size_t count = 1);
 
 		void SetRootSignature(RootSignature rootSignature);
 

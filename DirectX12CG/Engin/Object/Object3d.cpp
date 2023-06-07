@@ -245,7 +245,7 @@ void Object3d::Draw()
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawIndexedInstanced((unsigned int) model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList->DrawIndexedInstanced(static_cast<uint32_t>( model->indices.size()), 1, 0, 0, 0);
 
 }
 
@@ -277,7 +277,7 @@ void Object3d::Draw(unsigned short int incremant)
     //定数バッファビュー(CBV)の設定コマンド
     dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList->DrawIndexedInstanced(static_cast<uint32_t>(model->indices.size()), 1, 0, 0, 0);
 
 }
 

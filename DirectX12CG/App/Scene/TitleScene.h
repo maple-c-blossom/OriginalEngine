@@ -33,10 +33,10 @@ namespace MCB
 
 		//サウンド
 #pragma region サウンド
-		int testSound;
-		int test2Sound;
+		size_t testSound;
+		size_t test2Sound;
 
-		int volume = 255;
+		int32_t volume = 255;
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース

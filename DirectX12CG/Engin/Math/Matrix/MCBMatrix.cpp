@@ -367,7 +367,7 @@ MCB::MCBMatrix& MCB::MCBMatrix::operator-=(MCBMatrix matrix)
 	return *this;
 }
 
-float MCB::MCBMatrix::operator[](unsigned int n)
+float MCB::MCBMatrix::operator[](size_t n)
 {
 	switch (n)
 	{

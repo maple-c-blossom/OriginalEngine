@@ -31,7 +31,7 @@ void MCB::AnimationMesh::SetIbView(DXGI_FORMAT format)
 {
     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
     ibView.Format = format;
-    ibView.SizeInBytes = sizeIB;
+    ibView.SizeInBytes = static_cast<uint32_t>(sizeIB);
 }
 
 void MCB::AnimationMesh::CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
@@ -69,7 +69,7 @@ HRESULT MCB::AnimationMesh::IndexMaping()
 void MCB::AnimationMesh::SetVbView()
 {
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = sizeVB;
+    vbView.SizeInBytes = static_cast<uint32_t>(sizeVB);
     vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
@@ -92,14 +92,14 @@ HRESULT MCB::AnimationMesh::VertexMaping()
 
 void MCB::AnimationMesh::SetSizeIB()
 {
-    sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+    sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
 }
 
 
 
 void MCB::AnimationMesh::SetSizeVB()
 {
-    sizeVB = static_cast<unsigned int>(sizeof(AnimationVertex) * vertices.size());
+    sizeVB = static_cast<size_t>(sizeof(AnimationVertex) * vertices.size());
 }
 
 void MCB::AnimationMesh::Init()
@@ -108,7 +108,7 @@ void MCB::AnimationMesh::Init()
     SetSizeIB();
     for (auto& itr : material)
     {
-        itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+        itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
         CreateIndexBuffer(itr.HeapProp, D3D12_HEAP_FLAG_NONE, itr.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
 
     }
@@ -118,7 +118,7 @@ void MCB::AnimationMesh::Init()
     SetSizeVB();
     for (auto& itr : material)
     {
-        itr.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+        itr.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER,static_cast<uint32_t>(sizeVB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
         CreateVertexBuffer(itr.HeapProp, D3D12_HEAP_FLAG_NONE, itr.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
     }
     VertexMaping();

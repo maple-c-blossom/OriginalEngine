@@ -5,7 +5,7 @@ MCB::RootParameter::~RootParameter()
     rootparams.clear();
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, int NumDescriptorRanges,unsigned int descriptorIndex)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, int RegisterSpace, D3D12_SHADER_VISIBILITY shaderVisibility, int NumDescriptorRanges,size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -14,7 +14,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
         auto& descriptorRange = ShaderResource::GetInstance()->descriptorRange;
-        descriptorIndex = min(static_cast<unsigned int>(descriptorRange.size() - 1), descriptorIndex);
+        descriptorIndex = min(static_cast<size_t>(descriptorRange.size() - 1), descriptorIndex);
         rootparam.DescriptorTable.pDescriptorRanges = &descriptorRange[descriptorIndex];
         rootparam.DescriptorTable.NumDescriptorRanges = NumDescriptorRanges;
     }
@@ -32,7 +32,7 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
 
 }
 
-void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, unsigned int descriptorIndex)
+void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int ShaderRegister, size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -41,9 +41,9 @@ void MCB::RootParameter::SetRootParam(D3D12_ROOT_PARAMETER_TYPE paramType, int S
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
         auto& descriptorRange = ShaderResource::GetInstance()->descriptorRange;
-        descriptorIndex = min(static_cast<unsigned int>(descriptorRange.size() - 1), descriptorIndex);
+        descriptorIndex = min(static_cast<size_t>(descriptorRange.size() - 1), descriptorIndex);
         rootparam.DescriptorTable.pDescriptorRanges = &descriptorRange[descriptorIndex];
-        rootparam.DescriptorTable.NumDescriptorRanges = descriptorIndex;
+        rootparam.DescriptorTable.NumDescriptorRanges = static_cast<uint32_t>(descriptorIndex);
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
     {

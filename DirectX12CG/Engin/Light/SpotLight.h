@@ -27,7 +27,7 @@ namespace MCB
 			Float3 lightAtten;
 			float pad4;
 			Float2 lightFactorAngleCos;
-			unsigned int active;
+			uint32_t active;
 			float pad5;
 		}SpotLConstBuffData;
 		inline void SetSLightDir(Vector3D lightDir){ this->ligntDir = lightDir; }
@@ -63,7 +63,7 @@ namespace MCB
 		Float3 lightAtten = {1.f,1.f,1.f};
 		Float2 lightFactorAngleCos = {0.5f,0.2f};
 		float shininess = 3.0f;
-		unsigned int active = false;
+		size_t active = false;
 
 	};
 

@@ -37,7 +37,7 @@ void MCB::Model::SetIbView(DXGI_FORMAT format)
 {
     ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
     ibView.Format = format;
-    ibView.SizeInBytes = sizeIB;
+    ibView.SizeInBytes = static_cast<uint32_t>(sizeIB);
 }
 
 void MCB::Model::CreateIndexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
@@ -75,7 +75,7 @@ HRESULT MCB::Model::IndexMaping()
 void MCB::Model::SetVbView()
 {
     vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = sizeVB;
+    vbView.SizeInBytes = static_cast<uint32_t>(sizeVB);
     vbView.StrideInBytes = sizeof(vertices[0]);
 }
 
@@ -285,13 +285,13 @@ void MCB::Model::Init(const std::string fileName, bool smooth)
     CreateModel(fileName,smooth);
 
     SetSizeIB();
-    material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, sizeIB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
     CreateIndexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
     Dx12::GetInstance()->result = IndexMaping();
     SetIbView(DXGI_FORMAT_R16_UINT);
 
     SetSizeVB();
-    material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeVB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
     CreateVertexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
     VertexMaping();
     SetVbView();

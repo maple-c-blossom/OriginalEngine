@@ -24,7 +24,7 @@ namespace MCB
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
-            unsigned int ids[NUM_BONES_PER_VERTEX] = {};
+            size_t ids[NUM_BONES_PER_VERTEX] = {};
             float weights[NUM_BONES_PER_VERTEX] = {};
         }AnimationVertex;
         //--------------------------------------
@@ -35,7 +35,7 @@ namespace MCB
         }ConstBuffSkin;
         typedef struct SetWeight
         {
-            unsigned int id;
+            size_t id;
             float weight;
         }SetWeight;
 
@@ -69,8 +69,8 @@ namespace MCB
             
             std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
 
-            unsigned int sizeVB = static_cast<unsigned int>(sizeof(AnimationVertex) * vertices.size());
-            unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+            size_t sizeVB = static_cast<size_t>(sizeof(AnimationVertex) * vertices.size());
+            size_t sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
 
             D3D12_INDEX_BUFFER_VIEW ibView{};
 

@@ -5,9 +5,9 @@ void MCB::Pipeline::SetSampleMask()
 	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
 }
 
-void MCB::Pipeline::SetSampleMask(unsigned int sampleMask)
+void MCB::Pipeline::SetSampleMask(size_t sampleMask)
 {
-	pipelineDesc.SampleMask = sampleMask;
+	pipelineDesc.SampleMask = static_cast<uint32_t>(sampleMask);
 }
 
 void MCB::Pipeline::SetRasterizerState(bool DepthClipEnable , D3D12_CULL_MODE cullmode, D3D12_FILL_MODE fillmode)
@@ -135,12 +135,12 @@ void MCB::Pipeline::SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE topol
 	pipelineDesc.PrimitiveTopologyType = topologyType;
 }
 
-void MCB::Pipeline::SetNumRenderTargets(unsigned int numRenderTarget)
+void MCB::Pipeline::SetNumRenderTargets(size_t numRenderTarget)
 {
-	pipelineDesc.NumRenderTargets = numRenderTarget;
+	pipelineDesc.NumRenderTargets = static_cast<uint32_t>(numRenderTarget);
 }
 
-void MCB::Pipeline::SetRTVFormats(DXGI_FORMAT RTVFormat, unsigned int FormatNum)
+void MCB::Pipeline::SetRTVFormats(DXGI_FORMAT RTVFormat, size_t FormatNum)
 {
 	if (FormatNum >= 8) return;
 
@@ -148,9 +148,9 @@ void MCB::Pipeline::SetRTVFormats(DXGI_FORMAT RTVFormat, unsigned int FormatNum)
 
 }
 
-void MCB::Pipeline::SetSampleDescCount(unsigned int count)
+void MCB::Pipeline::SetSampleDescCount(size_t count)
 {
-	pipelineDesc.SampleDesc.Count = count;
+	pipelineDesc.SampleDesc.Count = static_cast<uint32_t>( count);
 }
 
 void MCB::Pipeline::SetRootSignature(RootSignature rootSignature)

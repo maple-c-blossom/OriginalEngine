@@ -93,9 +93,9 @@ namespace MCB
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
 
-        void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);
+        void boneAnimTransform(float timeInSeconds, size_t currentAnimation = 0, bool loop = true);
 
-        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation = 0);
+        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, DirectX::XMMATRIX globalInverseTransform, size_t currentAnimation = 0);
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 
@@ -105,11 +105,11 @@ namespace MCB
 
         static void calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findPosition(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findPosition(float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findRotation(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findRotation(float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findScaling(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findScaling(float AnimationTime, const NodeAnim* pNodeAnim);
 
         //bool LoadFile(ImportSetting setting);
         void Draw();

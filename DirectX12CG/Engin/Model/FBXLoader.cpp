@@ -373,7 +373,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	return textures;
 }
 
-  void AnimationModel::boneAnimTransform(float timeInSeconds, unsigned int currentAnimation,bool loop)
+  void AnimationModel::boneAnimTransform(float timeInSeconds, size_t currentAnimation,bool loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -409,7 +409,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, uint32_t currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, size_t currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
@@ -458,7 +458,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
 	  if (bonePtr != nullptr)
 	  {
-		  //unsigned int boneIndex = iter;
+		  //size_t boneIndex = iter;
 		  //BoneTransformInfo* boneInfo = (BoneTransformInfo*)editBoneTransforms->elementAtIndex(boneIndex);
 		  XMMATRIX* boneOff = &bonePtr->offsetMatrix;
 		  XMMATRIX trans = (*boneOff) * (/*globalInverseTransform **/ mat) ;
@@ -498,7 +498,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  uint32_t PositionIndex = findPosition(AnimationTime, pNodeAnim);
+	  uint32_t PositionIndex = static_cast<uint32_t>(findPosition(AnimationTime, pNodeAnim));
 	  uint32_t NextPositionIndex = (PositionIndex + 1);
 	  if(NextPositionIndex >= pNodeAnim->position.size()) NextPositionIndex = (uint32_t)pNodeAnim->position.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->positionTime[NextPositionIndex] - pNodeAnim->positionTime[PositionIndex]);
@@ -517,7 +517,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  uint32_t RotationIndex = findRotation(AnimationTime, pNodeAnim);
+	  uint32_t RotationIndex = static_cast<uint32_t>(findRotation(AnimationTime, pNodeAnim));
 	  uint32_t NextRotationIndex = (RotationIndex + 1);
 	  if (NextRotationIndex >= pNodeAnim->rotation.size()) NextRotationIndex = (uint32_t)pNodeAnim->rotation.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->rotationTime[NextRotationIndex] - pNodeAnim->rotationTime[RotationIndex]);
@@ -537,7 +537,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  return;
 	  }
 
-	  uint32_t ScalingIndex = findScaling(AnimationTime, pNodeAnim);
+	  uint32_t ScalingIndex = static_cast<uint32_t>(findScaling(AnimationTime, pNodeAnim));
 	  uint32_t NextScalingIndex = (ScalingIndex + 1);
 	  if(NextScalingIndex >= pNodeAnim->scale.size()) NextScalingIndex = (uint32_t)pNodeAnim->scale.size() - 1;
 	  float DeltaTime = (float)(pNodeAnim->scaleTime[NextScalingIndex] - pNodeAnim->scaleTime[ScalingIndex]);
@@ -549,7 +549,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	  Out = Start + Factor * Delta;
   }
 
-   uint32_t AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   for (uint32_t i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
@@ -563,7 +563,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-   uint32_t AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
@@ -579,7 +579,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-   uint32_t AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 
