@@ -41,7 +41,7 @@ void MCB::Scene::Object3DInit()
     ground.scale = { 1,1,1 };
     ground.position = { 0,-3,0 };
     ground.rotasion = { 0,0,ConvertRadius(5)};
-    ground.SetCollider(make_shared<PlaneCollider>((Vector3D{0,1,0},-3.f)));
+    ground.SetCollider(make_shared<PlaneCollider>((Vector3D(0,1,0),-3.f)));
     ground.camera = viewCamera;
 
 

@@ -134,13 +134,13 @@ unsigned int MCB::SoundManager::LoadWaveSound(const char* fileName)
 		assert(0);
 	}
 
-	char* pBuffer = new char[data.size];
-	file.read(pBuffer, data.size);
+	vector<char> pBuffer (data.size);
+	file.read(&pBuffer.front(), data.size);
 
 	file.close();
 
 	sounds[handleNum].wfex = format.fmt;
-	sounds[handleNum].pBuffer = move(reinterpret_cast<BYTE*>(pBuffer));
+	sounds[handleNum].pBuffer = reinterpret_cast<BYTE*>(pBuffer);
 	sounds[handleNum].bufferSize = data.size;
 	sounds[handleNum].name = fileName;
 
