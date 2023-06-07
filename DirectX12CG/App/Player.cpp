@@ -5,7 +5,7 @@ using namespace std;
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	SetCollider(make_shared<BaseCollider>());
+	SetCollider(make_shared<SphereCollider>());
 	collider_->SetAttribute(attributeFLENDRY);
 }
 
