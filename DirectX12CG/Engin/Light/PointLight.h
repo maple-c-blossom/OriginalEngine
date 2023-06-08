@@ -15,11 +15,11 @@ namespace MCB
 			Float3 lightAtten;
 			uint32_t active;
 		}PointLConstBuffData;
-		inline void SetPLightPos(Float3 pos) { lightPos = pos; }
-		inline void SetPLightColor(Float3 color) { lightColor = color; }
-		inline void SetPLightAtten(Float3 atten) { lightAtten = atten; }
-		inline void SetPLightShininess(float shininess) { this->shininess = shininess; }
-		inline void SetIsActive(bool flag) { isActive = flag; }
+		inline void SetPLightPos(const Float3& pos) { lightPos = pos; }
+		inline void SetPLightColor(const Float3& color) { lightColor = color; }
+		inline void SetPLightAtten(const Float3& atten) { lightAtten = atten; }
+		inline void SetPLightShininess(const float& shininess) { this->shininess = shininess; }
+		inline void SetIsActive(const bool& flag) { isActive = flag; }
 		inline Float3 GetPLightPos() { return lightPos; }
 		inline Float3 GetPLightColor() { return lightColor; }
 		inline Float3 GetPLightAtten() { return lightAtten; }

@@ -30,7 +30,7 @@ void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
     Dx12::GetInstance()->device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
 }
 
-void MCB::ShaderResource::SetDescriptorRange(int32_t NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int32_t BaseShaderRegister,size_t index)
+void MCB::ShaderResource::SetDescriptorRange(const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, const int32_t& BaseShaderRegister, size_t& index)
 {
     index = min(static_cast<size_t>(descriptorRange.size()) - 1, index);
     descriptorRange[index].NumDescriptors = NumDescriptors;

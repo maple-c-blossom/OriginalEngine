@@ -67,7 +67,7 @@ MCB::SoundManager::~SoundManager()
 
 }
 
-size_t MCB::SoundManager::LoadWaveSound(const char* fileName)
+size_t MCB::SoundManager::LoadWaveSound(const string& fileName)
 {
 
 	size_t handleNum = 0;

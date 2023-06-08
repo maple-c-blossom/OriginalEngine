@@ -37,7 +37,7 @@ namespace MCB
 			std::unique_ptr<BYTE> pBuffer;
 			size_t bufferSize;
 			bool free = true;
-			const char* name;
+			const string name;
 			IXAudio2SourceVoice* pSourceVoice = nullptr;
 			float volume = 1;
 		}SoundData;
@@ -50,14 +50,14 @@ namespace MCB
 
 		void ReleasexAudio2();
 
-		size_t LoadWaveSound(const char* fileName);
-		void DeleteSound(size_t SoundHandle);
+		size_t LoadWaveSound(const std::string& fileName);
+		void DeleteSound(const size_t& SoundHandle);
 		void AllDeleteSound();
 
-		void PlaySoundWave(size_t soundHandle, bool isLoop = false,uint16_t loopCount = XAUDIO2_LOOP_INFINITE);
-		void StopSoundWave(size_t soundHandle, bool startPosReset = true);
+		void PlaySoundWave(const size_t& soundHandle, const bool& isLoop = false,const uint16_t& loopCount = XAUDIO2_LOOP_INFINITE);
+		void StopSoundWave(const size_t& soundHandle, const bool& startPosReset = true);
 		//void SetVolume(size_t volume, size_t soundHandle);
-		void SetVolume(size_t volume, size_t soundHandle);
+		void SetVolume(const size_t& volume, const size_t& soundHandle);
 		SoundManager();
 		~SoundManager();
 

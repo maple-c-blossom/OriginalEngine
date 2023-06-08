@@ -16,14 +16,14 @@ namespace MCB
 		Vector2D(float x, float y);
 
 
-		float GetCrossProduct(Vector2D a, Vector2D b);
-		float GetCrossProduct(Vector2D orher);
-		float GetDot(Vector2D vec);
+		float GetCrossProduct(const Vector2D& a, const Vector2D& b);
+		float GetCrossProduct(const Vector2D& orher);
+		float GetDot(const Vector2D& vec);
 
-		Vector2D VecGet(Vector2D startVec, Vector2D endVec);
-		Vector2D VecGet(Vector2D startVec);
-		bool HitCrossProduct(Vector2D* points, const int32_t ArraySize, const Vector2D point);
-		bool HitCrossProduct(Vector2D* points, const int32_t ArraySize);
+		Vector2D VecGet(const Vector2D& startVec, const Vector2D& endVec);
+		Vector2D VecGet(const Vector2D& startVec);
+		bool HitCrossProduct(Vector2D* points, const int32_t& ArraySize, const Vector2D& point);
+		bool HitCrossProduct(Vector2D* points, const int32_t& ArraySize);
 		float GetLenge() const;
 		void VecNorm();
 
@@ -33,9 +33,9 @@ namespace MCB
 		float GetX() const;
 		float GetY() const;
 
-		void SetX(float x);
-		void SetY(float y);
-		void SetVec(Vector2D orher);
+		void SetX(const float& x);
+		void SetY(const float& y);
+		void SetVec(const Vector2D& orher);
 
 		Vector2D operator +();
 

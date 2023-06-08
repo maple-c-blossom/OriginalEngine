@@ -37,53 +37,53 @@ namespace MCB
 		static LightGroup* GetInitInstance();
 		void Initialize();
 		void UpDate();
-		void Draw( uint32_t rootParameterIndex);
+		void Draw( const uint32_t& rootParameterIndex);
 		void TransferConstBuff();
 		void DefaultLightSet();
 
 		void SetAmbientColor(const Float3& color);
 		Float3 GetAmbientColor();
 #pragma region DirL
-		void SetDirLightIsActive(int32_t lightindexNum, bool active);
-		void SetDirLightForLightDir(int32_t lightindexNum, const Vector3D& lightdir);
-		void SetDirLightColor(int32_t lightindexNum, const Float3& lightColor);
-		void SetDirLightShininess(int32_t lightindexNum, const float& lightShininess);
+		void SetDirLightIsActive(const int32_t& lightindexNum, bool active);
+		void SetDirLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir);
+		void SetDirLightColor(const int32_t& lightindexNum, const Float3& lightColor);
+		void SetDirLightShininess(const int32_t& lightindexNum, const float& lightShininess);
 
-		bool GetDirLightIsActive(int32_t lightindexNum);
-		Vector3D GetDirLightForLightDir(int32_t lightindexNum);
-		Float3 GetDirLightColor(int32_t lightindexNum);
-		float GetDirLightShininess(int32_t lightindexNum);
+		bool GetDirLightIsActive(const int32_t& lightindexNum);
+		Vector3D GetDirLightForLightDir(const int32_t& lightindexNum);
+		Float3 GetDirLightColor(const int32_t& lightindexNum);
+		float GetDirLightShininess(const int32_t& lightindexNum);
 #pragma endregion DirL
 
 #pragma region PointL
-		void SetPLightIsActive(int32_t lightindexNum, bool active);
-		void SetPLightPos(int32_t lightindexNum, const Float3& lightPos);
-		void SetPLightColor(int32_t lightindexNum, const Float3& lightColor);
-		void SetPLightAtten(int32_t lightindexNum, const Float3& lightAtten);
-		void SetPLightShininess(int32_t lightindexNum, const float& lightShininess);
+		void SetPLightIsActive(const int32_t& lightindexNum, bool active);
+		void SetPLightPos(const int32_t& lightindexNum, const Float3& lightPos);
+		void SetPLightColor(const int32_t& lightindexNum, const Float3& lightColor);
+		void SetPLightAtten(const int32_t& lightindexNum, const Float3& lightAtten);
+		void SetPLightShininess(const int32_t& lightindexNum, const float& lightShininess);
 
-		bool GetPLightIsActive(int32_t lightindexNum);
-		Float3 GetPLightPos(int32_t lightindexNum);
-		Float3 GetPLightColor(int32_t lightindexNum);
-		Float3 GetPLightAtten(int32_t lightindexNum);
-		float GetPLightShininess(int32_t lightindexNum);
+		bool GetPLightIsActive(const int32_t& lightindexNum);
+		Float3 GetPLightPos(const int32_t& lightindexNum);
+		Float3 GetPLightColor(const int32_t& lightindexNum);
+		Float3 GetPLightAtten(const int32_t& lightindexNum);
+		float GetPLightShininess(const int32_t& lightindexNum);
 #pragma endregion PointL
 
 #pragma region SpotL
 
-		void SetSLightIsActive(int32_t lightindexNum, bool active);
-		void SetSLightForLightDir(int32_t lightindexNum, const Vector3D& lightdir);
-		void SetSLightPos(int32_t lightindexNum, const Float3& lightPos);
-		void SetSLightColor(int32_t lightindexNum, const Float3& lightColor);
-		void SetSLightAtten(int32_t lightindexNum, const Float3& lightAtten);
-		void SetSLightShininess(int32_t lightindexNum, const float& lightShininess);
+		void SetSLightIsActive(const int32_t& lightindexNum, bool active);
+		void SetSLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir);
+		void SetSLightPos(const int32_t& lightindexNum, const Float3& lightPos);
+		void SetSLightColor(const int32_t& lightindexNum, const Float3& lightColor);
+		void SetSLightAtten(const int32_t& lightindexNum, const Float3& lightAtten);
+		void SetSLightShininess(const int32_t& lightindexNum, const float& lightShininess);
 
-		bool GetSLightIsActive(int32_t lightindexNum);
-		Vector3D GetSLightForLightDir(int32_t lightindexNum);
-		Float3 GetSLightPos(int32_t lightindexNum);
-		Float3 GetSLightColor(int32_t lightindexNum);
-		Float3 GetSLightAtten(int32_t lightindexNum);
-		float GetSLightShininess(int32_t lightindexNum);
+		bool GetSLightIsActive(const int32_t& lightindexNum);
+		Vector3D GetSLightForLightDir(const int32_t& lightindexNum);
+		Float3 GetSLightPos(const int32_t& lightindexNum);
+		Float3 GetSLightColor(const int32_t& lightindexNum);
+		Float3 GetSLightAtten(const int32_t& lightindexNum);
+		float GetSLightShininess(const int32_t& lightindexNum);
 
 #pragma endregion SpotL
 

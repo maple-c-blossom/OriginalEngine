@@ -30,12 +30,12 @@ namespace MCB
 			uint32_t active;
 			float pad5;
 		}SpotLConstBuffData;
-		inline void SetSLightDir(Vector3D lightDir){ this->ligntDir = lightDir; }
+		inline void SetSLightDir(const Vector3D& lightDir){ this->ligntDir = lightDir; }
 		inline void SetSLightColor(const Float3& lightcolor) { this->lightColor = lightcolor; }
-		inline void SetSLightPos(Float3 pos) { lightPos = pos; }
-		inline void SetSLightAtten(Float3 atten) { lightAtten = atten; }
-		inline void SetIsActive(bool active) { this->active = active; }
-		inline void SetSLightFactorAngle(Float2 factorCos,bool convertFlag = true)
+		inline void SetSLightPos(const Float3& pos) { lightPos = pos; }
+		inline void SetSLightAtten(const Float3& atten) { lightAtten = atten; }
+		inline void SetIsActive(const bool& active) { this->active = active; }
+		inline void SetSLightFactorAngle(const Float2& factorCos,const bool& convertFlag = true)
 		{
 			if (convertFlag)
 			{

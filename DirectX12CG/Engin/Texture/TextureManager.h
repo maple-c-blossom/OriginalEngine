@@ -30,7 +30,7 @@ namespace MCB
 
 		TextureCell* LoadTexture(const std::string& directoryPath, const std::string& filename);
 
-		TextureCell* CreateNoTextureFileIsTexture(bool postEffect = false);
+		TextureCell* CreateNoTextureFileIsTexture(const bool& postEffect = false);
 
 		static TextureManager* instance;
 

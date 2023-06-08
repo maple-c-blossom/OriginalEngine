@@ -88,14 +88,14 @@ namespace MCB
         std::vector<Bone> bones;
         ~AnimationModel();
         string fileName;
-        bool Load(std::string fileName,std::string fileType = "gltf");
+        bool Load(const std::string& fileName,const std::string& fileType = "gltf");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
-        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
+        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
 
-        void boneAnimTransform(float timeInSeconds, size_t currentAnimation = 0, bool loop = true);
+        void boneAnimTransform( const float timeInSeconds, const size_t currentAnimation = 0, bool loop = true);
 
-        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, DirectX::XMMATRIX globalInverseTransform, size_t currentAnimation = 0);
+        void readAnimNodeHeirarchy( const float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const size_t currentAnimation = 0);
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 

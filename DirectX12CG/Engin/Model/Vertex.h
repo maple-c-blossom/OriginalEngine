@@ -106,13 +106,13 @@ namespace MCB
 
          //D3D12_RESOURCE_DESC resdesc{};  // ÉäÉ\Å[ÉXê›íË
 
-         void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+         void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
          void SetIbView(DXGI_FORMAT format);
 
          void SetVbView();
 
-         void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+         void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
 
          void CalculationNormalVec();
 

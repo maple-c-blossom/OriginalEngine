@@ -41,17 +41,17 @@ namespace MCB
 		XINPUT_STATE state[4] = {};
 		XINPUT_STATE oldstate[4] = {};
 		void GetState();
-		bool IsButtonDown(int32_t Button, int16_t Userindex = 0);
-		bool IsButtonNDown(int32_t Button, int16_t Userindex = 0);
-		bool IsButtonPress(int32_t Button, int16_t Userindex = 0);
-		bool IsButtonTrigger(int32_t Button, int16_t Userindex = 0);
-		bool IsButtonRelease(int32_t Button, int16_t Userindex = 0);
-		Float3 IsInputLStick(int16_t Userindex = 0);
-		Float3 IsInputRStick(int16_t Userindex = 0);
-		Float2 IsInputLTrriger(int16_t Userindex = 0);
-		Float2 IsInputRTrriger(int16_t Userindex = 0);
-		void Vibration(int32_t LeftMotorSpeed, int32_t RightMotorSpeed, int16_t Userindex = 0);
-		void StopVibration(int16_t Userindex = 0);
+		bool IsButtonDown(const int32_t& Button, const int16_t& Userindex = 0);
+		bool IsButtonNDown(const int32_t& Button, const int16_t& Userindex = 0);
+		bool IsButtonPress(const int32_t& Button, const int16_t& Userindex = 0);
+		bool IsButtonTrigger(const int32_t& Button, const int16_t& Userindex = 0);
+		bool IsButtonRelease(const int32_t& Button, const int16_t& Userindex = 0);
+		Float3 IsInputLStick(const int16_t& Userindex = 0);
+		Float3 IsInputRStick(const int16_t& Userindex = 0);
+		Float2 IsInputLTrriger(const int16_t& Userindex = 0);
+		Float2 IsInputRTrriger(const int16_t& Userindex = 0);
+		void Vibration(const int32_t& LeftMotorSpeed, const int32_t& RightMotorSpeed, const int16_t& Userindex = 0);
+		void StopVibration(const int16_t& Userindex = 0);
 	};
 
 }

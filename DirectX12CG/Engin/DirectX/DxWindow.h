@@ -31,7 +31,7 @@ namespace MCB
 
 
         // ウィンドウプロシージャ 
-        static LRESULT WindowProc(HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lparam);
+        static LRESULT WindowProc(const HWND& hwnd,const  uint32_t& msg, const WPARAM& wparam, const LPARAM& lparam);
         bool IsBreak();
         void messageUpdate();
         void Init();

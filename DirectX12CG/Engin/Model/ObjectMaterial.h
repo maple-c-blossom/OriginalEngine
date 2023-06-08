@@ -66,9 +66,9 @@ namespace MCB
 
 		void Init();
 
-		void SetIndex(D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeIB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
+		void SetIndex(const D3D12_RESOURCE_DIMENSION& dimension, const uint32_t& sizeIB,const int32_t& height, const int32_t& DepthOrArraySize, const int32_t& MipLevels, const int32_t& SampleDescCount, const D3D12_TEXTURE_LAYOUT& layout);
 		void Update();
-		void SetVertexBuffer(D3D12_HEAP_TYPE heaptype ,D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeVB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
+		void SetVertexBuffer(D3D12_HEAP_TYPE heaptype ,const D3D12_RESOURCE_DIMENSION& dimension, const uint32_t& sizeVB, const int32_t& height, const int32_t& DepthOrArraySize, const int32_t& MipLevels, const int32_t& SampleDescCount, const D3D12_TEXTURE_LAYOUT& layout);
 
 	};
 

@@ -37,8 +37,8 @@ void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, D3D12_RESOURCE
     texresDesc.Format = texFile.metadata.format;
     texresDesc.Width = texFile.metadata.width;
     texresDesc.Height = (uint32_t)texFile.metadata.height;
-    texresDesc.DepthOrArraySize = (UINT16)texFile.metadata.arraySize;
-    texresDesc.MipLevels = (UINT16)texFile.metadata.mipLevels;
+    texresDesc.DepthOrArraySize = (uint16_t)texFile.metadata.arraySize;
+    texresDesc.MipLevels = (uint16_t)texFile.metadata.mipLevels;
     texresDesc.SampleDesc.Count = SampleDescCount;
 }
 

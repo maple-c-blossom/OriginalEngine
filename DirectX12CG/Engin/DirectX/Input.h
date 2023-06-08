@@ -56,26 +56,26 @@ namespace MCB
         //“ü—ÍŠÖ”-----------------------------------
 #pragma region “ü—ÍŠÖ”
 //‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
-        bool IsKeyDown(size_t keyNum);
+        bool IsKeyDown(const size_t& keyNum);
         //‰Ÿ‚µ‚Ä‚¢‚È‚¢ó‘Ô
-        bool IsKeyNDown(size_t keyNum);
+        bool IsKeyNDown(const size_t& keyNum);
         //’·‰Ÿ‚µó‘Ô
-        bool IsKeyPress(size_t keyNum);
+        bool IsKeyPress(const size_t& keyNum);
         //‰Ÿ‚µ‚½uŠÔ
-        bool IsKeyTrigger(size_t keyNum);
+        bool IsKeyTrigger(const size_t& keyNum);
         //—£‚µ‚½uŠÔ
-        bool IsKeyRelease(size_t keyNum);
+        bool IsKeyRelease(const size_t& keyNum);
 
         //‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
-        bool IsMouseDown(size_t MouseBotton);
+        bool IsMouseDown(const size_t& MouseBotton);
         //‰Ÿ‚µ‚Ä‚¢‚È‚¢ó‘Ô
-        bool IsMouseNDown(size_t MouseBotton);
+        bool IsMouseNDown(const size_t& MouseBotton);
         //’·‰Ÿ‚µó‘Ô
-        bool IsMousePress(size_t MouseBotton);
+        bool IsMousePress(const size_t& MouseBotton);
         //‰Ÿ‚µ‚½uŠÔ
-        bool IsMouseTrigger(size_t MouseBotton);
+        bool IsMouseTrigger(const size_t& MouseBotton);
         //—£‚µ‚½uŠÔ
-        bool IsMouseRelease(size_t MouseBotton);
+        bool IsMouseRelease(const size_t& MouseBotton);
 
 
         MCB::Mouse GetMousePosition();

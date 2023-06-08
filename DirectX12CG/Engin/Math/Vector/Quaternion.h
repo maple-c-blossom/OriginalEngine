@@ -10,62 +10,62 @@ namespace MCB
 		float y;
 		float z;
 		float w;
-		Quaternion(Vector3D vec, float angle);
+		Quaternion(const Vector3D& vec, const float& angle);
 		Quaternion();
-		Quaternion(float x, float y,float z,float w);
+		Quaternion(const float& x, const float& y,const float& z,const float& w);
 
 		//与えられたベクトル周りの回転を表すクォータニオンを生成
-		void SetRota(Vector3D vec,float angle);
+		void SetRota(const Vector3D& vec,const float& angle);
 		//共役
-		Quaternion GetConjugated(Quaternion q);
+		Quaternion GetConjugated (const Quaternion& q);
 		//逆数（数学用語より）
-		Quaternion GetReciprocal(Quaternion q);
+		Quaternion GetReciprocal(const Quaternion& q);
 		//長さ
 		double GetNorm();
 		//q*pの直積
-		Quaternion GetDirectProduct(Quaternion q, Quaternion p);
+		Quaternion GetDirectProduct(const Quaternion& q, const Quaternion& p);
 		//内積
-		float Dot(Quaternion a, Quaternion b);
+		float Dot(const Quaternion& a, const Quaternion& b);
 		//二つのクォータニオンの角度差
-		float GetAngle(Quaternion a, Quaternion b, float& dot,bool& nan);
-		float GetAngle(Quaternion a, Quaternion b);
+		float GetAngle(const Quaternion& a, const Quaternion& b, float& dot,bool& nan);
+		float GetAngle(const Quaternion& a, const Quaternion& b);
 		//球面線形補間
-		Quaternion Slerp(Quaternion start, Quaternion end, int32_t time,int32_t maxTime);
+		Quaternion Slerp(const Quaternion& start, const Quaternion& end, const int32_t& time, const int32_t& maxTime);
 		//球面線形補間
-		Quaternion Slerp(Quaternion start, Quaternion end, float time);
+		Quaternion Slerp(const Quaternion& start, const Quaternion& end, const float& time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える
-		Vector3D SetRotationVector(Vector3D rotationAxisVec, Vector3D PositionVec, float angle);
+		Vector3D SetRotationVector(const Vector3D& rotationAxisVec, const Vector3D& PositionVec, const float& angle);
 		//与えられたクォータニオンの回転をPositionVecに与える
-		Vector3D SetRotationVector(Quaternion rotationQuaternion, Vector3D PositionVec);
+		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Vector3D& PositionVec);
 		//何のために作ったの作ったんでしょうかね
-		Vector3D SetRotationVector(Quaternion rotationQuaternion, Quaternion PositionVec);
+		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec);
 
-		Quaternion DirToDir(Vector3D u, Vector3D v);
+		Quaternion DirToDir(const Vector3D& u, const Vector3D& v);
 		//正規化する
 		void Normalize();
 		//正規化した値を返す
-		static Quaternion Normalize(Quaternion q);
+		static Quaternion Normalize(const Quaternion& q);
 		//回転行列に変換
-		MCBMatrix GetQuaternionRotaMat(Quaternion rotaQ);
+		MCBMatrix GetQuaternionRotaMat(const Quaternion& rotaQ);
 		
 		void SinCos(float* returnSin, float* returnCos, float theta);
 		//多分オイラー角からクォータニオンを生成
-		Quaternion SetToRorateObjectToInternal(const Float3 eulerAngle);
+		Quaternion SetToRorateObjectToInternal(const Float3& eulerAngle);
 		//クォータニオンの回転軸を算出
-		Vector3D GetRotationAxis(Quaternion q);
+		Vector3D GetRotationAxis(const Quaternion& q);
 		//クォータニオンの回転軸を算出(AxisVecを書き換える)
-		void GetRotationAxis(Quaternion q,Vector3D& AxisVec);
+		void GetRotationAxis(const Quaternion& q,Vector3D& AxisVec);
 		//単位クォータニオン
 		Quaternion Identity();
 
 		//クォータニオンの角度
-		float GetAngle(Quaternion q);
+		float GetAngle(const Quaternion& q);
 		
-		float SafeAcos(float a);
+		float SafeAcos(const float& a);
 
-		bool operator== (Quaternion q);
+		bool operator== (const Quaternion& q);
 		Quaternion operator-();
 	};
-	Quaternion SetRota(Vector3D vec, float angle);
+	Quaternion SetRota(const Vector3D& vec, const float& angle);
 }
 

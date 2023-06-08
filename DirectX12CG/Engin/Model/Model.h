@@ -57,19 +57,19 @@ namespace MCB
 
         ObjectMaterial material;
 
-        void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+        void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
         void SetIbView(DXGI_FORMAT format);
 
         void SetVbView();
 
-        void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+        void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
         HRESULT IndexMaping();
 
         HRESULT VertexMaping();
 
-        void CreateModel(const std::string fileName,bool smooth = false);
+        void CreateModel(const std::string& fileName,const bool& smooth = false);
 
         void SetSizeIB();
 
@@ -77,11 +77,11 @@ namespace MCB
 
         void LoadMaterial(const std::string& directoryPath,const std::string& filename);
 
-        void Init(const std::string fileName, bool smooth = false);
+        void Init(const std::string& fileName, const bool& smooth = false);
         
         inline size_t GetVertexCount() { return vertices.size(); }
 
-        void AddSmoothData(uint16_t indexPosition, uint16_t indexVertex);
+        void AddSmoothData(const uint16_t& indexPosition, const uint16_t& indexVertex);
 
         void CalculateSmoothedVertexNormals();
     };

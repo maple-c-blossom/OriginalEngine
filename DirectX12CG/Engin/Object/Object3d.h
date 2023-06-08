@@ -72,23 +72,23 @@ namespace MCB
         bool trackingFlag = false;
         virtual void Init();
         virtual void CreateBuff();
-        virtual void Update( bool isBillBord = false);
-        virtual void UpdateMatrix( bool isBillBord = false);
+        virtual void Update( const bool& isBillBord = false);
+        virtual void UpdateMatrix( const bool& isBillBord = false);
 
-        virtual void Update( Quaternion q, bool isBillBord = false);
-        virtual void UpdateMatrix( Quaternion q, bool isBillBord = false);
+        virtual void Update( const Quaternion& q, const bool& isBillBord = false);
+        virtual void UpdateMatrix( const Quaternion& q, const bool& isBillBord = false);
 
         virtual void Draw();
 
-        virtual void Draw(uint16_t incremant);
+        virtual void Draw(const uint16_t& incremant);
 
-        virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
+        virtual void AnimationUpdate(ICamera* camera,const bool& isBillBord = false);
 
-        virtual void AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord = false);
+        virtual void AnimationUpdate(ICamera* camera, const Quaternion& q, const bool& isBillBord = false);
 
         virtual void AnimationDraw();
 
-       virtual void AnimationDraw(uint16_t incremant);
+       virtual void AnimationDraw(const uint16_t& incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
        void SetCollider(std::shared_ptr<BaseCollider> collider);
        BaseCollider* GetCollider() { return collider_.get(); };

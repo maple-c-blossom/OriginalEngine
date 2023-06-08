@@ -58,7 +58,7 @@ namespace MCB
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRangeconst (const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,const int32_t& BaseShaderRegister, const size_t& index = 0);
+            void SetDescriptorRange (const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,const int32_t& BaseShaderRegister,  size_t& index = 0);
 	};
 }
 
