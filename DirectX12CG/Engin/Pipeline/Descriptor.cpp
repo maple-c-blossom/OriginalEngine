@@ -16,7 +16,7 @@ void MCB::ShaderResource::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags)
 {
     srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     srvHeapDesc.Flags = flags; //シェーダーから見えるように
-    srvHeapDesc.NumDescriptors = (UINT)MaxSRVCount;//定数バッファの数
+    srvHeapDesc.NumDescriptors = (uint32_t)MaxSRVCount;//定数バッファの数
 }
 
 HRESULT MCB::ShaderResource::SetDescriptorHeap()

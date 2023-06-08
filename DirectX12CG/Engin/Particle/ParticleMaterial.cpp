@@ -45,7 +45,7 @@ void ParticleMaterial::Init()
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
 
-void MCB::ParticleMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
+void MCB::ParticleMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeIB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
 {
     Resdesc.Dimension = dimension;
     Resdesc.Width = sizeIB;
@@ -56,7 +56,7 @@ void MCB::ParticleMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT si
     Resdesc.Layout = layput;
 }
 
-void MCB::ParticleMaterial::SetVertexBuffer(D3D12_HEAP_TYPE heaptype, D3D12_RESOURCE_DIMENSION dimension, UINT sizeVB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
+void MCB::ParticleMaterial::SetVertexBuffer(D3D12_HEAP_TYPE heaptype, D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeVB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
 {
     HeapProp.Type = heaptype; // GPU‚Ö‚Ì“]‘——p
 

@@ -22,7 +22,7 @@ namespace MCB
 		Dx12* dx12 = nullptr;
 
 		void Init(Texture* texture);
-		void Print( float x, float y, float scale, const char* text, ... );
+		void Print(const float& x, const float& y, const float& scale, const char* text, ... );
 		void AllDraw();
 	};
 

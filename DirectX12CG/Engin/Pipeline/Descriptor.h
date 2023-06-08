@@ -44,21 +44,21 @@ namespace MCB
 
             void Init();
 
-            void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags);
+            void SetHeapDesc(const D3D12_DESCRIPTOR_HEAP_FLAGS& flags);
 
             HRESULT SetDescriptorHeap();
 
             void SetSrvHeap();
 
-            void SetSrvHeap(uint16_t incrementNum);
+            void SetSrvHeap(const uint16_t& incrementNum);
 
             void InitAllincrementNum();
 
-            void SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension);
+            void SetSrvDesc(TextureBuffer &texBuffer, const D3D12_SRV_DIMENSION& srvDimension);
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange(int32_t NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int32_t BaseShaderRegister, size_t index = 0);
+            void SetDescriptorRangeconst (const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,const int32_t& BaseShaderRegister, const size_t& index = 0);
 	};
 }
 

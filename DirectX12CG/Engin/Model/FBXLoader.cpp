@@ -403,7 +403,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
   /*  if(transforms->getCount() == 0)
       transforms->addElements((int32_t)boneMapping().size());
     
-    for(uint i = 0; i < boneMapping().size(); i++)
+    for(uint32_t i = 0; i < boneMapping().size(); i++)
     {
       memcpy(transforms->elementAtIndex(i), &((BoneTransformInfo *)editBoneTransforms->elementAtIndex(i))->finalTransform, sizeof(float16));
     }*/
@@ -466,7 +466,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
 	  }
 
-	  //for (uint i = 0; i < pNode->mNumChildren; i++)
+	  //for (uint32_t i = 0; i < pNode->mNumChildren; i++)
 	  //{
 		 // readAnimNodeHeirarchy(animationTime, pNode->mChildren[i], globalTransformation, scene, globalInverseTransform);
 	  //}

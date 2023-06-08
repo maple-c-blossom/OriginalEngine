@@ -195,5 +195,5 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.GetConstBuffTrans()->GetGPUVirtualAddress());
 	//描画コマンド
-	dx12->commandList->DrawInstanced((UINT)triangleMaterial.vertices.size(), 1, 0, 0);
+	dx12->commandList->DrawInstanced((uint32_t)triangleMaterial.vertices.size(), 1, 0, 0);
 }

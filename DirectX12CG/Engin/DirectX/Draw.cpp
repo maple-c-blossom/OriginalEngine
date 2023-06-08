@@ -35,7 +35,7 @@ D3D12_RESOURCE_BARRIER MCB::Draw::GetResouceBarrier()
     return barrierDesc;
 }
 
-UINT MCB::Draw::GetBbIndex()
+uint32_t MCB::Draw::GetBbIndex()
 {
     return bbIndex;
 }

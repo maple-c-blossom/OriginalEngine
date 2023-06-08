@@ -62,14 +62,14 @@ namespace MCB
 	{
 
 	public:
-		static bool CalcRaySphere(Ray ray,Sphere sphere, float* distance = nullptr, Vector3D* inter = nullptr);
-		static bool CalcRaySphere(Ray ray,Sphere sphere);
-		static bool CalcSphere(Sphere sphereA,Sphere sphereB, Vector3D* inter = nullptr,Vector3D* reject = nullptr);
-		static bool CalcPlaneRay(Plane plane,Ray ray, float* distance = nullptr,Vector3D* inter = nullptr);
-		static bool CalcTriangleRay(Triangle triangle,Ray ray, float* distance = nullptr,Vector3D* inter = nullptr);
-		static bool CalcPlaneSpher(Plane plane,Sphere sphere,Vector3D* inter = nullptr);
-		static bool CalcTriangleSpher(Triangle triangle,Sphere sphere, Vector3D* inter = nullptr, Vector3D* reject = nullptr);
-		static void CalcTrianglePoint(Triangle triangle, Vector3D sphere, Vector3D& point);
+		static bool CalcRaySphere(const Ray& ray,const Sphere& sphere, float* distance = nullptr, Vector3D* inter = nullptr);
+		static bool CalcRaySphere(const Ray& ray,const Sphere& sphere);
+		static bool CalcSphere(const Sphere& sphereA,const Sphere& sphereB, Vector3D* inter = nullptr,Vector3D* reject = nullptr);
+		static bool CalcPlaneRay(const Plane& plane,const Ray& ray, float* distance = nullptr,Vector3D* inter = nullptr);
+		static bool CalcTriangleRay(const Triangle& triangle,const Ray& ray, float* distance = nullptr,Vector3D* inter = nullptr);
+		static bool CalcPlaneSpher(const Plane& plane,const Sphere& sphere,Vector3D* inter = nullptr);
+		static bool CalcTriangleSpher(const Triangle& triangle,const Sphere& sphere, Vector3D* inter = nullptr, Vector3D* reject = nullptr);
+		static void CalcTrianglePoint(const Triangle triangle, Vector3D sphere, Vector3D& point);
 	};
 }
 

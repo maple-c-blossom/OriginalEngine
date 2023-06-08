@@ -43,7 +43,7 @@ namespace MCB
 		//void MapingLightConstBuff();
 		//void Init();
 		//void Updata();
-		//void Draw(UINT rootPramIndex);
+		//void Draw(uint32_t rootPramIndex);
 	};
 
 }

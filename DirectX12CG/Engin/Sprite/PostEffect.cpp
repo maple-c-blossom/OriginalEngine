@@ -154,7 +154,7 @@ void MCB::PostEffect::Draw()
     //SRVヒープの先頭アドレスを取得
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
     D3D12_GPU_DESCRIPTOR_HANDLE startHeap = srvGpuHandle;
-    UINT size = dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    uint32_t size = dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
 
     srvGpuHandle.ptr = startHeap.ptr + tex[0]->texture->incrementNum * size;
 

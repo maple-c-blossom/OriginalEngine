@@ -33,7 +33,7 @@ void Dx12::SetAdapter()
     IDXGIAdapter4* tmpAdapter = nullptr;
     //---------------------
 
-    for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND; i++)
+    for (uint32_t i = 0; dxgiFactory->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND; i++)
     {
         adapters.push_back(tmpAdapter);
     }
@@ -205,7 +205,7 @@ void Dx12::SetBackBuffer()
     for (size_t i = 0; i < backBuffers.size(); i++)
     {
         //スワップチェーンからバッファを取得
-        swapchain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+        swapchain->GetBuffer((uint32_t)i, IID_PPV_ARGS(&backBuffers[i]));
         //でスクリプタヒープハンドルを取得
         rtvHandle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
         //裏か表かでアドレスがずれる

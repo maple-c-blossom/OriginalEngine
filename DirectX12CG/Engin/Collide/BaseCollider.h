@@ -23,15 +23,15 @@ namespace MCB
 			object3d->OffCollision(&info);
 		}
 
-		inline void SetAttribute(uint16_t attribute)
+		inline void SetAttribute(const uint16_t& attribute)
 		{
 			this->attribute = attribute;
 		}
-		inline void AddAttribute(uint16_t attribute)
+		inline void AddAttribute(const uint16_t& attribute)
 		{
 			this->attribute |= attribute;
 		}
-		inline void RemoveAttribute(uint16_t attribute)
+		inline void RemoveAttribute(const uint16_t& attribute)
 		{
 			this->attribute &= !attribute;
 		}

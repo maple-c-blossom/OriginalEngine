@@ -17,7 +17,7 @@ namespace MCB
 		~Draw() {};
 	public:
 		D3D12_RESOURCE_BARRIER barrierDesc = {};
-		UINT bbIndex = {};
+		uint32_t bbIndex = {};
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = {};
 		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = {};
 		D3D12_VIEWPORT viewport = {};
@@ -25,7 +25,7 @@ namespace MCB
 
 
 		D3D12_RESOURCE_BARRIER GetResouceBarrier();
-		UINT GetBbIndex();
+		uint32_t GetBbIndex();
 
 		static Draw* GetInstance();
 

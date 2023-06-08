@@ -90,10 +90,10 @@ namespace MCB
 
         D3D12_VERTEX_BUFFER_VIEW vbView{};
 
-         UINT sizeVB = static_cast<UINT>(sizeof(vertices[0]) * _countof(vertices));
+         uint32_t sizeVB = static_cast<uint32_t>(sizeof(vertices[0]) * _countof(vertices));
 
          //インデックスデータ全体のサイズ
-         //UINT sizeIB = static_cast<UINT>(sizeof(uint16_t) * _countof(boxIndices));
+         //uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * _countof(boxIndices));
 
          //D3D12_INDEX_BUFFER_VIEW ibView{};
 

@@ -70,7 +70,7 @@ void LightGroup::UpDate()
 	}
 }
 
-void LightGroup::Draw(UINT rootParameterIndex)
+void LightGroup::Draw(uint32_t rootParameterIndex)
 {
 	// 定数バッファビューをセット
 	Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(rootParameterIndex, constBuff->GetGPUVirtualAddress());

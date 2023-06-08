@@ -64,7 +64,7 @@ using namespace MCB;
 //    }
 //}
 //
-//void MCB::DirLight::Draw(UINT rootPramIndex)
+//void MCB::DirLight::Draw(uint32_t rootPramIndex)
 //{
 //    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(rootPramIndex, lightConstBuff->GetGPUVirtualAddress());
 //}
