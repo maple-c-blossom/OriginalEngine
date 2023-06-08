@@ -39,20 +39,20 @@ void MCB::MeshCollider::ConstractTriangle(Model* model)
 void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 {
 	triangles.clear();
-	int start = 0;
+	int32_t start = 0;
 
-	for (int i = 0; i < model->nodes.size(); i++)
+	for (int32_t i = 0; i < model->nodes.size(); i++)
 	{
-		for (int j = 0; j < model->nodes[i]->meshes.size(); j++)
+		for (int32_t j = 0; j < model->nodes[i]->meshes.size(); j++)
 		{
 			size_t triangleNum = model->nodes[i]->meshes[j]->indices.size() / 3;
 			triangles.resize(triangles.size() + triangleNum);
-			for (int i = 0; i < triangleNum; i++)
+			for (int32_t i = 0; i < triangleNum; i++)
 			{
 				Triangle& tri = triangles[start + i];
-				int idx0 = model->nodes[i]->meshes[j]->indices[i * 3 + 0];
-				int idx1 = model->nodes[i]->meshes[j]->indices[i * 3 + 1];
-				int idx2 = model->nodes[i]->meshes[j]->indices[i * 3 + 2];
+				int32_t idx0 = model->nodes[i]->meshes[j]->indices[i * 3 + 0];
+				int32_t idx1 = model->nodes[i]->meshes[j]->indices[i * 3 + 1];
+				int32_t idx2 = model->nodes[i]->meshes[j]->indices[i * 3 + 2];
 
 				tri.vertexPoint[0].vec = { model->nodes[i]->meshes[j]->vertices[idx0].pos.x,model->nodes[i]->meshes[j]->vertices[idx0].pos.y,model->nodes[i]->meshes[j]->vertices[idx0].pos.z };
 				tri.vertexPoint[1].vec = { model->nodes[i]->meshes[j]->vertices[idx1].pos.x,model->nodes[i]->meshes[j]->vertices[idx1].pos.y,model->nodes[i]->meshes[j]->vertices[idx1].pos.z };
@@ -60,7 +60,7 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 				tri.NormalCalculation();
 
 			}
-			start += (int)triangleNum;
+			start += (int32_t)triangleNum;
 		}
 	}
 	
