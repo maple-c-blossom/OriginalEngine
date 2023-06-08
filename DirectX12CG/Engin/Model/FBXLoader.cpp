@@ -401,7 +401,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	}
     
   /*  if(transforms->getCount() == 0)
-      transforms->addElements((int)boneMapping().size());
+      transforms->addElements((int32_t)boneMapping().size());
     
     for(uint i = 0; i < boneMapping().size(); i++)
     {

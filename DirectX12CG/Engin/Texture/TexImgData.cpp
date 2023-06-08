@@ -7,7 +7,7 @@ MCB::TexImgData::~TexImgData()
 
 void MCB::TexImgData::SetImageDataRGBA(DirectX::XMFLOAT4 RGBA)
 {
-    for (int i = 0; i < imageDataCount; i++)
+    for (int32_t i = 0; i < imageDataCount; i++)
     {
     DirectX::XMFLOAT4 imageDataSeed = {0,0,0,0};
       imageDataSeed.x = RGBA.x;//R
@@ -20,7 +20,7 @@ void MCB::TexImgData::SetImageDataRGBA(DirectX::XMFLOAT4 RGBA)
 
 void MCB::TexImgData::SetImageDataRGBA(Float4 RGBA)
 {
-    for (int i = 0; i < imageDataCount; i++)
+    for (int32_t i = 0; i < imageDataCount; i++)
     {
         DirectX::XMFLOAT4 imageDataSeed = { 0,0,0,0 };
         imageDataSeed.x = RGBA.x;//R
@@ -33,7 +33,7 @@ void MCB::TexImgData::SetImageDataRGBA(Float4 RGBA)
 
 void MCB::TexImgData::SetNoTextureFileImageDataRGBA(Float4 RGBA)
 {
-    for (int i = 0; i < imageDataCount; i++)
+    for (int32_t i = 0; i < imageDataCount; i++)
     {
         DirectX::XMFLOAT4 imageDataSeed = { 0,0,0,0 };
         imageDataSeed.x = RGBA.x;//R

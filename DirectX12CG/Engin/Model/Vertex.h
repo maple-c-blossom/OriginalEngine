@@ -58,7 +58,7 @@ namespace MCB
         };
 
 
-        //unsigned short boxIndices[36] =
+        //uint16_t boxIndices[36] =
         //{
         //    //‘O
         //    0,1,2,

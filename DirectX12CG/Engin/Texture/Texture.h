@@ -15,14 +15,14 @@ namespace MCB
 		TextureBuffer texBuff = {};
 		TextureFile texfile = {};
 		ShaderResource* srvptr = nullptr;
-		unsigned short int incrementNum = 0;
+		uint16_t incrementNum = 0;
 		Texture() {};
 		Texture(const Texture& texture) {};
 		~Texture();
 
-		void CreateTexture(const wchar_t* FileName,unsigned short int incrementNum);
+		void CreateTexture(const wchar_t* FileName,uint16_t incrementNum);
 
-		void CreateTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
+		void CreateTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum);
 
 		void CreateTexture(const wchar_t* FileName);
 
@@ -30,7 +30,7 @@ namespace MCB
 
 		void CreateNoTextureFileIsTexture(bool postEffect = false);
 
-		void CreateNoTextureFileIsTexture(unsigned short int incrementNum, bool postEffect = false);
+		void CreateNoTextureFileIsTexture(uint16_t incrementNum, bool postEffect = false);
 
 		void SetSrvHeap();
 

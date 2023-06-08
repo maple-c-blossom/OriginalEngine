@@ -249,7 +249,7 @@ void Object3d::Draw()
 
 }
 
-void Object3d::Draw(unsigned short int incremant)
+void Object3d::Draw(uint16_t incremant)
 {
     if (model == nullptr)return;
     if (model->material.constBuffMaterialB1 == nullptr)return;
@@ -326,7 +326,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     }
     
     animationModel->boneAnimTransform(animeTime);
-    for (int i = 0; i < animationModel->bones.size(); i++)
+    for (size_t i = 0; i < animationModel->bones.size(); i++)
     {
         constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
     }
@@ -378,7 +378,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBo
     }
 
     animationModel->boneAnimTransform(animeTime);
-    for (int i = 0; i < animationModel->bones.size(); i++)
+    for (size_t i = 0; i < animationModel->bones.size(); i++)
     {
         constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
     }
@@ -392,7 +392,7 @@ void MCB::Object3d::AnimationDraw()
     animationModel->Draw();
 }
 
-void MCB::Object3d::AnimationDraw(unsigned short int incremant)
+void MCB::Object3d::AnimationDraw(uint16_t incremant)
 {
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
     Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());

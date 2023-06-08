@@ -55,7 +55,7 @@ namespace MCB
         Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
         D3D12_VERTEX_BUFFER_VIEW vbView{};
         Vertex vertex;
-        int vertNum = 1;
+        int32_t vertNum = 1;
         TextureCell* tex;
         Particle();
 

@@ -14,13 +14,13 @@ namespace MCB
 	double EaseInBack(double startPos, double endPos, double maxTime, double time);
 	double EaseInBack2(double startPos, double endPos, double maxTime, double time);
 	double EaseOutBounce(double startPos, double endPos, double time, double maxTime);
-	int Abs(int num);
+	int32_t Abs(int32_t num);
 	float Abs(float num);
 	double Abs(double num);
 	float ConvertRadius(float angle);
 
 	void InitRand();
-	int GetRand(int min, int max);
+	int32_t GetRand(int32_t min, int32_t max);
 	float clamp(float f);
 
 	class SimpleFigure

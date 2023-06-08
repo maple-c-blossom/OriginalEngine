@@ -37,53 +37,53 @@ namespace MCB
 		static LightGroup* GetInitInstance();
 		void Initialize();
 		void UpDate();
-		void Draw( UINT rootParameterIndex);
+		void Draw( uint32_t rootParameterIndex);
 		void TransferConstBuff();
 		void DefaultLightSet();
 
 		void SetAmbientColor(const Float3& color);
 		Float3 GetAmbientColor();
 #pragma region DirL
-		void SetDirLightIsActive(int lightindexNum, bool active);
-		void SetDirLightForLightDir(int lightindexNum, const Vector3D& lightdir);
-		void SetDirLightColor(int lightindexNum, const Float3& lightColor);
-		void SetDirLightShininess(int lightindexNum, const float& lightShininess);
+		void SetDirLightIsActive(int32_t lightindexNum, bool active);
+		void SetDirLightForLightDir(int32_t lightindexNum, const Vector3D& lightdir);
+		void SetDirLightColor(int32_t lightindexNum, const Float3& lightColor);
+		void SetDirLightShininess(int32_t lightindexNum, const float& lightShininess);
 
-		bool GetDirLightIsActive(int lightindexNum);
-		Vector3D GetDirLightForLightDir(int lightindexNum);
-		Float3 GetDirLightColor(int lightindexNum);
-		float GetDirLightShininess(int lightindexNum);
+		bool GetDirLightIsActive(int32_t lightindexNum);
+		Vector3D GetDirLightForLightDir(int32_t lightindexNum);
+		Float3 GetDirLightColor(int32_t lightindexNum);
+		float GetDirLightShininess(int32_t lightindexNum);
 #pragma endregion DirL
 
 #pragma region PointL
-		void SetPLightIsActive(int lightindexNum, bool active);
-		void SetPLightPos(int lightindexNum, const Float3& lightPos);
-		void SetPLightColor(int lightindexNum, const Float3& lightColor);
-		void SetPLightAtten(int lightindexNum, const Float3& lightAtten);
-		void SetPLightShininess(int lightindexNum, const float& lightShininess);
+		void SetPLightIsActive(int32_t lightindexNum, bool active);
+		void SetPLightPos(int32_t lightindexNum, const Float3& lightPos);
+		void SetPLightColor(int32_t lightindexNum, const Float3& lightColor);
+		void SetPLightAtten(int32_t lightindexNum, const Float3& lightAtten);
+		void SetPLightShininess(int32_t lightindexNum, const float& lightShininess);
 
-		bool GetPLightIsActive(int lightindexNum);
-		Float3 GetPLightPos(int lightindexNum);
-		Float3 GetPLightColor(int lightindexNum);
-		Float3 GetPLightAtten(int lightindexNum);
-		float GetPLightShininess(int lightindexNum);
+		bool GetPLightIsActive(int32_t lightindexNum);
+		Float3 GetPLightPos(int32_t lightindexNum);
+		Float3 GetPLightColor(int32_t lightindexNum);
+		Float3 GetPLightAtten(int32_t lightindexNum);
+		float GetPLightShininess(int32_t lightindexNum);
 #pragma endregion PointL
 
 #pragma region SpotL
 
-		void SetSLightIsActive(int lightindexNum, bool active);
-		void SetSLightForLightDir(int lightindexNum, const Vector3D& lightdir);
-		void SetSLightPos(int lightindexNum, const Float3& lightPos);
-		void SetSLightColor(int lightindexNum, const Float3& lightColor);
-		void SetSLightAtten(int lightindexNum, const Float3& lightAtten);
-		void SetSLightShininess(int lightindexNum, const float& lightShininess);
+		void SetSLightIsActive(int32_t lightindexNum, bool active);
+		void SetSLightForLightDir(int32_t lightindexNum, const Vector3D& lightdir);
+		void SetSLightPos(int32_t lightindexNum, const Float3& lightPos);
+		void SetSLightColor(int32_t lightindexNum, const Float3& lightColor);
+		void SetSLightAtten(int32_t lightindexNum, const Float3& lightAtten);
+		void SetSLightShininess(int32_t lightindexNum, const float& lightShininess);
 
-		bool GetSLightIsActive(int lightindexNum);
-		Vector3D GetSLightForLightDir(int lightindexNum);
-		Float3 GetSLightPos(int lightindexNum);
-		Float3 GetSLightColor(int lightindexNum);
-		Float3 GetSLightAtten(int lightindexNum);
-		float GetSLightShininess(int lightindexNum);
+		bool GetSLightIsActive(int32_t lightindexNum);
+		Vector3D GetSLightForLightDir(int32_t lightindexNum);
+		Float3 GetSLightPos(int32_t lightindexNum);
+		Float3 GetSLightColor(int32_t lightindexNum);
+		Float3 GetSLightAtten(int32_t lightindexNum);
+		float GetSLightShininess(int32_t lightindexNum);
 
 #pragma endregion SpotL
 

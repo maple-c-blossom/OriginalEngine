@@ -19,7 +19,7 @@ void ImguiManager::Init()
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(DxWindow::GetInstance()->hwnd);
-	ImGui_ImplDX12_Init(Dx12::GetInstance()->device.Get(), (int)Dx12::GetInstance()->backBuffers.size(),
+	ImGui_ImplDX12_Init(Dx12::GetInstance()->device.Get(), static_cast<int32_t>(Dx12::GetInstance()->backBuffers.size()),
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,ShaderResource::GetInstance()->srvHeap.Get(),
 		ShaderResource::GetInstance()->srvHeap->GetCPUDescriptorHandleForHeapStart(),
 		ShaderResource::GetInstance()->srvHeap->GetGPUDescriptorHandleForHeapStart());

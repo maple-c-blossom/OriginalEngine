@@ -31,7 +31,7 @@ void MCB::TextureBuffer::SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE
 
 }
 
-void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, D3D12_RESOURCE_DIMENSION resouceDimenSion, int SampleDescCount)
+void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, D3D12_RESOURCE_DIMENSION resouceDimenSion, int32_t SampleDescCount)
 {
     texresDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     texresDesc.Format = texFile.metadata.format;

@@ -150,7 +150,7 @@ size_t MCB::SoundManager::LoadWaveSound(const char* fileName)
 
 }
 
-void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, unsigned short loopCount)
+void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, uint16_t loopCount)
 {
 	if (soundHandle >= sounds.size())return;
 	HRESULT result = S_FALSE;

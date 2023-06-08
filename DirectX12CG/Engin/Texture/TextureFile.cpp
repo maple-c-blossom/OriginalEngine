@@ -19,7 +19,7 @@ HRESULT MCB::TextureFile::LoadTexture(const std::string& directoryPath, const st
     string filepath = directoryPath + filename;
 
     wchar_t wfilepath[128];
-    int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
+    int32_t iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1, wfilepath, _countof(wfilepath));
 
     return LoadFromWICFile(wfilepath, WIC_FLAGS_NONE,&metadata,scratchImg);
 }

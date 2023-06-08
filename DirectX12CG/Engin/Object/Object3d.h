@@ -80,7 +80,7 @@ namespace MCB
 
         virtual void Draw();
 
-        virtual void Draw(unsigned short int incremant);
+        virtual void Draw(uint16_t incremant);
 
         virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
 
@@ -88,7 +88,7 @@ namespace MCB
 
         virtual void AnimationDraw();
 
-       virtual void AnimationDraw(unsigned short int incremant);
+       virtual void AnimationDraw(uint16_t incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
        void SetCollider(std::shared_ptr<BaseCollider> collider);
        BaseCollider* GetCollider() { return collider_.get(); };

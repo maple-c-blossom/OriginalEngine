@@ -176,7 +176,7 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
             while (getline(line_stream, index_string, ' '))
             {
                 istringstream index_stream(index_string);
-                unsigned short indexPosition,indexTexcoord, indexNormal;
+                uint16_t indexPosition,indexTexcoord, indexNormal;
                 index_stream >> indexPosition;
                 index_stream.seekg(1, ios_base::cur);
                 index_stream >> indexTexcoord;
@@ -189,8 +189,8 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
                 vertex.normal = normals[indexNormal - 1];
                 vertex.uv = texcoords[indexTexcoord - 1];
                 vertices.emplace_back(vertex);
-                indices.emplace_back((unsigned short)indices.size());
-                if(smooth) AddSmoothData(indexPosition, (unsigned short)GetVertexCount() - 1);
+                indices.emplace_back((uint16_t)indices.size());
+                if(smooth) AddSmoothData(indexPosition, (uint16_t)GetVertexCount() - 1);
                 //if (smooth) CalculateSmoothedVertexNormals();
 
             }
@@ -298,7 +298,7 @@ void MCB::Model::Init(const std::string fileName, bool smooth)
 
 }
 
-void MCB::Model::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
+void MCB::Model::AddSmoothData(uint16_t indexPosition, uint16_t indexVertex)
 {
     smoothData[indexPosition].emplace_back(indexVertex);
 }
@@ -308,15 +308,15 @@ void MCB::Model::CalculateSmoothedVertexNormals()
     auto itr = smoothData.begin();
     for (; itr != smoothData.end(); ++itr)
     {
-        std::vector<unsigned short>& v = itr->second;
+        std::vector<uint16_t>& v = itr->second;
         Vector3D normal = {};
-        for (unsigned short index : v)
+        for (uint16_t index : v)
         {
             normal += vertices[index].normal;
         }
         normal = normal / (float)v.size();
         normal.V3Norm();
-        for (unsigned short index : v)
+        for (uint16_t index : v)
         {
             vertices[index].normal = { normal.vec.x, normal.vec.y, normal.vec.z };
         }

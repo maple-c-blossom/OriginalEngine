@@ -304,7 +304,7 @@ Quaternion MCB::Quaternion::Identity()
 	return Quaternion(0,0,0,1);
 }
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int time, int maxTime)
+MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int32_t time, int32_t maxTime)
 {
 	float Time = (float)time / (float)maxTime;
 	Quaternion ans;

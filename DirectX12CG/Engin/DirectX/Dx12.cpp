@@ -64,7 +64,7 @@ void Dx12::SetDevice(IDXGIAdapter4* tmpAdapter)
     //デバイス生成ここから----------------------------------------------------------------------------------------------------------
 #pragma region デバイス生成
 
-    for (int i = 0; i < _countof(levels); i++)
+    for (int32_t i = 0; i < _countof(levels); i++)
     {
         //採用したアダプターでデバイスを生成
         result = D3D12CreateDevice(tmpAdapter, levels[i], IID_PPV_ARGS(&device));

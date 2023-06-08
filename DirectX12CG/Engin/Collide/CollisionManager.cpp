@@ -251,7 +251,7 @@ bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDis
     return Raycast(ray,0xffff,hitinfo,maxDistance);
 }
 
-bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastHit* hitinfo, float maxDistance)
+bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hitinfo, float maxDistance)
 {
     const Ray& raytemp = ray;
     bool result = false;

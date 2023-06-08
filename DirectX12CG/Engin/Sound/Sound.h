@@ -44,7 +44,7 @@ namespace MCB
 
 		Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
 		IXAudio2MasteringVoice* masterVoice;
-		static const int MaxSound = 1026;
+		static const size_t MaxSound = 1026;
 
 		std::vector<SoundData> sounds;
 
@@ -54,7 +54,7 @@ namespace MCB
 		void DeleteSound(size_t SoundHandle);
 		void AllDeleteSound();
 
-		void PlaySoundWave(size_t soundHandle, bool isLoop = false,unsigned short loopCount = XAUDIO2_LOOP_INFINITE);
+		void PlaySoundWave(size_t soundHandle, bool isLoop = false,uint16_t loopCount = XAUDIO2_LOOP_INFINITE);
 		void StopSoundWave(size_t soundHandle, bool startPosReset = true);
 		//void SetVolume(size_t volume, size_t soundHandle);
 		void SetVolume(size_t volume, size_t soundHandle);

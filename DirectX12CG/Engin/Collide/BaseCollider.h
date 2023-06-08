@@ -23,21 +23,21 @@ namespace MCB
 			object3d->OffCollision(&info);
 		}
 
-		inline void SetAttribute(unsigned short attribute)
+		inline void SetAttribute(uint16_t attribute)
 		{
 			this->attribute = attribute;
 		}
-		inline void AddAttribute(unsigned short attribute)
+		inline void AddAttribute(uint16_t attribute)
 		{
 			this->attribute |= attribute;
 		}
-		inline void RemoveAttribute(unsigned short attribute)
+		inline void RemoveAttribute(uint16_t attribute)
 		{
 			this->attribute &= !attribute;
 		}
 		inline Object3d* GetObject3D() { return object3d; }
 	protected:
-		unsigned short attribute = attributeLANDSHAPE;
+		uint16_t attribute = attributeLANDSHAPE;
 		Object3d* object3d = nullptr;
 		MCB::PrimitiveType primitive = MCB::PrimitiveType::SPHERE;
 

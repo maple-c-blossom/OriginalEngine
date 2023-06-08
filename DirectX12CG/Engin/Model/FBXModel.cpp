@@ -92,7 +92,7 @@ HRESULT MCB::AnimationMesh::VertexMaping()
 
 void MCB::AnimationMesh::SetSizeIB()
 {
-    sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
+    sizeIB = static_cast<size_t>(sizeof(uint16_t) * indices.size());
 }
 
 
@@ -126,7 +126,7 @@ void MCB::AnimationMesh::Init()
 
 }
 
-//void MCB::AnimationModel::AddSmoothData(unsigned short indexPosition, unsigned short indexVertex)
+//void MCB::AnimationModel::AddSmoothData(uint16_t indexPosition, uint16_t indexVertex)
 //{
 //    smoothData[indexPosition].emplace_back(indexVertex);
 //}
@@ -136,15 +136,15 @@ void MCB::AnimationMesh::Init()
 //    auto itr = smoothData.begin();
 //    for (; itr != smoothData.end(); ++itr)
 //    {
-//        std::vector<unsigned short>& v = itr->second;
+//        std::vector<uint16_t>& v = itr->second;
 //        Vector3D normal = {};
-//        for (unsigned short index : v)
+//        for (uint16_t index : v)
 //        {
 //            normal += vertices[index].normal;
 //        }
 //        normal = normal / (float)v.size();
 //        normal.V3Norm();
-//        for (unsigned short index : v)
+//        for (uint16_t index : v)
 //        {
 //            vertices[index].normal = { normal.vec.x, normal.vec.y, normal.vec.z };
 //        }

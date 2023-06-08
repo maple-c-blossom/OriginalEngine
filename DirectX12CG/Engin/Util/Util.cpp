@@ -98,7 +98,7 @@ double MCB::EaseOutBounce(double startPos, double endPos, double time, double ma
 	}
 }
 
-int MCB::Abs(int num)
+int32_t MCB::Abs(int32_t num)
 {
 	if (num < 0)
 	{
@@ -135,7 +135,7 @@ void MCB::InitRand()
 	srand((static_cast<uint32_t>(time(nullptr))));
 }
 
-int MCB::GetRand(int min, int max)
+int32_t MCB::GetRand(int32_t min, int32_t max)
 {
 	return min + rand() % (max - min);
 }

@@ -32,7 +32,7 @@ namespace MCB
             //デスクリプタレンジの設定
             std::array<D3D12_DESCRIPTOR_RANGE, 2> descriptorRange = {};
 
-            static unsigned short int AllincrementNum;
+            static uint16_t AllincrementNum;
 
             const size_t MaxSRVCount = 0xfff;
 
@@ -50,7 +50,7 @@ namespace MCB
 
             void SetSrvHeap();
 
-            void SetSrvHeap(unsigned short int incrementNum);
+            void SetSrvHeap(uint16_t incrementNum);
 
             void InitAllincrementNum();
 
@@ -58,7 +58,7 @@ namespace MCB
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int BaseShaderRegister, size_t index = 0);
+            void SetDescriptorRange(int32_t NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int32_t BaseShaderRegister, size_t index = 0);
 	};
 }
 

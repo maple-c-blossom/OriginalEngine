@@ -41,11 +41,11 @@ namespace MCB
         TextureManager* Loader = TextureManager::GetInstance();
         TextureCell* texture;
         std::vector<ObjectVertex> vertices;
-        std::vector<unsigned short> indices;
-        std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
+        std::vector<uint16_t> indices;
+        std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData;
 
         size_t sizeVB = static_cast<size_t>(sizeof(ObjectVertex) * vertices.size());
-        size_t sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
+        size_t sizeIB = static_cast<size_t>(sizeof(uint16_t) * indices.size());
 
         D3D12_INDEX_BUFFER_VIEW ibView{};
 
@@ -81,7 +81,7 @@ namespace MCB
         
         inline size_t GetVertexCount() { return vertices.size(); }
 
-        void AddSmoothData(unsigned short indexPosition, unsigned short indexVertex);
+        void AddSmoothData(uint16_t indexPosition, uint16_t indexVertex);
 
         void CalculateSmoothedVertexNormals();
     };

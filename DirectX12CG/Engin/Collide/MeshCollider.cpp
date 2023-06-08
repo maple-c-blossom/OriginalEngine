@@ -19,15 +19,15 @@ MCB::MeshCollider::MeshCollider(AnimationModel* model)
 void MCB::MeshCollider::ConstractTriangle(Model* model)
 {
 	triangles.clear();
-	int start = 0;
+	int32_t start = 0;
 	size_t triangleNum = model->indices.size() / 3;
 	triangles.resize(triangles.size() + triangleNum);
-	for (int i = 0; i < triangleNum; i++)
+	for (int32_t i = 0; i < triangleNum; i++)
 	{
 		Triangle& tri = triangles[start + i];
-		int idx0 = model->indices[i * 3 + 0];
-		int idx1 = model->indices[i * 3 + 1];
-		int idx2 = model->indices[i * 3 + 2];
+		int32_t idx0 = model->indices[i * 3 + 0];
+		int32_t idx1 = model->indices[i * 3 + 1];
+		int32_t idx2 = model->indices[i * 3 + 2];
 
 		tri.vertexPoint[0].vec = { model->vertices[idx0].pos.x,model->vertices[idx0].pos.y,model->vertices[idx0].pos.z };
 		tri.vertexPoint[1].vec = { model->vertices[idx1].pos.x,model->vertices[idx1].pos.y,model->vertices[idx1].pos.z };

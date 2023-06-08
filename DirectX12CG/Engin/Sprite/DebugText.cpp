@@ -12,21 +12,21 @@ void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
 	
 	va_list args;
 	va_start(args, text);
-	int w = vsnprintf(buffer, maxCharCount - 1, text, args);
-	for (int i = 0; i < w; i++)
+	int32_t w = vsnprintf(buffer, maxCharCount - 1, text, args);
+	for (int32_t i = 0; i < w; i++)
 	{
 		if (spriteIndex >= maxCharCount) break;
 
 		const unsigned char& character = buffer[i];
 
-		int fontIndex = character - 32;
+		int32_t fontIndex = character - 32;
 		if (character >= 0x7f)
 		{
 			fontIndex = 0;
 		}
 
-		int fontIndexY = fontIndex / fontLineCount;
-		int fontIndexX = fontIndex % fontLineCount;
+		int32_t fontIndexY = fontIndex / fontLineCount;
+		int32_t fontIndexX = fontIndex % fontLineCount;
 
 		sprite[spriteIndex].position = {x + fontWidth * scale * i,y,0};
 		sprite[spriteIndex].texLeftTop = {(float)fontIndexX * fontWidth,(float)fontIndexY * fontHeight};
@@ -46,7 +46,7 @@ void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
 void MCB::DebugText::AllDraw()
 {
 	ShaderResource* descriptor = ShaderResource::GetInstance();
-	for (int i = 0; i < spriteIndex; i++)
+	for (int32_t i = 0; i < spriteIndex; i++)
 	{
 		//SRVヒープの先頭アドレスを取得
 		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();

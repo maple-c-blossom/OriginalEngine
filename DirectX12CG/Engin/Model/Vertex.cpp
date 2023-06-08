@@ -44,14 +44,14 @@ void MCB::Vertex::SetVbView()
 
 //void MCB::Vertex::CalculationNormalVec()
 //{
-//    for (int i = 0; i < _countof(boxIndices) / 3; i++)
+//    for (int32_t i = 0; i < _countof(boxIndices) / 3; i++)
 //    {
 //        //三角形1つごとに計算
 //
 //        //三角形のインデックスを取り出して、一時的な変数に入れる
-//        unsigned short index0 = boxIndices[i * 3 + 0];
-//        unsigned short index1 = boxIndices[i * 3 + 1];
-//        unsigned short index2 = boxIndices[i * 3 + 2];
+//        uint16_t index0 = boxIndices[i * 3 + 0];
+//        uint16_t index1 = boxIndices[i * 3 + 1];
+//        uint16_t index2 = boxIndices[i * 3 + 2];
 //
 //        //三角形を構成する頂点座標
 //        XMVECTOR p0 = XMLoadFloat3(&Box[index0].pos);
@@ -105,7 +105,7 @@ HRESULT MCB::Vertex::VertexMaping()
     assert(SUCCEEDED(result));
 
     // 全頂点に対して
-    for (int i = 0; i < _countof(vertices); i++)
+    for (int32_t i = 0; i < _countof(vertices); i++)
     {
         vertMap[i] = vertices[i];   // 座標をコピー
     }

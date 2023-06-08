@@ -30,7 +30,7 @@ namespace MCB
 		float GetAngle(Quaternion a, Quaternion b, float& dot,bool& nan);
 		float GetAngle(Quaternion a, Quaternion b);
 		//球面線形補間
-		Quaternion Slerp(Quaternion start, Quaternion end, int time,int maxTime);
+		Quaternion Slerp(Quaternion start, Quaternion end, int32_t time,int32_t maxTime);
 		//球面線形補間
 		Quaternion Slerp(Quaternion start, Quaternion end, float time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える

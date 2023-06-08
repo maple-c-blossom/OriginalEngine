@@ -18,8 +18,8 @@ namespace MCB
         static void DeleteInstance();
 
         // ウィンドウサイズ
-        static const int window_width = 1280;  // 横幅
-        static const int window_height = 720;  // 縦幅
+        static const int32_t window_width = 1280;  // 横幅
+        static const int32_t window_height = 720;  // 縦幅
 
 
         MSG msg{}; //メッセージここから

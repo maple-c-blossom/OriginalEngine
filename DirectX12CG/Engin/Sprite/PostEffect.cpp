@@ -34,7 +34,7 @@ void MCB::PostEffect::Init()
 	HRESULT result = S_FALSE;
 	
     ID3D12Device* device = Dx12::GetInstance()->device.Get();//毎回GetInstance呼ぶのは非効率なのでポインタ確保
-    int i = 0;
+    int32_t i = 0;
     D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeap作成
     rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvDescHeapDesc.NumDescriptors = 2;
@@ -89,7 +89,7 @@ void MCB::PostEffect::PreDraw()
                 D3D12_RESOURCE_STATE_RENDER_TARGET));
     }
     array<D3D12_CPU_DESCRIPTOR_HANDLE, 2> rtvH;
-    int i = 0;
+    int32_t i = 0;
     for (auto& itr : rtvH)
     {
         itr = CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV->GetCPUDescriptorHandleForHeapStart(), i, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));

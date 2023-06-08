@@ -14,7 +14,7 @@ namespace MCB
 		PipeLineManager* pipeline;
 		std::future<void> sceneInitialize;
 		static const int isChengeSceneTime = 30;
-		int isChengeSceneTimer = 0;
+		int32_t isChengeSceneTimer = 0;
 		TextureCell* damyTexture;
 		TextureCell* loadTex;
 		TextureCell* loadBackGroundTex;
@@ -23,7 +23,7 @@ namespace MCB
 		PostEffect postEffect;
 		ImguiManager imgui;
 		bool isInitialized = true;
-		int angle = 0;
+		int32_t angle = 0;
 	public:
 		SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline);
 		~SceneManager();

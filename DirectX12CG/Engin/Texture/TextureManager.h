@@ -21,10 +21,10 @@ namespace MCB
 		 std::list<std::unique_ptr<TextureCell>> textures;
 		//std::vector<int> texincrement;
 	public:
-		//int LoadTexture(const wchar_t* FileName, unsigned short int incrementNum);
+		//int LoadTexture(const wchar_t* FileName, uint16_t incrementNum);
 		static void DeleteInstace();
 		static TextureManager* GetInstance();
-		//int LoadTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
+		//int LoadTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum);
 
 		TextureCell* LoadTexture(const wchar_t* FileName);
 
@@ -40,6 +40,6 @@ namespace MCB
 
 		//void SetDelete(int index);
 
-		//Texture* GetTexture(unsigned short int incrementNum);
+		//Texture* GetTexture(uint16_t incrementNum);
 	};
 }

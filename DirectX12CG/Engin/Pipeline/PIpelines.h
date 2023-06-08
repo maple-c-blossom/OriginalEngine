@@ -12,7 +12,7 @@ namespace MCB
         //                                                  obj3dPipeline[Sub].Create3DObjectPipeline(depth,rootparams,Sub),};
         //static PipelineRootSignature spritePipeline = spritePipeline.CreateSpritePipeline(depth, rootparams);
         //static PipelineRootSignature particlePipeline = particlePipeline.CreateParticlePipeline(depth, rootparams);
-        //inline void SetObj3dPipeline(int blendMode)
+        //inline void SetObj3dPipeline(int32_t blendMode)
         //{
         //    switch (blendMode)
         //    {

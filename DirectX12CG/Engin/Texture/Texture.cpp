@@ -12,7 +12,7 @@ MCB::Texture::~Texture()
 
 }
 
-void MCB::Texture::CreateTexture(const wchar_t* FileName, unsigned short int incrementNum)
+void MCB::Texture::CreateTexture(const wchar_t* FileName, uint16_t incrementNum)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
@@ -55,7 +55,7 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName, unsigned short int inc
 
 
 
-void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum)
+void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
@@ -238,7 +238,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
 }
 
 
-void MCB::Texture::CreateNoTextureFileIsTexture(unsigned short int incrementNum, bool postEffect)
+void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool postEffect)
 {
     if (postEffect)
     {

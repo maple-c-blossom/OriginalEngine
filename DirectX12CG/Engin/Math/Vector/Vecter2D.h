@@ -1,5 +1,5 @@
 #pragma once
-
+#include <cstdint>
 namespace MCB
 {
 
@@ -22,8 +22,8 @@ namespace MCB
 
 		Vector2D VecGet(Vector2D startVec, Vector2D endVec);
 		Vector2D VecGet(Vector2D startVec);
-		bool HitCrossProduct(Vector2D* points, const int ArraySize, const Vector2D point);
-		bool HitCrossProduct(Vector2D* points, const int ArraySize);
+		bool HitCrossProduct(Vector2D* points, const int32_t ArraySize, const Vector2D point);
+		bool HitCrossProduct(Vector2D* points, const int32_t ArraySize);
 		float GetLenge() const;
 		void VecNorm();
 

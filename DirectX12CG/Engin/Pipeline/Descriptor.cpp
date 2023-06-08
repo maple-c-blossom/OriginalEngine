@@ -2,7 +2,7 @@
 #include <algorithm>
 using namespace MCB;
 
-unsigned short int MCB::ShaderResource::AllincrementNum = 0;
+uint16_t MCB::ShaderResource::AllincrementNum = 0;
 
 void MCB::ShaderResource::Init()
 {
@@ -30,7 +30,7 @@ void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
     Dx12::GetInstance()->device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
 }
 
-void MCB::ShaderResource::SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int BaseShaderRegister,size_t index)
+void MCB::ShaderResource::SetDescriptorRange(int32_t NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type, int32_t BaseShaderRegister,size_t index)
 {
     index = min(static_cast<size_t>(descriptorRange.size()) - 1, index);
     descriptorRange[index].NumDescriptors = NumDescriptors;
@@ -53,7 +53,7 @@ void MCB::ShaderResource::SetSrvHeap()
     
 }
 
-void MCB::ShaderResource::SetSrvHeap(unsigned short int incrementNum)
+void MCB::ShaderResource::SetSrvHeap(uint16_t incrementNum)
 {
     srvHandle = srvHeap->GetCPUDescriptorHandleForHeapStart();
     srvHandle.ptr += incrementNum * Dx12::GetInstance()->device.Get()->GetDescriptorHandleIncrementSize(srvHeapDesc.Type);

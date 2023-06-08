@@ -16,8 +16,8 @@
 
 namespace MCB
 {
-        static const unsigned short int NUM_BONES_PER_VERTEX = 4;
-        static const unsigned short int MAX_BONE = 128;
+        static const uint16_t NUM_BONES_PER_VERTEX = 4;
+        static const uint16_t MAX_BONE = 128;
         //頂点データ構造体-------------------------------------
         typedef struct AnimationVertex
         {
@@ -64,13 +64,13 @@ namespace MCB
             std::vector<TextureCell*> textures;
             //MCB::Texture textures;
             std::vector<AnimationVertex> vertices;
-            std::vector<unsigned short> indices;
+            std::vector<uint16_t> indices;
             //std::vector<ConstBuffSkin> vertexBones;
             
-            std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
+            std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData;
 
             size_t sizeVB = static_cast<size_t>(sizeof(AnimationVertex) * vertices.size());
-            size_t sizeIB = static_cast<size_t>(sizeof(unsigned short) * indices.size());
+            size_t sizeIB = static_cast<size_t>(sizeof(uint16_t) * indices.size());
 
             D3D12_INDEX_BUFFER_VIEW ibView{};
 

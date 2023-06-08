@@ -54,11 +54,11 @@ float Vector2D::GetDot(Vector2D vec)
     return x * vec.x + y * vec.y;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize, const Vector2D point)
+bool Vector2D::HitCrossProduct(Vector2D* points, const int32_t ArraySize, const Vector2D point)
 {
     if (points == nullptr) return false;
     bool isHit = false;
-    for (int i = 0; i < ArraySize; i++)
+    for (int32_t i = 0; i < ArraySize; i++)
     {
         Vector2D& vecs = points[i];
         Vector2D& vece = points[i + 1 % ArraySize];
@@ -83,11 +83,11 @@ bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize, const Vect
     return isHit;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize)
+bool Vector2D::HitCrossProduct(Vector2D* points, const int32_t ArraySize)
 {
     if (points == nullptr) return false;
     bool isHit = false;
-    for (int i = 0; i < ArraySize; i++)
+    for (int32_t i = 0; i < ArraySize; i++)
     {
         Vector2D& vecs = points[i];
         Vector2D& vece = points[(i + 1) % ArraySize];
