@@ -84,7 +84,7 @@ void MCB::Vertex::SetVbView()
 //    //---------------------------------------
 //
 //    //全インデックスに対して-------------------------
-//    for (int i = 0; i < _countof(boxIndices); i++)
+//    for (int32_t i = 0; i < _countof(boxIndices); i++)
 //    {
 //        indexMap[i] = boxIndices[i];
 //    }

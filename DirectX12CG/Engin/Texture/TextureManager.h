@@ -19,12 +19,12 @@ namespace MCB
 		TextureManager& operator=(const TextureManager& textureManager) = delete;
 		~TextureManager() {};
 		 std::list<std::unique_ptr<TextureCell>> textures;
-		//std::vector<int> texincrement;
+		//std::vector<int32_t> texincrement;
 	public:
-		//int LoadTexture(const wchar_t* FileName, uint16_t incrementNum);
+		//int32_t LoadTexture(const wchar_t* FileName, uint16_t incrementNum);
 		static void DeleteInstace();
 		static TextureManager* GetInstance();
-		//int LoadTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum);
+		//int32_t LoadTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum);
 
 		TextureCell* LoadTexture(const wchar_t* FileName);
 
@@ -38,7 +38,7 @@ namespace MCB
 		
 		void Erase();
 
-		//void SetDelete(int index);
+		//void SetDelete(int32_t index);
 
 		//Texture* GetTexture(uint16_t incrementNum);
 	};

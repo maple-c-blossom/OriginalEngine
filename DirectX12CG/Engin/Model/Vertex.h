@@ -98,7 +98,7 @@ namespace MCB
          //D3D12_INDEX_BUFFER_VIEW ibView{};
 
          //D3D12_HEAP_PROPERTIES heapprop{};   // ÉqÅ[Évê›íË
-         static const int vertexCount = 1;
+         static const int32_t vertexCount = 1;
 
          ObjectMaterial material;
 
