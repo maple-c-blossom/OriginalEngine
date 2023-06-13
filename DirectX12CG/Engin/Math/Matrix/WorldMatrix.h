@@ -49,6 +49,8 @@ namespace MCB
 		/// <param name="ConvertToRadians">弧度法に変換するフラグ、angleを弧度法で書いたら"false"を設定してください</param>
 		void SetMatRot(const float& angleX, const float& angleY, const float& angleZ, const bool& ConvertToRadians = true);
 
+
+
 		/// <summary>
 		/// 引数で与えられた角度に変換された回転行列を返します
 		/// </summary>

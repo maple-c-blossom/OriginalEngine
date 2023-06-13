@@ -89,9 +89,9 @@ void WorldMatrix::SetMatTrans(const float& transX, const float& transY, const fl
 
 void WorldMatrix::CreateMatrixWorld(const XMMATRIX& matScale, const XMMATRIX& matRot, const XMMATRIX& matTransform)
 {
-	this->matScale_ = matScale;
-	this->matRot_ = matRot;
-	this->matTransform_ = matTransform;
+	matScale_ = matScale;
+	matRot_ = matRot;
+	matTransform_ = matTransform;
 
 	matWorld_ = XMMatrixIdentity();
 	matWorld_ *= matScale;

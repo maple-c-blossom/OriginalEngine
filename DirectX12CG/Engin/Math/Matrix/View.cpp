@@ -6,9 +6,9 @@ using namespace MCB;
 
 void View::CreateMatrixView(const XMFLOAT3& eye, const XMFLOAT3& target, const XMFLOAT3& up)
 {
-	this->eye_ = eye;
-	this->target_ = target;
-	this->up_ = up;
+	eye_ = eye;
+	target_ = target;
+	up_ = up;
 	mat_ = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
