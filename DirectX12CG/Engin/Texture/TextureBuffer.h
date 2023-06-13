@@ -12,11 +12,11 @@ namespace MCB
     class TextureBuffer
     {
     public:
-        D3D12_HEAP_PROPERTIES texHeapProp{};
+        D3D12_HEAP_PROPERTIES texHeapProp_{};
 
-        D3D12_RESOURCE_DESC texresDesc{};
+        D3D12_RESOURCE_DESC texresDesc_{};
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> texbuff = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> texbuff_ = nullptr;
 
         HRESULT CommitResouce(const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_STATES& resouceState, const D3D12_CLEAR_VALUE* clearValue);
 
@@ -30,7 +30,7 @@ namespace MCB
 
         void SetNoTextureFileTexResourceDescForPostEffect();
 
-        void TransferMipmatToTexBuff(TexImgData teximg,HRESULT& result);
+        void TransferMipmatToTexBuff(const TexImgData& teximg,HRESULT& result);
         void TransferMipmatToTexBuff(HRESULT& result);
     };
 }

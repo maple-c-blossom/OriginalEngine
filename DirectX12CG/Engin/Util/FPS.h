@@ -11,7 +11,7 @@ namespace MCB
         FPS(const FPS& dx12) {};
         FPS& operator=(const FPS& dx12) {};
         ~FPS() {};
-        std::chrono::steady_clock::time_point reference;
+        std::chrono::steady_clock::time_point reference_;
     public:
         static FPS* GetInstance();
         static FPS* GetInitInstance();

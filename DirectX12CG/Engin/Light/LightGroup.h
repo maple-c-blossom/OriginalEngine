@@ -25,7 +25,7 @@ namespace MCB
 
 	private: 
 
-		static ID3D12Device* device;
+		static ID3D12Device* sdevice_;
 		LightGroup() {};
 		LightGroup(const LightGroup& lghtGroup) {};
 		LightGroup& operator=(const LightGroup& lightGroup) {};
@@ -88,12 +88,12 @@ namespace MCB
 #pragma endregion SpotL
 
 	private:
-		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff;
-		Float3 ambientColor = { 1,1,1 };
-		DirLight dirLights[sDIR_LIGHT_NUM_];
-		PointLight PLights[sP_LIGHT_NUM_];
-		SpotLight SLights[sS_LIGHT_NUM_];
-		bool isUpdate = false;
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_;
+		Float3 ambientColor_ = { 1,1,1 };
+		DirLight dirLights_[sDIR_LIGHT_NUM_];
+		PointLight PLights_[sP_LIGHT_NUM_];
+		SpotLight SLights_[sS_LIGHT_NUM_];
+		bool isUpdate_ = false;
 	};
 
 }

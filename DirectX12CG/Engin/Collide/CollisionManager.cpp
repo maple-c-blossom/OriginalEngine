@@ -15,12 +15,12 @@ void MCB::CollisionManager::CheckAllCollision()
     std::forward_list<BaseCollider*>::iterator itrA;
     std::forward_list<BaseCollider*>::iterator itrB;
 
-    *itrA = colliders.begin()->get();
-    for (; *itrA != colliders.end()->get(); ++itrA)
+    *itrA = colliders_.begin()->get();
+    for (; *itrA != colliders_.end()->get(); ++itrA)
     {
         itrB = itrA;
         ++itrB;
-        for (; *itrB != colliders.end()->get(); ++itrB)
+        for (; *itrB != colliders_.end()->get(); ++itrB)
         {
             BaseCollider* itrCollA = *itrA;
             BaseCollider* itrCollB = *itrB;
@@ -29,7 +29,7 @@ void MCB::CollisionManager::CheckAllCollision()
                 if (itrCollA->GetPrimitive() == PrimitiveType::RAY)
                 {
                     Ray* rayA = dynamic_cast<Ray*>(itrCollA);
-                    if (rayA->rayCasted)
+                    if (rayA->rayCasted_)
                     {
                         continue;
                     }
@@ -37,7 +37,7 @@ void MCB::CollisionManager::CheckAllCollision()
                 else
                 {
                     Ray* rayA = dynamic_cast<Ray*>(itrCollB);
-                    if (rayA->rayCasted)
+                    if (rayA->rayCasted_)
                     {
                         continue;
                     }
@@ -259,12 +259,12 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
     std::forward_list<BaseCollider*>::iterator itr_hit;
     float dist = maxDistance;
     Vector3D inter;
-    *itr = colliders.begin()->get();
+    *itr = colliders_.begin()->get();
 
-    for (; *itr != colliders.end()->get(); ++itr)
+    for (; *itr != colliders_.end()->get(); ++itr)
     {
         BaseCollider* col = *itr;
-        if (!(col->attribute & attribute))continue;
+        if (!(col->attribute_ & attribute))continue;
         if (col->GetPrimitive() == PrimitiveType::SPHERE)
         {
             Sphere* prim = dynamic_cast<Sphere*>(col);
@@ -318,11 +318,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
     }
     if (result && hitinfo)
     {
-        hitinfo->dist = dist;
-        hitinfo->collPtr = *itr_hit;
-        hitinfo->inter = inter;
-        hitinfo->objctPtr = hitinfo->collPtr->GetObject3D();
+        hitinfo->dist_ = dist;
+        hitinfo->collPtr_ = *itr_hit;
+        hitinfo->inter_ = inter;
+        hitinfo->objctPtr_ = hitinfo->collPtr_->GetObject3D();
     }
-    ray.rayCasted = true;
+    ray.rayCasted_ = true;
     return result;
 }

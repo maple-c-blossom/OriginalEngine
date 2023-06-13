@@ -6,8 +6,8 @@ namespace MCB
     class Player :public Object3d
     {
     private:
-        bool isGraund = true;
-        Vector3D fallV;
+        bool isGraund_ = true;
+        Vector3D fallV_;
     public:
         void Init();
         void Update();

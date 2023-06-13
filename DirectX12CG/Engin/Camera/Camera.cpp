@@ -13,9 +13,9 @@ void Camera::Inilialize()
 
 void Camera::WorldPositionInit()
 {
-	object3d->Init();
-	object3d->position = firstPos;
-	object3d->rotasion = angle;
+	object3d_->Init();
+	object3d_->position = firstPos_;
+	object3d_->rotasion = angle_;
 	
 }
 
@@ -30,36 +30,36 @@ void Camera::WorldPositionUpdate(DirectX::XMMATRIX playerMatrix, DirectX::XMFLOA
 {
 	//object3d->Update(view,projection);
 
-	object3d->matWorld.SetMatScale(object3d->scale.x, object3d->scale.y, object3d->scale.z);
-	object3d->matWorld.SetMatRot(object3d->rotasion.x, object3d->rotasion.y, object3d->rotasion.z, false);
-	object3d->matWorld.SetMatTrans(object3d->position.x, object3d->position.y, object3d->position.z);
+	object3d_->matWorld.SetMatScale(object3d_->scale.x, object3d_->scale.y, object3d_->scale.z);
+	object3d_->matWorld.SetMatRot(object3d_->rotasion.x, object3d_->rotasion.y, object3d_->rotasion.z, false);
+	object3d_->matWorld.SetMatTrans(object3d_->position.x, object3d_->position.y, object3d_->position.z);
 
 	if (isBillBord)
 	{
-		if (object3d->parent == nullptr)
+		if (object3d_->parent == nullptr)
 		{
-			object3d->matWorld.UpdataBillBordMatrixWorld(view);
+			object3d_->matWorld.UpdataBillBordMatrixWorld(view);
 		}
 		else
 		{
-			object3d->matWorld.UpdataMatrixWorld();
+			object3d_->matWorld.UpdataMatrixWorld();
 		}
 	}
 	else
 	{
-		object3d->matWorld.UpdataMatrixWorld();
+		object3d_->matWorld.UpdataMatrixWorld();
 	}
 
-	if (object3d->parent != nullptr)
+	if (object3d_->parent != nullptr)
 	{
-		object3d->matWorld.matWorld *= object3d->parent->matWorld.matWorld;
+		object3d_->matWorld.matWorld *= object3d_->parent->matWorld.matWorld;
 	}
 
-	object3d->GetConstMapTrans()->world = object3d->matWorld.matWorld * view.mat;
-	object3d->GetConstMapTrans()->viewproj = projection.mat;
-	object3d->GetConstMapTrans()->cameraPos.x = view.eye.x;
-	object3d->GetConstMapTrans()->cameraPos.y = view.eye.y;
-	object3d->GetConstMapTrans()->cameraPos.z = view.eye.z;
+	object3d_->GetConstMapTrans()->world = object3d_->matWorld.matWorld * view.mat;
+	object3d_->GetConstMapTrans()->viewproj = projection.mat;
+	object3d_->GetConstMapTrans()->cameraPos.x = view.eye.x;
+	object3d_->GetConstMapTrans()->cameraPos.y = view.eye.y;
+	object3d_->GetConstMapTrans()->cameraPos.z = view.eye.z;
 
 	/*object3d->constMapTranceform->cameraPos.x = playerPosition.x;
 	object3d->constMapTranceform->cameraPos.y = playerPosition.y;
@@ -73,7 +73,7 @@ XMMATRIX Camera::GetMadWorld()
 {
 	//ƒ[ƒ‹ƒhÀ•W‚ð“ü‚ê‚é•Ï”
 	XMMATRIX matWorld;
-	matWorld = object3d->matWorld.matWorld;
+	matWorld = object3d_->matWorld.matWorld;
 
 	return matWorld;
 }

@@ -58,12 +58,12 @@ namespace MCB
 
 
 
-		Material material;
-		D3D12_HEAP_PROPERTIES HeapProp{};
-		D3D12_RESOURCE_DESC Resdesc{};
+		Material material_;
+		D3D12_HEAP_PROPERTIES HeapProp_{};
+		D3D12_RESOURCE_DESC Resdesc_{};
 		//Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
-		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1 = nullptr;
-		ConstBufferDataMaterialB1* constMapMaterial = nullptr;
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1_ = nullptr;
+		ConstBufferDataMaterialB1* constMapMaterial_ = nullptr;
 
 		~ParticleMaterial();
 

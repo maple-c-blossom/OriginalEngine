@@ -18,7 +18,7 @@ namespace MCB
 		TextureManager(const TextureManager& textureManager) = delete;
 		TextureManager& operator=(const TextureManager& textureManager) = delete;
 		~TextureManager() {};
-		 std::list<std::unique_ptr<TextureCell>> textures;
+		 std::list<std::unique_ptr<TextureCell>> textures_;
 		//std::vector<int32_t> texincrement;
 	public:
 		//int32_t LoadTexture(const wchar_t* FileName, uint16_t incrementNum);
@@ -32,7 +32,7 @@ namespace MCB
 
 		TextureCell* CreateNoTextureFileIsTexture(const bool& postEffect = false);
 
-		static TextureManager* instance;
+		static TextureManager* sinstance_;
 
 		void Clear();
 		

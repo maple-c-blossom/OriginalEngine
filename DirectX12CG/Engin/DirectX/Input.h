@@ -10,18 +10,18 @@ namespace MCB
     
     struct Mouse
     {
-        LONG x;
-        LONG y;
-        LONG z;
+        int64_t x;
+        int64_t y;
+        int64_t z;
     };
     class Input
     {
         
     private:
-        Microsoft::WRL::ComPtr<IDirectInputDevice8> devkeyboard = nullptr;
-        Microsoft::WRL::ComPtr <IDirectInputDevice8> devmouse = nullptr;
+        Microsoft::WRL::ComPtr<IDirectInputDevice8> devkeyboard_ = nullptr;
+        Microsoft::WRL::ComPtr <IDirectInputDevice8> devmouse_ = nullptr;
 
-        Microsoft::WRL::ComPtr <IDirectInput8> dinput = nullptr;
+        Microsoft::WRL::ComPtr <IDirectInput8> dinput_ = nullptr;
         Input() {};
         Input(const Input& input) {};
         ~Input() {};
@@ -37,14 +37,14 @@ namespace MCB
         static Input* GetInstance();
         static void AllStopVibration();
         static Input* GetInitInstance();
-        GamePad* gamePad = GamePad::GetInitInstance();
+        GamePad* gamePad_ = GamePad::GetInitInstance();
 
         //キー初期化----------------------
-        BYTE key[256] = {};
-        BYTE oldkey[256] = {};
+        BYTE key_[256] = {};
+        BYTE oldkey_[256] = {};
         //-----------------------
-        DIMOUSESTATE2 mouse = {};
-        DIMOUSESTATE2 oldmouse = {};
+        DIMOUSESTATE2 mouse_ = {};
+        DIMOUSESTATE2 oldmouse_ = {};
         //Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
 
         //キーボード初期化-------------------------------

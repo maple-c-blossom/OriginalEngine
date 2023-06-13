@@ -82,34 +82,34 @@ namespace MCB
         //ID3D12Device* device = nullptr;
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
-        TextureManager* textureManager = TextureManager::GetInstance();
-        std::vector<std::unique_ptr<Node>> nodes;
-        std::vector<std::unique_ptr<Animation>> animations;
-        std::vector<Bone> bones;
+        TextureManager* textureManager_ = TextureManager::GetInstance();
+        std::vector<std::unique_ptr<Node>> nodes_;
+        std::vector<std::unique_ptr<Animation>> animations_;
+        std::vector<Bone> bones_;
         ~AnimationModel();
-        string fileName;
+        string fileName_;
         bool Load(const std::string& fileName,const std::string& fileType = "gltf");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
 
-        void boneAnimTransform( const float timeInSeconds, const size_t currentAnimation = 0, bool loop = true);
+        void boneAnimTransform( const float& timeInSeconds, const size_t& currentAnimation = 0, const bool& loop = true);
 
-        void readAnimNodeHeirarchy( const float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const size_t currentAnimation = 0);
+        void readAnimNodeHeirarchy( const float& animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const size_t& currentAnimation = 0);
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 
-        static void calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedPosition(Vector3D& Out, const float& AnimationTime, const NodeAnim* pNodeAnim);
 
-        static void calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedRotation(Quaternion& Out, const float& AnimationTime, const NodeAnim* pNodeAnim);
 
-        static void calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedScaling(Vector3D& Out, const float& AnimationTime, const NodeAnim* pNodeAnim);
 
-        static size_t findPosition(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findPosition(const float& AnimationTime, const NodeAnim* pNodeAnim);
 
-        static size_t findRotation(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findRotation(const float& AnimationTime, const NodeAnim* pNodeAnim);
 
-        static size_t findScaling(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findScaling(const float& AnimationTime, const NodeAnim* pNodeAnim);
 
         //bool LoadFile(ImportSetting setting);
         void Draw();

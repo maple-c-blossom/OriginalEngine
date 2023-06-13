@@ -7,11 +7,13 @@ namespace MCB
     class View
     {
         public:
-        DirectX::XMMATRIX mat = DirectX::XMMatrixIdentity();//行列
-        DirectX::XMFLOAT3 eye{ 0,0,0 }; //視点座標(カメラ自身の座標)
-        DirectX::XMFLOAT3 target{ 0,0,1 };//注視点座標(カメラが見ている座標、XMMatrixLookAtLHはこの座標から視点座標へのベクトルを求めることで向きを決定している)
-        DirectX::XMFLOAT3 up{ 0,1,0 };//上方向ベクトル(カメラの上側がどこかを決定する座標。)
-        DirectX::XMMATRIX billMat = DirectX::XMMatrixIdentity();
+        DirectX::XMMATRIX mat_ = DirectX::XMMatrixIdentity();//行列
+        DirectX::XMFLOAT3 eye_{ 0,0,0 }; //視点座標(カメラ自身の座標)
+        //注視点座標(カメラが見ている座標、XMMatrixLookAtLHはこの座標から
+        //視点座標へのベクトルを求めることで向きを決定している)
+        DirectX::XMFLOAT3 target_{ 0,0,1 };
+        DirectX::XMFLOAT3 up_{ 0,1,0 };//上方向ベクトル(カメラの上側がどこかを決定する座標。)
+        DirectX::XMMATRIX billMat_ = DirectX::XMMatrixIdentity();
 
 
         /// <summary>
@@ -20,12 +22,12 @@ namespace MCB
         /// <param name="eye">視点座標</param>
         /// <param name="target">注視点座標</param>
         /// <param name="up">上方向ベクトル</param>
-        void CreateMatrixView(DirectX::XMFLOAT3 eye, DirectX::XMFLOAT3 target, DirectX::XMFLOAT3 up);
+        void CreateMatrixView(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& target, const DirectX::XMFLOAT3& up);
 
         /// <summary>
         /// すでにある変数を利用して行列を作成します
         /// </summary>
-        void UpDateMatrixView(bool billbordY = false);
+        void UpDateMatrixView(const bool& billbordY = false);
     };
 
 }

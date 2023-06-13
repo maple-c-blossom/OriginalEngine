@@ -10,49 +10,49 @@ namespace MCB
 	class ICamera
 	{
 	protected:
-		View view;
-		Projection projection;
+		View view_;
+		Projection projection_;
 	public:
 		virtual ~ICamera() {};
 		virtual void Inilialize() = 0;
 		virtual void Update() = 0;
 		View* GetView()
 		{
-			return &view;
+			return &view_;
 		}
 		Projection* GetProjection()
 		{
-			return &projection;
+			return &projection_;
 		}
 
-		void SetViewEye(Float3 eyePos)
+		void SetViewEye(const Float3& eyePos)
 		{
-			view.eye = { eyePos.x,eyePos.y,eyePos.z };
+			view_.eye_ = { eyePos.x,eyePos.y,eyePos.z };
 		}
 
-		void SetViewTarget(Float3 targetPos)
+		void SetViewTarget(const Float3& targetPos)
 		{
-			view.target = { targetPos.x,targetPos.y,targetPos.z };
+			view_.target_ = { targetPos.x,targetPos.y,targetPos.z };
 		}
 
-		void SetViewUp(Float3 up)
+		void SetViewUp(const Float3& up)
 		{
-			view.up = { up.x, up.y, up.z };
+			view_.up_ = { up.x, up.y, up.z };
 		}
 
-		void SetProjectionFarZ(float farZ)
+		void SetProjectionFarZ(const float& farZ)
 		{
-			projection.farZ = farZ;
+			projection_.farZ_ = farZ;
 		}
 
-		void SetProjectionFovAngle(float fovAngle)
+		void SetProjectionFovAngle(const float& fovAngle)
 		{
-			projection.fovAngle = fovAngle;
+			projection_.fovAngle_ = fovAngle;
 		}
 
-		void SetProjection(float nearZ)
+		void SetProjection(const float& nearZ)
 		{
-			projection.nearZ = nearZ;
+			projection_.nearZ_ = nearZ;
 		}
 
 		void MatrixUpdate();

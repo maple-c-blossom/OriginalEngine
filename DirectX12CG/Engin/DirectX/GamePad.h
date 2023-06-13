@@ -33,13 +33,13 @@ namespace MCB
 		static void AllStopVibration();
 		static GamePad* GetInitInstance();
 
-		Float3 LStick{ 0,0,0 };
-		Float3 RStick{ 0,0,0 };
+		Float3 LStick_{ 0,0,0 };
+		Float3 RStick_{ 0,0,0 };
 
-		Float2 RTrriger = { 0,0 };
-		Float2 LTrriger = { 0,0 };
-		XINPUT_STATE state[4] = {};
-		XINPUT_STATE oldstate[4] = {};
+		Float2 RTrriger_ = { 0,0 };
+		Float2 LTrriger_ = { 0,0 };
+		XINPUT_STATE state_[4] = {};
+		XINPUT_STATE oldstate_[4] = {};
 		void GetState();
 		bool IsButtonDown(const int32_t& Button, const int16_t& Userindex = 0);
 		bool IsButtonNDown(const int32_t& Button, const int16_t& Userindex = 0);

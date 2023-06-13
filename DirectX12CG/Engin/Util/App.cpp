@@ -16,7 +16,7 @@ void MCB::App::Init()
 #endif
     Dx12::GetInitInstance();
 #ifdef _DEBUG
-    if (SUCCEEDED(Dx12::GetInstance()->device.Get()->QueryInterface(IID_PPV_ARGS(infoQueue.GetAddressOf()))))
+    if (SUCCEEDED(Dx12::GetInstance()->device_.Get()->QueryInterface(IID_PPV_ARGS(infoQueue.GetAddressOf()))))
     {
         infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
         infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);

@@ -8,13 +8,16 @@ namespace MCB
     class SphereCollider :public BaseCollider, public Sphere
     {
     public:
-        SphereCollider(Vector3D offset = { 0,0,0 }, float radius = 1.0f) { this->offset = offset, this->radius = radius; primitive = PrimitiveType::SPHERE; };
+        SphereCollider(const Vector3D& offset = { 0,0,0 },const float& radius = 1.0f) 
+        {
+            offset_ = offset, radius_ = radius; primitive_ = PrimitiveType::SPHERE; 
+        };
         void Update() override;
-        inline void SetRadius(float radius) { this->radius = radius; }
-        inline float GetRaius() { return radius; }
+        inline void SetRadius(const float& radius) { radius_ = radius; }
+        inline float GetRaius() { return radius_; }
     private:
-        Vector3D offset;
-        float radius;
+        Vector3D offset_;
+        float radius_;
 
     };
 }

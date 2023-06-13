@@ -30,13 +30,13 @@ void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
     Dx12::GetInstance()->device->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc, srvHandle);
 }
 
-void MCB::ShaderResource::SetDescriptorRange(const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, const int32_t& BaseShaderRegister, size_t& index)
+void MCB::ShaderResource::SetDescriptorRange(const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, const int32_t& BaseShaderRegister, const size_t& index)
 {
-    index = min(static_cast<size_t>(descriptorRange.size()) - 1, index);
-    descriptorRange[index].NumDescriptors = NumDescriptors;
-    descriptorRange[index].RangeType = type;
-    descriptorRange[index].BaseShaderRegister = BaseShaderRegister;
-    descriptorRange[index].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+    size_t i = min(static_cast<size_t>(descriptorRange.size()) - 1, index);
+    descriptorRange[i].NumDescriptors = NumDescriptors;
+    descriptorRange[i].RangeType = type;
+    descriptorRange[i].BaseShaderRegister = BaseShaderRegister;
+    descriptorRange[i].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 }
 
 void MCB::ShaderResource::SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension)

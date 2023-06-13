@@ -27,11 +27,11 @@ namespace MCB
 	{
 	public:
 		SimpleFigure();
-		Model triangleMaterial;
-		Object3d triangle;
+		Model triangleMaterial_;
+		Object3d triangle_;
 
-		Float3 PointA = { -1.5f,-0.5f,4.0f }; Float3 PointB = { 4.5f,0.5f,1.0f };
-		Float3 PointC = { 0.5f,-3.5f,-4.0f }; Float4 color = { 1.0f,1.0f,1.0f,1.0f };
+		Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
+		Float3 PointC_ = { 0.5f,-3.5f,-4.0f }; Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 		void  DrawTriangle(ICamera* camera);
 
 	};

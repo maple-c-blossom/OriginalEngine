@@ -9,13 +9,13 @@ namespace MCB
 	class DebugCamera :public ICamera
 	{
 	private:
-		Input* input = Input::GetInstance();
+		Input* input_ = Input::GetInstance();
 
-		float disEyeTarget;
-		Vector2D rotAngle;
-		Vector2D cursorSpd;
-		Vector3D eye;
-		Vector3D target;
+		float disEyeTarget_;
+		Vector2D rotAngle_;
+		Vector2D cursorSpd_;
+		Vector3D eye_;
+		Vector3D target_;
 		//Vector3D up;
 	public:
 		void Inilialize()override;

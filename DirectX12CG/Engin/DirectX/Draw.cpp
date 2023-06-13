@@ -2,56 +2,56 @@
 #include "FPS.h"
 void MCB::Draw::SetBeforeResourceBarrier()
 {
-    barrierDesc = {};
-    barrierDesc.Transition.pResource = Dx12::GetInstance()->backBuffers[bbIndex].Get(); // バックバッファを指定
-    barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // 表示から
-    barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
-    Dx12::GetInstance()->commandList->ResourceBarrier(1, &barrierDesc);
+    barrierDesc_ = {};
+    barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // バックバッファを指定
+    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // 表示から
+    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
+    Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 void MCB::Draw::BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
-    dx12->commandList->SetPipelineState(pipeline.pipeline.pipelinestate.Get());
-    dx12->commandList->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
+    dx12->commandList_->SetPipelineState(pipeline.pipeline.pipelinestate.Get());
+    dx12->commandList_->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
 
 
     //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
-    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+    dx12->commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     //SRVヒープの設定コマンド
-    dx12->commandList->SetDescriptorHeaps(1, srv->srvHeap.GetAddressOf());
+    dx12->commandList_->SetDescriptorHeaps(1, srv->srvHeap_.GetAddressOf());
 }
 
 void MCB::Draw::SetBeforeBbIndex()
 {
 
-    bbIndex = Dx12::GetInstance()->swapchain->GetCurrentBackBufferIndex();
+    bbIndex_ = Dx12::GetInstance()->swapchain_->GetCurrentBackBufferIndex();
 }
 
 D3D12_RESOURCE_BARRIER MCB::Draw::GetResouceBarrier()
 {
-    return barrierDesc;
+    return barrierDesc_;
 }
 
 uint32_t MCB::Draw::GetBbIndex()
 {
-    return bbIndex;
+    return bbIndex_;
 }
 
 void MCB::Draw::SetAfterResourceBarrier()
 {
-    barrierDesc.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
-    barrierDesc.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // 表示に
-    Dx12::GetInstance()->commandList->ResourceBarrier(1, &barrierDesc);
+    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
+    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // 表示に
+    Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 void MCB::Draw::CloseDrawCommandOrder()
 {
     Dx12* dx12 = Dx12::GetInstance();
     // 命令のクローズ----------------------------------
-    dx12->result = dx12->commandList->Close();
+    dx12->result = dx12->commandList_->Close();
     assert(SUCCEEDED(dx12->result) && "命令クローズ段階でのエラー");
     //------------
 }
@@ -67,10 +67,10 @@ MCB::Draw* MCB::Draw::GetInstance()
 void MCB::Draw::SetRenderTargetView(const Depth& depth)
 {
     Dx12* dx12 = Dx12::GetInstance();
-    rtvHandle = dx12->rtvHeaps->GetCPUDescriptorHandleForHeapStart();
-    rtvHandle.ptr += bbIndex * dx12->device->GetDescriptorHandleIncrementSize(dx12->rtvHeapDesc.Type);
-    dsvHandle = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
-    dx12->commandList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
+    rtvHandle_ = dx12->rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
+    rtvHandle_.ptr += bbIndex_ * dx12->device_->GetDescriptorHandleIncrementSize(dx12->rtvHeapDesc_.Type);
+    dsvHandle_ = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
+    dx12->commandList_->OMSetRenderTargets(1, &rtvHandle_, false, &dsvHandle_);
 }
 
 
@@ -79,16 +79,16 @@ void MCB::Draw::SetViewPort()
     Dx12* dx12 = Dx12::GetInstance();
     DxWindow* dxWindow = DxWindow::GetInstance();
 
-    viewport = {};
+    viewport_ = {};
 
-    viewport.Width = (FLOAT)dxWindow->window_width;
-    viewport.Height = (FLOAT)dxWindow->window_height;
-    viewport.TopLeftX = 0;
-    viewport.TopLeftY = 0;
-    viewport.MinDepth = 0.0f;
-    viewport.MaxDepth = 1.0f;
+    viewport_.Width = (FLOAT)dxWindow->sWINDOW_WIDTH_;
+    viewport_.Height = (FLOAT)dxWindow->sWINDOW_HEIGHT_;
+    viewport_.TopLeftX = 0;
+    viewport_.TopLeftY = 0;
+    viewport_.MinDepth = 0.0f;
+    viewport_.MaxDepth = 1.0f;
 
-    dx12->commandList->RSSetViewports(1, &viewport);
+    dx12->commandList_->RSSetViewports(1, &viewport_);
 }
 
 
@@ -96,8 +96,8 @@ void MCB::Draw::SetViewPort()
 void MCB::Draw::ClearScreen( const float* clearColor)
 {
     Dx12* dx12 = Dx12::GetInstance();
-    dx12->commandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-    dx12->commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+    dx12->commandList_->ClearRenderTargetView(rtvHandle_, clearColor, 0, nullptr);
+    dx12->commandList_->ClearDepthStencilView(dsvHandle_, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void MCB::Draw::CommandListExecution()
@@ -106,21 +106,21 @@ void MCB::Draw::CommandListExecution()
     Dx12* dx12 = Dx12::GetInstance();
     // コマンドリストの実行-------------------------------------
 #pragma region コマンドリスト実行
-    ID3D12CommandList* commandLists[] = { dx12->commandList.Get() }; // コマンドリストの配列
-    dx12->commandQueue->ExecuteCommandLists(1, commandLists);
+    ID3D12CommandList* commandLists[] = { dx12->commandList_.Get() }; // コマンドリストの配列
+    dx12->commandQueue_->ExecuteCommandLists(1, commandLists);
 
     // バッファをフリップ（裏表の入替え)-----------------------
-    dx12->result = dx12->swapchain->Present(1, 0);
+    dx12->result = dx12->swapchain_->Present(1, 0);
     assert(SUCCEEDED(dx12->result) && "バッファフリップ段階でのエラー");
     //-----------------
 
 #pragma region コマンド実行完了待ち
     // コマンドリストの実行完了を待つ
-    dx12->commandQueue->Signal(dx12->fence.Get(), ++dx12->fenceVal);
-    if (dx12->fence->GetCompletedValue() != dx12->fenceVal)
+    dx12->commandQueue_->Signal(dx12->fence_.Get(), ++dx12->fenceVal_);
+    if (dx12->fence_->GetCompletedValue() != dx12->fenceVal_)
     {
         HANDLE event = CreateEvent(nullptr, false, false, nullptr);
-        dx12->fence->SetEventOnCompletion(dx12->fenceVal, event);
+        dx12->fence_->SetEventOnCompletion(dx12->fenceVal_, event);
         WaitForSingleObject(event, INFINITE);
         CloseHandle(event);
     }
@@ -133,25 +133,25 @@ void MCB::Draw::SetScissorrect()
     DxWindow* dxWindow = DxWindow::GetInstance();
 
 
-    scissorrect = {};
+    scissorrect_ = {};
 
-    scissorrect.left = 0;                                       // 切り抜き座標左
-    scissorrect.right = scissorrect.left + dxWindow->window_width;        // 切り抜き座標右
-    scissorrect.top = 0;                                        // 切り抜き座標上
-    scissorrect.bottom = scissorrect.top + dxWindow->window_height;       // 切り抜き座標下
+    scissorrect_.left = 0;                                       // 切り抜き座標左
+    scissorrect_.right = scissorrect_.left + dxWindow->sWINDOW_WIDTH_;        // 切り抜き座標右
+    scissorrect_.top = 0;                                        // 切り抜き座標上
+    scissorrect_.bottom = scissorrect_.top + dxWindow->sWINDOW_HEIGHT_;       // 切り抜き座標下
 
-    dx12->commandList->RSSetScissorRects(1, &scissorrect);
+    dx12->commandList_->RSSetScissorRects(1, &scissorrect_);
 }
 
 void MCB::Draw::ResetQueAndCommandList()
 {
     Dx12* dx12 = Dx12::GetInstance();
     //キューをクリア
-    dx12->result = dx12->commandAllocator->Reset(); // キューをクリア
+    dx12->result = dx12->commandAllocator_->Reset(); // キューをクリア
     assert(SUCCEEDED(dx12->result) && "キュークリア段階でのエラー");
 
     //再びコマンドリストをためる準備
-    dx12->result = dx12->commandList->Reset(dx12->commandAllocator.Get(), nullptr);  // 再びコマンドリストを貯める準備
+    dx12->result = dx12->commandList_->Reset(dx12->commandAllocator_.Get(), nullptr);  // 再びコマンドリストを貯める準備
     assert(SUCCEEDED(dx12->result) && "コマンドリスト再貯蓄準備段階でのエラー");
 }
 

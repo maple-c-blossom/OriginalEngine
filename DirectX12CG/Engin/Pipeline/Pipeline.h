@@ -8,11 +8,11 @@ namespace MCB
 	public:
 
 
-		D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
 
-		D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = pipelineDesc.BlendState.RenderTarget[0];
+		D3D12_RENDER_TARGET_BLEND_DESC& blenddesc_ = pipelineDesc_.BlendState.RenderTarget[0];
 
-		Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate = nullptr;
+		Microsoft::WRL::ComPtr<ID3D12PipelineState> pipelinestate_ = nullptr;
 
 		void SetSampleMask();
 

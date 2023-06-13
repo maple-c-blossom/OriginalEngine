@@ -29,63 +29,63 @@ namespace MCB
 		};
 
 		//変換行列
-		DebugCamera debugCamera;
+		DebugCamera debugCamera_;
 		
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
 		//3Dモデル
 #pragma region 3Dモデル
-		std::unique_ptr<Model> SpherModel = nullptr;
-		std::unique_ptr<Model> SpherModel2 = nullptr;
-		std::unique_ptr<Model> groundModel = nullptr;
-		std::unique_ptr<Model> skydomeModel = nullptr;
+		std::unique_ptr<Model> SpherModel_ = nullptr;
+		std::unique_ptr<Model> SpherModel2_ = nullptr;
+		std::unique_ptr<Model> groundModel_ = nullptr;
+		std::unique_ptr<Model> skydomeModel_ = nullptr;
 
 		//AssimpLoader testModel;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
 #pragma region テクスチャ
-		TextureCell* debugTextTexture = nullptr;
-		TextureCell* zoomTex = nullptr;
+		TextureCell* debugTextTexture_ = nullptr;
+		TextureCell* zoomTex_ = nullptr;
 
 #pragma endregion テクスチャ
 
 		//サウンド
 #pragma region サウンド
-		size_t testSound = -1;
-		size_t test2Sound = -1;
+		size_t testSound_ = -1;
+		size_t test2Sound_ = -1;
 
-		int32_t volume = 255;
+		int32_t volume_ = 255;
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		SimpleFigure triangle;
+		SimpleFigure triangle_;
 		
-		Object3d ground = {};
-		Object3d Skydorm = {};
-		Object3d testsphere = {};
+		Object3d ground_ = {};
+		Object3d Skydorm_ = {};
+		Object3d testsphere_ = {};
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト
-		Sprite sprite = {};
+		Sprite sprite_ = {};
 
-		Sprite zoomSprite = {};
+		Sprite zoomSprite_ = {};
 
-		Sprite scopeSprite = {};
+		Sprite scopeSprite_ = {};
 
-		DebugText debugText = {};
+		DebugText debugText_ = {};
 
 #pragma endregion スプライト
 #pragma region パーティクル
 
 #pragma endregion
 #pragma region 通常変数
-		bool loopFlag = true;
-		bool startPositionReset = true;
-		bool ybill = false;
+		bool loopFlag_ = true;
+		bool startPositionReset_ = true;
+		bool ybill_ = false;
 #pragma endregion 通常変数
 
 	public:

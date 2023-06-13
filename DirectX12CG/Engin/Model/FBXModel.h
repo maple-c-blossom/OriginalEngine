@@ -55,26 +55,26 @@ namespace MCB
             //AnimationModel();
             ~AnimationMesh();
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_ = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin_ = nullptr;
 
-            std::vector<TextureCell*> textures;
+            std::vector<TextureCell*> textures_;
             //MCB::Texture textures;
-            std::vector<AnimationVertex> vertices;
-            std::vector<uint16_t> indices;
+            std::vector<AnimationVertex> vertices_;
+            std::vector<uint16_t> indices_;
             //std::vector<ConstBuffSkin> vertexBones;
             
-            std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData;
+            std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData_;
 
-            size_t sizeVB = static_cast<size_t>(sizeof(AnimationVertex) * vertices.size());
-            size_t sizeIB = static_cast<size_t>(sizeof(uint16_t) * indices.size());
+            size_t sizeVB_ = static_cast<size_t>(sizeof(AnimationVertex) * vertices_.size());
+            size_t sizeIB_ = static_cast<size_t>(sizeof(uint16_t) * indices_.size());
 
-            D3D12_INDEX_BUFFER_VIEW ibView{};
+            D3D12_INDEX_BUFFER_VIEW ibView_{};
 
-            D3D12_VERTEX_BUFFER_VIEW vbView{};
+            D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
  
 
@@ -82,9 +82,9 @@ namespace MCB
 
             //D3D12_RESOURCE_DESC resdesc{};  // ÉäÉ\Å[ÉXê›íË
 
-            std::vector<ObjectMaterial> material;
+            std::vector<ObjectMaterial> material_;
 
-            void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
+            void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
             void SetIbView(const DXGI_FORMAT& format);
 
@@ -102,7 +102,7 @@ namespace MCB
 
             void Init();
 
-            inline size_t GetVertexCount() { return vertices.size(); }
+            inline size_t GetVertexCount() { return vertices_.size(); }
 
         };
 	};

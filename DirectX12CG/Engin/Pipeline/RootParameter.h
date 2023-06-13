@@ -8,7 +8,7 @@ namespace MCB
 	class RootParameter
 	{
 		public:
-			std::vector<D3D12_ROOT_PARAMETER> rootparams;
+			std::vector<D3D12_ROOT_PARAMETER> rootparams_;
 		~RootParameter();
 
 		void SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType, const int32_t& ShaderRegister, const int32_t& RegisterSpace,

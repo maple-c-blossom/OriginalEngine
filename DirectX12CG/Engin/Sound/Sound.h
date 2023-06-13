@@ -37,16 +37,16 @@ namespace MCB
 			std::unique_ptr<BYTE> pBuffer;
 			size_t bufferSize;
 			bool free = true;
-			const string name;
+			const std::string name;
 			IXAudio2SourceVoice* pSourceVoice = nullptr;
 			float volume = 1;
 		}SoundData;
 
-		Microsoft::WRL::ComPtr<IXAudio2> xAudio2;
-		IXAudio2MasteringVoice* masterVoice;
-		static const size_t MaxSound = 1026;
+		Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;
+		IXAudio2MasteringVoice* masterVoice_;
+		static const size_t sMAX_SOUND_ = 1026;
 
-		std::vector<SoundData> sounds;
+		std::vector<SoundData> sounds_;
 
 		void ReleasexAudio2();
 

@@ -18,7 +18,7 @@ namespace MCB
 
 		//SphereCollider sphere;
 	private:
-		std::vector<Triangle>triangles;
-		DirectX::XMMATRIX invWorldMat;
+		std::vector<Triangle>triangles_;
+		DirectX::XMMATRIX invWorldMat_;
 	};
 }

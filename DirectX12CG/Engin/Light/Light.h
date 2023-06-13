@@ -18,24 +18,23 @@ namespace MCB
 			Float3 lightColor;
 			uint32_t active;
 		}LightConstBuffData;
-		inline void SetLightDir(Vector3D lightdir) 
+		inline void SetLightDir(const Vector3D& lightdir) 
 		{
-			lightdir.V3Norm();
-			this->lightdir = lightdir;
+			lightdir_ = lightdir;
 		}
-		inline Vector3D GetLightDir() { return lightdir; }
-		inline void SetLightColor(const Float3& lightcolor) { this->lightColor = lightcolor; }
-		inline Float3 GetLightColor() { return lightColor; }
-		inline void SetLightShininess(const float& lightshininess) { this->shininess = lightshininess; }
-		inline float GetLightShininess() { return shininess; }
-		inline void SetIsActive(const bool& active) { this->active = active; }
-		inline bool IsActive() { return active; }
+		inline Vector3D GetLightDir() { return lightdir_; }
+		inline void SetLightColor(const Float3& lightcolor) { lightColor_ = lightcolor; }
+		inline Float3 GetLightColor() { return lightColor_; }
+		inline void SetLightShininess(const float& lightshininess) { shininess_ = lightshininess; }
+		inline float GetLightShininess() { return shininess_; }
+		inline void SetIsActive(const bool& active) { this->active_ = active; }
+		inline bool IsActive() { return active_; }
 	private:
 
-		Vector3D lightdir = { 1,0,0 };
-		Float3 lightColor = { 1,1,1 };
-		float shininess = 3.0f;
-		bool active = false;
+		Vector3D lightdir_ = { 1,0,0 };
+		Float3 lightColor_ = { 1,1,1 };
+		float shininess_ = 3.0f;
+		bool active_ = false;
 		//static DirLight* LightCreate();
 		//void SetLightDir(Vector3D lightdir);
 		//void SetLightColor(Float3 lightColor);

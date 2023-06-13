@@ -24,7 +24,7 @@ namespace MCB
     class Object3d
     {
     protected:
-        std::string name;
+        std::string name_;
         std::shared_ptr<BaseCollider> collider_;
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
@@ -40,36 +40,36 @@ namespace MCB
         }ConstBufferDataTransform;
         //---------------------------------
         //行列用定数バッファ
-        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform_ = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;
         //行列用定数バッファマップ
-        ConstBufferDataTransform* constMapTranceform = nullptr;
-        ConstBuffSkin* constMapSkin = nullptr;
+        ConstBufferDataTransform* constMapTranceform_ = nullptr;
+        ConstBuffSkin* constMapSkin_ = nullptr;
     public:
-        static LightGroup* lights;
+        static LightGroup* lights_;
         //アフィン変換情報
-        DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-        DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
-        DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
-        Float4 color = { 1.f,1.f,1.f,1.f };
-        float shaderNum = 1.f;
+        DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
+        DirectX::XMFLOAT3 rotasion_ = { 0.0f,0.0f,0.0f };
+        DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
+        Float4 color_ = { 1.f,1.f,1.f,1.f };
+        float shaderNum_ = 1.f;
         //ワールド行列
-        WorldMatrix matWorld = {};
-        Vector3D NORM_FRONT_VEC = {};
-        Vector3D nowFrontVec = {0,0,1};
-        float frontAngle = 0;
-        float animeTime;
-        float animationSpeed = 0.1f;
-        Model* model = nullptr;
-        AnimationModel* animationModel = nullptr;
-        bool hited = false;
+        WorldMatrix matWorld_ = {};
+        Vector3D normFrontVec_ = {};
+        Vector3D nowFrontVec_ = {0,0,1};
+        float frontAngle_ = 0;
+        float animeTime_;
+        float animationSpeed_ = 0.1f;
+        Model* model_ = nullptr;
+        AnimationModel* animationModel_ = nullptr;
+        bool hited_ = false;
         Object3d();
 
         virtual ~Object3d();
-        ICamera* camera;
+        ICamera* camera_;
         //親オブジェクトへのポインタ
-        Object3d* parent = nullptr;
-        bool trackingFlag = false;
+        Object3d* parent_ = nullptr;
+        bool trackingFlag_ = false;
         virtual void Init();
         virtual void CreateBuff();
         virtual void Update( const bool& isBillBord = false);
@@ -89,14 +89,14 @@ namespace MCB
         virtual void AnimationDraw();
 
        virtual void AnimationDraw(const uint16_t& incremant);
-       const DirectX::XMMATRIX GetMatWorld() { return matWorld.matWorld; };
+       const DirectX::XMMATRIX GetMatWorld() { return matWorld_.matWorld_; };
        void SetCollider(std::shared_ptr<BaseCollider> collider);
        BaseCollider* GetCollider() { return collider_.get(); };
-       virtual void OnCollision(const CollisionInfomation& info) { color = { 1,0,0,1 }; hited = true; }
-       virtual void OffCollision(const CollisionInfomation* info = nullptr) { color = { 1,1,1,1 };  hited = false;}
+       virtual void OnCollision(const CollisionInfomation& info) { color_ = { 1,0,0,1 }; hited_ = true; }
+       virtual void OffCollision(const CollisionInfomation* info = nullptr) { color_ = { 1,1,1,1 };  hited_ = false;}
        static void SetLights(LightGroup* light);
-       ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform; };
-       ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform.Get(); };
+       ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform_; };
+       ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform_.Get(); };
         //void CreateModel(const char* fileName);
     };
 

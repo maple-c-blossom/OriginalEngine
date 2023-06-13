@@ -76,19 +76,19 @@ namespace MCB
 
 	protected:
 #pragma region DirectX基礎機能群
-		DxWindow* dxWindow = DxWindow::GetInstance();
+		DxWindow* dxWindow_ = DxWindow::GetInstance();
 		//DirectXクラス生成
-		Dx12* dx = Dx12::GetInstance();
+		Dx12* dx_ = Dx12::GetInstance();
 		//inputクラス生成
-		Input* input = Input::GetInstance();
+		Input* input_ = Input::GetInstance();
 
-		ShaderResource* descriptor = ShaderResource::GetInstance();
+		ShaderResource* descriptor_ = ShaderResource::GetInstance();
 
-		Depth* depth;
+		Depth* depth_;
 		//ルートパラメータ
-		RootParameter* rootparamsPtr;
+		RootParameter* rootparamsPtr_;
 
-		PipeLineManager* pipeline;
+		PipeLineManager* pipeline_;
 
 		//PipelineRootSignature* obj3dPipelinePtr;
 
@@ -96,29 +96,29 @@ namespace MCB
 
 		//PipelineRootSignature* particlePipelinePtr;
 
-		LightGroup* lights = LightGroup::GetInstance();
+		LightGroup* lights_ = LightGroup::GetInstance();
 
 		//描画前処理と描画後処理
-		MCB::Draw* draw = Draw::GetInstance();
+		MCB::Draw* draw_ = Draw::GetInstance();
 
 		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
 	
 		//サウンドマネージャー
-		SoundManager soundManager;
+		SoundManager soundManager_;
 		//クリアカラー
 #pragma endregion DirectX基礎機能群
-		bool sceneEnd = false;
+		bool sceneEnd_ = false;
 
-		std::shared_ptr<IScene> nextScene = nullptr;
+		std::shared_ptr<IScene> nextScene_ = nullptr;
 
-		ICamera* viewCamera;
+		ICamera* viewCamera_;
 
-		TextureManager* loader = TextureManager::GetInstance();
+		TextureManager* loader_ = TextureManager::GetInstance();
 
-		std::unique_ptr<PostEffect> postEffect = std::make_unique<PostEffect>();
+		std::unique_ptr<PostEffect> postEffect_ = std::make_unique<PostEffect>();
 	public:
-		ImguiManager imgui;
-		float clearColor[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
+		ImguiManager imgui_;
+		float clearColor_[4] = { 0.0f,0.25f, 0.5f,0.0f }; // 青っぽい色
 		virtual ~IScene() {};
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
@@ -133,19 +133,19 @@ namespace MCB
 		virtual void SpriteInit() = 0;
 		virtual void ParticleInit() = 0;
 		virtual void MatrixUpdate() = 0;
-		void ImGuiDraw() { imgui.Draw(); }
+		void ImGuiDraw() { imgui_.Draw(); }
 		virtual void ImGuiUpdate() = 0;
 		virtual std::shared_ptr<IScene> GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
-		bool GetIsSceneEnd() { return sceneEnd; }
+		bool GetIsSceneEnd() { return sceneEnd_; }
 
-		Depth* GetDepthPtr() { return depth; }
-		Depth& GetDepth() { return *depth; }
+		Depth* GetDepthPtr() { return depth_; }
+		Depth& GetDepth() { return *depth_; }
 		//ルートパラメータ
-		RootParameter* GetRootparamsPtr() { return rootparamsPtr; }
+		RootParameter* GetRootparamsPtr() { return rootparamsPtr_; }
 		
-		PipeLineManager* GetpipelinePtr() { return pipeline; }
-		PipeLineManager& Getpipeline() { return *pipeline; }
+		PipeLineManager* GetpipelinePtr() { return pipeline_; }
+		PipeLineManager& Getpipeline() { return *pipeline_; }
 	};
 
 }

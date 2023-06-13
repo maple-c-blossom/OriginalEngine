@@ -52,7 +52,7 @@ namespace MCB
         //    {{-5.0f,5.0f,5.0f}  ,{} ,{1.0f,1.0f}},// 右下
         //};
 
-        StructVertex vertices[1] =
+        StructVertex vertices_[1] =
         {
             {{0.0f,0.0f,0.0f},{0,0,1},{0,1}},
         };
@@ -82,15 +82,15 @@ namespace MCB
     
         //Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
-        uint16_t* indexMap = nullptr;
+        uint16_t* indexMap_ = nullptr;
 
-        StructVertex* vertMap = nullptr;
+        StructVertex* vertMap_ = nullptr;
 
-        D3D12_VERTEX_BUFFER_VIEW vbView{};
+        D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
-         uint32_t sizeVB = static_cast<uint32_t>(sizeof(vertices[0]) * _countof(vertices));
+         uint32_t sizeVB_ = static_cast<uint32_t>(sizeof(vertices_[0]) * _countof(vertices_));
 
          //インデックスデータ全体のサイズ
          //uint32_t sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * _countof(boxIndices));
@@ -98,21 +98,21 @@ namespace MCB
          //D3D12_INDEX_BUFFER_VIEW ibView{};
 
          //D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
-         static const int32_t vertexCount = 1;
+         static const int32_t vertexCount_ = 1;
 
-         ObjectMaterial material;
+         ObjectMaterial material_;
 
-         D3D12_HEAP_PROPERTIES heapprop{};   // ヒープ設定
+         D3D12_HEAP_PROPERTIES heapprop_{};   // ヒープ設定
 
          //D3D12_RESOURCE_DESC resdesc{};  // リソース設定
 
          void CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
-         void SetIbView(DXGI_FORMAT format);
+         void SetIbView(const DXGI_FORMAT& format);
 
          void SetVbView();
 
-         void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+         void CreateIndexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc,const D3D12_RESOURCE_STATES& state);
 
          void CalculationNormalVec();
 

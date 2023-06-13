@@ -31,25 +31,25 @@ namespace MCB
         Model();
         ~Model();
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_ = nullptr;
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
-
-
+        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
 
-        TextureManager* Loader = TextureManager::GetInstance();
-        TextureCell* texture;
-        std::vector<ObjectVertex> vertices;
-        std::vector<uint16_t> indices;
-        std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData;
 
-        size_t sizeVB = static_cast<size_t>(sizeof(ObjectVertex) * vertices.size());
-        size_t sizeIB = static_cast<size_t>(sizeof(uint16_t) * indices.size());
 
-        D3D12_INDEX_BUFFER_VIEW ibView{};
+        TextureManager* Loader_ = TextureManager::GetInstance();
+        TextureCell* texture_;
+        std::vector<ObjectVertex> vertices_;
+        std::vector<uint16_t> indices_;
+        std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData_;
 
-        D3D12_VERTEX_BUFFER_VIEW vbView{};
+        size_t sizeVB_ = static_cast<size_t>(sizeof(ObjectVertex) * vertices_.size());
+        size_t sizeIB_ = static_cast<size_t>(sizeof(uint16_t) * indices_.size());
+
+        D3D12_INDEX_BUFFER_VIEW ibView_{};
+
+        D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
         //D3D12_HEAP_PROPERTIES heapprop{};   // ÉqÅ[Évê›íË
 
@@ -59,7 +59,7 @@ namespace MCB
 
         void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
-        void SetIbView(DXGI_FORMAT format);
+        void SetIbView(const DXGI_FORMAT& format);
 
         void SetVbView();
 
@@ -79,7 +79,7 @@ namespace MCB
 
         void Init(const std::string& fileName, const bool& smooth = false);
         
-        inline size_t GetVertexCount() { return vertices.size(); }
+        inline size_t GetVertexCount() { return vertices_.size(); }
 
         void AddSmoothData(const uint16_t& indexPosition, const uint16_t& indexVertex);
 

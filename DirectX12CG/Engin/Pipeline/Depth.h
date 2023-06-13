@@ -12,13 +12,13 @@ namespace MCB
 	class Depth
 	{
 	public:
-		D3D12_RESOURCE_DESC depthResDesc{};
-		D3D12_HEAP_PROPERTIES depthHeapProp{};
-		D3D12_CLEAR_VALUE depthClearValue{};
-		Microsoft::WRL::ComPtr<ID3D12Resource> depthBuffer = nullptr;
-		D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc{};
-		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap = nullptr;
-		D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+		D3D12_RESOURCE_DESC depthResDesc_{};
+		D3D12_HEAP_PROPERTIES depthHeapProp_{};
+		D3D12_CLEAR_VALUE depthClearValue_{};
+		Microsoft::WRL::ComPtr<ID3D12Resource> depthBuffer_ = nullptr;
+		D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc_{};
+		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> dsvHeap_ = nullptr;
+		D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc_ = {};
 
 		Depth();
 

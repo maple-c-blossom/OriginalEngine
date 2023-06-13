@@ -36,38 +36,38 @@ namespace MCB
             Float3 pos;//xyz座標
         }Vertex;
         //行列用定数バッファ
-        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform_ = nullptr;
 
         //行列用定数バッファマップ
-        ConstBufferDataTransform* constMapTranceform = nullptr;
+        ConstBufferDataTransform* constMapTranceform_ = nullptr;
 
         //アフィン変換情報
-        DirectX::XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
-        DirectX::XMFLOAT3 rotasion = { 0.0f,0.0f,0.0f };
-        DirectX::XMFLOAT3 position = { 0.0f, 0.0f, 0.0f };
-        TextureManager* textureManager = TextureManager::GetInstance();
+        DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
+        DirectX::XMFLOAT3 rotasion_ = { 0.0f,0.0f,0.0f };
+        DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
+        TextureManager* textureManager_ = TextureManager::GetInstance();
         //ワールド行列
-        WorldMatrix matWorld = {};
-        size_t sizeVB;
-        Vector3D NORM_FRONT_VEC = {};
-        Vector3D nowFrontVec = {};
-        float frontAngle = 0;
-        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
-        D3D12_VERTEX_BUFFER_VIEW vbView{};
-        Vertex vertex;
-        int32_t vertNum = 1;
-        TextureCell* tex;
+        WorldMatrix matWorld_ = {};
+        size_t sizeVB_;
+        Vector3D NORM_FRONT_VEC_ = {};
+        Vector3D nowFrontVec_ = {};
+        float frontAngle_ = 0;
+        Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
+        D3D12_VERTEX_BUFFER_VIEW vbView_{};
+        Vertex vertex_;
+        int32_t vertNum_ = 1;
+        TextureCell* tex_;
         Particle();
 
         ~Particle();
 
 
         //親オブジェクトへのポインタ
-        Particle* parent = nullptr;
+        Particle* parent_ = nullptr;
         
-        ParticleMaterial material;
+        ParticleMaterial material_;
 
-        bool trackingFlag = false;
+        bool trackingFlag_ = false;
 
         void SetColor(const Float4& color);
 

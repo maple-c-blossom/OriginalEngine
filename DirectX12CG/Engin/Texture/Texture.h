@@ -10,12 +10,12 @@ namespace MCB
 	class Texture
 	{
 	public:
-		MipMap mipMap = {};
-		TexImgData texImg = {};
-		TextureBuffer texBuff = {};
-		TextureFile texfile = {};
-		ShaderResource* srvptr = nullptr;
-		uint16_t incrementNum = 0;
+		MipMap mipMap_ = {};
+		TexImgData texImg_ = {};
+		TextureBuffer texBuff_ = {};
+		TextureFile texfile_ = {};
+		ShaderResource* srvptr_ = nullptr;
+		uint16_t incrementNum_ = 0;
 		Texture() {};
 		Texture(const Texture& texture) {};
 		~Texture();

@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <cstdint>
 
 namespace MCB
 {
@@ -10,7 +11,7 @@ namespace MCB
         DxWindow(const DxWindow& dx12) {};
         DxWindow& operator=(const DxWindow& dx12) {};
         ~DxWindow();
-        bool breakFlag = false;
+        bool breakFlag_ = false;
 
     public:
         static DxWindow* GetInstance();
@@ -18,15 +19,15 @@ namespace MCB
         static void DeleteInstance();
 
         // ウィンドウサイズ
-        static const int32_t window_width = 1280;  // 横幅
-        static const int32_t window_height = 720;  // 縦幅
+        static const int32_t sWINDOW_WIDTH_ = 1280;  // 横幅
+        static const int32_t sWINDOW_HEIGHT_ = 720;  // 縦幅
 
 
-        MSG msg{}; //メッセージここから
-        WNDCLASSEX window{}; // ウィンドウクラスの設定
+        MSG msg_{}; //メッセージここから
+        WNDCLASSEX window_{}; // ウィンドウクラスの設定
             // ウィンドウサイズ{ X座標 Y座標 横幅 縦幅 }
-        RECT wrc = { 0, 0, window_width, window_height };
-        HWND hwnd;
+        RECT wrc = { 0, 0, sWINDOW_WIDTH_, sWINDOW_HEIGHT_ };
+        HWND hwnd_;
         const wchar_t* windowName = L"MapleEngin";
 
 

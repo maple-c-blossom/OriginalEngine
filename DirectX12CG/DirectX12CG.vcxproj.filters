@@ -628,14 +628,14 @@
     <ClInclude Include="Query.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="App\Player.h">
-      <Filter>ヘッダー ファイル\Engin\Util</Filter>
-    </ClInclude>
     <ClInclude Include="Engin\Util\App.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Player.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

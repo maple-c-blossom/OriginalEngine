@@ -6,10 +6,10 @@ namespace MCB
 	class Quaternion
 	{
 	public:
-		float x;
-		float y;
-		float z;
-		float w;
+		float x_;
+		float y_;
+		float z_;
+		float w_;
 		Quaternion(const Vector3D& vec, const float& angle);
 		Quaternion();
 		Quaternion(const float& x, const float& y,const float& z,const float& w);

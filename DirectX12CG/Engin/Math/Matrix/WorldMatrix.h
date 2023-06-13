@@ -9,13 +9,13 @@ namespace MCB
 	{
 	public:
 		//ワールド行列
-		DirectX::XMMATRIX matWorld = DirectX::XMMatrixIdentity();
+		DirectX::XMMATRIX matWorld_ = DirectX::XMMatrixIdentity();
 		//スケール行列
-		DirectX::XMMATRIX matScale = DirectX::XMMatrixIdentity();
+		DirectX::XMMATRIX matScale_ = DirectX::XMMatrixIdentity();
 		//回転行列
-		DirectX::XMMATRIX matRot = DirectX::XMMatrixIdentity();
+		DirectX::XMMATRIX matRot_ = DirectX::XMMatrixIdentity();
 		//平行移動行列
-		DirectX::XMMATRIX matTransform;
+		DirectX::XMMATRIX matTransform_;
 
 
 

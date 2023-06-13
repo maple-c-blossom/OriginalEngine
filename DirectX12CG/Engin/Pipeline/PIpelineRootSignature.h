@@ -25,10 +25,10 @@ namespace MCB
 	class PipelineRootSignature
 	{
 	public:
-		Pipeline pipeline;
-		RootSignature rootsignature;
-		Shader shader;
-		TexSample texSample;
+		Pipeline pipeline_;
+		RootSignature rootsignature_;
+		Shader shader_;
+		TexSample texSample_;
 
 		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam,const int32_t& blendMode = Alpha );
 

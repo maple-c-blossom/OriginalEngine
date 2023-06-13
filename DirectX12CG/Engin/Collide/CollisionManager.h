@@ -11,8 +11,8 @@ namespace MCB
 	{
 	public:
 		static CollisionManager* GetInstance();
-		inline void AddCollider(std::shared_ptr<BaseCollider> coll) { colliders.push_front(coll); }
-		inline void RemoveCollider(std::shared_ptr<BaseCollider> coll) { colliders.remove(coll); }
+		inline void AddCollider(std::shared_ptr<BaseCollider> coll) { colliders_.push_front(coll); }
+		inline void RemoveCollider(std::shared_ptr<BaseCollider> coll) { colliders_.remove(coll); }
 		void CheckAllCollision();
 		bool Raycast( Ray& ray, RayCastHit* hitinfo = nullptr, const float& maxDistance = D3D12_FLOAT32_MAX);
 		bool Raycast( Ray& ray, const uint16_t& attribute, RayCastHit* hitinfo = nullptr, const float& maxDistance = D3D12_FLOAT32_MAX);
@@ -23,6 +23,6 @@ namespace MCB
 		~CollisionManager() = default;
 		CollisionManager& operator= (const CollisionManager&) = delete;
 
-		std::forward_list<std::shared_ptr<BaseCollider>>colliders;
+		std::forward_list<std::shared_ptr<BaseCollider>>colliders_;
 	};
 }

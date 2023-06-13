@@ -9,8 +9,8 @@ namespace MCB
 
 
 	public:
-		float x = 0;
-		float y = 0;
+		float x_ = 0;
+		float y_ = 0;
 
 		Vector2D();
 		Vector2D(float x, float y);
@@ -45,9 +45,9 @@ namespace MCB
 
 		Vector2D& operator -=(const Vector2D& other);
 
-		Vector2D& operator *=(float speed);
+		Vector2D& operator *=(const float& speed);
 
-		Vector2D& operator /=(float Lenge);
+		Vector2D& operator /=(const float& Lenge);
 
 	};
 
@@ -56,10 +56,10 @@ namespace MCB
 
 	Vector2D operator -(const Vector2D& a, const Vector2D& b);
 
-	Vector2D operator *(Vector2D a, float speed);
+	Vector2D operator *(const Vector2D& a, const float& speed);
 
-	Vector2D operator *(float speed, Vector2D a);
+	Vector2D operator *(const float& speed, const Vector2D& a);
 
-	Vector2D operator /(Vector2D a, float Lenge);
+	Vector2D operator /(const Vector2D& a, const float& Lenge);
 
 }
