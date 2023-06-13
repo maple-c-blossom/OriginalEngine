@@ -11,12 +11,12 @@ void MCB::DebugCamera::Inilialize()
 	view_.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_, 0.1f, 4000.0f);
 
-	eye_.vec_.x_ = view_.eye.x;
-	eye_.vec_.y_ = view_.eye.y;
-	eye_.vec_.z_ = view_.eye.z;
-	target_.vec_.x_ = view_.target.x;
-	target_.vec_.y_ = view_.target.y;
-	target_.vec_.z_ = view_.target.z;
+	eye_.vec_.x_ = view_.eye_.x;
+	eye_.vec_.y_ = view_.eye_.y;
+	eye_.vec_.z_ = view_.eye_.z;
+	target_.vec_.x_ = view_.target_.x;
+	target_.vec_.y_ = view_.target_.y;
+	target_.vec_.z_ = view_.target_.z;
 	Vector3D frontVec = target_ - eye_;
 	disEyeTarget_ = frontVec.V3Len();
 }
@@ -34,12 +34,12 @@ void MCB::DebugCamera::Update()
 	moveCursor.VecNorm();
 #pragma endregion
 
-	eye_.vec_.x_ = view_.eye.x;
-	eye_.vec_.y_ = view_.eye.y;
-	eye_.vec_.z_ = view_.eye.z;
-	target_.vec_.x_ = view_.target.x;
-	target_.vec_.y_ = view_.target.y;
-	target_.vec_.z_ = view_.target.z;
+	eye_.vec_.x_ = view_.eye_.x;
+	eye_.vec_.y_ = view_.eye_.y;
+	eye_.vec_.z_ = view_.eye_.z;
+	target_.vec_.x_ = view_.target_.x;
+	target_.vec_.y_ = view_.target_.y;
+	target_.vec_.z_ = view_.target_.z;
 	Vector3D frontVec = target_ - eye_;
 	frontVec.V3Norm();
 	Vector3D rightVec = Vector3D(0, 1, 0).GetV3Cross(frontVec);
@@ -51,8 +51,8 @@ void MCB::DebugCamera::Update()
 		if (cursorDisPrev != 0) {
 			moveCursor /= 1000;
 			moveCursor *= cursorDisPrev;
-			if (view_.up.y < 0) {
-				moveCursor.x = -moveCursor.x;
+			if (view_.up_.y < 0) {
+				moveCursor.x_ = -moveCursor.x_;
 			}
 			rotAngle_ += moveCursor;
 		}
@@ -80,13 +80,13 @@ void MCB::DebugCamera::Update()
 	Vector2D angle = rotAngle_;
 
 #pragma region view‘ã“ü
-	view_.up.y = cosf(angle.y);
-	view_.target.x = target_.vec_.x_;
-	view_.target.y = target_.vec_.y_;
-	view_.target.z = target_.vec_.z_;
-	view_.eye.x = target_.vec_.x_ - disEyeTarget_ * cosf(angle.y) * sinf(angle.x);
-	view_.eye.y = target_.vec_.y_ + disEyeTarget_ * sinf(angle.y);
-	view_.eye.z = target_.vec_.z_ - disEyeTarget_ * cosf(angle.y) * cosf(angle.x);
+	view_.up_.y = cosf(angle.y_);
+	view_.target_.x = target_.vec_.x_;
+	view_.target_.y = target_.vec_.y_;
+	view_.target_.z = target_.vec_.z_;
+	view_.eye_.x = target_.vec_.x_ - disEyeTarget_ * cosf(angle.y_) * sinf(angle.x_);
+	view_.eye_.y = target_.vec_.y_ + disEyeTarget_ * sinf(angle.y_);
+	view_.eye_.z = target_.vec_.z_ - disEyeTarget_ * cosf(angle.y_) * cosf(angle.x_);
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();
 

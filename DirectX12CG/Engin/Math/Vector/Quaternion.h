@@ -15,11 +15,11 @@ namespace MCB
 		Quaternion(const float& x, const float& y,const float& z,const float& w);
 
 		//与えられたベクトル周りの回転を表すクォータニオンを生成
-		void SetRota(const Vector3D& vec,const float& angle);
+		void SetRota( Vector3D vec,const float& angle);
 		//共役
-		Quaternion GetConjugated (const Quaternion& q);
-		//逆数（数学用語より）
-		Quaternion GetReciprocal(const Quaternion& q);
+		Quaternion GetConjugated ( Quaternion q);
+		//逆数（数学用語より
+		Quaternion GetReciprocal( Quaternion q);
 		//長さ
 		double GetNorm();
 		//q*pの直積
@@ -34,17 +34,17 @@ namespace MCB
 		//球面線形補間
 		Quaternion Slerp(const Quaternion& start, const Quaternion& end, const float& time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える
-		Vector3D SetRotationVector(const Vector3D& rotationAxisVec, const Vector3D& PositionVec, const float& angle);
+		Vector3D SetRotationVector(const Vector3D& rotationAxisVec,  Vector3D PositionVec, const float& angle);
 		//与えられたクォータニオンの回転をPositionVecに与える
-		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Vector3D& PositionVec);
+		Vector3D SetRotationVector(const Quaternion& rotationQuaternion,  Vector3D PositionVec);
 		//何のために作ったの作ったんでしょうかね
 		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec);
 
-		Quaternion DirToDir(const Vector3D& u, const Vector3D& v);
+		Quaternion DirToDir( Vector3D u,  Vector3D v);
 		//正規化する
 		void Normalize();
 		//正規化した値を返す
-		static Quaternion Normalize(const Quaternion& q);
+		static Quaternion Normalize( Quaternion q);
 		//回転行列に変換
 		MCBMatrix GetQuaternionRotaMat(const Quaternion& rotaQ);
 		

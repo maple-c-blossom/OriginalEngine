@@ -2,6 +2,6 @@
 
 void MCB::ICamera::MatrixUpdate()
 {
-	projection.UpdataMatrixProjection();
-	view.UpDateMatrixView();
+	projection_.UpdataMatrixProjection();
+	view_.UpDateMatrixView();
 }

@@ -3,43 +3,44 @@
 
 
 using namespace MCB;
-MCB::Vector3D::Vector3D(Float3 start, Float3 end)
-{
-	vec = end - start;
-}
-
-MCB::Vector3D::Vector3D(Vector3D start, Vector3D end)
+MCB::Vector3D::Vector3D(const Float3& start,const Float3& end)
 {
 	Vector3D temp = end - start;
-	vec = temp.vec;
+	vec_ = temp.vec_;
+}
+
+MCB::Vector3D::Vector3D(const Vector3D& start, const Vector3D& end)
+{
+	Vector3D temp = end - start;
+	vec_ = temp.vec_;
 }
 
 
 
 MCB::Vector3D::Vector3D()
 {
-	vec.x = 0;
-	vec.y = 0;
-	vec.z = 0;
+	vec_.x_ = 0;
+	vec_.y_ = 0;
+	vec_.z_ = 0;
 }
-MCB::Vector3D::Vector3D(Float3 vec)
+MCB::Vector3D::Vector3D(const Float3& vec)
 {
-	this->vec = vec;
+	vec_ = vec;
 }
-MCB::Vector3D::Vector3D(float x, float y, float z)
+MCB::Vector3D::Vector3D(const float& x, const float& y, const float& z)
 {
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
+	vec_.x_ = x;
+	vec_.y_ = y;
+	vec_.z_ = z;
 }
-Vector3D MCB::Vector3D::V3Get(Float3 start, Float3 end)
+Vector3D MCB::Vector3D::V3Get(const Float3& start, const Float3& end)
 {
 	 Vector3D temp(start,end);
 	 return temp;
 }
 float MCB::Vector3D::V3Len() const
 {
-	return sqrtf(((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
+	return sqrtf(((vec_.x_ * vec_.x_) + (vec_.y_ * vec_.y_) + (vec_.z_ * vec_.z_)));
 }
 
 void MCB::Vector3D::V3Norm()
@@ -51,41 +52,41 @@ void MCB::Vector3D::V3Norm()
 		return;
 	}
 
-	vec.x = vec.x / VecLen;
-	vec.y = vec.y / VecLen;
-	vec.z = vec.z / VecLen;
+	vec_.x_ = vec_.x_ / VecLen;
+	vec_.y_ = vec_.y_ / VecLen;
+	vec_.z_ = vec_.z_ / VecLen;
 
 }
 
-float MCB::Vector3D::GetV3Dot(Vector3D vector)
+float MCB::Vector3D::GetV3Dot(const Vector3D& vector)
 {
-	return (vec.x * vector.vec.x) + (vec.y * vector.vec.y) + (vec.z * vector.vec.z);
+	return (vec_.x_ * vector.vec_.x_) + (vec_.y_ * vector.vec_.y_) + (vec_.z_ * vector.vec_.z_);
 }
 
-Vector3D MCB::Vector3D::GetV3Cross(Vector3D vector)
+Vector3D MCB::Vector3D::GetV3Cross(const Vector3D& vector)
 {
 	Vector3D temp;
-	temp.vec.x = vec.y * vector.vec.z - vec.z * vector.vec.y;
-	temp.vec.y = vec.z * vector.vec.x - vec.x * vector.vec.z;
-	temp.vec.z = vec.x * vector.vec.y - vec.y * vector.vec.x;
+	temp.vec_.x_ = vec_.y_ * vector.vec_.z_ - vec_.z_ * vector.vec_.y_;
+	temp.vec_.y_ = vec_.z_ * vector.vec_.x_ - vec_.x_ * vector.vec_.z_;
+	temp.vec_.z_ = vec_.x_ * vector.vec_.y_ - vec_.y_ * vector.vec_.x_;
 	return temp;
 }
 
-Vector3D MCB::Vector3D::GetV3Cross(Vector3D avector, Vector3D bvector)
+Vector3D MCB::Vector3D::GetV3Cross(const Vector3D& avector, const Vector3D& bvector)
 {
 	Vector3D temp;
-	temp.vec.x = avector.vec.y * bvector.vec.z - avector.vec.z * bvector.vec.y;
-	temp.vec.y = avector.vec.z * bvector.vec.x - avector.vec.x * bvector.vec.z;
-	temp.vec.z = avector.vec.x * bvector.vec.y - avector.vec.y * bvector.vec.x;
+	temp.vec_.x_ = avector.vec_.y_ * bvector.vec_.z_ - avector.vec_.z_ * bvector.vec_.y_;
+	temp.vec_.y_ = avector.vec_.z_ * bvector.vec_.x_ - avector.vec_.x_ * bvector.vec_.z_;
+	temp.vec_.z_ = avector.vec_.x_ * bvector.vec_.y_ - avector.vec_.y_ * bvector.vec_.x_;
 	return temp;
 }
 
 DirectX::XMVECTOR MCB::Vector3D::ConvertXMVEC()
 {
 	DirectX::XMVECTOR temp;
-	temp.m128_f32[0] = this->vec.x;
-	temp.m128_f32[1] = this->vec.y;
-	temp.m128_f32[2] = this->vec.z;
+	temp.m128_f32[0] = vec_.x_;
+	temp.m128_f32[1] = vec_.y_;
+	temp.m128_f32[2] = vec_.z_;
 	return temp;
 }
 
@@ -101,7 +102,7 @@ Vector3D MCB::Vector3D::GetUpVec(Vector3D RightVec, Vector3D frontVec)
 }
 
 
-Vector3D MCB::Vector3D::GetRightVec(Vector3D frontVec, Vector3D UpVec)
+Vector3D MCB::Vector3D::GetRightVec( Vector3D frontVec,  Vector3D UpVec)
 {
 	Vector3D ans;
 	frontVec.V3Norm();
@@ -115,7 +116,7 @@ Vector3D MCB::Vector3D::GetRightVec(Vector3D frontVec, Vector3D UpVec)
 float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 {
 	Vector3D temp;
-	temp.vec = vec;
+	temp.vec_ = vec_;
 	temp.V3Norm();
 	vector.V3Norm();
 	return acos(temp.GetV3Dot(vector));
@@ -123,45 +124,45 @@ float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 
 Vector3D& MCB::Vector3D::operator+=(const Vector3D& Vec)
 {
-	this->vec.x += Vec.vec.x;
-	this->vec.y += Vec.vec.y;
-	this->vec.z += Vec.vec.z;
+	this->vec_.x_ += Vec.vec_.x_;
+	this->vec_.y_ += Vec.vec_.y_;
+	this->vec_.z_ += Vec.vec_.z_;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator-=(const Vector3D& Vec)
 {
-	this->vec.x -= Vec.vec.x;
-	this->vec.y -= Vec.vec.y;
-	this->vec.z -= Vec.vec.z;
+	this->vec_.x_ -= Vec.vec_.x_;
+	this->vec_.y_ -= Vec.vec_.y_;
+	this->vec_.z_ -= Vec.vec_.z_;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator*=(const float& k)
 {
-	this->vec.x *= k;
-	this->vec.y *= k;
-	this->vec.z *= k;
+	this->vec_.x_ *= k;
+	this->vec_.y_ *= k;
+	this->vec_.z_ *= k;
 	return *this;
 }
 
-Vector3D& MCB::Vector3D::operator=(const Float3 a)
+Vector3D& MCB::Vector3D::operator=(const Float3& a)
 {
-	this->vec.x = a.x;
-	this->vec.y = a.y;
-	this->vec.z = a.z;
+	this->vec_.x_ = a.x_;
+	this->vec_.y_ = a.y_;
+	this->vec_.z_ = a.z_;
 	return *this;
 }
 
-Vector3D& MCB::Vector3D::operator=(const DirectX::XMVECTOR a)
+Vector3D& MCB::Vector3D::operator=(const DirectX::XMVECTOR& a)
 {
-	this->vec.x = a.m128_f32[0];
-	this->vec.y = a.m128_f32[1];
-	this->vec.z = a.m128_f32[2];
+	this->vec_.x_ = a.m128_f32[0];
+	this->vec_.y_ = a.m128_f32[1];
+	this->vec_.z_ = a.m128_f32[2];
 	return *this;
 }
 
-Vector3D MCB::operator+(Vector3D& vecA, Vector3D& vecB)
+Vector3D MCB::operator+(const Vector3D& vecA, const Vector3D& vecB)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -169,7 +170,7 @@ Vector3D MCB::operator+(Vector3D& vecA, Vector3D& vecB)
 	return temp;
 }
 
-Vector3D MCB::operator-(Vector3D& vecA, Vector3D& vecB)
+Vector3D MCB::operator-(const Vector3D& vecA, const Vector3D& vecB)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -177,7 +178,7 @@ Vector3D MCB::operator-(Vector3D& vecA, Vector3D& vecB)
 	return temp;
 }
 
-Vector3D MCB::operator*(Vector3D& vecA, float k)
+Vector3D MCB::operator*(const Vector3D& vecA, const float& k)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -185,7 +186,7 @@ Vector3D MCB::operator*(Vector3D& vecA, float k)
 	return temp;
 }
 
-Vector3D MCB::operator*(float k, Vector3D vecA)
+Vector3D MCB::operator*(const float& k, const Vector3D& vecA)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -193,20 +194,20 @@ Vector3D MCB::operator*(float k, Vector3D vecA)
 	return temp;
 }
 
-Vector3D MCB::operator/(Vector3D& vecA, float k)
+Vector3D MCB::operator/(const Vector3D& vecA, const float& k)
 {
 	Vector3D temp;
-	temp.vec.x = vecA.vec.x / k;
-	temp.vec.y = vecA.vec.y / k;
-	temp.vec.z = vecA.vec.z / k;
+	temp.vec_.x_ = vecA.vec_.x_ / k;
+	temp.vec_.y_ = vecA.vec_.y_ / k;
+	temp.vec_.z_ = vecA.vec_.z_ / k;
 	return temp;
 }
 
-Vector3D MCB::operator-(Vector3D& vecA)
+Vector3D MCB::operator-(const Vector3D& vecA)
 {
 	Vector3D temp;
-	temp.vec.x = vecA.vec.x * -1;
-	temp.vec.y = vecA.vec.y * -1;
-	temp.vec.z = vecA.vec.z * -1;
+	temp.vec_.x_ = vecA.vec_.x_ * -1;
+	temp.vec_.y_ = vecA.vec_.y_ * -1;
+	temp.vec_.z_ = vecA.vec_.z_ * -1;
 	return temp;
 }

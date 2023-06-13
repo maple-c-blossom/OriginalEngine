@@ -7,35 +7,35 @@ using namespace MCB;
 
 void MCB::MCBMatrix::MCBMatrixIdentity()
 {
-	_11 = 1.0f; _12 = 0.0f; _13 = 0.0f; _14 = 0.0f;
-	_21 = 0.0f; _22 = 1.0f; _23 = 0.0f; _24 = 0.0f;
-	_31 = 0.0f; _32 = 0.0f; _33 = 1.0f; _34 = 0.0f;
-	_41 = 0.0f; _42 = 0.0f; _43 = 0.0f; _44 = 1.0f;
+	_11_ = 1.0f; _12_ = 0.0f; _13_ = 0.0f; _14_ = 0.0f;
+	_21_ = 0.0f; _22_ = 1.0f; _23_ = 0.0f; _24_ = 0.0f;
+	_31_ = 0.0f; _32_ = 0.0f; _33_ = 1.0f; _34_ = 0.0f;
+	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(float x, float y, float z)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(const float& x, const float& y, const float& z)
 {
 	MCBMatrix temp;
 	temp.MCBMatrixIdentity();
 
-	temp._41 = x;
-	temp._42 = y;
-	temp._43 = z;
-	temp._44 = 1;
+	temp._41_ = x;
+	temp._42_ = y;
+	temp._43_ = z;
+	temp._44_ = 1;
 
 	return temp;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(float x, float y, float z)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(const float& x, const float& y, const float& z)
 {
 
 	MCBMatrix temp;
 	temp.MCBMatrixIdentity();
 
-	temp._11 = x;
-	temp._22 = y;
-	temp._33 = z;
-	temp._44 = 1;
+	temp._11_ = x;
+	temp._22_ = y;
+	temp._33_ = z;
+	temp._44_ = 1;
 
 	return temp;
 	return MCBMatrix();
@@ -43,94 +43,94 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(float x, float y, float z)
 
 void MCB::MCBMatrix::ConvertMatrixArray(float** ArrayMat)
 {
-	ArrayMat[0][0] = _11, ArrayMat[0][1] = _12, ArrayMat[0][2] = _13, ArrayMat[0][3] = _14;
-	ArrayMat[1][0] = _21, ArrayMat[1][1] = _22, ArrayMat[1][2] = _23, ArrayMat[1][3] = _24;
-	ArrayMat[2][0] = _31, ArrayMat[2][1] = _32, ArrayMat[2][2] = _33, ArrayMat[2][3] = _34;
-	ArrayMat[3][0] = _41, ArrayMat[3][1] = _42, ArrayMat[3][2] = _43, ArrayMat[3][3] = _44;
+	ArrayMat[0][0] = _11_, ArrayMat[0][1] = _12_, ArrayMat[0][2] = _13_, ArrayMat[0][3] = _14_;
+	ArrayMat[1][0] = _21_, ArrayMat[1][1] = _22_, ArrayMat[1][2] = _23_, ArrayMat[1][3] = _24_;
+	ArrayMat[2][0] = _31_, ArrayMat[2][1] = _32_, ArrayMat[2][2] = _33_, ArrayMat[2][3] = _34_;
+	ArrayMat[3][0] = _41_, ArrayMat[3][1] = _42_, ArrayMat[3][2] = _43_, ArrayMat[3][3] = _44_;
 }
 
 void MCB::MCBMatrix::ConvertMatrixMCBMat(float** ArrayMat)
 {
-	_11 = ArrayMat[0][0], _12 = ArrayMat[0][1], _13 = ArrayMat[0][2], _14 = ArrayMat[0][3];
-	_21 = ArrayMat[1][0], _22 = ArrayMat[1][1], _23 = ArrayMat[1][2], _24 = ArrayMat[1][3];
-	_31 = ArrayMat[2][0], _32 = ArrayMat[2][1], _33 = ArrayMat[2][2], _34 = ArrayMat[2][3];
-	_41 = ArrayMat[3][0], _42 = ArrayMat[3][1], _43 = ArrayMat[3][2], _44 = ArrayMat[3][3];
+	_11_ = ArrayMat[0][0], _12_ = ArrayMat[0][1], _13_ = ArrayMat[0][2], _14_ = ArrayMat[0][3];
+	_21_ = ArrayMat[1][0], _22_ = ArrayMat[1][1], _23_ = ArrayMat[1][2], _24_ = ArrayMat[1][3];
+	_31_ = ArrayMat[2][0], _32_ = ArrayMat[2][1], _33_ = ArrayMat[2][2], _34_ = ArrayMat[2][3];
+	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX(float angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX(const float& angle)
 {
 	MCBMatrix matrix;
 
 	matrix.MCBMatrixIdentity();
 
-	matrix._22 = cosf(angle);
-	matrix._23 = sinf(angle);
+	matrix._22_ = cosf(angle);
+	matrix._23_ = sinf(angle);
 
-	matrix._32 = -sinf(angle);
-	matrix._33 = cosf(angle);
+	matrix._32_ = -sinf(angle);
+	matrix._33_ = cosf(angle);
 
 	return matrix;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(float angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(const float& angle)
 {
 	MCBMatrix matrix;
 
 	matrix.MCBMatrixIdentity();
-	matrix,_11 = (float)cosf(angle);
-	matrix._31 = (float)-sin(angle);
+	matrix,_11_ = (float)cosf(angle);
+	matrix._31_ = (float)-sin(angle);
 
-	matrix._13 = (float)sinf(angle);
-	matrix._33 = (float)cosf(angle);
+	matrix._13_ = (float)sinf(angle);
+	matrix._33_ = (float)cosf(angle);
 
 	return matrix;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(float angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(const float& angle)
 {
 	MCBMatrix matrix;
 	matrix.MCBMatrixIdentity();
 
-	matrix._11 = (float)cos(angle);
-	matrix._12 = (float)sin(angle);
+	matrix._11_ = (float)cos(angle);
+	matrix._12_ = (float)sin(angle);
 
-	matrix._21 = (float)-sin(angle);
-	matrix._22 = (float)cos(angle);
+	matrix._21_ = (float)-sin(angle);
+	matrix._22_ = (float)cos(angle);
 
 	return matrix;
 }
 
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(double angle, DirectX::XMFLOAT3 vector)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(const double& angle, const DirectX::XMFLOAT3& vector)
 {
 	MCBMatrix matRot = ReturnMatrixIdentity();
 
-	matRot._11 = (vector.x * vector.x) * (1 - (float)cos(angle)) + (float)cos(angle);
-	matRot._12 = vector.x * vector.y * (1 - (float)cos(angle)) - vector.z * (float)sin(angle);
-	matRot._13 = vector.x * vector.z * (1 - (float)cos(angle)) + vector.y * (float)sin(angle);
-	matRot._14 = 0;
+	matRot._11_ = (vector.x * vector.x) * (1 - (float)cos(angle)) + (float)cos(angle);
+	matRot._12_ = vector.x * vector.y * (1 - (float)cos(angle)) - vector.z * (float)sin(angle);
+	matRot._13_ = vector.x * vector.z * (1 - (float)cos(angle)) + vector.y * (float)sin(angle);
+	matRot._14_ = 0;
 
-	matRot._21 = vector.x * vector.y * (1 - (float)cos(angle)) + vector.z * (float)sin(angle);
-	matRot._22 = (vector.y * vector.y) * (1 - (float)cos(angle)) + (float)cos(angle);
-	matRot._23 = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
-	matRot._24 = 0;
+	matRot._21_ = vector.x * vector.y * (1 - (float)cos(angle)) + vector.z * (float)sin(angle);
+	matRot._22_ = (vector.y * vector.y) * (1 - (float)cos(angle)) + (float)cos(angle);
+	matRot._23_ = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
+	matRot._24_ = 0;
 
-	matRot._31 = vector.x * vector.z * (1 - (float)cos(angle)) - vector.y * (float)sin(angle);
-	matRot._32 = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
-	matRot._33 = (vector.z * vector.z) * (1 - (float)cos(angle)) + (float)cos(angle);
-	matRot._34 = 0;
+	matRot._31_ = vector.x * vector.z * (1 - (float)cos(angle)) - vector.y * (float)sin(angle);
+	matRot._32_ = vector.y * vector.z * (1 - (float)cos(angle)) + vector.x * (float)sin(angle);
+	matRot._33_ = (vector.z * vector.z) * (1 - (float)cos(angle)) + (float)cos(angle);
+	matRot._34_ = 0;
 
-	matRot._41 = 0;
-	matRot._42 = 0;
-	matRot._43 = 0;
-	matRot._44 = 1;
+	matRot._41_ = 0;
+	matRot._42_ = 0;
+	matRot._43_ = 0;
+	matRot._44_ = 1;
 
 	return matRot;
 
 
 }
 
-void MCB::MCBMatrix::SetRotaMatrix(Float3 angle)
+void MCB::MCBMatrix::SetRotaMatrix(const Float3& angle)
 {
 
 }
@@ -138,10 +138,10 @@ void MCB::MCBMatrix::SetRotaMatrix(Float3 angle)
 MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 {
 	MCBMatrix ans;
-		ans._11 = 1.0f; ans._12 = 0.0f; ans._13 = 0.0f; ans._14 = 0.0f;
-		ans._21 = 0.0f; ans._22 = 1.0f; ans._23 = 0.0f; ans._24 = 0.0f;
-		ans._31 = 0.0f; ans._32 = 0.0f; ans._33 = 1.0f; ans._34 = 0.0f;
-		ans._41 = 0.0f; ans._42 = 0.0f; ans._43 = 0.0f; ans._44 = 1.0f;
+		ans._11_ = 1.0f; ans._12_ = 0.0f; ans._13_ = 0.0f; ans._14_ = 0.0f;
+		ans._21_ = 0.0f; ans._22_ = 1.0f; ans._23_ = 0.0f; ans._24_ = 0.0f;
+		ans._31_ = 0.0f; ans._32_ = 0.0f; ans._33_ = 1.0f; ans._34_ = 0.0f;
+		ans._41_ = 0.0f; ans._42_ = 0.0f; ans._43_ = 0.0f; ans._44_ = 1.0f;
 	return ans;
 }
 
@@ -180,259 +180,259 @@ MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 //	return ans;
 //}
 
-DirectX::XMMATRIX MCB::MCBMatrix::MatrixConvertXMMatrix(MCBMatrix mat)
+DirectX::XMMATRIX MCB::MCBMatrix::MatrixConvertXMMatrix(const MCBMatrix& mat)
 {
 	XMMATRIX ans;
-	ans.r[0].m128_f32[0] = mat._11;
-	ans.r[0].m128_f32[1] = mat._12;
-	ans.r[0].m128_f32[2] = mat._13;
-	ans.r[0].m128_f32[3] = mat._14;
+	ans.r[0].m128_f32[0] = mat._11_;
+	ans.r[0].m128_f32[1] = mat._12_;
+	ans.r[0].m128_f32[2] = mat._13_;
+	ans.r[0].m128_f32[3] = mat._14_;
 
-	ans.r[1].m128_f32[0] = mat._21;
-	ans.r[1].m128_f32[1] = mat._22;
-	ans.r[1].m128_f32[2] = mat._23;
-	ans.r[1].m128_f32[3] = mat._24;
+	ans.r[1].m128_f32[0] = mat._21_;
+	ans.r[1].m128_f32[1] = mat._22_;
+	ans.r[1].m128_f32[2] = mat._23_;
+	ans.r[1].m128_f32[3] = mat._24_;
 
-	ans.r[2].m128_f32[0] = mat._31;
-	ans.r[2].m128_f32[1] = mat._32;
-	ans.r[2].m128_f32[2] = mat._33;
-	ans.r[2].m128_f32[3] = mat._34;
+	ans.r[2].m128_f32[0] = mat._31_;
+	ans.r[2].m128_f32[1] = mat._32_;
+	ans.r[2].m128_f32[2] = mat._33_;
+	ans.r[2].m128_f32[3] = mat._34_;
 
-	ans.r[3].m128_f32[0] = mat._41;
-	ans.r[3].m128_f32[1] = mat._42;
-	ans.r[3].m128_f32[2] = mat._43;
-	ans.r[3].m128_f32[3] = mat._44;
+	ans.r[3].m128_f32[0] = mat._41_;
+	ans.r[3].m128_f32[1] = mat._42_;
+	ans.r[3].m128_f32[2] = mat._43_;
+	ans.r[3].m128_f32[3] = mat._44_;
 
 	return ans;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixConvertXMMatrix(XMMATRIX mat)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixConvertXMMatrix(const XMMATRIX& mat)
 {
 	MCBMatrix ans;
-	ans._11 = mat.r[0].m128_f32[0];
-	ans._12 = mat.r[0].m128_f32[1];
-	ans._13 = mat.r[0].m128_f32[2];
-	ans._14 = mat.r[0].m128_f32[3];
+	ans._11_ = mat.r[0].m128_f32[0];
+	ans._12_ = mat.r[0].m128_f32[1];
+	ans._13_ = mat.r[0].m128_f32[2];
+	ans._14_ = mat.r[0].m128_f32[3];
 						 
-	ans._21 = mat.r[1].m128_f32[0] ;
-	ans._22 = mat.r[1].m128_f32[1] ;
-	ans._23 = mat.r[1].m128_f32[2] ;
-	ans._24 = mat.r[1].m128_f32[3] ;
+	ans._21_ = mat.r[1].m128_f32[0] ;
+	ans._22_ = mat.r[1].m128_f32[1] ;
+	ans._23_ = mat.r[1].m128_f32[2] ;
+	ans._24_ = mat.r[1].m128_f32[3] ;
 						 
-	ans._31 = mat.r[2].m128_f32[0] ;
-	ans._32 = mat.r[2].m128_f32[1] ;
-	ans._33 = mat.r[2].m128_f32[2] ;
-	ans._34 = mat.r[2].m128_f32[3] ;
+	ans._31_ = mat.r[2].m128_f32[0] ;
+	ans._32_ = mat.r[2].m128_f32[1] ;
+	ans._33_ = mat.r[2].m128_f32[2] ;
+	ans._34_ = mat.r[2].m128_f32[3] ;
 						 
-	ans._41 = mat.r[3].m128_f32[0];
-	ans._42 = mat.r[3].m128_f32[1] ;
-	ans._43 = mat.r[3].m128_f32[2] ;
-	ans._44 = mat.r[3].m128_f32[3] ;
+	ans._41_ = mat.r[3].m128_f32[0];
+	ans._42_ = mat.r[3].m128_f32[1] ;
+	ans._43_ = mat.r[3].m128_f32[2] ;
+	ans._44_ = mat.r[3].m128_f32[3] ;
 	return MCBMatrix();
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::operator*(float s)
+MCB::MCBMatrix MCB::MCBMatrix::operator*(const float& s)
 {
 	MCBMatrix ans;
-	ans._11 = _11 * s;
-	ans._12 = _12 * s;
-	ans._13 = _13 * s;
-	ans._14 = _14 * s;
+	ans._11_ = _11_ * s;
+	ans._12_ = _12_ * s;
+	ans._13_ = _13_ * s;
+	ans._14_ = _14_ * s;
 
-	ans._21 = _21 * s;
-	ans._22 = _22 * s;
-	ans._23 = _23 * s;
-	ans._24 = _24 * s;
+	ans._21_ = _21_ * s;
+	ans._22_ = _22_ * s;
+	ans._23_ = _23_ * s;
+	ans._24_ = _24_ * s;
 
-	ans._31 = _31 * s;
-	ans._32 = _32 * s;
-	ans._33 = _33 * s;
-	ans._34 = _34 * s;
+	ans._31_ = _31_ * s;
+	ans._32_ = _32_ * s;
+	ans._33_ = _33_ * s;
+	ans._34_ = _34_ * s;
 
-	ans._41 = _41 * s;
-	ans._42 = _42 * s;
-	ans._43 = _43 * s;
-	ans._44 = _44 * s;
+	ans._41_ = _41_ * s;
+	ans._42_ = _42_ * s;
+	ans._43_ = _43_ * s;
+	ans._44_ = _44_ * s;
 
 	return ans;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::operator/(float s)
+MCB::MCBMatrix MCB::MCBMatrix::operator/(const float& s)
 {
 	MCBMatrix ans;
-	ans._11 = _11 / s;
-	ans._12 = _12 / s;
-	ans._13 = _13 / s;
-	ans._14 = _14 / s;
+	ans._11_ = _11_ / s;
+	ans._12_ = _12_ / s;
+	ans._13_ = _13_ / s;
+	ans._14_ = _14_ / s;
 
-	ans._21 = _21 / s;
-	ans._22 = _22 / s;
-	ans._23 = _23 / s;
-	ans._24 = _24 / s;
+	ans._21_ = _21_ / s;
+	ans._22_ = _22_ / s;
+	ans._23_ = _23_ / s;
+	ans._24_ = _24_ / s;
 
-	ans._31 = _31 / s;
-	ans._32 = _32 / s;
-	ans._33 = _33 / s;
-	ans._34 = _34 / s;
+	ans._31_ = _31_ / s;
+	ans._32_ = _32_ / s;
+	ans._33_ = _33_ / s;
+	ans._34_ = _34_ / s;
 
-	ans._41 = _41 / s;
-	ans._42 = _42 / s;
-	ans._43 = _43 / s;
-	ans._44 = _44 / s;
+	ans._41_ = _41_ / s;
+	ans._42_ = _42_ / s;
+	ans._43_ = _43_ / s;
+	ans._44_ = _44_ / s;
 
 	return ans;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::operator+(MCBMatrix matrix)
+MCB::MCBMatrix MCB::MCBMatrix::operator+(const MCBMatrix& matrix)
 {
 	MCBMatrix ans;
-	ans._11 = _11 + matrix._11; 
-	ans._12 = _12 + matrix._12; 
-	ans._13 = _13 + matrix._13; 
-	ans._14 = _14 + matrix._14; 
+	ans._11_ = _11_ + matrix._11_; 
+	ans._12_ = _12_ + matrix._12_; 
+	ans._13_ = _13_ + matrix._13_; 
+	ans._14_ = _14_ + matrix._14_; 
 
-	ans._21 = _21 + matrix._21;
-	ans._22 = _22 + matrix._22;
-	ans._23 = _23 + matrix._23;
-	ans._24 = _24 + matrix._24;
+	ans._21_ = _21_ + matrix._21_;
+	ans._22_ = _22_ + matrix._22_;
+	ans._23_ = _23_ + matrix._23_;
+	ans._24_ = _24_ + matrix._24_;
 
-	ans._31 = _31 + matrix._31;
-	ans._32 = _32 + matrix._32;
-	ans._33 = _33 + matrix._33;
-	ans._34 = _34 + matrix._34;
+	ans._31_ = _31_ + matrix._31_;
+	ans._32_ = _32_ + matrix._32_;
+	ans._33_ = _33_ + matrix._33_;
+	ans._34_ = _34_ + matrix._34_;
 
-	ans._41 = _41 + matrix._41;
-	ans._42 = _42 + matrix._42;
-	ans._43 = _43 + matrix._43;
-	ans._44 = _44 + matrix._44;
-
-
-	return ans;
-}
-
-MCB::MCBMatrix MCB::MCBMatrix::operator-(MCBMatrix matrix)
-{
-	MCBMatrix ans;
-	ans._11 = _11 - matrix._11;
-	ans._12 = _12 - matrix._12;
-	ans._13 = _13 - matrix._13;
-	ans._14 = _14 - matrix._14;
-
-	ans._21 = _21 - matrix._21;
-	ans._22 = _22 - matrix._22;
-	ans._23 = _23 - matrix._23;
-	ans._24 = _24 - matrix._24;
-
-	ans._31 = _31 - matrix._31;
-	ans._32 = _32 - matrix._32;
-	ans._33 = _33 - matrix._33;
-	ans._34 = _34 - matrix._34;
-
-	ans._41 = _41 - matrix._41;
-	ans._42 = _42 - matrix._42;
-	ans._43 = _43 - matrix._43;
-	ans._44 = _44 - matrix._44;
+	ans._41_ = _41_ + matrix._41_;
+	ans._42_ = _42_ + matrix._42_;
+	ans._43_ = _43_ + matrix._43_;
+	ans._44_ = _44_ + matrix._44_;
 
 
 	return ans;
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator*=(MCBMatrix matrix)
+MCB::MCBMatrix MCB::MCBMatrix::operator-(const MCBMatrix& matrix)
+{
+	MCBMatrix ans;
+	ans._11_ = _11_ - matrix._11_;
+	ans._12_ = _12_ - matrix._12_;
+	ans._13_ = _13_ - matrix._13_;
+	ans._14_ = _14_ - matrix._14_;
+
+	ans._21_ = _21_ - matrix._21_;
+	ans._22_ = _22_ - matrix._22_;
+	ans._23_ = _23_ - matrix._23_;
+	ans._24_ = _24_ - matrix._24_;
+
+	ans._31_ = _31_ - matrix._31_;
+	ans._32_ = _32_ - matrix._32_;
+	ans._33_ = _33_ - matrix._33_;
+	ans._34_ = _34_ - matrix._34_;
+
+	ans._41_ = _41_ - matrix._41_;
+	ans._42_ = _42_ - matrix._42_;
+	ans._43_ = _43_ - matrix._43_;
+	ans._44_ = _44_ - matrix._44_;
+
+
+	return ans;
+}
+
+MCB::MCBMatrix& MCB::MCBMatrix::operator*=(const MCBMatrix& matrix)
 {
 	*this = *this * matrix;
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator*=(float s)
+MCB::MCBMatrix& MCB::MCBMatrix::operator*=(const float& s)
 {
 	*this = *this * s;
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator/=(float s)
+MCB::MCBMatrix& MCB::MCBMatrix::operator/=(const float& s)
 {
 	*this = *this / s;
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator+=(MCBMatrix matrix)
+MCB::MCBMatrix& MCB::MCBMatrix::operator+=(const MCBMatrix& matrix)
 {
 	*this = *this + matrix;
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator-=(MCBMatrix matrix)
+MCB::MCBMatrix& MCB::MCBMatrix::operator-=(const MCBMatrix& matrix)
 {
 	*this = *this - matrix;
 	return *this;
 }
 
-float MCB::MCBMatrix::operator[](size_t n)
+float MCB::MCBMatrix::operator[](const size_t& n)
 {
 	switch (n)
 	{
 	case 0:
-		return _11;
+		return _11_;
 		break;
 
 	case 1:
-		return _12;
+		return _12_;
 		break;
 
 	case 2:
-		return _13;
+		return _13_;
 		break;
 		
 	case 3:
-		return _14;
+		return _14_;
 		break;
 
 	case 4:
-		return _21;
+		return _21_;
 		break;
 
 	case 5:
-		return _22;
+		return _22_;
 		break;
 
 	case 6:
-		return _23;
+		return _23_;
 		break;
 
 	case 7:
-		return _24;
+		return _24_;
 		break;
 
 	case 8:
-		return _31;
+		return _31_;
 		break;
 
 	case 9:
-		return _32;
+		return _32_;
 		break;
 
 	case 10:
-		return _33;
+		return _33_;
 		break;
 
 	case 11:
-		return _34;
+		return _34_;
 		break;
 
 	case 12:
-		return _41;
+		return _41_;
 		break;
 
 	case 13:
-		return _42;
+		return _42_;
 		break;
 
 	case 14:
-		return _43;
+		return _43_;
 		break;
 
 	case 15:
-		return _44;
+		return _44_;
 		break;
 	default:
 		throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
@@ -444,36 +444,36 @@ float MCB::MCBMatrix::operator[](size_t n)
 	return -114514.1919810f;
 }
 
-MCBMatrix MCB::operator*(MCBMatrix matrix1, MCBMatrix matrix2)
+MCBMatrix MCB::operator*(const MCBMatrix& matrix1, const MCBMatrix& matrix2)
 {
 	MCBMatrix ans;
 
 #pragma region １行目
-	ans._11 = (matrix1._11 * matrix2._11) + (matrix1._12 * matrix2._21) + (matrix1._13 * matrix2._31) + (matrix1._14 * matrix2._41);
-	ans._12 = (matrix1._11 * matrix2._12) + (matrix1._12 * matrix2._22) + (matrix1._13 * matrix2._32) + (matrix1._14 * matrix2._42);
-	ans._13 = (matrix1._11 * matrix2._13) + (matrix1._12 * matrix2._23) + (matrix1._13 * matrix2._33) + (matrix1._14 * matrix2._43);
-	ans._14 = (matrix1._11 * matrix2._14) + (matrix1._12 * matrix2._24) + (matrix1._13 * matrix2._34) + (matrix1._14 * matrix2._44);
+	ans._11_ = (matrix1._11_ * matrix2._11_) + (matrix1._12_ * matrix2._21_) + (matrix1._13_ * matrix2._31_) + (matrix1._14_ * matrix2._41_);
+	ans._12_ = (matrix1._11_ * matrix2._12_) + (matrix1._12_ * matrix2._22_) + (matrix1._13_ * matrix2._32_) + (matrix1._14_ * matrix2._42_);
+	ans._13_ = (matrix1._11_ * matrix2._13_) + (matrix1._12_ * matrix2._23_) + (matrix1._13_ * matrix2._33_) + (matrix1._14_ * matrix2._43_);
+	ans._14_ = (matrix1._11_ * matrix2._14_) + (matrix1._12_ * matrix2._24_) + (matrix1._13_ * matrix2._34_) + (matrix1._14_ * matrix2._44_);
 #pragma endregion 1行目
 
 #pragma region 2行目
-	ans._21 = (matrix1._21 * matrix2._11) + (matrix1._22 * matrix2._21) + (matrix1._23 * matrix2._31) + (matrix1._24 * matrix2._41);
-	ans._22 = (matrix1._21 * matrix2._12) + (matrix1._22 * matrix2._22) + (matrix1._23 * matrix2._32) + (matrix1._24 * matrix2._42);
-	ans._23 = (matrix1._21 * matrix2._13) + (matrix1._22 * matrix2._23) + (matrix1._23 * matrix2._33) + (matrix1._24 * matrix2._43);
-	ans._24 = (matrix1._21 * matrix2._14) + (matrix1._22 * matrix2._24) + (matrix1._23 * matrix2._34) + (matrix1._24 * matrix2._44);
+	ans._21_ = (matrix1._21_ * matrix2._11_) + (matrix1._22_ * matrix2._21_) + (matrix1._23_ * matrix2._31_) + (matrix1._24_ * matrix2._41_);
+	ans._22_ = (matrix1._21_ * matrix2._12_) + (matrix1._22_ * matrix2._22_) + (matrix1._23_ * matrix2._32_) + (matrix1._24_ * matrix2._42_);
+	ans._23_ = (matrix1._21_ * matrix2._13_) + (matrix1._22_ * matrix2._23_) + (matrix1._23_ * matrix2._33_) + (matrix1._24_ * matrix2._43_);
+	ans._24_ = (matrix1._21_ * matrix2._14_) + (matrix1._22_ * matrix2._24_) + (matrix1._23_ * matrix2._34_) + (matrix1._24_ * matrix2._44_);
 #pragma endregion 2行目
 
 #pragma region 3行目
-	ans._31 = (matrix1._31 * matrix2._11) + (matrix1._32 * matrix2._21) + (matrix1._33 * matrix2._31) + (matrix1._34 * matrix2._41);
-	ans._32 = (matrix1._31 * matrix2._12) + (matrix1._32 * matrix2._22) + (matrix1._33 * matrix2._32) + (matrix1._34 * matrix2._42);
-	ans._33 = (matrix1._31 * matrix2._13) + (matrix1._32 * matrix2._23) + (matrix1._33 * matrix2._33) + (matrix1._34 * matrix2._43);
-	ans._34 = (matrix1._31 * matrix2._14) + (matrix1._32 * matrix2._24) + (matrix1._33 * matrix2._34) + (matrix1._34 * matrix2._44);
+	ans._31_ = (matrix1._31_ * matrix2._11_) + (matrix1._32_ * matrix2._21_) + (matrix1._33_ * matrix2._31_) + (matrix1._34_ * matrix2._41_);
+	ans._32_ = (matrix1._31_ * matrix2._12_) + (matrix1._32_ * matrix2._22_) + (matrix1._33_ * matrix2._32_) + (matrix1._34_ * matrix2._42_);
+	ans._33_ = (matrix1._31_ * matrix2._13_) + (matrix1._32_ * matrix2._23_) + (matrix1._33_ * matrix2._33_) + (matrix1._34_ * matrix2._43_);
+	ans._34_ = (matrix1._31_ * matrix2._14_) + (matrix1._32_ * matrix2._24_) + (matrix1._33_ * matrix2._34_) + (matrix1._34_ * matrix2._44_);
 #pragma endregion 3行目
 
 #pragma region 4行目
-	ans._41 = (matrix1._41 * matrix2._11) + (matrix1._42 * matrix2._21) + (matrix1._43 * matrix2._31) + (matrix1._44 * matrix2._41);
-	ans._42 = (matrix1._41 * matrix2._12) + (matrix1._42 * matrix2._22) + (matrix1._43 * matrix2._32) + (matrix1._44 * matrix2._42);
-	ans._43 = (matrix1._41 * matrix2._13) + (matrix1._42 * matrix2._23) + (matrix1._43 * matrix2._33) + (matrix1._44 * matrix2._43);
-	ans._44 = (matrix1._41 * matrix2._14) + (matrix1._42 * matrix2._24) + (matrix1._43 * matrix2._34) + (matrix1._44 * matrix2._44);
+	ans._41_ = (matrix1._41_ * matrix2._11_) + (matrix1._42_ * matrix2._21_) + (matrix1._43_ * matrix2._31_) + (matrix1._44_ * matrix2._41_);
+	ans._42_ = (matrix1._41_ * matrix2._12_) + (matrix1._42_ * matrix2._22_) + (matrix1._43_ * matrix2._32_) + (matrix1._44_ * matrix2._42_);
+	ans._43_ = (matrix1._41_ * matrix2._13_) + (matrix1._42_ * matrix2._23_) + (matrix1._43_ * matrix2._33_) + (matrix1._44_ * matrix2._43_);
+	ans._44_ = (matrix1._41_ * matrix2._14_) + (matrix1._42_ * matrix2._24_) + (matrix1._43_ * matrix2._34_) + (matrix1._44_ * matrix2._44_);
 #pragma endregion 4行目
 
 	return ans;

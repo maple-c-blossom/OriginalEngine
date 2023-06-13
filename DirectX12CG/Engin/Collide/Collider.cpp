@@ -2,7 +2,7 @@
 #include "Util.h"
 using namespace MCB;
 
-bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter,Vector3D* reject)
+bool MCB::Collision::CalcSphere(const Sphere& sphereA, const Sphere& sphereB, Vector3D* inter,Vector3D* reject)
 {
 
 	float hitX = (sphereA.centerPosition_.vec_.x_ - sphereB.centerPosition_.vec_.x_) * (sphereA.centerPosition_.vec_.x_ - sphereB.centerPosition_.vec_.x_);
@@ -38,7 +38,7 @@ bool MCB::Collision::CalcSphere(Sphere sphereA, Sphere sphereB, Vector3D* inter,
 	return false;
 }
 
-bool MCB::Collision::CalcPlaneRay(Plane plane, Ray ray, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcPlaneRay(const Plane& plane, const Ray& ray, float* distance, Vector3D* inter)
 {
 	const float epsilon = 1.0e-5f;
 	float d1 = plane.normal_.GetV3Dot(ray.rayVec_);
