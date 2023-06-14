@@ -142,7 +142,7 @@ void MCB::Input::MouseUpdate()
 	oldmouse_ = mouse_;
 }
 
-bool Input::IsKeyDown(const size_t& keyNum)
+bool Input::IsKeyDown( size_t keyNum)
 {
 		if (key_[keyNum])
 		{
@@ -151,7 +151,7 @@ bool Input::IsKeyDown(const size_t& keyNum)
 		return false;
 }
 
-bool Input::IsKeyNDown(const size_t& keyNum)
+bool Input::IsKeyNDown( size_t keyNum)
 {
 	if (!key_[keyNum])
 	{
@@ -160,7 +160,7 @@ bool Input::IsKeyNDown(const size_t& keyNum)
 	return false;
 }
 
-bool Input::IsKeyPress(const size_t& keyNum)
+bool Input::IsKeyPress( size_t keyNum)
 {
 	if (key_[keyNum] && oldkey_[keyNum])
 	{
@@ -169,7 +169,7 @@ bool Input::IsKeyPress(const size_t& keyNum)
 	return false;
 }
 
-bool Input::IsKeyTrigger(const size_t& keyNum)
+bool Input::IsKeyTrigger( size_t keyNum)
 {
 	if (key_[keyNum] && !oldkey_[keyNum])
 	{
@@ -178,7 +178,7 @@ bool Input::IsKeyTrigger(const size_t& keyNum)
 	return false;
 }
 
-bool Input::IsKeyRelease(const size_t& keyNum)
+bool Input::IsKeyRelease( size_t keyNum)
 {
 	if (!key_[keyNum] && oldkey_[keyNum])
 	{
@@ -187,31 +187,31 @@ bool Input::IsKeyRelease(const size_t& keyNum)
 	return false;
 }
 
-bool MCB::Input::IsMouseDown(const size_t& MouseBotton)
+bool MCB::Input::IsMouseDown( size_t MouseBotton)
 {
 	if (mouse_.rgbButtons[MouseBotton]) return true;
 	return false;
 }
 
-bool MCB::Input::IsMouseNDown(const size_t& MouseBotton)
+bool MCB::Input::IsMouseNDown( size_t MouseBotton)
 {
 	if (!mouse_.rgbButtons[MouseBotton]) return true;
 	return false;
 }
 
-bool MCB::Input::IsMousePress(const size_t& MouseBotton)
+bool MCB::Input::IsMousePress( size_t MouseBotton)
 {
 	if (mouse_.rgbButtons[MouseBotton] && oldmouse_.rgbButtons[MouseBotton]) return true;
 	return false;
 }
 
-bool MCB::Input::IsMouseTrigger(const size_t& MouseBotton)
+bool MCB::Input::IsMouseTrigger( size_t MouseBotton)
 {
 	if (mouse_.rgbButtons[MouseBotton] && !oldmouse_.rgbButtons[MouseBotton]) return true;
 	return false;
 }
 
-bool MCB::Input::IsMouseRelease(const size_t& MouseBotton)
+bool MCB::Input::IsMouseRelease( size_t MouseBotton)
 {
 	if (!mouse_.rgbButtons[MouseBotton] && oldmouse_.rgbButtons[MouseBotton])
 	{

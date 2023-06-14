@@ -375,7 +375,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	return textures;
 }
 
-  void AnimationModel::boneAnimTransform(const float& timeInSeconds,const size_t& currentAnimation,const bool& loop)
+  void AnimationModel::boneAnimTransform( float timeInSeconds, size_t currentAnimation, bool loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -411,7 +411,8 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy(const float& animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, const DirectX::XMMATRIX& globalInverseTransform,const size_t& currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy( float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, 
+	  const DirectX::XMMATRIX& globalInverseTransform, size_t currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 

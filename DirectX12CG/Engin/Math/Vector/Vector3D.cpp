@@ -27,7 +27,7 @@ MCB::Vector3D::Vector3D(const Float3& vec)
 {
 	vec_ = vec;
 }
-MCB::Vector3D::Vector3D(const float& x, const float& y, const float& z)
+MCB::Vector3D::Vector3D( float x,  float y,  float z)
 {
 	vec_.x_ = x;
 	vec_.y_ = y;
@@ -138,7 +138,7 @@ Vector3D& MCB::Vector3D::operator-=(const Vector3D& Vec)
 	return *this;
 }
 
-Vector3D& MCB::Vector3D::operator*=(const float& k)
+Vector3D& MCB::Vector3D::operator*=( float k)
 {
 	this->vec_.x_ *= k;
 	this->vec_.y_ *= k;
@@ -178,7 +178,7 @@ Vector3D MCB::operator-(const Vector3D& vecA, const Vector3D& vecB)
 	return temp;
 }
 
-Vector3D MCB::operator*(const Vector3D& vecA, const float& k)
+Vector3D MCB::operator*(const Vector3D& vecA,  float k)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -186,7 +186,7 @@ Vector3D MCB::operator*(const Vector3D& vecA, const float& k)
 	return temp;
 }
 
-Vector3D MCB::operator*(const float& k, const Vector3D& vecA)
+Vector3D MCB::operator*( float k, const Vector3D& vecA)
 {
 	Vector3D temp;
 	temp = vecA;
@@ -194,7 +194,7 @@ Vector3D MCB::operator*(const float& k, const Vector3D& vecA)
 	return temp;
 }
 
-Vector3D MCB::operator/(const Vector3D& vecA, const float& k)
+Vector3D MCB::operator/(const Vector3D& vecA,  float k)
 {
 	Vector3D temp;
 	temp.vec_.x_ = vecA.vec_.x_ / k;

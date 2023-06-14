@@ -102,17 +102,17 @@ HRESULT MCB::Vertex::VertexMaping()
 {
     HRESULT result;
 
-    result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+    result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
     assert(SUCCEEDED(result));
 
     // 全頂点に対して
-    for (int32_t i = 0; i < _countof(vertices); i++)
+    for (int32_t i = 0; i < _countof(vertices_); i++)
     {
-        vertMap[i] = vertices[i];   // 座標をコピー
+        vertMap_[i] = vertices_[i];   // 座標をコピー
     }
 
     // マップを解除
-    vertBuff->Unmap(0, nullptr);
+    vertBuff_->Unmap(0, nullptr);
 
     return result;
 }

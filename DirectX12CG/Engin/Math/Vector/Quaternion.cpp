@@ -3,12 +3,12 @@
 #define PI 3.14159265358979323846264338327950288f
 using namespace MCB;
 
-MCB::Quaternion::Quaternion(const Vector3D& vec, const float& angle)
+MCB::Quaternion::Quaternion(const Vector3D& vec, float angle)
 {
 	this->SetRota(vec, angle);
 }
 
-void MCB::Quaternion::SetRota( Vector3D vec, const float& angle)
+void MCB::Quaternion::SetRota( Vector3D vec, float angle)
 {
 	vec.V3Norm();
 	float s = sinf(angle / 2);
@@ -24,7 +24,7 @@ MCB::Quaternion::Quaternion()
 	this->Identity();
 }
 
-MCB::Quaternion::Quaternion(const float& x, const float& y, const float& z, const float& w)
+MCB::Quaternion::Quaternion(float x, float y, float z, float w)
 {
 	this->x_ = x;
 	this->y_ = y;
@@ -92,7 +92,7 @@ float MCB::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b)
 	return acosf(dot);
 }
 
-Vector3D MCB::Quaternion::SetRotationVector(const Vector3D& rotationAxisVec,Vector3D PositionVec,const float& angle)
+Vector3D MCB::Quaternion::SetRotationVector(const Vector3D& rotationAxisVec,Vector3D PositionVec, float angle)
 {
 	PositionVec.V3Norm();
 	Quaternion position{};
@@ -272,7 +272,7 @@ float MCB::Quaternion::GetAngle(const Quaternion& q)
 	return thetaOver2 * 2.0f;
 }
 
-float MCB::Quaternion::SafeAcos(const float& a)
+float MCB::Quaternion::SafeAcos( float a)
 {
 	if (a <= -1.0f)
 	{
@@ -305,7 +305,7 @@ Quaternion MCB::Quaternion::Identity()
 }
 
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
-	const int32_t& time,const int32_t& maxTime)
+	 int32_t time, int32_t maxTime)
 {
 	float Time = (float)time / (float)maxTime;
 	Quaternion ans;
@@ -350,7 +350,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start,const Quaternion& end,const float& time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
+MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start,const Quaternion& end, float time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
 {
 	Quaternion ans;
 	float dot;
@@ -394,7 +394,7 @@ MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start,const Quaternion& end,c
 	return ans;
 }
 
-Quaternion MCB::SetRota(const Vector3D& vec,const float& angle)
+Quaternion MCB::SetRota(const Vector3D& vec, float angle)
 {
 	return Quaternion(vec, angle);
 }

@@ -5,7 +5,7 @@
 using namespace MCB;
 
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, uint32_t msg, WPARAM wParam, LPARAM lparam);
-LRESULT DxWindow::WindowProc(const HWND& hwnd,const uint32_t& msg,const WPARAM& wparam,const LPARAM& lparam)
+LRESULT DxWindow::WindowProc(const HWND& hwnd, uint32_t msg,const WPARAM& wparam,const LPARAM& lparam)
 {
     if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam))
     {

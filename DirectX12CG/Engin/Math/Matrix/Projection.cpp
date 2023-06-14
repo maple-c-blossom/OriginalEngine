@@ -3,7 +3,7 @@
 using namespace DirectX;
 using namespace MCB;
 
-void Projection::CreateMatrixProjection(const float& fovAngle, const float& aspectRatio, const float& nearZ, const float& farZ)
+void Projection::CreateMatrixProjection( float fovAngle,  float aspectRatio,  float nearZ,  float farZ)
 {
     fovAngle_ = fovAngle;
     aspectRatio_ = aspectRatio;

@@ -70,7 +70,7 @@ void LightGroup::UpDate()
 	}
 }
 
-void LightGroup::Draw(const uint32_t& rootParameterIndex)
+void LightGroup::Draw( uint32_t rootParameterIndex)
 {
 	// 定数バッファビューをセット
 	Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(rootParameterIndex,
@@ -204,7 +204,7 @@ void LightGroup::SetAmbientColor(const Float3& color)
 	isUpdate_ = true;
 }
 
-void LightGroup::SetDirLightIsActive(const int32_t& lightindexNum,const bool& active)
+void LightGroup::SetDirLightIsActive( int32_t lightindexNum, bool active)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 
@@ -212,7 +212,7 @@ void LightGroup::SetDirLightIsActive(const int32_t& lightindexNum,const bool& ac
 	isUpdate_ = true;
 }
 
-void LightGroup::SetDirLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir)
+void LightGroup::SetDirLightForLightDir( int32_t lightindexNum, const Vector3D& lightdir)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 
@@ -220,7 +220,7 @@ void LightGroup::SetDirLightForLightDir(const int32_t& lightindexNum, const Vect
 	isUpdate_ = true;
 }
 
-void LightGroup::SetDirLightColor(const int32_t& lightindexNum, const Float3& lightcolor)
+void LightGroup::SetDirLightColor( int32_t lightindexNum, const Float3& lightcolor)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 
@@ -228,7 +228,7 @@ void LightGroup::SetDirLightColor(const int32_t& lightindexNum, const Float3& li
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetDirLightShininess(const int32_t& lightindexNum, const float& lightShininess)
+void MCB::LightGroup::SetDirLightShininess( int32_t lightindexNum,  float lightShininess)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 
@@ -241,144 +241,144 @@ Float3 MCB::LightGroup::GetAmbientColor()
 	return ambientColor_;
 }
 
-bool MCB::LightGroup::GetDirLightIsActive(const int32_t& lightindexNum)
+bool MCB::LightGroup::GetDirLightIsActive( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 	return dirLights_[lightindexNum].IsActive();
 }
 
-Vector3D MCB::LightGroup::GetDirLightForLightDir(const int32_t& lightindexNum)
+Vector3D MCB::LightGroup::GetDirLightForLightDir( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 	return dirLights_[lightindexNum].GetLightDir();
 }
 
-Float3 MCB::LightGroup::GetDirLightColor(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetDirLightColor( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 	return dirLights_[lightindexNum].GetLightColor();
 }
 
-float MCB::LightGroup::GetDirLightShininess(const int32_t& lightindexNum)
+float MCB::LightGroup::GetDirLightShininess( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sDIR_LIGHT_NUM_);
 	return dirLights_[lightindexNum].GetLightShininess();
 }
 
-void MCB::LightGroup::SetPLightIsActive(const int32_t& lightindexNum,const bool& active)
+void MCB::LightGroup::SetPLightIsActive( int32_t lightindexNum, bool active)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	PLights_[lightindexNum].SetIsActive(active);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetPLightPos(const int32_t& lightindexNum, const Float3& lightPos)
+void MCB::LightGroup::SetPLightPos( int32_t lightindexNum, const Float3& lightPos)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	PLights_[lightindexNum].SetPLightPos(lightPos);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetPLightColor(const int32_t& lightindexNum, const Float3& lightColor)
+void MCB::LightGroup::SetPLightColor( int32_t lightindexNum, const Float3& lightColor)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	PLights_[lightindexNum].SetPLightColor(lightColor);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetPLightAtten(const int32_t& lightindexNum, const Float3& lightAtten)
+void MCB::LightGroup::SetPLightAtten( int32_t lightindexNum, const Float3& lightAtten)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	PLights_[lightindexNum].SetPLightAtten(lightAtten);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetPLightShininess(const int32_t& lightindexNum, const float& lightShininess)
+void MCB::LightGroup::SetPLightShininess( int32_t lightindexNum,  float lightShininess)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	PLights_[lightindexNum].SetPLightShininess(lightShininess);
 	isUpdate_ = true;
 }
 
-bool MCB::LightGroup::GetPLightIsActive(const int32_t& lightindexNum)
+bool MCB::LightGroup::GetPLightIsActive( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	return PLights_[lightindexNum].IsActive();
 }
 
-Float3 MCB::LightGroup::GetPLightPos(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetPLightPos( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	return PLights_[lightindexNum].GetPLightPos();
 }
 
-Float3 MCB::LightGroup::GetPLightColor(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetPLightColor( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	return PLights_[lightindexNum].GetPLightColor();
 }
 
-Float3 MCB::LightGroup::GetPLightAtten(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetPLightAtten( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	return PLights_[lightindexNum].GetPLightAtten();
 }
 
-float MCB::LightGroup::GetPLightShininess(const int32_t& lightindexNum)
+float MCB::LightGroup::GetPLightShininess( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	return PLights_[lightindexNum].GetPLightShininess();
 }
 
-void MCB::LightGroup::SetSLightIsActive(const int32_t& lightindexNum, bool active)
+void MCB::LightGroup::SetSLightIsActive( int32_t lightindexNum, bool active)
 {
 	assert(0 <= lightindexNum && lightindexNum < sP_LIGHT_NUM_);
 	SLights_[lightindexNum].SetIsActive(active);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetSLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir)
+void MCB::LightGroup::SetSLightForLightDir( int32_t lightindexNum, const Vector3D& lightdir)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	SLights_[lightindexNum].SetSLightDir(lightdir);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetSLightPos(const int32_t& lightindexNum, const Float3& lightPos)
+void MCB::LightGroup::SetSLightPos( int32_t lightindexNum, const Float3& lightPos)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	SLights_[lightindexNum].SetSLightPos(lightPos);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetSLightColor(const int32_t& lightindexNum, const Float3& lightColor)
+void MCB::LightGroup::SetSLightColor( int32_t lightindexNum, const Float3& lightColor)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	SLights_[lightindexNum].SetSLightColor(lightColor);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetSLightAtten(const int32_t& lightindexNum, const Float3& lightAtten)
+void MCB::LightGroup::SetSLightAtten( int32_t lightindexNum, const Float3& lightAtten)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	SLights_[lightindexNum].SetSLightAtten(lightAtten);
 	isUpdate_ = true;
 }
 
-void MCB::LightGroup::SetSLightShininess(const int32_t& lightindexNum, const float& lightShininess)
+void MCB::LightGroup::SetSLightShininess( int32_t lightindexNum,  float lightShininess)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	SLights_[lightindexNum].SetSLightShininess(lightShininess);
 	isUpdate_ = true;
 }
 
-Float3 MCB::LightGroup::GetSLightAtten(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetSLightAtten( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightAtten();
 }
 
-float MCB::LightGroup::GetSLightShininess(const int32_t& lightindexNum)
+float MCB::LightGroup::GetSLightShininess( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightShininess();
@@ -386,25 +386,25 @@ float MCB::LightGroup::GetSLightShininess(const int32_t& lightindexNum)
 
 
 
-bool MCB::LightGroup::GetSLightIsActive(const int32_t& lightindexNum)
+bool MCB::LightGroup::GetSLightIsActive( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].IsActive();
 }
 
-Vector3D MCB::LightGroup::GetSLightForLightDir(const int32_t& lightindexNum)
+Vector3D MCB::LightGroup::GetSLightForLightDir( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightDir();
 }
 
-Float3 MCB::LightGroup::GetSLightPos(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetSLightPos( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightPos();
 }
 
-Float3 MCB::LightGroup::GetSLightColor(const int32_t& lightindexNum)
+Float3 MCB::LightGroup::GetSLightColor( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightColor();

@@ -12,7 +12,7 @@ void View::CreateMatrixView(const XMFLOAT3& eye, const XMFLOAT3& target, const X
 	mat_ = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
-void View::UpDateMatrixView(const bool& billbordY)
+void View::UpDateMatrixView( bool billbordY)
 {
 	//mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 	XMVECTOR eyePosition = XMLoadFloat3(&eye_);

@@ -246,12 +246,12 @@ void MCB::CollisionManager::CheckAllCollision()
     }
 }
 
-bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo,const float& maxDistance)
+bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDistance)
 {
     return Raycast(ray,0xffff,hitinfo,maxDistance);
 }
 
-bool MCB::CollisionManager::Raycast(Ray& ray,const uint16_t& attribute, RayCastHit* hitinfo,const float& maxDistance)
+bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hitinfo, float maxDistance)
 {
     const Ray& raytemp = ray;
     bool result = false;

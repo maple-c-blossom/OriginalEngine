@@ -13,7 +13,7 @@ void MCB::MCBMatrix::MCBMatrixIdentity()
 	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(const float& x, const float& y, const float& z)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate( float x,  float y,  float z)
 {
 	MCBMatrix temp;
 	temp.MCBMatrixIdentity();
@@ -26,7 +26,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(const float& x, const float& y
 	return temp;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(const float& x, const float& y, const float& z)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling( float x,  float y,  float z)
 {
 
 	MCBMatrix temp;
@@ -57,7 +57,7 @@ void MCB::MCBMatrix::ConvertMatrixMCBMat(float** ArrayMat)
 	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX(const float& angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX( float angle)
 {
 	MCBMatrix matrix;
 
@@ -72,7 +72,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX(const float& angle)
 	return matrix;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(const float& angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY( float angle)
 {
 	MCBMatrix matrix;
 
@@ -86,7 +86,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY(const float& angle)
 	return matrix;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(const float& angle)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ( float angle)
 {
 	MCBMatrix matrix;
 	matrix.MCBMatrixIdentity();
@@ -101,7 +101,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaZ(const float& angle)
 }
 
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota(const double& angle, const DirectX::XMFLOAT3& vector)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRota( double angle, const DirectX::XMFLOAT3& vector)
 {
 	MCBMatrix matRot = ReturnMatrixIdentity();
 
@@ -231,7 +231,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixConvertXMMatrix(const XMMATRIX& mat)
 	return MCBMatrix();
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::operator*(const float& s)
+MCB::MCBMatrix MCB::MCBMatrix::operator*( float s)
 {
 	MCBMatrix ans;
 	ans._11_ = _11_ * s;
@@ -257,7 +257,7 @@ MCB::MCBMatrix MCB::MCBMatrix::operator*(const float& s)
 	return ans;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::operator/(const float& s)
+MCB::MCBMatrix MCB::MCBMatrix::operator/( float s)
 {
 	MCBMatrix ans;
 	ans._11_ = _11_ / s;
@@ -343,13 +343,13 @@ MCB::MCBMatrix& MCB::MCBMatrix::operator*=(const MCBMatrix& matrix)
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator*=(const float& s)
+MCB::MCBMatrix& MCB::MCBMatrix::operator*=( float s)
 {
 	*this = *this * s;
 	return(*this);
 }
 
-MCB::MCBMatrix& MCB::MCBMatrix::operator/=(const float& s)
+MCB::MCBMatrix& MCB::MCBMatrix::operator/=( float s)
 {
 	*this = *this / s;
 	return(*this);
@@ -367,7 +367,7 @@ MCB::MCBMatrix& MCB::MCBMatrix::operator-=(const MCBMatrix& matrix)
 	return *this;
 }
 
-float MCB::MCBMatrix::operator[](const size_t& n)
+float MCB::MCBMatrix::operator[]( size_t n)
 {
 	switch (n)
 	{

@@ -1,7 +1,7 @@
 #include "MCBFloat.h"
 using namespace MCB;
 
-MCB::Float3::Float3(const float& x, const float& y, const float& z)
+MCB::Float3::Float3(float x, float y, float z)
 {
 	x_ = x;
 	y_ = y;
@@ -47,7 +47,7 @@ MCB::Float4::Float4()
 	w_ = 0;
 }
 
-MCB::Float4::Float4(const float& x, const float& y, const float& z, const float& w)
+MCB::Float4::Float4(float x, float y, float z, float w)
 {
 	x_ = x;
 	y_ = y;

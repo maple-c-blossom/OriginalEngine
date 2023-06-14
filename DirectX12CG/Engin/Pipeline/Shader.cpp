@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, const size_t& ShaderName)
+void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint,  size_t ShaderName)
 {
     HRESULT result;
 

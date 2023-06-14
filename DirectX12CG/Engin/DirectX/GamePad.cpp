@@ -16,7 +16,7 @@ void MCB::GamePad::GetState()
 	}
 }
 
-bool MCB::GamePad::IsButtonDown(const int32_t& Button,const int16_t& Userindex)
+bool MCB::GamePad::IsButtonDown( int32_t Button, int16_t Userindex)
 {
 	if (state_[Userindex].Gamepad.wButtons & Button)
 	{
@@ -25,7 +25,7 @@ bool MCB::GamePad::IsButtonDown(const int32_t& Button,const int16_t& Userindex)
 	return false;
 }
 
-bool MCB::GamePad::IsButtonNDown(const int32_t& Button,const int16_t& Userindex)
+bool MCB::GamePad::IsButtonNDown( int32_t Button, int16_t Userindex)
 {
 	if (!(state_[Userindex].Gamepad.wButtons & Button))
 	{
@@ -34,7 +34,7 @@ bool MCB::GamePad::IsButtonNDown(const int32_t& Button,const int16_t& Userindex)
 	return false;
 }
 
-bool MCB::GamePad::IsButtonPress(const int32_t& Button, const int16_t& Userindex)
+bool MCB::GamePad::IsButtonPress( int32_t Button,  int16_t Userindex)
 {
 	if ((state_[Userindex].Gamepad.wButtons & Button) && (oldstate_[Userindex].Gamepad.wButtons & Button))
 	{
@@ -43,7 +43,7 @@ bool MCB::GamePad::IsButtonPress(const int32_t& Button, const int16_t& Userindex
 	return false;
 }
 
-bool MCB::GamePad::IsButtonTrigger(const int32_t& Button, const int16_t& Userindex)
+bool MCB::GamePad::IsButtonTrigger( int32_t Button,  int16_t Userindex)
 {
 	if ((state_[Userindex].Gamepad.wButtons & Button) && !(oldstate_[Userindex].Gamepad.wButtons & Button))
 	{
@@ -52,7 +52,7 @@ bool MCB::GamePad::IsButtonTrigger(const int32_t& Button, const int16_t& Userind
 	return false;
 }
 
-bool MCB::GamePad::IsButtonRelease(const int32_t& Button, const int16_t& Userindex)
+bool MCB::GamePad::IsButtonRelease( int32_t Button,  int16_t Userindex)
 {
 	if (!(state_[Userindex].Gamepad.wButtons & Button) && (oldstate_[Userindex].Gamepad.wButtons & Button))
 	{
@@ -61,7 +61,7 @@ bool MCB::GamePad::IsButtonRelease(const int32_t& Button, const int16_t& Userind
 	return false;
 }
 
-Float3 MCB::GamePad::IsInputLStick(const int16_t& Userindex)
+Float3 MCB::GamePad::IsInputLStick( int16_t Userindex)
 {
 	float LX = state_[Userindex].Gamepad.sThumbLX;
 	float LY = state_[Userindex].Gamepad.sThumbLY;
@@ -99,7 +99,7 @@ Float3 MCB::GamePad::IsInputLStick(const int16_t& Userindex)
 	//repeat for right thumb stick
 }
 
-Float3 MCB::GamePad::IsInputRStick(const int16_t& Userindex)
+Float3 MCB::GamePad::IsInputRStick( int16_t Userindex)
 {
 	float RX = state_[Userindex].Gamepad.sThumbRX;
 	float RY = state_[Userindex].Gamepad.sThumbRY;
@@ -137,7 +137,7 @@ Float3 MCB::GamePad::IsInputRStick(const int16_t& Userindex)
 	//repeat for right thumb stick
 }
 
-Float2 MCB::GamePad::IsInputLTrriger(const int16_t& Userindex)
+Float2 MCB::GamePad::IsInputLTrriger( int16_t Userindex)
 {
 	float LT = state_[Userindex].Gamepad.bLeftTrigger;
 	//determine how far the controller is pushed
@@ -170,7 +170,7 @@ Float2 MCB::GamePad::IsInputLTrriger(const int16_t& Userindex)
 	}
 }
 
-Float2 MCB::GamePad::IsInputRTrriger(const int16_t& Userindex)
+Float2 MCB::GamePad::IsInputRTrriger( int16_t Userindex)
 {
 	float RT = state_[Userindex].Gamepad.bRightTrigger;
 	//determine how far the controller is pushed
@@ -203,7 +203,7 @@ Float2 MCB::GamePad::IsInputRTrriger(const int16_t& Userindex)
 	}
 }
 
-void MCB::GamePad::Vibration(const int32_t& LeftMotorSpeed, const int32_t& RightMotorSpeed, const int16_t& Userindex)
+void MCB::GamePad::Vibration( int32_t LeftMotorSpeed,  int32_t RightMotorSpeed,  int16_t Userindex)
 {
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
@@ -212,7 +212,7 @@ void MCB::GamePad::Vibration(const int32_t& LeftMotorSpeed, const int32_t& Right
 	XInputSetState(Userindex, &vibration);
 }
 
-void MCB::GamePad::StopVibration(const int16_t& Userindex)
+void MCB::GamePad::StopVibration( int16_t Userindex)
 {
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));

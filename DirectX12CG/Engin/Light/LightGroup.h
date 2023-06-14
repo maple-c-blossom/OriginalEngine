@@ -71,19 +71,19 @@ namespace MCB
 
 #pragma region SpotL
 
-		void SetSLightIsActive(const int32_t& lightindexNum, bool active);
-		void SetSLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir);
-		void SetSLightPos(const int32_t& lightindexNum, const Float3& lightPos);
-		void SetSLightColor(const int32_t& lightindexNum, const Float3& lightColor);
-		void SetSLightAtten(const int32_t& lightindexNum, const Float3& lightAtten);
-		void SetSLightShininess(const int32_t& lightindexNum, const float& lightShininess);
+		void SetSLightIsActive( int32_t lightindexNum, bool active);
+		void SetSLightForLightDir( int32_t lightindexNum, const Vector3D& lightdir);
+		void SetSLightPos( int32_t lightindexNum, const Float3& lightPos);
+		void SetSLightColor( int32_t lightindexNum, const Float3& lightColor);
+		void SetSLightAtten( int32_t lightindexNum, const Float3& lightAtten);
+		void SetSLightShininess( int32_t lightindexNum,  float lightShininess);
 
-		bool GetSLightIsActive(const int32_t& lightindexNum);
-		Vector3D GetSLightForLightDir(const int32_t& lightindexNum);
-		Float3 GetSLightPos(const int32_t& lightindexNum);
-		Float3 GetSLightColor(const int32_t& lightindexNum);
-		Float3 GetSLightAtten(const int32_t& lightindexNum);
-		float GetSLightShininess(const int32_t& lightindexNum);
+		bool GetSLightIsActive( int32_t lightindexNum);
+		Vector3D GetSLightForLightDir( int32_t lightindexNum);
+		Float3 GetSLightPos( int32_t lightindexNum);
+		Float3 GetSLightColor( int32_t lightindexNum);
+		Float3 GetSLightAtten( int32_t lightindexNum);
+		float GetSLightShininess( int32_t lightindexNum);
 
 #pragma endregion SpotL
 

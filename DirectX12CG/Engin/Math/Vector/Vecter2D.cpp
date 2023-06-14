@@ -54,7 +54,7 @@ float Vector2D::GetDot(const Vector2D& vec)
     return x_ * vec.x_ + y_ * vec.y_;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int32_t& ArraySize, const Vector2D& point)
+bool Vector2D::HitCrossProduct(Vector2D* points, int32_t ArraySize, const Vector2D& point)
 {
     if (points == nullptr) return false;
     bool isHit = false;
@@ -83,7 +83,7 @@ bool Vector2D::HitCrossProduct(Vector2D* points, const int32_t& ArraySize, const
     return isHit;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int32_t& ArraySize)
+bool Vector2D::HitCrossProduct(Vector2D* points, int32_t ArraySize)
 {
     if (points == nullptr) return false;
     bool isHit = false;
@@ -136,12 +136,12 @@ float Vector2D::GetY()const
 }
 
 
-void Vector2D::SetX(const float& x)
+void Vector2D::SetX( float x)
 {
     this->x_ = x;
 }
 
-void Vector2D::SetY(const float& y)
+void Vector2D::SetY( float y)
 {
     this->y_ = y;
 }
@@ -185,7 +185,7 @@ Vector2D& Vector2D::operator-=(const Vector2D& vec)
     // TODO: return ステートメントをここに挿入します
 }
 
-Vector2D& Vector2D::operator*=(const float& speed)
+Vector2D& Vector2D::operator*=( float speed)
 {
     x_ *= speed;
     y_ *= speed;
@@ -193,7 +193,7 @@ Vector2D& Vector2D::operator*=(const float& speed)
     // TODO: return ステートメントをここに挿入します
 }
 
-Vector2D& Vector2D::operator/=(const float& Lenge)
+Vector2D& Vector2D::operator/=( float Lenge)
 {
     x_ /= Lenge;
     y_ /= Lenge;

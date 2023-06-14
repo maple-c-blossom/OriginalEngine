@@ -50,7 +50,7 @@ namespace MCB
 
             void SetSrvHeap();
 
-            void SetSrvHeap(const uint16_t& incrementNum);
+            void SetSrvHeap( uint16_t incrementNum);
 
             void InitAllincrementNum();
 
@@ -58,7 +58,8 @@ namespace MCB
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange (const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,const int32_t& BaseShaderRegister, const size_t& index = 0);
+            void SetDescriptorRange ( int32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,
+                int32_t BaseShaderRegister,  size_t index = 0);
 	};
 }
 

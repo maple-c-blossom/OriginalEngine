@@ -5,9 +5,9 @@ MCB::RootParameter::~RootParameter()
     rootparams_.clear();
 }
 
-void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType, const int32_t& ShaderRegister,
-    const int32_t& RegisterSpace, const D3D12_SHADER_VISIBILITY& shaderVisibility,
-    const int32_t& NumDescriptorRanges, size_t descriptorIndex)
+void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType,  int32_t ShaderRegister,
+     int32_t RegisterSpace, const D3D12_SHADER_VISIBILITY& shaderVisibility,
+     int32_t NumDescriptorRanges, size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ
@@ -35,7 +35,7 @@ void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType
 }
 
 void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType,
-    const int32_t& ShaderRegister, size_t descriptorIndex)
+     int32_t ShaderRegister, size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
     rootparam.ParameterType = paramType;//Ží—Þ

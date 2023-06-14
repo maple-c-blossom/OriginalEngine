@@ -16,7 +16,7 @@ void WorldMatrix::SetMatRotX(const float& angle, const bool& ConvertToRadians)
 
 }
 
-void WorldMatrix::SetMatRotY(const float& angle, const bool& ConvertToRadians)
+void WorldMatrix::SetMatRotY( float angle,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
@@ -28,7 +28,7 @@ void WorldMatrix::SetMatRotY(const float& angle, const bool& ConvertToRadians)
 	}
 }
 
-void WorldMatrix::SetMatRotZ(const float& angle, const bool& ConvertToRadians)
+void WorldMatrix::SetMatRotZ( float angle,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
@@ -40,7 +40,7 @@ void WorldMatrix::SetMatRotZ(const float& angle, const bool& ConvertToRadians)
 	}
 }
 
-void WorldMatrix::SetMatRot(const float& angleX, const float& angleY, const float& angleZ,const bool& ConvertToRadians)
+void WorldMatrix::SetMatRot( float angleX,  float angleY,  float angleZ, bool ConvertToRadians)
 {
 	matRot_ = XMMatrixIdentity();
 	if (ConvertToRadians)
@@ -57,8 +57,8 @@ void WorldMatrix::SetMatRot(const float& angleX, const float& angleY, const floa
 	}
 }
 
-XMMATRIX WorldMatrix::ReturnMatRot(const XMMATRIX& matRot , const float& angleX, 
-	const float& angleY, const float& angleZ, const bool& ConvertToRadians)
+XMMATRIX WorldMatrix::ReturnMatRot(const XMMATRIX& matRot ,  float angleX, 
+	 float angleY,  float angleZ,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
@@ -76,12 +76,12 @@ XMMATRIX WorldMatrix::ReturnMatRot(const XMMATRIX& matRot , const float& angleX,
 	return matRot_;
 }
 
-void WorldMatrix::SetMatScale(const float& scaleX, const float& scaleY, const float& scaleZ)
+void WorldMatrix::SetMatScale( float scaleX, float scaleY,  float scaleZ)
 {
 	matScale_ = XMMatrixScaling(scaleX, scaleY, scaleZ);
 }
 
-void WorldMatrix::SetMatTrans(const float& transX, const float& transY, const float& transZ)
+void WorldMatrix::SetMatTrans( float transX,  float transY,  float transZ)
 {
 	matTransform_ = XMMatrixTranslation(transX, transY, transZ);
 }

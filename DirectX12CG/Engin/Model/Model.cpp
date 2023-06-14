@@ -99,7 +99,7 @@ HRESULT MCB::Model::VertexMaping()
 }
 
 
-void MCB::Model::CreateModel(const string& fileName, const bool& smooth)
+void MCB::Model::CreateModel(const string& fileName,  bool smooth)
 {
     std::ifstream file;
 
@@ -282,7 +282,7 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
 
 }
 
-void MCB::Model::Init(const std::string& fileName,const bool& smooth)
+void MCB::Model::Init(const std::string& fileName, bool smooth)
 {
     CreateModel(fileName,smooth);
 
@@ -300,7 +300,7 @@ void MCB::Model::Init(const std::string& fileName,const bool& smooth)
 
 }
 
-void MCB::Model::AddSmoothData(const uint16_t& indexPosition, const uint16_t& indexVertex)
+void MCB::Model::AddSmoothData( uint16_t indexPosition,  uint16_t indexVertex)
 {
     smoothData_[indexPosition].emplace_back(indexVertex);
 }

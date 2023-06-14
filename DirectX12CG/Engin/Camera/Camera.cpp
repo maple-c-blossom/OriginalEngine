@@ -26,8 +26,9 @@ void Camera::Update()
 	projection_.UpdataMatrixProjection();
 }
 
-void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix, const DirectX::XMFLOAT3& playerPosition
-	, const bool& isBillBord)
+void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
+	const DirectX::XMFLOAT3& playerPosition
+	, bool isBillBord)
 {
 	//object3d->Update(view,projection);
 
