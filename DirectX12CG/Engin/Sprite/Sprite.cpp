@@ -3,7 +3,7 @@
 using namespace MCB;
 using namespace DirectX;
 
-DirectX::XMMATRIX Sprite::matProje{};
+DirectX::XMMATRIX Sprite::smatProje_{};
 
 MCB::Sprite::Sprite()
 {
@@ -22,21 +22,21 @@ void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
         {{},{1.0f,0.0f}},
     };
 
-    float left = (0.0f - anchorPoint.x) * size.x;
-    float right = (1.0f - anchorPoint.x) * size.x;
-    float top = (0.0f - anchorPoint.y) * size.y;
-    float bottom = (1.0f - anchorPoint.y) * size.y;
+    float left = (0.0f - anchorPoint_.x_) * size_.x_;
+    float right = (1.0f - anchorPoint_.x_) * size_.x_;
+    float top = (0.0f - anchorPoint_.y_) * size_.y_;
+    float bottom = (1.0f - anchorPoint_.y_) * size_.y_;
 
 
     enum { LB, LT, RB, RT };
 
-    if (isFlipX)
+    if (isFlipX_)
     {
         left = -left;
         right = -right;
     }
 
-    if (isFlipY)
+    if (isFlipY_)
     {
         top = -top;
         bottom = -bottom;
@@ -49,12 +49,12 @@ void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
 
     if (tex != nullptr)
     {
-        D3D12_RESOURCE_DESC resDesc = tex->texBuff.texbuff->GetDesc();
+        D3D12_RESOURCE_DESC resDesc = tex->texBuff_.texbuff_->GetDesc();
 
-        float tex_left = texLeftTop.x / resDesc.Width;
-        float tex_right = (texLeftTop.x + cuttingSize.x) / resDesc.Width;
-        float tex_top = texLeftTop.y / resDesc.Height;
-        float tex_bottom = (texLeftTop.y + cuttingSize.y) / resDesc.Height;
+        float tex_left = texLeftTop_.x_ / resDesc.Width;
+        float tex_right = (texLeftTop_.x_ + cuttingSize_.x_) / resDesc.Width;
+        float tex_top = texLeftTop_.y_ / resDesc.Height;
+        float tex_bottom = (texLeftTop_.y_ + cuttingSize_.y_) / resDesc.Height;
 
         vertices[LB].uv = { tex_left,tex_bottom };
         vertices[LT].uv = { tex_left,tex_top };
@@ -66,35 +66,35 @@ void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
     
 
     SpriteVertex* vertexMap = nullptr;
-    result = vertBuff->Map(0, nullptr, (void**)&vertexMap);
+    result = vertBuff_->Map(0, nullptr, (void**)&vertexMap);
     assert(SUCCEEDED(result) && "SpriteTransferVertexBuffer時のvertBuff->Mapエラー");
     memcpy(vertexMap, vertices, sizeof(vertices));
-    vertBuff->Unmap(0, nullptr);
+    vertBuff_->Unmap(0, nullptr);
 
 }
 
 void MCB::Sprite::SpriteUpdate()
 {
     HRESULT result = S_FALSE;
-    matWorld = DirectX::XMMatrixIdentity();
-    matWorld *= DirectX::XMMatrixRotationZ(ConvertRadius(rotation));
-    matWorld *= XMMatrixTranslation(position.x, position.y, position.z);
+    matWorld_ = DirectX::XMMatrixIdentity();
+    matWorld_ *= DirectX::XMMatrixRotationZ(ConvertRadius(rotation_));
+    matWorld_ *= XMMatrixTranslation(position_.x_, position_.y_, position_.z_);
 
     SpriteConstBufferDataTransform* constMap = nullptr;
-    result = constBuff->Map(0, nullptr, (void**)&constMap);
+    result = constBuff_->Map(0, nullptr, (void**)&constMap);
     assert(SUCCEEDED(result) && "SpriteUpdate時のconstBuff->Mapエラー");
-    constMap->color = color;
-    constMap->mat = matWorld * Sprite::matProje;
+    constMap->color = color_;
+    constMap->mat = matWorld_ * Sprite::smatProje_;
 
-    constBuff->Unmap(0, nullptr);
+    constBuff_->Unmap(0, nullptr);
 
 }
 
 void MCB::Sprite::InitMatProje()
 {
     DxWindow* dxWindow = DxWindow::GetInstance();
-    Sprite::matProje = DirectX::XMMatrixOrthographicOffCenterLH(
-        0.0f, (float)dxWindow->window_width, (float)dxWindow->window_height, 0.0f, 0.0f, 1.0f);
+    Sprite::smatProje_ = DirectX::XMMatrixOrthographicOffCenterLH(
+        0.0f, (float)dxWindow->sWINDOW_WIDTH_, (float)dxWindow->sWINDOW_HEIGHT_, 0.0f, 0.0f, 1.0f);
 
 }
 
@@ -113,29 +113,29 @@ void MCB::Sprite::CreateSprite()
         {{100.0f,0.0f, 0.0f},{1.0f,0.0f}}
     };
 
-    this->HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    HeapProp_.Type = D3D12_HEAP_TYPE_UPLOAD;
 
 
-    this->Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    this->Resdesc.Width = (sizeof(vertices));
-    this->Resdesc.Height = 1;
-    this->Resdesc.DepthOrArraySize = 1;
-    this->Resdesc.MipLevels = 1;
-    this->Resdesc.SampleDesc.Count = 1;
-    this->Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    Resdesc_.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    Resdesc_.Width = (sizeof(vertices));
+    Resdesc_.Height = 1;
+    Resdesc_.DepthOrArraySize = 1;
+    Resdesc_.MipLevels = 1;
+    Resdesc_.SampleDesc.Count = 1;
+    Resdesc_.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    result = dx12->device.Get()->CreateCommittedResource(
-        &this->HeapProp,
+    result = dx12->device_.Get()->CreateCommittedResource(
+        &this->HeapProp_,
         D3D12_HEAP_FLAG_NONE,
-        &this->Resdesc,
-        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->vertBuff));
+        &this->Resdesc_,
+        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->vertBuff_));
 
     assert(SUCCEEDED(result) && "Sprite生成時の頂点バッファCommittedResourceエラー");
 
-    float left = (0.0f - this->anchorPoint.x) * this->size.x;
-    float right = (1.0f - this->anchorPoint.x) * this->size.x;
-    float top = (0.0f - this->anchorPoint.y) * this->size.y;
-    float bottom = (1.0f - this->anchorPoint.y) * this->size.y;
+    float left = (0.0f - this->anchorPoint_.x_) * size_.x_;
+    float right = (1.0f - this->anchorPoint_.x_) * this->size_.x_;
+    float top = (0.0f - this->anchorPoint_.y_) * this->size_.y_;
+    float bottom = (1.0f - this->anchorPoint_.y_) * this->size_.y_;
 
 
     enum { LB, LT, RB, RT };
@@ -147,14 +147,14 @@ void MCB::Sprite::CreateSprite()
 
 
     SpriteVertex* vertexMap = nullptr;
-    result = this->vertBuff->Map(0, nullptr, (void**)&vertexMap);
+    result = this->vertBuff_->Map(0, nullptr, (void**)&vertexMap);
     assert(SUCCEEDED(result) && "Sprite生成時のvertBuff->Mapエラー");
     memcpy(vertexMap, vertices, sizeof(vertices));
-    this->vertBuff->Unmap(0, nullptr);
+    this->vertBuff_->Unmap(0, nullptr);
 
-    this->vbView.BufferLocation = this->vertBuff->GetGPUVirtualAddress();
-    this->vbView.SizeInBytes = sizeof(vertices);
-    this->vbView.StrideInBytes = sizeof(vertices[0]);
+    this->vbView_.BufferLocation = this->vertBuff_->GetGPUVirtualAddress();
+    this->vbView_.SizeInBytes = sizeof(vertices);
+    this->vbView_.StrideInBytes = sizeof(vertices[0]);
 
     D3D12_HEAP_PROPERTIES constHeapProp{};
     constHeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -169,21 +169,21 @@ void MCB::Sprite::CreateSprite()
     constResdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
 
-    result = dx12->device.Get()->CreateCommittedResource(
+    result = dx12->device_.Get()->CreateCommittedResource(
         &constHeapProp,
         D3D12_HEAP_FLAG_NONE,
         &constResdesc,
-        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->constBuff)
+        D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&this->constBuff_)
     );
 
     assert(SUCCEEDED(result) && "Sprite生成時の定数バッファのCommittedResourceエラー");
     SpriteConstBufferDataTransform* constMap = nullptr;
-    result = this->constBuff->Map(0, nullptr, (void**)&constMap);
+    result = this->constBuff_->Map(0, nullptr, (void**)&constMap);
     assert(SUCCEEDED(result) && "Sprite生成時のconstBuff->Mapエラー");
-    Float4 tempcolor; tempcolor.x = 1; tempcolor.y = 1;tempcolor.z = 1;tempcolor.w = 1;
+    Float4 tempcolor; tempcolor.x_ = 1; tempcolor.y_ = 1;tempcolor.z_ = 1;tempcolor.w_ = 1;
     constMap->color = tempcolor;
-    constMap->mat = Sprite::matProje;
-    this->constBuff->Unmap(0,nullptr);
+    constMap->mat = Sprite::smatProje_;
+    this->constBuff_->Unmap(0,nullptr);
 }
 
 //void MCB::Sprite::SpriteCommonBeginDraw(const PipelineRootSignature& pipeline)
@@ -213,66 +213,66 @@ void MCB::Sprite::SpriteDraw(Texture& tex, float positionX, float positionY,
 
     Float2 size;
 
-    size.x = size_x;
-    size.y = size_y;
+    size.x_ = size_x;
+    size.y_ = size_y;
 
-    tempsprite.position.x = positionX;
-    tempsprite.position.y = positionY;
-    tempsprite.position.z = 0;
+    tempsprite.position_.x_ = positionX;
+    tempsprite.position_.y_ = positionY;
+    tempsprite.position_.z_ = 0;
 
     tempsprite.SpriteUpdate();
 
-    if (size.x == 0 || size.y == 0)
+    if (size.x_ == 0 || size.y_ == 0)
     {
-        D3D12_RESOURCE_DESC resdesc = tex.texBuff.texbuff->GetDesc();
+        D3D12_RESOURCE_DESC resdesc = tex.texBuff_.texbuff_->GetDesc();
 
-        if (size.x == 0)
+        if (size.x_ == 0)
         {
-            tempsprite.size.x = (float)resdesc.Width;
+            tempsprite.size_.x_ = (float)resdesc.Width;
         }
 
-        if (size.y == 0)
+        if (size.y_ == 0)
         {
-            tempsprite.size.y = (float)resdesc.Height;
+            tempsprite.size_.y_ = (float)resdesc.Height;
         }
     }
     
-    if(size.x != 0 || size.y != 0)
+    if(size.x_ != 0 || size.y_ != 0)
     {
-        if (size.x != 0)
+        if (size.x_ != 0)
         {
-            tempsprite.size.x = size.x;
+            tempsprite.size_.x_ = size.x_;
         }
 
-        if (size.y != 0)
+        if (size.y_ != 0)
         {
-            tempsprite.size.y = size.y;
+            tempsprite.size_.y_ = size.y_;
         }
     }
 
 
 
-    if (tempsprite.size.x != this->size.x || tempsprite.size.y != this->size.y)
+    if (tempsprite.size_.x_ != size_.x_ || tempsprite.size_.y_ != size_.y_)
     {
         tempsprite.SpriteTransferVertexBuffer();
-        this->size = tempsprite.size;
+        this->size_ = tempsprite.size_;
     }
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff_->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawInstanced(4,1,0,0);
+    dx12->commandList_->DrawInstanced(4,1,0,0);
 
 }
 
@@ -283,70 +283,71 @@ void MCB::Sprite::SpriteFlipDraw(Texture& tex, float positionX, float positionY,
 
     Sprite tempSprite = *this;
 
-    tempSprite.position.x = positionX;
-    tempSprite.position.y = positionY;
-    tempSprite.position.z = 0;
+    tempSprite.position_.x_ = positionX;
+    tempSprite.position_.y_ = positionY;
+    tempSprite.position_.z_ = 0;
 
     tempSprite.SpriteUpdate();
 
-    tempSprite.isFlipX = isflipX;
-    tempSprite.isFlipY = isflipY;
+    tempSprite.isFlipX_ = isflipX;
+    tempSprite.isFlipY_ = isflipY;
 
-    D3D12_RESOURCE_DESC resdesc = tex.texBuff.texbuff->GetDesc();
+    D3D12_RESOURCE_DESC resdesc = tex.texBuff_.texbuff_->GetDesc();
 
-    tempSprite.size.x = (float)resdesc.Width;
-    tempSprite.size.y = (float)resdesc.Height;
+    tempSprite.size_.x_ = (float)resdesc.Width;
+    tempSprite.size_.y_ = (float)resdesc.Height;
 
     tempSprite.SpriteTransferVertexBuffer();
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuff_->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawInstanced(4, 1, 0, 0);
+    dx12->commandList_->DrawInstanced(4, 1, 0, 0);
 
 }
 
-void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positionY, Float2 cuttingsize, Float2 CuttingLeftTop)
+void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positionY,
+    const Float2& cuttingsize,const Float2& CuttingLeftTop)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
     Sprite tempSprite = *this;
 
-    tempSprite.position.x = positionX;
-    tempSprite.position.y = positionY;
-    tempSprite.position.z = 0;
-    tempSprite.texLeftTop = CuttingLeftTop;
-    tempSprite.cuttingSize = cuttingsize;
+    tempSprite.position_.x_ = positionX;
+    tempSprite.position_.y_ = positionY;
+    tempSprite.position_.z_ = 0;
+    tempSprite.texLeftTop_ = CuttingLeftTop;
+    tempSprite.cuttingSize_ = cuttingsize;
 
     tempSprite.SpriteUpdate();
     tempSprite.SpriteTransferVertexBuffer(&tex);
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex.incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, this->constBuff->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, this->constBuff_->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawInstanced(4, 1, 0, 0);
+    dx12->commandList_->DrawInstanced(4, 1, 0, 0);
 }
 
 

@@ -5,21 +5,21 @@
 
 void MCB::App::Init()
 {
-    dxWindow = DxWindow::GetInitInstance();
-    fps = FPS::GetInitInstance();
+    dxWindow_ = DxWindow::GetInitInstance();
+    fps_ = FPS::GetInitInstance();
 #ifdef _DEBUG
-    if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+    if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController_))))
     {
-        debugController->EnableDebugLayer();
-        debugController->SetEnableGPUBasedValidation(TRUE);
+        debugController_->EnableDebugLayer();
+        debugController_->SetEnableGPUBasedValidation(TRUE);
     }
 #endif
     Dx12::GetInitInstance();
 #ifdef _DEBUG
-    if (SUCCEEDED(Dx12::GetInstance()->device_.Get()->QueryInterface(IID_PPV_ARGS(infoQueue.GetAddressOf()))))
+    if (SUCCEEDED(Dx12::GetInstance()->device_.Get()->QueryInterface(IID_PPV_ARGS(infoQueue_.GetAddressOf()))))
     {
-        infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
-        infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
+        infoQueue_->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
+        infoQueue_->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_ERROR, true);
         D3D12_MESSAGE_ID denyids[] = { D3D12_MESSAGE_ID_RESOURCE_BARRIER_BEFORE_AFTER_MISMATCH, D3D12_MESSAGE_ID_GPU_BASED_VALIDATION_INCOMPATIBLE_RESOURCE_STATE };
         D3D12_MESSAGE_SEVERITY severities[] = { D3D12_MESSAGE_SEVERITY_INFO };
         D3D12_INFO_QUEUE_FILTER filter{};
@@ -27,36 +27,36 @@ void MCB::App::Init()
         filter.DenyList.pIDList = denyids;
         filter.DenyList.NumSeverities = _countof(severities);
         filter.DenyList.pSeverityList = severities;
-        infoQueue->PushStorageFilter(&filter);
+        infoQueue_->PushStorageFilter(&filter);
 
     }
 #endif
-    input = Input::GetInitInstance();
-    depth = std::make_unique<Depth>();
+    input_ = Input::GetInitInstance();
+    depth_ = std::make_unique<Depth>();
     ShaderResource::GetInitInstance();
     LightGroup::GetInitInstance();
-    rootparams = std::make_unique<RootParameter>();
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1);
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 3, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
-    rootparams->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1,1);
-    pipeline = std::make_unique<PipeLineManager>(rootparams.get(), depth.get());
-    scene = std::make_unique<SceneManager>(rootparams.get(), depth.get(), pipeline.get());
-    scene->Initialize();
+    rootparams_ = std::make_unique<RootParameter>();
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1);
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 1, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 2, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_CBV, 3, 0, D3D12_SHADER_VISIBILITY_ALL, 0);
+    rootparams_->SetRootParam(D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE, 0, 0, D3D12_SHADER_VISIBILITY_ALL, 1,1);
+    pipeline_ = std::make_unique<PipeLineManager>(rootparams_.get(), depth_.get());
+    scene_ = std::make_unique<SceneManager>(rootparams_.get(), depth_.get(), pipeline_.get());
+    scene_->Initialize();
 }
 
 void MCB::App::MainLoop()
 {
     while (true)
     {
-        input->UpDateInit();
-        dxWindow->messageUpdate();
-        if (input->IsKeyDown(DIK_ESCAPE) || dxWindow->IsBreak()) break;
+        input_->UpDateInit();
+        dxWindow_->messageUpdate();
+        if (input_->IsKeyDown(DIK_ESCAPE) || dxWindow_->IsBreak()) break;
 
-        scene->Update();
-        scene->Draw();
+        scene_->Update();
+        scene_->Draw();
     }
 }
 

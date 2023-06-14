@@ -6,123 +6,128 @@ using namespace std;
 
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
-	this->root = root;
-	this->pipeline = pipeline;
-	this->depth = depth;
-	damyTexture = texmanager->CreateNoTextureFileIsTexture();
-	loadBackGroundTex = texmanager->CreateNoTextureFileIsTexture();
-	loadTex = texmanager->LoadTexture(L"Resources\\reimu.png");
-	loadBackGround.InitMatProje();
-	loadBackGround.color = { 0,0,0,0 };
-	loadSprite.InitMatProje();
+	this->root_ = root;
+	this->pipeline_ = pipeline;
+	this->depth_ = depth;
+	damyTexture_ = texmanager_->CreateNoTextureFileIsTexture();
+	loadBackGroundTex_ = texmanager_->CreateNoTextureFileIsTexture();
+	loadTex_ = texmanager_->LoadTexture(L"Resources\\reimu.png");
+	loadBackGround_.InitMatProje();
+	loadBackGround_.color_ = { 0,0,0,0 };
+	loadSprite_.InitMatProje();
 	InitRand();
-	imgui.Init();
-	scene = make_shared<Scene>(this->root, this->depth, this->pipeline);
+	imgui_.Init();
+	scene_ = make_shared<Scene>(this->root_, this->depth_, this->pipeline_);
 }
 
 MCB::SceneManager::~SceneManager()
 {
-	imgui.Final();
+	imgui_.Final();
 	
 }
 
 void MCB::SceneManager::Initialize()
 {
-	scene->Initialize();
+	scene_->Initialize();
 
 }
 
 void MCB::SceneManager::Update()
 {
-	if (isInitialized)//ゲーム画面への処理
+	if (isInitialized_)//ゲーム画面への処理
 	{
-		if (isChengeSceneTimer <= 0)
+		if (isChengeSceneTimer_ <= 0)
 		{
-			scene->Update();
-			loadBackGround.color.w = 0;
-			loadSprite.color.w = loadBackGround.color.w;
-			isChengeSceneTimer = 0;
+			scene_->Update();
+			loadBackGround_.color_.w_= 0;
+			loadSprite_.color_.w_ = loadBackGround_.color_.w_;
+			isChengeSceneTimer_ = 0;
 		}
-		if (scene->GetIsSceneEnd())
+		if (scene_->GetIsSceneEnd())
 		{
 			//ロード画面への遷移アニメーション終了後
-			if ( isChengeSceneTimer >= isChengeSceneTime)
+			if ( isChengeSceneTimer_ >= isChengeSceneTime_)
 			{
-				isInitialized = false;
-				sceneInitialize = std::async(std::launch::async, [this] {return sceneChenge(); });
+				isInitialized_ = false;
+				sceneInitialize_ = std::async(std::launch::async, [this] {return sceneChenge(); });
 			}
 			else//ロード画面への遷移アニメーション処理
 			{
-				isChengeSceneTimer++;
-				if (isChengeSceneTimer >= isChengeSceneTime)isChengeSceneTimer = isChengeSceneTime;
-				loadBackGround.color.w = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime, (float)isChengeSceneTimer);
-				loadSprite.color.w = loadBackGround.color.w;
+				isChengeSceneTimer_++;
+				if (isChengeSceneTimer_ >= isChengeSceneTime_)isChengeSceneTimer_ = isChengeSceneTime_;
+				loadBackGround_.color_.w_ = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime_, (float)isChengeSceneTimer_);
+				loadSprite_.color_.w_ = loadBackGround_.color_.w_;
 				
-				angle = 0;
+				angle_ = 0;
 			}
 		}
 		else//ゲーム画面への遷移アニメーション処理
 		{
-			if (isChengeSceneTimer > 0)
+			if (isChengeSceneTimer_ > 0)
 			{
-				scene->MatrixUpdate();
-				isChengeSceneTimer--;
-				if (isChengeSceneTimer <= 0)isChengeSceneTimer = 0;
-				loadBackGround.color.w = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime, (float)isChengeSceneTimer);
-				loadSprite.color.w = loadBackGround.color.w;
-				angle++;
-				if (angle >= 360)
+				scene_->MatrixUpdate();
+				isChengeSceneTimer_--;
+				if (isChengeSceneTimer_ <= 0)isChengeSceneTimer_ = 0;
+				loadBackGround_.color_.w_ = (float)Lerp(0.f, 1.f, (float)isChengeSceneTime_, (float)isChengeSceneTimer_);
+				loadSprite_.color_.w_ = loadBackGround_.color_.w_;
+				angle_++;
+				if (angle_ >= 360)
 				{
-					angle = 0;
+					angle_ = 0;
 				}
-				loadSprite.rotation = (float)angle;
+				loadSprite_.rotation_ = (float)angle_;
 			}
 		}
 	}
 	else//ロード画面の処理
 	{
-		loadBackGround.color.w = 1;
-		loadSprite.color.w = loadBackGround.color.w;
-		angle++;
-		if (angle >= 360)
+		loadBackGround_.color_.w_ = 1;
+		loadSprite_.color_.w_ = loadBackGround_.color_.w_;
+		angle_++;
+		if (angle_ >= 360)
 		{
-			angle = 0;
+			angle_ = 0;
 		}
-		loadSprite.rotation = (float)angle;
+		loadSprite_.rotation_ = (float)angle_;
 	}
 }
 
 void MCB::SceneManager::Draw()
 {
-		Draw::GetInstance()->PreDraw(scene->GetDepth(), *scene->Getpipeline().Getpipeline(0, Alpha), scene->clearColor);
+		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
 
-	if (isInitialized)//ゲーム画面
+	if (isInitialized_)//ゲーム画面
 	{
-		scene->PostEffectDraw();
-		Draw::GetInstance()->PreDraw(scene->GetDepth(), *scene->Getpipeline().Getpipeline(0, Alpha), scene->clearColor);
+		scene_->PostEffectDraw();
+		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
 		//3D描画
-		scene->Draw();
+		scene_->Draw();
 		//パーティクル
-		scene->Getpipeline().SetParticlePipeLine(Alpha);
-		scene->ParticleDraw();
+		scene_->Getpipeline().SetParticlePipeLine(Alpha);
+		scene_->ParticleDraw();
 		//スプライト
 	
-		scene->Getpipeline().SetSpritePipeLine(Alpha);
-		scene->SpriteDraw();
+		scene_->Getpipeline().SetSpritePipeLine(Alpha);
+		scene_->SpriteDraw();
 
 
 
-		loadBackGround.SpriteDraw(*loadBackGroundTex->texture,(float) DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2, (float)DxWindow::GetInstance()->window_width, (float)DxWindow::GetInstance()->window_height);
+		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture,(float) DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2,
+			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
+			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
 //#ifdef _DEBUG
-		scene->ImGuiUpdate();
-		scene->ImGuiDraw();
+		scene_->ImGuiUpdate();
+		scene_->ImGuiDraw();
 //#endif 
 	}
 	else//ロード画面
 	{
-		scene->Getpipeline().SetSpritePipeLine(Alpha);
-		loadBackGround.SpriteDraw(*loadBackGroundTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2, (float)DxWindow::GetInstance()->window_width, (float)DxWindow::GetInstance()->window_height);
-		loadSprite.SpriteDraw(*loadTex->texture, (float)DxWindow::GetInstance()->window_width / 2, (float)DxWindow::GetInstance()->window_height / 2);
+		scene_->Getpipeline().SetSpritePipeLine(Alpha);
+		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2, 
+			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
+			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
+		loadSprite_.SpriteDraw(*loadTex_->texture, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2,
+			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
 
@@ -130,15 +135,15 @@ void MCB::SceneManager::Draw()
 
 void MCB::SceneManager::sceneChenge()
 {
-	shared_ptr<IScene> nextScene = scene->GetNextScene();
+	shared_ptr<IScene> nextScene = scene_->GetNextScene();
 	nextScene->Initialize();
-	scene = nextScene;
-	texmanager->Erase();
-	isInitialized = true;
+	scene_ = nextScene;
+	texmanager_->Erase();
+	isInitialized_ = true;
 
 }
 
 MCB::IScene* MCB::SceneManager::GetScene()
 {
-	return scene.get();
+	return scene_.get();
 }

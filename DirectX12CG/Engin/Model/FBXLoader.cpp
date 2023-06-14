@@ -493,7 +493,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
 
 
-   void AnimationModel::calcInterpolatedPosition(Vector3D& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->position.size() == 1)
 	  {
@@ -512,7 +512,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  Out = Start + Factor * Delta;
   }
 
-   void AnimationModel::calcInterpolatedRotation(Quaternion& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  // we need at least two values to interpolate...
 	  if (pNodeAnim->rotation.size() == 1) {
@@ -533,7 +533,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
   }
 
 
-   void AnimationModel::calcInterpolatedScaling(Vector3D& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->scale.size() == 1) {
 		  Out = pNodeAnim->scale[0];
@@ -552,7 +552,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  Out = Start + Factor * Delta;
   }
 
-   size_t AnimationModel::findPosition(const float& AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findPosition( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   for (uint32_t i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
@@ -566,7 +566,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
    }
 
 
-   size_t AnimationModel::findRotation(const float& AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findRotation( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
@@ -582,7 +582,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
    }
 
 
-   size_t AnimationModel::findScaling(const float& AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findScaling( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 

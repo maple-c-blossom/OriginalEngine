@@ -71,14 +71,14 @@ void MCB::ObjectMaterial::SetVertexBuffer(const D3D12_HEAP_TYPE& heaptype,const 
     uint32_t sizeVB, int32_t height, int32_t DepthOrArraySize, 
     int32_t MipLevels, int32_t SampleDescCount,const D3D12_TEXTURE_LAYOUT& layput)
 {
-    HeapProp.Type = heaptype; // GPUへの転送用
+    HeapProp_.Type = heaptype; // GPUへの転送用
 
-    Resdesc.Dimension = dimension;
-    Resdesc.Width = sizeVB; // 頂点データ全体のサイズ
-    Resdesc.Height = height;
-    Resdesc.DepthOrArraySize = DepthOrArraySize;
-    Resdesc.MipLevels = MipLevels;
-    Resdesc.SampleDesc.Count = SampleDescCount;
-    Resdesc.Layout = layput;
+    Resdesc_.Dimension = dimension;
+    Resdesc_.Width = sizeVB; // 頂点データ全体のサイズ
+    Resdesc_.Height = height;
+    Resdesc_.DepthOrArraySize = DepthOrArraySize;
+    Resdesc_.MipLevels = MipLevels;
+    Resdesc_.SampleDesc.Count = SampleDescCount;
+    Resdesc_.Layout = layput;
 
 }

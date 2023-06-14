@@ -37,7 +37,7 @@ namespace MCB
 			std::unique_ptr<BYTE> pBuffer;
 			size_t bufferSize;
 			bool free = true;
-			const std::string name;
+			std::string name;
 			IXAudio2SourceVoice* pSourceVoice = nullptr;
 			float volume = 1;
 		}SoundData;

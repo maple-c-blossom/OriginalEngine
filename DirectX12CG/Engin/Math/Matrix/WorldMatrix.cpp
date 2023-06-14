@@ -3,7 +3,7 @@
 using namespace MCB;
 using  namespace DirectX;
 
-void WorldMatrix::SetMatRotX(const float& angle, const bool& ConvertToRadians)
+void WorldMatrix::SetMatRotX( float angle, bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{

@@ -6,7 +6,7 @@ void MCB::Player::Init()
 {
 	Object3d::Init();
 	SetCollider(make_shared<SphereCollider>());
-	collider_->SetAttribute(attributeFLENDRY);
+	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 }
 
 void MCB::Player::Update()
@@ -15,34 +15,34 @@ void MCB::Player::Update()
 
 	if (Input::GetInstance()->IsKeyDown(DIK_A))
 	{
-		position.x -= 0.05f;
+		position_.x -= 0.05f;
 	}
 	if (Input::GetInstance()->IsKeyDown(DIK_D))
 	{
-		position.x += 0.05f;
+		position_.x += 0.05f;
 	}
 	if (Input::GetInstance()->IsKeyDown(DIK_W))
 	{
-		position.z += 0.1f;
+		position_.z += 0.1f;
 	}
 	if (Input::GetInstance()->IsKeyDown(DIK_S))
 	{
-		position.z -= 0.1f;
+		position_.z -= 0.1f;
 	}
-	if (!isGraund)
+	if (!isGraund_)
 	{
 		const float fallAcc = -0.01f;
 		const float VYMin = -0.5f;
-		fallV.vec.y = max(fallV.vec.y + fallAcc, VYMin);
-		position.x += fallV.vec.x;
-		position.y += fallV.vec.y;
-		position.z += fallV.vec.z;
+		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
+		position_.x += fallV_.vec_.x_;
+		position_.y += fallV_.vec_.y_;
+		position_.z += fallV_.vec_.z_;
 	}
 	else if (Input::GetInstance()->IsKeyTrigger(DIK_SPACE))
 	{
-		isGraund = false;
+		isGraund_ = false;
 		const float jumpVYFist = 0.2f;
-		fallV = { 0,jumpVYFist,0,0};
+		fallV_ = { 0,jumpVYFist,0,0};
 	}
 
 	Object3d::Update();
@@ -50,31 +50,31 @@ void MCB::Player::Update()
 	assert(sphere);
 
 	Ray ray;
-	ray.StartPosition = sphere->centerPosition;
-	ray.StartPosition.vec.y += sphere->GetRaius();
-	ray.rayVec = { 0,-1,0,0 };
+	ray.StartPosition_ = sphere->centerPosition_;
+	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
+	ray.rayVec_ = { 0,-1,0,0 };
 	RayCastHit info;
-	if (isGraund)
+	if (isGraund_)
 	{
 		const float absDistance = 0.2f;
-		if (CollisionManager::GetInstance()->Raycast(ray, attributeLANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
-			isGraund = true;
-			position.y -= (info.dist - sphere->GetRaius() * 2.0f);
+			isGraund_ = true;
+			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
 			Object3d::Update();
 		}
 		else
 		{
-			isGraund = false;
-			fallV = {0,0,0,0};
+			isGraund_ = false;
+			fallV_ = {0,0,0,0};
 		}
 	}
-	else if(fallV.vec.y <= 0.0f)
+	else if(fallV_.vec_.y_ <= 0.0f)
 	{
-		if (CollisionManager::GetInstance()->Raycast(ray, attributeLANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
-			isGraund = true;
-			position.y -= (info.dist - sphere->GetRaius() * 2.0f);
+			isGraund_ = true;
+			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
 			Object3d::Update();
 		}
 	}

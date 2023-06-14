@@ -7,7 +7,7 @@ void MCB::DebugText::Init(Texture* texture)
 	dx12_ = Dx12::GetInstance();
 }
 
-void MCB::DebugText::Print(float x, float y, float scale, const std::string& text, ...)
+void MCB::DebugText::Print(float x, float y, float scale, const std::string text, ...)
 {
 	
 	va_list args;

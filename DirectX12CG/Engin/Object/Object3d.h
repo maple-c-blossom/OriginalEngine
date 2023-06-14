@@ -75,8 +75,8 @@ namespace MCB
         virtual void Update(  bool isBillBord = false);
         virtual void UpdateMatrix(  bool isBillBord = false);
 
-        virtual void Update( const Quaternion& q,  bool isBillBord = false);
-        virtual void UpdateMatrix( const Quaternion& q,  bool isBillBord = false);
+        virtual void Update(  Quaternion q,  bool isBillBord = false);
+        virtual void UpdateMatrix(  Quaternion q,  bool isBillBord = false);
 
         virtual void Draw();
 
@@ -84,11 +84,11 @@ namespace MCB
 
         virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
 
-        virtual void AnimationUpdate(ICamera* camera, const Quaternion& q,  bool isBillBord = false);
+        virtual void AnimationUpdate(ICamera* camera,  Quaternion q,  bool isBillBord = false);
 
         virtual void AnimationDraw();
 
-       virtual void AnimationDraw(const uint16_t& incremant);
+       virtual void AnimationDraw( uint16_t incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld_.matWorld_; };
        void SetCollider(std::shared_ptr<BaseCollider> collider);
        BaseCollider* GetCollider() { return collider_.get(); };
