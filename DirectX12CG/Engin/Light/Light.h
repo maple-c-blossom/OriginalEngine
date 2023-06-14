@@ -27,7 +27,7 @@ namespace MCB
 		inline Float3 GetLightColor() { return lightColor_; }
 		inline void SetLightShininess( float lightshininess) { shininess_ = lightshininess; }
 		inline float GetLightShininess() { return shininess_; }
-		inline void SetIsActive( bool active) { this->active_ = active; }
+		inline void SetIsActive( bool active) { active_ = active; }
 		inline bool IsActive() { return active_; }
 	private:
 

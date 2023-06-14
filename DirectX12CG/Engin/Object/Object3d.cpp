@@ -9,7 +9,7 @@ LightGroup* Object3d::slights_ = nullptr;
 
 MCB::Object3d::Object3d()
 {
-    this->CreateBuff();
+    CreateBuff();
 }
 
 

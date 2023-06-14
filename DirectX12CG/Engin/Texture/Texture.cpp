@@ -46,7 +46,7 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName, uint16_t incrementNum)
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
 
-    this->incrementNum_ = incrementNum;
+    incrementNum_ = incrementNum;
 
     srvptr_ = srv;
 
@@ -84,7 +84,7 @@ void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::st
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
 
-    this->incrementNum_ = incrementNum;
+    incrementNum_ = incrementNum;
 
     srvptr_ = srv;
 
@@ -134,7 +134,7 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName)
     result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
-    this->incrementNum_ = ShaderResource::sAllincrementNum_;
+    incrementNum_ = ShaderResource::sAllincrementNum_;
 
     ShaderResource::sAllincrementNum_++;
     srvptr_ = srv;
@@ -171,7 +171,7 @@ void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::st
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
 
-    this->incrementNum_ = ShaderResource::sAllincrementNum_;
+    incrementNum_ = ShaderResource::sAllincrementNum_;
 
     ShaderResource::sAllincrementNum_++;
     srvptr_ = srv;
@@ -202,7 +202,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------
-        this->incrementNum_ = ShaderResource::sAllincrementNum_;
+        incrementNum_ = ShaderResource::sAllincrementNum_;
 
         ShaderResource::sAllincrementNum_++;
         srvptr_ = srv;
@@ -228,7 +228,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------
-        this->incrementNum_ = ShaderResource::sAllincrementNum_;
+        incrementNum_ = ShaderResource::sAllincrementNum_;
 
         ShaderResource::sAllincrementNum_++;
         srvptr_ = srv;
@@ -258,9 +258,9 @@ void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool post
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff_.TransferMipmatToTexBuff(result);
         //-----------------------------------
-        this->incrementNum_ = ShaderResource::sAllincrementNum_;
+        incrementNum_ = ShaderResource::sAllincrementNum_;
 
-        this->incrementNum_ = incrementNum;
+        incrementNum_ = incrementNum;
         srvptr_ = srv;
 
         SetSrvHeap();
@@ -284,9 +284,9 @@ void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool post
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------
-        this->incrementNum_ = ShaderResource::sAllincrementNum_;
+        incrementNum_ = ShaderResource::sAllincrementNum_;
 
-        this->incrementNum_ = incrementNum;
+        incrementNum_ = incrementNum;
         srvptr_ = srv;
 
         SetSrvHeap();

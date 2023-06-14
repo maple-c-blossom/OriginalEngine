@@ -14,9 +14,9 @@ void MCB::TitleScene::ParticleInit()
 {
 }
 
-shared_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
+unique_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
 {
-	return make_shared<Scene>(rootparamsPtr_, depth_, pipeline_);
+	return make_unique<Scene>(rootparamsPtr_, depth_, pipeline_);
 }
 
 void MCB::TitleScene::MatrixUpdate()
@@ -94,8 +94,8 @@ void MCB::TitleScene::ImGuiUpdate()
 MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
 {
 	rootparamsPtr_ = root;
-	this->depth_ = depth;
-    this->pipeline_ = pipeline;
+	depth_ = depth;
+    pipeline_ = pipeline;
 }
 
 MCB::TitleScene::~TitleScene()

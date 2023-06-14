@@ -13,8 +13,8 @@ namespace MCB
             range_ = range; primitive_ = PrimitiveType::RAY; 
         };
         void Update() override;
-        inline void SetRadius( float radius) { this->radius_ = radius; }
-        inline void SetRange( float range) { this->range_ = range; }
+        inline void SetRadius( float radius) { radius_ = radius; }
+        inline void SetRange( float range) { range_ = range; }
     private:
 		Vector3D offset_;
 		Vector3D rayVec_;

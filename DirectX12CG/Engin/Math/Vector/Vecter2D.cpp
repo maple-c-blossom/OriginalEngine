@@ -138,12 +138,12 @@ float Vector2D::GetY()const
 
 void Vector2D::SetX( float x)
 {
-    this->x_ = x;
+    x_ = x;
 }
 
 void Vector2D::SetY( float y)
 {
-    this->y_ = y;
+    y_ = y;
 }
 
 

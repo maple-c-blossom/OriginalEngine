@@ -50,7 +50,7 @@ void Particle::Init(TextureCell* tex)
 
     dx12->result_ = constBuffTranceform_->Map(0, nullptr, (void**)&constMapTranceform_);
     material_.Init();
-    this->tex_ = tex;
+    tex_ = tex;
     Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
         &HeapProp, // ƒq[ƒvİ’è
         D3D12_HEAP_FLAG_NONE,

@@ -135,7 +135,7 @@ namespace MCB
 		virtual void MatrixUpdate() = 0;
 		void ImGuiDraw() { imgui_.Draw(); }
 		virtual void ImGuiUpdate() = 0;
-		virtual std::shared_ptr<IScene> GetNextScene() = 0;
+		virtual std::unique_ptr<IScene> GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
 		bool GetIsSceneEnd() { return sceneEnd_; }
 

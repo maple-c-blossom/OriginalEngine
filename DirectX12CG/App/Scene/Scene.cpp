@@ -7,7 +7,7 @@ using namespace DirectX;
 
 MCB::Scene::~Scene()
 {
-    soundManager_.AllDeleteSound();
+    //soundManager_.AllDeleteSound();
     zoomTex_->free = true;
     debugTextTexture_->free = true;
     loader_->Erase();
@@ -113,9 +113,9 @@ void MCB::Scene::ParticleInit()
 }
 
 
-shared_ptr<IScene> MCB::Scene::GetNextScene()
+unique_ptr<IScene> MCB::Scene::GetNextScene()
 {
-    return make_shared<TitleScene>(rootparamsPtr_, depth_, pipeline_);
+    return make_unique<TitleScene>(rootparamsPtr_, depth_, pipeline_);
 }
 
 
@@ -293,5 +293,5 @@ MCB::Scene::Scene(RootParameter* root, Depth* depthptr, PipeLineManager* pipelin
 {
     rootparamsPtr_ = root;
     depth_ = depthptr;
-    this->pipeline_ = pipeline;
+    pipeline_ = pipeline;
 }

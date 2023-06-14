@@ -124,41 +124,41 @@ float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 
 Vector3D& MCB::Vector3D::operator+=(const Vector3D& Vec)
 {
-	this->vec_.x_ += Vec.vec_.x_;
-	this->vec_.y_ += Vec.vec_.y_;
-	this->vec_.z_ += Vec.vec_.z_;
+	vec_.x_ += Vec.vec_.x_;
+	vec_.y_ += Vec.vec_.y_;
+	vec_.z_ += Vec.vec_.z_;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator-=(const Vector3D& Vec)
 {
-	this->vec_.x_ -= Vec.vec_.x_;
-	this->vec_.y_ -= Vec.vec_.y_;
-	this->vec_.z_ -= Vec.vec_.z_;
+	vec_.x_ -= Vec.vec_.x_;
+	vec_.y_ -= Vec.vec_.y_;
+	vec_.z_ -= Vec.vec_.z_;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator*=( float k)
 {
-	this->vec_.x_ *= k;
-	this->vec_.y_ *= k;
-	this->vec_.z_ *= k;
+	vec_.x_ *= k;
+	vec_.y_ *= k;
+	vec_.z_ *= k;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator=(const Float3& a)
 {
-	this->vec_.x_ = a.x_;
-	this->vec_.y_ = a.y_;
-	this->vec_.z_ = a.z_;
+	vec_.x_ = a.x_;
+	vec_.y_ = a.y_;
+	vec_.z_ = a.z_;
 	return *this;
 }
 
 Vector3D& MCB::Vector3D::operator=(const DirectX::XMVECTOR& a)
 {
-	this->vec_.x_ = a.m128_f32[0];
-	this->vec_.y_ = a.m128_f32[1];
-	this->vec_.z_ = a.m128_f32[2];
+	vec_.x_ = a.m128_f32[0];
+	vec_.y_ = a.m128_f32[1];
+	vec_.z_ = a.m128_f32[2];
 	return *this;
 }
 

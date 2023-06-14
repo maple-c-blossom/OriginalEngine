@@ -5,7 +5,7 @@ using namespace MCB;
 
 MCB::Quaternion::Quaternion(const Vector3D& vec, float angle)
 {
-	this->SetRota(vec, angle);
+	SetRota(vec, angle);
 }
 
 void MCB::Quaternion::SetRota( Vector3D vec, float angle)
@@ -16,20 +16,20 @@ void MCB::Quaternion::SetRota( Vector3D vec, float angle)
 	y_ = s * vec.vec_.y_;
 	z_ = s * vec.vec_.z_;
 	w_ = cosf(angle / 2);
-	this->Normalize();
+	Normalize();
 }
 
 MCB::Quaternion::Quaternion()
 {
-	this->Identity();
+	Identity();
 }
 
 MCB::Quaternion::Quaternion(float x, float y, float z, float w)
 {
-	this->x_ = x;
-	this->y_ = y;
-	this->z_ = z;
-	this->w_ = w;
+	x_ = x;
+	y_ = y;
+	z_ = z;
+	w_ = w;
 }
 
 Quaternion MCB::Quaternion::GetConjugated(Quaternion q)

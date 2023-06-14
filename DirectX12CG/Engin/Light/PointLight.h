@@ -18,7 +18,7 @@ namespace MCB
 		inline void SetPLightPos(const Float3& pos) { lightPos_ = pos; }
 		inline void SetPLightColor(const Float3& color) { lightColor_ = color; }
 		inline void SetPLightAtten(const Float3& atten) { lightAtten_ = atten; }
-		inline void SetPLightShininess( float shininess) { this->shininess_ = shininess; }
+		inline void SetPLightShininess( float shininess) { shininess_ = shininess; }
 		inline void SetIsActive( bool flag) { isActive_ = flag; }
 		inline Float3 GetPLightPos() { return lightPos_; }
 		inline Float3 GetPLightColor() { return lightColor_; }

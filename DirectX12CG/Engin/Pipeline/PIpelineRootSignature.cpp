@@ -671,8 +671,8 @@ void MCB::PipelineRootSignature::SetBrendMode(int32_t blendMode)
 void MCB::PipelineRootSignature::CommonBeginDraw(int32_t toporogyType)
 {
     Dx12* dx12 = Dx12::GetInstance();
-    dx12->commandList_->SetPipelineState(this->pipeline_.pipelinestate_.Get());
-    dx12->commandList_->SetGraphicsRootSignature(this->rootsignature_.rootsignature_.Get());
+    dx12->commandList_->SetPipelineState(pipeline_.pipelinestate_.Get());
+    dx12->commandList_->SetGraphicsRootSignature(rootsignature_.rootsignature_.Get());
 
     switch (toporogyType)
     {

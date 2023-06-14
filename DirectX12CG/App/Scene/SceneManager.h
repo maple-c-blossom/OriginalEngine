@@ -7,7 +7,7 @@ namespace MCB
 	{
 	private:
 
-		std::shared_ptr<IScene> scene_;
+		std::unique_ptr<IScene> scene_;
 		RootParameter* root_;
 		Depth* depth_;
 		TextureManager* texmanager_ = TextureManager::GetInstance();

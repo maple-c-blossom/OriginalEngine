@@ -6,9 +6,9 @@ using namespace std;
 
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
-	this->root_ = root;
-	this->pipeline_ = pipeline;
-	this->depth_ = depth;
+	root_ = root;
+	pipeline_ = pipeline;
+	depth_ = depth;
 	damyTexture_ = texmanager_->CreateNoTextureFileIsTexture();
 	loadBackGroundTex_ = texmanager_->CreateNoTextureFileIsTexture();
 	loadTex_ = texmanager_->LoadTexture(L"Resources\\reimu.png");
@@ -17,7 +17,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_shared<Scene>(this->root_, this->depth_, this->pipeline_);
+	scene_ = make_unique<Scene>(root_, depth_, pipeline_);
 }
 
 MCB::SceneManager::~SceneManager()
@@ -94,6 +94,7 @@ void MCB::SceneManager::Update()
 
 void MCB::SceneManager::Draw()
 {
+
 		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
 
 	if (isInitialized_)//ÉQÅ[ÉÄâÊñ 
@@ -135,9 +136,9 @@ void MCB::SceneManager::Draw()
 
 void MCB::SceneManager::sceneChenge()
 {
-	shared_ptr<IScene> nextScene = scene_->GetNextScene();
+	unique_ptr<IScene> nextScene = scene_->GetNextScene();
 	nextScene->Initialize();
-	scene_ = nextScene;
+	scene_.reset(nextScene.get());
 	texmanager_->Erase();
 	isInitialized_ = true;
 

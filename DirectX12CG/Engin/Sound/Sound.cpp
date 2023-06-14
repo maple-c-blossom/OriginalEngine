@@ -192,7 +192,7 @@ void MCB::SoundManager::SetVolume(size_t volume,size_t soundHandle)
 {
 	float tempVolume = volume / 100.0f;
 	if (soundHandle >= sounds_.size())return;
-	this->sounds_[soundHandle].volume = tempVolume;
+	sounds_[soundHandle].volume = tempVolume;
 	if (sounds_[soundHandle].pSourceVoice != nullptr)
 	{
 		sounds_[soundHandle].pSourceVoice->SetVolume(sounds_[soundHandle].volume);

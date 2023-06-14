@@ -31,7 +31,7 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
-	this->fileName_ = fileName;
+	fileName_ = fileName;
 	std::string baseDirectory = "Resources\\";
 	std::string extend = "." + fileType;
 	fileName = baseDirectory + fileName + "\\" + fileName + extend;
@@ -241,7 +241,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_OPACITY, mat.material_.alpha);
 		mat.Init();
 		tempmodel.material_.push_back(mat);
-		tempmodel.textures_ = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
+		tempmodel.textures_ = loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	}
 	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices_.size());

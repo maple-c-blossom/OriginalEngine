@@ -145,10 +145,10 @@ void MCB::PostEffect::Draw()
 
 
 
-    if (tempsprite.size_.x_ != this->size_.x_ || tempsprite.size_.y_ != this->size_.y_)
+    if (tempsprite.size_.x_ != size_.x_ || tempsprite.size_.y_ != size_.y_)
     {
         tempsprite.SpriteTransferVertexBuffer(/*tex->texture.get()*/);
-        this->size_ = tempsprite.size_;
+        size_ = tempsprite.size_;
     }
 
     //SRVヒープの先頭アドレスを取得

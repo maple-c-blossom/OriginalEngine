@@ -11,7 +11,7 @@ namespace MCB
 		friend class CollisionManager;
 		BaseCollider() = default;
 		virtual ~BaseCollider() = default;
-		inline void SetObject(Object3d* object) { this->object3d_ = object; };
+		inline void SetObject(Object3d* object) { object3d_ = object; };
 		virtual void Update() = 0;
 		inline MCB::PrimitiveType GetPrimitive() { return primitive_; }
 		inline void OnCollision(const CollisionInfomation& info)
