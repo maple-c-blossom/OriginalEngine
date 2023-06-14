@@ -104,7 +104,7 @@ namespace MCB
 		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
 	
 		//サウンドマネージャー
-		SoundManager soundManager_;
+		SoundManager* soundManager_ = SoundManager::GetInstance();
 		//クリアカラー
 #pragma endregion DirectX基礎機能群
 		bool sceneEnd_ = false;

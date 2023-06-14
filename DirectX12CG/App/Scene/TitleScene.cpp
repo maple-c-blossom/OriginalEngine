@@ -16,7 +16,7 @@ void MCB::TitleScene::ParticleInit()
 
 unique_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
 {
-	return make_unique<Scene>(rootparamsPtr_, depth_, pipeline_);
+	return move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
 }
 
 void MCB::TitleScene::MatrixUpdate()
@@ -100,7 +100,7 @@ MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* p
 
 MCB::TitleScene::~TitleScene()
 {
-    soundManager_.AllDeleteSound();
+    soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
     loader_->Erase();
 }
@@ -146,9 +146,9 @@ void MCB::TitleScene::LoadTexture()
 
 void MCB::TitleScene::LoadSound()
 {
-    testSound_ = soundManager_.LoadWaveSound("Resources\\cat1.wav");
-    test2Sound_ = soundManager_.LoadWaveSound("Resources\\fanfare.wav");
-    soundManager_.SetVolume(100, testSound_);
+    testSound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
+    test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    soundManager_->SetVolume(100, testSound_);
 }
 
 void MCB::TitleScene::Object3DInit()

@@ -34,7 +34,7 @@ void MCB::SceneManager::Initialize()
 
 void MCB::SceneManager::Update()
 {
-	if (isInitialized_)//ゲーム画面への処理
+	if (isSceneReady_)//ゲーム画面への処理
 	{
 		if (isChengeSceneTimer_ <= 0)
 		{
@@ -48,8 +48,10 @@ void MCB::SceneManager::Update()
 			//ロード画面への遷移アニメーション終了後
 			if ( isChengeSceneTimer_ >= isChengeSceneTime_)
 			{
-				isInitialized_ = false;
+				isSceneReady_ = false;
+				OutputDebugStringW(L"asyncCall\n");
 				sceneInitialize_ = std::async(std::launch::async, [this] {return sceneChenge(); });
+				OutputDebugStringW(L"asyncCallEnd\n");
 			}
 			else//ロード画面への遷移アニメーション処理
 			{
@@ -97,7 +99,7 @@ void MCB::SceneManager::Draw()
 
 		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
 
-	if (isInitialized_)//ゲーム画面
+	if (isSceneReady_)//ゲーム画面
 	{
 		scene_->PostEffectDraw();
 		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
@@ -114,8 +116,8 @@ void MCB::SceneManager::Draw()
 
 
 		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture,(float) DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2,
-			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
-			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
+		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
+		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
 //#ifdef _DEBUG
 		scene_->ImGuiUpdate();
 		scene_->ImGuiDraw();
@@ -136,12 +138,17 @@ void MCB::SceneManager::Draw()
 
 void MCB::SceneManager::sceneChenge()
 {
+	OutputDebugStringW(L"SceneChengeIn\n");
 	unique_ptr<IScene> nextScene = scene_->GetNextScene();
+	OutputDebugStringW(L"SceneChengeGetNext\n");
 	nextScene->Initialize();
-	scene_.reset(nextScene.get());
+	OutputDebugStringW(L"SceneChengeInitComp\n");
+	scene_ = std::move(nextScene);
+	OutputDebugStringW(L"SceneChengeComp\n");
 	texmanager_->Erase();
-	isInitialized_ = true;
-
+	OutputDebugStringW(L"SceneChengeTexErase\n");
+	isSceneReady_ = true;
+	OutputDebugStringW(L"SceneChengeEnd\n");
 }
 
 MCB::IScene* MCB::SceneManager::GetScene()

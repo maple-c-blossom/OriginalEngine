@@ -5,6 +5,12 @@
 using namespace MCB;
 using namespace std;
 
+SoundManager* MCB::SoundManager::GetInstance()
+{
+	static SoundManager inst;
+	return &inst;
+}
+
 void MCB::SoundManager::ReleasexAudio2()
 {
 	xAudio2_.Reset();

@@ -22,7 +22,7 @@ namespace MCB
 		Sprite loadBackGround_;
 		PostEffect postEffect_;
 		ImguiManager imgui_;
-		bool isInitialized_ = true;
+		bool isSceneReady_ = true;
 		int32_t angle_ = 0;
 	public:
 		SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline);

@@ -12,7 +12,12 @@ namespace MCB
 {
 	class SoundManager
 	{
-	public:
+		private:
+			SoundManager(const SoundManager& SoundManager) {};
+			SoundManager& operator=(const SoundManager& SoundManager) {};
+			SoundManager();
+			~SoundManager();
+
 		typedef struct ChunkHeader
 		{
 			char id[4];
@@ -47,7 +52,8 @@ namespace MCB
 		static const size_t sMAX_SOUND_ = 1026;
 
 		std::vector<SoundData> sounds_;
-
+		public:
+		static SoundManager* GetInstance();
 		void ReleasexAudio2();
 
 		size_t LoadWaveSound(const std::string& fileName);
@@ -58,8 +64,7 @@ namespace MCB
 		void StopSoundWave( size_t soundHandle,  bool startPosReset = true);
 		//void SetVolume(size_t volume, size_t soundHandle);
 		void SetVolume( size_t volume,  size_t soundHandle);
-		SoundManager();
-		~SoundManager();
+
 
 	};
 

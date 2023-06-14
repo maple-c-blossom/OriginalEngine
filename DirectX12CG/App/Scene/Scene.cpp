@@ -91,11 +91,11 @@ void MCB::Scene::LoadTexture()
 
 void MCB::Scene::LoadSound()
 {
-    testSound_ = soundManager_.LoadWaveSound("Resources\\fanfare.wav");
-    test2Sound_ = soundManager_.LoadWaveSound("Resources\\cat1.wav");
-    soundManager_.SetVolume(100, testSound_);
+    testSound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    test2Sound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
+    soundManager_->SetVolume(100, testSound_);
     volume_ = 100;
-    soundManager_.SetVolume(volume_, test2Sound_);
+    soundManager_->SetVolume(volume_, test2Sound_);
 }
 
 void MCB::Scene::SpriteInit()
@@ -115,7 +115,7 @@ void MCB::Scene::ParticleInit()
 
 unique_ptr<IScene> MCB::Scene::GetNextScene()
 {
-    return make_unique<TitleScene>(rootparamsPtr_, depth_, pipeline_);
+    return move(make_unique<TitleScene>(rootparamsPtr_, depth_, pipeline_));
 }
 
 
