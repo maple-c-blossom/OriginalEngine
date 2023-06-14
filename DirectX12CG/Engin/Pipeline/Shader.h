@@ -54,7 +54,7 @@ namespace MCB
      //--------------------
 
 
-        void ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint,const size_t& ShaderName);
+        void ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, size_t ShaderName);
 
         /*void SetInputLayout(const char* semanticName, DXGI_FORMAT format);
 

@@ -73,7 +73,7 @@ namespace MCB
 
         void Init(TextureCell* tex);
 
-        void Update(View& view, Projection& projection,const bool& isBillBord = false);
+        void Update(View& view, Projection& projection, bool isBillBord = false);
 
         void Draw();
 

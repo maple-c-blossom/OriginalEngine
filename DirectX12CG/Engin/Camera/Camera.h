@@ -10,7 +10,7 @@ namespace MCB
 		void Inilialize()override;
 		void Update()override;
 
-		void WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,const DirectX::XMFLOAT3& playerPosition,const bool& isBillBord);
+		void WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,const DirectX::XMFLOAT3& playerPosition, bool isBillBord);
 
 		void WorldPositionInit();
 

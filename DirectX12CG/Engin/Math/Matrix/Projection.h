@@ -13,7 +13,7 @@ namespace MCB
 		float nearZ_;//ファークリップ距離(前)
 		float farZ_;//ファークリップ距離(後ろ)
 
-		void CreateMatrixProjection(const float& fovAngle, const float& aspectRatio, const float& nearZ, const float& farZ);
+		void CreateMatrixProjection( float fovAngle,  float aspectRatio,  float nearZ,  float farZ);
 		void UpdataMatrixProjection();
 	};
 }

@@ -3,16 +3,17 @@
 
 using namespace DirectX;
 
-void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag,
+    const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
-    dx12.result = dx12.device->CreateCommittedResource(
+    dx12.result_ = dx12.device_->CreateCommittedResource(
         &HeapProp, // ヒープ設定
         flag,
         &Resdesc, // リソース設定
         state,
         nullptr,
-        IID_PPV_ARGS(&vertBuff));
-    assert(SUCCEEDED(dx12.result));
+        IID_PPV_ARGS(&vertBuff_));
+    assert(SUCCEEDED(dx12.result_));
 }
 
 //void MCB::Vertex::SetIbView(DXGI_FORMAT format)
@@ -24,9 +25,9 @@ void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& He
 
 void MCB::Vertex::SetVbView()
 {
-    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = sizeVB;
-    vbView.StrideInBytes = sizeof(vertices[0]);
+    vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+    vbView_.SizeInBytes = sizeVB_;
+    vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
 //void MCB::Vertex::CreateIndexBuffer(Dx12 &dx12,const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag,const D3D12_RESOURCE_DESC Resdesc ,D3D12_RESOURCE_STATES state)

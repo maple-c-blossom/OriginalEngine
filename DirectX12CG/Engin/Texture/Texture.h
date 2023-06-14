@@ -20,17 +20,17 @@ namespace MCB
 		Texture(const Texture& texture) {};
 		~Texture();
 
-		void CreateTexture(const wchar_t* FileName,const uint16_t& incrementNum);
+		void CreateTexture(const wchar_t* FileName, uint16_t incrementNum);
 
-		void CreateTexture(const std::string& directoryPath, const std::string& filename, const uint16_t& incrementNum);
+		void CreateTexture(const std::string& directoryPath, const std::string& filename,  uint16_t incrementNum);
 
 		void CreateTexture(const wchar_t* FileName);
 
 		void CreateTexture( const std::string& directoryPath, const std::string& filename);
 
-		void CreateNoTextureFileIsTexture(const bool& postEffect = false);
+		void CreateNoTextureFileIsTexture( bool postEffect = false);
 
-		void CreateNoTextureFileIsTexture(const uint16_t& incrementNum,const bool& postEffect = false);
+		void CreateNoTextureFileIsTexture( uint16_t incrementNum, bool postEffect = false);
 
 		void SetSrvHeap();
 

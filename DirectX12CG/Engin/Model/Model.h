@@ -27,7 +27,7 @@ namespace MCB
     {
     public:
 
-        Model(const std::string fileName, bool smooth = false);
+        Model(const std::string fileName,const bool& smooth = false);
         Model();
         ~Model();
 
@@ -38,7 +38,7 @@ namespace MCB
 
 
 
-        TextureManager* Loader_ = TextureManager::GetInstance();
+        TextureManager* loader_ = TextureManager::GetInstance();
         TextureCell* texture_;
         std::vector<ObjectVertex> vertices_;
         std::vector<uint16_t> indices_;
@@ -55,7 +55,7 @@ namespace MCB
 
         //D3D12_RESOURCE_DESC resdesc{};  // ÉäÉ\Å[ÉXê›íË
 
-        ObjectMaterial material;
+        ObjectMaterial material_;
 
         void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
@@ -69,7 +69,7 @@ namespace MCB
 
         HRESULT VertexMaping();
 
-        void CreateModel(const std::string& fileName,const bool& smooth = false);
+        void CreateModel(const std::string& fileName, bool smooth = false);
 
         void SetSizeIB();
 
@@ -77,11 +77,11 @@ namespace MCB
 
         void LoadMaterial(const std::string& directoryPath,const std::string& filename);
 
-        void Init(const std::string& fileName, const bool& smooth = false);
+        void Init(const std::string& fileName,  bool smooth = false);
         
         inline size_t GetVertexCount() { return vertices_.size(); }
 
-        void AddSmoothData(const uint16_t& indexPosition, const uint16_t& indexVertex);
+        void AddSmoothData( uint16_t indexPosition,  uint16_t indexVertex);
 
         void CalculateSmoothedVertexNormals();
     };

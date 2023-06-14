@@ -34,20 +34,20 @@ namespace MCB
 		inline void SetSLightColor(const Float3& lightcolor) { lightColor_ = lightcolor; }
 		inline void SetSLightPos(const Float3& pos) { lightPos_ = pos; }
 		inline void SetSLightAtten(const Float3& atten) { lightAtten_ = atten; }
-		inline void SetIsActive(const bool& active) { active_ = active; }
-		inline void SetSLightFactorAngle(const Float2& factorCos,const bool& convertFlag = true)
+		inline void SetIsActive( bool active) { active_ = active; }
+		inline void SetSLightFactorAngle(const Float2& factorCos, bool convertFlag = true)
 		{
 			if (convertFlag)
 			{
-				lightFactorAngleCos_.x = ConvertRadius(factorCos.x);
-				lightFactorAngleCos_.y = ConvertRadius(factorCos.y);
+				lightFactorAngleCos_.x_ = ConvertRadius(factorCos.x_);
+				lightFactorAngleCos_.y_ = ConvertRadius(factorCos.y_);
 			}
 			else
 			{
 				lightFactorAngleCos_ = factorCos;
 			}
 		}
-		inline void SetSLightShininess(const float& shininess) { shininess_ = shininess; }
+		inline void SetSLightShininess( float shininess) { shininess_ = shininess; }
 
 		inline float GetSLightShininess() { return shininess_; }
 		inline Vector3D GetSLightDir() { return ligntDir_; }

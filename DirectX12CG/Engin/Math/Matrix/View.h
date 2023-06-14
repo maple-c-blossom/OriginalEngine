@@ -27,7 +27,7 @@ namespace MCB
         /// <summary>
         /// ‚·‚Å‚É‚ ‚é•Ï”‚ğ—˜—p‚µ‚Äs—ñ‚ğì¬‚µ‚Ü‚·
         /// </summary>
-        void UpDateMatrixView(const bool& billbordY = false);
+        void UpDateMatrixView( bool billbordY = false);
     };
 
 }

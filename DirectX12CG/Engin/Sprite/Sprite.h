@@ -57,13 +57,13 @@ namespace MCB
 		void CreateSprite();
 		//void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
-		void SpriteDraw(Texture& tex, const float& positionX = 0, const float& positionY = 0,
-			const float& size_x = 0, const float& size_y = 0);
+		void SpriteDraw(Texture& tex,  float positionX = 0,  float positionY = 0,
+			 float size_x = 0,  float size_y = 0);
 
-		void SpriteFlipDraw( Texture& tex, const float& positionX = 0, const float& positionY = 0,
-			const bool& isflipX = false, const bool& isflipY = false);
+		void SpriteFlipDraw( Texture& tex,  float positionX = 0,  float positionY = 0,
+			 bool isflipX = false,  bool isflipY = false);
 
-		void SpriteCuttingDraw(Texture& tex, const float& positionX = 0, const float& positionY = 0,
+		void SpriteCuttingDraw(Texture& tex,  float positionX = 0,  float positionY = 0,
 			const Float2& cuttingsize = {0,0}, const Float2& CuttingLeftTop = {0,0});
 
 

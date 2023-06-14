@@ -14,7 +14,7 @@ namespace MCB
             primitive_ = PrimitiveType::TRIANGLE; 
         };
         void Update() override;
-        inline void SetVertexPoint(const Vector3D& point,const int32_t& index) { vertexPoint_[index] = point; }
+        inline void SetVertexPoint(const Vector3D& point, int32_t index) { vertexPoint_[index] = point; }
     private:
         std::array<Vector3D, 3> vertexPoint_;
         Vector3D offset_;

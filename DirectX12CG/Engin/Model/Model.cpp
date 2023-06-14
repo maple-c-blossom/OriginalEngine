@@ -3,52 +3,54 @@
 
 using namespace std;
 
-MCB::Model::Model( const std::string fileName,bool smooth)
+MCB::Model::Model( const std::string fileName,const bool& smooth)
 {
-    material.Init();
+    material_.Init();
     Init(fileName,smooth);
-    material.Update();
+    material_.Update();
 }
 
 MCB::Model::Model()
 {
-    material.Init();
+    material_.Init();
 }
 
 MCB::Model::~Model()
 {
-    texture->free = true;
+    texture_->free = true;
     //texture.texfile.scratchImg.Release();
 }
 
-void MCB::Model::CreateVertexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateVertexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag,
+    const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
-    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+    Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
         &HeapProp, // ヒープ設定
         flag,
         &Resdesc, // リソース設定
         state,
         nullptr,
-        IID_PPV_ARGS(&vertBuff));
-    assert(SUCCEEDED(Dx12::GetInstance()->result));
+        IID_PPV_ARGS(&vertBuff_));
+    assert(SUCCEEDED(Dx12::GetInstance()->result_));
 }
 
-void MCB::Model::SetIbView(DXGI_FORMAT format)
+void MCB::Model::SetIbView(const DXGI_FORMAT& format)
 {
-    ibView.BufferLocation = indexBuff->GetGPUVirtualAddress();
-    ibView.Format = format;
-    ibView.SizeInBytes = static_cast<uint32_t>(sizeIB);
+    ibView_.BufferLocation = indexBuff_->GetGPUVirtualAddress();
+    ibView_.Format = format;
+    ibView_.SizeInBytes = static_cast<uint32_t>(sizeIB_);
 }
 
-void MCB::Model::CreateIndexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Model::CreateIndexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag,
+    const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
-    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+    Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
         &HeapProp,
         flag,
         &Resdesc,
         state,
         nullptr,
-        IID_PPV_ARGS(&indexBuff)
+        IID_PPV_ARGS(&indexBuff_)
     );
 
 }
@@ -60,13 +62,13 @@ HRESULT MCB::Model::IndexMaping()
 
     uint16_t* indexMap = nullptr;
     //GPU上のバッファに対応した仮想メモリを取得----------------------------
-    result = indexBuff->Map(0, nullptr, (void**)&indexMap);
+    result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
     //---------------------------------------
     
-    std::copy(indices.begin(), indices.end(), indexMap);
+    std::copy(indices_.begin(), indices_.end(), indexMap);
     
     //繋がりを解除---------------------
-    indexBuff->Unmap(0, nullptr);
+    indexBuff_->Unmap(0, nullptr);
     //------------------------
 
     return result;
@@ -74,9 +76,9 @@ HRESULT MCB::Model::IndexMaping()
 
 void MCB::Model::SetVbView()
 {
-    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = static_cast<uint32_t>(sizeVB);
-    vbView.StrideInBytes = sizeof(vertices[0]);
+    vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+    vbView_.SizeInBytes = static_cast<uint32_t>(sizeVB_);
+    vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
 HRESULT MCB::Model::VertexMaping()
@@ -85,19 +87,19 @@ HRESULT MCB::Model::VertexMaping()
 
     ObjectVertex* vertMap = nullptr;
 
-    result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+    result = vertBuff_->Map(0, nullptr, (void**)&vertMap);
     assert(SUCCEEDED(result));
 
-    std::copy(vertices.begin(), vertices.end(), vertMap);
+    std::copy(vertices_.begin(), vertices_.end(), vertMap);
 
     // マップを解除
-    vertBuff->Unmap(0, nullptr);
+    vertBuff_->Unmap(0, nullptr);
 
     return result;
 }
 
 
-void MCB::Model::CreateModel(const string fileName, bool smooth)
+void MCB::Model::CreateModel(const string& fileName, const bool& smooth)
 {
     std::ifstream file;
 
@@ -130,9 +132,9 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
         {
             //各座標読み込み
             Float3 position{};
-            line_stream >> position.x;
-            line_stream >> position.y;
-            line_stream >> position.z;
+            line_stream >> position.x_;
+            line_stream >> position.y_;
+            line_stream >> position.z_;
             //座標データに追加
             positions.emplace_back(position);
             ////頂点データに追加
@@ -144,10 +146,10 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
         if (key == "vt")
         {
             Float2 texcoord{};
-            line_stream >> texcoord.x;
-            line_stream >> texcoord.y;
+            line_stream >> texcoord.x_;
+            line_stream >> texcoord.y_;
 
-            texcoord.y = 1.0f - texcoord.y;
+            texcoord.y_ = 1.0f - texcoord.y_;
 
             texcoords.emplace_back(texcoord);
         }
@@ -155,9 +157,9 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
         if (key == "vn")
         {
             Float3 normal{};
-            line_stream >> normal.x;
-            line_stream >> normal.y;
-            line_stream >> normal.z;
+            line_stream >> normal.x_;
+            line_stream >> normal.y_;
+            line_stream >> normal.z_;
 
             normals.emplace_back(normal);
         }
@@ -188,8 +190,8 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
                 vertex.pos = positions[indexPosition - 1];
                 vertex.normal = normals[indexNormal - 1];
                 vertex.uv = texcoords[indexTexcoord - 1];
-                vertices.emplace_back(vertex);
-                indices.emplace_back((uint16_t)indices.size());
+                vertices_.emplace_back(vertex);
+                indices_.emplace_back((uint16_t)indices_.size());
                 if(smooth) AddSmoothData(indexPosition, (uint16_t)GetVertexCount() - 1);
                 //if (smooth) CalculateSmoothedVertexNormals();
 
@@ -208,14 +210,14 @@ void MCB::Model::CreateModel(const string fileName, bool smooth)
 
 void MCB::Model::SetSizeIB()
 {
-    sizeIB = static_cast<uint32_t>(sizeof(uint16_t) * indices.size());
+    sizeIB_ = static_cast<uint32_t>(sizeof(uint16_t) * indices_.size());
 }
 
 
 
 void MCB::Model::SetSizeVB()
 {
-    sizeVB = static_cast<uint32_t>(sizeof(ObjectVertex) * vertices.size());
+    sizeVB_ = static_cast<uint32_t>(sizeof(ObjectVertex) * vertices_.size());
 }
 
 void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::string& filename)
@@ -244,35 +246,35 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
 
         if (key == "newmtl")
         {
-            line_stream >> material.material.name;
+            line_stream >> material_.material_.name;
         }
 
         if (key == "Ka")
         {
-            line_stream >> material.material.ambient.x;
-            line_stream >> material.material.ambient.y;
-            line_stream >> material.material.ambient.z;
+            line_stream >> material_.material_.ambient.x_;
+            line_stream >> material_.material_.ambient.y_;
+            line_stream >> material_.material_.ambient.z_;
         }
 
         if (key == "Kd")
         {
-            line_stream >> material.material.diffuse.x;
-            line_stream >> material.material.diffuse.y;
-            line_stream >> material.material.diffuse.z;
+            line_stream >> material_.material_.diffuse.x_;
+            line_stream >> material_.material_.diffuse.y_;
+            line_stream >> material_.material_.diffuse.z_;
         }
 
         if (key == "Ks")
         {
-            line_stream >> material.material.specular.x;
-            line_stream >> material.material.specular.y;
-            line_stream >> material.material.specular.z;
+            line_stream >> material_.material_.specular.x_;
+            line_stream >> material_.material_.specular.y_;
+            line_stream >> material_.material_.specular.z_;
         }
 
         if (key == "map_Kd")
         {
-            line_stream >> material.material.textureFileName;
+            line_stream >> material_.material_.textureFileName;
 
-            texture = Loader->LoadTexture(directoryPath, material.material.textureFileName);
+            texture_ = loader_->LoadTexture(directoryPath, material_.material_.textureFileName);
         }
 
     }
@@ -280,45 +282,45 @@ void MCB::Model::LoadMaterial(const std::string& directoryPath, const std::strin
 
 }
 
-void MCB::Model::Init(const std::string fileName, bool smooth)
+void MCB::Model::Init(const std::string& fileName,const bool& smooth)
 {
     CreateModel(fileName,smooth);
 
     SetSizeIB();
-    material.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-    CreateIndexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-    Dx12::GetInstance()->result = IndexMaping();
+    material_.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    CreateIndexBuffer(material_.HeapProp_, D3D12_HEAP_FLAG_NONE, material_.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
+    Dx12::GetInstance()->result_ = IndexMaping();
     SetIbView(DXGI_FORMAT_R16_UINT);
 
     SetSizeVB();
-    material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeVB), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-    CreateVertexBuffer(material.HeapProp, D3D12_HEAP_FLAG_NONE, material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
+    material_.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeVB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+    CreateVertexBuffer(material_.HeapProp_, D3D12_HEAP_FLAG_NONE, material_.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
     VertexMaping();
     SetVbView();
 
 }
 
-void MCB::Model::AddSmoothData(uint16_t indexPosition, uint16_t indexVertex)
+void MCB::Model::AddSmoothData(const uint16_t& indexPosition, const uint16_t& indexVertex)
 {
-    smoothData[indexPosition].emplace_back(indexVertex);
+    smoothData_[indexPosition].emplace_back(indexVertex);
 }
 
 void MCB::Model::CalculateSmoothedVertexNormals()
 {
-    auto itr = smoothData.begin();
-    for (; itr != smoothData.end(); ++itr)
+    auto itr = smoothData_.begin();
+    for (; itr != smoothData_.end(); ++itr)
     {
         std::vector<uint16_t>& v = itr->second;
         Vector3D normal = {};
         for (uint16_t index : v)
         {
-            normal += vertices[index].normal;
+            normal += vertices_[index].normal;
         }
         normal = normal / (float)v.size();
         normal.V3Norm();
         for (uint16_t index : v)
         {
-            vertices[index].normal = { normal.vec.x, normal.vec.y, normal.vec.z };
+            vertices_[index].normal = { normal.vec_.x_, normal.vec_.y_, normal.vec_.z_ };
         }
     }
 }

@@ -27,30 +27,30 @@ namespace MCB
 
 		void SetViewEye(const Float3& eyePos)
 		{
-			view_.eye_ = { eyePos.x,eyePos.y,eyePos.z };
+			view_.eye_ = { eyePos.x_,eyePos.y_,eyePos.z_ };
 		}
 
 		void SetViewTarget(const Float3& targetPos)
 		{
-			view_.target_ = { targetPos.x,targetPos.y,targetPos.z };
+			view_.target_ = { targetPos.x_,targetPos.y_,targetPos.z_ };
 		}
 
 		void SetViewUp(const Float3& up)
 		{
-			view_.up_ = { up.x, up.y, up.z };
+			view_.up_ = { up.x_, up.y_, up.z_ };
 		}
 
-		void SetProjectionFarZ(const float& farZ)
+		void SetProjectionFarZ(float farZ)
 		{
 			projection_.farZ_ = farZ;
 		}
 
-		void SetProjectionFovAngle(const float& fovAngle)
+		void SetProjectionFovAngle( float fovAngle)
 		{
 			projection_.fovAngle_ = fovAngle;
 		}
 
-		void SetProjection(const float& nearZ)
+		void SetProjection( float nearZ)
 		{
 			projection_.nearZ_ = nearZ;
 		}

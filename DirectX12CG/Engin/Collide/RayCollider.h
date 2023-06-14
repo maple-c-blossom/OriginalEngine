@@ -7,14 +7,14 @@ namespace MCB
 	{
     public:
         RayCollider(const Vector3D& offset = { 0,0,0 },const Vector3D& rayVec = { 0,0,1 },
-            const float& radius = 0.f,const float& range = 10000.f) 
+             float radius = 0.f, float range = 10000.f) 
         {
             offset_ = offset; radius_ = radius; rayVec_ = rayVec; 
             range_ = range; primitive_ = PrimitiveType::RAY; 
         };
         void Update() override;
-        inline void SetRadius(const float& radius) { this->radius_ = radius; }
-        inline void SetRange(const float& range) { this->range_ = range; }
+        inline void SetRadius( float radius) { this->radius_ = radius; }
+        inline void SetRange( float range) { this->range_ = range; }
     private:
 		Vector3D offset_;
 		Vector3D rayVec_;

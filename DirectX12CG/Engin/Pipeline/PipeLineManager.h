@@ -17,12 +17,12 @@ namespace MCB
 
 	public:
 		PipeLineManager(RootParameter* rootpamrams, Depth* depth);
-		void SetObjPipeLine(const int32_t& blend = 0);
-		void SetFbxPipeLine(const int32_t& blend = 0);
-		void SetSpritePipeLine(const int32_t& blend = 0);
-		void SetParticlePipeLine(const int32_t& blend = 0);
-		void SetPostEffectPipeLine(const int32_t& blend = 0);
-		PipelineRootSignature* Getpipeline(const int32_t& pipelineSelect,const int32_t& blend);
+		void SetObjPipeLine( int32_t blend = 0);
+		void SetFbxPipeLine( int32_t blend = 0);
+		void SetSpritePipeLine( int32_t blend = 0);
+		void SetParticlePipeLine( int32_t blend = 0);
+		void SetPostEffectPipeLine( int32_t blend = 0);
+		PipelineRootSignature* Getpipeline( int32_t pipelineSelect, int32_t blend);
 	};
 
 }

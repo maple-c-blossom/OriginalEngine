@@ -25,9 +25,9 @@ namespace MCB
 		inline Vector3D GetLightDir() { return lightdir_; }
 		inline void SetLightColor(const Float3& lightcolor) { lightColor_ = lightcolor; }
 		inline Float3 GetLightColor() { return lightColor_; }
-		inline void SetLightShininess(const float& lightshininess) { shininess_ = lightshininess; }
+		inline void SetLightShininess( float lightshininess) { shininess_ = lightshininess; }
 		inline float GetLightShininess() { return shininess_; }
-		inline void SetIsActive(const bool& active) { this->active_ = active; }
+		inline void SetIsActive( bool active) { this->active_ = active; }
 		inline bool IsActive() { return active_; }
 	private:
 

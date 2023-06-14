@@ -11,7 +11,7 @@ namespace MCB
 		float y_;
 		float z_;
 
-		Float3(const float& x, const float& y, const float& z);
+		Float3( float x,  float y,  float z);
 		Float3();
 
 		Float3& operator+=(const Float3& a);
@@ -34,7 +34,7 @@ namespace MCB
 		float w_ = 0;
 
 		Float4();
-		Float4(const float& x, const float& y, const float& z, const float& w);
+		Float4( float x,  float y,  float z,  float w);
 	};
 
 	MCB::Float3 operator-(MCB::Float3& a, MCB::Float3& b);

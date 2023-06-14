@@ -11,27 +11,27 @@ using namespace DirectX;
 
 MCB::AnimationModel::~AnimationModel()
 {
-	for (uint32_t i = 0; i < nodes.size(); i++)
+	for (uint32_t i = 0; i < nodes_.size(); i++)
 	{
-		for (uint32_t j = 0; j < nodes[i]->meshes.size(); j++)
+		for (uint32_t j = 0; j < nodes_[i]->meshes.size(); j++)
 		{
-			for (uint32_t k = 0; k < nodes[i]->meshes[j]->textures.size(); k++)
+			for (uint32_t k = 0; k < nodes_[i]->meshes[j]->textures_.size(); k++)
 			{
-				nodes[i]->meshes[j]->textures[k]->free = true;
+				nodes_[i]->meshes[j]->textures_[k]->free = true;
 			}
 		}
 	}
 }
 
 
-bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
+bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
 	//importer.SetIOHandler(new MyIOSystem());
 	// And have it read the given file with some example postprocessing
 	// Usually - if speed is not the most important aspect for you - you'll
 	// probably to request more postprocessing than we do in this example.
-	this->fileName = fileName;
+	this->fileName_ = fileName;
 	std::string baseDirectory = "Resources\\";
 	std::string extend = "." + fileType;
 	fileName = baseDirectory + fileName + "\\" + fileName + extend;
@@ -70,9 +70,9 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 				{
 					Vector3D tempPosition;
 					double time;
-					tempPosition.vec.x = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.x;
-					tempPosition.vec.y = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.y;
-					tempPosition.vec.z = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.z;
+					tempPosition.vec_.x_ = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.x;
+					tempPosition.vec_.y_ = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.y;
+					tempPosition.vec_.z_ = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mValue.z;
 					time = scene->mAnimations[i]->mChannels[j]->mPositionKeys[k].mTime;
 
 					tempNodeAnim.position.push_back(tempPosition);
@@ -83,9 +83,9 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 				{
 					Vector3D tempScale;
 					double time;
-					tempScale.vec.x = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.x;
-					tempScale.vec.y = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.y;
-					tempScale.vec.z = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.z;
+					tempScale.vec_.x_ = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.x;
+					tempScale.vec_.y_ = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.y;
+					tempScale.vec_.z_ = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mValue.z;
 					time = scene->mAnimations[i]->mChannels[j]->mScalingKeys[k].mTime;
 					tempNodeAnim.scale.push_back(tempScale);
 					tempNodeAnim.scaleTime.push_back(time);
@@ -95,17 +95,17 @@ bool MCB::AnimationModel::Load(std::string fileName,std::string fileType) {
 				{
 					Quaternion tempRotation;
 					double time;
-					tempRotation.x = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.x;
-					tempRotation.y = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.y;
-					tempRotation.z = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.z;
-					tempRotation.w = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.w;
+					tempRotation.x_ = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.x;
+					tempRotation.y_ = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.y;
+					tempRotation.z_ = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.z;
+					tempRotation.w_ = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mValue.w;
 					time = scene->mAnimations[i]->mChannels[j]->mRotationKeys[k].mTime;
 					tempNodeAnim.rotation.push_back(tempRotation);
 					tempNodeAnim.rotationTime.push_back(time);
 				}
 				tempAnim->channels.push_back(tempNodeAnim);
 			}
-			animations.push_back(move(tempAnim));
+			animations_.push_back(move(tempAnim));
 		}
 	}
 
@@ -134,7 +134,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 			newObject->meshes.push_back(move(tempmodel));
 			for (auto& itr :newObject->meshes)//なぜかreturnされるまでfalseだったtextureのfreeがtrueにされているので修正(上記のやつが同じ原因っぽい）
 			{
-				for (auto& itr2 : itr->textures)
+				for (auto& itr2 : itr->textures_)
 				{
 					if (itr2->free)
 					{
@@ -169,8 +169,8 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
 		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
-		nodes.push_back(std::move(newObject));
-		parent = nodes.back().get();
+		nodes_.push_back(std::move(newObject));
+		parent = nodes_.back().get();
 		//transform.SetUnity();
 		
 	if (targetParent)
@@ -193,18 +193,18 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 	for (uint32_t i = 0; i < mesh->mNumVertices; i++) {
 		AnimationVertex vertex;
 
-		vertex.pos.x = mesh->mVertices[i].x;
-		vertex.pos.y = mesh->mVertices[i].y;
-		vertex.pos.z = mesh->mVertices[i].z;
-		vertex.normal.x = mesh->mNormals[i].x;
-		vertex.normal.y = mesh->mNormals[i].y;
-		vertex.normal.z = mesh->mNormals[i].z;
+		vertex.pos.x_ = mesh->mVertices[i].x;
+		vertex.pos.y_ = mesh->mVertices[i].y;
+		vertex.pos.z_ = mesh->mVertices[i].z;
+		vertex.normal.x_ = mesh->mNormals[i].x;
+		vertex.normal.y_ = mesh->mNormals[i].y;
+		vertex.normal.z_ = mesh->mNormals[i].z;
 		if (mesh->mTextureCoords[0]) {
-			vertex.uv.x = (float)mesh->mTextureCoords[0][i].x;
-			vertex.uv.y = (float)mesh->mTextureCoords[0][i].y;
+			vertex.uv.x_ = (float)mesh->mTextureCoords[0][i].x;
+			vertex.uv.y_ = (float)mesh->mTextureCoords[0][i].y;
 		}
 
-		tempmodel.vertices.push_back(vertex);
+		tempmodel.vertices_.push_back(vertex);
 	}
 
 
@@ -212,7 +212,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		aiFace face = mesh->mFaces[i];
 
 		for (uint32_t j = 0; j < face.mNumIndices; j++)
-			tempmodel.indices.push_back(face.mIndices[j]);
+			tempmodel.indices_.push_back(face.mIndices[j]);
 	}
 
 	if (mesh->mMaterialIndex >= 0) {
@@ -221,30 +221,30 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		aiString name;
 
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE,color);
-		mat.material.diffuse.x = color.r;
-		mat.material.diffuse.y = color.g;
-		mat.material.diffuse.z = color.b;
+		mat.material_.diffuse.x_ = color.r;
+		mat.material_.diffuse.y_ = color.g;
+		mat.material_.diffuse.z_ = color.b;
 
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_SPECULAR, color);
-		mat.material.specular.x = color.r;
-		mat.material.specular.y = color.g;
-		mat.material.specular.z = color.b;
+		mat.material_.specular.x_ = color.r;
+		mat.material_.specular.y_ = color.g;
+		mat.material_.specular.z_ = color.b;
 
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_AMBIENT, color);
-		mat.material.ambient.x = color.r;
-		mat.material.ambient.y = color.g;
-		mat.material.ambient.z = color.b;
+		mat.material_.ambient.x_ = color.r;
+		mat.material_.ambient.y_ = color.g;
+		mat.material_.ambient.z_ = color.b;
 
 		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_NAME, name);
-		mat.material.name = name.C_Str();
+		mat.material_.name = name.C_Str();
 
-		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_OPACITY, mat.material.alpha);
+		scene->mMaterials[mesh->mMaterialIndex]->Get(AI_MATKEY_OPACITY, mat.material_.alpha);
 		mat.Init();
-		tempmodel.material.push_back(mat);
-		tempmodel.textures = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
+		tempmodel.material_.push_back(mat);
+		tempmodel.textures_ = this->loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
 	}
-	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices.size());
+	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices_.size());
 	for (uint32_t i = 0; i < mesh->mNumBones; i++)
 	{
 		Bone temp;
@@ -282,9 +282,9 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		}
 
 
-		bones.push_back(temp);
+		bones_.push_back(temp);
 	}
-	for (int32_t i = 0; i < tempmodel.vertices.size(); i++)
+	for (int32_t i = 0; i < tempmodel.vertices_.size(); i++)
 	{
 		auto& weightL = weightList[i];
 		weightL.sort([](auto const& lhs, auto const rhs) {return lhs.weight > rhs.weight; });
@@ -292,17 +292,17 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		for (auto& weightSet : weightL)
 		{
 			
-			tempmodel.vertices[i].ids[weightArrayIndex] = weightSet.id;
-			tempmodel.vertices[i].weights[weightArrayIndex] = weightSet.weight;
+			tempmodel.vertices_[i].ids[weightArrayIndex] = weightSet.id;
+			tempmodel.vertices_[i].weights[weightArrayIndex] = weightSet.weight;
 			if (++weightArrayIndex >= NUM_BONES_PER_VERTEX)
 			{
 				float weight = 0.0f;
 				for (int32_t j = 1; j < NUM_BONES_PER_VERTEX; j++)
 				{
-					weight += tempmodel.vertices[i].weights[j];
+					weight += tempmodel.vertices_[i].weights[j];
 
 				}
-				tempmodel.vertices[i].weights[0] = 1.0f - weight;
+				tempmodel.vertices_[i].weights[0] = 1.0f - weight;
 				break;
 			}
 		}
@@ -316,26 +316,26 @@ void MCB::AnimationModel::Draw()
 {
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
-	for (auto& itr : nodes)
+	for (auto& itr : nodes_)
 	{
 		for (auto& itr2 : itr->meshes)
 		{
 			//定数バッファビュー(CBV)の設定コマンド
-			dx12->commandList->SetGraphicsRootConstantBufferView(2, itr2->material.begin()->constBuffMaterialB1->GetGPUVirtualAddress());
+			dx12->commandList_->SetGraphicsRootConstantBufferView(2, itr2->material_.begin()->constBuffMaterialB1_->GetGPUVirtualAddress());
 			//SRVヒープの先頭アドレスを取得
-			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
-			srvGpuHandle.ptr += itr2->textures.front()->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+			srvGpuHandle.ptr += itr2->textures_.front()->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
 			//SRVヒープの先頭にあるSRVをパラメータ1番に設定
-			dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+			dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 			//頂点データ
-			dx12->commandList->IASetVertexBuffers(0, 1, &itr2->vbView);
+			dx12->commandList_->IASetVertexBuffers(0, 1, &itr2->vbView_);
 			//インデックスデータ
-			dx12->commandList->IASetIndexBuffer(&itr2->ibView);
+			dx12->commandList_->IASetIndexBuffer(&itr2->ibView_);
 			//描画コマンド
-			dx12->commandList->DrawIndexedInstanced((uint32_t)itr2->indices.size(), 1, 0, 0, 0);
+			dx12->commandList_->DrawIndexedInstanced((uint32_t)itr2->indices_.size(), 1, 0, 0, 0);
 		}
 	}
 
@@ -343,7 +343,9 @@ void MCB::AnimationModel::Draw()
 }
 //
 
-std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene) {
+std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,const aiTextureType& type,
+	const std::string& typeName, const aiScene* scene)
+{
 	std::vector<TextureCell*> textures;
 	for (uint32_t i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
@@ -355,10 +357,10 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		{
 			path = path.substr(path.find("\\") + 1);
 		}
-		path = "Resources\\" + fileName + "\\" + path;
+		path = "Resources\\" + fileName_ + "\\" + path;
 		wchar_t wfilepath[128];
 		int32_t iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
-		tempTex = textureManager->LoadTexture(wfilepath);
+		tempTex = textureManager_->LoadTexture(wfilepath);
 		textures.push_back(tempTex);
 
 	}
@@ -366,14 +368,14 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	if (textures.empty())
 	{
 		TextureCell* tempTex;
-		tempTex = textureManager->CreateNoTextureFileIsTexture();
+		tempTex = textureManager_->CreateNoTextureFileIsTexture();
 		textures.push_back(tempTex);
 	}
 	
 	return textures;
 }
 
-  void AnimationModel::boneAnimTransform(float timeInSeconds, size_t currentAnimation,bool loop)
+  void AnimationModel::boneAnimTransform(const float& timeInSeconds,const size_t& currentAnimation,const bool& loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -383,19 +385,19 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
     
     //NSLog(@"%d", scene->mNumAnimations);
     
-    float ticksPerSecond = (float)(animations[currentAnimation]->ticksPerSecond != 0 ? animations[currentAnimation]->ticksPerSecond : 25.0f);
+    float ticksPerSecond = (float)(animations_[currentAnimation]->ticksPerSecond != 0 ? animations_[currentAnimation]->ticksPerSecond : 25.0f);
     float timeInTicks = timeInSeconds * ticksPerSecond;
     float animationTime = timeInTicks;
     
     if(loop)
-      animationTime = (float)fmod(animationTime, animations[currentAnimation]->duration);
+      animationTime = (float)fmod(animationTime, animations_[currentAnimation]->duration);
     else
-      animationTime = (float)min(animationTime, animations[currentAnimation]->duration -0.0001f);
+      animationTime = (float)min(animationTime, animations_[currentAnimation]->duration -0.0001f);
     
 	
-	for (auto& itr : nodes) itr->AnimaetionParentMat = XMMatrixIdentity();
-	for (auto& itr : bones) itr.finalMatrix = itr.offsetMatrix;
-	for (auto& itr : nodes)
+	for (auto& itr : nodes_) itr->AnimaetionParentMat = XMMatrixIdentity();
+	for (auto& itr : bones_) itr.finalMatrix = itr.offsetMatrix;
+	for (auto& itr : nodes_)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(), &itr->AnimaetionParentMat, itr->transform, currentAnimation);
 	}
@@ -409,11 +411,11 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, DirectX::XMMATRIX globalInverseTransform, size_t currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy(const float& animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, const DirectX::XMMATRIX& globalInverseTransform,const size_t& currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
-	  const Animation* pAnimation = animations[currentAnimation].get();
+	  const Animation* pAnimation = animations_[currentAnimation].get();
 
 	  XMMATRIX nodeTrans = pNode->transform;
 
@@ -424,19 +426,19 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 		   //Interpolate scaling and generate scaling transformation matrix
 		  Vector3D scaling;
 		  calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
-		  XMMATRIX scalingM = XMMatrixScaling(scaling.vec.x, scaling.vec.y, scaling.vec.z);
+		  XMMATRIX scalingM = XMMatrixScaling(scaling.vec_.x_, scaling.vec_.y_, scaling.vec_.z_);
 
 		  // Interpolate rotation and generate rotation transformation matrix
 		  Quaternion rotationQ;
 		  calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
 		  //quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
-		  XMVECTOR XMrotationQ = { rotationQ.x,rotationQ.y,rotationQ.z,rotationQ.w };
+		  XMVECTOR XMrotationQ = { rotationQ.x_,rotationQ.y_,rotationQ.z_,rotationQ.w_ };
 		  XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
 
 		  // Interpolate translation and generate translation transformation matrix
 		  Vector3D translation;
 		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
-		  XMMATRIX translationM = XMMatrixTranslation( translation.vec.x, translation.vec.y, translation.vec.z );
+		  XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
 
 		   //Combine the above transformations
 		  nodeTrans = scalingM * rotationM * translationM;
@@ -446,7 +448,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	  else pNode->AnimaetionParentMat = nodeTrans;
 	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
 	  Bone* bonePtr = nullptr;
-	  for (auto& itr : bones)
+	  for (auto& itr : bones_)
 	  {
 		  //std::string name = nodeName.substr(0, itr.name.size());
 		  if (itr.name == nodeName)
@@ -490,7 +492,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 
 
 
-   void AnimationModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedPosition(Vector3D& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->position.size() == 1)
 	  {
@@ -509,7 +511,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	  Out = Start + Factor * Delta;
   }
 
-   void AnimationModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedRotation(Quaternion& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  // we need at least two values to interpolate...
 	  if (pNodeAnim->rotation.size() == 1) {
@@ -530,7 +532,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
   }
 
 
-   void AnimationModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void AnimationModel::calcInterpolatedScaling(Vector3D& Out,const float& AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->scale.size() == 1) {
 		  Out = pNodeAnim->scale[0];
@@ -549,7 +551,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
 	  Out = Start + Factor * Delta;
   }
 
-   size_t AnimationModel::findPosition(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findPosition(const float& AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   for (uint32_t i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
@@ -563,7 +565,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-   size_t AnimationModel::findRotation(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findRotation(const float& AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
@@ -579,7 +581,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat, 
    }
 
 
-   size_t AnimationModel::findScaling(float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t AnimationModel::findScaling(const float& AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 

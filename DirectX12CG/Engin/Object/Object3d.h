@@ -72,19 +72,19 @@ namespace MCB
         bool trackingFlag_ = false;
         virtual void Init();
         virtual void CreateBuff();
-        virtual void Update( const bool& isBillBord = false);
-        virtual void UpdateMatrix( const bool& isBillBord = false);
+        virtual void Update(  bool isBillBord = false);
+        virtual void UpdateMatrix(  bool isBillBord = false);
 
-        virtual void Update( const Quaternion& q, const bool& isBillBord = false);
-        virtual void UpdateMatrix( const Quaternion& q, const bool& isBillBord = false);
+        virtual void Update( const Quaternion& q,  bool isBillBord = false);
+        virtual void UpdateMatrix( const Quaternion& q,  bool isBillBord = false);
 
         virtual void Draw();
 
-        virtual void Draw(const uint16_t& incremant);
+        virtual void Draw( uint16_t incremant);
 
-        virtual void AnimationUpdate(ICamera* camera,const bool& isBillBord = false);
+        virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
 
-        virtual void AnimationUpdate(ICamera* camera, const Quaternion& q, const bool& isBillBord = false);
+        virtual void AnimationUpdate(ICamera* camera, const Quaternion& q,  bool isBillBord = false);
 
         virtual void AnimationDraw();
 

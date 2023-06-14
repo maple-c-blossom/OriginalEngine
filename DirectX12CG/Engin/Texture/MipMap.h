@@ -8,7 +8,7 @@ namespace MCB
 	public:
 		DirectX::ScratchImage mipChain_{};
 
-		HRESULT GenerateMipMap(TextureFile* scratchimg, const DirectX::TEX_FILTER_FLAGS& flag, const size_t& levels);
+		HRESULT GenerateMipMap(TextureFile* scratchimg, const DirectX::TEX_FILTER_FLAGS& flag,  size_t levels);
 
 	};
 }

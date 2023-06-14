@@ -15,21 +15,21 @@ namespace MCB
 	public:
 		void MCBMatrixIdentity();
 
-		MCBMatrix MCBMatrixTransrate(const float& x, const float& y, const float& z);
+		MCBMatrix MCBMatrixTransrate( float x,  float y,  float z);
 
-		MCBMatrix MCBMatrixScaling(const float& x, const float& y, const float& z);
+		MCBMatrix MCBMatrixScaling( float x,  float y,  float z);
 
 		void ConvertMatrixArray(float** ArrayMat);
 
 		void ConvertMatrixMCBMat(float** ArrayMat);
 
-		MCBMatrix MCBMatrixRotaX(const float& angle);
+		MCBMatrix MCBMatrixRotaX( float angle);
 
-		MCBMatrix MCBMatrixRotaY(const float& angle);
+		MCBMatrix MCBMatrixRotaY( float angle);
 
-		MCBMatrix MCBMatrixRotaZ(const float& angle);
+		MCBMatrix MCBMatrixRotaZ( float angle);
 
-		MCBMatrix MCBMatrixRota(const double& angle,const DirectX::XMFLOAT3& vector);
+		MCBMatrix MCBMatrixRota( double angle,const DirectX::XMFLOAT3& vector);
 
 		void SetRotaMatrix(const Float3& angle);
 
@@ -47,18 +47,18 @@ namespace MCB
 		MCBMatrix MCBMatrixConvertXMMatrix(const DirectX::XMMATRIX& mat);
 
 		//MCBMatrix operator*(MCBMatrix matrix);
-		MCBMatrix operator*(const float& s);
-		MCBMatrix operator/(const float& s);
+		MCBMatrix operator*( float s);
+		MCBMatrix operator/( float s);
 		MCBMatrix operator+(const MCBMatrix& matrix);
 		MCBMatrix operator-(const MCBMatrix& matrix);
 
 		MCBMatrix& operator*=(const MCBMatrix& matrix);
-		MCBMatrix& operator*=(const float& s);
-		MCBMatrix& operator/=(const float& s);
+		MCBMatrix& operator*=( float s);
+		MCBMatrix& operator/=( float s);
 		MCBMatrix& operator+=(const MCBMatrix& matrix);
 		MCBMatrix& operator-=(const MCBMatrix& matrix);
 
-		float operator[](const size_t& n);
+		float operator[]( size_t n);
 
 	};
 		MCBMatrix operator*(const MCBMatrix& matrix1, const MCBMatrix& matrix2);

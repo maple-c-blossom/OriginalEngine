@@ -18,13 +18,16 @@ namespace MCB
 
         Microsoft::WRL::ComPtr<ID3D12Resource> texbuff_ = nullptr;
 
-        HRESULT CommitResouce(const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_STATES& resouceState, const D3D12_CLEAR_VALUE* clearValue);
+        HRESULT CommitResouce(const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_STATES& resouceState,
+            const D3D12_CLEAR_VALUE* clearValue);
 
         void TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox,HRESULT &result);
         
-        void SetTexHeapProp(const D3D12_HEAP_TYPE& heaptype,const D3D12_CPU_PAGE_PROPERTY& cpuPagePropety,const D3D12_MEMORY_POOL& memorypool);
+        void SetTexHeapProp(const D3D12_HEAP_TYPE& heaptype,const D3D12_CPU_PAGE_PROPERTY& cpuPagePropety,
+            const D3D12_MEMORY_POOL& memorypool);
 
-        void SetTexResourceDesc(TextureFile& texFile,const D3D12_RESOURCE_DIMENSION& resouceDimension,const int32_t& SampleDescCount);
+        void SetTexResourceDesc(TextureFile& texFile,const D3D12_RESOURCE_DIMENSION& resouceDimension,
+            int32_t SampleDescCount);
 
         void SetNoTextureFileTexResourceDesc();
 
