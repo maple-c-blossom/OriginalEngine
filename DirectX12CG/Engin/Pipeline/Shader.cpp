@@ -6,7 +6,7 @@
 using namespace std;
 
 
-void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, size_t ShaderName)
+void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entryPoint, const size_t& ShaderName)
 {
     HRESULT result;
 
@@ -20,15 +20,15 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
             entryPoint, "vs_5_0", // エントリーポイント名、シェーダーモデル指定
             D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
             0,
-            &vsBlob, &errorBlob);
+            &vsBlob_, &errorBlob_);
 
         if (FAILED(result)) {
             // errorBlobからエラー内容をstring型にコピー
             std::string error;
-            error.resize(errorBlob->GetBufferSize());
+            error.resize(errorBlob_->GetBufferSize());
 
-            copy_n((char*)errorBlob->GetBufferPointer(),
-                errorBlob->GetBufferSize(),
+            copy_n((char*)errorBlob_->GetBufferPointer(),
+                errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
             // エラー内容を出力ウィンドウに表示
@@ -45,15 +45,15 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
             entryPoint, "ps_5_0", // エントリーポイント名、シェーダーモデル指定
             D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
             0,
-            &psBlob, &errorBlob);
+            &psBlob_, &errorBlob_);
 
         if (FAILED(result)) {
             // errorBlobからエラー内容をstring型にコピー
             std::string error;
-            error.resize(errorBlob->GetBufferSize());
+            error.resize(errorBlob_->GetBufferSize());
 
-            copy_n((char*)errorBlob->GetBufferPointer(),
-                errorBlob->GetBufferSize(),
+            copy_n((char*)errorBlob_->GetBufferPointer(),
+                errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
             // エラー内容を出力ウィンドウに表示
@@ -69,15 +69,15 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
             entryPoint, "gs_5_0", // エントリーポイント名、シェーダーモデル指定
             D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // デバッグ用設定
             0,
-            &gsBlob, &errorBlob);
+            &gsBlob_, &errorBlob_);
 
         if (FAILED(result)) {
             // errorBlobからエラー内容をstring型にコピー
             std::string error;
-            error.resize(errorBlob->GetBufferSize());
+            error.resize(errorBlob_->GetBufferSize());
 
-            copy_n((char*)errorBlob->GetBufferPointer(),
-                errorBlob->GetBufferSize(),
+            copy_n((char*)errorBlob_->GetBufferPointer(),
+                errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
             // エラー内容を出力ウィンドウに表示

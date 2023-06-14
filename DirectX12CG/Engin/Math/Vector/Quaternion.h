@@ -30,9 +30,9 @@ namespace MCB
 		float GetAngle(const Quaternion& a, const Quaternion& b, float& dot,bool& nan);
 		float GetAngle(const Quaternion& a, const Quaternion& b);
 		//球面線形補間
-		Quaternion Slerp(const Quaternion& start, const Quaternion& end, const int32_t& time, const int32_t& maxTime);
+		Quaternion Slerp( Quaternion start, const Quaternion& end, const int32_t& time, const int32_t& maxTime);
 		//球面線形補間
-		Quaternion Slerp(const Quaternion& start, const Quaternion& end, const float& time);
+		Quaternion Slerp( Quaternion start, const Quaternion& end, const float& time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える
 		Vector3D SetRotationVector(const Vector3D& rotationAxisVec,  Vector3D PositionVec, const float& angle);
 		//与えられたクォータニオンの回転をPositionVecに与える

@@ -207,27 +207,27 @@ void MCB::Quaternion::SinCos(float* returnSin, float* returnCos, float theta)
 	*returnCos = cos(theta);
 }
 
-Quaternion MCB::Quaternion::SetToRorateObjectToInternal(const Float3 eulerAngle)
+Quaternion MCB::Quaternion::SetToRorateObjectToInternal(const Float3& eulerAngle)
 {
 	Quaternion ans;
 	float sp, sb, sh;
 	float cp, cb, ch;
 
-	SinCos(&sp, &cp, eulerAngle.x * 0.5f);
-	SinCos(&sb, &cb, eulerAngle.z * 0.5f);
-	SinCos(&sh, &ch, eulerAngle.y * 0.5f);
+	SinCos(&sp, &cp, eulerAngle.x_ * 0.5f);
+	SinCos(&sb, &cb, eulerAngle.z_ * 0.5f);
+	SinCos(&sh, &ch, eulerAngle.y_ * 0.5f);
 
-	ans.x = ch * sp * cb + sh * cp * sb;
-	ans.y = -ch * sp * sb + sh * cp * cb;
-	ans.z = -sh * sp * cb + ch * cp * sb;
-	ans.w = ch * cp * cb + sh * sp * sb;
+	ans.x_ = ch * sp * cb + sh * cp * sb;
+	ans.y_ = -ch * sp * sb + sh * cp * cb;
+	ans.z_ = -sh * sp * cb + ch * cp * sb;
+	ans.w_ = ch * cp * cb + sh * sp * sb;
 
 	return ans;
 }
 
-Vector3D MCB::Quaternion::GetRotationAxis(Quaternion q)
+Vector3D MCB::Quaternion::GetRotationAxis(const Quaternion& q)
 {
-	float sinThetaOver2Sq = 1.0f - q.w * q.w;
+	float sinThetaOver2Sq = 1.0f - q.w_ * q.w_;
 
 	if (sinThetaOver2Sq <= 0.0f)
 	{
@@ -239,16 +239,16 @@ Vector3D MCB::Quaternion::GetRotationAxis(Quaternion q)
 
 
 	return Vector3D(
-		q.x * oneOverSinThetaOver2,
-		q.y * oneOverSinThetaOver2,
-		q.z * oneOverSinThetaOver2
+		q.x_ * oneOverSinThetaOver2,
+		q.y_ * oneOverSinThetaOver2,
+		q.z_ * oneOverSinThetaOver2
 		);
 
 }
 
-void MCB::Quaternion::GetRotationAxis(Quaternion q, Vector3D& AxisVec)
+void MCB::Quaternion::GetRotationAxis(const Quaternion& q, Vector3D& AxisVec)
 {
-	float sinThetaOver2Sq = 1.0f - q.w * q.w;
+	float sinThetaOver2Sq = 1.0f - q.w_ * q.w_;
 
 	if (sinThetaOver2Sq <= 0.0f)
 	{
@@ -260,19 +260,19 @@ void MCB::Quaternion::GetRotationAxis(Quaternion q, Vector3D& AxisVec)
 
 
 	AxisVec = Vector3D(
-		q.x * oneOverSinThetaOver2,
-		q.y * oneOverSinThetaOver2,
-		q.z * oneOverSinThetaOver2
+		q.x_ * oneOverSinThetaOver2,
+		q.y_ * oneOverSinThetaOver2,
+		q.z_ * oneOverSinThetaOver2
 	);
 }
 
-float MCB::Quaternion::GetAngle(Quaternion q)
+float MCB::Quaternion::GetAngle(const Quaternion& q)
 {
-	float thetaOver2 = SafeAcos(q.w);
+	float thetaOver2 = SafeAcos(q.w_);
 	return thetaOver2 * 2.0f;
 }
 
-float MCB::Quaternion::SafeAcos(float a)
+float MCB::Quaternion::SafeAcos(const float& a)
 {
 	if (a <= -1.0f)
 	{
@@ -285,9 +285,9 @@ float MCB::Quaternion::SafeAcos(float a)
 	return acos(a);
 }
 
-bool MCB::Quaternion::operator==(Quaternion q)
+bool MCB::Quaternion::operator==(const Quaternion& q)
 {
-	if (q.x == x && q.y == y && q.z == z && q.w == w)
+	if (q.x_ == x_ && q.y_ == y_ && q.z_ == z_ && q.w_ == w_)
 	{
 		return true;
 	}
@@ -296,7 +296,7 @@ bool MCB::Quaternion::operator==(Quaternion q)
 
 Quaternion MCB::Quaternion::operator-()
 {
-	return {-x,-y,-z,-w};
+	return {-x_,-y_,-z_,-w_};
 }
 
 Quaternion MCB::Quaternion::Identity()
@@ -304,7 +304,8 @@ Quaternion MCB::Quaternion::Identity()
 	return Quaternion(0,0,0,1);
 }
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int32_t time, int32_t maxTime)
+MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
+	const int32_t& time,const int32_t& maxTime)
 {
 	float Time = (float)time / (float)maxTime;
 	Quaternion ans;
@@ -318,10 +319,10 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int32_t
 	}
 	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		ans.x = (1.f - Time) * startDemo.x + Time * end.x;
-		ans.y = (1.f - Time) * startDemo.y + Time * end.y;
-		ans.z = (1.f - Time) * startDemo.z + Time * end.z;
-		ans.w = (1.f - Time) * startDemo.w + Time * end.w;
+		ans.x_ = (1.f - Time) * startDemo.x_ + Time * end.x_;
+		ans.y_ = (1.f - Time) * startDemo.y_ + Time * end.y_;
+		ans.z_ = (1.f - Time) * startDemo.z_ + Time * end.z_;
+		ans.w_ = (1.f - Time) * startDemo.w_ + Time * end.w_;
 		ans.Normalize();
 		return ans;
 	}
@@ -330,7 +331,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int32_t
 
 	if (st == 0)
 	{
-		return -startDemo;
+		return -start;
 	}
 
 	float sut = sinf(angle * Time);
@@ -339,17 +340,17 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, int32_t
 	float coeff1 = sout / st;
 	float coeff2 = sut / st;
 
-	ans.x = coeff1 * start.x + coeff2 * end.x;
-	ans.y = coeff1 * start.y + coeff2 * end.y;
-	ans.z = coeff1 * start.z + coeff2 * end.z;
-	ans.w = coeff1 * start.w + coeff2 * end.w;
+	ans.x_ = coeff1 * start.x_ + coeff2 * end.x_;
+	ans.y_ = coeff1 * start.y_ + coeff2 * end.y_;
+	ans.z_ = coeff1 * start.z_ + coeff2 * end.z_;
+	ans.w_ = coeff1 * start.w_ + coeff2 * end.w_;
 
 	ans.Normalize();
 	return ans;
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
+MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start,const Quaternion& end,const float& time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
 {
 	Quaternion ans;
 	float dot;
@@ -363,10 +364,10 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float t
 
 	if (dot >= 1.0f - FLT_EPSILON)
 	{
-		ans.x = (1.f - time) * startDemo.x + time * end.x;
-		ans.y = (1.f - time) * startDemo.y + time * end.y;
-		ans.z = (1.f - time) * startDemo.z + time * end.z;
-		ans.w = (1.f - time) * startDemo.w + time * end.w;
+		ans.x_ = (1.f - time) * startDemo.x_ + time * end.x_;
+		ans.y_ = (1.f - time) * startDemo.y_ + time * end.y_;
+		ans.z_ = (1.f - time) * startDemo.z_ + time * end.z_;
+		ans.w_ = (1.f - time) * startDemo.w_ + time * end.w_;
 		ans.Normalize();
 		return ans;
 	}
@@ -384,16 +385,16 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float t
 	float coeff1 = sout / st;
 	float coeff2 = sut / st;
 
-	ans.x = coeff1 * start.x + coeff2 * end.x;
-	ans.y = coeff1 * start.y + coeff2 * end.y;
-	ans.z = coeff1 * start.z + coeff2 * end.z;
-	ans.w = coeff1 * start.w + coeff2 * end.w;
+	ans.x_ = coeff1 * start.x_ + coeff2 * end.x_;
+	ans.y_ = coeff1 * start.y_ + coeff2 * end.y_;
+	ans.z_ = coeff1 * start.z_ + coeff2 * end.z_;
+	ans.w_ = coeff1 * start.w_ + coeff2 * end.w_;
 
 	ans.Normalize();
 	return ans;
 }
 
-Quaternion MCB::SetRota(Vector3D vec, float angle)
+Quaternion MCB::SetRota(const Vector3D& vec,const float& angle)
 {
 	return Quaternion(vec, angle);
 }

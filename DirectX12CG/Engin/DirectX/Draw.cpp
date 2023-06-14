@@ -13,8 +13,8 @@ void MCB::Draw::BeforeDraw(const Depth& depth, const PipelineRootSignature& pipe
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
-    dx12->commandList_->SetPipelineState(pipeline.pipeline.pipelinestate.Get());
-    dx12->commandList_->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
+    dx12->commandList_->SetPipelineState(pipeline.pipeline_.pipelinestate_.Get());
+    dx12->commandList_->SetGraphicsRootSignature(pipeline.rootsignature_.rootsignature_.Get());
 
 
     //プリミティブ形状の設定コマンド（三角形リスト）--------------------------
@@ -51,8 +51,8 @@ void MCB::Draw::CloseDrawCommandOrder()
 {
     Dx12* dx12 = Dx12::GetInstance();
     // 命令のクローズ----------------------------------
-    dx12->result = dx12->commandList_->Close();
-    assert(SUCCEEDED(dx12->result) && "命令クローズ段階でのエラー");
+    dx12->result_ = dx12->commandList_->Close();
+    assert(SUCCEEDED(dx12->result_) && "命令クローズ段階でのエラー");
     //------------
 }
 
@@ -69,7 +69,7 @@ void MCB::Draw::SetRenderTargetView(const Depth& depth)
     Dx12* dx12 = Dx12::GetInstance();
     rtvHandle_ = dx12->rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
     rtvHandle_.ptr += bbIndex_ * dx12->device_->GetDescriptorHandleIncrementSize(dx12->rtvHeapDesc_.Type);
-    dsvHandle_ = depth.dsvHeap->GetCPUDescriptorHandleForHeapStart();
+    dsvHandle_ = depth.dsvHeap_->GetCPUDescriptorHandleForHeapStart();
     dx12->commandList_->OMSetRenderTargets(1, &rtvHandle_, false, &dsvHandle_);
 }
 
@@ -110,8 +110,8 @@ void MCB::Draw::CommandListExecution()
     dx12->commandQueue_->ExecuteCommandLists(1, commandLists);
 
     // バッファをフリップ（裏表の入替え)-----------------------
-    dx12->result = dx12->swapchain_->Present(1, 0);
-    assert(SUCCEEDED(dx12->result) && "バッファフリップ段階でのエラー");
+    dx12->result_ = dx12->swapchain_->Present(1, 0);
+    assert(SUCCEEDED(dx12->result_) && "バッファフリップ段階でのエラー");
     //-----------------
 
 #pragma region コマンド実行完了待ち
@@ -121,8 +121,11 @@ void MCB::Draw::CommandListExecution()
     {
         HANDLE event = CreateEvent(nullptr, false, false, nullptr);
         dx12->fence_->SetEventOnCompletion(dx12->fenceVal_, event);
-        WaitForSingleObject(event, INFINITE);
-        CloseHandle(event);
+        if (event)
+        {
+            WaitForSingleObject(event, INFINITE);
+            CloseHandle(event);
+        }
     }
 #pragma endregion コマンド実行完了待ち
 }
@@ -147,12 +150,12 @@ void MCB::Draw::ResetQueAndCommandList()
 {
     Dx12* dx12 = Dx12::GetInstance();
     //キューをクリア
-    dx12->result = dx12->commandAllocator_->Reset(); // キューをクリア
-    assert(SUCCEEDED(dx12->result) && "キュークリア段階でのエラー");
+    dx12->result_ = dx12->commandAllocator_->Reset(); // キューをクリア
+    assert(SUCCEEDED(dx12->result_) && "キュークリア段階でのエラー");
 
     //再びコマンドリストをためる準備
-    dx12->result = dx12->commandList_->Reset(dx12->commandAllocator_.Get(), nullptr);  // 再びコマンドリストを貯める準備
-    assert(SUCCEEDED(dx12->result) && "コマンドリスト再貯蓄準備段階でのエラー");
+    dx12->result_ = dx12->commandList_->Reset(dx12->commandAllocator_.Get(), nullptr);  // 再びコマンドリストを貯める準備
+    assert(SUCCEEDED(dx12->result_) && "コマンドリスト再貯蓄準備段階でのエラー");
 }
 
 void MCB::Draw::PreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor)

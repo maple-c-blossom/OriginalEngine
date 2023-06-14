@@ -7,12 +7,12 @@ uint16_t MCB::ShaderResource::sAllincrementNum_ = 0;
 void MCB::ShaderResource::Init()
 {
     SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
-    Dx12::GetInstance()->result = SetDescriptorHeap();
+    Dx12::GetInstance()->result_ = SetDescriptorHeap();
     SetDescriptorRange(1, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 0);
     SetDescriptorRange(2, D3D12_DESCRIPTOR_RANGE_TYPE_SRV, 1,1);
 }
 
-void MCB::ShaderResource::SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags)
+void MCB::ShaderResource::SetHeapDesc(const D3D12_DESCRIPTOR_HEAP_FLAGS& flags)
 {
     srvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
     srvHeapDesc_.Flags = flags; //シェーダーから見えるように
@@ -27,7 +27,7 @@ HRESULT MCB::ShaderResource::SetDescriptorHeap()
 void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
 {
     //ヒープの二番目にシェーダーリソースビュー作成
-    Dx12::GetInstance()->device_->CreateShaderResourceView(texBuffer.texbuff.Get(), &srvDesc_, srvHandle_);
+    Dx12::GetInstance()->device_->CreateShaderResourceView(texBuffer.texbuff_.Get(), &srvDesc_, srvHandle_);
 }
 
 void MCB::ShaderResource::SetDescriptorRange(const int32_t& NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, const int32_t& BaseShaderRegister, const size_t& index)
@@ -39,12 +39,12 @@ void MCB::ShaderResource::SetDescriptorRange(const int32_t& NumDescriptors, cons
     descriptorRange_[i].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 }
 
-void MCB::ShaderResource::SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension)
+void MCB::ShaderResource::SetSrvDesc(TextureBuffer &texBuffer, const D3D12_SRV_DIMENSION& srvDimension)
 {
-    srvDesc_.Format = texBuffer.texresDesc.Format;
+    srvDesc_.Format = texBuffer.texresDesc_.Format;
     srvDesc_.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
     srvDesc_.ViewDimension = srvDimension;
-    srvDesc_.Texture2D.MipLevels = texBuffer.texresDesc.MipLevels;
+    srvDesc_.Texture2D.MipLevels = texBuffer.texresDesc_.MipLevels;
 }
 
 void MCB::ShaderResource::SetSrvHeap()
@@ -53,7 +53,7 @@ void MCB::ShaderResource::SetSrvHeap()
     
 }
 
-void MCB::ShaderResource::SetSrvHeap(uint16_t incrementNum)
+void MCB::ShaderResource::SetSrvHeap(const uint16_t& incrementNum)
 {
     srvHandle_ = srvHeap_->GetCPUDescriptorHandleForHeapStart();
     srvHandle_.ptr += incrementNum * Dx12::GetInstance()->device_.Get()->GetDescriptorHandleIncrementSize(srvHeapDesc_.Type);

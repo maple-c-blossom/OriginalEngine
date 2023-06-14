@@ -28,7 +28,7 @@ namespace MCB
         //Šî–{•Ï”‰Šú‰»-----
     #pragma region Šî–{•Ï”‰Šú‰»
 
-        HRESULT result;
+        HRESULT result_;
         Microsoft::WRL::ComPtr<ID3D12Device> device_ = nullptr;
         Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_ = nullptr;
         Microsoft::WRL::ComPtr<IDXGISwapChain4> swapchain_ = nullptr;

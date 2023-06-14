@@ -44,7 +44,7 @@ namespace MCB
 		void SetAmbientColor(const Float3& color);
 		Float3 GetAmbientColor();
 #pragma region DirL
-		void SetDirLightIsActive(const int32_t& lightindexNum, bool active);
+		void SetDirLightIsActive(const int32_t& lightindexNum, const bool& active);
 		void SetDirLightForLightDir(const int32_t& lightindexNum, const Vector3D& lightdir);
 		void SetDirLightColor(const int32_t& lightindexNum, const Float3& lightColor);
 		void SetDirLightShininess(const int32_t& lightindexNum, const float& lightShininess);
@@ -56,7 +56,7 @@ namespace MCB
 #pragma endregion DirL
 
 #pragma region PointL
-		void SetPLightIsActive(const int32_t& lightindexNum, bool active);
+		void SetPLightIsActive(const int32_t& lightindexNum,const bool& active);
 		void SetPLightPos(const int32_t& lightindexNum, const Float3& lightPos);
 		void SetPLightColor(const int32_t& lightindexNum, const Float3& lightColor);
 		void SetPLightAtten(const int32_t& lightindexNum, const Float3& lightAtten);

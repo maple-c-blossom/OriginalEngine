@@ -38,7 +38,7 @@ bool MCB::Collision::CalcSphere(const Sphere& sphereA, const Sphere& sphereB, Ve
 	return false;
 }
 
-bool MCB::Collision::CalcPlaneRay(const Plane& plane, const Ray& ray, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcPlaneRay(Plane plane, const Ray& ray, float* distance, Vector3D* inter)
 {
 	const float epsilon = 1.0e-5f;
 	float d1 = plane.normal_.GetV3Dot(ray.rayVec_);
@@ -56,7 +56,7 @@ bool MCB::Collision::CalcPlaneRay(const Plane& plane, const Ray& ray, float* dis
 	return true;
 }
 
-bool MCB::Collision::CalcTriangleRay(Triangle triangle, Ray ray, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcTriangleRay(Triangle triangle,const Ray& ray, float* distance, Vector3D* inter)
 {
 	Plane plane;
 	Vector3D interPlane;
@@ -85,7 +85,7 @@ bool MCB::Collision::CalcTriangleRay(Triangle triangle, Ray ray, float* distance
 	return true;
 }
 
-bool MCB::Collision::CalcPlaneSpher(Plane plane, Sphere sphere, Vector3D* inter)
+bool MCB::Collision::CalcPlaneSpher(const Plane& plane, Sphere sphere, Vector3D* inter)
 {
 	float dist = sphere.centerPosition_.GetV3Dot(plane.normal_);
 	dist = dist - plane.originDistance_;
@@ -112,7 +112,7 @@ bool MCB::Collision::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3
 	return true;
 }
 
-void MCB::Collision::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector3D& closest)
+void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& point, Vector3D& closest)
 {
 	// 資料領域チェック①の前準備
 	Vector3D p0p1 = triangle.vertexPoint_[1] - triangle.vertexPoint_[0];
@@ -189,7 +189,7 @@ void MCB::Collision::CalcTrianglePoint(Triangle triangle, Vector3D point, Vector
 
 }
 
-bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere, float* distance, Vector3D* inter)
+bool MCB::Collision::CalcRaySphere(const Ray& ray,const Sphere& sphere, float* distance, Vector3D* inter)
 {
 	Vector3D m(sphere.centerPosition_, ray.StartPosition_);
 	float b = m.GetV3Dot(ray.rayVec_);
@@ -208,7 +208,7 @@ bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere, float* distance, Vect
 		return true;
 }
 
-bool MCB::Collision::CalcRaySphere(Ray ray, Sphere sphere)
+bool MCB::Collision::CalcRaySphere( Ray ray,const Sphere& sphere)
 {
 	Vector3D rayToSphere(ray.StartPosition_, sphere.centerPosition_.vec_);
 	ray.rayVec_.V3Norm();

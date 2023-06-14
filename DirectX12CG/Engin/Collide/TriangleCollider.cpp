@@ -2,14 +2,14 @@
 
 void MCB::TriangleCollider::Update()
 {
-	DirectX::XMMATRIX mat = object3d->GetMatWorld();
+	DirectX::XMMATRIX mat = object3d_->GetMatWorld();
 	Vector3D position;
-	position.vec.x = mat.r[3].m128_f32[0] + offset.vec.x;
-	position.vec.y = mat.r[3].m128_f32[1] + offset.vec.y;
-	position.vec.z = mat.r[3].m128_f32[2] + offset.vec.z;
-	Triangle::vertexPoint[0] = position + vertexPoint[0];
-	Triangle::vertexPoint[1] = position + vertexPoint[1];
-	Triangle::vertexPoint[2] = position + vertexPoint[2];
+	position.vec_.x_ = mat.r[3].m128_f32[0] + offset_.vec_.x_;
+	position.vec_.y_ = mat.r[3].m128_f32[1] + offset_.vec_.y_;
+	position.vec_.z_ = mat.r[3].m128_f32[2] + offset_.vec_.z_;
+	Triangle::vertexPoint_[0] = position + vertexPoint_[0];
+	Triangle::vertexPoint_[1] = position + vertexPoint_[1];
+	Triangle::vertexPoint_[2] = position + vertexPoint_[2];
 	Triangle::NormalCalculation();
-	GetObject3D()->hited = false;
+	GetObject3D()->hited_ = false;
 }

@@ -67,8 +67,8 @@ void Dx12::SetDevice(IDXGIAdapter4* tmpAdapter)
     for (int32_t i = 0; i < _countof(levels_); i++)
     {
         //採用したアダプターでデバイスを生成
-        result = D3D12CreateDevice(tmpAdapter, levels_[i], IID_PPV_ARGS(&device_));
-        if (result == S_OK)
+        result_ = D3D12CreateDevice(tmpAdapter, levels_[i], IID_PPV_ARGS(&device_));
+        if (result_ == S_OK)
         {
             featureLevel_ = levels_[i];
             break;
@@ -86,18 +86,18 @@ void Dx12::SetCommandListAndQueue()
 #pragma region コマンドリスト
 
     //コマンドアロケータを生成
-    result = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
+    assert(SUCCEEDED(result_));
 
     //コマンドリストを生成
-    result = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
+    assert(SUCCEEDED(result_));
 
 
     //コマンドキューの生成
 
-    result = device_->CreateCommandQueue(&commandQueueDesc_, IID_PPV_ARGS(&commandQueue_));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandQueue(&commandQueueDesc_, IID_PPV_ARGS(&commandQueue_));
+    assert(SUCCEEDED(result_));
 
 #pragma endregion コマンドリスト
     //コマンドリストここまで------------------------------------------------------------------------------------------
@@ -142,8 +142,8 @@ void Dx12::SetDXFactory()
 #pragma region DXGIファクトリー生成
 
 //DXGIファクトリーの生成
-    result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
-    assert(SUCCEEDED(result));
+    result_ = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
+    assert(SUCCEEDED(result_));
 
 #pragma endregion DXGIファクトリー生成
     //-------------------
@@ -164,12 +164,12 @@ void Dx12::SetSwapChain()
     swapChainDesc_.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     swapChainDesc_.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    result = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_.Get(), dxWindow->hwnd_, &swapChainDesc_, nullptr, nullptr, &swapchain1_);
+    result_ = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_.Get(), dxWindow->hwnd_, &swapChainDesc_, nullptr, nullptr, &swapchain1_);
 
-    assert(SUCCEEDED(result));
+    assert(SUCCEEDED(result_));
 
-    result = swapchain1_.As(&swapchain_);
-    assert(SUCCEEDED(result));
+    result_ = swapchain1_.As(&swapchain_);
+    assert(SUCCEEDED(result_));
 
 
 
@@ -227,7 +227,7 @@ void Dx12::SetFence()
 {
     //フェンスの生成---------
 #pragma region フェンスの生成
-    result = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
+    result_ = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 #pragma endregion フェンスの生成
     //------------
 }
