@@ -5,67 +5,71 @@ using namespace DirectX;
 
 MCB::ParticleMaterial::~ParticleMaterial()
 {
-    constBuffMaterialB1->Unmap(0, nullptr);
+    constBuffMaterialB1_->Unmap(0, nullptr);
 }
 
 void ParticleMaterial::Init()
 {
     Dx12* dx12 = Dx12::GetInstance();
-    HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    HeapProp_.Type = D3D12_HEAP_TYPE_UPLOAD;
 
 
-    Resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    Resdesc.Width = (sizeof(ConstBufferDataMaterialB1) + 0xff) & ~0xff;
-    Resdesc.Height = 1;
-    Resdesc.DepthOrArraySize = 1;
-    Resdesc.MipLevels = 1;
-    Resdesc.SampleDesc.Count = 1;
-    Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+    Resdesc_.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    Resdesc_.Width = (sizeof(ConstBufferDataMaterialB1) + 0xff) & ~0xff;
+    Resdesc_.Height = 1;
+    Resdesc_.DepthOrArraySize = 1;
+    Resdesc_.MipLevels = 1;
+    Resdesc_.SampleDesc.Count = 1;
+    Resdesc_.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12->result = dx12->device->CreateCommittedResource
+    dx12->result_ = dx12->device_->CreateCommittedResource
     (
-        &HeapProp,        //ヒープ設定
+        &HeapProp_,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
-        &Resdesc,//リソース設定
+        &Resdesc_,//リソース設定
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&constBuffMaterialB1)
+        IID_PPV_ARGS(&constBuffMaterialB1_)
     );
-    assert(SUCCEEDED(dx12->result));
+    assert(SUCCEEDED(dx12->result_));
 
-    dx12->result = constBuffMaterialB1->Map(0, nullptr, (void**)&constMapMaterial);
+    dx12->result_ = constBuffMaterialB1_->Map(0, nullptr, (void**)&constMapMaterial_);
 
-    assert(SUCCEEDED(dx12->result));
+    assert(SUCCEEDED(dx12->result_));
 
-    constMapMaterial->ambient = material.ambient;
-    constMapMaterial->diffuse = material.diffuse;
-    constMapMaterial->specular = material.specular;
-    constMapMaterial->alpha = material.alpha;
-    constMapMaterial->color = material.color;
+    constMapMaterial_->ambient = material_.ambient;
+    constMapMaterial_->diffuse = material_.diffuse;
+    constMapMaterial_->specular = material_.specular;
+    constMapMaterial_->alpha = material_.alpha;
+    constMapMaterial_->color = material_.color;
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
 
-void MCB::ParticleMaterial::SetIndex(D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeIB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
+void MCB::ParticleMaterial::SetIndex(const D3D12_RESOURCE_DIMENSION& dimension, uint32_t sizeIB,
+    int32_t height, int32_t DepthOrArraySize, int32_t MipLevels,
+    int32_t SampleDescCount,const D3D12_TEXTURE_LAYOUT& layput)
 {
-    Resdesc.Dimension = dimension;
-    Resdesc.Width = sizeIB;
-    Resdesc.Height = height;
-    Resdesc.DepthOrArraySize = DepthOrArraySize;
-    Resdesc.MipLevels = MipLevels;
-    Resdesc.SampleDesc.Count = SampleDescCount;
-    Resdesc.Layout = layput;
+    Resdesc_.Dimension = dimension;
+    Resdesc_.Width = sizeIB;
+    Resdesc_.Height = height;
+    Resdesc_.DepthOrArraySize = DepthOrArraySize;
+    Resdesc_.MipLevels = MipLevels;
+    Resdesc_.SampleDesc.Count = SampleDescCount;
+    Resdesc_.Layout = layput;
 }
 
-void MCB::ParticleMaterial::SetVertexBuffer(D3D12_HEAP_TYPE heaptype, D3D12_RESOURCE_DIMENSION dimension, uint32_t sizeVB, int32_t height, int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount, D3D12_TEXTURE_LAYOUT layput)
+void MCB::ParticleMaterial::SetVertexBuffer(const D3D12_HEAP_TYPE& heaptype,
+    const D3D12_RESOURCE_DIMENSION& dimension, uint32_t sizeVB, int32_t height, 
+    int32_t DepthOrArraySize, int32_t MipLevels, int32_t SampleDescCount,const D3D12_TEXTURE_LAYOUT& layput)
 {
-    HeapProp.Type = heaptype; // GPUへの転送用
+    HeapProp_.Type = heaptype; // GPUへの転送用
 
-    Resdesc.Dimension = dimension;
-    Resdesc.Width = sizeVB; // 頂点データ全体のサイズ
-    Resdesc.Height = height;
-    Resdesc.DepthOrArraySize = DepthOrArraySize;
-    Resdesc.MipLevels = MipLevels;
-    Resdesc.SampleDesc.Count = SampleDescCount;
-    Resdesc.Layout = layput;
+    Resdesc_.Dimension = dimension;
+    Resdesc_.Width = sizeVB; // 頂点データ全体のサイズ
+    Resdesc_.Height = height;
+    Resdesc_.DepthOrArraySize = DepthOrArraySize;
+    Resdesc_.MipLevels = MipLevels;
+    Resdesc_.SampleDesc.Count = SampleDescCount;
+    Resdesc_.Layout = layput;
 
 }

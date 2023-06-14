@@ -70,8 +70,8 @@ namespace MCB
 			int32_t DepthOrArraySize,  int32_t MipLevels,  int32_t SampleDescCount,
 			const D3D12_TEXTURE_LAYOUT& layout);
 		void Update();
-		void SetVertexBuffer(D3D12_HEAP_TYPE heaptype ,const D3D12_RESOURCE_DIMENSION& dimension,  
-			uint32_t sizeVB,  int32_t height,  int32_t DepthOrArraySize,  int32_t MipLevels,
+		void SetVertexBuffer(const D3D12_HEAP_TYPE& heaptype ,const D3D12_RESOURCE_DIMENSION& dimension,  
+			uint32_t sizeVB,  int32_t height,  int32_t DepthOrArraySize, int32_t MipLevels,
 			int32_t SampleDescCount, const D3D12_TEXTURE_LAYOUT& layout);
 
 	};

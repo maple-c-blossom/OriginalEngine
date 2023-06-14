@@ -10,7 +10,7 @@ namespace MCB
 	{
 	private:
 		std::array<PipelineRootSignature,4> objPipeline_;
-		std::array<PipelineRootSignature,4> AnimeObjPipeline_;
+		std::array<PipelineRootSignature,4> animeObjPipeline_;
 		std::array<PipelineRootSignature,4> spritePipeline_;
 		std::array<PipelineRootSignature,4> particlePipeline_;
 		std::array<PipelineRootSignature,4> postEffectPipeline_;

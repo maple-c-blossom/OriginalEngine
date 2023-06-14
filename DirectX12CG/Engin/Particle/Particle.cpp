@@ -10,15 +10,15 @@ MCB::Particle::Particle()
 MCB::Particle::~Particle()
 {
     //delete vertex;
-    if (constBuffTranceform == nullptr) return;
-    constBuffTranceform->Unmap(0, nullptr);
+    if (constBuffTranceform_ == nullptr) return;
+    constBuffTranceform_->Unmap(0, nullptr);
     //vert.material.constBuffMaterialB1->Unmap(0, nullptr);
 }
 
-void MCB::Particle::SetColor(Float4 color)
+void MCB::Particle::SetColor(const Float4& color)
 {
-    material.material.color = color;
-    material.constMapMaterial->color = material.material.color;
+    material_.material_.color = color;
+    material_.constMapMaterial_->color = material_.material_.color;
 }
 
 void Particle::Init(TextureCell* tex)
@@ -36,68 +36,68 @@ void Particle::Init(TextureCell* tex)
     Resdesc.SampleDesc.Count = 1;
     Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12->result = dx12->device->CreateCommittedResource
+    dx12->result_ = dx12->device_->CreateCommittedResource
     (
         &HeapProp,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
         &Resdesc,//リソース設定
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&constBuffTranceform)
+        IID_PPV_ARGS(&constBuffTranceform_)
     );
 
-    assert(SUCCEEDED(dx12->result));
+    assert(SUCCEEDED(dx12->result_));
 
-    dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
-    material.Init();
-    this->tex = tex;
-    Dx12::GetInstance()->result = Dx12::GetInstance()->device->CreateCommittedResource(
+    dx12->result_ = constBuffTranceform_->Map(0, nullptr, (void**)&constMapTranceform_);
+    material_.Init();
+    this->tex_ = tex;
+    Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
         &HeapProp, // ヒープ設定
         D3D12_HEAP_FLAG_NONE,
         &Resdesc, // リソース設定
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&vertBuff));
-    assert(SUCCEEDED(Dx12::GetInstance()->result));
+        IID_PPV_ARGS(&vertBuff_));
+    assert(SUCCEEDED(Dx12::GetInstance()->result_));
 
-    sizeVB = static_cast<size_t>(sizeof(Vertex));
-    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = static_cast<uint32_t>(sizeVB);
-    vbView.StrideInBytes = sizeof(vertex);
+    sizeVB_ = static_cast<size_t>(sizeof(Vertex));
+    vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+    vbView_.SizeInBytes = static_cast<uint32_t>(sizeVB_);
+    vbView_.StrideInBytes = sizeof(vertex_);
 }
 
 void Particle::Update(View& view, Projection& projection, bool isBillBord)
 {
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
-    matWorld.SetMatTrans(position.x, position.y, position.z);
+    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
+    matWorld_.SetMatRot(rotasion_.x, rotasion_.y, rotasion_.z, false);
+    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
-        if (parent == nullptr)
+        if (parent_ == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(view);
+            matWorld_.UpdataBillBordMatrixWorld(view);
         }
         else
         {
-            matWorld.UpdataMatrixWorld();
+            matWorld_.UpdataMatrixWorld();
         }
     }
     else
     {
-        matWorld.UpdataMatrixWorld();
+        matWorld_.UpdataMatrixWorld();
     }
 
-    if (parent != nullptr)
+    if (parent_ != nullptr)
     {
-        matWorld.matWorld *= parent->matWorld.matWorld;
+        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
     }
 
     //constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
-    constMapTranceform->world = matWorld.matWorld * view.mat;
-    constMapTranceform->viewproj = projection.mat;
-    constMapTranceform->cameraPos.x = view.eye.x;
-    constMapTranceform->cameraPos.y = view.eye.y;
-    constMapTranceform->cameraPos.z = view.eye.z;
+    constMapTranceform_->world = matWorld_.matWorld_ * view.mat_;
+    constMapTranceform_->viewproj = projection.mat_;
+    constMapTranceform_->cameraPos.x_ = view.eye_.x;
+    constMapTranceform_->cameraPos.y_ = view.eye_.y;
+    constMapTranceform_->cameraPos.z_ = view.eye_.z;
 }
 
 void Particle::Draw()
@@ -108,25 +108,25 @@ void Particle::Draw()
 
 
     ////定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(2,material.constBuffMaterialB1->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(2,material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
     //lights->Draw(3);
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += tex->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += tex_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
     //描画コマンド
-    dx12->commandList->DrawInstanced(vertNum, 1, 0, 0);
+    dx12->commandList_->DrawInstanced(vertNum_, 1, 0, 0);
     //インデックスデータ
     //dx12.commandList->IASetIndexBuffer(&model->ibView);
     //定数バッファビュー(CBV)の設定コマンド
