@@ -43,7 +43,7 @@ namespace MCB
 
         //アフィン変換情報
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
-        DirectX::XMFLOAT3 rotasion_ = { 0.0f,0.0f,0.0f };
+        DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         TextureManager* textureManager_ = TextureManager::GetInstance();
         //ワールド行列

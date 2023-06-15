@@ -84,7 +84,8 @@
     <ClCompile Include="Engin\Collide\RayCastHit.cpp" />
     <ClCompile Include="Engin\Collide\MeshCollider.cpp" />
     <ClCompile Include="App\Player.cpp" />
-    <ClCompile Include="Query.cpp" />
+    <ClCompile Include="Engin\Util\LevelLoader.cpp" />
+    <ClCompile Include="Engin\Collide\Query.cpp" />
     <ClCompile Include="Engin\Sprite\PostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -236,7 +237,8 @@
     <ClInclude Include="Engin\Collide\RayCastHit.h" />
     <ClInclude Include="Engin\Collide\MeshCollider.h" />
     <ClInclude Include="App\Player.h" />
-    <ClInclude Include="Query.h" />
+    <ClInclude Include="Engin\Util\LevelLoader.h" />
+    <ClInclude Include="Engin\Collide\Query.h" />
     <ClInclude Include="Engin\Sprite\PostEffect.h" />
   </ItemGroup>
   <ItemGroup>

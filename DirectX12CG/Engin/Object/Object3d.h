@@ -25,7 +25,7 @@ namespace MCB
     {
     protected:
         std::string name_;
-        std::shared_ptr<BaseCollider> collider_;
+        BaseCollider* collider_;
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
@@ -49,7 +49,7 @@ namespace MCB
         static LightGroup* slights_;
         //アフィン変換情報
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
-        DirectX::XMFLOAT3 rotasion_ = { 0.0f,0.0f,0.0f };
+        DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;
@@ -90,8 +90,8 @@ namespace MCB
 
        virtual void AnimationDraw( uint16_t incremant);
        const DirectX::XMMATRIX GetMatWorld() { return matWorld_.matWorld_; };
-       void SetCollider(std::shared_ptr<BaseCollider> collider);
-       BaseCollider* GetCollider() { return collider_.get(); };
+       void SetCollider(std::unique_ptr<BaseCollider> collider);
+       BaseCollider* GetCollider() { return collider_; };
        virtual void OnCollision(const CollisionInfomation& info) { color_ = { 1,0,0,1 }; hited_ = true; }
        virtual void OffCollision(const CollisionInfomation* info = nullptr) { color_ = { 1,1,1,1 };  hited_ = false;}
        static void SetLights(LightGroup* light);

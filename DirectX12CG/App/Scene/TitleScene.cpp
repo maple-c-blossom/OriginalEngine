@@ -158,8 +158,8 @@ void MCB::TitleScene::Object3DInit()
     ground_.model_ = groundModel_.get();
     ground_.scale_ = { 1,1,1 };
     ground_.position_ = { 0,-3,0 };
-    ground_.rotasion_ = { 0,0,ConvertRadius(5) };
-    ground_.SetCollider(std::move(std::make_shared<MeshCollider>(groundModel_.get())));
+    ground_.rotation_ = { 0,0,ConvertRadius(5) };
+    ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
     ground_.camera_ = viewCamera_;
 
     play_.Init();
@@ -178,12 +178,12 @@ void MCB::TitleScene::Object3DInit()
     testsphere_.animationModel_ = animModel_.get();
     testsphere_.scale_ = { 3,3,3 };
     testsphere_.position_ = { 0,4,30 };
-    testsphere_.rotasion_.y = ConvertRadius(90);
+    testsphere_.rotation_.y = ConvertRadius(90);
     testsphere_.camera_ = viewCamera_;
 
     test2Animation_.animationModel_ = anim2Model_.get();
     test2Animation_.scale_ = { 3,3,3 };
     test2Animation_.position_ = { 10,4,30 };
-    test2Animation_.rotasion_.y = ConvertRadius(90);
+    test2Animation_.rotation_.y = ConvertRadius(90);
     test2Animation_.camera_ = viewCamera_;
 }

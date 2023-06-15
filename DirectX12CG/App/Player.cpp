@@ -5,7 +5,7 @@ using namespace std;
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	SetCollider(make_shared<SphereCollider>());
+	SetCollider(make_unique<SphereCollider>());
 	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 }
 
@@ -46,7 +46,7 @@ void MCB::Player::Update()
 	}
 
 	Object3d::Update();
-	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_.get());
+	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
 
 	Ray ray;
@@ -57,6 +57,7 @@ void MCB::Player::Update()
 	if (isGraund_)
 	{
 		const float absDistance = 0.2f;
+		OutputDebugStringW(L"playerisGraund--------------------------------------------------\n");
 		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
 			isGraund_ = true;
@@ -71,6 +72,7 @@ void MCB::Player::Update()
 	}
 	else if(fallV_.vec_.y_ <= 0.0f)
 	{
+		OutputDebugStringW(L"playerNoisGraund--------------------------------------------------\n");
 		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
 			isGraund_ = true;

@@ -263,6 +263,7 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
 
     for (; *itr != colliders_.end()->get(); ++itr)
     {
+        OutputDebugStringW(L"RayCastForIn\n");
         BaseCollider* col = *itr;
         if (!(col->attribute_ & attribute))continue;
         if (col->GetPrimitive() == PrimitiveType::SPHERE)
@@ -303,6 +304,7 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
         }
         else if (col->GetPrimitive() == PrimitiveType::MESH)
         {
+            OutputDebugStringW(L"MeshIn\n");
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;

@@ -40,8 +40,8 @@ void MCB::Scene::Object3DInit()
     ground_.model_ = groundModel_.get();
     ground_.scale_ = { 1,1,1 };
     ground_.position_ = { 0,-3,0 };
-    ground_.rotasion_ = { 0,0,ConvertRadius(5)};
-    ground_.SetCollider(make_shared<PlaneCollider>(Vector3D(0,1,0),-3.f));
+    ground_.rotation_ = { 0,0,ConvertRadius(5)};
+    ground_.SetCollider(move(make_unique<PlaneCollider>(Vector3D(0,1,0),-3.f)));
     ground_.camera_ = viewCamera_;
 
 
@@ -55,8 +55,8 @@ void MCB::Scene::Object3DInit()
     testsphere_.model_ = SpherModel2_.get();
     testsphere_.scale_ = { 1,1,1 };
     testsphere_.position_ = { 0,0,3 };
-    testsphere_.rotasion_ = { ConvertRadius(90),0,0 };
-    testsphere_.SetCollider(move(make_shared<SphereCollider>()));
+    testsphere_.rotation_ = { ConvertRadius(90),0,0 };
+    testsphere_.SetCollider(move(make_unique<SphereCollider>()));
     testsphere_.camera_ = viewCamera_;
    
     //sphere.Init();
@@ -109,7 +109,7 @@ void MCB::Scene::ParticleInit()
 {
 
 
-    //testParticle.rotasion.x = ConvertRadius(-90);
+    //testParticle.rotation.x = ConvertRadius(-90);
 }
 
 
@@ -125,7 +125,7 @@ void MCB::Scene::Update()
 
 
 
-    //testsphere.rotasion.y += 0.05f;
+    //testsphere.rotation.y += 0.05f;
     if (input_->IsKeyDown(DIK_W))
     {
         lights_->SetPLightPos(0, { lights_->GetPLightPos(0).x_,lights_->GetPLightPos(0).y_,

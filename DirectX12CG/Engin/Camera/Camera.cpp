@@ -15,7 +15,7 @@ void Camera::WorldPositionInit()
 {
 	object3d_->Init();
 	object3d_->position_ = firstPos_;
-	object3d_->rotasion_ = angle_;
+	object3d_->rotation_ = angle_;
 	
 }
 
@@ -33,7 +33,7 @@ void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
 	//object3d->Update(view,projection);
 
 	object3d_->matWorld_.SetMatScale(object3d_->scale_.x, object3d_->scale_.y, object3d_->scale_.z);
-	object3d_->matWorld_.SetMatRot(object3d_->rotasion_.x, object3d_->rotasion_.y, object3d_->rotasion_.z, false);
+	object3d_->matWorld_.SetMatRot(object3d_->rotation_.x, object3d_->rotation_.y, object3d_->rotation_.z, false);
 	object3d_->matWorld_.SetMatTrans(object3d_->position_.x, object3d_->position_.y, object3d_->position_.z);
 
 	if (isBillBord)

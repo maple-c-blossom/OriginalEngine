@@ -90,7 +90,7 @@ void MCB::Object3d::CreateBuff()
 void Object3d::Update(bool isBillBord)
 {
     matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.SetMatRot(rotasion_.x, rotasion_.y, rotasion_.z,false);
+    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z,false);
     matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
@@ -127,7 +127,7 @@ void Object3d::Update(bool isBillBord)
 void MCB::Object3d::UpdateMatrix( bool isBillBord)
 {
     matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.SetMatRot(rotasion_.x, rotasion_.y, rotasion_.z, false);
+    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z, false);
     matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
@@ -286,7 +286,7 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     
     if (animationModel_ == nullptr)return;
     matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.SetMatRot(rotasion_.x, rotasion_.y, rotasion_.z, false);
+    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z, false);
     matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
@@ -399,12 +399,12 @@ void MCB::Object3d::AnimationDraw(uint16_t incremant)
     animationModel_->Draw();
 }
 
-void MCB::Object3d::SetCollider(shared_ptr<BaseCollider> collider)
+void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
 {
     collider->SetObject(this);
     collider->Update();
-    collider_ = collider;
-    CollisionManager::GetInstance()->AddCollider(collider_);
+    collider_ = collider.get();
+    CollisionManager::GetInstance()->AddCollider(move(collider));
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)
