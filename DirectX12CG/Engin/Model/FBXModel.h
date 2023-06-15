@@ -24,7 +24,7 @@ namespace MCB
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
-            size_t ids[NUM_BONES_PER_VERTEX] = {};
+            int32_t ids[NUM_BONES_PER_VERTEX] = {};
             float weights[NUM_BONES_PER_VERTEX] = {};
         }AnimationVertex;
         //--------------------------------------
@@ -35,7 +35,7 @@ namespace MCB
         }ConstBuffSkin;
         typedef struct SetWeight
         {
-            size_t id;
+            int32_t id;
             float weight;
         }SetWeight;
 
