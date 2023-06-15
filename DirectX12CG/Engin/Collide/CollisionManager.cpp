@@ -255,19 +255,20 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
 {
     const Ray& raytemp = ray;
     bool result = false;
-    std::forward_list<BaseCollider*>::iterator itr;
-    std::forward_list<BaseCollider*>::iterator itr_hit;
+    //std::forward_list<BaseCollider*>::iterator itr;
+    //std::forward_list<BaseCollider*>::iterator itr_hit;
     float dist = maxDistance;
     Vector3D inter;
-    *itr = colliders_.begin()->get();
-
-    for (; *itr != colliders_.end()->get(); ++itr)
+    //*itr = colliders_.begin()->get();
+    BaseCollider* itr_hit = nullptr;
+    for (auto& itr:colliders_)
     {
         OutputDebugStringW(L"RayCastForIn\n");
-        BaseCollider* col = *itr;
+        BaseCollider* col = itr.get();
         if (!(col->attribute_ & attribute))continue;
         if (col->GetPrimitive() == PrimitiveType::SPHERE)
         {
+            OutputDebugStringW(L"SPHERE\n");
             Sphere* prim = dynamic_cast<Sphere*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -276,10 +277,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::PLANE)
         {
+            OutputDebugStringW(L"PLANE\n");
             Plane* prim = dynamic_cast<Plane*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -288,10 +290,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::TRIANGLE)
         {
+            OutputDebugStringW(L"TRIANGLE\n");
             Triangle* prim = dynamic_cast<Triangle*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -300,11 +303,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::MESH)
         {
-            OutputDebugStringW(L"MeshIn\n");
+            OutputDebugStringW(L"Mesh\n");
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -314,14 +317,14 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
 
     }
     if (result && hitinfo)
     {
         hitinfo->dist_ = dist;
-        hitinfo->collPtr_ = *itr_hit;
+        hitinfo->collPtr_ = itr_hit;
         hitinfo->inter_ = inter;
         hitinfo->objctPtr_ = hitinfo->collPtr_->GetObject3D();
     }

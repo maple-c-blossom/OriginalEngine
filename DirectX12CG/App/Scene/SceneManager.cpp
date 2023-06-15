@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 #include "DxWindow.h"
-#include "Scene.h"
+#include "TitleScene.h"
 #include "Draw.h"
 using namespace std;
 
@@ -17,7 +17,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<Scene>(root_, depth_, pipeline_);
+	scene_ = make_unique<TitleScene>(root_, depth_, pipeline_);
 }
 
 MCB::SceneManager::~SceneManager()
