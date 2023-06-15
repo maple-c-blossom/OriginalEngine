@@ -78,6 +78,7 @@ void MCB::TitleScene::CheckAllColision()
 void MCB::TitleScene::ImGuiUpdate()
 {
     imgui_.Begin();
+    XMMATRIX mat = testsphere_.animationModel_->bones_[0].finalMatrix;
     //ImGui::ShowDemoWindow();
     if (ImGui::CollapsingHeader("Infomation"))
     {
@@ -85,6 +86,14 @@ void MCB::TitleScene::ImGuiUpdate()
         {
             ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
             ImGui::Text("sphereMove: [WASD]");
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[0].m128_f32[0], mat.r[0].m128_f32[1], mat.r[0].m128_f32[2], mat.r[0].m128_f32[1] );
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[1].m128_f32[0], mat.r[1].m128_f32[1], mat.r[1].m128_f32[2], mat.r[1].m128_f32[1]);
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[2].m128_f32[0], mat.r[2].m128_f32[1], mat.r[2].m128_f32[2], mat.r[2].m128_f32[1]);
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[3].m128_f32[0], mat.r[3].m128_f32[1], mat.r[3].m128_f32[2], mat.r[3].m128_f32[1]);
             ImGui::TreePop();
         }
     }

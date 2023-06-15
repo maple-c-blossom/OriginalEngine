@@ -133,7 +133,6 @@ void MCB::SceneManager::Draw()
 			(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2);
 	}  
 	Draw::GetInstance()->PostDraw();
-
 }
 
 void MCB::SceneManager::sceneChenge()
