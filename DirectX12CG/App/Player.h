@@ -8,10 +8,11 @@ namespace MCB
     private:
         bool isGraund_ = true;
         Vector3D fallV_;
+
+
     public:
         void Init();
         void Update();
-        void UpdateMatrix();
         void Draw();
     };
 

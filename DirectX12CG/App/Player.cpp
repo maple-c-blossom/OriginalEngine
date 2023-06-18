@@ -85,6 +85,8 @@ void MCB::Player::Update()
 
 
 
+
+
 void MCB::Player::Draw()
 {
 	Object3d::Draw();

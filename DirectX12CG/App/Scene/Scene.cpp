@@ -59,6 +59,9 @@ void MCB::Scene::Object3DInit()
     testsphere_.SetCollider(move(make_unique<SphereCollider>()));
     testsphere_.camera_ = viewCamera_;
    
+    player_.Init();
+    player_.model_ = SpherModel2_.get();
+    player_.camera_ = viewCamera_;
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -123,86 +126,13 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-
-
-    //testsphere.rotation.y += 0.05f;
-    if (input_->IsKeyDown(DIK_W))
-    {
-        lights_->SetPLightPos(0, { lights_->GetPLightPos(0).x_,lights_->GetPLightPos(0).y_,
-            lights_->GetPLightPos(0).z_ + 1 });
-        lights_->SetSLightPos(0, { lights_->GetSLightPos(0).x_,lights_->GetSLightPos(0).y_,
-lights_->GetSLightPos(0).z_ + 1 });
-    }
-    if (input_->IsKeyDown(DIK_S))
-    {
-        lights_->SetPLightPos(0, { lights_->GetPLightPos(0).x_,lights_->GetPLightPos(0).y_,
-lights_->GetPLightPos(0).z_ - 1 });
-        lights_->SetSLightPos(0, { lights_->GetSLightPos(0).x_,lights_->GetSLightPos(0).y_,
-lights_->GetSLightPos(0).z_ - 1 });
-    }
-
-
-
-    if (input_->IsKeyDown(DIK_W))
-    {
-        testsphere_.position_.z += 0.1f;
-    }
-    if (input_->IsKeyDown(DIK_S))
-    {
-        testsphere_.position_.z -= 0.1f;
-    }
-    
-    if (input_->IsKeyDown(DIK_D))
-    {
-        testsphere_.position_.x += 0.1f;
-    }
-    if (input_->IsKeyDown(DIK_A))
-    {   
-        testsphere_.position_.x -= 0.1f;
-    }
-
-    if (input_->IsKeyTrigger(DIK_T))
-    {
-        lights_->SetDirLightIsActive(0, !lights_->GetDirLightIsActive(0));
-    }
-    else if (input_->IsKeyTrigger(DIK_Y))
-    {
-        lights_->SetPLightIsActive(0, !lights_->GetPLightIsActive(0));
-    }
-    else if (input_->IsKeyTrigger(DIK_U))
-    {
-        lights_->SetSLightIsActive(0, !lights_->GetSLightIsActive(0));
-    }
-
-
-
-    if (input_->IsKeyTrigger(DIK_1))
-    {
-        testsphere_.shaderNum_ = 1.f;
-    }
-    else if (input_->IsKeyTrigger(DIK_2))
-    {
-        testsphere_.shaderNum_ = 2.f;
-    }
-    else if (input_->IsKeyTrigger(DIK_3))
-    {
-        testsphere_.shaderNum_ = 3.f;
-    }
-
-    if (input_->IsKeyTrigger(DIK_O))
-    {
-        testsphere_.model_ = SpherModel_.get();
-    }
-    else if (input_->IsKeyTrigger(DIK_P))
-    {
-        testsphere_.model_ = SpherModel2_.get();
-    }
+    player_.Update();
     
     lights_->UpDate();
 
 
     MatrixUpdate();
-   
+    
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd_ = true;
@@ -220,9 +150,8 @@ void MCB::Scene::PostEffectDraw()
     postEffect_->PreDraw();
     Skydorm_.Draw();
     ground_.Draw();
-    testsphere_.Draw(zoomTex_->texture.get()->incrementNum_);
     postEffect_->PostDraw();
-
+    player_.Draw();
 
 }
 
@@ -284,7 +213,7 @@ void MCB::Scene::MatrixUpdate()
     Skydorm_.Update();
     ground_.Update();
     testsphere_.Update(false);
-    
+    player_.UpdateMatrix();
 
     //testParticle.Updata(matView, matProjection, true);
 }

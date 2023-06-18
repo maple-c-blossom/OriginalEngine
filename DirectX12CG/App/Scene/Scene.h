@@ -63,7 +63,8 @@ namespace MCB
 
 #pragma region 3Dオブジェクト
 		SimpleFigure triangle_;
-		
+		Player player_;
+
 		Object3d ground_ = {};
 		Object3d Skydorm_ = {};
 		Object3d testsphere_ = {};
