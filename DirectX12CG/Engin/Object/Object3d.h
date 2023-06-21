@@ -82,9 +82,9 @@ namespace MCB
 
         virtual void Draw( uint16_t incremant);
 
-        virtual void AnimationUpdate(ICamera* camera, bool isBillBord = false);
+        virtual void AnimationUpdate( bool isBillBord = false);
 
-        virtual void AnimationUpdate(ICamera* camera,  Quaternion q,  bool isBillBord = false);
+        virtual void AnimationUpdate( Quaternion q,  bool isBillBord = false);
 
         virtual void AnimationDraw();
 

@@ -110,7 +110,7 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 			const XMMATRIX& temp = object3d_->GetMatWorld();
 			if (reject)
 			{
-				*reject = XMVector3Transform(reject->ConvertXMVEC(), temp);
+				*reject = XMVector3TransformNormal(reject->ConvertXMVEC(), temp);
 			}
 
 			if (inter)
