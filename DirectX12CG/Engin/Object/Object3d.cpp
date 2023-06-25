@@ -89,30 +89,7 @@ void MCB::Object3d::CreateBuff()
 
 void Object3d::Update(bool isBillBord)
 {
-    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z,false);
-    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
-    if (isBillBord)
-    {
-        if (parent_ == nullptr)
-        {
-            matWorld_.UpdataBillBordMatrixWorld(*camera_->GetView());
-        }
-        else
-        {
-            matWorld_.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld_.UpdataMatrixWorld();
-    }
-
-    if (parent_ != nullptr)
-    {
-        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
-    }
-    
+    UpdateMatrix(isBillBord);
     constMapTranceform_->world = matWorld_.matWorld_;
     constMapTranceform_->cameraMat = camera_->GetView()->mat_;
     constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
@@ -153,31 +130,7 @@ void MCB::Object3d::UpdateMatrix( bool isBillBord)
 
 void Object3d::Update(Quaternion q, bool isBillBord)
 {
-    MCBMatrix matRot;
-    matRot.MCBMatrixIdentity();
-    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.matRot_ = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
-    if (isBillBord)
-    {
-        if (parent_ == nullptr)
-        {
-            matWorld_.UpdataBillBordMatrixWorld(*camera_->GetView());
-        }
-        else
-        {
-            matWorld_.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld_.UpdataMatrixWorld();
-    }
-
-    if (parent_ != nullptr)
-    {
-        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
-    }
+    UpdateMatrix(q,isBillBord);
 
     constMapTranceform_->world = matWorld_.matWorld_;
     constMapTranceform_->cameraMat = camera_->GetView()->mat_;
@@ -281,40 +234,17 @@ void Object3d::Draw(uint16_t incremant)
 
 }
 
-void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(bool isBillBord)
 {
     
     if (animationModel_ == nullptr)return;
-    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z, false);
-    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
-    if (isBillBord)
-    {
-        if (parent_ == nullptr)
-        {
-            matWorld_.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld_.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld_.UpdataMatrixWorld();
-    }
-
-    if (parent_ != nullptr)
-    {
-        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
-    }
-
+    UpdateMatrix(isBillBord);
     constMapTranceform_->world = matWorld_.matWorld_;
-    constMapTranceform_->cameraMat = camera->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform_->viewproj = camera->GetProjection()->mat_;
-    constMapTranceform_->cameraPos.x_ = camera->GetView()->eye_.x;
-    constMapTranceform_->cameraPos.y_ = camera->GetView()->eye_.y;
-    constMapTranceform_->cameraPos.z_ = camera->GetView()->eye_.z;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
     constMapTranceform_->color = color_;
     constMapTranceform_->shaderNum = shaderNum_;
     if (collider_)collider_->Update();
@@ -332,41 +262,17 @@ void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
     }
 }
 
-void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord)
+void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
 {
     if (animationModel_ == nullptr)return;
-    MCBMatrix matRot;
-    matRot.MCBMatrixIdentity();
-    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
-    matWorld_.matRot_ = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
-    if (isBillBord)
-    {
-        if (parent_ == nullptr)
-        {
-            matWorld_.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld_.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld_.UpdataMatrixWorld();
-    }
-
-    if (parent_ != nullptr)
-    {
-        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
-    }
+    UpdateMatrix(q,isBillBord);
 
     constMapTranceform_->world = matWorld_.matWorld_;
-    constMapTranceform_->cameraMat = camera->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform_->viewproj = camera->GetProjection()->mat_;
-    constMapTranceform_->cameraPos.x_ = camera->GetView()->eye_.x;
-    constMapTranceform_->cameraPos.y_ = camera->GetView()->eye_.y;
-    constMapTranceform_->cameraPos.z_ = camera->GetView()->eye_.z;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
     constMapTranceform_->shaderNum = shaderNum_;
     constMapTranceform_->color = color_;
     if (collider_)collider_->Update();
