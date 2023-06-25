@@ -20,14 +20,14 @@ namespace MCB
 		DirectX::XMMATRIX GetMadWorld();
 
 		//WorldMatrix GetMadWorld2();
-
+		void SetCameraTarget(Object3d* target);
 
 	private:
 
 		std::unique_ptr<Object3d> object3d_ = std::make_unique<Object3d>();
 
 		//Object3d* object3d = nullptr;
-
+		Object3d* target_;
 
  
 		DirectX::XMFLOAT3 eyeStartPos_;

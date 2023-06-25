@@ -80,6 +80,11 @@ XMMATRIX Camera::GetMadWorld()
 	return matWorld;
 }
 
+void MCB::Camera::SetCameraTarget(Object3d* target)
+{
+	target_ = target;
+}
+
 
 //void MCB::Camera::SetPlayerMatrix(DirectX::XMMATRIX playerMatrix)
 //{
