@@ -387,6 +387,9 @@
     <ClCompile Include="Engin\Util\LevelLoader.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp">
+      <Filter>ソース ファイル\Engin\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -642,6 +645,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\LevelLoader.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h">
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

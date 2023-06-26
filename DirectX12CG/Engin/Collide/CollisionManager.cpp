@@ -331,3 +331,54 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
     ray.rayCasted_ = true;
     return result;
 }
+
+void MCB::CollisionManager::QuerySphere(const Sphere& sphere, QueryCallBack* callBack, uint16_t attribute)
+{
+    assert(callBack && "QuerySphere:callBack NullptrExeption");
+    std::forward_list<BaseCollider*>::iterator itr;
+
+    *itr = colliders_.begin()->get();
+    for (; *itr != colliders_.end()->get(); ++itr)
+    {
+        BaseCollider* col = *itr;
+        if (!(col->attribute_ & attribute))
+        {
+            if (col->GetPrimitive() == PrimitiveType::SPHERE)
+            {
+                Sphere* sphere2 = dynamic_cast<Sphere*>(col);
+                Vector3D tempInter;
+                Vector3D tempReject;
+                if (!Collision::CalcSphere(sphere, *sphere2, &tempInter, &tempReject)) continue;
+                
+                QueryHit info;
+                info.baseColl = col;
+                info.obj = col->object3d_;
+                info.inter = tempInter;
+                info.reject = tempReject;
+
+                if (!callBack->OnQueryHit(info))
+                {
+                    return;
+                }
+            }
+
+            if (col->GetPrimitive() == PrimitiveType::MESH)
+            {
+                MeshCollider* mesh = dynamic_cast<MeshCollider*>(col);
+                Vector3D tempInter;
+                Vector3D tempReject;
+                if (mesh->ChakeCollisionSphere(sphere,&tempInter, &tempReject)) continue;
+                QueryHit info;
+                info.baseColl = col;
+                info.obj = col->object3d_;
+                info.inter = tempInter;
+                info.reject = tempReject;
+                if (!callBack->OnQueryHit(info))
+                {
+                    return;
+                }
+
+            }
+        }
+    }
+}

@@ -129,6 +129,7 @@ void MCB::TitleScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
+
 }
 
 void MCB::TitleScene::LoadModel()

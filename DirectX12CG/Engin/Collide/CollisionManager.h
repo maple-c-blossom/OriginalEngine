@@ -19,7 +19,7 @@ namespace MCB
 		void CheckAllCollision();
 		bool Raycast( Ray& ray, RayCastHit* hitinfo = nullptr,  float maxDistance = D3D12_FLOAT32_MAX);
 		bool Raycast( Ray& ray,  uint16_t attribute, RayCastHit* hitinfo = nullptr,  float maxDistance = D3D12_FLOAT32_MAX);
-		
+		void QuerySphere(const Sphere& sphere, QueryCallBack* callBack, uint16_t attribute = static_cast<uint16_t>(0xffffffff));
 	private:
 		CollisionManager() = default;
 		CollisionManager(const CollisionManager&) = delete;
