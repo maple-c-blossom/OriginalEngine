@@ -527,7 +527,8 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 
 
     texSample_.Init();
-
+    texSample_.samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
+    texSample_.samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
     // 頂点シェーダの読み込みとコンパイル--------------------------------
 #pragma region 頂点シェーダの読み込みとコンパイル
 
