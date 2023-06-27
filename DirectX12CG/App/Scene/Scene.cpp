@@ -124,75 +124,19 @@ void MCB::Scene::Update()
 
 
 
-    //testsphere.rotasion.y += 0.05f;
-    if (input->IsKeyDown(DIK_W))
-    {
-        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z + 1 });
-        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z + 1 });
-    }
-    if (input->IsKeyDown(DIK_S))
-    {
-        lights->SetPLightPos(0, { lights->GetPLightPos(0).x,lights->GetPLightPos(0).y,lights->GetPLightPos(0).z - 1 });
-        lights->SetSLightPos(0, { lights->GetSLightPos(0).x,lights->GetSLightPos(0).y,lights->GetSLightPos(0).z - 1 });
-    }
-
-
-
-    if (input->IsKeyDown(DIK_W))
-    {
-        testsphere.position.z += 0.1f;
-    }
-    if (input->IsKeyDown(DIK_S))
-    {
-        testsphere.position.z -= 0.1f;
-    }
     
-    if (input->IsKeyDown(DIK_D))
+    if (input->IsKeyTrigger(DIK_SPACE))
     {
-        testsphere.position.x += 0.1f;
+        blurFlag = !blurFlag;
     }
-    if (input->IsKeyDown(DIK_A))
-    {   
-        testsphere.position.x -= 0.1f;
-    }
-
-    if (input->IsKeyTrigger(DIK_T))
+    if (blurFlag)
     {
-        lights->SetDirLightIsActive(0, !lights->GetDirLightIsActive(0));
+        postEffect->color.x = 4;
     }
-    else if (input->IsKeyTrigger(DIK_Y))
+    else
     {
-        lights->SetPLightIsActive(0, !lights->GetPLightIsActive(0));
+        postEffect->color.x = 7;
     }
-    else if (input->IsKeyTrigger(DIK_U))
-    {
-        lights->SetSLightIsActive(0, !lights->GetSLightIsActive(0));
-    }
-
-
-
-    if (input->IsKeyTrigger(DIK_1))
-    {
-        testsphere.shaderNum = 1.f;
-    }
-    else if (input->IsKeyTrigger(DIK_2))
-    {
-        testsphere.shaderNum = 2.f;
-    }
-    else if (input->IsKeyTrigger(DIK_3))
-    {
-        testsphere.shaderNum = 3.f;
-    }
-
-    if (input->IsKeyTrigger(DIK_O))
-    {
-        testsphere.model = SpherModel.get();
-    }
-    else if (input->IsKeyTrigger(DIK_P))
-    {
-        testsphere.model = SpherModel2.get();
-    }
-    
     lights->UpDate();
 
 
@@ -253,17 +197,7 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("ObjectShaderChange: [num 1 = Phone], [num 2 = Toon],[num3 = rimLight]");
-            ImGui::Text("LightChenge:[T (Dir)] or [Y (Point)] or [U (Spot)] ");
-            ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s",lights->GetDirLightIsActive(0) ? "true":"false", lights->GetPLightIsActive(0) ? "true" : "false", lights->GetSLightIsActive(0) ? "true" : "false");
-            //ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
-            ImGui::Text("LightMove: [W],[S]");
-            ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
-            ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");
-            ImGui::Text("SmoothChange:[O (NoSmooth)] or [P (Smooth)]");
-            ImGui::Text("%f,%f,%f,", viewCamera->GetView()->eye.x, viewCamera->GetView()->eye.y, viewCamera->GetView()->eye.z);
-            ImGui::Text("%f,%f,%f,", testsphere.position.x, testsphere.position.y, testsphere.position.z);
-
+            ImGui::Text("Blur:%s : Change[SPACE]",blurFlag ? "ON":"OFF");
             ImGui::TreePop();
         }
     }

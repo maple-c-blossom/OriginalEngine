@@ -85,6 +85,7 @@ namespace MCB
 		bool loopFlag = true;
 		bool startPositionReset = true;
 		bool ybill = false;
+		bool blurFlag = false;
 #pragma endregion ’Êí•Ï”
 
 	public:
