@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Input.h"
 #include "CollisionManager.h"
+#include "PlayerQueryCallBack.h"
 using namespace std;
 void MCB::Player::Init()
 {
@@ -17,6 +18,12 @@ void MCB::Player::UniqueUpdate()
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
 
+	PlayerQueryCallBack callback(sphere);
+
+	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
+	position_.x += callback.move.vec_.x_;
+	position_.y += callback.move.vec_.y_;
+	position_.z += callback.move.vec_.z_;
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();

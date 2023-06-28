@@ -312,7 +312,10 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             float disttemp;
             Vector3D intertemp;
             //if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
-            if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
+            if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))
+            {
+                continue;
+            }
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
@@ -335,12 +338,12 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
 void MCB::CollisionManager::QuerySphere(const Sphere& sphere, QueryCallBack* callBack, uint16_t attribute)
 {
     assert(callBack && "QuerySphere:callBack NullptrExeption");
-    std::forward_list<BaseCollider*>::iterator itr;
 
-    *itr = colliders_.begin()->get();
-    for (; *itr != colliders_.end()->get(); ++itr)
+
+   
+    for ( auto& itr: colliders_)
     {
-        BaseCollider* col = *itr;
+        BaseCollider* col = itr.get();
         if (!(col->attribute_ & attribute))
         {
             if (col->GetPrimitive() == PrimitiveType::SPHERE)

@@ -132,6 +132,14 @@ void MCB::Scene::Update()
 
     MatrixUpdate();
     
+    if (input_->IsKeyTrigger(DIK_LCONTROL))
+    {
+        std::unique_ptr<LevelLoader::LevelData> level;
+        level = move(LevelLoader::Load("testLevel", viewCamera_));
+        level_ = move(level);
+
+    }
+
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd_ = true;

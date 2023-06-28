@@ -34,7 +34,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		objData->obj.scale_.y = static_cast<float>(transform["scaling"][2]);
 		objData->obj.scale_.z = static_cast<float>(transform["scaling"][0]);
 
-		objData->obj.SetCollider(make_unique<MeshCollider>());
+		if(!(objData->fileName == "skydome"))objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
 		objData->obj.camera_ = camera;
 		levelData->objects.emplace_back(move(objData));
 	}
