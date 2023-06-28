@@ -9,6 +9,7 @@ namespace MCB
 {
 	class LevelLoader
 	{
+		public:
 		// レベルデータ
 		struct LevelData {
 
@@ -19,24 +20,26 @@ namespace MCB
 			};
 
 			// オブジェクト配列
-			std::vector<ObjectData> objects;
+			std::vector<std::unique_ptr<ObjectData>> objects;
+			void Update();
+			void UpdateMatrix();
+			void Draw();
 		};
-
-		public:// 定数
-			// デフォルトの読み込みディレクトリ
-			static const std::string sBASE_FILE_DIR_;
-			// ファイル拡張子
-			static const std::string sEXTEND_;
+		//定数
+		// デフォルトの読み込みディレクトリ
+		static const std::string sBASE_FILE_DIR_;
+		// ファイル拡張子
+		static const std::string sEXTEND_;
 
 		public:// メンバ関数
 
-			static void RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson);
+		static void RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson,ICamera* camera);
 
-			/// <summary>
-			/// レベルデータファイルの読み込み
-			/// </summary>
-			/// <param name="fileName">ファイル名</param>
-			static std::unique_ptr<LevelData>  Load(const std::string& fileName);
+		/// <summary>
+		/// レベルデータファイルの読み込み
+		/// </summary>
+		/// <param name="fileName">ファイル名</param>
+		static std::unique_ptr<LevelData>  Load(const std::string& fileName, ICamera* camera);
 	};
 
 }

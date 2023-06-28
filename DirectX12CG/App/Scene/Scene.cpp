@@ -36,31 +36,33 @@ void MCB::Scene::Initialize()
 void MCB::Scene::Object3DInit()
 {
 
-    ground_.Init();
-    ground_.model_ = groundModel_.get();
-    ground_.scale_ = { 1,1,1 };
-    ground_.position_ = { 0,-3,0 };
-    ground_.rotation_ = { 0,0,ConvertRadius(5)};
-    ground_.SetCollider(move(make_unique<PlaneCollider>(Vector3D(0,1,0),-3.f)));
-    ground_.camera_ = viewCamera_;
+    //ground_.Init();
+    //ground_.model_ = groundModel_;
+    //ground_.scale_ = { 1,1,1 };
+    //ground_.position_ = { 0,-3,0 };
+    //ground_.rotation_ = { 0,0,0};
+    //ground_.SetCollider(move(make_unique<PlaneCollider>(Vector3D(0,1,0),-3.f)));
+    //ground_.camera_ = viewCamera_;
 
 
-    Skydorm_;
-    Skydorm_.Init();
-    Skydorm_.model_ = skydomeModel_.get();
-    Skydorm_.scale_ = { 4,4,4 };
-    Skydorm_.camera_ = viewCamera_;
+    //Skydorm_;
+    //Skydorm_.Init();
+    //Skydorm_.model_ = skydomeModel_;
+    //Skydorm_.scale_ = { 4,4,4 };
+    //Skydorm_.camera_ = viewCamera_;
 
-    testsphere_.Init();
-    testsphere_.model_ = SpherModel2_.get();
-    testsphere_.scale_ = { 1,1,1 };
-    testsphere_.position_ = { 0,0,3 };
-    testsphere_.rotation_ = { ConvertRadius(90),0,0 };
-    testsphere_.SetCollider(move(make_unique<SphereCollider>()));
-    testsphere_.camera_ = viewCamera_;
+    //testsphere_.Init();
+    //testsphere_.model_ = SpherModel_;
+    //testsphere_.scale_ = { 1,1,1 };
+    //testsphere_.position_ = { 0,0,3 };
+    //testsphere_.rotation_ = { ConvertRadius(90),0,0 };
+    //testsphere_.SetCollider(move(make_unique<SphereCollider>()));
+    //testsphere_.camera_ = viewCamera_;
    
+    level_ = move(LevelLoader::Load("testLevel",viewCamera_));
+
     player_.Init();
-    player_.model_ = SpherModel2_.get();
+    player_.model_ = SpherModel_;
     player_.camera_ = viewCamera_;
     //sphere.Init();
     //sphere.model = BoxModel;
@@ -71,13 +73,10 @@ void MCB::Scene::Object3DInit()
 
 void MCB::Scene::LoadModel()
 {
-    SpherModel_ = std::make_unique<Model>("sphere");
-    SpherModel2_ = std::make_unique<Model>("sphere", true);
 
-    groundModel_ = std::make_unique<Model>("ground");
-
-    skydomeModel_ = std::make_unique<Model>("skydome");
-
+   SpherModel_ = modelManager_->GetModel("sphere", true);
+   groundModel_ = modelManager_->GetModel("ground");
+   skydomeModel_ = modelManager_->GetModel("skydome");
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
@@ -126,10 +125,10 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-    player_.Update();
-    
+    player_.UniqueUpdate();
+    level_->Update();
     lights_->UpDate();
-
+    debugCamera_.Update();
 
     MatrixUpdate();
     
@@ -148,8 +147,7 @@ void MCB::Scene::Draw()
 void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
-    Skydorm_.Draw();
-    ground_.Draw();
+    level_->Draw();
     postEffect_->PostDraw();
     player_.Draw();
 
@@ -187,20 +185,6 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
-            ImGui::Text("ObjectShaderChange: [num 1 = Phone], [num 2 = Toon],[num3 = rimLight]");
-            ImGui::Text("LightChenge:[T (Dir)] or [Y (Point)] or [U (Spot)] ");
-            ImGui::Text("LightActive:Dir = %s,Point = %s, Spot = %s"
-                ,lights_->GetDirLightIsActive(0) ? "true":"false", lights_->GetPLightIsActive(0) ? "true" : "false",
-                lights_->GetSLightIsActive(0) ? "true" : "false");
-            //ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
-            ImGui::Text("LightMove: [W],[S]");
-            ImGui::Text("CameraMove: [ArrowKey],[N].[M]");
-            ImGui::Text("CameraRota:[LSHIFT] + [Mouse LEFTClick] + [MouseMove]");
-            ImGui::Text("SmoothChange:[O (NoSmooth)] or [P (Smooth)]");
-            ImGui::Text("%f,%f,%f,", viewCamera_->GetView()->eye_.x, viewCamera_->GetView()->eye_.y,
-                viewCamera_->GetView()->eye_.z);
-            ImGui::Text("%f,%f,%f,", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
-
             ImGui::TreePop();
         }
     }
@@ -210,10 +194,8 @@ void MCB::Scene::ImGuiUpdate()
 void MCB::Scene::MatrixUpdate()
 {
     viewCamera_->Update();
-    Skydorm_.Update();
-    ground_.Update();
-    testsphere_.Update(false);
-    player_.UpdateMatrix();
+    level_->UpdateMatrix();
+    player_.Update();
 
     //testParticle.Updata(matView, matProjection, true);
 }

@@ -13,6 +13,7 @@
 #include "TextureManager.h"
 #include <unordered_map>
 #include "Vector3D.h"
+#include <string>
 namespace MCB
 {
     //頂点データ構造体-------------------------------------
@@ -35,8 +36,8 @@ namespace MCB
 
         Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
-
-
+        bool isDelete_ = false;
+        std::string fileName_;
 
         TextureManager* loader_ = TextureManager::GetInstance();
         TextureCell* texture_;

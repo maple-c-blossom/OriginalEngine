@@ -5,6 +5,7 @@
 #include "DebugCamera.h"
 #include "Player.h"
 #include <memory>
+
 #pragma region ゲーム系.h include
 
 
@@ -36,10 +37,10 @@ namespace MCB
 #pragma region 各種リソース
 		//3Dモデル
 #pragma region 3Dモデル
-		std::unique_ptr<Model> SpherModel_ = nullptr;
-		std::unique_ptr<Model> SpherModel2_ = nullptr;
-		std::unique_ptr<Model> groundModel_ = nullptr;
-		std::unique_ptr<Model> skydomeModel_ = nullptr;
+		Model* SpherModel_ = nullptr;
+		Model* SpherModel2_ = nullptr;
+		Model* groundModel_ = nullptr;
+		Model* skydomeModel_ = nullptr;
 
 		//AssimpLoader testModel;
 #pragma endregion 3Dモデル
@@ -87,6 +88,7 @@ namespace MCB
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool ybill_ = false;
+		std::unique_ptr<LevelLoader::LevelData> level_;
 #pragma endregion 通常変数
 
 	public:

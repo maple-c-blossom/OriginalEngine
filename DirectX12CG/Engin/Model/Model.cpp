@@ -6,6 +6,7 @@ using namespace std;
 MCB::Model::Model( const std::string fileName,const bool& smooth)
 {
     material_.Init();
+    fileName_ = fileName;
     Init(fileName,smooth);
     material_.Update();
 }

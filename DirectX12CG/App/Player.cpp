@@ -9,7 +9,7 @@ void MCB::Player::Init()
 	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 }
 
-void MCB::Player::Update()
+void MCB::Player::UniqueUpdate()
 {
 	Move();
 
@@ -48,9 +48,6 @@ void MCB::Player::Update()
 			Object3d::UpdateMatrix();
 		}
 	}
-
-
-	Object3d::Update();
 }
 
 void MCB::Player::Move()
@@ -131,8 +128,3 @@ void MCB::Player::Move()
 
 }
 
-
-void MCB::Player::Draw()
-{
-	Object3d::Draw();
-}

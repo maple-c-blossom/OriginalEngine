@@ -21,8 +21,8 @@ MCB::Object3d::~Object3d()
         CollisionManager::GetInstance()->RemoveCollider(collider_);
         collider_ = nullptr;
     }
-    constBuffTranceform_->Unmap(0, nullptr);
-    constBuffSkin_->Unmap(0, nullptr);
+    //constBuffTranceform_->Unmap(0, nullptr);
+    //constBuffSkin_->Unmap(0, nullptr);
 }
 
 void Object3d::Init()
@@ -85,6 +85,10 @@ void MCB::Object3d::CreateBuff()
     assert(SUCCEEDED(dx12->result_));
 
     dx12->result_ = constBuffSkin_->Map(0, nullptr, (void**)&constMapSkin_);
+}
+
+void MCB::Object3d::UniqueUpdate()
+{
 }
 
 void Object3d::Update(bool isBillBord)
@@ -309,8 +313,7 @@ void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
 {
     collider->SetObject(this);
     collider->Update();
-    collider_ = collider.get();
-    CollisionManager::GetInstance()->AddCollider(move(collider));
+    collider_ = CollisionManager::GetInstance()->AddCollider(move(collider));
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)

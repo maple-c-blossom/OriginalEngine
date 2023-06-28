@@ -13,7 +13,9 @@ namespace MCB
 	{
 	public:
 		static CollisionManager* GetInstance();
-		inline void AddCollider(std::unique_ptr<BaseCollider> coll) { colliders_.push_front(move(coll)); }
+		inline BaseCollider* AddCollider(std::unique_ptr<BaseCollider> coll) { colliders_.push_front(move(coll));
+		return colliders_.front().get();
+		}
 		inline void RemoveCollider(BaseCollider* coll) { colliders_.remove_if(
 			[&](auto& itr) {return itr.get() == coll; }); }
 		void CheckAllCollision();

@@ -25,7 +25,7 @@ namespace MCB
     {
     protected:
         std::string name_;
-        BaseCollider* collider_;
+        BaseCollider* collider_ = nullptr;
         //定数バッファ用構造体(行列)------------------------
         typedef struct ConstBufferDataTransform
         {
@@ -72,6 +72,7 @@ namespace MCB
         bool trackingFlag_ = false;
         virtual void Init();
         virtual void CreateBuff();
+        virtual void UniqueUpdate();
         virtual void Update(  bool isBillBord = false);
         virtual void UpdateMatrix(  bool isBillBord = false);
 

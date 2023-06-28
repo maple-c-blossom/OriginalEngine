@@ -88,6 +88,7 @@ namespace MCB
         std::vector<Bone> bones_;
         ~AnimationModel();
         string fileName_;
+        bool isDelete_ = false;
         bool Load( std::string fileName,const std::string& fileType = "gltf");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);

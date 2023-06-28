@@ -55,8 +55,9 @@
 #include "TriangleCollider.h"
 #include "BoxCollider.h"
 #include "MeshCollider.h"
+#include "ModelManager.h"
 
-
+#include "LevelLoader.h"
 #include "PostEffect.h"
 #pragma endregion 自作.h include
 #pragma region pragma comment
@@ -105,6 +106,7 @@ namespace MCB
 	
 		//サウンドマネージャー
 		SoundManager* soundManager_ = SoundManager::GetInstance();
+		ModelManager* modelManager_ = ModelManager::GetInstance();
 		//クリアカラー
 #pragma endregion DirectX基礎機能群
 		bool sceneEnd_ = false;

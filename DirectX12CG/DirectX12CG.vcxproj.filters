@@ -390,6 +390,9 @@
     <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp">
       <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Model\ModelManager.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -648,6 +651,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\ModelManager.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

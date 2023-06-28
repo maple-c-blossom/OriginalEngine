@@ -13,14 +13,13 @@ namespace MCB
         float speedFront_ = 0.0f;
         float speedRight_ = 0.0f;
         float rotasionSpeed_ = 0.015f;
-        float speed_ = 0.125f;
-        float srowspeed_ = 0.075f;
-        float maxspeed_ = 0.5f;
+        float speed_ = 0.0125f;
+        float srowspeed_ = 0.0125f;
+        float maxspeed_ = 0.25f;
         MCB::Vector3D rightVec_ = {1,0,0};
     public:
         void Init();
-        void Update();
-        void Draw();
+        void UniqueUpdate() override;
         void Move();
     };
 
