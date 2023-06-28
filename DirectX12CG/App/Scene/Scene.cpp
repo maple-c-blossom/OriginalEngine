@@ -134,9 +134,7 @@ void MCB::Scene::Update()
     
     if (input_->IsKeyTrigger(DIK_LCONTROL))
     {
-        std::unique_ptr<LevelLoader::LevelData> level;
-        level = move(LevelLoader::Load("testLevel", viewCamera_));
-        level_ = move(level);
+       level_ = level_->ReLoad();
 
     }
 

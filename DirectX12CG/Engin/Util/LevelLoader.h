@@ -18,12 +18,14 @@ namespace MCB
 				std::string fileName;
 				Object3d obj;
 			};
-
+			std::string levelFileName;
+			ICamera* camera;
 			// オブジェクト配列
 			std::vector<std::unique_ptr<ObjectData>> objects;
 			void Update();
 			void UpdateMatrix();
 			void Draw();
+			std::unique_ptr<LevelData> ReLoad();
 		};
 		//定数
 		// デフォルトの読み込みディレクトリ
@@ -40,6 +42,7 @@ namespace MCB
 		/// </summary>
 		/// <param name="fileName">ファイル名</param>
 		static std::unique_ptr<LevelData>  Load(const std::string& fileName, ICamera* camera);
+		 
 	};
 
 }

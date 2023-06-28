@@ -63,6 +63,8 @@ std::unique_ptr<LevelLoader::LevelData> LevelLoader::Load(const std::string& fil
 	string name = deserialize["name"].get<string>();
 	assert(name.compare("scene") == 0 && "レベルデータが正しくありません");
 	unique_ptr<LevelData> levelData = make_unique<LevelData>();
+	levelData->levelFileName = fileName;
+	levelData->camera = camera;
 	for (json& obj : deserialize["objects"])
 	{
 		RecursiveAnalysis(levelData.get(), obj,camera);
@@ -70,6 +72,10 @@ std::unique_ptr<LevelLoader::LevelData> LevelLoader::Load(const std::string& fil
 	file.close();
 	return levelData;
 }
+
+
+
+
 
 void MCB::LevelLoader::LevelData::Update()
 {
@@ -94,4 +100,9 @@ void MCB::LevelLoader::LevelData::Draw()
 		if (itr->obj.animationModel_)itr->obj.AnimationDraw();
 		else itr->obj.Draw();
 	}
+}
+
+std::unique_ptr<LevelLoader::LevelData> MCB::LevelLoader::LevelData::ReLoad()
+{
+	return Load(levelFileName,camera);
 }

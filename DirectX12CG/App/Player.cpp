@@ -55,6 +55,11 @@ void MCB::Player::UniqueUpdate()
 			Object3d::UpdateMatrix();
 		}
 	}
+
+	if (position_.y <= -20)
+	{
+		position_.y = 0;
+	}
 }
 
 void MCB::Player::Move()
