@@ -51,7 +51,7 @@ namespace MCB
 		IXAudio2MasteringVoice* masterVoice_;
 		static const size_t sMAX_SOUND_ = 1026;
 
-		std::vector<SoundData> sounds_;
+		std::vector < std::unique_ptr< SoundData> > sounds_;
 		public:
 		static SoundManager* GetInstance();
 		void ReleasexAudio2();
