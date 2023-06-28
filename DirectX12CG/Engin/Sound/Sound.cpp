@@ -30,7 +30,7 @@ void MCB::SoundManager::AllDeleteSound()
 {
 	for (size_t i = 0; i < sounds_.size(); i++)
 	{
-		if (sounds_[i]->pBuffer != nullptr)
+		if (!sounds_[i]->pBuffer.empty())
 		{
 			if(sounds_[i]->pSourceVoice != nullptr) sounds_[i]->pSourceVoice->Stop();
 
@@ -61,7 +61,7 @@ MCB::SoundManager::~SoundManager()
 {
 	for (size_t i = 0; i < sounds_.size(); i++)
 	{
-		if (sounds_[i]->pBuffer != nullptr)
+		if (!sounds_[i]->pBuffer.empty())
 		{
 			if(sounds_[i]->pSourceVoice)sounds_[i]->pSourceVoice->Stop();
 			sounds_[i]->bufferSize = 0;
@@ -147,7 +147,7 @@ size_t MCB::SoundManager::LoadWaveSound(const string& fileName)
 	file.close();
 
 	temp->wfex = format.fmt;
-	temp->pBuffer.reset((reinterpret_cast<BYTE*>(pBuffer.data())));
+	temp->pBuffer = move(pBuffer);
 	temp->bufferSize = data.size;
 	temp->name = fileName;
 	sounds_.push_back(move(temp));
@@ -165,7 +165,7 @@ void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, uint16_t l
 	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = sounds_[soundHandle]->pBuffer.get();
+	buf.pAudioData = reinterpret_cast<BYTE*>(sounds_[soundHandle]->pBuffer.front());
 	buf.AudioBytes =static_cast<uint32_t>( sounds_[soundHandle]->bufferSize);
 	if (isLoop) buf.LoopCount = loopCount;
 	else 

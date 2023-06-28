@@ -39,7 +39,7 @@ namespace MCB
 		typedef struct SoundData
 		{
 			WAVEFORMATEX wfex;
-			std::unique_ptr<BYTE> pBuffer;
+			std::vector<char> pBuffer;
 			size_t bufferSize;
 			bool free = true;
 			std::string name;
