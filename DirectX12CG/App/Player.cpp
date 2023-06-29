@@ -6,6 +6,7 @@ using namespace std;
 void MCB::Player::Init()
 {
 	Object3d::Init();
+	position_.z = -20;
 	SetCollider(make_unique<SphereCollider>());
 	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 }

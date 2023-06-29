@@ -18,7 +18,7 @@ void MCB::Scene::Initialize()
 
     maincamera_.Inilialize();
     debugCamera_.Inilialize();
-    viewCamera_ = &debugCamera_;
+    viewCamera_ = &maincamera_;
     LoadTexture();
     LoadModel();
     LoadSound();
