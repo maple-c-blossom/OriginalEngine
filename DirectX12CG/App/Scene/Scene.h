@@ -4,6 +4,7 @@
 #include <cmath>
 #include "DebugCamera.h"
 #include "Player.h"
+#include "Camera.h"
 #include <memory>
 
 #pragma region ゲーム系.h include
@@ -31,7 +32,7 @@ namespace MCB
 
 		//変換行列
 		DebugCamera debugCamera_;
-		
+		Camera maincamera_;
 #pragma endregion 変換行列
 
 #pragma region 各種リソース

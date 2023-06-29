@@ -47,7 +47,7 @@ namespace MCB
 	{
 	public:
 		Vector3D centerPosition_ = {};
-		float radius_ = {};
+		float radius_ = 1.0f;
 	};
 
 	class Plane

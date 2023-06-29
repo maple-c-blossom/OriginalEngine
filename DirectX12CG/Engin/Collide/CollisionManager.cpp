@@ -344,7 +344,7 @@ void MCB::CollisionManager::QuerySphere(const Sphere& sphere, QueryCallBack* cal
     for ( auto& itr: colliders_)
     {
         BaseCollider* col = itr.get();
-        if (!(col->attribute_ & attribute))
+        if ((col->attribute_ & attribute))
         {
             if (col->GetPrimitive() == PrimitiveType::SPHERE)
             {
@@ -370,7 +370,7 @@ void MCB::CollisionManager::QuerySphere(const Sphere& sphere, QueryCallBack* cal
                 MeshCollider* mesh = dynamic_cast<MeshCollider*>(col);
                 Vector3D tempInter;
                 Vector3D tempReject;
-                if (mesh->ChakeCollisionSphere(sphere,&tempInter, &tempReject)) continue;
+                if (!mesh->ChakeCollisionSphere(sphere,&tempInter, &tempReject)) continue;
                 QueryHit info;
                 info.baseColl = col;
                 info.obj = col->object3d_;

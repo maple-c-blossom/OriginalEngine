@@ -99,13 +99,13 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 {
 	Sphere local;
 	local.centerPosition_ = XMVector3Transform(XMVECTOR{ sphere.centerPosition_.vec_.x_, sphere.centerPosition_.vec_.y_, sphere.centerPosition_.vec_.z_ }, invWorldMat_);
-	local.radius_ *= XMVector3Length(invWorldMat_.r[0]).m128_f32[0];
+	local.radius_ = sphere.radius_ * XMVector3Length(invWorldMat_.r[0]).m128_f32[0];
 
 	std::vector<Triangle>::const_iterator itr = triangles_.cbegin();
 	for (; itr != triangles_.cend(); ++itr)
 	{
 		const Triangle& tri = *itr;
-		if (Collision::CalcTriangleSpher(tri, sphere, inter,reject))
+		if (Collision::CalcTriangleSpher(tri, local, inter,reject))
 		{
 			const XMMATRIX& temp = object3d_->GetMatWorld();
 			if (reject)

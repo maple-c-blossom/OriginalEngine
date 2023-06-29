@@ -16,6 +16,7 @@ MCB::Scene::~Scene()
 void MCB::Scene::Initialize()
 {
 
+    maincamera_.Inilialize();
     debugCamera_.Inilialize();
     viewCamera_ = &debugCamera_;
     LoadTexture();
@@ -30,7 +31,7 @@ void MCB::Scene::Initialize()
     Object3d::SetLights(lights_);
     postEffect_->Init();
     postEffect_->color_.x_ = static_cast<float>(PostEffectNum::NONE);
-
+    maincamera_.SetCameraTarget(&player_);
 }
 
 void MCB::Scene::Object3DInit()
@@ -129,7 +130,7 @@ void MCB::Scene::Update()
     level_->Update();
     lights_->UpDate();
     debugCamera_.Update();
-
+    maincamera_.Update();
     MatrixUpdate();
     
     if (input_->IsKeyTrigger(DIK_LCONTROL))
@@ -191,6 +192,7 @@ void MCB::Scene::ImGuiUpdate()
     {
         if (ImGui::TreeNode("operation"))
         {
+            ImGui::Text("LevelReLoad:LCONTROL");
             ImGui::TreePop();
         }
     }

@@ -21,7 +21,7 @@ void Camera::WorldPositionInit()
 
 void Camera::Update()
 {
-	
+
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();
 }

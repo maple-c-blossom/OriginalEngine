@@ -46,6 +46,7 @@ namespace MCB
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
         ConstBuffSkin* constMapSkin_ = nullptr;
     public:
+        std::string nameId;
         static LightGroup* slights_;
         //ƒAƒtƒBƒ“•ÏŠ·î•ñ
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
