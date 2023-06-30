@@ -65,6 +65,11 @@ void MCB::Scene::Object3DInit()
     player_.Init();
     player_.model_ = SpherModel_;
     player_.camera_ = viewCamera_;
+
+    goal_.Init();
+    goal_.model_ = SpherModel_;
+    goal_.position_.z = 20;
+    goal_.color_ = { 1,1,0,1 };
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -131,18 +136,19 @@ void MCB::Scene::Update()
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
+    CheckAllColision();
     MatrixUpdate();
     
     if (input_->IsKeyTrigger(DIK_LCONTROL))
     {
        level_ = level_->ReLoad();
-
+        //Goal::goal_ = false;
     }
 
-    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
-    {
-        sceneEnd_ = true;
-    }
+    //if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    //{
+    //    sceneEnd_ = true;
+    //}
 }
 
 void MCB::Scene::Draw()
@@ -155,8 +161,9 @@ void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
     level_->Draw();
-    postEffect_->PostDraw();
     player_.Draw();
+    goal_.Draw();
+    postEffect_->PostDraw();
 
 }
 
@@ -164,9 +171,12 @@ void MCB::Scene::SpriteDraw()
 {
     pipeline_->SetPostEffectPipeLine();
     postEffect_->Draw();
-
     pipeline_->SetSpritePipeLine();
 
+    if (goal_.GetIsGoal())
+    {
+        debugText_.Print(30, 30, 1, "OK!");
+    }
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
 
@@ -181,6 +191,7 @@ void MCB::Scene::ParticleDraw()
 
 void MCB::Scene::CheckAllColision()
 {
+    CollisionManager::GetInstance()->CheckAllCollision();
 }
 
 
@@ -204,6 +215,7 @@ void MCB::Scene::MatrixUpdate()
     viewCamera_->Update();
     level_->UpdateMatrix();
     player_.Update();
+    goal_.Update();
 
     //testParticle.Updata(matView, matProjection, true);
 }

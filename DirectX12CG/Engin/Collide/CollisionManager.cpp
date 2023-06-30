@@ -12,18 +12,20 @@ MCB::CollisionManager* MCB::CollisionManager::GetInstance()
 void MCB::CollisionManager::CheckAllCollision()
 {
 
-    std::forward_list<BaseCollider*>::iterator itrA;
-    std::forward_list<BaseCollider*>::iterator itrB;
+    //std::forward_list<BaseCollider*>::iterator itrA;
+    //std::forward_list<BaseCollider*>::iterator itrB;
 
-    *itrA = colliders_.begin()->get();
-    for (; *itrA != colliders_.end()->get(); ++itrA)
+    //*itrA = colliders_.begin()->get();
+    //BaseCollider* itr_hit = nullptr;
+    for (auto& itr : colliders_)
     {
-        itrB = itrA;
-        ++itrB;
-        for (; *itrB != colliders_.end()->get(); ++itrB)
+
+        for (auto& itr2 : colliders_)
         {
-            BaseCollider* itrCollA = *itrA;
-            BaseCollider* itrCollB = *itrB;
+            BaseCollider* itrCollA = itr.get();
+            BaseCollider* itrCollB = itr2.get();
+            if (itrCollA == itrCollB)continue;
+            if (itrCollA->attribute_ == ATTRIBUTE_LANDSHAPE || itrCollB->attribute_ == ATTRIBUTE_LANDSHAPE) continue;
             if (itrCollA->GetPrimitive() == PrimitiveType::RAY || itrCollB->GetPrimitive() == PrimitiveType::RAY)
             {
                 if (itrCollA->GetPrimitive() == PrimitiveType::RAY)

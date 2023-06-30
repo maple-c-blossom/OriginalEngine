@@ -393,6 +393,9 @@
     <ClCompile Include="Engin\Model\ModelManager.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
+    <ClCompile Include="App\Goal.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -654,6 +657,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Model\ModelManager.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Goal.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

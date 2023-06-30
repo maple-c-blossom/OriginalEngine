@@ -4,6 +4,7 @@
 #include <cmath>
 #include "DebugCamera.h"
 #include "Player.h"
+#include "Goal.h"
 #include "Camera.h"
 #include <memory>
 
@@ -66,7 +67,7 @@ namespace MCB
 #pragma region 3Dオブジェクト
 		SimpleFigure triangle_;
 		Player player_;
-
+		Goal goal_;
 		Object3d ground_ = {};
 		Object3d Skydorm_ = {};
 		Object3d testsphere_ = {};

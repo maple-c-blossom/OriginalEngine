@@ -36,7 +36,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 
 		if(!(objData->fileName == "skydome"))objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
 		objData->obj.camera_ = camera;
-		objData->obj.nameId = objData->fileName;
+		objData->obj.nameId_ = objData->fileName;
 		levelData->objects.emplace_back(move(objData));
 	}
 	if (objJson.contains("children"))

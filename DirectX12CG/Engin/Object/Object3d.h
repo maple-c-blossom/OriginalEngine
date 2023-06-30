@@ -46,7 +46,7 @@ namespace MCB
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
         ConstBuffSkin* constMapSkin_ = nullptr;
     public:
-        std::string nameId;
+        std::string nameId_;
         static LightGroup* slights_;
         //アフィン変換情報
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
@@ -67,7 +67,7 @@ namespace MCB
         Object3d();
 
         virtual ~Object3d();
-        ICamera* camera_;
+        static ICamera* camera_;
         //親オブジェクトへのポインタ
         Object3d* parent_ = nullptr;
         bool trackingFlag_ = false;
@@ -99,6 +99,7 @@ namespace MCB
        static void SetLights(LightGroup* light);
        ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform_; };
        ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform_.Get(); };
+       std::string GetName() { return name_; };
         //void CreateModel(const char* fileName);
     };
 

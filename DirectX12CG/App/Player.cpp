@@ -8,7 +8,10 @@ void MCB::Player::Init()
 	Object3d::Init();
 	position_.z = -20;
 	SetCollider(make_unique<SphereCollider>());
-	collider_->SetAttribute(ATTRIBUTE_ENEMY);
+	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
+	UpdateMatrix();
+	collider_->Update();
+	nameId_ = "Player";
 }
 
 void MCB::Player::UniqueUpdate()
@@ -62,6 +65,7 @@ void MCB::Player::UniqueUpdate()
 		position_.y = 0;
 	}
 }
+
 
 void MCB::Player::Move()
 {

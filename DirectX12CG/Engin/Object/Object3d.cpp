@@ -6,6 +6,8 @@ using namespace MCB;
 using namespace std;
 
 LightGroup* Object3d::slights_ = nullptr;
+ICamera* Object3d::camera_ = nullptr;
+
 
 MCB::Object3d::Object3d()
 {
