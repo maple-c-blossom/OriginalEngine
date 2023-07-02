@@ -91,6 +91,7 @@ void MCB::Object3d::CreateBuff()
 
 void MCB::Object3d::UniqueUpdate()
 {
+
 }
 
 void Object3d::Update(bool isBillBord)

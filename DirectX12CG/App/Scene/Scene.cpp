@@ -63,12 +63,14 @@ void MCB::Scene::Object3DInit()
     level_ = move(LevelLoader::Load("testLevel",viewCamera_));
 
     player_.Init();
-    player_.model_ = SpherModel_;
+    player_.animationModel_ = playerModel_;
     player_.camera_ = viewCamera_;
 
     goal_.Init();
     goal_.model_ = SpherModel_;
-    goal_.position_.z = 20;
+    goal_.position_.y = 1;
+    goal_.position_.z = 50;
+    goal_.scale_ = { 3,3,3 };
     goal_.color_ = { 1,1,0,1 };
     //sphere.Init();
     //sphere.model = BoxModel;
@@ -83,6 +85,7 @@ void MCB::Scene::LoadModel()
    SpherModel_ = modelManager_->GetModel("sphere", true);
    groundModel_ = modelManager_->GetModel("ground");
    skydomeModel_ = modelManager_->GetModel("skydome");
+   playerModel_ = modelManager_->GetModel("player", playerModel_);
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
@@ -131,8 +134,8 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
 
-    player_.UniqueUpdate();
     level_->Update();
+    player_.UniqueUpdate();
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
@@ -161,8 +164,9 @@ void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
     level_->Draw();
-    player_.Draw();
     goal_.Draw();
+    pipeline_->SetFbxPipeLine();
+    player_.AnimationDraw(zoomTex_->texture.get()->incrementNum_);
     postEffect_->PostDraw();
 
 }
@@ -214,7 +218,7 @@ void MCB::Scene::MatrixUpdate()
 {
     viewCamera_->Update();
     level_->UpdateMatrix();
-    player_.Update();
+    player_.AnimationUpdate();
     goal_.Update();
 
     //testParticle.Updata(matView, matProjection, true);

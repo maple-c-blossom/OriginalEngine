@@ -40,7 +40,7 @@ namespace MCB
 		//3Dƒ‚ƒfƒ‹
 #pragma region 3Dƒ‚ƒfƒ‹
 		Model* SpherModel_ = nullptr;
-		Model* SpherModel2_ = nullptr;
+		AnimationModel* playerModel_ = nullptr;
 		Model* groundModel_ = nullptr;
 		Model* skydomeModel_ = nullptr;
 

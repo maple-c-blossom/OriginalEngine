@@ -90,7 +90,7 @@ AnimationModel* MCB::ModelManager::GetModel(const string& fileName, AnimationMod
     auto itr = animModelMap_.find(fileName);
     if (itr == animModelMap_.end())
     {
-        Load(fileName, "gltf");
+        Load(fileName, false,"gltf");
     }
     return animModelMap_[fileName].get();
 }

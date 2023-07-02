@@ -12,6 +12,7 @@ void MCB::Player::Init()
 	UpdateMatrix();
 	collider_->Update();
 	nameId_ = "Player";
+	position_ = { 0,0,-50 };
 }
 
 void MCB::Player::UniqueUpdate()
@@ -63,6 +64,7 @@ void MCB::Player::UniqueUpdate()
 	if (position_.y <= -20)
 	{
 		position_.y = 0;
+		position_.x = 0;
 	}
 }
 
@@ -123,6 +125,19 @@ void MCB::Player::Move()
 		speedRight_ = 0;
 	}
 
+	if (speedFront_ != 0)
+	{
+		animationSpeed_ = speedFront_ / 5;
+	}
+	else if(speedRight_ != 0)
+	{
+		animationSpeed_ = speedRight_ / 5;
+	}
+	else
+	{
+		animationSpeed_ = 0;
+	}
+
 	position_.x += nowFrontVec_.vec_.x_ * speedFront_;
 	position_.z += nowFrontVec_.vec_.z_ * speedFront_;
 	position_.x += rightVec_.vec_.x_ * speedRight_;
@@ -139,7 +154,7 @@ void MCB::Player::Move()
 	else if (Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))
 	{
 		isGraund_ = false;
-		const float jumpVYFist = 0.2f;
+		const float jumpVYFist = 0.25f;
 		fallV_ = { 0,jumpVYFist,0,0 };
 	}
 
