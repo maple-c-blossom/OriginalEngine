@@ -2,6 +2,8 @@
 #include "DirectXMath.h"
 #include "Util.h"
 #include "DxWindow.h"
+#include "RayCollider.h"
+#include "CollisionManager.h"
 using namespace MCB;
 using namespace DirectX;
 
@@ -25,6 +27,23 @@ void Camera::Update()
 	view_.eye_.y = target_->position_.y + 5;
 	view_.eye_.z = target_->position_.z + (15 * -target_->nowFrontVec_.vec_.z_);
 	view_.target_ = target_->position_;
+	Ray ray;
+	ray.StartPosition_.vec_.x_ = view_.eye_.x;
+	ray.StartPosition_.vec_.y_ = view_.eye_.y;
+	ray.StartPosition_.vec_.z_ = view_.eye_.z;
+	ray.rayVec_ = Vector3D().V3Get(ray.StartPosition_.vec_, Float3(target_->position_.x,
+		target_->position_.y
+		+ 0.5f ,
+		target_->position_.z));
+	float rayLength = ray.rayVec_.V3Len();
+	ray.rayVec_.V3Norm();
+	RayCastHit info;
+	OutputDebugStringW(L"camera--------------------------------------------------\n");
+	if(CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info,rayLength - 0.5f))
+	{
+		if(info.objctPtr_ != target_)info.objctPtr_->isInvisible = true;
+	}
+	OutputDebugStringW(L"end--------------------------------------------------\n");
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();
 }

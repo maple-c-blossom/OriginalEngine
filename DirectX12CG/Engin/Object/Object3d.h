@@ -65,6 +65,7 @@ namespace MCB
         Model* model_ = nullptr;
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
+        bool isInvisible = false;
         Object3d();
 
         virtual ~Object3d();
