@@ -7,12 +7,14 @@ void MCB::Player::Init()
 {
 	Object3d::Init();
 	position_.z = -20;
-	SetCollider(make_unique<SphereCollider>());
+	scale_ = { 1.25,1.25,1.25 };
+	SetCollider(make_unique<SphereCollider>(Vector3D{0,0.5f,0},0.5f));
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
 	UpdateMatrix();
 	collider_->Update();
 	nameId_ = "Player";
 	position_ = { 0,0,-50 };
+	rotation_.y = ConvertRadius(180);
 }
 
 void MCB::Player::UniqueUpdate()
@@ -71,7 +73,7 @@ void MCB::Player::UniqueUpdate()
 
 void MCB::Player::Move()
 {
-
+	
 	if (input_->IsKeyDown(DIK_W))
 	{
 		if (speedFront_ <= maxspeed_)speedFront_ += speed_;
@@ -127,15 +129,20 @@ void MCB::Player::Move()
 
 	if (speedFront_ != 0)
 	{
-		animationSpeed_ = speedFront_ / 5;
+		if(speedFront_ > 0)currentAnimation_ = "Run";
+		if(speedFront_ < 0)currentAnimation_ = "Run_Back";
+		animationSpeed_ = abs(speedFront_) / 7;
 	}
 	else if(speedRight_ != 0)
 	{
-		animationSpeed_ = speedRight_ / 5;
+		if (speedRight_ > 0)currentAnimation_ = "Run_Right";
+		if (speedRight_ < 0)currentAnimation_ = "Run_Left";
+		animationSpeed_ = abs(speedRight_) / 7;
 	}
 	else
 	{
-		animationSpeed_ = 0;
+		animationSpeed_ = 0.05f;
+		currentAnimation_ = "Idle";
 	}
 
 	position_.x += nowFrontVec_.vec_.x_ * speedFront_;

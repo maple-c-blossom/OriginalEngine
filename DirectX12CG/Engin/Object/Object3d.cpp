@@ -257,12 +257,9 @@ void MCB::Object3d::AnimationUpdate(bool isBillBord)
     if (collider_)collider_->Update();
     animeTime_ += animationSpeed_;
 
-    if (animeTime_ >= animationModel_->animations_[0]->duration)
-    {
-        animeTime_ = 0;
-    }
+  
     
-    animationModel_->boneAnimTransform(animeTime_);
+    animationModel_->boneAnimTransform(animeTime_,currentAnimation_);
     for (size_t i = 0; i < animationModel_->bones_.size(); i++)
     {
         constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
@@ -290,7 +287,7 @@ void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
         animeTime_ = 0;
     }
 
-    animationModel_->boneAnimTransform(animeTime_);
+    animationModel_->boneAnimTransform(animeTime_, currentAnimation_);
     for (size_t i = 0; i < animationModel_->bones_.size(); i++)
     {
         constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;

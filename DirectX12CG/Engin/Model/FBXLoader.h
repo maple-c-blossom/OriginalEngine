@@ -12,6 +12,7 @@
 #include "FBXModel.h"
 #include "TextureManager.h"
 #include "Quaternion.h"
+#include <unordered_map>
 namespace MCB
 {
 
@@ -61,7 +62,7 @@ namespace MCB
     typedef struct Node
     {
         std::string name;
-        std::vector< std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
+        std::vector<std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
@@ -84,8 +85,9 @@ namespace MCB
     public:
         TextureManager* textureManager_ = TextureManager::GetInstance();
         std::vector<std::unique_ptr<Node>> nodes_;
-        std::vector<std::unique_ptr<Animation>> animations_;
+        std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
         std::vector<Bone> bones_;
+        std::string prevAnimName_ = "NoAnimation";
         ~AnimationModel();
         string fileName_;
         bool isDelete_ = false;
@@ -94,9 +96,9 @@ namespace MCB
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
 
-        void boneAnimTransform(  float timeInSeconds,  size_t currentAnimation = 0,  bool loop = true);
+        void boneAnimTransform(  float& timeInSeconds,const std::string& currentAnimation = "Null", bool loop = true);
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform,  size_t currentAnimation = 0);
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const std::string& currentAnimation = "Null");
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 

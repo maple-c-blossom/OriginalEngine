@@ -105,7 +105,7 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 				}
 				tempAnim->channels.push_back(tempNodeAnim);
 			}
-			animations_.push_back(move(tempAnim));
+			animations_[tempAnim->name] = move(tempAnim);
 		}
 	}
 
@@ -375,7 +375,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	return textures;
 }
 
-  void AnimationModel::boneAnimTransform( float timeInSeconds, size_t currentAnimation, bool loop)
+  void AnimationModel::boneAnimTransform( float& timeInSeconds, const std::string& currentAnimation, bool loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -384,15 +384,33 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
     //}
     
     //NSLog(@"%d", scene->mNumAnimations);
-    
-    float ticksPerSecond = (float)(animations_[currentAnimation]->ticksPerSecond != 0 ? animations_[currentAnimation]->ticksPerSecond : 25.0f);
+
+
+
+	if (prevAnimName_ != currentAnimation)
+	{
+		auto itr = animations_.find(currentAnimation);
+		if (itr == animations_.end())
+		{
+			return;
+		}
+	}
+	if (timeInSeconds >= animations_[currentAnimation]->duration)
+	{
+		timeInSeconds = 0;
+	}
+	Animation* anim;
+	anim = animations_[currentAnimation].get();
+	prevAnimName_ = currentAnimation;
+
+    float ticksPerSecond = (float)(anim->ticksPerSecond != 0 ? anim->ticksPerSecond : 25.0f);
     float timeInTicks = timeInSeconds * ticksPerSecond;
     float animationTime = timeInTicks;
     
     if(loop)
-      animationTime = (float)fmod(animationTime, animations_[currentAnimation]->duration);
+      animationTime = (float)fmod(animationTime, anim->duration);
     else
-      animationTime = (float)min(animationTime, animations_[currentAnimation]->duration -0.0001f);
+      animationTime = (float)min(animationTime, anim->duration -0.0001f);
     
 	
 	for (auto& itr : nodes_) itr->AnimaetionParentMat = XMMatrixIdentity();
@@ -412,10 +430,18 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
   }
 
   void AnimationModel::readAnimNodeHeirarchy( float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, 
-	  const DirectX::XMMATRIX& globalInverseTransform, size_t currentAnimation)
+	  const DirectX::XMMATRIX& globalInverseTransform, const string& currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
+	  if (prevAnimName_ != currentAnimation)
+	  {
+		  auto itr = animations_.find(currentAnimation);
+		  if (itr == animations_.end())
+		  {
+			  return;
+		  }
+	  }
 	  const Animation* pAnimation = animations_[currentAnimation].get();
 
 	  XMMATRIX nodeTrans = pNode->transform;

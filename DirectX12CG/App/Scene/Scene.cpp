@@ -166,7 +166,7 @@ void MCB::Scene::PostEffectDraw()
     level_->Draw();
     goal_.Draw();
     pipeline_->SetFbxPipeLine();
-    player_.AnimationDraw(zoomTex_->texture.get()->incrementNum_);
+    player_.AnimationDraw();
     postEffect_->PostDraw();
 
 }

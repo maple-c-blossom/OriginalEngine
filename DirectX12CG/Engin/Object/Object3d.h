@@ -47,6 +47,7 @@ namespace MCB
         ConstBuffSkin* constMapSkin_ = nullptr;
     public:
         std::string nameId_;
+        std::string currentAnimation_ = "Null";
         static LightGroup* slights_;
         //ƒAƒtƒBƒ“•ÏŠ·î•ñ
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
