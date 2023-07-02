@@ -88,7 +88,7 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.y_)
 	{
-		float accelerator = speed_;
+		float accelerator = speed_ * 2;
 		accelerator *= input_->gamePad_->LStick_.y_;
 		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ += accelerator;
 		else if (speedFront_ >= maxspeed_) speedFront_ = maxspeed_;
@@ -115,7 +115,7 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator = speed_;
+		float accelerator = speed_ * 2;
 		accelerator *= input_->gamePad_->LStick_.x_;
 		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
@@ -127,24 +127,26 @@ void MCB::Player::Move()
 		speedRight_ = 0;
 	}
 
-	if (speedFront_ != 0)
+	if (abs(speedFront_) > abs(speedRight_))
 	{
-		if(speedFront_ > 0)currentAnimation_ = "Run";
-		if(speedFront_ < 0)currentAnimation_ = "Run_Back";
-		animationSpeed_ = abs(speedFront_) / 7;
+		if (speedFront_ != 0)
+		{
+			if (speedFront_ > 0)currentAnimation_ = "Run";
+			if (speedFront_ < 0)currentAnimation_ = "Run_Back";
+
+		}
 	}
 	else if(speedRight_ != 0)
 	{
 		if (speedRight_ > 0)currentAnimation_ = "Run_Right";
 		if (speedRight_ < 0)currentAnimation_ = "Run_Left";
-		animationSpeed_ = abs(speedRight_) / 7;
 	}
 	else
 	{
 		animationSpeed_ = 0.05f;
 		currentAnimation_ = "Idle";
 	}
-
+	animationSpeed_ = max(abs(speedFront_) / 7, abs(speedRight_) / 7);
 	position_.x += nowFrontVec_.vec_.x_ * speedFront_;
 	position_.z += nowFrontVec_.vec_.z_ * speedFront_;
 	position_.x += rightVec_.vec_.x_ * speedRight_;

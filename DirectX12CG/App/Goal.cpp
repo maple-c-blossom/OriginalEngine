@@ -7,7 +7,7 @@ void Goal::Init()
 {
 	Object3d::Init();
 	goal_ = false;
-	SetCollider(make_unique<SphereCollider>());
+	SetCollider(make_unique<SphereCollider>(Vector3D{0,0,0},2.f));
 	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 	UpdateMatrix();
 	collider_->Update();
