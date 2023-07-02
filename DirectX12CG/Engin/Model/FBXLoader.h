@@ -88,6 +88,7 @@ namespace MCB
         std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
         std::vector<Bone> bones_;
         std::string prevAnimName_ = "NoAnimation";
+        Animation* prevAnim = nullptr;
         ~AnimationModel();
         string fileName_;
         bool isDelete_ = false;

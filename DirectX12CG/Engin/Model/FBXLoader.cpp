@@ -394,14 +394,15 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		{
 			return;
 		}
+		prevAnimName_ = currentAnimation;
+		prevAnim = animations_[currentAnimation].get();
 	}
 	if (timeInSeconds >= animations_[currentAnimation]->duration)
 	{
 		timeInSeconds = 0;
 	}
 	Animation* anim;
-	anim = animations_[currentAnimation].get();
-	prevAnimName_ = currentAnimation;
+	anim = prevAnim;
 
     float ticksPerSecond = (float)(anim->ticksPerSecond != 0 ? anim->ticksPerSecond : 25.0f);
     float timeInTicks = timeInSeconds * ticksPerSecond;

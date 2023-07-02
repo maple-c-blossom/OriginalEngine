@@ -151,7 +151,7 @@ void MCB::Player::Move()
 	position_.z += rightVec_.vec_.z_ * speedRight_;
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.01f;
+		const float fallAcc = -0.03f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		position_.x += fallV_.vec_.x_;
@@ -161,7 +161,7 @@ void MCB::Player::Move()
 	else if (Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))
 	{
 		isGraund_ = false;
-		const float jumpVYFist = 0.25f;
+		const float jumpVYFist = 0.45f;
 		fallV_ = { 0,jumpVYFist,0,0 };
 	}
 

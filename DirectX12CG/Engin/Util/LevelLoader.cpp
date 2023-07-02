@@ -1,5 +1,6 @@
 #include "LevelLoader.h"
 #include "MeshCollider.h"
+#include "PlaneCollider.h"
 #include "ModelManager.h"
 #include "Util.h"
 using namespace MCB;
@@ -34,7 +35,10 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		objData->obj.scale_.y = static_cast<float>(transform["scaling"][1]);
 		objData->obj.scale_.z = static_cast<float>(transform["scaling"][2]);
 
-		if(!(objData->fileName == "skydome"))objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
+		if (!(objData->fileName == "skydome"))
+		{
+			objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
+		}
 		objData->obj.camera_ = camera;
 		objData->obj.nameId_ = objData->fileName;
 		levelData->objects.emplace_back(move(objData));

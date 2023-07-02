@@ -17,6 +17,7 @@ namespace MCB
         float srowspeed_ = 0.0125f;
         float maxspeed_ = 0.25f;
         MCB::Vector3D rightVec_ = {1,0,0};
+        Object3d* ground;
     public:
         void Init();
         void UniqueUpdate() override;

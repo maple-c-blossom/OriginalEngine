@@ -144,8 +144,9 @@ void MCB::Scene::Update()
     
     if (input_->IsKeyTrigger(DIK_LCONTROL))
     {
-       level_ = level_->ReLoad();
-        //Goal::goal_ = false;
+       //level_ = level_->ReLoad();
+        Goal::ResetGoal();
+        player_.position_ = { 0,0,-50 };
     }
 
     //if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
@@ -179,8 +180,11 @@ void MCB::Scene::SpriteDraw()
 
     if (goal_.GetIsGoal())
     {
-        debugText_.Print(30, 30, 1, "OK!");
+        debugText_.Print(dxWindow_->sWINDOW_WIDTH_ / 2, dxWindow_->sWINDOW_HEIGHT_ / 2, 5, "Goal!!!");
     }
+    debugText_.sprite_->color_ = { 1,1,1,1 };
+    debugText_.Print(10, 10, 1, "Move:WASD or LStick");
+    debugText_.Print(10, 30, 1, "(debug) Reset:LCONTROL");
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
 
