@@ -10,7 +10,7 @@
 //}
 using namespace MCB;
 
-Vector2D Vector2D::VecGet(Vector2D startVec, Vector2D endVec)
+Vector2D Vector2D::VecGet(const Vector2D& startVec,const Vector2D& endVec)
 {
     Vector2D Vectol;
     Vectol.SetX(endVec.GetX() - startVec.GetX());
@@ -18,47 +18,47 @@ Vector2D Vector2D::VecGet(Vector2D startVec, Vector2D endVec)
     return Vectol;
 }
 
-Vector2D Vector2D::VecGet(Vector2D startVec)
+Vector2D Vector2D::VecGet(const Vector2D& startVec)
 {
     Vector2D Vectol;
-    Vectol.SetX(x - startVec.GetX());
-    Vectol.SetY(y - startVec.GetY());
+    Vectol.SetX(x_ - startVec.GetX());
+    Vectol.SetY(y_ - startVec.GetY());
     return Vectol;
 }
 
 Vector2D::Vector2D()
 {
-    x = 0;
-    y = 0;
+    x_ = 0;
+    y_ = 0;
 
 }
 
 Vector2D::Vector2D(float x, float y)
 {
-    this->x = x;
-    this->y = y;
+    x_ = x;
+    y_ = y;
 }
 
-float Vector2D::GetCrossProduct(Vector2D a, Vector2D b)
+float Vector2D::GetCrossProduct(const Vector2D& a, const Vector2D& b)
 {
-    return a.x * b.y - a.y * b.x;
+    return a.x_ * b.y_ - a.y_ * b.x_;
 }
 
-float Vector2D::GetCrossProduct(Vector2D b)
+float Vector2D::GetCrossProduct(const Vector2D& b)
 {
-    return x * b.y - y * b.x;
+    return x_ * b.y_ - y_ * b.x_;
 }
 
-float Vector2D::GetDot(Vector2D vec)
+float Vector2D::GetDot(const Vector2D& vec)
 {
-    return x * vec.x + y * vec.y;
+    return x_ * vec.x_ + y_ * vec.y_;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize, const Vector2D point)
+bool Vector2D::HitCrossProduct(Vector2D* points, int32_t ArraySize, const Vector2D& point)
 {
     if (points == nullptr) return false;
     bool isHit = false;
-    for (int i = 0; i < ArraySize; i++)
+    for (int32_t i = 0; i < ArraySize; i++)
     {
         Vector2D& vecs = points[i];
         Vector2D& vece = points[i + 1 % ArraySize];
@@ -83,11 +83,11 @@ bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize, const Vect
     return isHit;
 }
 
-bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize)
+bool Vector2D::HitCrossProduct(Vector2D* points, int32_t ArraySize)
 {
     if (points == nullptr) return false;
     bool isHit = false;
-    for (int i = 0; i < ArraySize; i++)
+    for (int32_t i = 0; i < ArraySize; i++)
     {
         Vector2D& vecs = points[i];
         Vector2D& vece = points[(i + 1) % ArraySize];
@@ -114,44 +114,44 @@ bool Vector2D::HitCrossProduct(Vector2D* points, const int ArraySize)
 
 float Vector2D::GetLenge()const
 {
-    return sqrtf(x * x + y * y);
+    return sqrtf(x_ * x_ + y_ * y_);
 }
 
 void Vector2D::VecNorm()
 {
     float vecLen = GetLenge();
-    x = x / vecLen;
-    y = y / vecLen;
+    x_ = x_ / vecLen;
+    y_ = y_ / vecLen;
 }
 
 
 float Vector2D::GetX()const
 {
-    return x;
+    return x_;
 }
 
 float Vector2D::GetY()const
 {
-    return y;
+    return y_;
 }
 
 
-void Vector2D::SetX(float x)
+void Vector2D::SetX( float x)
 {
-    this->x = x;
+    x_ = x;
 }
 
-void Vector2D::SetY(float y)
+void Vector2D::SetY( float y)
 {
-    this->y = y;
+    y_ = y;
 }
 
 
 
-void Vector2D::SetVec(Vector2D vec)
+void Vector2D::SetVec(const Vector2D& vec)
 {
-    x = vec.x;
-    y = vec.y;
+    x_ = vec.x_;
+    y_ = vec.y_;
 }
 
 Vector2D Vector2D::operator+()
@@ -171,32 +171,32 @@ Vector2D Vector2D::operator-()
 
 Vector2D& Vector2D::operator+=(const Vector2D& vec)
 {
-    this->x = this->x + vec.x;
-    this->y = this->y + vec.y;
+    x_ = x_ + vec.x_;
+    y_ = y_ + vec.y_;
     return *this;
     // TODO: return ステートメントをここに挿入します
 }
 
 Vector2D& Vector2D::operator-=(const Vector2D& vec)
 {
-    this->x = this->x - vec.x;
-    this->y = this->y - vec.y;
+    x_ = x_ - vec.x_;
+    y_ = y_ - vec.y_;
     return *this;
     // TODO: return ステートメントをここに挿入します
 }
 
-Vector2D& Vector2D::operator*=(float speed)
+Vector2D& Vector2D::operator*=( float speed)
 {
-    x *= speed;
-    y *= speed;
+    x_ *= speed;
+    y_ *= speed;
     return *this;
     // TODO: return ステートメントをここに挿入します
 }
 
-Vector2D& Vector2D::operator/=(float Lenge)
+Vector2D& Vector2D::operator/=( float Lenge)
 {
-    x /= Lenge;
-    y /= Lenge;
+    x_ /= Lenge;
+    y_ /= Lenge;
     return *this;
     // TODO: return ステートメントをここに挿入します
 }

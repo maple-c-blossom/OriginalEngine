@@ -8,7 +8,7 @@ namespace MCB
 
 	public:
 
-        D3D12_STATIC_SAMPLER_DESC samplerDesc{};
+        D3D12_STATIC_SAMPLER_DESC samplerDesc_{};
 
         void Init();
 

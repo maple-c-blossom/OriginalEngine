@@ -5,38 +5,39 @@
 using namespace MCB;
 using namespace std;
 
-LightGroup* Object3d::lights = nullptr;
+LightGroup* Object3d::slights_ = nullptr;
+ICamera* Object3d::camera_ = nullptr;
+
 
 MCB::Object3d::Object3d()
 {
-    this->CreateBuff();
+    CreateBuff();
 }
 
 
 
 MCB::Object3d::~Object3d()
 {
-    if (collider)
+    if (collider_)
     {
-        CollisionManager::GetInstance()->RemoveCollider(collider);
-        delete collider;
-        collider = nullptr;
+        CollisionManager::GetInstance()->RemoveCollider(collider_);
+        collider_ = nullptr;
     }
-    constBuffTranceform->Unmap(0, nullptr);
-    constBuffSkin->Unmap(0, nullptr);
+    //constBuffTranceform_->Unmap(0, nullptr);
+    //constBuffSkin_->Unmap(0, nullptr);
 }
 
 void Object3d::Init()
 {
-    name = typeid(*this).name();
+    name_ = typeid(*this).name();
 
 }
 
 void MCB::Object3d::CreateBuff()
 {
     Dx12* dx12 = Dx12::GetInstance();
-    NORM_FRONT_VEC.vec = { 0,0,1 };
-    nowFrontVec = NORM_FRONT_VEC;
+    normFrontVec_.vec_ = { 0,0,1 };
+    nowFrontVec_ = normFrontVec_;
 
     D3D12_HEAP_PROPERTIES HeapProp{};
     HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -50,19 +51,19 @@ void MCB::Object3d::CreateBuff()
     Resdesc.SampleDesc.Count = 1;
     Resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12->result = dx12->device->CreateCommittedResource
+    dx12->result_ = dx12->device_->CreateCommittedResource
     (
         &HeapProp,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
         &Resdesc,//リソース設定
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&constBuffTranceform)
+        IID_PPV_ARGS(&constBuffTranceform_)
     );
 
-    assert(SUCCEEDED(dx12->result));
+    assert(SUCCEEDED(dx12->result_));
 
-    dx12->result = constBuffTranceform->Map(0, nullptr, (void**)&constMapTranceform);
+    dx12->result_ = constBuffTranceform_->Map(0, nullptr, (void**)&constMapTranceform_);
 
     D3D12_RESOURCE_DESC ResdescFbx{};
     ResdescFbx.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
@@ -73,342 +74,251 @@ void MCB::Object3d::CreateBuff()
     ResdescFbx.SampleDesc.Count = 1;
     ResdescFbx.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12->result = dx12->device->CreateCommittedResource
+    dx12->result_ = dx12->device_->CreateCommittedResource
     (
         &HeapProp,        //ヒープ設定
         D3D12_HEAP_FLAG_NONE,
         &ResdescFbx,//リソース設定
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
-        IID_PPV_ARGS(&constBuffSkin)
+        IID_PPV_ARGS(&constBuffSkin_)
     );
 
-    assert(SUCCEEDED(dx12->result));
+    assert(SUCCEEDED(dx12->result_));
 
-    dx12->result = constBuffSkin->Map(0, nullptr, (void**)&constMapSkin);
+    dx12->result_ = constBuffSkin_->Map(0, nullptr, (void**)&constMapSkin_);
+}
+
+void MCB::Object3d::UniqueUpdate()
+{
+    isInvisible = false;
 }
 
 void Object3d::Update(bool isBillBord)
 {
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z,false);
-    matWorld.SetMatTrans(position.x, position.y, position.z);
-    if (isBillBord)
-    {
-        if (parent == nullptr)
-        {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld.UpdataMatrixWorld();
-    }
-
-    if (parent != nullptr)
-    {
-        matWorld.matWorld *= parent->matWorld.matWorld;
-    }
-    
-    constMapTranceform->world = matWorld.matWorld;
-    constMapTranceform->cameraMat = camera->GetView()->mat;
-    constMapTranceform->viewproj = camera->GetProjection()->mat;
-    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
-    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
-    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
-    constMapTranceform->shaderNum = shaderNum;
-    constMapTranceform->color = color;
-    if(collider)collider->Update();
+    UpdateMatrix(isBillBord);
+    constMapTranceform_->world = matWorld_.matWorld_;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
+    constMapTranceform_->shaderNum = shaderNum_;
+    constMapTranceform_->color = color_;
+    if(collider_)collider_->Update();
 }
 
 void MCB::Object3d::UpdateMatrix( bool isBillBord)
 {
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
-    matWorld.SetMatTrans(position.x, position.y, position.z);
+    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
+    matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z, false);
+    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
-        if (parent == nullptr)
+        if (parent_ == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
+            matWorld_.UpdataBillBordMatrixWorld(*camera_->GetView());
         }
         else
         {
-            matWorld.UpdataMatrixWorld();
+            matWorld_.UpdataMatrixWorld();
         }
     }
     else
     {
-        matWorld.UpdataMatrixWorld();
+        matWorld_.UpdataMatrixWorld();
     }
 
-    if (parent != nullptr)
+    if (parent_ != nullptr)
     {
-        matWorld.matWorld *= parent->matWorld.matWorld;
+        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
     }
 }
 
 void Object3d::Update(Quaternion q, bool isBillBord)
 {
-    MCBMatrix matRot;
-    matRot.MCBMatrixIdentity();
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.matRot = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-    matWorld.SetMatTrans(position.x, position.y, position.z);
-    if (isBillBord)
-    {
-        if (parent == nullptr)
-        {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld.UpdataMatrixWorld();
-    }
+    UpdateMatrix(q,isBillBord);
 
-    if (parent != nullptr)
-    {
-        matWorld.matWorld *= parent->matWorld.matWorld;
-    }
-
-    constMapTranceform->world = matWorld.matWorld;
-    constMapTranceform->cameraMat = camera->GetView()->mat;
-    constMapTranceform->viewproj = camera->GetProjection()->mat;
-    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
-    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
-    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
-    constMapTranceform->shaderNum = shaderNum;
-    constMapTranceform->color = color;
-    if (collider)collider->Update();
+    constMapTranceform_->world = matWorld_.matWorld_;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
+    constMapTranceform_->shaderNum = shaderNum_;
+    constMapTranceform_->color = color_;
+    if (collider_)collider_->Update();
 }
 
 void MCB::Object3d::UpdateMatrix( Quaternion q, bool isBillBord)
 {
     MCBMatrix matRot;
     matRot.MCBMatrixIdentity();
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.matRot = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-    matWorld.SetMatTrans(position.x, position.y, position.z);
+    matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
+    matWorld_.matRot_ = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
+    matWorld_.SetMatTrans(position_.x, position_.y, position_.z);
     if (isBillBord)
     {
-        if (parent == nullptr)
+        if (parent_ == nullptr)
         {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
+            matWorld_.UpdataBillBordMatrixWorld(*camera_->GetView());
         }
         else
         {
-            matWorld.UpdataMatrixWorld();
+            matWorld_.UpdataMatrixWorld();
         }
     }
     else
     {
-        matWorld.UpdataMatrixWorld();
+        matWorld_.UpdataMatrixWorld();
     }
 
-    if (parent != nullptr)
+    if (parent_ != nullptr)
     {
-        matWorld.matWorld *= parent->matWorld.matWorld;
+        matWorld_.matWorld_ *= parent_->matWorld_.matWorld_;
     }
 }
 
 void Object3d::Draw()
 {
-    if (model == nullptr)return;
-    if (model->material.constBuffMaterialB1 == nullptr)return;
+    if (model_ == nullptr || isInvisible)return;
+    if (model_->material_.constBuffMaterialB1_ == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
-    lights->Draw(3);
+    dx12->commandList_->SetGraphicsRootConstantBufferView(2, model_->material_.constBuffMaterialB1_->GetGPUVirtualAddress());
+    slights_->Draw(3);
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += model->texture->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &model->vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &model_->vbView_);
     //インデックスデータ
-    dx12->commandList->IASetIndexBuffer(&model->ibView);
+    dx12->commandList_->IASetIndexBuffer(&model_->ibView_);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawIndexedInstanced((unsigned int) model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList_->DrawIndexedInstanced(static_cast<uint32_t>( model_->indices_.size()), 1, 0, 0, 0);
 
 }
 
-void Object3d::Draw(unsigned short int incremant)
+void Object3d::Draw(uint16_t incremant)
 {
-    if (model == nullptr)return;
-    if (model->material.constBuffMaterialB1 == nullptr)return;
+    if (model_ == nullptr || isInvisible)return;
+    if (model_->material_.constBuffMaterialB1_ == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(2, model->material.constBuffMaterialB1->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(2, model_->material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
-    lights->Draw(3);
+    slights_->Draw(3);
 
     //SRVヒープの先頭アドレスを取得
-    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
+    D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
-    srvGpuHandle.ptr += incremant * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+    srvGpuHandle.ptr += incremant * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     //SRVヒープの先頭にあるSRVをパラメータ1番に設定
-    dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+    dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
     //頂点データ
-    dx12->commandList->IASetVertexBuffers(0, 1, &model->vbView);
+    dx12->commandList_->IASetVertexBuffers(0, 1, &model_->vbView_);
     //インデックスデータ
-    dx12->commandList->IASetIndexBuffer(&model->ibView);
+    dx12->commandList_->IASetIndexBuffer(&model_->ibView_);
     //定数バッファビュー(CBV)の設定コマンド
-    dx12->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
+    dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     //描画コマンド
-    dx12->commandList->DrawIndexedInstanced((unsigned int)model->indices.size(), 1, 0, 0, 0);
+    dx12->commandList_->DrawIndexedInstanced(static_cast<uint32_t>(model_->indices_.size()), 1, 0, 0, 0);
 
 }
 
-void MCB::Object3d::AnimationUpdate(ICamera* camera, bool isBillBord)
+void MCB::Object3d::AnimationUpdate(bool isBillBord)
 {
     
-    if (animationModel == nullptr)return;
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.SetMatRot(rotasion.x, rotasion.y, rotasion.z, false);
-    matWorld.SetMatTrans(position.x, position.y, position.z);
-    if (isBillBord)
-    {
-        if (parent == nullptr)
-        {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld.UpdataMatrixWorld();
-    }
+    if (animationModel_ == nullptr)return;
+    UpdateMatrix(isBillBord);
+    constMapTranceform_->world = matWorld_.matWorld_;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
+    constMapTranceform_->color = color_;
+    constMapTranceform_->shaderNum = shaderNum_;
+    if (collider_)collider_->Update();
+    animeTime_ += animationSpeed_;
 
-    if (parent != nullptr)
-    {
-        matWorld.matWorld *= parent->matWorld.matWorld;
-    }
-
-    constMapTranceform->world = matWorld.matWorld;
-    constMapTranceform->cameraMat = camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform->viewproj = camera->GetProjection()->mat;
-    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
-    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
-    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
-    constMapTranceform->color = color;
-    constMapTranceform->shaderNum = shaderNum;
-    if (collider)collider->Update();
-    animeTime += animationSpeed;
-
-    if (animeTime >= animationModel->animations[0]->duration)
-    {
-        animeTime = 0;
-    }
+  
     
-    animationModel->boneAnimTransform(animeTime);
-    for (int i = 0; i < animationModel->bones.size(); i++)
+    animationModel_->boneAnimTransform(animeTime_,currentAnimation_);
+    for (size_t i = 0; i < animationModel_->bones_.size(); i++)
     {
-        constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
+        constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
     }
 }
 
-void MCB::Object3d::AnimationUpdate(ICamera* camera, Quaternion q, bool isBillBord)
+void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
 {
-    if (animationModel == nullptr)return;
-    MCBMatrix matRot;
-    matRot.MCBMatrixIdentity();
-    matWorld.SetMatScale(scale.x, scale.y, scale.z);
-    matWorld.matRot = matRot.MatrixConvertXMMatrix(q.GetQuaternionRotaMat(q));
-    matWorld.SetMatTrans(position.x, position.y, position.z);
-    if (isBillBord)
+    if (animationModel_ == nullptr)return;
+    UpdateMatrix(q,isBillBord);
+
+    constMapTranceform_->world = matWorld_.matWorld_;
+    constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
+    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
+    constMapTranceform_->shaderNum = shaderNum_;
+    constMapTranceform_->color = color_;
+    if (collider_)collider_->Update();
+    animeTime_ += animationSpeed_;
+
+    if (animeTime_ >= animationModel_->animations_[0]->duration)
     {
-        if (parent == nullptr)
-        {
-            matWorld.UpdataBillBordMatrixWorld(*camera->GetView());
-        }
-        else
-        {
-            matWorld.UpdataMatrixWorld();
-        }
-    }
-    else
-    {
-        matWorld.UpdataMatrixWorld();
+        animeTime_ = 0;
     }
 
-    if (parent != nullptr)
+    animationModel_->boneAnimTransform(animeTime_, currentAnimation_);
+    for (size_t i = 0; i < animationModel_->bones_.size(); i++)
     {
-        matWorld.matWorld *= parent->matWorld.matWorld;
-    }
-
-    constMapTranceform->world = matWorld.matWorld;
-    constMapTranceform->cameraMat = camera->GetView()->mat /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform->viewproj = camera->GetProjection()->mat;
-    constMapTranceform->cameraPos.x = camera->GetView()->eye.x;
-    constMapTranceform->cameraPos.y = camera->GetView()->eye.y;
-    constMapTranceform->cameraPos.z = camera->GetView()->eye.z;
-    constMapTranceform->shaderNum = shaderNum;
-    constMapTranceform->color = color;
-    if (collider)collider->Update();
-    animeTime += animationSpeed;
-
-    if (animeTime >= animationModel->animations[0]->duration)
-    {
-        animeTime = 0;
-    }
-
-    animationModel->boneAnimTransform(animeTime);
-    for (int i = 0; i < animationModel->bones.size(); i++)
-    {
-        constMapSkin->boneMats[i] = animationModel->bones[i].finalMatrix;
+        constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
     }
 }
 
 void MCB::Object3d::AnimationDraw()
 {
+    if (animationModel_ == nullptr || isInvisible)return;
     //定数バッファビュー(CBV)の設定コマンド
-    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
-    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
-    animationModel->Draw();
+    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
+    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
+    animationModel_->Draw();
 }
 
-void MCB::Object3d::AnimationDraw(unsigned short int incremant)
+void MCB::Object3d::AnimationDraw(uint16_t incremant)
 {
-    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(0, constBuffTranceform->GetGPUVirtualAddress());
-    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(4, constBuffSkin->GetGPUVirtualAddress());
-    animationModel->Draw();
+    if (animationModel_ == nullptr || isInvisible)return;
+    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
+    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
+    animationModel_->Draw();
 }
 
-void MCB::Object3d::SetCollider(BaseCollider* collider)
+void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
 {
     collider->SetObject(this);
     collider->Update();
-    this->collider = collider;
-    CollisionManager::GetInstance()->AddCollider(this->collider);
+    collider_ = CollisionManager::GetInstance()->AddCollider(move(collider));
 }
 
 void MCB::Object3d::SetLights(LightGroup* lights)
 {
-    Object3d::lights = lights;
+    Object3d::slights_ = lights;
 }

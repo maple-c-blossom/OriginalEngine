@@ -7,10 +7,10 @@ namespace MCB
 	class RayCastHit
 	{
 	public:
-		Object3d* objctPtr = nullptr;
-		BaseCollider* collPtr = nullptr;
-		Vector3D inter;
-		float dist;
+		Object3d* objctPtr_ = nullptr;
+		BaseCollider* collPtr_ = nullptr;
+		Vector3D inter_;
+		float dist_;
 	};
 
 }

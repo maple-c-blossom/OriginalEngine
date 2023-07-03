@@ -2,64 +2,64 @@
 
 MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 {
-	for (int i = 0; i < objPipeline.size(); i++) objPipeline[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
-	for (int i = 0; i < spritePipeline.size(); i++) spritePipeline[i].CreateSpritePipeline(*depth, *rootpamrams, i);
-	for (int i = 0; i < particlePipeline.size(); i++) particlePipeline[i].CreateParticlePipeline(*depth, *rootpamrams, i);
-	for (int i = 0; i < fbxPipeline.size(); i++) fbxPipeline[i].CreateFbxPipeline(*depth, *rootpamrams, i);
-	for (int i = 0; i < fbxPipeline.size(); i++) postEffectPipeline[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < objPipeline_.size(); i++) objPipeline_[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < spritePipeline_.size(); i++) spritePipeline_[i].CreateSpritePipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < particlePipeline_.size(); i++) particlePipeline_[i].CreateParticlePipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < animeObjPipeline_.size(); i++) animeObjPipeline_[i].CreateFbxPipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < postEffectPipeline_.size(); i++) postEffectPipeline_[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
 }
 
-void MCB::PipeLineManager::SetObjPipeLine(int blend)
+void MCB::PipeLineManager::SetObjPipeLine(int32_t blend)
 {
-	if (blend >= objPipeline.size())return;
-	objPipeline[blend].CommonBeginDraw();
+	if (blend >= objPipeline_.size())return;
+	objPipeline_[blend].CommonBeginDraw();
 }
 
-void MCB::PipeLineManager::SetFbxPipeLine(int blend)
+void MCB::PipeLineManager::SetFbxPipeLine(int32_t blend)
 {
-	if (blend >= fbxPipeline.size())return;
-	fbxPipeline[blend].CommonBeginDraw(TRIANGLELIST);
+	if (blend >= animeObjPipeline_.size())return;
+	animeObjPipeline_[blend].CommonBeginDraw(TRIANGLELIST);
 }
 
-void MCB::PipeLineManager::SetSpritePipeLine(int blend)
+void MCB::PipeLineManager::SetSpritePipeLine(int32_t blend)
 {
-	if (blend >= spritePipeline.size())return;
-	spritePipeline[blend].CommonBeginDraw();
+	if (blend >= spritePipeline_.size())return;
+	spritePipeline_[blend].CommonBeginDraw();
 }
 
-void MCB::PipeLineManager::SetParticlePipeLine(int blend)
+void MCB::PipeLineManager::SetParticlePipeLine(int32_t blend)
 {
-	if (blend >= particlePipeline.size())return;
-	particlePipeline[blend].CommonBeginDraw(POINT);
+	if (blend >= particlePipeline_.size())return;
+	particlePipeline_[blend].CommonBeginDraw(POINT);
 }
 
-void MCB::PipeLineManager::SetPostEffectPipeLine(int blend)
+void MCB::PipeLineManager::SetPostEffectPipeLine(int32_t blend)
 {
-	if (blend >= spritePipeline.size())return;
-	postEffectPipeline[blend].CommonBeginDraw();
+	if (blend >= spritePipeline_.size())return;
+	postEffectPipeline_[blend].CommonBeginDraw();
 }
 
-MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(const int& pipelineSelect,const int& blend)
+MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline( int32_t pipelineSelect, int32_t blend)
 {
 	switch (pipelineSelect)
 	{
 	case 1:
-		return &objPipeline[blend];
+		return &objPipeline_[blend];
 		break;
 	case 2:
-		return &spritePipeline[blend];
+		return &spritePipeline_[blend];
 		break;
 	case 3:
-		return &particlePipeline[blend];
+		return &particlePipeline_[blend];
 		break;
 	case 4:
-		return &fbxPipeline[blend];
+		return &animeObjPipeline_[blend];
 		break;
 	case 5:
-		return &postEffectPipeline[blend];
+		return &postEffectPipeline_[blend];
 		break;
 	default:
-		return &objPipeline[blend];
+		return &objPipeline_[blend];
 		break;
 	}
 }

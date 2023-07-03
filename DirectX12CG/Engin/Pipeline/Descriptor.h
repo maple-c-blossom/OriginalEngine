@@ -19,22 +19,22 @@ namespace MCB
             //定数バッファ用のデスクリプタヒープ
 
             //設定構造体
-            D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc{};
+            D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 
             //デスクリプタヒープの生成  
-            Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_ = nullptr;
             
-            D3D12_CPU_DESCRIPTOR_HANDLE srvHandle; 
+            D3D12_CPU_DESCRIPTOR_HANDLE srvHandle_; 
 
             //シェーダーリソースビュー設定
-            D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+            D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};
 
             //デスクリプタレンジの設定
-            std::array<D3D12_DESCRIPTOR_RANGE, 2> descriptorRange = {};
+            std::array<D3D12_DESCRIPTOR_RANGE, 2> descriptorRange_ = {};
 
-            static unsigned short int AllincrementNum;
+            static uint16_t sAllincrementNum_;
 
-            const size_t MaxSRVCount = 0xfff;
+            const size_t MAX_SRV_COUNT_ = 0xfff;
 
 
             static ShaderResource* GetInstance();
@@ -44,21 +44,22 @@ namespace MCB
 
             void Init();
 
-            void SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAGS flags);
+            void SetHeapDesc(const D3D12_DESCRIPTOR_HEAP_FLAGS& flags);
 
             HRESULT SetDescriptorHeap();
 
             void SetSrvHeap();
 
-            void SetSrvHeap(unsigned short int incrementNum);
+            void SetSrvHeap( uint16_t incrementNum);
 
             void InitAllincrementNum();
 
-            void SetSrvDesc(TextureBuffer &texBuffer, D3D12_SRV_DIMENSION srvDimension);
+            void SetSrvDesc(TextureBuffer &texBuffer, const D3D12_SRV_DIMENSION& srvDimension);
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange(int NumDescriptors, D3D12_DESCRIPTOR_RANGE_TYPE type,int BaseShaderRegister, unsigned int index = 0);
+            void SetDescriptorRange ( int32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,
+                int32_t BaseShaderRegister,  size_t index = 0);
 	};
 }
 

@@ -375,13 +375,25 @@
     <ClCompile Include="Engin\Pipeline\Depth.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Query.cpp">
+    <ClCompile Include="Engin\Collide\Query.cpp">
       <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
     <ClCompile Include="Engin\Util\App.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
     <ClCompile Include="App\Player.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Util\LevelLoader.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp">
+      <Filter>ソース ファイル\Engin\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Model\ModelManager.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Goal.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -625,17 +637,29 @@
     <ClInclude Include="Engin\Pipeline\Depth.h">
       <Filter>ヘッダー ファイル\Engin\Pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="Query.h">
+    <ClInclude Include="Engin\Collide\Query.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
-    </ClInclude>
-    <ClInclude Include="App\Player.h">
-      <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Util\App.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
     <ClInclude Include="Engin\Util\resource.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Player.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Util\LevelLoader.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h">
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\ModelManager.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Goal.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

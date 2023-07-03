@@ -6,12 +6,12 @@ namespace MCB
     class BoxCollider :public BaseCollider,public Box
     {
     public:
-        BoxCollider(Vector3D offset = { 0,0,0 }, Float3 size = {1.f,1.f,1.f}) { this->offset = offset, this->size = size; primitive = PrimitiveType::BOX; };
+        BoxCollider(const Vector3D& offset = { 0,0,0 }, Float3 size = {1.f,1.f,1.f}) {offset_ = offset, size_ = size; primitive_ = PrimitiveType::BOX; };
         void Update() override;
-        inline void SetSize(Float3 size) { this->size = size; }
+        inline void SetSize(const Float3& size) { size_ = size; }
     private:
-        Vector3D offset;
-        Float3 size;
+        Vector3D offset_;
+        Float3 size_;
 
     };
 }

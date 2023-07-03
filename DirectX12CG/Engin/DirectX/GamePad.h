@@ -33,25 +33,25 @@ namespace MCB
 		static void AllStopVibration();
 		static GamePad* GetInitInstance();
 
-		Float3 LStick{ 0,0,0 };
-		Float3 RStick{ 0,0,0 };
+		Float3 LStick_{ 0,0,0 };
+		Float3 RStick_{ 0,0,0 };
 
-		Float2 RTrriger = { 0,0 };
-		Float2 LTrriger = { 0,0 };
-		XINPUT_STATE state[4] = {};
-		XINPUT_STATE oldstate[4] = {};
+		Float2 RTrriger_ = { 0,0 };
+		Float2 LTrriger_ = { 0,0 };
+		XINPUT_STATE state_[4] = {};
+		XINPUT_STATE oldstate_[4] = {};
 		void GetState();
-		bool IsButtonDown(int Button, short int Userindex = 0);
-		bool IsButtonNDown(int Button, short int Userindex = 0);
-		bool IsButtonPress(int Button, short int Userindex = 0);
-		bool IsButtonTrigger(int Button, short int Userindex = 0);
-		bool IsButtonRelease(int Button, short int Userindex = 0);
-		Float3 IsInputLStick(short int Userindex = 0);
-		Float3 IsInputRStick(short int Userindex = 0);
-		Float2 IsInputLTrriger(short int Userindex = 0);
-		Float2 IsInputRTrriger(short int Userindex = 0);
-		void Vibration(int LeftMotorSpeed, int RightMotorSpeed, short int Userindex = 0);
-		void StopVibration(short int Userindex = 0);
+		bool IsButtonDown( int32_t Button,  int16_t Userindex = 0);
+		bool IsButtonNDown( int32_t Button, int16_t Userindex = 0);
+		bool IsButtonPress( int32_t Button, int16_t Userindex = 0);
+		bool IsButtonTrigger( int32_t Button, int16_t Userindex = 0);
+		bool IsButtonRelease( int32_t Button, int16_t Userindex = 0);
+		Float3 IsInputLStick( int16_t Userindex = 0);
+		Float3 IsInputRStick( int16_t Userindex = 0);
+		Float2 IsInputLTrriger( int16_t Userindex = 0);
+		Float2 IsInputRTrriger( int16_t Userindex = 0);
+		void Vibration( int32_t LeftMotorSpeed,  int32_t RightMotorSpeed,  int16_t Userindex = 0);
+		void StopVibration( int16_t Userindex = 0);
 	};
 
 }

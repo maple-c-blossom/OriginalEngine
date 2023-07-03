@@ -24,7 +24,7 @@ void MCB::FPS::DeleteInstance()
 
 void MCB::FPS::Initialize()
 {
-    reference = steady_clock::now();
+    reference_ = steady_clock::now();
 }
 
 void MCB::FPS::UpDate()
@@ -32,11 +32,11 @@ void MCB::FPS::UpDate()
     const microseconds minTime(uint16_t(1000000.0f / 60.f));
     const microseconds minCheckTime(uint16_t(1000000.0f / 65.f));
     steady_clock::time_point now = steady_clock::now();
-    microseconds elapsed = duration_cast<microseconds>(now - reference);
+    microseconds elapsed = duration_cast<microseconds>(now - reference_);
     if (elapsed < minCheckTime)
     {
-        while (steady_clock::now() - reference < minTime) this_thread::sleep_for(microseconds(1));
+        while (steady_clock::now() - reference_ < minTime) this_thread::sleep_for(microseconds(1));
 
     }
-    reference = steady_clock::now();
+    reference_ = steady_clock::now();
 }

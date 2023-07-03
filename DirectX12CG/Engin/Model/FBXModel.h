@@ -16,15 +16,15 @@
 
 namespace MCB
 {
-        static const unsigned short int NUM_BONES_PER_VERTEX = 4;
-        static const unsigned short int MAX_BONE = 128;
+        static const uint16_t NUM_BONES_PER_VERTEX = 4;
+        static const uint16_t MAX_BONE = 128;
         //頂点データ構造体-------------------------------------
         typedef struct AnimationVertex
         {
             Float3 pos;//xyz座標
             Float3 normal;//法線ベクトル
             Float2 uv;//uv座標
-            unsigned int ids[NUM_BONES_PER_VERTEX] = {};
+            int32_t ids[NUM_BONES_PER_VERTEX] = {};
             float weights[NUM_BONES_PER_VERTEX] = {};
         }AnimationVertex;
         //--------------------------------------
@@ -35,7 +35,7 @@ namespace MCB
         }ConstBuffSkin;
         typedef struct SetWeight
         {
-            unsigned int id;
+            int32_t id;
             float weight;
         }SetWeight;
 
@@ -55,26 +55,26 @@ namespace MCB
             //AnimationModel();
             ~AnimationMesh();
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> indexBuff_ = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin_ = nullptr;
 
-            std::vector<TextureCell*> textures;
+            std::vector<TextureCell*> textures_;
             //MCB::Texture textures;
-            std::vector<AnimationVertex> vertices;
-            std::vector<unsigned short> indices;
+            std::vector<AnimationVertex> vertices_;
+            std::vector<uint16_t> indices_;
             //std::vector<ConstBuffSkin> vertexBones;
             
-            std::unordered_map<unsigned short int, std::vector<unsigned short int>>smoothData;
+            std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData_;
 
-            unsigned int sizeVB = static_cast<unsigned int>(sizeof(AnimationVertex) * vertices.size());
-            unsigned int sizeIB = static_cast<unsigned int>(sizeof(unsigned short) * indices.size());
+            size_t sizeVB_ = static_cast<size_t>(sizeof(AnimationVertex) * vertices_.size());
+            size_t sizeIB_ = static_cast<size_t>(sizeof(uint16_t) * indices_.size());
 
-            D3D12_INDEX_BUFFER_VIEW ibView{};
+            D3D12_INDEX_BUFFER_VIEW ibView_{};
 
-            D3D12_VERTEX_BUFFER_VIEW vbView{};
+            D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
  
 
@@ -82,15 +82,17 @@ namespace MCB
 
             //D3D12_RESOURCE_DESC resdesc{};  // リソース設定
 
-            std::vector<ObjectMaterial> material;
+            std::vector<ObjectMaterial> material_;
 
-            void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+            void CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
-            void SetIbView(DXGI_FORMAT format);
+            void SetIbView(const DXGI_FORMAT& format);
+
+
 
             void SetVbView();
 
-            void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state);
+            void CreateIndexBuffer(const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag, const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state);
 
             HRESULT IndexMaping();
 
@@ -102,7 +104,7 @@ namespace MCB
 
             void Init();
 
-            inline size_t GetVertexCount() { return vertices.size(); }
+            inline size_t GetVertexCount() { return vertices_.size(); }
 
         };
 	};

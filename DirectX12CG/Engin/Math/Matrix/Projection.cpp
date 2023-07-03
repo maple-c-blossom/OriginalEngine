@@ -3,14 +3,14 @@
 using namespace DirectX;
 using namespace MCB;
 
-void Projection::CreateMatrixProjection(float fovAngle, float aspectRatio, float nearZ, float farZ)
+void Projection::CreateMatrixProjection( float fovAngle,  float aspectRatio,  float nearZ,  float farZ)
 {
-    this->fovAngle = fovAngle;
-    this->aspectRatio = aspectRatio;
-    this->nearZ = nearZ;
-    this->farZ = farZ;
+    fovAngle_ = fovAngle;
+    aspectRatio_ = aspectRatio;
+    nearZ_ = nearZ;
+    farZ_ = farZ;
 
-    mat = XMMatrixPerspectiveFovLH(
+    mat_ = XMMatrixPerspectiveFovLH(
         fovAngle,
         aspectRatio,
         nearZ, farZ
@@ -19,9 +19,9 @@ void Projection::CreateMatrixProjection(float fovAngle, float aspectRatio, float
 
 void Projection::UpdataMatrixProjection()
 {
-    mat = XMMatrixPerspectiveFovLH(
-        fovAngle,
-        aspectRatio,
-        nearZ, farZ
+    mat_ = XMMatrixPerspectiveFovLH(
+        fovAngle_,
+        aspectRatio_,
+        nearZ_, farZ_
     );
 }

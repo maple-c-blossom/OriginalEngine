@@ -33,7 +33,7 @@ void Dx12::SetAdapter()
     IDXGIAdapter4* tmpAdapter = nullptr;
     //---------------------
 
-    for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND; i++)
+    for (uint32_t i = 0; dxgiFactory_->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&tmpAdapter)) != DXGI_ERROR_NOT_FOUND; i++)
     {
         adapters.push_back(tmpAdapter);
     }
@@ -64,13 +64,13 @@ void Dx12::SetDevice(IDXGIAdapter4* tmpAdapter)
     //デバイス生成ここから----------------------------------------------------------------------------------------------------------
 #pragma region デバイス生成
 
-    for (int i = 0; i < _countof(levels); i++)
+    for (int32_t i = 0; i < _countof(levels_); i++)
     {
         //採用したアダプターでデバイスを生成
-        result = D3D12CreateDevice(tmpAdapter, levels[i], IID_PPV_ARGS(&device));
-        if (result == S_OK)
+        result_ = D3D12CreateDevice(tmpAdapter, levels_[i], IID_PPV_ARGS(&device_));
+        if (result_ == S_OK)
         {
-            featureLevel = levels[i];
+            featureLevel_ = levels_[i];
             break;
         }
     }
@@ -86,18 +86,18 @@ void Dx12::SetCommandListAndQueue()
 #pragma region コマンドリスト
 
     //コマンドアロケータを生成
-    result = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
+    assert(SUCCEEDED(result_));
 
     //コマンドリストを生成
-    result = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
+    assert(SUCCEEDED(result_));
 
 
     //コマンドキューの生成
 
-    result = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
-    assert(SUCCEEDED(result));
+    result_ = device_->CreateCommandQueue(&commandQueueDesc_, IID_PPV_ARGS(&commandQueue_));
+    assert(SUCCEEDED(result_));
 
 #pragma endregion コマンドリスト
     //コマンドリストここまで------------------------------------------------------------------------------------------
@@ -142,8 +142,8 @@ void Dx12::SetDXFactory()
 #pragma region DXGIファクトリー生成
 
 //DXGIファクトリーの生成
-    result = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
-    assert(SUCCEEDED(result));
+    result_ = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
+    assert(SUCCEEDED(result_));
 
 #pragma endregion DXGIファクトリー生成
     //-------------------
@@ -155,21 +155,21 @@ void Dx12::SetSwapChain()
     //スワップチェーンの生成ここから------------------------------------------------------------------
 #pragma region スワップチェーンの生成
 
-    swapChainDesc.Width = dxWindow->window_width;
-    swapChainDesc.Height = dxWindow->window_height;
-    swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-    swapChainDesc.SampleDesc.Count = 1;
-    swapChainDesc.BufferUsage = DXGI_USAGE_BACK_BUFFER;
-    swapChainDesc.BufferCount = 2;
-    swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+    swapChainDesc_.Width = dxWindow->sWINDOW_WIDTH_;
+    swapChainDesc_.Height = dxWindow->sWINDOW_HEIGHT_;
+    swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    swapChainDesc_.SampleDesc.Count = 1;
+    swapChainDesc_.BufferUsage = DXGI_USAGE_BACK_BUFFER;
+    swapChainDesc_.BufferCount = 2;
+    swapChainDesc_.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    swapChainDesc_.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
-    result = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), dxWindow->hwnd, &swapChainDesc, nullptr, nullptr, &swapchain1);
+    result_ = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_.Get(), dxWindow->hwnd_, &swapChainDesc_, nullptr, nullptr, &swapchain1_);
 
-    assert(SUCCEEDED(result));
+    assert(SUCCEEDED(result_));
 
-    result = swapchain1.As(&swapchain);
-    assert(SUCCEEDED(result));
+    result_ = swapchain1_.As(&swapchain_);
+    assert(SUCCEEDED(result_));
 
 
 
@@ -184,9 +184,9 @@ void Dx12::SetDesctiptor()
 
 //各種設定
 
-    rtvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-    rtvHeapDesc.NumDescriptors = swapChainDesc.BufferCount;
-    device->CreateDescriptorHeap(&rtvHeapDesc, IID_PPV_ARGS(&rtvHeaps));
+    rtvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+    rtvHeapDesc_.NumDescriptors = swapChainDesc_.BufferCount;
+    device_->CreateDescriptorHeap(&rtvHeapDesc_, IID_PPV_ARGS(&rtvHeaps_));
 
 #pragma endregion デスクリプタヒープ生成
     //デスクリプタヒープを生成ここまで------------
@@ -200,22 +200,22 @@ void Dx12::SetBackBuffer()
 
     
 
-    backBuffers.resize(swapChainDesc.BufferCount);
+    backBuffers_.resize(swapChainDesc_.BufferCount);
 
-    for (size_t i = 0; i < backBuffers.size(); i++)
+    for (size_t i = 0; i < backBuffers_.size(); i++)
     {
         //スワップチェーンからバッファを取得
-        swapchain->GetBuffer((UINT)i, IID_PPV_ARGS(&backBuffers[i]));
+        swapchain_->GetBuffer((uint32_t)i, IID_PPV_ARGS(&backBuffers_[i]));
         //でスクリプタヒープハンドルを取得
-        rtvHandle = rtvHeaps->GetCPUDescriptorHandleForHeapStart();
+        rtvHandle_ = rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
         //裏か表かでアドレスがずれる
-        rtvHandle.ptr += i * device->GetDescriptorHandleIncrementSize(rtvHeapDesc.Type);
+        rtvHandle_.ptr += i * device_->GetDescriptorHandleIncrementSize(rtvHeapDesc_.Type);
 
         //シェーダーの計算結果をSRGBに変換して書き込む
-        rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-        rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+        rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+        rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
         //レンダーターゲットビューの生成
-        device->CreateRenderTargetView(backBuffers[i].Get(), &rtvDesc, rtvHandle);
+        device_->CreateRenderTargetView(backBuffers_[i].Get(), &rtvDesc_, rtvHandle_);
 
     }
 
@@ -227,7 +227,7 @@ void Dx12::SetFence()
 {
     //フェンスの生成---------
 #pragma region フェンスの生成
-    result = device->CreateFence(fenceVal, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+    result_ = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 #pragma endregion フェンスの生成
     //------------
 }

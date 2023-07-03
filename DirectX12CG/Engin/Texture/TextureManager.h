@@ -18,28 +18,28 @@ namespace MCB
 		TextureManager(const TextureManager& textureManager) = delete;
 		TextureManager& operator=(const TextureManager& textureManager) = delete;
 		~TextureManager() {};
-		 std::list<std::unique_ptr<TextureCell>> textures;
-		//std::vector<int> texincrement;
+		 std::list<std::unique_ptr<TextureCell>> textures_;
+		//std::vector<int32_t> texincrement;
 	public:
-		//int LoadTexture(const wchar_t* FileName, unsigned short int incrementNum);
+		//int32_t LoadTexture(const wchar_t* FileName, uint16_t incrementNum);
 		static void DeleteInstace();
 		static TextureManager* GetInstance();
-		//int LoadTexture(const std::string& directoryPath, const std::string& filename, unsigned short int incrementNum);
+		//int32_t LoadTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum);
 
 		TextureCell* LoadTexture(const wchar_t* FileName);
 
 		TextureCell* LoadTexture(const std::string& directoryPath, const std::string& filename);
 
-		TextureCell* CreateNoTextureFileIsTexture(bool postEffect = false);
+		TextureCell* CreateNoTextureFileIsTexture( bool postEffect = false);
 
-		static TextureManager* instance;
+		static TextureManager* sinstance_;
 
 		void Clear();
 		
 		void Erase();
 
-		//void SetDelete(int index);
+		//void SetDelete(int32_t index);
 
-		//Texture* GetTexture(unsigned short int incrementNum);
+		//Texture* GetTexture(uint16_t incrementNum);
 	};
 }

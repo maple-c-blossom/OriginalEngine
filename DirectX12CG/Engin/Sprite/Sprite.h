@@ -30,25 +30,25 @@ namespace MCB
 		}SpriteVertex;
 		Sprite();
 
-		Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff = nullptr;
-		D3D12_VERTEX_BUFFER_VIEW vbView{};
-		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff = nullptr;
-		D3D12_HEAP_PROPERTIES HeapProp{};
-		D3D12_HEAP_PROPERTIES constHeapProp{};
-		D3D12_RESOURCE_DESC Resdesc{};
-		D3D12_RESOURCE_DESC constResdesc{};
+		Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
+		D3D12_VERTEX_BUFFER_VIEW vbView_{};
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuff_ = nullptr;
+		D3D12_HEAP_PROPERTIES HeapProp_{};
+		D3D12_HEAP_PROPERTIES constHeapProp_{};
+		D3D12_RESOURCE_DESC Resdesc_{};
+		D3D12_RESOURCE_DESC constResdesc_{};
 
-		float rotation = 0.0f;
-		Float3 position = { 0,0,0 };
-		DirectX::XMMATRIX matWorld;
-		Float4 color = { 1.0f,1.0f,1.0f,1.0f };
-		static DirectX::XMMATRIX matProje;
-		Float2 size = { 100,100 };
-		Float2 anchorPoint = { 0.5f,0.5f };
-		Float2 texLeftTop = { 0,0 };
-		Float2 cuttingSize = { 0,0 };
-		bool isFlipX = false;
-		bool isFlipY = false;
+		float rotation_ = 0.0f;
+		Float3 position_ = { 0,0,0 };
+		DirectX::XMMATRIX matWorld_;
+		Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+		static DirectX::XMMATRIX smatProje_;
+		Float2 size_ = { 100,100 };
+		Float2 anchorPoint_ = { 0.5f,0.5f };
+		Float2 texLeftTop_ = { 0,0 };
+		Float2 cuttingSize_ = { 0,0 };
+		bool isFlipX_ = false;
+		bool isFlipY_ = false;
 
 
 		void SpriteTransferVertexBuffer( Texture* tex = nullptr);
@@ -57,14 +57,14 @@ namespace MCB
 		void CreateSprite();
 		//void SpriteCommonBeginDraw(const PipelineRootSignature& pipeline);
 
-		void SpriteDraw(Texture& tex, float positionX = 0,float positionY = 0,
-						float size_x = 0, float size_y = 0);
+		void SpriteDraw(Texture& tex,  float positionX = 0,  float positionY = 0,
+			 float size_x = 0,  float size_y = 0);
 
-		void SpriteFlipDraw( Texture& tex, float positionX = 0, float positionY = 0, 
-							bool isflipX = false, bool isflipY = false);
+		void SpriteFlipDraw( Texture& tex,  float positionX = 0,  float positionY = 0,
+			 bool isflipX = false,  bool isflipY = false);
 
-		void SpriteCuttingDraw(Texture& tex, float positionX = 0, float positionY = 0,
-			Float2 cuttingsize = {0,0},Float2 CuttingLeftTop = {0,0});
+		void SpriteCuttingDraw(Texture& tex,  float positionX = 0,  float positionY = 0,
+			const Float2& cuttingsize = {0,0}, const Float2& CuttingLeftTop = {0,0});
 
 
 

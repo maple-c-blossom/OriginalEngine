@@ -12,24 +12,26 @@ MCB::CollisionManager* MCB::CollisionManager::GetInstance()
 void MCB::CollisionManager::CheckAllCollision()
 {
 
-    std::forward_list<BaseCollider*>::iterator itrA;
-    std::forward_list<BaseCollider*>::iterator itrB;
+    //std::forward_list<BaseCollider*>::iterator itrA;
+    //std::forward_list<BaseCollider*>::iterator itrB;
 
-    itrA = colliders.begin();
-    for (; itrA != colliders.end(); ++itrA)
+    //*itrA = colliders_.begin()->get();
+    //BaseCollider* itr_hit = nullptr;
+    for (auto& itr : colliders_)
     {
-        itrB = itrA;
-        ++itrB;
-        for (; itrB != colliders.end(); ++itrB)
+
+        for (auto& itr2 : colliders_)
         {
-            BaseCollider* itrCollA = *itrA;
-            BaseCollider* itrCollB = *itrB;
+            BaseCollider* itrCollA = itr.get();
+            BaseCollider* itrCollB = itr2.get();
+            if (itrCollA == itrCollB)continue;
+            if (itrCollA->attribute_ == ATTRIBUTE_LANDSHAPE || itrCollB->attribute_ == ATTRIBUTE_LANDSHAPE) continue;
             if (itrCollA->GetPrimitive() == PrimitiveType::RAY || itrCollB->GetPrimitive() == PrimitiveType::RAY)
             {
                 if (itrCollA->GetPrimitive() == PrimitiveType::RAY)
                 {
                     Ray* rayA = dynamic_cast<Ray*>(itrCollA);
-                    if (rayA->rayCasted)
+                    if (rayA->rayCasted_)
                     {
                         continue;
                     }
@@ -37,7 +39,7 @@ void MCB::CollisionManager::CheckAllCollision()
                 else
                 {
                     Ray* rayA = dynamic_cast<Ray*>(itrCollB);
-                    if (rayA->rayCasted)
+                    if (rayA->rayCasted_)
                     {
                         continue;
                     }
@@ -54,8 +56,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::RAY && itrCollB->GetPrimitive() == PrimitiveType::SPHERE)
@@ -69,8 +71,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter,distance));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::SPHERE && itrCollB->GetPrimitive() == PrimitiveType::RAY)
@@ -84,8 +86,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter,distance));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::PLANE && itrCollB->GetPrimitive() == PrimitiveType::SPHERE)
@@ -98,8 +100,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::SPHERE && itrCollB->GetPrimitive() == PrimitiveType::PLANE)
@@ -112,8 +114,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::PLANE && itrCollB->GetPrimitive() == PrimitiveType::RAY)
@@ -127,8 +129,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter,distance));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::RAY && itrCollB->GetPrimitive() == PrimitiveType::PLANE)
@@ -142,8 +144,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter,distance));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::TRIANGLE && itrCollB->GetPrimitive() == PrimitiveType::RAY)
@@ -157,8 +159,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter, distance));
                 }
                 else {
-                   if(!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                   if(!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                   if(!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                   if(!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::RAY && itrCollB->GetPrimitive() == PrimitiveType::TRIANGLE)
@@ -172,8 +174,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter, distance));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::TRIANGLE && itrCollB->GetPrimitive() == PrimitiveType::SPHERE)
@@ -186,8 +188,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::SPHERE && itrCollB->GetPrimitive() == PrimitiveType::TRIANGLE)
@@ -200,8 +202,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
                 else {
-                    if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
             else if (itrCollA->GetPrimitive() == PrimitiveType::SPHERE && itrCollB->GetPrimitive() == PrimitiveType::MESH)
@@ -218,8 +220,8 @@ void MCB::CollisionManager::CheckAllCollision()
                     }
                 //}
                 else {
-                    if (!itrCollA->GetObject3D()->hited)itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                    if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                    if (!itrCollA->GetObject3D()->hited_)itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                    if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
                 }
             }
 
@@ -237,8 +239,8 @@ void MCB::CollisionManager::CheckAllCollision()
                 }
             //}
             else {
-                if (!itrCollA->GetObject3D()->hited) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
-                if (!itrCollB->GetObject3D()->hited) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
+                if (!itrCollA->GetObject3D()->hited_) itrCollA->OffCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
+                if (!itrCollB->GetObject3D()->hited_) itrCollB->OffCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
             }
             }
 
@@ -251,22 +253,24 @@ bool MCB::CollisionManager::Raycast( Ray& ray, RayCastHit* hitinfo, float maxDis
     return Raycast(ray,0xffff,hitinfo,maxDistance);
 }
 
-bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastHit* hitinfo, float maxDistance)
+bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hitinfo, float maxDistance)
 {
     const Ray& raytemp = ray;
     bool result = false;
-    std::forward_list<BaseCollider*>::iterator itr;
-    std::forward_list<BaseCollider*>::iterator itr_hit;
+    //std::forward_list<BaseCollider*>::iterator itr;
+    //std::forward_list<BaseCollider*>::iterator itr_hit;
     float dist = maxDistance;
     Vector3D inter;
-    itr = colliders.begin();
-
-    for (; itr != colliders.end(); ++itr)
+    //*itr = colliders_.begin()->get();
+    BaseCollider* itr_hit = nullptr;
+    for (auto& itr:colliders_)
     {
-        BaseCollider* col = *itr;
-        if (!(col->attribute & attribute))continue;
+        OutputDebugStringW(L"RayCastForIn\n");
+        BaseCollider* col = itr.get();
+        if (!(col->attribute_ & attribute))continue;
         if (col->GetPrimitive() == PrimitiveType::SPHERE)
         {
+            OutputDebugStringW(L"SPHERE\n");
             Sphere* prim = dynamic_cast<Sphere*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -275,10 +279,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastH
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::PLANE)
         {
+            OutputDebugStringW(L"PLANE\n");
             Plane* prim = dynamic_cast<Plane*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -287,10 +292,11 @@ bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastH
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::TRIANGLE)
         {
+            OutputDebugStringW(L"TRIANGLE\n");
             Triangle* prim = dynamic_cast<Triangle*>(col);
             float disttemp;
             Vector3D intertemp;
@@ -299,30 +305,85 @@ bool MCB::CollisionManager::Raycast(Ray& ray, unsigned short attribute, RayCastH
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
         else if (col->GetPrimitive() == PrimitiveType::MESH)
         {
+            OutputDebugStringW(L"Mesh\n");
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;
             //if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
-            if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))continue;
+            if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))
+            {
+                continue;
+            }
             if (disttemp >= dist)continue;
             result = true;
             dist = disttemp;
             inter = intertemp;
-            itr_hit = itr;
+            itr_hit = itr.get();
         }
 
     }
     if (result && hitinfo)
     {
-        hitinfo->dist = dist;
-        hitinfo->collPtr = *itr_hit;
-        hitinfo->inter = inter;
-        hitinfo->objctPtr = hitinfo->collPtr->GetObject3D();
+        hitinfo->dist_ = dist;
+        hitinfo->collPtr_ = itr_hit;
+        hitinfo->inter_ = inter;
+        hitinfo->objctPtr_ = hitinfo->collPtr_->GetObject3D();
     }
-    ray.rayCasted = true;
+    ray.rayCasted_ = true;
     return result;
+}
+
+void MCB::CollisionManager::QuerySphere(const Sphere& sphere, QueryCallBack* callBack, uint16_t attribute)
+{
+    assert(callBack && "QuerySphere:callBack NullptrExeption");
+
+
+   
+    for ( auto& itr: colliders_)
+    {
+        BaseCollider* col = itr.get();
+        if ((col->attribute_ & attribute))
+        {
+            if (col->GetPrimitive() == PrimitiveType::SPHERE)
+            {
+                Sphere* sphere2 = dynamic_cast<Sphere*>(col);
+                Vector3D tempInter;
+                Vector3D tempReject;
+                if (!Collision::CalcSphere(sphere, *sphere2, &tempInter, &tempReject)) continue;
+                
+                QueryHit info;
+                info.baseColl = col;
+                info.obj = col->object3d_;
+                info.inter = tempInter;
+                info.reject = tempReject;
+
+                if (!callBack->OnQueryHit(info))
+                {
+                    return;
+                }
+            }
+
+            if (col->GetPrimitive() == PrimitiveType::MESH)
+            {
+                MeshCollider* mesh = dynamic_cast<MeshCollider*>(col);
+                Vector3D tempInter;
+                Vector3D tempReject;
+                if (!mesh->ChakeCollisionSphere(sphere,&tempInter, &tempReject)) continue;
+                QueryHit info;
+                info.baseColl = col;
+                info.obj = col->object3d_;
+                info.inter = tempInter;
+                info.reject = tempReject;
+                if (!callBack->OnQueryHit(info))
+                {
+                    return;
+                }
+
+            }
+        }
+    }
 }

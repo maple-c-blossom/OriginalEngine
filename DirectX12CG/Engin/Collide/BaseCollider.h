@@ -11,35 +11,35 @@ namespace MCB
 		friend class CollisionManager;
 		BaseCollider() = default;
 		virtual ~BaseCollider() = default;
-		inline void SetObject(Object3d* object) { this->object3d = object; };
+		inline void SetObject(Object3d* object) { object3d_ = object; };
 		virtual void Update() = 0;
-		inline MCB::PrimitiveType GetPrimitive() { return primitive; }
+		inline MCB::PrimitiveType GetPrimitive() { return primitive_; }
 		inline void OnCollision(const CollisionInfomation& info)
 		{
-			object3d->OnCollision(info);
+			object3d_->OnCollision(info);
 		}
 		inline void OffCollision(const CollisionInfomation& info)
 		{
-			object3d->OffCollision(&info);
+			object3d_->OffCollision(&info);
 		}
 
-		inline void SetAttribute(unsigned short attribute)
+		inline void SetAttribute( uint16_t attribute)
 		{
-			this->attribute = attribute;
+			attribute_ = attribute;
 		}
-		inline void AddAttribute(unsigned short attribute)
+		inline void AddAttribute( uint16_t attribute)
 		{
-			this->attribute |= attribute;
+			attribute_ |= attribute;
 		}
-		inline void RemoveAttribute(unsigned short attribute)
+		inline void RemoveAttribute( uint16_t attribute)
 		{
-			this->attribute &= !attribute;
+			attribute_ &= !attribute;
 		}
-		inline Object3d* GetObject3D() { return object3d; }
+		inline Object3d* GetObject3D() { return object3d_; }
 	protected:
-		unsigned short attribute = attributeLANDSHAPE;
-		Object3d* object3d = nullptr;
-		MCB::PrimitiveType primitive = MCB::PrimitiveType::SPHERE;
+		uint16_t attribute_ = ATTRIBUTE_LANDSHAPE;
+		Object3d* object3d_ = nullptr;
+		MCB::PrimitiveType primitive_ = MCB::PrimitiveType::SPHERE;
 
 	};
 }

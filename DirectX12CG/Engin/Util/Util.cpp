@@ -98,7 +98,7 @@ double MCB::EaseOutBounce(double startPos, double endPos, double time, double ma
 	}
 }
 
-int MCB::Abs(int num)
+int32_t MCB::Abs(int32_t num)
 {
 	if (num < 0)
 	{
@@ -132,10 +132,10 @@ float MCB::ConvertRadius(float angle)
 
 void MCB::InitRand()
 {
-	srand((unsigned int)time(nullptr));
+	srand((static_cast<uint32_t>(time(nullptr))));
 }
 
-int MCB::GetRand(int min, int max)
+int32_t MCB::GetRand(int32_t min, int32_t max)
 {
 	return min + rand() % (max - min);
 }
@@ -148,19 +148,19 @@ float MCB::clamp(float f)
 MCB::SimpleFigure::SimpleFigure()
 {
 
-	triangle.Init();
-	triangle.model = &triangleMaterial;
-	triangleMaterial.vertices = {
-		{PointA,{1,1,1},{0,0}},
-		{PointB,{1,1,1},{0,0}},
-		{PointC,{1,1,1},{0,0}}
+	triangle_.Init();
+	triangle_.model_ = &triangleMaterial_;
+	triangleMaterial_.vertices_ = {
+		{PointA_,{1,1,1},{0,0}},
+		{PointB_,{1,1,1},{0,0}},
+		{PointC_,{1,1,1},{0,0}}
 	};
-	triangleMaterial.SetSizeVB();
-	triangleMaterial.material.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, triangleMaterial.sizeVB, 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-	triangleMaterial.CreateVertexBuffer(triangleMaterial.material.HeapProp, D3D12_HEAP_FLAG_NONE, triangleMaterial.material.Resdesc, D3D12_RESOURCE_STATE_GENERIC_READ);
-	triangleMaterial.VertexMaping();
-	triangleMaterial.SetVbView();
-	triangle.model->texture = triangle.model->Loader->CreateNoTextureFileIsTexture();
+	triangleMaterial_.SetSizeVB();
+	triangleMaterial_.material_.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(triangleMaterial_.sizeVB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+	triangleMaterial_.CreateVertexBuffer(triangleMaterial_.material_.HeapProp_, D3D12_HEAP_FLAG_NONE, triangleMaterial_.material_.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
+	triangleMaterial_.VertexMaping();
+	triangleMaterial_.SetVbView();
+	triangle_.model_->texture_ = triangle_.model_->loader_->CreateNoTextureFileIsTexture();
 }
 
 void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
@@ -169,31 +169,31 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
 
-	triangleMaterial.vertices = {
-		{PointA,{1,1,1},{0,0}},
-		{PointB,{1,1,1},{0,0}},
-		{PointC,{1,1,1},{0,0}}
+	triangleMaterial_.vertices_ = {
+		{PointA_,{1,1,1},{0,0}},
+		{PointB_,{1,1,1},{0,0}},
+		{PointC_,{1,1,1},{0,0}}
 	};
 
-	triangleMaterial.VertexMaping();
+	triangleMaterial_.VertexMaping();
 
 
 
-	triangle.Update(camera);
+	triangle_.Update(camera);
 
 	//定数バッファビュー(CBV)の設定コマンド
-	dx12->commandList->SetGraphicsRootConstantBufferView(2, triangleMaterial.material.constBuffMaterialB1->GetGPUVirtualAddress());
+	dx12->commandList_->SetGraphicsRootConstantBufferView(2, triangleMaterial_.material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
 	//SRVヒープの先頭アドレスを取得
-	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap->GetGPUDescriptorHandleForHeapStart();
-	srvGpuHandle.ptr += triangle.model->texture->texture->incrementNum * dx12->device.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc.Type);
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
+	srvGpuHandle.ptr += triangle_.model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 	//SRVヒープの先頭にあるSRVをパラメータ1番に設定
-	dx12->commandList->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+	dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
 	//頂点データ
-	dx12->commandList->IASetVertexBuffers(0, 1, &triangleMaterial.vbView);
+	dx12->commandList_->IASetVertexBuffers(0, 1, &triangleMaterial_.vbView_);
 	//定数バッファビュー(CBV)の設定コマンド
-	dx12->commandList->SetGraphicsRootConstantBufferView(0, triangle.GetConstBuffTrans()->GetGPUVirtualAddress());
+	dx12->commandList_->SetGraphicsRootConstantBufferView(0, triangle_.GetConstBuffTrans()->GetGPUVirtualAddress());
 	//描画コマンド
-	dx12->commandList->DrawInstanced((UINT)triangleMaterial.vertices.size(), 1, 0, 0);
+	dx12->commandList_->DrawInstanced((uint32_t)triangleMaterial_.vertices_.size(), 1, 0, 0);
 }

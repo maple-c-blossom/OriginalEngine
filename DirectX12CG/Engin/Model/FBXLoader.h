@@ -12,6 +12,7 @@
 #include "FBXModel.h"
 #include "TextureManager.h"
 #include "Quaternion.h"
+#include <unordered_map>
 namespace MCB
 {
 
@@ -61,7 +62,7 @@ namespace MCB
     typedef struct Node
     {
         std::string name;
-        std::vector< std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
+        std::vector<std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
@@ -82,34 +83,37 @@ namespace MCB
         //ID3D12Device* device = nullptr;
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
-        TextureManager* textureManager = TextureManager::GetInstance();
-        std::vector<std::unique_ptr<Node>> nodes;
-        std::vector<std::unique_ptr<Animation>> animations;
-        std::vector<Bone> bones;
+        TextureManager* textureManager_ = TextureManager::GetInstance();
+        std::vector<std::unique_ptr<Node>> nodes_;
+        std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
+        std::vector<Bone> bones_;
+        std::string prevAnimName_ = "NoAnimation";
+        Animation* prevAnim = nullptr;
         ~AnimationModel();
-        string fileName;
-        bool Load(std::string fileName,std::string fileType = "gltf");
+        string fileName_;
+        bool isDelete_ = false;
+        bool Load( std::string fileName,const std::string& fileType = "gltf");
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
-        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName, const aiScene* scene);
+        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
 
-        void boneAnimTransform(float timeInSeconds, unsigned int currentAnimation = 0, bool loop = true);
+        void boneAnimTransform(  float& timeInSeconds,const std::string& currentAnimation = "Null", bool loop = true);
 
-        void readAnimNodeHeirarchy(float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, DirectX::XMMATRIX globalInverseTransform, unsigned int currentAnimation = 0);
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const std::string& currentAnimation = "Null");
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 
-        static void calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedPosition(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static void calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedRotation(Quaternion& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static void calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim);
+        static void calcInterpolatedScaling(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findPosition(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findPosition( float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findRotation(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findRotation( float AnimationTime, const NodeAnim* pNodeAnim);
 
-        static unsigned int findScaling(float AnimationTime, const NodeAnim* pNodeAnim);
+        static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
 
         //bool LoadFile(ImportSetting setting);
         void Draw();

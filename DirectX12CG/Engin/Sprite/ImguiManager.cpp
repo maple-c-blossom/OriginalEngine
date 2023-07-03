@@ -18,11 +18,11 @@ void ImguiManager::Init()
 	
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
-	ImGui_ImplWin32_Init(DxWindow::GetInstance()->hwnd);
-	ImGui_ImplDX12_Init(Dx12::GetInstance()->device.Get(), (int)Dx12::GetInstance()->backBuffers.size(),
-		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,ShaderResource::GetInstance()->srvHeap.Get(),
-		ShaderResource::GetInstance()->srvHeap->GetCPUDescriptorHandleForHeapStart(),
-		ShaderResource::GetInstance()->srvHeap->GetGPUDescriptorHandleForHeapStart());
+	ImGui_ImplWin32_Init(DxWindow::GetInstance()->hwnd_);
+	ImGui_ImplDX12_Init(Dx12::GetInstance()->device_.Get(), static_cast<int32_t>(Dx12::GetInstance()->backBuffers_.size()),
+		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,ShaderResource::GetInstance()->srvHeap_.Get(),
+		ShaderResource::GetInstance()->srvHeap_->GetCPUDescriptorHandleForHeapStart(),
+		ShaderResource::GetInstance()->srvHeap_->GetGPUDescriptorHandleForHeapStart());
 	ImGuiIO& io = GetIO();
 	io.Fonts->AddFontDefault();
 }
@@ -41,8 +41,8 @@ void MCB::ImguiManager::End()
 
 void MCB::ImguiManager::Draw()
 {
-	ID3D12GraphicsCommandList* commandList = Dx12::GetInstance()->commandList.Get();
-	ID3D12DescriptorHeap* ppHeaps[] = { ShaderResource::GetInstance()->srvHeap.Get() };
+	ID3D12GraphicsCommandList* commandList = Dx12::GetInstance()->commandList_.Get();
+	ID3D12DescriptorHeap* ppHeaps[] = { ShaderResource::GetInstance()->srvHeap_.Get() };
 	commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList);
 }

@@ -25,24 +25,24 @@ namespace MCB
 	class PipelineRootSignature
 	{
 	public:
-		Pipeline pipeline;
-		RootSignature rootsignature;
-		Shader shader;
-		TexSample texSample;
+		Pipeline pipeline_;
+		RootSignature rootsignature_;
+		Shader shader_;
+		TexSample texSample_;
 
-		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam,int blendMode = Alpha );
+		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, int32_t blendMode = Alpha );
 
-		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
 
-		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
 
-		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, int blendMode = Alpha);
+		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
 
-		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, int blendMode);
+		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode);
 
-		void SetBrendMode(int blendMode = Alpha);
+		void SetBrendMode( int32_t blendMode = Alpha);
 
-		void CommonBeginDraw(int toporogyType = TRIANGLESTRIP);
+		void CommonBeginDraw( int32_t toporogyType = TRIANGLESTRIP);
 
 	};
 }

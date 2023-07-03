@@ -12,25 +12,28 @@ namespace MCB
     class TextureBuffer
     {
     public:
-        D3D12_HEAP_PROPERTIES texHeapProp{};
+        D3D12_HEAP_PROPERTIES texHeapProp_{};
 
-        D3D12_RESOURCE_DESC texresDesc{};
+        D3D12_RESOURCE_DESC texresDesc_{};
 
-        Microsoft::WRL::ComPtr<ID3D12Resource> texbuff = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12Resource> texbuff_ = nullptr;
 
-        HRESULT CommitResouce(D3D12_HEAP_FLAGS flags, D3D12_RESOURCE_STATES resouceState, const D3D12_CLEAR_VALUE* clearValue);
+        HRESULT CommitResouce(const D3D12_HEAP_FLAGS& flags, const D3D12_RESOURCE_STATES& resouceState,
+            const D3D12_CLEAR_VALUE* clearValue);
 
         void TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox,HRESULT &result);
         
-        void SetTexHeapProp(D3D12_HEAP_TYPE heaptype, D3D12_CPU_PAGE_PROPERTY cpuPagePropety, D3D12_MEMORY_POOL memorypool);
+        void SetTexHeapProp(const D3D12_HEAP_TYPE& heaptype,const D3D12_CPU_PAGE_PROPERTY& cpuPagePropety,
+            const D3D12_MEMORY_POOL& memorypool);
 
-        void SetTexResourceDesc(TextureFile& texFile, D3D12_RESOURCE_DIMENSION resouceDimension, int SampleDescCount);
+        void SetTexResourceDesc(TextureFile& texFile,const D3D12_RESOURCE_DIMENSION& resouceDimension,
+            int32_t SampleDescCount);
 
         void SetNoTextureFileTexResourceDesc();
 
         void SetNoTextureFileTexResourceDescForPostEffect();
 
-        void TransferMipmatToTexBuff(TexImgData teximg,HRESULT& result);
+        void TransferMipmatToTexBuff(const TexImgData& teximg,HRESULT& result);
         void TransferMipmatToTexBuff(HRESULT& result);
     };
 }

@@ -10,11 +10,11 @@ namespace MCB
 	class RootSignature
 	{
 	public:
-		Microsoft::WRL::ComPtr <ID3D12RootSignature> rootsignature;
+		Microsoft::WRL::ComPtr <ID3D12RootSignature> rootsignature_;
 
-		D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
+		D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc_{};
 
-		Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob = nullptr;
+		Microsoft::WRL::ComPtr<ID3DBlob> rootSigBlob_ = nullptr;
 		
 		void InitRootSignatureDesc(RootParameter& rootparams, TexSample& sample);
 		void SetSerializeRootSignature(Shader& shader);

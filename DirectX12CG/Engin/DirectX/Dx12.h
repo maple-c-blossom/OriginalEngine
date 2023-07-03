@@ -28,21 +28,21 @@ namespace MCB
         //基本変数初期化-----
     #pragma region 基本変数初期化
 
-        HRESULT result;
-        Microsoft::WRL::ComPtr<ID3D12Device> device = nullptr;
-        Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory = nullptr;
-        Microsoft::WRL::ComPtr<IDXGISwapChain4> swapchain = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeaps = nullptr;
+        HRESULT result_;
+        Microsoft::WRL::ComPtr<ID3D12Device> device_ = nullptr;
+        Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_ = nullptr;
+        Microsoft::WRL::ComPtr<IDXGISwapChain4> swapchain_ = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_ = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_ = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
+        Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeaps_ = nullptr;
 
     #pragma endregion 基本変数初期化
         //--------------
 
         //デバイス変数-----------------------
         //対応レベルの配列
-        D3D_FEATURE_LEVEL levels[4] =
+        D3D_FEATURE_LEVEL levels_[4] =
         {
             D3D_FEATURE_LEVEL_12_1,
             D3D_FEATURE_LEVEL_12_0,
@@ -50,32 +50,32 @@ namespace MCB
             D3D_FEATURE_LEVEL_11_0,
         };
 
-        D3D_FEATURE_LEVEL featureLevel;
+        D3D_FEATURE_LEVEL featureLevel_;
         //---------------------------
 
         //コマンドキュー
-        D3D12_COMMAND_QUEUE_DESC commandQueueDesc{};
+        D3D12_COMMAND_QUEUE_DESC commandQueueDesc_{};
 
         //スワップチェーン
-        Microsoft::WRL::ComPtr<IDXGISwapChain1> swapchain1;
+        Microsoft::WRL::ComPtr<IDXGISwapChain1> swapchain1_;
 
         //各種設定
-        DXGI_SWAP_CHAIN_DESC1 swapChainDesc{};
+        DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 
         // デスクリプタ変数
-        D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc{};
+        D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_{};
 
         //バックバッファ変数
-        std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers = std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>>(2);
+        std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_ = std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>>(2);
 
-        D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle;
+        D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_;
 
         //レンダーターゲットビューの設定
-        D3D12_RENDER_TARGET_VIEW_DESC rtvDesc{};
+        D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
         //フェンス変数
-        Microsoft::WRL::ComPtr<ID3D12Fence> fence = nullptr;
-        UINT64 fenceVal = 0;
+        Microsoft::WRL::ComPtr<ID3D12Fence> fence_ = nullptr;
+        UINT64 fenceVal_ = 0;
 
         //Dx12(DxWindow dxWindow);
 

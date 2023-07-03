@@ -3,64 +3,78 @@
 using namespace DirectX;
 MCB::MeshCollider::MeshCollider()
 {
-		primitive = PrimitiveType::MESH;
+	primitive_ = PrimitiveType::MESH;
 }
 MCB::MeshCollider::MeshCollider(Model* model)
 {
-	primitive = PrimitiveType::MESH;
+	primitive_ = PrimitiveType::MESH;
 	ConstractTriangle(model);
 }
 
 MCB::MeshCollider::MeshCollider(AnimationModel* model)
 {
-	primitive = PrimitiveType::MESH;
+	primitive_ = PrimitiveType::MESH;
 	ConstractTriangle(model);
 }
 void MCB::MeshCollider::ConstractTriangle(Model* model)
 {
-	triangles.clear();
-	int start = 0;
-	size_t triangleNum = model->indices.size() / 3;
-	triangles.resize(triangles.size() + triangleNum);
-	for (int i = 0; i < triangleNum; i++)
+	triangles_.clear();
+	int32_t start = 0;
+	size_t triangleNum = model->indices_.size() / 3;
+	triangles_.resize(triangles_.size() + triangleNum);
+	for (int32_t i = 0; i < triangleNum; i++)
 	{
-		Triangle& tri = triangles[start + i];
-		int idx0 = model->indices[i * 3 + 0];
-		int idx1 = model->indices[i * 3 + 1];
-		int idx2 = model->indices[i * 3 + 2];
+		Triangle& tri = triangles_[start + i];
+		int32_t idx0 = model->indices_[i * 3 + 0];
+		int32_t idx1 = model->indices_[i * 3 + 1];
+		int32_t idx2 = model->indices_[i * 3 + 2];
 
-		tri.vertexPoint[0].vec = { model->vertices[idx0].pos.x,model->vertices[idx0].pos.y,model->vertices[idx0].pos.z };
-		tri.vertexPoint[1].vec = { model->vertices[idx1].pos.x,model->vertices[idx1].pos.y,model->vertices[idx1].pos.z };
-		tri.vertexPoint[2].vec = { model->vertices[idx2].pos.x,model->vertices[idx2].pos.y,model->vertices[idx2].pos.z };
+		tri.vertexPoint_[0].vec_ = { model->vertices_[idx0].pos.x_,
+			model->vertices_[idx0].pos.y_,model->vertices_[idx0].pos.z_ };
+
+		tri.vertexPoint_[1].vec_ = { model->vertices_[idx1].pos.x_,
+			model->vertices_[idx1].pos.y_,model->vertices_[idx1].pos.z_ };
+
+		tri.vertexPoint_[2].vec_ = { model->vertices_[idx2].pos.x_,
+			model->vertices_[idx2].pos.y_,model->vertices_[idx2].pos.z_ };
 		tri.NormalCalculation();
 	}
 }
 
 void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 {
-	triangles.clear();
-	int start = 0;
+	triangles_.clear();
+	int32_t start = 0;
 
-	for (int i = 0; i < model->nodes.size(); i++)
+	for (int32_t i = 0; i < model->nodes_.size(); i++)
 	{
-		for (int j = 0; j < model->nodes[i]->meshes.size(); j++)
+		for (int32_t j = 0; j < model->nodes_[i]->meshes.size(); j++)
 		{
-			size_t triangleNum = model->nodes[i]->meshes[j]->indices.size() / 3;
-			triangles.resize(triangles.size() + triangleNum);
-			for (int i = 0; i < triangleNum; i++)
+			size_t triangleNum = model->nodes_[i]->meshes[j]->indices_.size() / 3;
+			triangles_.resize(triangles_.size() + triangleNum);
+			for (int32_t i = 0; i < triangleNum; i++)
 			{
-				Triangle& tri = triangles[start + i];
-				int idx0 = model->nodes[i]->meshes[j]->indices[i * 3 + 0];
-				int idx1 = model->nodes[i]->meshes[j]->indices[i * 3 + 1];
-				int idx2 = model->nodes[i]->meshes[j]->indices[i * 3 + 2];
+				Triangle& tri = triangles_[start + i];
+				int32_t idx0 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 0];
+				int32_t idx1 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 1];
+				int32_t idx2 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 2];
 
-				tri.vertexPoint[0].vec = { model->nodes[i]->meshes[j]->vertices[idx0].pos.x,model->nodes[i]->meshes[j]->vertices[idx0].pos.y,model->nodes[i]->meshes[j]->vertices[idx0].pos.z };
-				tri.vertexPoint[1].vec = { model->nodes[i]->meshes[j]->vertices[idx1].pos.x,model->nodes[i]->meshes[j]->vertices[idx1].pos.y,model->nodes[i]->meshes[j]->vertices[idx1].pos.z };
-				tri.vertexPoint[2].vec = { model->nodes[i]->meshes[j]->vertices[idx2].pos.x,model->nodes[i]->meshes[j]->vertices[idx2].pos.y,model->nodes[i]->meshes[j]->vertices[idx2].pos.z };
+				tri.vertexPoint_[0].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx0].pos.x_,
+					model->nodes_[i]->meshes[j]->vertices_[idx0].pos.y_
+					,model->nodes_[i]->meshes[j]->vertices_[idx0].pos.z_ };
+
+				tri.vertexPoint_[1].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx1].pos.x_,
+					model->nodes_[i]->meshes[j]->vertices_[idx1].pos.y_,
+					model->nodes_[i]->meshes[j]->vertices_[idx1].pos.z_ };
+
+				tri.vertexPoint_[2].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx2].pos.x_,
+					model->nodes_[i]->meshes[j]->vertices_[idx2].pos.y_,
+					model->nodes_[i]->meshes[j]->vertices_[idx2].pos.z_ };
+
 				tri.NormalCalculation();
 
 			}
-			start += (int)triangleNum;
+			start += (int32_t)triangleNum;
 		}
 	}
 	
@@ -69,8 +83,8 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 void MCB::MeshCollider::Update()
 {
 	XMMATRIX mat = GetObject3D()->GetMatWorld();
-	invWorldMat = DirectX::XMMatrixInverse(nullptr,mat);
-	GetObject3D()->hited = false;
+	invWorldMat_ = DirectX::XMMatrixInverse(nullptr,mat);
+	GetObject3D()->hited_ = false;
 	//if (sphere.GetObject3D() == nullptr)
 	//{
 	//	sphere.SetObject(GetObject3D());
@@ -84,19 +98,19 @@ void MCB::MeshCollider::Update()
 bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter, Vector3D* reject)
 {
 	Sphere local;
-	local.centerPosition = XMVector3Transform(XMVECTOR{ sphere.centerPosition.vec.x, sphere.centerPosition.vec.y, sphere.centerPosition.vec.z }, invWorldMat);
-	local.radius *= XMVector3Length(invWorldMat.r[0]).m128_f32[0];
+	local.centerPosition_ = XMVector3Transform(XMVECTOR{ sphere.centerPosition_.vec_.x_, sphere.centerPosition_.vec_.y_, sphere.centerPosition_.vec_.z_ }, invWorldMat_);
+	local.radius_ = sphere.radius_ * XMVector3Length(invWorldMat_.r[0]).m128_f32[0];
 
-	std::vector<Triangle>::const_iterator itr = triangles.cbegin();
-	for (; itr != triangles.cend(); ++itr)
+	std::vector<Triangle>::const_iterator itr = triangles_.cbegin();
+	for (; itr != triangles_.cend(); ++itr)
 	{
 		const Triangle& tri = *itr;
-		if (Collision::CalcTriangleSpher(tri, sphere, inter,reject))
+		if (Collision::CalcTriangleSpher(tri, local, inter,reject))
 		{
-			const XMMATRIX& temp = object3d->GetMatWorld();
+			const XMMATRIX& temp = object3d_->GetMatWorld();
 			if (reject)
 			{
-				*reject = XMVector3Transform(reject->ConvertXMVEC(), temp);
+				*reject = XMVector3TransformNormal(reject->ConvertXMVEC(), temp);
 			}
 
 			if (inter)
@@ -113,23 +127,24 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 bool MCB::MeshCollider::ChakeCollisionRay(const Ray& ray, float* dist, Vector3D* inter)
 {
 	Ray local;
-	local.StartPosition = XMVector3Transform(XMVECTOR{ ray.StartPosition.vec.x,ray.StartPosition.vec.y, ray.StartPosition.vec.z,1 }, invWorldMat);
-	local.rayVec = XMVector3TransformNormal(XMVECTOR{ ray.rayVec.vec.x,ray.rayVec.vec.y, ray.rayVec.vec.z,1 },invWorldMat);
+	local.StartPosition_ = XMVector3Transform(XMVECTOR{ ray.StartPosition_.vec_.x_,ray.StartPosition_.vec_.y_, ray.StartPosition_.vec_.z_,1 }, invWorldMat_);
+	local.rayVec_ = XMVector3TransformNormal(
+		XMVECTOR{ ray.rayVec_.vec_.x_,ray.rayVec_.vec_.y_, ray.rayVec_.vec_.z_,1 },invWorldMat_);
 
-	std::vector<Triangle>::const_iterator itr = triangles.cbegin();
-	for (; itr != triangles.cend(); ++itr)
+	std::vector<Triangle>::const_iterator itr = triangles_.cbegin();
+	for (; itr != triangles_.cend(); ++itr)
 	{
 		const Triangle& tri = *itr;
 		Vector3D tempinter;
 		if (Collision::CalcTriangleRay(tri, local, nullptr, &tempinter))
 		{
-			const XMMATRIX& temp = object3d->GetMatWorld();
+			const XMMATRIX& temp = object3d_->GetMatWorld();
 			tempinter = XMVector3Transform(tempinter.ConvertXMVEC(), temp);
 			if (dist)
 			{
-				Vector3D tempV = ray.StartPosition;
+				Vector3D tempV = ray.StartPosition_;
 				Vector3D sub = tempinter - tempV;
-				*dist = sub.GetV3Dot(ray.rayVec);
+				*dist = sub.GetV3Dot(ray.rayVec_);
 			}
 			if (inter)
 			{

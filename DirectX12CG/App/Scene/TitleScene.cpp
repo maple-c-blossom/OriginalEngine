@@ -7,51 +7,51 @@ using namespace DirectX;
 void MCB::TitleScene::SpriteInit()
 {
 
-    debugText.Init(debugTextTexture->texture.get());
+    debugText_.Init(debugTextTexture_->texture.get());
 }
 
 void MCB::TitleScene::ParticleInit()
 {
 }
 
-MCB::IScene* MCB::TitleScene::GetNextScene()
+unique_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
 {
-	return new Scene(rootparamsPtr, depth, pipeline);
+	return move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
 }
 
 void MCB::TitleScene::MatrixUpdate()
 {
     //play.UpdateMatrix();
-    camera.Update();
-    Skydorm.Update(viewCamera);
-    ground.Update(viewCamera);
-    testsphere.AnimationUpdate(viewCamera);
-    test2Animation.AnimationUpdate(viewCamera);
+    camera_.Update();
+    Skydorm_.Update(viewCamera_);
+    ground_.Update(viewCamera_);
+    testsphere_.AnimationUpdate(viewCamera_);
+    test2Animation_.AnimationUpdate(viewCamera_);
 }
 
 void MCB::TitleScene::Update()
 {
 
-    lights->UpDate();
-    if (input->IsKeyTrigger(DIK_RETURN) || input->gamePad->IsButtonTrigger(GAMEPAD_A))
+    lights_->UpDate();
+    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
-        sceneEnd = true;
+        sceneEnd_ = true;
     }
-    play.Update();
+    play_.Update();
     MatrixUpdate();
 }
 
 void MCB::TitleScene::PostEffectDraw()
 {
-    postEffect->PreDraw();
-    Skydorm.Draw();
-    ground.Draw();
-    play.Draw();
-    pipeline->SetFbxPipeLine();
-    testsphere.AnimationDraw();
-    test2Animation.AnimationDraw();
-    pipeline->SetObjPipeLine();
-    postEffect->PostDraw();
+    postEffect_->PreDraw();
+    Skydorm_.Draw();
+    ground_.Draw();
+    play_.Draw();
+    pipeline_->SetFbxPipeLine();
+    testsphere_.AnimationDraw();
+    test2Animation_.AnimationDraw();
+    pipeline_->SetObjPipeLine();
+    postEffect_->PostDraw();
 }
 
 void MCB::TitleScene::Draw()
@@ -63,8 +63,8 @@ void MCB::TitleScene::Draw()
 
 void MCB::TitleScene::SpriteDraw()
 {
-    postEffect->Draw();
-    debugText.AllDraw();
+    postEffect_->Draw();
+    debugText_.AllDraw();
 }
 
 void MCB::TitleScene::ParticleDraw()
@@ -77,7 +77,8 @@ void MCB::TitleScene::CheckAllColision()
 
 void MCB::TitleScene::ImGuiUpdate()
 {
-    imgui.Begin();
+    imgui_.Begin();
+    XMMATRIX mat = testsphere_.animationModel_->bones_[0].finalMatrix;
     //ImGui::ShowDemoWindow();
     if (ImGui::CollapsingHeader("Infomation"))
     {
@@ -85,31 +86,38 @@ void MCB::TitleScene::ImGuiUpdate()
         {
             ImGui::Text("SceneChange: [ENTER] or [GamePad A]");
             ImGui::Text("sphereMove: [WASD]");
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[0].m128_f32[0], mat.r[0].m128_f32[1], mat.r[0].m128_f32[2], mat.r[0].m128_f32[1] );
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[1].m128_f32[0], mat.r[1].m128_f32[1], mat.r[1].m128_f32[2], mat.r[1].m128_f32[1]);
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[2].m128_f32[0], mat.r[2].m128_f32[1], mat.r[2].m128_f32[2], mat.r[2].m128_f32[1]);
+            ImGui::Text("finalMat[0]...   %f,%f,%f,%f"
+                , mat.r[3].m128_f32[0], mat.r[3].m128_f32[1], mat.r[3].m128_f32[2], mat.r[3].m128_f32[1]);
             ImGui::TreePop();
         }
     }
-    imgui.End();
+    imgui_.End();
 }
 
 MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
 {
-	rootparamsPtr = root;
-	this->depth = depth;
-    this->pipeline = pipeline;
+	rootparamsPtr_ = root;
+	depth_ = depth;
+    pipeline_ = pipeline;
 }
 
 MCB::TitleScene::~TitleScene()
 {
-    soundManager.AllDeleteSound();
-    debugTextTexture->free = true;
-    delete nextScene;
-    loader->Erase();
+    soundManager_->AllDeleteSound();
+    debugTextTexture_->free = true;
+    loader_->Erase();
 }
 
 void MCB::TitleScene::Initialize()
 {
-    camera.Inilialize();
-    viewCamera = &camera;
+    camera_.Inilialize();
+    viewCamera_ = &camera_;
     LoadTexture();
     LoadModel();
     LoadSound();
@@ -117,74 +125,75 @@ void MCB::TitleScene::Initialize()
     SpriteInit();
     ParticleInit();
     //soundManager.PlaySoundWave(testSound, loopFlag);
-    lights->DefaultLightSet();
-    lights->UpDate();
-    Object3d::SetLights(lights);
-    postEffect->Init();
+    lights_->DefaultLightSet();
+    lights_->UpDate();
+    Object3d::SetLights(lights_);
+    postEffect_->Init();
+
 }
 
 void MCB::TitleScene::LoadModel()
 {
 
-    groundModel = std::make_unique<Model>("ground");
+    groundModel_ = std::make_unique<Model>("ground");
 
-    skydomeModel = std::make_unique<Model>("skydome");
+    skydomeModel_ = std::make_unique<Model>("skydome");
 
-    sphereModel = std::make_unique<Model>("sphere");
+    sphereModel_ = std::make_unique<Model>("sphere");
 
 
-    animModel = std::make_unique<AnimationModel>();
-    animModel->Load("gamewsdsa");
+    animModel_ = std::make_unique<AnimationModel>();
+    animModel_->Load("gamewsdsa");
 
-    anim2Model = std::make_unique<AnimationModel>();
-    anim2Model->Load("testFbx");
+    anim2Model_ = std::make_unique<AnimationModel>();
+    anim2Model_->Load("testFbx");
 }
 
 void MCB::TitleScene::LoadTexture()
 {
-    debugTextTexture = loader->LoadTexture(L"Resources\\debugfont.png");
+    debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
 }
 
 void MCB::TitleScene::LoadSound()
 {
-    testSound = soundManager.LoadWaveSound("Resources\\cat1.wav");
-    test2Sound = soundManager.LoadWaveSound("Resources\\fanfare.wav");
-    soundManager.SetVolume(100, testSound);
+    testSound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
+    test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    soundManager_->SetVolume(100, testSound_);
 }
 
 void MCB::TitleScene::Object3DInit()
 {
 
-    ground.Init();
-    ground.model = groundModel.get();
-    ground.scale = { 1,1,1 };
-    ground.position = { 0,-3,0 };
-    ground.rotasion = { 0,0,ConvertRadius(5) };
-    ground.SetCollider(new MeshCollider(groundModel.get()));
-    ground.camera = viewCamera;
+    ground_.Init();
+    ground_.model_ = groundModel_.get();
+    ground_.scale_ = { 1,1,1 };
+    ground_.position_ = { 0,-3,0 };
+    ground_.rotation_ = { 0,0,ConvertRadius(5) };
+    ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
+    ground_.camera_ = viewCamera_;
 
-    play.Init();
-    play.model = sphereModel.get();
-    play.position = { 0,3,0 };
-    play.camera = viewCamera;
+    play_.Init();
+    play_.model_ = sphereModel_.get();
+    play_.position_ = { 0,3,0 };
+    play_.camera_ = viewCamera_;
 
-    Skydorm;
-    Skydorm.Init();
-    Skydorm.model = skydomeModel.get();
-    Skydorm.scale = { 4,4,4 };
-    Skydorm.camera = viewCamera;
 
-    testsphere.Init();
+    Skydorm_.Init();
+    Skydorm_.model_ = skydomeModel_.get();
+    Skydorm_.scale_ = { 4,4,4 };
+    Skydorm_.camera_ = viewCamera_;
+
+    testsphere_.Init();
     //testsphere.model = BoxModel;
-    testsphere.animationModel = animModel.get();
-    testsphere.scale = { 3,3,3 };
-    testsphere.position = { 0,4,30 };
-    testsphere.rotasion.y = ConvertRadius(90);
-    testsphere.camera = viewCamera;
+    testsphere_.animationModel_ = animModel_.get();
+    testsphere_.scale_ = { 3,3,3 };
+    testsphere_.position_ = { 0,4,30 };
+    testsphere_.rotation_.y = ConvertRadius(90);
+    testsphere_.camera_ = viewCamera_;
 
-    test2Animation.animationModel = anim2Model.get();
-    test2Animation.scale = { 3,3,3 };
-    test2Animation.position = { 10,4,30 };
-    test2Animation.rotasion.y = ConvertRadius(90);
-    test2Animation.camera = viewCamera;
+    test2Animation_.animationModel_ = anim2Model_.get();
+    test2Animation_.scale_ = { 3,3,3 };
+    test2Animation_.position_ = { 10,4,30 };
+    test2Animation_.rotation_.y = ConvertRadius(90);
+    test2Animation_.camera_ = viewCamera_;
 }

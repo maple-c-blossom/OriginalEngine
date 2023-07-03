@@ -2,64 +2,88 @@
 #include "DirectXMath.h"
 #include "Util.h"
 #include "DxWindow.h"
+#include "RayCollider.h"
+#include "CollisionManager.h"
 using namespace MCB;
 using namespace DirectX;
 
 void Camera::Inilialize()
 {
-	view.CreateMatrixView(XMFLOAT3(0.0f, 10.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-	projection.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)DxWindow::GetInstance()->window_width / DxWindow::GetInstance()->window_height, 0.1f, 4000.0f);
+	view_.CreateMatrixView(XMFLOAT3(0.0f, 10.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_, 0.1f, 4000.0f);
 }
 
 void Camera::WorldPositionInit()
 {
-	object3d->Init();
-	object3d->position = firstPos;
-	object3d->rotasion = angle;
+	object3d_->Init();
+	object3d_->position_ = firstPos_;
+	object3d_->rotation_ = angle_;
 	
 }
 
 void Camera::Update()
 {
-	
-	view.UpDateMatrixView();
-	projection.UpdataMatrixProjection();
+	view_.eye_.x = target_->position_.x + (15 * -target_->nowFrontVec_.vec_.x_);
+	view_.eye_.y = target_->position_.y + 5;
+	view_.eye_.z = target_->position_.z + (15 * -target_->nowFrontVec_.vec_.z_);
+	view_.target_ = target_->position_;
+	Ray ray;
+	ray.StartPosition_.vec_.x_ = view_.eye_.x;
+	ray.StartPosition_.vec_.y_ = view_.eye_.y;
+	ray.StartPosition_.vec_.z_ = view_.eye_.z;
+	ray.rayVec_ = Vector3D().V3Get(ray.StartPosition_.vec_, Float3(target_->position_.x,
+		target_->position_.y
+		+ 0.5f ,
+		target_->position_.z));
+	float rayLength = ray.rayVec_.V3Len();
+	ray.rayVec_.V3Norm();
+	RayCastHit info;
+	OutputDebugStringW(L"camera--------------------------------------------------\n");
+	if(CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info,rayLength - 0.5f))
+	{
+		if(info.objctPtr_ != target_)info.objctPtr_->isInvisible = true;
+	}
+	OutputDebugStringW(L"end--------------------------------------------------\n");
+	view_.UpDateMatrixView();
+	projection_.UpdataMatrixProjection();
 }
 
-void Camera::WorldPositionUpdate(DirectX::XMMATRIX playerMatrix, DirectX::XMFLOAT3 playerPosition,bool isBillBord)
+void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
+	const DirectX::XMFLOAT3& playerPosition
+	, bool isBillBord)
 {
 	//object3d->Update(view,projection);
 
-	object3d->matWorld.SetMatScale(object3d->scale.x, object3d->scale.y, object3d->scale.z);
-	object3d->matWorld.SetMatRot(object3d->rotasion.x, object3d->rotasion.y, object3d->rotasion.z, false);
-	object3d->matWorld.SetMatTrans(object3d->position.x, object3d->position.y, object3d->position.z);
+	object3d_->matWorld_.SetMatScale(object3d_->scale_.x, object3d_->scale_.y, object3d_->scale_.z);
+	object3d_->matWorld_.SetMatRot(object3d_->rotation_.x, object3d_->rotation_.y, object3d_->rotation_.z, false);
+	object3d_->matWorld_.SetMatTrans(object3d_->position_.x, object3d_->position_.y, object3d_->position_.z);
 
 	if (isBillBord)
 	{
-		if (object3d->parent == nullptr)
+		if (object3d_->parent_ == nullptr)
 		{
-			object3d->matWorld.UpdataBillBordMatrixWorld(view);
+			object3d_->matWorld_.UpdataBillBordMatrixWorld(view_);
 		}
 		else
 		{
-			object3d->matWorld.UpdataMatrixWorld();
+			object3d_->matWorld_.UpdataMatrixWorld();
 		}
 	}
 	else
 	{
-		object3d->matWorld.UpdataMatrixWorld();
+		object3d_->matWorld_.UpdataMatrixWorld();
 	}
 
-	if (object3d->parent != nullptr)
+	if (object3d_->parent_ != nullptr)
 	{
-		object3d->matWorld.matWorld *= object3d->parent->matWorld.matWorld;
+		object3d_->matWorld_.matWorld_ *= object3d_->parent_->matWorld_.matWorld_;
 	}
 
-	object3d->GetConstMapTrans()->world = object3d->matWorld.matWorld * view.mat;
-	object3d->GetConstMapTrans()->viewproj = projection.mat;
-	object3d->GetConstMapTrans()->cameraPos.x = view.eye.x;
-	object3d->GetConstMapTrans()->cameraPos.y = view.eye.y;
-	object3d->GetConstMapTrans()->cameraPos.z = view.eye.z;
+	object3d_->GetConstMapTrans()->world = object3d_->matWorld_.matWorld_ * view_.mat_;
+	object3d_->GetConstMapTrans()->viewproj = projection_.mat_;
+	object3d_->GetConstMapTrans()->cameraPos.x_ = view_.eye_.x;
+	object3d_->GetConstMapTrans()->cameraPos.y_ = view_.eye_.y;
+	object3d_->GetConstMapTrans()->cameraPos.z_ = view_.eye_.z;
 
 	/*object3d->constMapTranceform->cameraPos.x = playerPosition.x;
 	object3d->constMapTranceform->cameraPos.y = playerPosition.y;
@@ -73,9 +97,14 @@ XMMATRIX Camera::GetMadWorld()
 {
 	//ƒ[ƒ‹ƒhÀ•W‚ð“ü‚ê‚é•Ï”
 	XMMATRIX matWorld;
-	matWorld = object3d->matWorld.matWorld;
+	matWorld = object3d_->matWorld_.matWorld_;
 
 	return matWorld;
+}
+
+void MCB::Camera::SetCameraTarget(Object3d* target)
+{
+	target_ = target;
 }
 
 
@@ -94,13 +123,13 @@ XMMATRIX Camera::GetMadWorld()
 //	return matWorld;
 //}
 
-XMFLOAT3 Camera::Transform(DirectX::XMFLOAT3 forward, WorldMatrix matWorld)
+XMFLOAT3 Camera::Transform(const DirectX::XMFLOAT3& forward, const WorldMatrix& matWorld)
 {
 	XMFLOAT3 resultVec;
 
-	resultVec.x = (forward.x * matWorld.matWorld.r[0].m128_f32[0]) + (forward.y * matWorld.matWorld.r[1].m128_f32[0]) + (forward.z * matWorld.matWorld.r[2].m128_f32[0]);
-	resultVec.y = (forward.x * matWorld.matWorld.r[0].m128_f32[1]) + (forward.y * matWorld.matWorld.r[1].m128_f32[1]) + (forward.z * matWorld.matWorld.r[2].m128_f32[1]);
-	resultVec.z = (forward.x * matWorld.matWorld.r[0].m128_f32[2]) + (forward.y * matWorld.matWorld.r[1].m128_f32[2]) + (forward.z * matWorld.matWorld.r[2].m128_f32[2]);
+	resultVec.x = (forward.x * matWorld.matWorld_.r[0].m128_f32[0]) + (forward.y * matWorld.matWorld_.r[1].m128_f32[0]) + (forward.z * matWorld.matWorld_.r[2].m128_f32[0]);
+	resultVec.y = (forward.x * matWorld.matWorld_.r[0].m128_f32[1]) + (forward.y * matWorld.matWorld_.r[1].m128_f32[1]) + (forward.z * matWorld.matWorld_.r[2].m128_f32[1]);
+	resultVec.z = (forward.x * matWorld.matWorld_.r[0].m128_f32[2]) + (forward.y * matWorld.matWorld_.r[1].m128_f32[2]) + (forward.z * matWorld.matWorld_.r[2].m128_f32[2]);
 
 	return resultVec;
 }

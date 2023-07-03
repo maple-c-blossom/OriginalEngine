@@ -4,20 +4,20 @@
 using namespace DirectX;
 using namespace MCB;
 
-void View::CreateMatrixView(XMFLOAT3 eye, XMFLOAT3 target, XMFLOAT3 up)
+void View::CreateMatrixView(const XMFLOAT3& eye, const XMFLOAT3& target, const XMFLOAT3& up)
 {
-	this->eye = eye;
-	this->target = target;
-	this->up = up;
-	mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+	eye_ = eye;
+	target_ = target;
+	up_ = up;
+	mat_ = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
-void View::UpDateMatrixView(bool billbordY)
+void View::UpDateMatrixView( bool billbordY)
 {
 	//mat = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-	XMVECTOR eyePosition = XMLoadFloat3(&eye);
-	XMVECTOR targetPosition = XMLoadFloat3(&target);
-	XMVECTOR upVector = XMLoadFloat3(&up);
+	XMVECTOR eyePosition = XMLoadFloat3(&eye_);
+	XMVECTOR targetPosition = XMLoadFloat3(&target_);
+	XMVECTOR upVector = XMLoadFloat3(&up_);
 
 	XMVECTOR cameraAxisZ = XMVectorSubtract(targetPosition, eyePosition);
 	
@@ -42,7 +42,7 @@ void View::UpDateMatrixView(bool billbordY)
 	matCameraRot.r[2] = cameraAxisZ;
 	matCameraRot.r[3] = XMVectorSet(0, 0, 0, 1);
 
-	mat = XMMatrixTranspose(matCameraRot);
+	mat_ = XMMatrixTranspose(matCameraRot);
 
 	XMVECTOR reverseEyePosition = XMVectorNegate(eyePosition);
 	XMVECTOR tX = XMVector3Dot(cameraAxisX, reverseEyePosition);
@@ -50,25 +50,25 @@ void View::UpDateMatrixView(bool billbordY)
 	XMVECTOR tZ = XMVector3Dot(cameraAxisZ, reverseEyePosition);
 
 	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
-	mat.r[3] = translation;
+	mat_.r[3] = translation;
 
 	if (billbordY)
 	{
 		XMVECTOR yBillAxisX, yBillAxisY, yBillAxisZ;
 		yBillAxisX = cameraAxisX;
-		yBillAxisY = XMVector3Normalize(XMVECTOR{up.x, up.y, up.z});
+		yBillAxisY = XMVector3Normalize(XMVECTOR{up_.x, up_.y, up_.z});
 		yBillAxisZ = XMVector3Cross(yBillAxisX, yBillAxisY);
 
-		billMat.r[0] = yBillAxisX;
-		billMat.r[1] = yBillAxisY;
-		billMat.r[2] = yBillAxisZ;
-		billMat.r[3] = XMVectorSet(0, 0, 0, 1);
+		billMat_.r[0] = yBillAxisX;
+		billMat_.r[1] = yBillAxisY;
+		billMat_.r[2] = yBillAxisZ;
+		billMat_.r[3] = XMVectorSet(0, 0, 0, 1);
 	}
 	else
 	{
-		billMat.r[0] = cameraAxisX;
-		billMat.r[1] = cameraAxisY;
-		billMat.r[2] = cameraAxisZ;
-		billMat.r[3] = XMVectorSet(0, 0, 0, 1);
+		billMat_.r[0] = cameraAxisX;
+		billMat_.r[1] = cameraAxisY;
+		billMat_.r[2] = cameraAxisZ;
+		billMat_.r[3] = XMVectorSet(0, 0, 0, 1);
 	}
 }

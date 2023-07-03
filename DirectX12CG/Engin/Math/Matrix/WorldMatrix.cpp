@@ -3,115 +3,116 @@
 using namespace MCB;
 using  namespace DirectX;
 
-void WorldMatrix::SetMatRotX(float angle, bool ConvertToRadians)
+void WorldMatrix::SetMatRotX( float angle, bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
-		matRot *= XMMatrixRotationX(XMConvertToRadians(angle));
+		matRot_ *= XMMatrixRotationX(XMConvertToRadians(angle));
 	}
 	else
 	{
-		matRot *= XMMatrixRotationX(angle);
+		matRot_ *= XMMatrixRotationX(angle);
 	}
 
 }
 
-void WorldMatrix::SetMatRotY(float angle, bool ConvertToRadians)
+void WorldMatrix::SetMatRotY( float angle,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
-		matRot *= XMMatrixRotationY(XMConvertToRadians(angle));
+		matRot_ *= XMMatrixRotationY(XMConvertToRadians(angle));
 	}
 	else
 	{
-		matRot *= XMMatrixRotationY(angle);
+		matRot_ *= XMMatrixRotationY(angle);
 	}
 }
 
-void WorldMatrix::SetMatRotZ(float angle, bool ConvertToRadians)
+void WorldMatrix::SetMatRotZ( float angle,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
-		matRot *= XMMatrixRotationZ(XMConvertToRadians(angle));
+		matRot_ *= XMMatrixRotationZ(XMConvertToRadians(angle));
 	}
 	else
 	{
-		matRot *= XMMatrixRotationZ(angle);
+		matRot_ *= XMMatrixRotationZ(angle);
 	}
 }
 
-void WorldMatrix::SetMatRot(float angleX, float angleY, float angleZ, bool ConvertToRadians)
+void WorldMatrix::SetMatRot( float angleX,  float angleY,  float angleZ, bool ConvertToRadians)
 {
-	matRot = XMMatrixIdentity();
+	matRot_ = XMMatrixIdentity();
 	if (ConvertToRadians)
 	{
-		matRot *= XMMatrixRotationZ(XMConvertToRadians(angleZ));
-		matRot *= XMMatrixRotationX(XMConvertToRadians(angleX));
-		matRot *= XMMatrixRotationY(XMConvertToRadians(angleY));
+		matRot_ *= XMMatrixRotationZ(XMConvertToRadians(angleZ));
+		matRot_ *= XMMatrixRotationX(XMConvertToRadians(angleX));
+		matRot_ *= XMMatrixRotationY(XMConvertToRadians(angleY));
 	}
 	else
 	{
-		matRot *= XMMatrixRotationZ(angleZ);
-		matRot *= XMMatrixRotationX(angleX);
-		matRot *= XMMatrixRotationY(angleY);
+		matRot_ *= XMMatrixRotationZ(angleZ);
+		matRot_ *= XMMatrixRotationX(angleX);
+		matRot_ *= XMMatrixRotationY(angleY);
 	}
 }
 
-XMMATRIX WorldMatrix::ReturnMatRot(XMMATRIX matRot ,float angleX, float angleY, float angleZ, bool ConvertToRadians)
+XMMATRIX WorldMatrix::ReturnMatRot(const XMMATRIX& matRot ,  float angleX, 
+	 float angleY,  float angleZ,  bool ConvertToRadians)
 {
 	if (ConvertToRadians)
 	{
-		matRot *= XMMatrixRotationZ(XMConvertToRadians(angleZ));
-		matRot *= XMMatrixRotationX(XMConvertToRadians(angleX));
-		matRot *= XMMatrixRotationY(XMConvertToRadians(angleY));
+		matRot_ *= XMMatrixRotationZ(XMConvertToRadians(angleZ));
+		matRot_ *= XMMatrixRotationX(XMConvertToRadians(angleX));
+		matRot_ *= XMMatrixRotationY(XMConvertToRadians(angleY));
 	}
 	else
 	{
-		matRot *= XMMatrixRotationZ(angleZ);
-		matRot *= XMMatrixRotationX(angleX);
-		matRot *= XMMatrixRotationY(angleY);
+		matRot_ *= XMMatrixRotationZ(angleZ);
+		matRot_ *= XMMatrixRotationX(angleX);
+		matRot_ *= XMMatrixRotationY(angleY);
 	}
 
-	return matRot;
+	return matRot_;
 }
 
-void WorldMatrix::SetMatScale(float scaleX, float scaleY, float scaleZ)
+void WorldMatrix::SetMatScale( float scaleX, float scaleY,  float scaleZ)
 {
-	matScale = XMMatrixScaling(scaleX, scaleY, scaleZ);
+	matScale_ = XMMatrixScaling(scaleX, scaleY, scaleZ);
 }
 
-void WorldMatrix::SetMatTrans(float transX, float transY, float transZ)
+void WorldMatrix::SetMatTrans( float transX,  float transY,  float transZ)
 {
-	matTransform = XMMatrixTranslation(transX, transY, transZ);
+	matTransform_ = XMMatrixTranslation(transX, transY, transZ);
 }
 
 
-void WorldMatrix::CreateMatrixWorld(XMMATRIX matScale, XMMATRIX matRot, XMMATRIX matTransform)
+void WorldMatrix::CreateMatrixWorld(const XMMATRIX& matScale, const XMMATRIX& matRot, const XMMATRIX& matTransform)
 {
-	this->matScale = matScale;
-	this->matRot = matRot;
-	this->matTransform = matTransform;
+	matScale_ = matScale;
+	matRot_ = matRot;
+	matTransform_ = matTransform;
 
-	matWorld = XMMatrixIdentity();
-	matWorld *= matScale;
-	matWorld *= matRot;
-	matWorld *= matTransform;
+	matWorld_ = XMMatrixIdentity();
+	matWorld_ *= matScale;
+	matWorld_ *= matRot;
+	matWorld_ *= matTransform;
 }
 
 void WorldMatrix::UpdataMatrixWorld()
 {
-	matWorld = XMMatrixIdentity();
-	matWorld *= matScale;
-	matWorld *= matRot;
-	matWorld *= matTransform;
+	matWorld_ = XMMatrixIdentity();
+	matWorld_ *= matScale_;
+	matWorld_ *= matRot_;
+	matWorld_ *= matTransform_;
 }
 
-void WorldMatrix::UpdataBillBordMatrixWorld(View view)
+void WorldMatrix::UpdataBillBordMatrixWorld(const View& view)
 {
-	matWorld = XMMatrixIdentity();
-	matWorld *= view.billMat;
-	matWorld *= matScale;
-	matWorld *= matRot;
-	matWorld *= matTransform;
+	matWorld_ = XMMatrixIdentity();
+	matWorld_ *= view.billMat_;
+	matWorld_ *= matScale_;
+	matWorld_ *= matRot_;
+	matWorld_ *= matTransform_;
 }
 

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engin\Model\ModelManager.cpp" />
     <ClCompile Include="Engin\Util\App.cpp" />
     <ClCompile Include="Engin\Collide\CollisionManager.cpp" />
     <ClCompile Include="Engin\Collide\BoxCollider.cpp" />
@@ -84,8 +85,11 @@
     <ClCompile Include="Engin\Collide\RayCastHit.cpp" />
     <ClCompile Include="Engin\Collide\MeshCollider.cpp" />
     <ClCompile Include="App\Player.cpp" />
-    <ClCompile Include="Query.cpp" />
+    <ClCompile Include="Engin\Util\LevelLoader.cpp" />
+    <ClCompile Include="Engin\Collide\Query.cpp" />
     <ClCompile Include="Engin\Sprite\PostEffect.cpp" />
+    <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp" />
+    <ClCompile Include="App\Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -168,6 +172,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engin\Model\ModelManager.h" />
     <ClInclude Include="Engin\Util\App.h" />
     <ClInclude Include="Engin\Collide\CollisionManager.h" />
     <ClInclude Include="Engin\Collide\BoxCollider.h" />
@@ -236,8 +241,11 @@
     <ClInclude Include="Engin\Collide\RayCastHit.h" />
     <ClInclude Include="Engin\Collide\MeshCollider.h" />
     <ClInclude Include="App\Player.h" />
-    <ClInclude Include="Query.h" />
+    <ClInclude Include="Engin\Util\LevelLoader.h" />
+    <ClInclude Include="Engin\Collide\Query.h" />
     <ClInclude Include="Engin\Sprite\PostEffect.h" />
+    <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h" />
+    <ClInclude Include="App\Goal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
@@ -303,7 +311,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)External\Assimp\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
+    <IncludePath>$(SolutionDir)External\Assimp\include;$(SolutionDir)External\nlohmann_json;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

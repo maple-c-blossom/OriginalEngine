@@ -55,20 +55,24 @@ namespace MCB
 
 
 
-		Material material;
-		D3D12_HEAP_PROPERTIES HeapProp{};
-		D3D12_RESOURCE_DESC Resdesc{};
+		Material material_;
+		D3D12_HEAP_PROPERTIES HeapProp_{};
+		D3D12_RESOURCE_DESC Resdesc_{};
 		//Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
-		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1 = nullptr;
-		ConstBufferDataMaterialB1* constMapMaterial = nullptr;
+		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1_ = nullptr;
+		ConstBufferDataMaterialB1* constMapMaterial_ = nullptr;
 
 		~ObjectMaterial();
 
 		void Init();
 
-		void SetIndex(D3D12_RESOURCE_DIMENSION dimension, UINT sizeIB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
+		void SetIndex(const D3D12_RESOURCE_DIMENSION& dimension,  uint32_t sizeIB, int32_t height,  
+			int32_t DepthOrArraySize,  int32_t MipLevels,  int32_t SampleDescCount,
+			const D3D12_TEXTURE_LAYOUT& layout);
 		void Update();
-		void SetVertexBuffer(D3D12_HEAP_TYPE heaptype ,D3D12_RESOURCE_DIMENSION dimension, UINT sizeVB, int height, int DepthOrArraySize, int MipLevels, int SampleDescCount, D3D12_TEXTURE_LAYOUT layout);
+		void SetVertexBuffer(const D3D12_HEAP_TYPE& heaptype ,const D3D12_RESOURCE_DIMENSION& dimension,  
+			uint32_t sizeVB,  int32_t height,  int32_t DepthOrArraySize, int32_t MipLevels,
+			int32_t SampleDescCount, const D3D12_TEXTURE_LAYOUT& layout);
 
 	};
 

@@ -13,13 +13,13 @@ using namespace MCB;
 //void MCB::DirLight::SetLightDir(Vector3D lightdir)
 //{
 //    lightdir.V3Norm();
-//    this->lightdir = lightdir;
+//    lightdir = lightdir;
 //    dirty = true;
 //}
 //
 //void MCB::DirLight::SetLightColor(Float3 lightColor)
 //{
-//    this->lightColor = lightColor;
+//    lightColor = lightColor;
 //    dirty = true;
 //}
 //
@@ -64,7 +64,7 @@ using namespace MCB;
 //    }
 //}
 //
-//void MCB::DirLight::Draw(UINT rootPramIndex)
+//void MCB::DirLight::Draw(uint32_t rootPramIndex)
 //{
 //    Dx12::GetInstance()->commandList->SetGraphicsRootConstantBufferView(rootPramIndex, lightConstBuff->GetGPUVirtualAddress());
 //}

@@ -3,16 +3,17 @@
 
 using namespace DirectX;
 
-void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag, const D3D12_RESOURCE_DESC Resdesc, D3D12_RESOURCE_STATES state)
+void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag,
+    const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
-    dx12.result = dx12.device->CreateCommittedResource(
+    dx12.result_ = dx12.device_->CreateCommittedResource(
         &HeapProp, // ヒープ設定
         flag,
         &Resdesc, // リソース設定
         state,
         nullptr,
-        IID_PPV_ARGS(&vertBuff));
-    assert(SUCCEEDED(dx12.result));
+        IID_PPV_ARGS(&vertBuff_));
+    assert(SUCCEEDED(dx12.result_));
 }
 
 //void MCB::Vertex::SetIbView(DXGI_FORMAT format)
@@ -24,9 +25,9 @@ void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& He
 
 void MCB::Vertex::SetVbView()
 {
-    vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-    vbView.SizeInBytes = sizeVB;
-    vbView.StrideInBytes = sizeof(vertices[0]);
+    vbView_.BufferLocation = vertBuff_->GetGPUVirtualAddress();
+    vbView_.SizeInBytes = sizeVB_;
+    vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
 //void MCB::Vertex::CreateIndexBuffer(Dx12 &dx12,const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag,const D3D12_RESOURCE_DESC Resdesc ,D3D12_RESOURCE_STATES state)
@@ -44,14 +45,14 @@ void MCB::Vertex::SetVbView()
 
 //void MCB::Vertex::CalculationNormalVec()
 //{
-//    for (int i = 0; i < _countof(boxIndices) / 3; i++)
+//    for (int32_t i = 0; i < _countof(boxIndices) / 3; i++)
 //    {
 //        //三角形1つごとに計算
 //
 //        //三角形のインデックスを取り出して、一時的な変数に入れる
-//        unsigned short index0 = boxIndices[i * 3 + 0];
-//        unsigned short index1 = boxIndices[i * 3 + 1];
-//        unsigned short index2 = boxIndices[i * 3 + 2];
+//        uint16_t index0 = boxIndices[i * 3 + 0];
+//        uint16_t index1 = boxIndices[i * 3 + 1];
+//        uint16_t index2 = boxIndices[i * 3 + 2];
 //
 //        //三角形を構成する頂点座標
 //        XMVECTOR p0 = XMLoadFloat3(&Box[index0].pos);
@@ -84,7 +85,7 @@ void MCB::Vertex::SetVbView()
 //    //---------------------------------------
 //
 //    //全インデックスに対して-------------------------
-//    for (int i = 0; i < _countof(boxIndices); i++)
+//    for (int32_t i = 0; i < _countof(boxIndices); i++)
 //    {
 //        indexMap[i] = boxIndices[i];
 //    }
@@ -101,17 +102,17 @@ HRESULT MCB::Vertex::VertexMaping()
 {
     HRESULT result;
 
-    result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+    result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
     assert(SUCCEEDED(result));
 
     // 全頂点に対して
-    for (int i = 0; i < _countof(vertices); i++)
+    for (int32_t i = 0; i < _countof(vertices_); i++)
     {
-        vertMap[i] = vertices[i];   // 座標をコピー
+        vertMap_[i] = vertices_[i];   // 座標をコピー
     }
 
     // マップを解除
-    vertBuff->Unmap(0, nullptr);
+    vertBuff_->Unmap(0, nullptr);
 
     return result;
 }

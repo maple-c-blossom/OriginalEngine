@@ -2,7 +2,7 @@
 
 void MCB::PlaneCollider::Update()
 {
-	Plane::originDistance = originDistance;
-	Plane::normal = normal;
-	GetObject3D()->hited = false;
+	Plane::originDistance_ = originDistance_;
+	Plane::normal_ = normal_;
+	GetObject3D()->hited_ = false;
 }
