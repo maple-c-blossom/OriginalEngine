@@ -70,7 +70,7 @@ void MCB::Object3d::CreateBuff()
 
 void MCB::Object3d::UniqueUpdate()
 {
-
+    isInvisible = false;
 }
 
 void Object3d::Update(bool isBillBord)
@@ -160,7 +160,7 @@ void MCB::Object3d::UpdateMatrix( Quaternion q, bool isBillBord)
 
 void Object3d::Draw()
 {
-    if (model_ == nullptr)return;
+    if (model_ == nullptr || isInvisible)return;
     if (model_->material_.constBuffMaterialB1_ == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
@@ -190,7 +190,7 @@ void Object3d::Draw()
 
 void Object3d::Draw(uint16_t incremant)
 {
-    if (model_ == nullptr)return;
+    if (model_ == nullptr || isInvisible)return;
     if (model_->material_.constBuffMaterialB1_ == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
@@ -273,6 +273,7 @@ void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
 
 void MCB::Object3d::AnimationDraw()
 {
+    if (animationModel_ == nullptr || isInvisible)return;
     //定数バッファビュー(CBV)の設定コマンド
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     //Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
@@ -281,6 +282,7 @@ void MCB::Object3d::AnimationDraw()
 
 void MCB::Object3d::AnimationDraw(uint16_t incremant)
 {
+    if (animationModel_ == nullptr || isInvisible)return;
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     
     animationModel_->Draw();

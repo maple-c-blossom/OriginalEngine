@@ -39,7 +39,7 @@ void MCB::Player::UniqueUpdate()
 	if (isGraund_)
 	{
 		const float absDistance = 0.2f;
-		OutputDebugStringW(L"playerisGraund--------------------------------------------------\n");
+		\
 		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
 			isGraund_ = true;
@@ -54,7 +54,7 @@ void MCB::Player::UniqueUpdate()
 	}
 	else if(fallV_.vec_.y_ <= 0.0f)
 	{
-		OutputDebugStringW(L"playerNoisGraund--------------------------------------------------\n");
+		
 		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
 		{
 			isGraund_ = true;
