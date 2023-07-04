@@ -126,6 +126,32 @@ void MCB::AnimationMesh::Init()
     VertexMaping();
     SetVbView();
 
+    D3D12_RESOURCE_DESC ResdescFbx{};
+    ResdescFbx.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+    ResdescFbx.Width = (sizeof(ConstBuffSkin) + 0xff) & ~0xff;
+    ResdescFbx.Height = 1;
+    ResdescFbx.DepthOrArraySize = 1;
+    ResdescFbx.MipLevels = 1;
+    ResdescFbx.SampleDesc.Count = 1;
+    ResdescFbx.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+    D3D12_HEAP_PROPERTIES HeapProp{};
+    HeapProp.Type = D3D12_HEAP_TYPE_UPLOAD;
+    Dx12* dx12 = Dx12::GetInstance();
+    dx12->result_ = dx12->device_->CreateCommittedResource
+    (
+        &HeapProp,        //ヒープ設定
+        D3D12_HEAP_FLAG_NONE,
+        &ResdescFbx,//リソース設定
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&constBuffSkin_)
+    );
+
+    assert(SUCCEEDED(dx12->result_));
+
+    dx12->result_ = constBuffSkin_->Map(0, nullptr, (void**)&constMapSkin_);
+
 }
 
 //void MCB::AnimationModel::AddSmoothData(uint16_t indexPosition, uint16_t indexVertex)

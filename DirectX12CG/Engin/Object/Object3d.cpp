@@ -65,28 +65,7 @@ void MCB::Object3d::CreateBuff()
 
     dx12->result_ = constBuffTranceform_->Map(0, nullptr, (void**)&constMapTranceform_);
 
-    D3D12_RESOURCE_DESC ResdescFbx{};
-    ResdescFbx.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-    ResdescFbx.Width = (sizeof(ConstBuffSkin) + 0xff) & ~0xff;
-    ResdescFbx.Height = 1;
-    ResdescFbx.DepthOrArraySize = 1;
-    ResdescFbx.MipLevels = 1;
-    ResdescFbx.SampleDesc.Count = 1;
-    ResdescFbx.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-    dx12->result_ = dx12->device_->CreateCommittedResource
-    (
-        &HeapProp,        //ヒープ設定
-        D3D12_HEAP_FLAG_NONE,
-        &ResdescFbx,//リソース設定
-        D3D12_RESOURCE_STATE_GENERIC_READ,
-        nullptr,
-        IID_PPV_ARGS(&constBuffSkin_)
-    );
-
-    assert(SUCCEEDED(dx12->result_));
-
-    dx12->result_ = constBuffSkin_->Map(0, nullptr, (void**)&constMapSkin_);
 }
 
 void MCB::Object3d::UniqueUpdate()
@@ -260,10 +239,8 @@ void MCB::Object3d::AnimationUpdate(bool isBillBord)
   
     
     animationModel_->boneAnimTransform(animeTime_,currentAnimation_);
-    for (size_t i = 0; i < animationModel_->bones_.size(); i++)
-    {
-        constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
-    }
+
+
 }
 
 void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
@@ -288,24 +265,24 @@ void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
     }
 
     animationModel_->boneAnimTransform(animeTime_, currentAnimation_);
-    for (size_t i = 0; i < animationModel_->bones_.size(); i++)
-    {
-        constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
-    }
+    //for (size_t i = 0; i < animationModel_->bones_.size(); i++)
+    //{
+    //    constMapSkin_->boneMats[i] = animationModel_->bones_[i].finalMatrix;
+    //}
 }
 
 void MCB::Object3d::AnimationDraw()
 {
     //定数バッファビュー(CBV)の設定コマンド
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
-    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
+    //Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
     animationModel_->Draw();
 }
 
 void MCB::Object3d::AnimationDraw(uint16_t incremant)
 {
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
-    Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
+    
     animationModel_->Draw();
 }
 

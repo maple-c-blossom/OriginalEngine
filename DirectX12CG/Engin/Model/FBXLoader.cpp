@@ -282,7 +282,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		}
 
 
-		bones_.push_back(temp);
+		tempmodel.bones_.push_back(temp);
 	}
 	for (int32_t i = 0; i < tempmodel.vertices_.size(); i++)
 	{
@@ -320,6 +320,21 @@ void MCB::AnimationModel::Draw()
 	{
 		for (auto& itr2 : itr->meshes)
 		{
+			for (auto& itr3: itr2->constMapSkin_->boneMats)
+			{
+				itr3 = XMMatrixIdentity();
+			}
+			for (size_t i = 0; i < itr2->bones_.size(); i++)
+			{
+				itr2->constMapSkin_->boneMats[i] = itr2->bones_[i].finalMatrix;
+			}
+		}
+	}
+	for (auto& itr : nodes_)
+	{
+		for (auto& itr2 : itr->meshes)
+		{
+			dx12->commandList_->SetGraphicsRootConstantBufferView(4, itr2->constBuffSkin_->GetGPUVirtualAddress());
 			//定数バッファビュー(CBV)の設定コマンド
 			dx12->commandList_->SetGraphicsRootConstantBufferView(2, itr2->material_.begin()->constBuffMaterialB1_->GetGPUVirtualAddress());
 			//SRVヒープの先頭アドレスを取得
@@ -414,8 +429,15 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
       animationTime = (float)min(animationTime, anim->duration -0.0001f);
     
 	
-	for (auto& itr : nodes_) itr->AnimaetionParentMat = XMMatrixIdentity();
-	for (auto& itr : bones_) itr.finalMatrix = itr.offsetMatrix;
+	for (auto& itr : nodes_)
+	{
+		itr->AnimaetionParentMat = XMMatrixIdentity();
+		for (auto& itr2 : itr->meshes)
+		{
+			for (auto& itr3 : itr2->bones_) itr3.finalMatrix = itr3.offsetMatrix;
+		}
+	}
+
 	for (auto& itr : nodes_)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(), &itr->AnimaetionParentMat, itr->transform, currentAnimation);
@@ -475,24 +497,31 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	  else pNode->AnimaetionParentMat = nodeTrans;
 	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
-	  Bone* bonePtr = nullptr;
-	  for (auto& itr : bones_)
+	 std::list<Bone*> bonePtr{};
+	  for (auto& itr : nodes_)
 	  {
-		  //std::string name = nodeName.substr(0, itr.name.size());
-		  if (itr.name == nodeName)
+		  for (auto& itr2 : itr->meshes)
 		  {
-			  bonePtr = &itr;
-			  break;
+			  for (auto& itr3 : itr2->bones_)
+			  {
+				  //std::string name = nodeName.substr(0, itr.name.size());
+				  if (itr3.name == nodeName)
+				  {
+					  bonePtr.push_back(&itr3);
+					  break;
+				  }
+			  }
 		  }
 	  }
 
-	  if (bonePtr != nullptr)
+	  if (!bonePtr.empty())
 	  {
-		  //size_t boneIndex = iter;
-		  //BoneTransformInfo* boneInfo = (BoneTransformInfo*)editBoneTransforms->elementAtIndex(boneIndex);
-		  XMMATRIX* boneOff = &bonePtr->offsetMatrix;
-		  XMMATRIX trans = (*boneOff) * (/*globalInverseTransform **/ mat) ;
-		  bonePtr->finalMatrix = trans;
+		  for (auto& itr : bonePtr)
+		  {
+				  XMMATRIX* boneOff = &itr->offsetMatrix;
+				  XMMATRIX trans = (*boneOff) * (/*globalInverseTransform **/ mat);
+				  itr->finalMatrix = trans;
+		  }
 		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
 	  }
 

@@ -149,10 +149,10 @@ void MCB::Scene::Update()
         player_.position_ = { 0,0,-50 };
     }
 
-    //if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
-    //{
-    //    sceneEnd_ = true;
-    //}
+    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    {
+        sceneEnd_ = true;
+    }
 }
 
 void MCB::Scene::Draw()

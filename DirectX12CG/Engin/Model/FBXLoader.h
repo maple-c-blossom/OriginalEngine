@@ -86,7 +86,7 @@ namespace MCB
         TextureManager* textureManager_ = TextureManager::GetInstance();
         std::vector<std::unique_ptr<Node>> nodes_;
         std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
-        std::vector<Bone> bones_;
+        
         std::string prevAnimName_ = "NoAnimation";
         Animation* prevAnim = nullptr;
         ~AnimationModel();
