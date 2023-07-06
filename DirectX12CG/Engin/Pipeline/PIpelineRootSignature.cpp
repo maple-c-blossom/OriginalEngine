@@ -1,7 +1,7 @@
 #include "PIpelineRootSignature.h"
 using namespace MCB;
 
-void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParameter& rootparams,int32_t blendMode)
+void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParameter& rootparams, uint16_t blendMode)
 {
 
      texSample_.Init();
@@ -134,7 +134,7 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
 
 }
 
-void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParameter& rootparams, int32_t blendMode)
+void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParameter& rootparams, uint16_t blendMode)
 {
 
 
@@ -258,7 +258,7 @@ void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParamete
 
 }
 
-void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParameter& rootparams, int32_t blendMode)
+void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParameter& rootparams, uint16_t blendMode)
 {
 
 
@@ -388,7 +388,7 @@ void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParame
 
 }
 
-void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& rootparam, int32_t blendMode)
+void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode)
 {
 
 
@@ -521,7 +521,7 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
 
 }
 
-void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, int32_t blendMode)
+void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode)
 {
 
 
@@ -647,7 +647,7 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 
 }
 
-void MCB::PipelineRootSignature::SetBrendMode(int32_t blendMode)
+void MCB::PipelineRootSignature::SetBrendMode(BlendMode blendMode)
 {
     switch (blendMode)
     {
@@ -669,7 +669,7 @@ void MCB::PipelineRootSignature::SetBrendMode(int32_t blendMode)
     }
 }
 
-void MCB::PipelineRootSignature::CommonBeginDraw(int32_t toporogyType)
+void MCB::PipelineRootSignature::CommonBeginDraw(Toporogy toporogyType)
 {
     Dx12* dx12 = Dx12::GetInstance();
     dx12->commandList_->SetPipelineState(pipeline_.pipelinestate_.Get());

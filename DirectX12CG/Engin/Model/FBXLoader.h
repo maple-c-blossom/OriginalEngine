@@ -72,6 +72,10 @@ namespace MCB
         DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
         Node* parent = nullptr;
         std::vector<Node*>children{};
+        Vector3D endPosition;
+        Vector3D startPosition;
+        Vector3D boneVec;
+        float boneLength;
     }Node;
     //struct aiMesh;
     //struct aiMaterial;

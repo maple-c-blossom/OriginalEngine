@@ -97,12 +97,12 @@ void MCB::SceneManager::Update()
 void MCB::SceneManager::Draw()
 {
 
-		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
+		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 
 	if (isSceneReady_)//ゲーム画面
 	{
 		scene_->PostEffectDraw();
-		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
+		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 		//3D描画
 		scene_->Draw();
 		//パーティクル

@@ -9,9 +9,9 @@
 //
 MCB::AnimationMesh::~AnimationMesh()
 {
-    for (auto& itr : textures_)
+    for (auto& tex : textures_)
     {
-        itr->free = true;
+        tex->free = true;
     }
 }
 
@@ -108,6 +108,7 @@ void MCB::AnimationMesh::Init()
 {
 
     SetSizeIB();
+    for (auto& itr : material_)
     for (auto& itr : material_)
     {
         itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);

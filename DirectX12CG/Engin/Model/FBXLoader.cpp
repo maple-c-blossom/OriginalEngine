@@ -499,11 +499,18 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		  pNode->rotation = rotationQ.ConvertXMVector();
 
 		  nodeTrans = scalingM * rotationM * translationM;
-		  
+
 	  }
 	  XMMATRIX mat;
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	  else pNode->AnimaetionParentMat = nodeTrans;
+	  pNode->endPosition.vec_.x_ = pNode->AnimaetionParentMat.r[3].m128_f32[0];
+	  pNode->endPosition.vec_.y_ = pNode->AnimaetionParentMat.r[3].m128_f32[1];
+	  pNode->endPosition.vec_.z_ = pNode->AnimaetionParentMat.r[3].m128_f32[2];
+	  if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
+	  else pNode->startPosition = { 0,0,0 };
+	  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
+	  pNode->boneLength = pNode->boneVec.V3Len();
 	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
 	 std::list<Bone*> bonePtr{};
 	  for (auto& itr : nodes_)
@@ -660,3 +667,5 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
 	   return 0;
    }
+
+

@@ -30,19 +30,19 @@ namespace MCB
 		Shader shader_;
 		TexSample texSample_;
 
-		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, int32_t blendMode = Alpha );
+		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
-		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode);
+		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode);
 
-		void SetBrendMode( int32_t blendMode = Alpha);
+		void SetBrendMode(BlendMode blendMode = Alpha);
 
-		void CommonBeginDraw( int32_t toporogyType = TRIANGLESTRIP);
+		void CommonBeginDraw(Toporogy toporogyType = TRIANGLESTRIP);
 
 	};
 }

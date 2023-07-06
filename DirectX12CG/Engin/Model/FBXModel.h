@@ -45,6 +45,7 @@ namespace MCB
             std::string name;
             DirectX::XMMATRIX offsetMatrix;
             DirectX::XMMATRIX finalMatrix;
+
         }Bone;
 
 	class AnimationMesh
