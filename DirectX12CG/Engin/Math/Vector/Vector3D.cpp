@@ -113,6 +113,8 @@ Vector3D MCB::Vector3D::GetRightVec( Vector3D frontVec,  Vector3D UpVec)
 	return ans;
 }
 
+
+
 float MCB::Vector3D::GetInnerProduct(Vector3D vector)
 {
 	Vector3D temp;
@@ -211,3 +213,5 @@ Vector3D MCB::operator-(const Vector3D& vecA)
 	temp.vec_.z_ = vecA.vec_.z_ * -1;
 	return temp;
 }
+
+

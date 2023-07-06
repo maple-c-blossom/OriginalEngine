@@ -1,5 +1,6 @@
 #pragma once
 #include "MCBFloat.h"
+#include "DirectXMath.h"
 namespace MCB
 {
 
@@ -27,11 +28,14 @@ namespace MCB
 		Vector3D GetUpVec(Vector3D RightVec, Vector3D frontVec = { 0,0,1 });
 		Vector3D GetRightVec( Vector3D frontVec,  Vector3D UpVec = { 0,1,0 });
 
+
+
 		Vector3D& operator+=(const Vector3D& Vec);
 		Vector3D& operator-=(const Vector3D& Vec);
 		Vector3D& operator*=( float k);
 		Vector3D& operator= (const Float3& a);
 		Vector3D& operator= (const DirectX::XMVECTOR& a);
+		
 	};
 	Vector3D operator+(const Vector3D& vecA, const Vector3D& vecB);
 	Vector3D operator-(const Vector3D& vecA, const Vector3D& vecB);
@@ -39,6 +43,7 @@ namespace MCB
 	Vector3D operator*( float k, const Vector3D& vecA);
 	Vector3D operator/(const Vector3D& vecA,  float k);
 	Vector3D operator-(const Vector3D& vecA);
+
 
 }
 

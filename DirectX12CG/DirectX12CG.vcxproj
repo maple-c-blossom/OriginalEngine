@@ -330,8 +330,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Debug\assimp-vc143-mtd.lib" $(TargetDir)\lib\assimp\lib\Debug/Y
+xcopy "$(SolutionDir)\External\Assimp\lib\Debug\assimp-vc143-mtd.pdb" $(TargetDir)\lib\assimp\lib\Debug/Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -355,6 +355,10 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.lib" $(TargetDir)\lib\assimp\lib\Release/Y
+xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.pdb" $(TargetDir)\lib\assimp\lib\Release /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

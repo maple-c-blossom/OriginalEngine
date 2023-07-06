@@ -58,6 +58,8 @@ namespace MCB
 		//単位クォータニオン
 		Quaternion Identity();
 
+		DirectX::XMVECTOR ConvertXMVector();
+
 		//クォータニオンの角度
 		float GetAngle(const Quaternion& q);
 		

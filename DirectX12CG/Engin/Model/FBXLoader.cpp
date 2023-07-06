@@ -54,6 +54,8 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 	//DoTheSceneProcessing(scene);
 	CopyNodesWithMeshes(scene->mRootNode, scene);
 	
+
+
 	if (scene->mNumAnimations > 0)
 	{
 		for (uint32_t i = 0; i < scene->mNumAnimations; i++)
@@ -176,6 +178,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 	if (targetParent)
 	{
 		parent->parent = targetParent;
+		targetParent->children.push_back(parent);
 		targetParent->globalTransform *= parent->globalTransform;
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
@@ -491,7 +494,12 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		  XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
 
 		   //Combine the above transformations
+		  pNode->translation = translation.ConvertXMVEC();
+		  pNode->scale = scaling.ConvertXMVEC();
+		  pNode->rotation = rotationQ.ConvertXMVector();
+
 		  nodeTrans = scalingM * rotationM * translationM;
+		  
 	  }
 	  XMMATRIX mat;
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);

@@ -71,7 +71,7 @@ namespace MCB
         DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
         Node* parent = nullptr;
-
+        std::vector<Node*>children{};
     }Node;
     //struct aiMesh;
     //struct aiMaterial;

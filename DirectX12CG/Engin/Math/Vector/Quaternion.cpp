@@ -304,6 +304,11 @@ Quaternion MCB::Quaternion::Identity()
 	return Quaternion(0,0,0,1);
 }
 
+DirectX::XMVECTOR MCB::Quaternion::ConvertXMVector()
+{
+	return DirectX::XMVECTOR{ x_,y_,z_,w_ };
+}
+
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
 	 int32_t time, int32_t maxTime)
 {
