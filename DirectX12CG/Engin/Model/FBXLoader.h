@@ -119,6 +119,8 @@ namespace MCB
 
         static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
 
+        void OneBoneIK(Node& joint,const Vector3D& targetPos);
+
         //bool LoadFile(ImportSetting setting);
         void Draw();
     };

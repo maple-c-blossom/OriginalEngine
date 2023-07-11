@@ -668,4 +668,27 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   return 0;
    }
 
+   void MCB::AnimationModel::OneBoneIK(Node& joint, const Vector3D& targetPos)
+   {
+	   XMMATRIX mat = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
+	   Vector3D vec = targetPos;
+	   XMVECTOR xmVec = vec.ConvertXMVEC();
+	   xmVec = XMVector3Transform(xmVec,mat);
+	   float root1 = sqrt(pow(xmVec.m128_f32[0], 2) + pow(xmVec.m128_f32[1], 2));
+	   float root2 = sqrt(pow(xmVec.m128_f32[0], 2) + pow(xmVec.m128_f32[1], 2) + pow(xmVec.m128_f32[2], 2));
+	   Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
+	   Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
+	   // ÉàÅ[é≤âÒì]ÇÃåvéZ
+	   XMVECTOR jointRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 0.0f);
+
+	   // ÉsÉbÉ`é≤âÒì]ÇÃåvéZ
+	   XMVECTOR pithRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.0f);
+
+	   XMVECTOR currentRotation =joint.rotation;
+	   XMVECTOR newRotation = XMQuaternionMultiply(jointRotation, pithRotation);
+	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, newRotation);
+	   joint.rotation = finalRotation;
+
+   }
+
 
