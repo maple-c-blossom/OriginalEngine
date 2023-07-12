@@ -706,7 +706,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		float lineCLenSquare = lineCLen * lineCLen;
 		//éËèá2
 		float cosB = (lineCLenSquare + lineALenSquare - lineBLenSquare) / (2 * lineCLen *lineALen);
-		float cosC = (lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen);
+		floatz2 cosC = (lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen);
 		//éËèá3
 		float sinB = abs(sqrtf(1.f - (cosB * cosB)));
 		float sinC = abs(sqrtf(1.f - (cosC * cosC)));
