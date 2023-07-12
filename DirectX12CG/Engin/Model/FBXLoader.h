@@ -76,6 +76,14 @@ namespace MCB
         Vector3D startPosition;
         Vector3D boneVec;
         float boneLength;
+        struct IKData
+        {
+            bool isIK = false;
+            bool rotationInv = false;
+            Vector3D iKTargetPosition = {};
+            Vector3D constraintVector = {0,1,0};
+        };
+        IKData ikData;
     }Node;
     //struct aiMesh;
     //struct aiMaterial;
@@ -119,7 +127,9 @@ namespace MCB
 
         static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
 
-        void OneBoneIK(Node& joint,const Vector3D& targetPos);
+        void OneBoneIK(Node& joint);
+
+        void TowBoneIK(Node& joint1, Node& joint2);
 
         //bool LoadFile(ImportSetting setting);
         void Draw();

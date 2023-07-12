@@ -668,27 +668,50 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   return 0;
    }
 
-   void MCB::AnimationModel::OneBoneIK(Node& joint, const Vector3D& targetPos)
+   void MCB::AnimationModel::OneBoneIK(Node& joint)
    {
-	   XMMATRIX mat = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
-	   Vector3D vec = targetPos;
-	   XMVECTOR xmVec = vec.ConvertXMVEC();
-	   xmVec = XMVector3Transform(xmVec,mat);
-	   float root1 = sqrt(pow(xmVec.m128_f32[0], 2) + pow(xmVec.m128_f32[1], 2));
-	   float root2 = sqrt(pow(xmVec.m128_f32[0], 2) + pow(xmVec.m128_f32[1], 2) + pow(xmVec.m128_f32[2], 2));
-	   Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
-	   Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
-	   // ÉàÅ[é≤âÒì]ÇÃåvéZ
-	   XMVECTOR jointRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 0.0f);
+		XMMATRIX mat = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
+		Vector3D vec = joint.ikData.iKTargetPosition;
+		XMVECTOR xmVec = vec.ConvertXMVEC();
+		xmVec = XMVector3Transform(xmVec,mat);
+		float VecXSquare = xmVec.m128_f32[0] * xmVec.m128_f32[0];
+		float VecYSquare = xmVec.m128_f32[1] * xmVec.m128_f32[1];
+		float root1 = sqrtf(VecXSquare + VecYSquare);
+		float root2 = sqrtf(VecXSquare + VecYSquare + pow(xmVec.m128_f32[2], 2));
+		Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
+		Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
+		// ÉàÅ[é≤âÒì]ÇÃåvéZ
+		XMVECTOR jointRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 0.0f);
 
-	   // ÉsÉbÉ`é≤âÒì]ÇÃåvéZ
-	   XMVECTOR pithRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.0f);
+		// ÉsÉbÉ`é≤âÒì]ÇÃåvéZ
+		XMVECTOR pithRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.0f);
 
-	   XMVECTOR currentRotation =joint.rotation;
-	   XMVECTOR newRotation = XMQuaternionMultiply(jointRotation, pithRotation);
-	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, newRotation);
-	   joint.rotation = finalRotation;
+		XMVECTOR currentRotation =joint.rotation;
+		XMVECTOR newRotation = XMQuaternionMultiply(jointRotation, pithRotation);
+		XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, newRotation);
+		joint.rotation = finalRotation;
 
+   }
+
+   void MCB::AnimationModel::TowBoneIK(Node& joint1, Node& joint2)
+   {
+		OneBoneIK(joint1);//éËèá1
+
+		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//éËèá1.5?Åiï”CéZèo)
+		float lineALen = joint2.boneLength;
+		float lineBLen = joint1.boneLength;
+		float lineCLen = lineC.V3Len();
+		float lineALenSquare = lineALen * lineALen;
+		float lineBLenSquare = lineBLen * lineBLen;
+		float lineCLenSquare = lineCLen * lineCLen;
+		//éËèá2
+		float cosB = (lineCLenSquare + lineALenSquare - lineBLenSquare) / (2 * lineCLen *lineALen);
+		float cosC = (lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen);
+		//éËèá3
+		float sinB = abs(sqrtf(1.f - (cosB * cosB)));
+		float sinC = abs(sqrtf(1.f - (cosC * cosC)));
+		joint1.ikData.rotationInv ? sinC : sinB *= -1;
+		cosC *= -1;
    }
 
 
