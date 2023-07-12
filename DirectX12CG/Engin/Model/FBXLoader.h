@@ -76,6 +76,7 @@ namespace MCB
         Vector3D startPosition;
         Vector3D boneVec;
         float boneLength;
+        bool updated = false;
         struct IKData
         {
             bool isIK = false;
@@ -96,7 +97,7 @@ namespace MCB
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
         TextureManager* textureManager_ = TextureManager::GetInstance();
-        std::vector<std::unique_ptr<Node>> nodes_;
+        std::vector< std::unique_ptr<Node>> nodes_;
         std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
         
         std::string prevAnimName_ = "NoAnimation";
@@ -111,7 +112,7 @@ namespace MCB
 
         void boneAnimTransform(  float& timeInSeconds,const std::string& currentAnimation = "Null", bool loop = true);
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, DirectX::XMMATRIX *parentTransform, const DirectX::XMMATRIX& globalInverseTransform, const std::string& currentAnimation = "Null");
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode,  const std::string& currentAnimation = "Null");
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 
@@ -129,9 +130,10 @@ namespace MCB
 
         void OneBoneIK(Node& joint);
 
-        void TowBoneIK(Node& joint1, Node& joint2);
-
-        //bool LoadFile(ImportSetting setting);
+        void TwoBoneIK(Node& joint1, Node& joint2);
+        Node* ReadNode(std::string name);
+        void Vectorconstraiont(Node& joint);
+        void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
         void Draw();
     };
 }

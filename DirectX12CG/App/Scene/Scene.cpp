@@ -139,6 +139,9 @@ void MCB::Scene::Update()
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
+    Node* node = playerModel_->ReadNode("LowerArm.R");
+    node->ikData.isIK = true;
+    node->ikData.iKTargetPosition = { player_.position_.x,player_.position_.y + 0.5f,player_.position_.z };
     CheckAllColision();
     MatrixUpdate();
     

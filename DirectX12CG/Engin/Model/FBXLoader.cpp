@@ -443,7 +443,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
 	for (auto& itr : nodes_)
 	{
-		readAnimNodeHeirarchy(animationTime, itr.get(), &itr->AnimaetionParentMat, itr->transform, currentAnimation);
+		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
 	}
     
   /*  if(transforms->getCount() == 0)
@@ -455,8 +455,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy( float animationTime, Node* pNode, DirectX::XMMATRIX* parentTransform, 
-	  const DirectX::XMMATRIX& globalInverseTransform, const string& currentAnimation)
+  void AnimationModel::readAnimNodeHeirarchy( float animationTime, Node* pNode,  const string& currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
@@ -511,6 +510,23 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  else pNode->startPosition = { 0,0,0 };
 	  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
+	  if (pNode->ikData.isIK)
+	  {
+		  TwoBoneIK(*pNode,*pNode->parent);
+		  XMMATRIX scalingM = XMMatrixScaling(pNode->scale.m128_f32[0], pNode->scale.m128_f32[1], pNode->scale.m128_f32[2]);
+		  XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
+		  XMMATRIX translationM = XMMatrixTranslation(pNode->translation.m128_f32[0], pNode->translation.m128_f32[1], pNode->translation.m128_f32[2]);
+		  nodeTrans = scalingM * rotationM * translationM;
+		  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
+		  else pNode->AnimaetionParentMat = nodeTrans;
+		  pNode->endPosition.vec_.x_ = pNode->AnimaetionParentMat.r[3].m128_f32[0];
+		  pNode->endPosition.vec_.y_ = pNode->AnimaetionParentMat.r[3].m128_f32[1];
+		  pNode->endPosition.vec_.z_ = pNode->AnimaetionParentMat.r[3].m128_f32[2];
+		  if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
+		  else pNode->startPosition = { 0,0,0 };
+		  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
+		  pNode->boneLength = pNode->boneVec.V3Len();
+	  }
 	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
 	 std::list<Bone*> bonePtr{};
 	  for (auto& itr : nodes_)
@@ -670,33 +686,29 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
    void MCB::AnimationModel::OneBoneIK(Node& joint)
    {
-		XMMATRIX mat = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
+	    joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
 		Vector3D vec = joint.ikData.iKTargetPosition;
 		XMVECTOR xmVec = vec.ConvertXMVEC();
-		xmVec = XMVector3Transform(xmVec,mat);
+		xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
 		float VecXSquare = xmVec.m128_f32[0] * xmVec.m128_f32[0];
 		float VecYSquare = xmVec.m128_f32[1] * xmVec.m128_f32[1];
 		float root1 = sqrtf(VecXSquare + VecYSquare);
-		float root2 = sqrtf(VecXSquare + VecYSquare + pow(xmVec.m128_f32[2], 2));
+		float root2 = sqrtf(VecXSquare + VecYSquare + powf(xmVec.m128_f32[2], 2));
 		Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
 		Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
-		// ÉàÅ[é≤âÒì]ÇÃåvéZ
-		XMVECTOR jointRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 0.0f);
-
 		// ÉsÉbÉ`é≤âÒì]ÇÃåvéZ
-		XMVECTOR pithRotation = XMQuaternionRotationRollPitchYaw(0.0f, atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.0f);
-
+		XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.f);
 		XMVECTOR currentRotation =joint.rotation;
-		XMVECTOR newRotation = XMQuaternionMultiply(jointRotation, pithRotation);
-		XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, newRotation);
+		XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
 		joint.rotation = finalRotation;
 
    }
 
-   void MCB::AnimationModel::TowBoneIK(Node& joint1, Node& joint2)
+   void MCB::AnimationModel::TwoBoneIK(Node& joint1, Node& joint2)
    {
 		OneBoneIK(joint1);//éËèá1
-
+		//Ç±Ç±Ç…ä÷êﬂï˚å¸ÇÃêßå‰Çç∑ÇµçûÇﬁÇÁÇµÇ¢
+		Vectorconstraiont(joint1);
 		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//éËèá1.5?Åiï”CéZèo)
 		float lineALen = joint2.boneLength;
 		float lineBLen = joint1.boneLength;
@@ -712,6 +724,42 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		float sinC = abs(sqrtf(1.f - (cosC * cosC)));
 		joint1.ikData.rotationInv ? sinC : sinB *= -1;
 		cosC *= -1;
+		ApplyRotation(joint1, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(-sinB, cosB));
+		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
+   Node* MCB::AnimationModel::ReadNode(std::string name)
+   {
+	   for (auto& node : nodes_)
+	   {
+		   if (node->name == name)
+		   {
+			   return node.get();
+		   }
+	   }
+	   return nullptr;
+   }
 
+   void MCB::AnimationModel::Vectorconstraiont(Node& joint)
+   {
+	   Vector3D vec = joint.ikData.constraintVector;
+	   XMVECTOR xmVec = vec.ConvertXMVEC();
+	   xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
+	   float root = sqrtf(powf(vec.vec_.y_, 2) + powf(vec.vec_.z_, 2));
+	   float cosX = vec.vec_.y_ / root;
+	   float sinX = vec.vec_.z_ / root;
+
+	   XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(0.f,0.f, atan2f(sinX,cosX));
+	   XMVECTOR currentRotation = joint.rotation;
+	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
+	   joint.rotation = finalRotation;
+   }
+
+   void MCB::AnimationModel::ApplyRotation(Node& joint, const XMFLOAT3& axis, float angle)
+   {
+	   XMVECTOR rotationAxis = XMLoadFloat3(&axis);
+	   XMVECTOR rotation = XMQuaternionRotationAxis(rotationAxis, angle);
+	   XMVECTOR currentRotation = joint.rotation;
+	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
+	   joint.rotation = finalRotation;
+   }
