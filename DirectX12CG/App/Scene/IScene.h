@@ -42,7 +42,7 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
-#include "FBXLoader.h"
+#include "AnimationModel.h"
 #include "PipeLineManager.h"
 #include "ImguiManager.h"
 #include "Particle.h"

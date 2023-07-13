@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engin\Model\AnimationMesh.cpp" />
+    <ClCompile Include="Engin\Model\AnimationModel.cpp" />
     <ClCompile Include="Engin\Model\ModelManager.cpp" />
     <ClCompile Include="Engin\Util\App.cpp" />
     <ClCompile Include="Engin\Collide\CollisionManager.cpp" />
@@ -29,8 +31,6 @@
     <ClCompile Include="Engin\DirectX\Draw.cpp" />
     <ClCompile Include="Engin\DirectX\Dx12.cpp" />
     <ClCompile Include="Engin\DirectX\DxWindow.cpp" />
-    <ClCompile Include="Engin\Model\FBXLoader.cpp" />
-    <ClCompile Include="Engin\Model\FBXModel.cpp" />
     <ClCompile Include="Engin\Util\FPS.cpp" />
     <ClCompile Include="Engin\DirectX\GamePad.cpp" />
     <ClCompile Include="Engin\Camera\ICamera.cpp" />
@@ -172,6 +172,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engin\Model\AnimationMesh.h" />
+    <ClInclude Include="Engin\Model\AnimationModel.h" />
     <ClInclude Include="Engin\Model\ModelManager.h" />
     <ClInclude Include="Engin\Util\App.h" />
     <ClInclude Include="Engin\Collide\CollisionManager.h" />
@@ -187,8 +189,6 @@
     <ClInclude Include="Engin\DirectX\Draw.h" />
     <ClInclude Include="Engin\DirectX\Dx12.h" />
     <ClInclude Include="Engin\DirectX\DxWindow.h" />
-    <ClInclude Include="Engin\Model\FBXLoader.h" />
-    <ClInclude Include="Engin\Model\FBXModel.h" />
     <ClInclude Include="Engin\Util\FPS.h" />
     <ClInclude Include="Engin\DirectX\GamePad.h" />
     <ClInclude Include="Engin\Camera\ICamera.h" />

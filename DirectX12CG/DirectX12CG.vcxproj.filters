@@ -300,12 +300,6 @@
     <ClCompile Include="App\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Engin\Model\FBXLoader.cpp">
-      <Filter>ソース ファイル\Engin\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Engin\Model\FBXModel.cpp">
-      <Filter>ソース ファイル\Engin\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Engin\DirectX\GamePad.cpp">
       <Filter>ソース ファイル\Engin\Input</Filter>
     </ClCompile>
@@ -395,6 +389,12 @@
     </ClCompile>
     <ClCompile Include="App\Goal.cpp">
       <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Model\AnimationModel.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Model\AnimationMesh.cpp">
+      <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -559,12 +559,6 @@
     <ClInclude Include="App\Scene\TitleScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Engin\Model\FBXModel.h">
-      <Filter>ヘッダー ファイル\Engin\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Engin\Model\FBXLoader.h">
-      <Filter>ヘッダー ファイル\Engin\Model</Filter>
-    </ClInclude>
     <ClInclude Include="Engin\DirectX\GamePad.h">
       <Filter>ヘッダー ファイル\Engin\Input</Filter>
     </ClInclude>
@@ -660,6 +654,12 @@
     </ClInclude>
     <ClInclude Include="App\Goal.h">
       <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\AnimationMesh.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Model\AnimationModel.h">
+      <Filter>ヘッダー ファイル\Engin\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

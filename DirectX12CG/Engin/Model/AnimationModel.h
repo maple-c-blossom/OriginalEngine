@@ -9,7 +9,7 @@
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
-#include "FBXModel.h"
+#include "AnimationMesh.h"
 #include "TextureManager.h"
 #include "Quaternion.h"
 #include <unordered_map>
