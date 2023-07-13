@@ -91,23 +91,34 @@ namespace MCB
 
     class Skeleton
     {
+    private:
         std::vector< std::unique_ptr<Node>> nodes_;
     public:
         Node* rootNode;
         
-        Animation* currentAnimation = nullptr;
-        Animation* prevAnimation = nullptr;
-        Animation* nextAnimation = nullptr;
+        //アニメーションの補間に使うと予想して作っておく----------
+        Animation* currentAnimation = nullptr;//現在Animation
+        Animation* prevAnimation = nullptr;//前回Animation
+        Animation* nextAnimation = nullptr;//次のAnimation
+        //--------------
 
+        //限定的に使用するNodesを直接取得する物(forで全参照したいときとか)
         std::vector< std::unique_ptr<Node>>* GetNodes_()
         {
             return &nodes_;
         };
-        Node* GetNode(std::string name)
+        Node* GetNode(std::string name)//与えられた名前のNodeを返す
         {
-
+            for (auto& node : nodes_)
+            {
+                if (node->name == name)
+                {
+                    return node.get();
+                }
+            }
+            return nullptr; 
         }
-        void SetNode(std::unique_ptr<Node> node)
+        void SetNode(std::unique_ptr<Node> node)//Nodeを追加
         {
             nodes_.push_back(std::move(node));
         }
@@ -119,38 +130,42 @@ namespace MCB
         /// <param name="closestNum">何番目に近いノードが欲しいのか</param>
         /// <returns></returns>
         Node* GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin = {0,0,0}, uint32_t closestNum = 1);
-        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);
+        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);//Animation前の準備等
 
-        static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
 
+        static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);//どのNodeのキーフレームを見るのか
+        //キーフレームの補完-------------
         static void calcInterpolatedPosition(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
         static void calcInterpolatedRotation(Quaternion& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
         static void calcInterpolatedScaling(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
-
+        //------------
+        //キーフレームの値を検索し返す------------------------
         static size_t findPosition( float AnimationTime, const NodeAnim* pNodeAnim);
 
         static size_t findRotation( float AnimationTime, const NodeAnim* pNodeAnim);
 
         static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
-
+        //---------------------
+        //1BoneIK(試作)
         void OneBoneIK(Node& joint);
-
+        //2BoneIK(試作）
         void TwoBoneIK(Node& joint1, Node& joint2);
-        Node* ReadNode(std::string name);
+        //関節の曲がる方向を制限(試作)
         void Vectorconstraiont(Node& joint);
+
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
     };
 
-
+    //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)
     class AnimationManager
     {
         std::unordered_map<std::string, std::unique_ptr<Animation>> animations_;
     public:
-        Animation* GetAnimation(std::string name) 
+        Animation* GetAnimation(std::string name) //アニメーションを取得
         {
             auto& itr = animations_.find(name);
             if (itr == animations_.end())
@@ -162,29 +177,29 @@ namespace MCB
         };
         void SetAnimation(std::unique_ptr<Animation> animation) {
             animations_[animation->name] = std::move(animation);
-        }
+        }//アニメーションを追加
     };
 
     class AnimationModel
     {
     private:
-        using string = std::string;
+
         //ID3D12Device* device = nullptr;
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
         TextureManager* textureManager_ = TextureManager::GetInstance();
-        Skeleton skeleton;
-        AnimationManager animationManager;
+        Skeleton skeleton;//スケルトン情報
+        AnimationManager animationManager;//アニメーション情報
+        //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
         void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
         ~AnimationModel();
-        string fileName_;
-        bool isDelete_ = false;
-        bool Load( std::string fileName,const std::string& fileType = "gltf");
-        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
-        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
-        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
-
-        void Draw();
+        string fileName_;//Modelのファイル名
+        bool isDelete_ = false;//完全に削除していいかどうか
+        bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelデータをロード
+        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeの階層構造並びにmeshの解析、抽出
+        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh内のデータを解析、抽出
+        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material内のTexture情報の解析,抽出
+        void Draw();//Modelの描画
     };
 }
 

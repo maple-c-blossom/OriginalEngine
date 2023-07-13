@@ -726,17 +726,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
-   Node* MCB::Skeleton::ReadNode(std::string name)
-   {
-	   for (auto& node : nodes_)
-	   {
-		   if (node->name == name)
-		   {
-			   return node.get();
-		   }
-	   }
-	   return nullptr;
-   }
+
 
    void MCB::Skeleton::Vectorconstraiont(Node& joint)
    {
@@ -776,22 +766,22 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		for (auto& node : nodes_)
 		{
 			Vector3D pointVec = pointVec.V3Get(node->startPosition.vec_, localTargetPos.vec_);
-			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);
+			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);//Boneのベクトルから最も近い位置を算出
 			LengeData temp;
 			temp.node = node.get();
 			temp.lenge = lenge;
 			lenges.push_back(temp);
 		}
 
-		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });
-		int i = 0;
+		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });//近い順でソート(closestNumで検索掛けるため)
+		int i = 1;//添え字ではなく"何番目か"を指定するので1番目を最初に(0番を最初にするかは思案中)
 		for (auto itr = lenges.begin(); itr != lenges.end(); ++itr)
 		{
-			i++;
-			if (i == closestNum)
+			if (i == closestNum)//完全一致しない場合はnullptr(ずれた値出るとまずいため）
 			{
 				result = itr->node;
 			}
+			i++;
 		}
 		return result;
    }
