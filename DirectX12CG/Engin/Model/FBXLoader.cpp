@@ -7,17 +7,23 @@
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
+using namespace std;
 
+void MCB::AnimationModel::AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation, bool loop)
+{
+	Animation* anim = animationManager.GetAnimation(currentAnimation);
+	skeleton.boneAnimTransform(timeInSeconds,anim,loop);
+}
 
 MCB::AnimationModel::~AnimationModel()
 {
-	for (uint32_t i = 0; i < nodes_.size(); i++)
+	for (auto& node :  *skeleton.GetNodes_())
 	{
-		for (uint32_t j = 0; j < nodes_[i]->meshes.size(); j++)
+		for (auto& mesh : node->meshes)
 		{
-			for (uint32_t k = 0; k < nodes_[i]->meshes[j]->textures_.size(); k++)
+			for (auto& texture: mesh->textures_)
 			{
-				nodes_[i]->meshes[j]->textures_[k]->free = true;
+				texture->free = true;
 			}
 		}
 	}
@@ -53,7 +59,6 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 	// Now we can access the file's contents.
 	//DoTheSceneProcessing(scene);
 	CopyNodesWithMeshes(scene->mRootNode, scene);
-	
 
 
 	if (scene->mNumAnimations > 0)
@@ -107,7 +112,7 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 				}
 				tempAnim->channels.push_back(tempNodeAnim);
 			}
-			animations_[tempAnim->name] = move(tempAnim);
+			animationManager.SetAnimation(move(tempAnim));
 		}
 	}
 
@@ -171,8 +176,8 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
 		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
-		nodes_.push_back(std::move(newObject));
-		parent = nodes_.back().get();
+		skeleton.SetNode(std::move(newObject));
+		parent = skeleton.GetNodes_()->back().get();
 		//transform.SetUnity();
 		
 	if (targetParent)
@@ -181,6 +186,13 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		targetParent->children.push_back(parent);
 		targetParent->globalTransform *= parent->globalTransform;
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
+	}
+	else
+	{
+		if (skeleton.rootNode == nullptr)
+		{
+			skeleton.rootNode = parent;
+		}
 	}
 	//// continue for all child nodes
 	for (uint32_t i = 0; i < ainode->mNumChildren; i++) {
@@ -319,7 +331,7 @@ void MCB::AnimationModel::Draw()
 {
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
-	for (auto& itr : nodes_)
+	for (auto& itr : *skeleton.GetNodes_())
 	{
 		for (auto& itr2 : itr->meshes)
 		{
@@ -333,7 +345,7 @@ void MCB::AnimationModel::Draw()
 			}
 		}
 	}
-	for (auto& itr : nodes_)
+	for (auto& itr : *skeleton.GetNodes_())
 	{
 		for (auto& itr2 : itr->meshes)
 		{
@@ -393,7 +405,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	return textures;
 }
 
-  void AnimationModel::boneAnimTransform( float& timeInSeconds, const std::string& currentAnimation, bool loop)
+  void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation, bool loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -403,33 +415,27 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
     
     //NSLog(@"%d", scene->mNumAnimations);
 
+	  if (animation == nullptr) return;
 
-
-	if (prevAnimName_ != currentAnimation)
+	if (prevAnimation != animation)
 	{
-		auto itr = animations_.find(currentAnimation);
-		if (itr == animations_.end())
-		{
-			return;
-		}
-		prevAnimName_ = currentAnimation;
-		prevAnim = animations_[currentAnimation].get();
+		prevAnimation = currentAnimation;
+		currentAnimation = animation;
 	}
-	if (timeInSeconds >= animations_[currentAnimation]->duration)
+	if (timeInSeconds >= currentAnimation->duration)
 	{
 		timeInSeconds = 0;
 	}
-	Animation* anim;
-	anim = prevAnim;
 
-    float ticksPerSecond = (float)(anim->ticksPerSecond != 0 ? anim->ticksPerSecond : 25.0f);
+
+    float ticksPerSecond = (float)(currentAnimation->ticksPerSecond != 0 ? currentAnimation->ticksPerSecond : 25.0f);
     float timeInTicks = timeInSeconds * ticksPerSecond;
     float animationTime = timeInTicks;
     
     if(loop)
-      animationTime = (float)fmod(animationTime, anim->duration);
+      animationTime = (float)fmod(animationTime, currentAnimation->duration);
     else
-      animationTime = (float)min(animationTime, anim->duration -0.0001f);
+      animationTime = (float)min(animationTime, currentAnimation->duration -0.0001f);
     
 	
 	for (auto& itr : nodes_)
@@ -455,19 +461,11 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
     }*/
   }
 
-  void AnimationModel::readAnimNodeHeirarchy( float animationTime, Node* pNode,  const string& currentAnimation)
+  void Skeleton::readAnimNodeHeirarchy( float animationTime, Node* pNode,  Animation* currentAnimation)
   {
 	  const string& nodeName = pNode->name;
 
-	  if (prevAnimName_ != currentAnimation)
-	  {
-		  auto itr = animations_.find(currentAnimation);
-		  if (itr == animations_.end())
-		  {
-			  return;
-		  }
-	  }
-	  const Animation* pAnimation = animations_[currentAnimation].get();
+	  const Animation* pAnimation = currentAnimation;
 
 	  XMMATRIX nodeTrans = pNode->transform;
 
@@ -562,7 +560,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  //}
   }
 
-  const NodeAnim* AnimationModel::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
+  const NodeAnim* Skeleton::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
   {
 
 	  for (uint32_t i = 0; i < pAnimation->channels.size(); i++)
@@ -580,7 +578,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
 
 
-   void AnimationModel::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void Skeleton::calcInterpolatedPosition(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->position.size() == 1)
 	  {
@@ -599,7 +597,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  Out = Start + Factor * Delta;
   }
 
-   void AnimationModel::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void Skeleton::calcInterpolatedRotation(Quaternion& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  // we need at least two values to interpolate...
 	  if (pNodeAnim->rotation.size() == 1) {
@@ -620,7 +618,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
   }
 
 
-   void AnimationModel::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
+   void Skeleton::calcInterpolatedScaling(Vector3D& Out, float AnimationTime, const NodeAnim* pNodeAnim)
   {
 	  if (pNodeAnim->scale.size() == 1) {
 		  Out = pNodeAnim->scale[0];
@@ -639,7 +637,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	  Out = Start + Factor * Delta;
   }
 
-   size_t AnimationModel::findPosition( float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t Skeleton::findPosition( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   for (uint32_t i = 0; i < pNodeAnim->position.size(); i++) {
 		   if (AnimationTime < (float)pNodeAnim->positionTime[i]) {
@@ -653,7 +651,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
    }
 
 
-   size_t AnimationModel::findRotation( float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t Skeleton::findRotation( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->rotation.size() > 0);
 
@@ -669,7 +667,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
    }
 
 
-   size_t AnimationModel::findScaling( float AnimationTime, const NodeAnim* pNodeAnim)
+   size_t Skeleton::findScaling( float AnimationTime, const NodeAnim* pNodeAnim)
    {
 	   assert(pNodeAnim->scale.size() > 0);
 
@@ -684,7 +682,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   return 0;
    }
 
-   void MCB::AnimationModel::OneBoneIK(Node& joint)
+   void MCB::Skeleton::OneBoneIK(Node& joint)
    {
 	    joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
 		Vector3D vec = joint.ikData.iKTargetPosition;
@@ -704,7 +702,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
    }
 
-   void MCB::AnimationModel::TwoBoneIK(Node& joint1, Node& joint2)
+   void MCB::Skeleton::TwoBoneIK(Node& joint1, Node& joint2)
    {
 		OneBoneIK(joint1);//éËèá1
 		//Ç±Ç±Ç…ä÷êﬂï˚å¸ÇÃêßå‰Çç∑ÇµçûÇﬁÇÁÇµÇ¢
@@ -728,7 +726,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
-   Node* MCB::AnimationModel::ReadNode(std::string name)
+   Node* MCB::Skeleton::ReadNode(std::string name)
    {
 	   for (auto& node : nodes_)
 	   {
@@ -740,7 +738,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   return nullptr;
    }
 
-   void MCB::AnimationModel::Vectorconstraiont(Node& joint)
+   void MCB::Skeleton::Vectorconstraiont(Node& joint)
    {
 	   Vector3D vec = joint.ikData.constraintVector;
 	   XMVECTOR xmVec = vec.ConvertXMVEC();
@@ -755,11 +753,45 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   joint.rotation = finalRotation;
    }
 
-   void MCB::AnimationModel::ApplyRotation(Node& joint, const XMFLOAT3& axis, float angle)
+   void MCB::Skeleton::ApplyRotation(Node& joint, const XMFLOAT3& axis, float angle)
    {
 	   XMVECTOR rotationAxis = XMLoadFloat3(&axis);
 	   XMVECTOR rotation = XMQuaternionRotationAxis(rotationAxis, angle);
 	   XMVECTOR currentRotation = joint.rotation;
 	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
 	   joint.rotation = finalRotation;
+   }
+
+   Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
+   {
+	   struct LengeData
+	   {
+		   Node* node;
+		   float lenge;
+	   };
+
+		Node* result = nullptr;
+		Vector3D localTargetPos = targetPos - objectPositoin;//MeshãÛä‘Ç…ïœä∑
+		list<LengeData> lenges;
+		for (auto& node : nodes_)
+		{
+			Vector3D pointVec = pointVec.V3Get(node->startPosition.vec_, localTargetPos.vec_);
+			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);
+			LengeData temp;
+			temp.node = node.get();
+			temp.lenge = lenge;
+			lenges.push_back(temp);
+		}
+
+		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });
+		int i = 0;
+		for (auto itr = lenges.begin(); itr != lenges.end(); ++itr)
+		{
+			i++;
+			if (i == closestNum)
+			{
+				result = itr->node;
+			}
+		}
+		return result;
    }

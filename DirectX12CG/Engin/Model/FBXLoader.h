@@ -89,30 +89,39 @@ namespace MCB
     //struct aiMesh;
     //struct aiMaterial;
 
-    class AnimationModel
+    class Skeleton
     {
-    private:
-        using string = std::string;
-        //ID3D12Device* device = nullptr;
-        //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
-    public:
-        TextureManager* textureManager_ = TextureManager::GetInstance();
         std::vector< std::unique_ptr<Node>> nodes_;
-        std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
+    public:
+        Node* rootNode;
         
-        std::string prevAnimName_ = "NoAnimation";
-        Animation* prevAnim = nullptr;
-        ~AnimationModel();
-        string fileName_;
-        bool isDelete_ = false;
-        bool Load( std::string fileName,const std::string& fileType = "gltf");
-        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
-        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
-        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
+        Animation* currentAnimation = nullptr;
+        Animation* prevAnimation = nullptr;
+        Animation* nextAnimation = nullptr;
 
-        void boneAnimTransform(  float& timeInSeconds,const std::string& currentAnimation = "Null", bool loop = true);
+        std::vector< std::unique_ptr<Node>>* GetNodes_()
+        {
+            return &nodes_;
+        };
+        Node* GetNode(std::string name)
+        {
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode,  const std::string& currentAnimation = "Null");
+        }
+        void SetNode(std::unique_ptr<Node> node)
+        {
+            nodes_.push_back(std::move(node));
+        }
+        /// <summary>
+        /// 与えられたポジションに近いNodeを返す
+        /// </summary>
+        /// <param name="targetPos">対象となるポジション</param>
+        /// <param name="objectPositoin">モデルを保有しているオブジェクトのポジション(初めからMesh空間上の座標を渡す場合不要)</param>
+        /// <param name="closestNum">何番目に近いノードが欲しいのか</param>
+        /// <returns></returns>
+        Node* GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin = {0,0,0}, uint32_t closestNum = 1);
+        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);
+
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);
 
@@ -134,6 +143,47 @@ namespace MCB
         Node* ReadNode(std::string name);
         void Vectorconstraiont(Node& joint);
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
+    };
+
+
+    class AnimationManager
+    {
+        std::unordered_map<std::string, std::unique_ptr<Animation>> animations_;
+    public:
+        Animation* GetAnimation(std::string name) 
+        {
+            auto& itr = animations_.find(name);
+            if (itr == animations_.end())
+            {
+                return nullptr;
+            }
+            return animations_[name].get();
+
+        };
+        void SetAnimation(std::unique_ptr<Animation> animation) {
+            animations_[animation->name] = std::move(animation);
+        }
+    };
+
+    class AnimationModel
+    {
+    private:
+        using string = std::string;
+        //ID3D12Device* device = nullptr;
+        //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
+    public:
+        TextureManager* textureManager_ = TextureManager::GetInstance();
+        Skeleton skeleton;
+        AnimationManager animationManager;
+        void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
+        ~AnimationModel();
+        string fileName_;
+        bool isDelete_ = false;
+        bool Load( std::string fileName,const std::string& fileType = "gltf");
+        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);
+        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);
+        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);
+
         void Draw();
     };
 }

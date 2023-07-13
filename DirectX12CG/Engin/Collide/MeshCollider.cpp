@@ -46,36 +46,38 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 	triangles_.clear();
 	int32_t start = 0;
 
-	for (int32_t i = 0; i < model->nodes_.size(); i++)
+	size_t i = 0;
+	for (auto& itr: *model->skeleton.GetNodes_())
 	{
-		for (int32_t j = 0; j < model->nodes_[i]->meshes.size(); j++)
+		for (int32_t j = 0; j <itr->meshes.size(); j++)
 		{
-			size_t triangleNum = model->nodes_[i]->meshes[j]->indices_.size() / 3;
+			size_t triangleNum =itr->meshes[j]->indices_.size() / 3;
 			triangles_.resize(triangles_.size() + triangleNum);
 			for (int32_t i = 0; i < triangleNum; i++)
 			{
 				Triangle& tri = triangles_[start + i];
-				int32_t idx0 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 0];
-				int32_t idx1 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 1];
-				int32_t idx2 = model->nodes_[i]->meshes[j]->indices_[i * 3 + 2];
+				int32_t idx0 =itr->meshes[j]->indices_[i * 3 + 0];
+				int32_t idx1 =itr->meshes[j]->indices_[i * 3 + 1];
+				int32_t idx2 =itr->meshes[j]->indices_[i * 3 + 2];
 
-				tri.vertexPoint_[0].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx0].pos.x_,
-					model->nodes_[i]->meshes[j]->vertices_[idx0].pos.y_
-					,model->nodes_[i]->meshes[j]->vertices_[idx0].pos.z_ };
+				tri.vertexPoint_[0].vec_ = {itr->meshes[j]->vertices_[idx0].pos.x_,
+					itr->meshes[j]->vertices_[idx0].pos.y_
+					,itr->meshes[j]->vertices_[idx0].pos.z_ };
 
-				tri.vertexPoint_[1].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx1].pos.x_,
-					model->nodes_[i]->meshes[j]->vertices_[idx1].pos.y_,
-					model->nodes_[i]->meshes[j]->vertices_[idx1].pos.z_ };
+				tri.vertexPoint_[1].vec_ = {itr->meshes[j]->vertices_[idx1].pos.x_,
+					itr->meshes[j]->vertices_[idx1].pos.y_,
+					itr->meshes[j]->vertices_[idx1].pos.z_ };
 
-				tri.vertexPoint_[2].vec_ = { model->nodes_[i]->meshes[j]->vertices_[idx2].pos.x_,
-					model->nodes_[i]->meshes[j]->vertices_[idx2].pos.y_,
-					model->nodes_[i]->meshes[j]->vertices_[idx2].pos.z_ };
+				tri.vertexPoint_[2].vec_ = {itr->meshes[j]->vertices_[idx2].pos.x_,
+					itr->meshes[j]->vertices_[idx2].pos.y_,
+					itr->meshes[j]->vertices_[idx2].pos.z_ };
 
 				tri.NormalCalculation();
 
 			}
 			start += (int32_t)triangleNum;
 		}
+		i++;
 	}
 	
 }
