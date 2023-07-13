@@ -193,7 +193,7 @@ namespace MCB
         //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
         void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
         ~AnimationModel();
-        string fileName_;//Modelのファイル名
+        std::string fileName_;//Modelのファイル名
         bool isDelete_ = false;//完全に削除していいかどうか
         bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelデータをロード
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeの階層構造並びにmeshの解析、抽出
