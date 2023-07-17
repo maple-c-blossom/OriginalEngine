@@ -158,6 +158,9 @@ namespace MCB
         void Vectorconstraiont(Node& joint);
 
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
+
+        void DrawHeirarchy(Node* node);
+
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)
@@ -200,6 +203,7 @@ namespace MCB
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh内のデータを解析、抽出
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material内のTexture情報の解析,抽出
         void Draw();//Modelの描画
+        void DrawHeirarchy();
     };
 }
 

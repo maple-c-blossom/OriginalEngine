@@ -209,7 +209,7 @@ void MCB::Scene::CheckAllColision()
 void MCB::Scene::ImGuiUpdate()
 {
     imgui_.Begin();
-    //ImGui::ShowDemoWindow();
+    ImGui::ShowDemoWindow();
     if (ImGui::CollapsingHeader("Infomation"))
     {
         if (ImGui::TreeNode("operation"))

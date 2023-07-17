@@ -1,4 +1,4 @@
-
+#include <MyImgui/imgui.h>
 #include "AnimationModel.h"
 #include "Dx12.h"
 #include <list>
@@ -371,6 +371,7 @@ void MCB::AnimationModel::Draw()
 
 
 }
+
 //
 
 std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,const aiTextureType& type,
@@ -752,6 +753,20 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	   joint.rotation = finalRotation;
    }
 
+   void MCB::Skeleton::DrawHeirarchy(Node* node)
+   {
+
+	   if (ImGui::TreeNode("children"))
+	   {
+		   for (auto& child : node->children)
+		   {
+			   DrawHeirarchy(child);
+		   }
+		   ImGui::TreePop();
+	   }
+
+   }
+
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
    {
 	   struct LengeData
@@ -785,3 +800,4 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		}
 		return result;
    }
+
