@@ -372,6 +372,15 @@ void MCB::AnimationModel::Draw()
 
 }
 
+void MCB::AnimationModel::DrawHeirarchy()
+{
+	if (ImGui::TreeNode("skeleton"))
+	{
+		skeleton.DrawHeirarchy(skeleton.rootNode);
+		ImGui::TreePop();
+	}
+}
+
 //
 
 std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,const aiTextureType& type,
@@ -755,16 +764,45 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
    void MCB::Skeleton::DrawHeirarchy(Node* node)
    {
-
-	   if (ImGui::TreeNode("children"))
+	   string transTag = node->name + "_Transform";
+	   string child = node->name + "_children";
+	   if (ImGui::TreeNode(node->name.c_str()))
 	   {
-		   for (auto& child : node->children)
+		   if (ImGui::TreeNode(transTag.c_str()))
 		   {
-			   DrawHeirarchy(child);
+
+			   ImGui::InputFloat3("position", node->translation.m128_f32);
+				   ImGui::InputFloat4("rotation", node->rotation.m128_f32);
+				   ImGui::InputFloat3("scale", node->scale.m128_f32);
+				   if (ImGui::TreeNode("Matrix"))
+				   {
+					   ImGui::Text("%f, %f, %f, %f", node->transform.r[0].m128_f32[0], node->transform.r[0].m128_f32[1],
+						   node->transform.r[0].m128_f32[2], node->transform.r[0].m128_f32[3]);
+
+					   ImGui::Text("%f, %f, %f, %f", node->transform.r[1].m128_f32[0], node->transform.r[1].m128_f32[1],
+						   node->transform.r[1].m128_f32[2], node->transform.r[1].m128_f32[3]);
+
+					   ImGui::Text("%f, %f, %f, %f", node->transform.r[2].m128_f32[0], node->transform.r[2].m128_f32[1],
+						   node->transform.r[2].m128_f32[2], node->transform.r[2].m128_f32[3]);
+
+					   ImGui::Text("%f, %f, %f, %f", node->transform.r[3].m128_f32[0], node->transform.r[3].m128_f32[1],
+						   node->transform.r[3].m128_f32[2], node->transform.r[3].m128_f32[3]);
+					   ImGui::TreePop();
+				   }
+			   ImGui::TreePop();
+
+		   }
+
+		   if (ImGui::TreeNode(child.c_str()))
+		   {
+			   for (auto& child : node->children)
+			   {
+				   DrawHeirarchy(child);
+			   }
+			   ImGui::TreePop();
 		   }
 		   ImGui::TreePop();
 	   }
-
    }
 
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)

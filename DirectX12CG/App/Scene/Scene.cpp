@@ -154,7 +154,7 @@ void MCB::Scene::Update()
 
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
-        sceneEnd_ = true;
+        //sceneEnd_ = true;
     }
 }
 
@@ -215,6 +215,15 @@ void MCB::Scene::ImGuiUpdate()
         if (ImGui::TreeNode("operation"))
         {
             ImGui::Text("LevelReLoad:LCONTROL");
+            ImGui::TreePop();
+        }
+    }
+
+    if (ImGui::CollapsingHeader("MotionModel"))
+    {
+        if (ImGui::TreeNode(playerModel_->fileName_.c_str()))
+        {
+            playerModel_->DrawHeirarchy();
             ImGui::TreePop();
         }
     }
