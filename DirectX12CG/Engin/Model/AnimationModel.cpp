@@ -736,7 +736,10 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
-
+   void MCB::Skeleton::TwoBoneIK()
+   {
+	   
+   }
 
    void MCB::Skeleton::Vectorconstraiont(Node& joint)
    {
@@ -793,13 +796,16 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
 		   }
 
-		   if (ImGui::TreeNode(child.c_str()))
+		   if (node->children.size())
 		   {
-			   for (auto& child : node->children)
+			   if (ImGui::TreeNode(child.c_str()))
 			   {
-				   DrawHeirarchy(child);
+				   for (auto& child : node->children)
+				   {
+					   DrawHeirarchy(child);
+				   }
+				   ImGui::TreePop();
 			   }
-			   ImGui::TreePop();
 		   }
 		   ImGui::TreePop();
 	   }

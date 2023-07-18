@@ -154,6 +154,7 @@ namespace MCB
         void OneBoneIK(Node& joint);
         //2BoneIK(ìj
         void TwoBoneIK(Node& joint1, Node& joint2);
+        void TwoBoneIK();
         //ŠÖß‚Ì‹È‚ª‚é•ûŒü‚ğ§ŒÀ(ì)
         void Vectorconstraiont(Node& joint);
 
