@@ -154,7 +154,7 @@ namespace MCB
         void OneBoneIK(Node& joint);
         //2BoneIK(試作）
         void TwoBoneIK(Node& joint1, Node& joint2);
-        void TwoBoneIK();
+        void SetTwoBoneIK(Vector3D objPos,Vector3D targetPos);
         //関節の曲がる方向を制限(試作)
         void Vectorconstraiont(Node& joint);
 
@@ -203,6 +203,7 @@ namespace MCB
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeの階層構造並びにmeshの解析、抽出
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh内のデータを解析、抽出
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material内のTexture情報の解析,抽出
+        void TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos);
         void Draw();//Modelの描画
         void DrawHeirarchy();
     };

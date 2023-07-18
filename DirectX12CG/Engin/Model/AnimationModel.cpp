@@ -415,6 +415,11 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	return textures;
 }
 
+void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
+{
+	skeleton.SetTwoBoneIK(objPos, targetPos);
+}
+
   void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation, bool loop)
   {
     
@@ -714,7 +719,9 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 
    void MCB::Skeleton::TwoBoneIK(Node& joint1, Node& joint2)
    {
+	   if (&joint1 == nullptr)return;
 		OneBoneIK(joint1);//éËèá1
+		if (&joint2 == nullptr) return;
 		//Ç±Ç±Ç…ä÷êﬂï˚å¸ÇÃêßå‰Çç∑ÇµçûÇﬁÇÁÇµÇ¢
 		Vectorconstraiont(joint1);
 		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//éËèá1.5?Åiï”CéZèo)
@@ -736,10 +743,17 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
-   void MCB::Skeleton::TwoBoneIK()
+   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos)
    {
-	   
+	   Node* node = GetNearPositionNode(targetPos,objPos);
+	   if (node)
+	   {
+		   node->ikData.isIK = true;
+		   node->ikData.iKTargetPosition = targetPos;
+	   }
    }
+
+
 
    void MCB::Skeleton::Vectorconstraiont(Node& joint)
    {

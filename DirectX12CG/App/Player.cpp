@@ -31,6 +31,7 @@ void MCB::Player::UniqueUpdate()
 	position_.x += callback.move.vec_.x_;
 	position_.y += callback.move.vec_.y_;
 	position_.z += callback.move.vec_.z_;
+
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
@@ -44,6 +45,7 @@ void MCB::Player::UniqueUpdate()
 		{
 			isGraund_ = true;
 			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
+			animationModel_->TwoBoneIkOrder({ position_.x,position_.y,position_.z }, { position_.x,position_.y - sphere->GetRaius() / 2,position_.z });
 			Object3d::UpdateMatrix();
 		}
 		else
@@ -59,6 +61,7 @@ void MCB::Player::UniqueUpdate()
 		{
 			isGraund_ = true;
 			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
+			animationModel_->TwoBoneIkOrder({ position_.x,position_.y,position_.z }, { position_.x,position_.y - sphere->GetRaius() / 2,position_.z });
 			Object3d::UpdateMatrix();
 		}
 	}

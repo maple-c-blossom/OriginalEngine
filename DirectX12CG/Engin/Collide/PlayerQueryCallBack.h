@@ -12,6 +12,7 @@ namespace MCB
 		PlayerQueryCallBack(Sphere* sphere):sphere_(sphere) {};
 		Sphere* sphere_ = nullptr;
 		Vector3D move = {};
+		Vector3D inter = {};
 		bool OnQueryHit(const QueryHit& info)override;
 
 	};
