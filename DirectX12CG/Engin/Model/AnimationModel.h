@@ -150,10 +150,23 @@ namespace MCB
 
         static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
         //---------------------
+        //IK関連の全面改修が必要そう(NodeがIKの対象かどうかの情報持ってるけどSkeletonが集約管理した方がいいっぽい）
         //1BoneIK(試作)
         void OneBoneIK(Node& joint);
         //2BoneIK(試作）
         void TwoBoneIK(Node& joint1, Node& joint2);
+
+        /// <summary>
+        /// CCDIK
+        /// </summary>
+        /// <param name="effectter">目標地点に向ける先端のNode</param>
+        /// <param name="targetPos">目標地点</param>
+        /// <param name="numMaxIteration">CCDの反復回数</param>
+        /// <param name="errToleranceSq">誤差の許容数値(2乗）</param>
+        void CCDIK(Node& effectter,Vector3D targetPos,int numMaxIteration,float errToleranceSq);//理論理解段階のため未定義(引数も不十分の可能性あり)
+
+        void SetCCDIK(Vector3D targetPos,Vector3D objPos);
+
         void SetTwoBoneIK(Vector3D objPos,Vector3D targetPos);
         //関節の曲がる方向を制限(試作)
         void Vectorconstraiont(Node& joint);

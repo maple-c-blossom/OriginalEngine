@@ -23,9 +23,9 @@ void Camera::WorldPositionInit()
 
 void Camera::Update()
 {
-	view_.eye_.x = target_->position_.x + (15 * -target_->nowFrontVec_.vec_.x_);
-	view_.eye_.y = target_->position_.y + 5;
-	view_.eye_.z = target_->position_.z + (15 * -target_->nowFrontVec_.vec_.z_);
+	view_.eye_.x = target_->position_.x + (7.5f * -target_->nowFrontVec_.vec_.x_);
+	view_.eye_.y = target_->position_.y + 2.5f;
+	view_.eye_.z = target_->position_.z + (7.5f * -target_->nowFrontVec_.vec_.z_);
 	view_.target_ = target_->position_;
 	Ray ray;
 	ray.StartPosition_.vec_.x_ = view_.eye_.x;

@@ -743,6 +743,27 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
    }
 
+   void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
+   {
+	   XMVECTOR localTargetPos = XMVectorZero();
+	   XMVECTOR localEffecrPos = XMVectorZero();
+
+	   for (int i = 0; i < numMaxIteration; i++)
+	   {
+		   for (Node* joint = effectter.parent; joint != nullptr; joint = joint->parent)
+		   {
+				XMVECTOR effectorPos = effectter.translation;
+				XMVECTOR jointPos = joint->translation;
+				XMMATRIX invCoord = XMMatrixInverse(nullptr, joint->AnimaetionParentMat);
+				localEffecrPos = XMVector3Transform(effectorPos, invCoord);
+				localTargetPos = XMVector3Transform(targetPos.ConvertXMVEC(), invCoord);
+				
+		   }
+	   }
+
+
+   }
+
    void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos)
    {
 	   Node* node = GetNearPositionNode(targetPos,objPos);
