@@ -7,7 +7,7 @@
 #include <wrl.h>
 #include "WorldMatrix.h"
 #include "Dx12.h"
-#include "View.h"
+#include "ICamera.h"
 #include "Projection.h"
 #include "Vector3D.h"
 #include "TextureManager.h"
@@ -57,6 +57,9 @@ namespace MCB
         Vertex vertex_;
         int32_t vertNum_ = 1;
         TextureCell* tex_;
+
+        bool deleteFlag;
+
         Particle();
 
         ~Particle();
@@ -73,7 +76,7 @@ namespace MCB
 
         void Init(TextureCell* tex);
 
-        void Update(View& view, Projection& projection, bool isBillBord = false);
+        void Update(ICamera* camera, bool isBillBord = false);
 
         void Draw();
 

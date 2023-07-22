@@ -66,7 +66,7 @@ void Particle::Init(TextureCell* tex)
     vbView_.StrideInBytes = sizeof(vertex_);
 }
 
-void Particle::Update(View& view, Projection& projection, bool isBillBord)
+void Particle::Update(ICamera* camera, bool isBillBord)
 {
     matWorld_.SetMatScale(scale_.x, scale_.y, scale_.z);
     matWorld_.SetMatRot(rotation_.x, rotation_.y, rotation_.z, false);
@@ -75,7 +75,7 @@ void Particle::Update(View& view, Projection& projection, bool isBillBord)
     {
         if (parent_ == nullptr)
         {
-            matWorld_.UpdataBillBordMatrixWorld(view);
+            matWorld_.UpdataBillBordMatrixWorld(*camera->GetView());
         }
         else
         {
@@ -93,11 +93,11 @@ void Particle::Update(View& view, Projection& projection, bool isBillBord)
     }
 
     //constMapTranceform->mat = matWorld.matWorld * view.mat * projection.mat;
-    constMapTranceform_->world = matWorld_.matWorld_ * view.mat_;
-    constMapTranceform_->viewproj = projection.mat_;
-    constMapTranceform_->cameraPos.x_ = view.eye_.x;
-    constMapTranceform_->cameraPos.y_ = view.eye_.y;
-    constMapTranceform_->cameraPos.z_ = view.eye_.z;
+    constMapTranceform_->world = matWorld_.matWorld_ * camera->GetView()->mat_;
+    constMapTranceform_->viewproj = camera->GetProjection()->mat_;
+    constMapTranceform_->cameraPos.x_ = camera->GetView()->eye_.x;
+    constMapTranceform_->cameraPos.y_ = camera->GetView()->eye_.y;
+    constMapTranceform_->cameraPos.z_ = camera->GetView()->eye_.z;
 }
 
 void Particle::Draw()

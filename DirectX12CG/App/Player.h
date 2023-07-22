@@ -2,6 +2,8 @@
 #include "Object3d.h"
 #include "SphereCollider.h"
 #include "Input.h"
+#include "Particle.h"
+#include "vector"
 namespace MCB
 {
     class Player :public Object3d
@@ -18,10 +20,13 @@ namespace MCB
         float maxspeed_ = 0.25f;
         MCB::Vector3D rightVec_ = {1,0,0};
         Object3d* ground;
+
+        std::vector<Particle> particles;
     public:
         void Init();
         void UniqueUpdate() override;
         void Move();
+        void ParticleDraw();
     };
 
 }
