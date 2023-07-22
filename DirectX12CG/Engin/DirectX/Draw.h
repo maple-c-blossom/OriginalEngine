@@ -33,12 +33,14 @@ namespace MCB
 
 		void SetBeforeBbIndex();
 		void SetBeforeResourceBarrier();
+		void SetBeforeResourceBarrierAfterPostEffect();
 		void BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline);
 		void SetRenderTargetView(const Depth& depth);
 		void ClearScreen(const float* clearColor);
 		void SetViewPort();
 		void SetScissorrect();
 		void PreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor);
+		void AfterPostEffectPreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor);
 
 
 		void SetAfterResourceBarrier();

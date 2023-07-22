@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "DxWindow.h"
 #include "Scene.h"
-#include "Draw.h"
+#include "TitleScene.h"
 using namespace std;
 
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
@@ -17,7 +17,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<Scene>(root_, depth_, pipeline_);
+	scene_ = make_unique<TitleScene>(root_, depth_, pipeline_);
 }
 
 MCB::SceneManager::~SceneManager()
@@ -102,7 +102,7 @@ void MCB::SceneManager::Draw()
 	if (isSceneReady_)//ゲーム画面
 	{
 		scene_->PostEffectDraw();
-		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
+		Draw::GetInstance()->AfterPostEffectPreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 		//3D描画
 		scene_->Draw();
 		//パーティクル

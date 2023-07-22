@@ -9,6 +9,16 @@ void MCB::Draw::SetBeforeResourceBarrier()
     Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
+void MCB::Draw::SetBeforeResourceBarrierAfterPostEffect()
+{
+    //barrierDesc_ = {};
+    //barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // バックバッファを指定
+    //barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // 表示から
+    //barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // 描画
+    //Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
+}
+
+
 void MCB::Draw::BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline)
 {
     Dx12* dx12 = Dx12::GetInstance();
@@ -169,7 +179,17 @@ void MCB::Draw::PreDraw(const Depth& depth,const PipelineRootSignature& pipeline
     BeforeDraw( depth, pipeline);
 
 }
+void MCB::Draw::AfterPostEffectPreDraw(const Depth& depth, const PipelineRootSignature& pipeline, const float* clearColor)
+{
+    SetBeforeBbIndex();
+    SetBeforeResourceBarrierAfterPostEffect();
+    SetRenderTargetView(depth);
+    ClearScreen(clearColor);
+    SetViewPort();
+    SetScissorrect();
+    BeforeDraw(depth, pipeline);
 
+}
 void MCB::Draw::PostDraw()
 {
     SetAfterResourceBarrier();
