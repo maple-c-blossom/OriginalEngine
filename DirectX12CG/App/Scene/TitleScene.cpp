@@ -8,6 +8,7 @@ void MCB::TitleScene::SpriteInit()
 {
 
     debugText_.Init(debugTextTexture_->texture.get());
+    titleSprite_.CreateSprite();
 }
 
 void MCB::TitleScene::ParticleInit()
@@ -33,11 +34,11 @@ void MCB::TitleScene::Update()
 {
 
     lights_->UpDate();
-    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
         sceneEnd_ = true;
     }
-    play_.Update();
+
     MatrixUpdate();
 }
 
@@ -48,8 +49,7 @@ void MCB::TitleScene::PostEffectDraw()
     ground_.Draw();
     //play_.Draw();
     pipeline_->SetFbxPipeLine();
-    testsphere_.AnimationDraw();
-    test2Animation_.AnimationDraw();
+
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -63,7 +63,11 @@ void MCB::TitleScene::Draw()
 
 void MCB::TitleScene::SpriteDraw()
 {
+    
     postEffect_->Draw();
+    pipeline_->SetSpritePipeLine();
+    titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
+    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 200, 2, "Press AButton");
     debugText_.AllDraw();
 }
 
@@ -134,6 +138,7 @@ void MCB::TitleScene::LoadModel()
 void MCB::TitleScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
+    titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
 }
 
 void MCB::TitleScene::LoadSound()

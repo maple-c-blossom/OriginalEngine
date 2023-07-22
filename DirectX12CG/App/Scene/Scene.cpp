@@ -152,9 +152,9 @@ void MCB::Scene::Update()
         player_.position_ = { 0,0,-50 };
     }
 
-    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    if (goal_.GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
     {
-        //sceneEnd_ = true;
+        sceneEnd_ = true;
     }
 }
 
@@ -184,6 +184,7 @@ void MCB::Scene::SpriteDraw()
     if (goal_.GetIsGoal())
     {
         debugText_.Print(dxWindow_->sWINDOW_WIDTH_ / 2, dxWindow_->sWINDOW_HEIGHT_ / 2, 5, "Goal!!!");
+        debugText_.Print(dxWindow_->sWINDOW_WIDTH_ / 2, dxWindow_->sWINDOW_HEIGHT_ / 2 + 120, 3, "Press AButton");
     }
     debugText_.sprite_->color_ = { 1,1,1,1 };
     debugText_.Print(10, 10, 1, "Move:WASD or LStick");

@@ -21,6 +21,8 @@ namespace MCB
         // ウィンドウサイズ
         static const int32_t sWINDOW_WIDTH_ = 1280;  // 横幅
         static const int32_t sWINDOW_HEIGHT_ = 720;  // 縦幅
+        static const int32_t sWINDOW_CENTER_WIDTH_ = 1280 / 2;  // 横幅
+        static const int32_t sWINDOW_CENTER_HEIGHT_ = 720 / 2;  // 縦幅
 
 
         MSG msg_{}; //メッセージここから
