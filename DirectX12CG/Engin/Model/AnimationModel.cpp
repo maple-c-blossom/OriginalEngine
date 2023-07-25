@@ -429,30 +429,31 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
     //}
     
     //NSLog(@"%d", scene->mNumAnimations);
+	  float animationTime = 0;
+	  if (animation != nullptr)
+	  {
 
-	  if (animation == nullptr) return;
-
-	if (prevAnimation != animation)
-	{
-		prevAnimation = currentAnimation;
-		currentAnimation = animation;
-	}
-	if (timeInSeconds >= currentAnimation->duration)
-	{
-		timeInSeconds = 0;
-	}
+		  if (prevAnimation != animation)
+		  {
+			  prevAnimation = currentAnimation;
+			  currentAnimation = animation;
+		  }
+		  if (timeInSeconds >= currentAnimation->duration)
+		  {
+			  timeInSeconds = 0;
+		  }
 
 
-    float ticksPerSecond = (float)(currentAnimation->ticksPerSecond != 0 ? currentAnimation->ticksPerSecond : 25.0f);
-    float timeInTicks = timeInSeconds * ticksPerSecond;
-    float animationTime = timeInTicks;
-    
-    if(loop)
-      animationTime = (float)fmod(animationTime, currentAnimation->duration);
-    else
-      animationTime = (float)min(animationTime, currentAnimation->duration -0.0001f);
-    
-	
+		  float ticksPerSecond = (float)(currentAnimation->ticksPerSecond != 0 ? currentAnimation->ticksPerSecond : 25.0f);
+		  float timeInTicks = timeInSeconds * ticksPerSecond;
+		  float animationTime = timeInTicks;
+
+		  if (loop)
+			  animationTime = (float)fmod(animationTime, currentAnimation->duration);
+		  else
+			  animationTime = (float)min(animationTime, currentAnimation->duration - 0.0001f);
+
+	  }
 	for (auto& itr : nodes_)
 	{
 		itr->AnimaetionParentMat = XMMatrixIdentity();
@@ -577,7 +578,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
   const NodeAnim* Skeleton::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
   {
-
+	  if (!pAnimation) return nullptr;
 	  for (uint32_t i = 0; i < pAnimation->channels.size(); i++)
 	  {
 		  const NodeAnim* pNodeAnim = &pAnimation->channels[i];

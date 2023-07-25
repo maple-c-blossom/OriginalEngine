@@ -21,12 +21,13 @@ namespace MCB
         MCB::Vector3D rightVec_ = {1,0,0};
         Object3d* ground;
 
-        std::vector<Particle> particles;
+
     public:
         void Init();
         void UniqueUpdate() override;
         void Move();
-        void ParticleDraw();
+        void OnCollision(const CollisionInfomation& info) override { hited_ = true; };
+  
     };
 
 }

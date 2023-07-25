@@ -11,9 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="App\PopEffect.cpp" />
     <ClCompile Include="Engin\Model\AnimationMesh.cpp" />
     <ClCompile Include="Engin\Model\AnimationModel.cpp" />
-    <ClCompile Include="Engin\Model\ModelManager.cpp" />
+    <ClCompile Include="Engin\Model\ModelManager.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
+    </ClCompile>
     <ClCompile Include="Engin\Util\App.cpp" />
     <ClCompile Include="Engin\Collide\CollisionManager.cpp" />
     <ClCompile Include="Engin\Collide\BoxCollider.cpp" />
@@ -72,6 +76,7 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</LanguageStandard>
     </ClCompile>
     <ClCompile Include="App\Scene\TitleScene.cpp" />
+    <ClCompile Include="Engin\Util\Timer.cpp" />
     <ClCompile Include="Engin\Util\Util.cpp" />
     <ClCompile Include="Engin\Math\Vector\Vecter2D.cpp" />
     <ClCompile Include="Engin\Math\Vector\Vector3D.cpp" />
@@ -172,6 +177,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App\PopEffect.h" />
     <ClInclude Include="Engin\Model\AnimationMesh.h" />
     <ClInclude Include="Engin\Model\AnimationModel.h" />
     <ClInclude Include="Engin\Model\ModelManager.h" />
@@ -228,6 +234,7 @@
     <ClInclude Include="Engin\Texture\TextureFile.h" />
     <ClInclude Include="Engin\Texture\TextureManager.h" />
     <ClInclude Include="App\Scene\TitleScene.h" />
+    <ClInclude Include="Engin\Util\Timer.h" />
     <ClInclude Include="Engin\Util\Util.h" />
     <ClInclude Include="Engin\Math\Vector\Vecter2D.h" />
     <ClInclude Include="Engin\Math\Vector\Vector3D.h" />

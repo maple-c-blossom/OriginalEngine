@@ -34,7 +34,7 @@ namespace MCB
 
 		//サウンド
 #pragma region サウンド
-		size_t testSound_;
+		size_t selectSound_;
 		size_t test2Sound_;
 
 		int32_t volume_ = 255;

@@ -13,8 +13,7 @@ namespace MCB
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 		Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
 		Microsoft::WRL::ComPtr<ID3D12Resource> depthBuff_;
-		const float CLEAR_COLOR_[4] = { 0.f,0.f,0.f,1.0f };
-		//const float CLEAR_COLOR_[4] = { 0.25f,0.5f,0.1f,1.0f };
+		const float CLEAR_COLOR_[4] = { 0.25f,0.5f,0.1f,1.0f };
 	public:
 		PostEffect();
 		~PostEffect();

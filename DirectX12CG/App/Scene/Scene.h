@@ -43,7 +43,7 @@ namespace MCB
 		AnimationModel* playerModel_ = nullptr;
 		Model* groundModel_ = nullptr;
 		Model* skydomeModel_ = nullptr;
-
+		Model* goalModel_ = nullptr;
 		//AssimpLoader testModel;
 #pragma endregion 3Dƒ‚ƒfƒ‹
 

@@ -22,7 +22,7 @@ unique_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
 
 void MCB::TitleScene::MatrixUpdate()
 {
-    //play.UpdateMatrix();
+    //test2Animation_.UpdateMatrix();
     camera_.Update();
     Skydorm_.Update(viewCamera_);
     ground_.Update(viewCamera_);
@@ -36,9 +36,11 @@ void MCB::TitleScene::Update()
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
+        soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
-
+    test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+        {test2Animation_.position_.x + 20, test2Animation_.position_.y, test2Animation_.position_.z});
     MatrixUpdate();
 }
 
@@ -47,8 +49,8 @@ void MCB::TitleScene::PostEffectDraw()
     postEffect_->PreDraw();
     Skydorm_.Draw();
     ground_.Draw();
-    //play_.Draw();
     pipeline_->SetFbxPipeLine();
+    test2Animation_.AnimationDraw();
 
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
@@ -97,6 +99,8 @@ MCB::TitleScene::~TitleScene()
 {
     soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
+
+    //modelManager_->erase();
     loader_->Erase();
 }
 
@@ -132,7 +136,7 @@ void MCB::TitleScene::LoadModel()
     animModel_->Load("gamewsdsa");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-    anim2Model_->Load("testFbx");
+    anim2Model_->Load("IKTest");
 }
 
 void MCB::TitleScene::LoadTexture()
@@ -143,9 +147,9 @@ void MCB::TitleScene::LoadTexture()
 
 void MCB::TitleScene::LoadSound()
 {
-    testSound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
+    selectSound_ = soundManager_->LoadWaveSound("Resources\\select.wav");
     test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
-    soundManager_->SetVolume(100, testSound_);
+    soundManager_->SetVolume(100, selectSound_);
 }
 
 void MCB::TitleScene::Object3DInit()
@@ -181,6 +185,5 @@ void MCB::TitleScene::Object3DInit()
     test2Animation_.animationModel_ = anim2Model_.get();
     test2Animation_.scale_ = { 3,3,3 };
     test2Animation_.position_ = { 10,4,30 };
-    test2Animation_.rotation_.y = ConvertRadius(90);
     test2Animation_.camera_ = viewCamera_;
 }

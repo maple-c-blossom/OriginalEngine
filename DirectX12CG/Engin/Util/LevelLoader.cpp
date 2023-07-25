@@ -107,6 +107,22 @@ void MCB::LevelLoader::LevelData::Draw()
 	}
 }
 
+MCB::LevelLoader::LevelData::~LevelData()
+{
+	std::unordered_map<string, bool> deleteModel;
+	for (auto& object : objects)
+	{
+		if (deleteModel.find(object->fileName) != deleteModel.end())
+		{
+			continue;
+		}
+
+		deleteModel[object->fileName] = true;
+		if(object->obj.model_)object->obj.model_->isDelete_ = true;
+		if (object->obj.animationModel_)object->obj.animationModel_->isDelete_ = true;
+	}
+}
+
 std::unique_ptr<LevelLoader::LevelData> MCB::LevelLoader::LevelData::ReLoad()
 {
 	return Load(levelFileName,camera);

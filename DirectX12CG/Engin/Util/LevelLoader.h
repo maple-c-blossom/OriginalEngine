@@ -25,6 +25,7 @@ namespace MCB
 			void Update();
 			void UpdateMatrix();
 			void Draw();
+			~LevelData();
 			std::unique_ptr<LevelData> ReLoad();
 		};
 		//’è”

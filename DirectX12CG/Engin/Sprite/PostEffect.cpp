@@ -23,7 +23,7 @@ MCB::PostEffect::PostEffect()
 
 MCB::PostEffect::~PostEffect()
 {
-    //for (auto& itr: tex)
+    //for (auto& itr: tex_)
     //{
     //    itr->free = true;
     //}

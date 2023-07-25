@@ -37,21 +37,9 @@ void MCB::ModelManager::erase(const string& fileName, const string& extend)
 
 void MCB::ModelManager::erase()
 {
-    for (auto& itr : modelMap_)
-    {
-        if (itr.second->isDelete_)
-        {
-            modelMap_.erase(itr.second->fileName_);
-        }
-    }
 
-    for (auto& itr : animModelMap_)
-    {
-        if (itr.second->isDelete_)
-        {
-            animModelMap_.erase(itr.second->fileName_);
-        }
-    }
+    erase_if(modelMap_, [](const auto& p) {return p.second->isDelete_; });
+    erase_if(animModelMap_, [](const auto& p) {return p.second->isDelete_; });
 }
 
 void MCB::ModelManager::Load(const string& fileName, bool smooth,const string& extend)

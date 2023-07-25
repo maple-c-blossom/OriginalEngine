@@ -172,12 +172,4 @@ void MCB::Player::Move()
 
 }
 
-void MCB::Player::ParticleDraw()
-{
-	for (auto& particle : particles_)
-	{
-		particle.Update(camera_, true);
-		particle.Draw();
-	}
-}
 

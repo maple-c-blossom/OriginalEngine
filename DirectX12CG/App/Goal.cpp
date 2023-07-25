@@ -13,12 +13,42 @@ void Goal::Init()
 	collider_->Update();
 }
 
+void Goal::UpDate()
+{
+	for (auto& effect : effects_)
+	{
+		effect->UniqueUpdate();
+		effect->UpdateMatrix(camera_);
+	}
+	effects_.remove_if([](auto& effect) {return effect->deleteFlag_; });
+	
+}
+
+void Goal::Draw()
+{
+	if(!goal_)Object3d::Draw();
+	for (auto& effect : effects_)
+	{
+		effect->Draw();
+	}
+}
+
 void Goal::OnCollision(const MCB::CollisionInfomation& info)
 {
 	hited_ = true;
 	std::string hitName = info.object3d_->nameId_;
 	if (hitName == "Player")
 	{
+		if (!goal_)
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				unique_ptr<PopEffect> effect = make_unique<PopEffect>();
+				effect->Initialize(popModel_, { sinf(ConvertRadius((float)GetRand(0,360))) * cosf(ConvertRadius((float)GetRand(0,360))),sinf(ConvertRadius((float)GetRand(0,360))) * sinf(ConvertRadius((float)GetRand(0,360))),cosf(ConvertRadius((float)GetRand(0,360))) },
+					{ position_.x + GetRand(0,200) / 100,position_.y + GetRand(0,200) / 100,position_.z + GetRand(0,200) / 100 }, { (float)0.25,(float)0.25,(float)0.25 }, { 1,0,0,1 }, 0.25f, 30);
+				effects_.push_back(std::move(effect));
+			}
+		}
 		goal_ = true;
 	}
 }

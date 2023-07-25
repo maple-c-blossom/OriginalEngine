@@ -140,6 +140,7 @@ void MCB::SceneManager::sceneChenge()
 	OutputDebugStringW(L"SceneChengeIn\n");
 	unique_ptr<IScene> nextScene = scene_->GetNextScene();
 	OutputDebugStringW(L"SceneChengeGetNext\n");
+	ModelManager::GetInstance()->Init();
 	nextScene->Initialize();
 	OutputDebugStringW(L"SceneChengeInitComp\n");
 	scene_ = std::move(nextScene);

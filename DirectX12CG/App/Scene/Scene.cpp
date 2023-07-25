@@ -10,6 +10,7 @@ MCB::Scene::~Scene()
     //soundManager_.AllDeleteSound();
     zoomTex_->free = true;
     debugTextTexture_->free = true;
+    //modelManager_->erase();
     loader_->Erase();
 }
 
@@ -72,6 +73,7 @@ void MCB::Scene::Object3DInit()
     goal_.position_.z = 50;
     goal_.scale_ = { 3,3,3 };
     goal_.color_ = { 1,1,0,1 };
+    goal_.popModel_ = goalModel_;
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -83,9 +85,10 @@ void MCB::Scene::LoadModel()
 {
 
    SpherModel_ = modelManager_->GetModel("sphere", true);
-   groundModel_ = modelManager_->GetModel("ground");
-   skydomeModel_ = modelManager_->GetModel("skydome");
+   //groundModel_ = modelManager_->GetModel("ground");
+   //skydomeModel_ = modelManager_->GetModel("skydome");
    playerModel_ = modelManager_->GetModel("player", playerModel_);
+   goalModel_ = modelManager_->GetModel("star");
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
@@ -139,6 +142,7 @@ void MCB::Scene::Update()
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
+    goal_.UpDate();
     //Node* node = playerModel_->ReadNode("LowerArm.R");
     //node->ikData.isIK = true;
     //node->ikData.iKTargetPosition = { player_.position_.x + 1.0f,player_.position_.y + 0.5f,player_.position_.z };

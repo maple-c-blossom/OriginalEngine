@@ -396,6 +396,12 @@
     <ClCompile Include="Engin\Model\AnimationMesh.cpp">
       <Filter>ソース ファイル\Engin\Model</Filter>
     </ClCompile>
+    <ClCompile Include="App\PopEffect.cpp">
+      <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Util\Timer.cpp">
+      <Filter>ソース ファイル\Engin\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -660,6 +666,12 @@
     </ClInclude>
     <ClInclude Include="Engin\Model\AnimationModel.h">
       <Filter>ヘッダー ファイル\Engin\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="App\PopEffect.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Util\Timer.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
