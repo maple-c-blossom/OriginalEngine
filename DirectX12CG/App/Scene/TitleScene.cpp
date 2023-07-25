@@ -26,7 +26,7 @@ void MCB::TitleScene::MatrixUpdate()
     camera_.Update();
     Skydorm_.Update(viewCamera_);
     ground_.Update(viewCamera_);
-    testsphere_.AnimationUpdate(viewCamera_);
+    testsphere_.Update(viewCamera_);
     test2Animation_.AnimationUpdate(viewCamera_);
 }
 
@@ -39,8 +39,30 @@ void MCB::TitleScene::Update()
         soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
+
+    if (input_->IsKeyDown(DIK_W))
+    {
+        testsphere_.position_.z += 0.01f;
+    }
+    
+    if (input_->IsKeyDown(DIK_S))
+    {
+        testsphere_.position_.z -= 0.01f;
+    }
+
+    if (input_->IsKeyDown(DIK_D))
+    {
+        testsphere_.position_.x += 0.01f;
+    }
+
+    if (input_->IsKeyDown(DIK_A))
+    {
+        testsphere_.position_.x -= 0.01f;
+    }
+
+
     test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-        {test2Animation_.position_.x + 20, test2Animation_.position_.y, test2Animation_.position_.z});
+        { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z});
     MatrixUpdate();
 }
 
@@ -49,6 +71,7 @@ void MCB::TitleScene::PostEffectDraw()
     postEffect_->PreDraw();
     Skydorm_.Draw();
     ground_.Draw();
+    testsphere_.Draw();
     pipeline_->SetFbxPipeLine();
     test2Animation_.AnimationDraw();
 
@@ -176,9 +199,9 @@ void MCB::TitleScene::Object3DInit()
 
     testsphere_.Init();
     //testsphere.model = BoxModel;
-    testsphere_.animationModel_ = animModel_.get();
-    testsphere_.scale_ = { 3,3,3 };
-    testsphere_.position_ = { 0,4,30 };
+    testsphere_.model_ = sphereModel_.get();
+    testsphere_.scale_ = { 1,1,1 };
+    testsphere_.position_ = { 10,4,25 };
     testsphere_.rotation_.y = ConvertRadius(90);
     testsphere_.camera_ = viewCamera_;
 
