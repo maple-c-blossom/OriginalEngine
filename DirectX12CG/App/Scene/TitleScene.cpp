@@ -62,11 +62,17 @@ void MCB::TitleScene::Update()
 
     if (input_->IsKeyDown(DIK_RETURN))
     {
-        Sleep(100);
+        debugStop = !debugStop;
     }
 
-    test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-        { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z});
+    if (debugStop)
+    {
+        test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z });
+        Sleep(2000);
+        debugStop = !debugStop;
+    }
+
     MatrixUpdate();
 }
 
@@ -210,7 +216,7 @@ void MCB::TitleScene::Object3DInit()
     testsphere_.camera_ = viewCamera_;
 
     test2Animation_.animationModel_ = anim2Model_.get();
-    test2Animation_.scale_ = { 3,3,3 };
+    test2Animation_.scale_ = { 1,1,1 };
     test2Animation_.position_ = { 10,4,30 };
     test2Animation_.camera_ = viewCamera_;
 }

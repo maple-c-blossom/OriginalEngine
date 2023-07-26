@@ -172,6 +172,22 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->transform.r[3].m128_f32[1] = ainode->mTransformation.d2;
 		newObject->transform.r[3].m128_f32[2] = ainode->mTransformation.d3;
 		newObject->transform.r[3].m128_f32[3] = ainode->mTransformation.d4;
+		aiVector3D s;
+		aiQuaternion r;
+		aiVector3D t;
+		ainode->mTransformation.Decompose(s, r, t);
+		newObject->scale.m128_f32[0] = s.x;
+		newObject->scale.m128_f32[1] = s.y;
+		newObject->scale.m128_f32[2] = s.z;
+
+		newObject->rotation.m128_f32[0] = r.x;
+		newObject->rotation.m128_f32[1] = r.y;
+		newObject->rotation.m128_f32[2] = r.z;
+		newObject->rotation.m128_f32[3] = r.w;
+
+		newObject->translation.m128_f32[0] = t.x;
+		newObject->translation.m128_f32[1] = t.y;
+		newObject->translation.m128_f32[2] = t.z;
 
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
@@ -283,7 +299,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		temp.offsetMatrix.r[3].m128_f32[1] = mesh->mBones[i]->mOffsetMatrix.d2;
 		temp.offsetMatrix.r[3].m128_f32[2] = mesh->mBones[i]->mOffsetMatrix.d3;
 		temp.offsetMatrix.r[3].m128_f32[3] = mesh->mBones[i]->mOffsetMatrix.d4;
-
+		
 
 		temp.offsetMatrix = DirectX::XMMatrixTranspose(temp.offsetMatrix);
 		temp.finalMatrix = temp.offsetMatrix;
@@ -517,9 +533,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  XMMATRIX mat;
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	  else pNode->AnimaetionParentMat = nodeTrans;
-	  pNode->endPosition.vec_.x_ = pNode->AnimaetionParentMat.r[3].m128_f32[0];
-	  pNode->endPosition.vec_.y_ = pNode->AnimaetionParentMat.r[3].m128_f32[1];
-	  pNode->endPosition.vec_.z_ = pNode->AnimaetionParentMat.r[3].m128_f32[2];
+	  XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
+
+	  pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
+	  pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
+	  pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
 	  if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
 	  else pNode->startPosition = { 0,0,0 };
 	  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
@@ -843,6 +861,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 						   node->transform.r[3].m128_f32[2], node->transform.r[3].m128_f32[3]);
 					   ImGui::TreePop();
 				   }
+
+			   ImGui::Text("BoneVec:%f,%f,%f", node->boneVec.vec_.x_, node->boneVec.vec_.y_, node->boneVec.vec_.z_);
+			   ImGui::Text("BoneLength:%f", node->boneLength);
+			   
 			   ImGui::TreePop();
 
 		   }

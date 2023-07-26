@@ -66,6 +66,7 @@ namespace MCB
 #pragma region ’Êí•Ï”
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
+		bool debugStop = false;
 #pragma endregion ’Êí•Ï”
 	public:
 
