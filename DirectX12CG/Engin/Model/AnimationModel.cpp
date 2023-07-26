@@ -503,6 +503,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
 
+	  XMMATRIX mat;
 	  if (pNodeAnim)
 	  {
 		   //Interpolate scaling and generate scaling transformation matrix
@@ -530,11 +531,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		  nodeTrans = scalingM * rotationM * translationM;
 
 	  }
-	  XMMATRIX mat;
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	  else pNode->AnimaetionParentMat = nodeTrans;
 	  XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
-
 	  pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	  pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
 	  pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
@@ -542,23 +541,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  else pNode->startPosition = { 0,0,0 };
 	  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
+
 	  if (pNode->ikData.isIK)
 	  {
-
 		  TwoBoneIK(*pNode,*pNode->parent);
-		  XMMATRIX scalingM = XMMatrixScaling(pNode->scale.m128_f32[0], pNode->scale.m128_f32[1], pNode->scale.m128_f32[2]);
-		  XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
-		  XMMATRIX translationM = XMMatrixTranslation(pNode->translation.m128_f32[0], pNode->translation.m128_f32[1], pNode->translation.m128_f32[2]);
-		  nodeTrans = scalingM * rotationM * translationM;
-		  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
-		  else pNode->AnimaetionParentMat = nodeTrans;
-		  pNode->endPosition.vec_.x_ = pNode->AnimaetionParentMat.r[3].m128_f32[0];
-		  pNode->endPosition.vec_.y_ = pNode->AnimaetionParentMat.r[3].m128_f32[1];
-		  pNode->endPosition.vec_.z_ = pNode->AnimaetionParentMat.r[3].m128_f32[2];
-		  if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
-		  else pNode->startPosition = { 0,0,0 };
-		  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
-		  pNode->boneLength = pNode->boneVec.V3Len();
+		  UpdateNodeMatrix(pNode);
 	  }
 	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
 	 std::list<Bone*> bonePtr{};
@@ -742,9 +729,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   if (&joint1 == nullptr)return;
 	   if (&joint2 == nullptr)return;
-		OneBoneIK(joint1);//Žè‡1
+		OneBoneIK(joint2);//Žè‡1
 		//‚±‚±‚ÉŠÖß•ûŒü‚Ì§Œä‚ð·‚µž‚Þ‚ç‚µ‚¢
-		Vectorconstraiont(joint1);
+		Vectorconstraiont(joint2);
 		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//Žè‡1.5?i•ÓCŽZo)
 		float lineALen = joint2.boneLength;
 		float lineBLen = joint1.boneLength;
@@ -766,6 +753,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		{
 			joint1.rotation.m128_f32[0] = 0;
 		}
+		UpdateNodeMatrix(&joint2);
+		UpdateNodeMatrix(&joint1);
+
    }
 
    void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
@@ -882,6 +872,25 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   }
 		   ImGui::TreePop();
 	   }
+   }
+
+   void MCB::Skeleton::UpdateNodeMatrix(Node* pNode)
+   {
+	   XMMATRIX nodeTrans;
+	   XMMATRIX scalingM = XMMatrixScaling(pNode->scale.m128_f32[0], pNode->scale.m128_f32[1], pNode->scale.m128_f32[2]);
+	   XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
+	   XMMATRIX translationM = XMMatrixTranslation(pNode->translation.m128_f32[0], pNode->translation.m128_f32[1], pNode->translation.m128_f32[2]);
+	   nodeTrans = scalingM * rotationM * translationM;
+	   if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
+	   else pNode->AnimaetionParentMat = nodeTrans;
+	   XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
+	   pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
+	   pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
+	   pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
+	   if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
+	   else pNode->startPosition = { 0,0,0 };
+	   pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
+	   pNode->boneLength = pNode->boneVec.V3Len();
    }
 
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)

@@ -62,16 +62,16 @@ void MCB::TitleScene::Update()
 
     if (input_->IsKeyDown(DIK_RETURN))
     {
-        debugStop = !debugStop;
+        debugStop = true;
     }
 
     if (debugStop)
     {
+        //Sleep(2000);s
+        //debugStop = false;
+    }
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z });
-        Sleep(2000);
-        debugStop = !debugStop;
-    }
 
     MatrixUpdate();
 }

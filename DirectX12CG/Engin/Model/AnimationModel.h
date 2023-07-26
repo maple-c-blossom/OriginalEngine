@@ -175,6 +175,7 @@ namespace MCB
 
         void DrawHeirarchy(Node* node);
 
+        void UpdateNodeMatrix(Node* node);
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)
