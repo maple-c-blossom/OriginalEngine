@@ -189,8 +189,12 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->translation.m128_f32[1] = t.y;
 		newObject->translation.m128_f32[2] = t.z;
 
+		newObject->defaultTranslation = newObject->translation;
+		newObject->defaultRotation = newObject->rotation;
+
 		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
 		newObject->globalTransform = newObject->transform;
+		newObject->defaultTransform = newObject->globalTransform;
 		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
 		skeleton.SetNode(std::move(newObject));
 		parent = skeleton.GetNodes_()->back().get();
@@ -303,6 +307,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 
 		temp.offsetMatrix = DirectX::XMMatrixTranspose(temp.offsetMatrix);
 		temp.finalMatrix = temp.offsetMatrix;
+		
 		for (uint32_t j = 0; j < mesh->mBones[i]->mNumWeights; j++)
 		{
 
@@ -707,54 +712,101 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    void MCB::Skeleton::OneBoneIK(Node& joint)
    {
 
-	    joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
-		Vector3D vec = joint.ikData.iKTargetPosition;
-		XMVECTOR xmVec = vec.ConvertXMVEC();
-		xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
-		float VecXSquare = xmVec.m128_f32[0] * xmVec.m128_f32[0];
-		float VecYSquare = xmVec.m128_f32[1] * xmVec.m128_f32[1];
-		float root1 = sqrtf(VecXSquare + VecYSquare);
-		float root2 = sqrtf(VecXSquare + VecYSquare + powf(xmVec.m128_f32[2], 2));
-		Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
-		Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
-		// ƒsƒbƒ`Ž²‰ñ“]‚ÌŒvŽZ
-		XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.f);
-		XMVECTOR currentRotation =joint.rotation;
-		XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
+	 //   joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
+		//Vector3D vec = joint.ikData.iKTargetPosition;
+		//XMVECTOR xmVec = vec.ConvertXMVEC();
+		//xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
+		//float VecXSquare = xmVec.m128_f32[0] * xmVec.m128_f32[0];
+		//float VecYSquare = xmVec.m128_f32[1] * xmVec.m128_f32[1];
+		//float root1 = sqrtf(VecXSquare + VecYSquare);
+		//float root2 = sqrtf(VecXSquare + VecYSquare + powf(xmVec.m128_f32[2], 2));
+		//Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
+		//Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
+		//// ƒsƒbƒ`Ž²‰ñ“]‚ÌŒvŽZ
+		//XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 
+		//	atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.f);
+		//XMVECTOR currentRotation =joint.parent->rotation;
+		//XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
 
-		joint.rotation = finalRotation;
+		//joint.parent->rotation = finalRotation;
+
+	   joint.parent->globalInverseTransform = XMMatrixInverse(nullptr,joint.parent->AnimaetionParentMat);
+	   Vector3D vec = joint.ikData.iKTargetPosition;
+	   XMVECTOR xmVec = vec.ConvertXMVEC();
+	   xmVec = XMVector3Transform(xmVec, joint.parent->globalInverseTransform);
+	   Vector3D axis = axis.V3Get(joint.startPosition.vec_, { xmVec.m128_f32[0],xmVec.m128_f32[1],xmVec.m128_f32[2] });
+	   axis.V3Norm();
+	   Vector3D boneVec = joint.boneVec;
+	   boneVec.V3Norm();
+	   float angle = axis.GetV3Dot(boneVec);
+	   axis = axis.GetV3Cross(boneVec);
+
+	   Quaternion q(axis, angle);
+	   XMVECTOR currentRotation =joint.parent->rotation;
+	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, {q.x_,q.y_,q.z_,q.w_});
+
+	   joint.parent->rotation = finalRotation;
+	   UpdateNodeMatrix(joint.parent);
    }
 
    void MCB::Skeleton::TwoBoneIK(Node& joint1, Node& joint2)
    {
-	   if (&joint1 == nullptr)return;
-	   if (&joint2 == nullptr)return;
-		OneBoneIK(joint2);//Žè‡1
-		//‚±‚±‚ÉŠÖß•ûŒü‚Ì§Œä‚ð·‚µž‚Þ‚ç‚µ‚¢
-		Vectorconstraiont(joint2);
-		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//Žè‡1.5?i•ÓCŽZo)
-		float lineALen = joint2.boneLength;
-		float lineBLen = joint1.boneLength;
-		float lineCLen = lineC.V3Len();
-		float lineALenSquare = lineALen * lineALen;
-		float lineBLenSquare = lineBLen * lineBLen;
-		float lineCLenSquare = lineCLen * lineCLen;
-		//Žè‡2
-		float cosB = cos((lineCLenSquare + lineALenSquare - lineBLenSquare) / (2 * lineCLen *lineALen));
-		float cosC = cos((lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen));
-		//Žè‡3
-		float sinB = abs(sqrtf(1.f - (cosB * cosB)));
-		float sinC = abs(sqrtf(1.f - (cosC * cosC)));
-		joint1.ikData.rotationInv ? sinC : sinB *= -1;
-		cosC *= -1;
-		ApplyRotation(joint1, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(-sinB, cosB));
-		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
-		if (!isfinite(joint1.rotation.m128_f32[0]))
-		{
-			joint1.rotation.m128_f32[0] = 0;
-		}
-		UpdateNodeMatrix(&joint2);
-		UpdateNodeMatrix(&joint1);
+	 //  if (&joint1 == nullptr)return;
+	 //  if (&joint2 == nullptr)return;
+	 //  Vector3D temp = joint2.ikData.iKTargetPosition;
+	 //  joint2.ikData.iKTargetPosition = joint1.ikData.iKTargetPosition;
+		//OneBoneIK(joint2);//Žè‡1
+		////‚±‚±‚ÉŠÖß•ûŒü‚Ì§Œä‚ð·‚µž‚Þ‚ç‚µ‚¢
+		//Vectorconstraiont(joint2);
+		//joint2.parent->globalInverseTransform = XMMatrixInverse(nullptr, joint2.parent->AnimaetionParentMat);
+		//Vector3D vec = joint2.ikData.iKTargetPosition;
+		//XMVECTOR xmVec = vec.ConvertXMVEC();
+		//xmVec = XMVector3Transform(xmVec, joint2.parent->globalInverseTransform);
+		//vec = { xmVec.m128_f32[0],xmVec.m128_f32[2],xmVec.m128_f32[3] };
+		//Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,vec.vec_);//Žè‡1.5?i•ÓCŽZo)
+		//float lineALen = joint2.boneLength;
+		//float lineBLen = joint1.boneLength;
+		//float lineCLen = lineC.V3Len();
+		//float lineALenSquare = lineALen * lineALen;
+		//float lineBLenSquare = lineBLen * lineBLen;
+		//float lineCLenSquare = lineCLen * lineCLen;
+		////Žè‡2
+		//float cosB = cos((lineCLenSquare + lineALenSquare - lineBLenSquare) / (2 * lineCLen *lineALen));
+		//float cosC = cos((lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen));
+		////Žè‡3
+		//float sinB = abs(sqrtf(1.f - (cosB * cosB)));
+		//float sinC = abs(sqrtf(1.f - (cosC * cosC)));
+		//joint1.ikData.rotationInv ? sinC : sinB *= -1;
+		//cosC *= -1;
+		//ApplyRotation(*joint1.parent, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(-sinB, cosB));
+		//ApplyRotation(*joint2.parent, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
+		//if (!isfinite(joint1.rotation.m128_f32[0]))
+		//{
+		//	joint1.rotation.m128_f32[0] = 0;
+		//}
+		//UpdateNodeMatrix(joint2.parent);
+		//UpdateNodeMatrix(joint1.parent);
+		//UpdateNodeMatrix(&joint1);
+		//joint2.ikData.iKTargetPosition = temp;
+	   Node* rootJoint = joint2.parent;
+	   XMMATRIX inv = XMMatrixInverse(nullptr, rootJoint->defaultTransform);
+	   Vector3D vec = joint1.ikData.iKTargetPosition;
+	   XMVECTOR xmVec = vec.ConvertXMVEC();
+	   xmVec = XMVector3Transform(xmVec, inv);
+	   Vector3D nd = nd.GetV3Normal(rootJoint->defaultTranslation,
+		   joint2.defaultTranslation, joint1.defaultTranslation);
+	   Vector3D nt = nt.GetV3Normal(rootJoint->defaultTranslation, joint1.ikData.constraintVector,
+		   joint1.ikData.iKTargetPosition);
+	   Quaternion q1 = q1.DirToDir(nd, nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É
+	   Vector3D targetVector = targetVector.V3Get(rootJoint->defaultTranslation, xmVec);
+	   float angle = (pow(targetVector.V3Len(),2) + pow(joint2.boneLength,2) - pow(joint1.boneLength,2)) / 
+					 (2 * targetVector.V3Len() * joint2.boneLength);//—]Œ·’è—‚ÅŠp“xŽZo
+	   Quaternion tempQ(nt, cosf(angle));//“¯ˆê•½–Êã‚Ì‰ñ“]‚È‚ç‰ñ“]Ž²‚ð–@ü‚É‚µ‚Ä‚Ý‚½‚çƒ_ƒ‚©‚ÈH
+	   Vector3D d2 = tempQ.SetRotationVector(tempQ, joint2.boneVec);//D2ŽZo
+	   Quaternion q2 = q2.DirToDir(joint2.boneVec,d2);
+	   Quaternion rootJointRotation = q2.GetDirectProduct(q2, q1);
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();//
+	   ////angle‚Æ
 
    }
 

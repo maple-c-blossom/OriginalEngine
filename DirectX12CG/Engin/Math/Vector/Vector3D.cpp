@@ -15,6 +15,14 @@ MCB::Vector3D::Vector3D(const Vector3D& start, const Vector3D& end)
 	vec_ = temp.vec_;
 }
 
+MCB::Vector3D::Vector3D(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end)
+{
+	Vector3D temp;
+	temp.vec_.x_= end .m128_f32[0] - start.m128_f32[0];
+	temp.vec_.y_= end .m128_f32[1] - start.m128_f32[1];
+	temp.vec_.z_= end .m128_f32[2] - start.m128_f32[2];
+	vec_ = temp.vec_;
+}
 
 
 MCB::Vector3D::Vector3D()
@@ -27,6 +35,12 @@ MCB::Vector3D::Vector3D(const Float3& vec)
 {
 	vec_ = vec;
 }
+MCB::Vector3D::Vector3D(const DirectX::XMVECTOR vec)
+{
+	vec_.x_ = vec.m128_f32[0];
+	vec_.y_ = vec.m128_f32[1];
+	vec_.z_ = vec.m128_f32[2];
+}
 MCB::Vector3D::Vector3D( float x,  float y,  float z)
 {
 	vec_.x_ = x;
@@ -37,6 +51,12 @@ Vector3D MCB::Vector3D::V3Get(const Float3& start, const Float3& end)
 {
 	 Vector3D temp(start,end);
 	 return temp;
+}
+
+Vector3D MCB::Vector3D::V3Get(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end)
+{
+	Vector3D temp(start, end);
+	return temp;
 }
 float MCB::Vector3D::V3Len() const
 {
@@ -110,6 +130,17 @@ Vector3D MCB::Vector3D::GetRightVec( Vector3D frontVec,  Vector3D UpVec)
 	ans = ans.GetV3Cross(UpVec, frontVec);
 	ans.V3Norm();
 
+	return ans;
+}
+
+Vector3D MCB::Vector3D::GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2)
+{
+	Vector3D ans;
+	Vector3D vv1, vv2;
+	vv1 = vv1.V3Get(v0.vec_, v1.vec_);
+	vv2 = vv2.V3Get(v1.vec_, v2.vec_);
+	ans = vv1.GetV3Cross(vv2);
+	ans.V3Norm();
 	return ans;
 }
 

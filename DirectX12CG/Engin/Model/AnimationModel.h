@@ -70,6 +70,9 @@ namespace MCB
         DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
+        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };
+        DirectX::XMVECTOR defaultTranslation = { 0,0,0,1 };
+        DirectX::XMMATRIX defaultTransform = DirectX::XMMatrixIdentity();
         Node* parent = nullptr;
         std::vector<Node*>children{};
         Vector3D endPosition;
@@ -83,6 +86,7 @@ namespace MCB
             bool rotationInv = false;
             Vector3D iKTargetPosition = {};
             Vector3D constraintVector = {0,1,0};
+            Vector3D temptarget = { 0,0,0 };
         };
         IKData ikData;
     }Node;
@@ -95,7 +99,7 @@ namespace MCB
         std::vector< std::unique_ptr<Node>> nodes_;
     public:
         Node* rootNode;
-        
+     
         //アニメーションの補間に使うと予想して作っておく----------
         Animation* currentAnimation = nullptr;//現在Animation
         Animation* prevAnimation = nullptr;//前回Animation

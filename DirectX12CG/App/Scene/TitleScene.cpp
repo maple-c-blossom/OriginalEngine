@@ -71,8 +71,8 @@ void MCB::TitleScene::Update()
         //debugStop = false;
     }
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z });
-
+            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },"Bone2");
+        
     MatrixUpdate();
 }
 

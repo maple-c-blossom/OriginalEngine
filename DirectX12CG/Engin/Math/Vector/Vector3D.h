@@ -10,11 +10,14 @@ namespace MCB
 		Float3 vec_;
 		Vector3D(const Float3& start, const Float3& end);
 		Vector3D(const Vector3D& start, const Vector3D& end);
+		Vector3D(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
 		Vector3D();
 		Vector3D(const Float3& vec);
+		Vector3D(const DirectX::XMVECTOR vec);
 		Vector3D( float x,  float y, float z);
 
 		Vector3D V3Get(const Float3& start, const Float3& end);
+		Vector3D V3Get(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
 		float V3Len() const;
 		void V3Norm();
 		float GetV3Dot(const Vector3D& vector);
@@ -28,6 +31,7 @@ namespace MCB
 		Vector3D GetUpVec(Vector3D RightVec, Vector3D frontVec = { 0,0,1 });
 		Vector3D GetRightVec( Vector3D frontVec,  Vector3D UpVec = { 0,1,0 });
 
+		Vector3D GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2);
 
 
 		Vector3D& operator+=(const Vector3D& Vec);
