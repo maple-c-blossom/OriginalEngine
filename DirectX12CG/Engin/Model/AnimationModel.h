@@ -167,7 +167,7 @@ namespace MCB
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(Vector3D objPos,Vector3D targetPos);
+        void SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, std::string boneName = "NULL");
         //ŠÖß‚Ì‹È‚ª‚é•ûŒü‚ð§ŒÀ(ŽŽì)
         void Vectorconstraiont(Node& joint);
 
@@ -187,6 +187,7 @@ namespace MCB
             auto& itr = animations_.find(name);
             if (itr == animations_.end())
             {
+                if (!animations_.empty()) return animations_.begin()->second.get();
                 return nullptr;
             }
             return animations_[name].get();

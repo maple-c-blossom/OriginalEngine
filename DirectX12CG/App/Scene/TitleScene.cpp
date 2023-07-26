@@ -42,24 +42,28 @@ void MCB::TitleScene::Update()
 
     if (input_->IsKeyDown(DIK_W))
     {
-        testsphere_.position_.z += 0.01f;
+        testsphere_.position_.z += 0.05f;
     }
     
     if (input_->IsKeyDown(DIK_S))
     {
-        testsphere_.position_.z -= 0.01f;
+        testsphere_.position_.z -= 0.05f;
     }
 
     if (input_->IsKeyDown(DIK_D))
     {
-        testsphere_.position_.x += 0.01f;
+        testsphere_.position_.x += 0.05f;
     }
 
     if (input_->IsKeyDown(DIK_A))
     {
-        testsphere_.position_.x -= 0.01f;
+        testsphere_.position_.x -= 0.05f;
     }
 
+    if (input_->IsKeyDown(DIK_RETURN))
+    {
+        Sleep(100);
+    }
 
     test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
         { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z});
@@ -107,7 +111,7 @@ void MCB::TitleScene::CheckAllColision()
 void MCB::TitleScene::ImGuiUpdate()
 {
     imgui_.Begin();
-
+    test2Animation_.animationModel_->skeleton.DrawHeirarchy(test2Animation_.animationModel_->skeleton.rootNode);
     imgui_.End();
 }
 

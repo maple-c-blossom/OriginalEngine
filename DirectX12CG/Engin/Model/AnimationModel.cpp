@@ -526,6 +526,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  pNode->boneLength = pNode->boneVec.V3Len();
 	  if (pNode->ikData.isIK)
 	  {
+
 		  TwoBoneIK(*pNode,*pNode->parent);
 		  XMMATRIX scalingM = XMMatrixScaling(pNode->scale.m128_f32[0], pNode->scale.m128_f32[1], pNode->scale.m128_f32[2]);
 		  XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
@@ -700,6 +701,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    void MCB::Skeleton::OneBoneIK(Node& joint)
    {
+
 	    joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
 		Vector3D vec = joint.ikData.iKTargetPosition;
 		XMVECTOR xmVec = vec.ConvertXMVEC();
@@ -714,15 +716,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.f);
 		XMVECTOR currentRotation =joint.rotation;
 		XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
-		joint.rotation = finalRotation;
 
+		joint.rotation = finalRotation;
    }
 
    void MCB::Skeleton::TwoBoneIK(Node& joint1, Node& joint2)
    {
 	   if (&joint1 == nullptr)return;
+	   if (&joint2 == nullptr)return;
 		OneBoneIK(joint1);//Žè‡1
-		if (&joint2 == nullptr) return;
 		//‚±‚±‚ÉŠÖß•ûŒü‚Ì§Œä‚ð·‚µž‚Þ‚ç‚µ‚¢
 		Vectorconstraiont(joint1);
 		Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,joint1.ikData.iKTargetPosition.vec_);//Žè‡1.5?i•ÓCŽZo)
@@ -742,6 +744,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		cosC *= -1;
 		ApplyRotation(joint1, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(-sinB, cosB));
 		ApplyRotation(joint2, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
+		if (!isfinite(joint1.rotation.m128_f32[0]))
+		{
+			joint1.rotation.m128_f32[0] = 0;
+		}
    }
 
    void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
@@ -765,9 +771,17 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos)
+   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos,string boneName)
    {
-	   Node* node = GetNearPositionNode(targetPos,objPos);
+	   Node* node;
+	   if (boneName == "NULL")
+	   {
+			 node = GetNearPositionNode(targetPos,objPos);
+	   }
+	   else
+	   {
+		   node = GetNode(boneName);
+	   }
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
@@ -790,6 +804,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   XMVECTOR currentRotation = joint.rotation;
 	   XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
 	   joint.rotation = finalRotation;
+
    }
 
    void MCB::Skeleton::ApplyRotation(Node& joint, const XMFLOAT3& axis, float angle)
