@@ -779,7 +779,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	   float angle = cosineFrom3LineLength(endJointBoneLength, localTargetVectorFromRootJoint.V3Len(), middleJointBoneLength);//余弦定理で角度算出
 	   Quaternion d2RotaionQ(nt, acosf(angle));//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
-	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, xmEffectorLocalVecFromRoot);//D2算出
+	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, xmEffectorLocalVecFromRoot);//rootからmiddleにいてほしい場所までのベクトル算出
 	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
