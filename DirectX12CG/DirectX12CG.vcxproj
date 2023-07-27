@@ -363,8 +363,8 @@ xcopy "$(SolutionDir)\External\Assimp\lib\Debug\assimp-vc143-mtd.pdb" $(TargetDi
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.lib" $(TargetDir)\lib\assimp\lib\Release/Y
-xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.pdb" $(TargetDir)\lib\assimp\lib\Release /Y</Command>
+      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.lib" $(TargetDir)lib\assimp\lib\Release/Y
+xcopy "$(SolutionDir)\External\Assimp\lib\Release\assimp-vc143-mt.pdb" $(TargetDir)lib\assimp\lib\Release /Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
