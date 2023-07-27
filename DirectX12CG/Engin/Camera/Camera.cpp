@@ -31,7 +31,7 @@ void Camera::Update()
 	ray.StartPosition_.vec_.x_ = view_.eye_.x;
 	ray.StartPosition_.vec_.y_ = view_.eye_.y;
 	ray.StartPosition_.vec_.z_ = view_.eye_.z;
-	ray.rayVec_ = Vector3D().V3Get(ray.StartPosition_.vec_, Float3(target_->position_.x,
+	ray.rayVec_ = Vector3D().Vector3Substruct(ray.StartPosition_.vec_, Float3(target_->position_.x,
 		target_->position_.y
 		+ 0.5f ,
 		target_->position_.z));

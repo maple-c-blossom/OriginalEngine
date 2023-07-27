@@ -4,6 +4,7 @@
 #include <list>
 #include <algorithm>
 #include "Util.h"
+#include <algorithm>
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
@@ -153,25 +154,25 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		// the new object is the parent for all child nodes
 
 		// the new object is the parent for all child nodes
-		newObject->transform.r[0].m128_f32[0] = ainode->mTransformation.a1;
-		newObject->transform.r[0].m128_f32[1] = ainode->mTransformation.a2;
-		newObject->transform.r[0].m128_f32[2] = ainode->mTransformation.a3;
-		newObject->transform.r[0].m128_f32[3] = ainode->mTransformation.a4;
+		newObject->localTransform.r[0].m128_f32[0] = ainode->mTransformation.a1;
+		newObject->localTransform.r[0].m128_f32[1] = ainode->mTransformation.a2;
+		newObject->localTransform.r[0].m128_f32[2] = ainode->mTransformation.a3;
+		newObject->localTransform.r[0].m128_f32[3] = ainode->mTransformation.a4;
 
-		newObject->transform.r[1].m128_f32[0] = ainode->mTransformation.b1;
-		newObject->transform.r[1].m128_f32[1] = ainode->mTransformation.b2;
-		newObject->transform.r[1].m128_f32[2] = ainode->mTransformation.b3;
-		newObject->transform.r[1].m128_f32[3] = ainode->mTransformation.b4;
+		newObject->localTransform.r[1].m128_f32[0] = ainode->mTransformation.b1;
+		newObject->localTransform.r[1].m128_f32[1] = ainode->mTransformation.b2;
+		newObject->localTransform.r[1].m128_f32[2] = ainode->mTransformation.b3;
+		newObject->localTransform.r[1].m128_f32[3] = ainode->mTransformation.b4;
 
-		newObject->transform.r[2].m128_f32[0] = ainode->mTransformation.c1;
-		newObject->transform.r[2].m128_f32[1] = ainode->mTransformation.c2;
-		newObject->transform.r[2].m128_f32[2] = ainode->mTransformation.c3;
-		newObject->transform.r[2].m128_f32[3] = ainode->mTransformation.c4;
+		newObject->localTransform.r[2].m128_f32[0] = ainode->mTransformation.c1;
+		newObject->localTransform.r[2].m128_f32[1] = ainode->mTransformation.c2;
+		newObject->localTransform.r[2].m128_f32[2] = ainode->mTransformation.c3;
+		newObject->localTransform.r[2].m128_f32[3] = ainode->mTransformation.c4;
 
-		newObject->transform.r[3].m128_f32[0] = ainode->mTransformation.d1;
-		newObject->transform.r[3].m128_f32[1] = ainode->mTransformation.d2;
-		newObject->transform.r[3].m128_f32[2] = ainode->mTransformation.d3;
-		newObject->transform.r[3].m128_f32[3] = ainode->mTransformation.d4;
+		newObject->localTransform.r[3].m128_f32[0] = ainode->mTransformation.d1;
+		newObject->localTransform.r[3].m128_f32[1] = ainode->mTransformation.d2;
+		newObject->localTransform.r[3].m128_f32[2] = ainode->mTransformation.d3;
+		newObject->localTransform.r[3].m128_f32[3] = ainode->mTransformation.d4;
 		aiVector3D s;
 		aiQuaternion r;
 		aiVector3D t;
@@ -189,13 +190,22 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->translation.m128_f32[1] = t.y;
 		newObject->translation.m128_f32[2] = t.z;
 
-		newObject->defaultTranslation = newObject->translation;
-		newObject->defaultRotation = newObject->rotation;
-
-		newObject->transform = DirectX::XMMatrixTranspose(newObject->transform);
-		newObject->globalTransform = newObject->transform;
-		newObject->defaultTransform = newObject->globalTransform;
-		newObject->globalInverseTransform = XMMatrixInverse(nullptr,newObject->transform);
+		
+		
+		newObject->localTransform = DirectX::XMMatrixTranspose(newObject->localTransform);
+		DirectX::XMMatrixDecompose(&newObject->defaultScale, &newObject->defaultRotation, &newObject->defaultLocalTranslation,
+			newObject->localTransform);
+		/*newObject->defaultTranslation = newObject->translation;
+		newObject->defaultRotation = newObject->rotation;*/
+		newObject->endPosition.vec_.x_ = newObject->translation.m128_f32[0];
+		newObject->endPosition.vec_.y_ = newObject->translation.m128_f32[1];
+		newObject->endPosition.vec_.z_ = newObject->translation.m128_f32[2];
+		if (targetParent) newObject->startPosition = targetParent->endPosition;
+		else newObject->startPosition = { 0,0,0 };
+		newObject->defaultBoneVec = Vector3D().Vector3Substruct(newObject->startPosition.vec_, newObject->endPosition.vec_);
+		newObject->globalTransform = newObject->localTransform;
+		newObject->defaultWarldTransform = newObject->globalTransform;
+		newObject->globalInverseTransform = XMMatrixInverse(nullptr, newObject->globalTransform);
 		skeleton.SetNode(std::move(newObject));
 		parent = skeleton.GetNodes_()->back().get();
 		//transform.SetUnity();
@@ -203,8 +213,10 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 	if (targetParent)
 	{
 		parent->parent = targetParent;
+		parent->globalTransform *= targetParent->globalTransform;
+		parent->defaultWarldTransform = parent->globalTransform;
+		parent->globalInverseTransform = XMMatrixInverse(nullptr, parent->globalTransform);
 		targetParent->children.push_back(parent);
-		targetParent->globalTransform *= parent->globalTransform;
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
 	}
 	else
@@ -504,55 +516,54 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	  const Animation* pAnimation = currentAnimation;
 
-	  XMMATRIX nodeTrans = pNode->transform;
+	  XMMATRIX nodeTrans = pNode->localTransform;
 
 	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
 
 	  XMMATRIX mat;
 	  if (pNodeAnim)
 	  {
-		   //Interpolate scaling and generate scaling transformation matrix
-		  Vector3D scaling;
-		  calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
-		  XMMATRIX scalingM = XMMatrixScaling(scaling.vec_.x_, scaling.vec_.y_, scaling.vec_.z_);
+		  // //Interpolate scaling and generate scaling transformation matrix
+		  //Vector3D scaling;
+		  //calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
+		  //XMMATRIX scalingM = XMMatrixScaling(scaling.vec_.x_, scaling.vec_.y_, scaling.vec_.z_);
 
-		  // Interpolate rotation and generate rotation transformation matrix
-		  Quaternion rotationQ;
-		  calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
-		  //quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
-		  XMVECTOR XMrotationQ = { rotationQ.x_,rotationQ.y_,rotationQ.z_,rotationQ.w_ };
-		  XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
+		  //// Interpolate rotation and generate rotation transformation matrix
+		  //Quaternion rotationQ;
+		  //calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
+		  ////quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
+		  //XMVECTOR XMrotationQ = { rotationQ.x_,rotationQ.y_,rotationQ.z_,rotationQ.w_ };
+		  //XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
 
-		  // Interpolate translation and generate translation transformation matrix
-		  Vector3D translation;
-		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
-		  XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
+		  //// Interpolate translation and generate translation transformation matrix
+		  //Vector3D translation;
+		  //calcInterpolatedPosition(translation, animationTime, pNodeAnim);
+		  //XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
 
-		   //Combine the above transformations
-		  pNode->translation = translation.ConvertXMVEC();
-		  pNode->scale = scaling.ConvertXMVEC();
-		  pNode->rotation = rotationQ.ConvertXMVector();
+		  // //Combine the above transformations
+		  //pNode->translation = translation.ConvertXMVEC();
+		  //pNode->scale = scaling.ConvertXMVEC();
+		  //pNode->rotation = rotationQ.ConvertXMVector();
 
-		  nodeTrans = scalingM * rotationM * translationM;
+		  //nodeTrans = scalingM * rotationM * translationM;
 
 	  }
-	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
-	  else pNode->AnimaetionParentMat = nodeTrans;
+	  if (pNode->parent) pNode->globalTransform = nodeTrans * (pNode->parent->globalTransform);
+	  else pNode->globalTransform = nodeTrans;
 	  XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
 	  pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	  pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
 	  pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
 	  if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
 	  else pNode->startPosition = { 0,0,0 };
-	  pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
+	  pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
 
 	  if (pNode->ikData.isIK)
 	  {
 		  TwoBoneIK(*pNode,*pNode->parent);
-		  UpdateNodeMatrix(pNode);
 	  }
-	 mat = /*pNode->globalTransform **/ pNode->AnimaetionParentMat;
+	 mat = /*pNode->globalTransform **/ pNode->globalTransform;
 	 std::list<Bone*> bonePtr{};
 	  for (auto& itr : nodes_)
 	  {
@@ -712,29 +723,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    void MCB::Skeleton::OneBoneIK(Node& joint)
    {
 
-	 //   joint.globalInverseTransform = XMMatrixInverse(nullptr,joint.AnimaetionParentMat);
-		//Vector3D vec = joint.ikData.iKTargetPosition;
-		//XMVECTOR xmVec = vec.ConvertXMVEC();
-		//xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
-		//float VecXSquare = xmVec.m128_f32[0] * xmVec.m128_f32[0];
-		//float VecYSquare = xmVec.m128_f32[1] * xmVec.m128_f32[1];
-		//float root1 = sqrtf(VecXSquare + VecYSquare);
-		//float root2 = sqrtf(VecXSquare + VecYSquare + powf(xmVec.m128_f32[2], 2));
-		//Vector3D cosTheta = {0,root1 / root2,xmVec.m128_f32[0] / root1};
-		//Vector3D sinTheta = { 0,xmVec.m128_f32[2] / root2,xmVec.m128_f32[1] / root1};
-		//// ピッチ軸回転の計算
-		//XMVECTOR rotation = XMQuaternionRotationRollPitchYaw(atan2f(sinTheta.vec_.z_, cosTheta.vec_.z_), 
-		//	atan2f(sinTheta.vec_.y_, cosTheta.vec_.y_), 0.f);
-		//XMVECTOR currentRotation =joint.parent->rotation;
-		//XMVECTOR finalRotation = XMQuaternionMultiply(currentRotation, rotation);
-
-		//joint.parent->rotation = finalRotation;
 
 	   joint.parent->globalInverseTransform = XMMatrixInverse(nullptr,joint.parent->AnimaetionParentMat);
 	   Vector3D vec = joint.ikData.iKTargetPosition;
 	   XMVECTOR xmVec = vec.ConvertXMVEC();
 	   xmVec = XMVector3Transform(xmVec, joint.parent->globalInverseTransform);
-	   Vector3D axis = axis.V3Get(joint.startPosition.vec_, { xmVec.m128_f32[0],xmVec.m128_f32[1],xmVec.m128_f32[2] });
+	   Vector3D axis = axis.Vector3Substruct(joint.startPosition.vec_, { xmVec.m128_f32[0],xmVec.m128_f32[1],xmVec.m128_f32[2] });
 	   axis.V3Norm();
 	   Vector3D boneVec = joint.boneVec;
 	   boneVec.V3Norm();
@@ -749,65 +743,58 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   UpdateNodeMatrix(joint.parent);
    }
 
-   void MCB::Skeleton::TwoBoneIK(Node& joint1, Node& joint2)
+   float cosineFrom3LineLength(float a = 3, float b = 3, float c = 3)
    {
-	 //  if (&joint1 == nullptr)return;
-	 //  if (&joint2 == nullptr)return;
-	 //  Vector3D temp = joint2.ikData.iKTargetPosition;
-	 //  joint2.ikData.iKTargetPosition = joint1.ikData.iKTargetPosition;
-		//OneBoneIK(joint2);//手順1
-		////ここに関節方向の制御を差し込むらしい
-		//Vectorconstraiont(joint2);
-		//joint2.parent->globalInverseTransform = XMMatrixInverse(nullptr, joint2.parent->AnimaetionParentMat);
-		//Vector3D vec = joint2.ikData.iKTargetPosition;
-		//XMVECTOR xmVec = vec.ConvertXMVEC();
-		//xmVec = XMVector3Transform(xmVec, joint2.parent->globalInverseTransform);
-		//vec = { xmVec.m128_f32[0],xmVec.m128_f32[2],xmVec.m128_f32[3] };
-		//Vector3D lineC = lineC.V3Get(joint2.startPosition.vec_,vec.vec_);//手順1.5?（辺C算出)
-		//float lineALen = joint2.boneLength;
-		//float lineBLen = joint1.boneLength;
-		//float lineCLen = lineC.V3Len();
-		//float lineALenSquare = lineALen * lineALen;
-		//float lineBLenSquare = lineBLen * lineBLen;
-		//float lineCLenSquare = lineCLen * lineCLen;
-		////手順2
-		//float cosB = cos((lineCLenSquare + lineALenSquare - lineBLenSquare) / (2 * lineCLen *lineALen));
-		//float cosC = cos((lineALenSquare + lineBLenSquare - lineCLenSquare) / (2 * lineALen *lineBLen));
-		////手順3
-		//float sinB = abs(sqrtf(1.f - (cosB * cosB)));
-		//float sinC = abs(sqrtf(1.f - (cosC * cosC)));
-		//joint1.ikData.rotationInv ? sinC : sinB *= -1;
-		//cosC *= -1;
-		//ApplyRotation(*joint1.parent, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(-sinB, cosB));
-		//ApplyRotation(*joint2.parent, XMFLOAT3(0.0f, 0.0f, 1.0f), atan2f(sinC, -cosC));
-		//if (!isfinite(joint1.rotation.m128_f32[0]))
-		//{
-		//	joint1.rotation.m128_f32[0] = 0;
-		//}
-		//UpdateNodeMatrix(joint2.parent);
-		//UpdateNodeMatrix(joint1.parent);
-		//UpdateNodeMatrix(&joint1);
-		//joint2.ikData.iKTargetPosition = temp;
-	   Node* rootJoint = joint2.parent;
-	   XMMATRIX inv = XMMatrixInverse(nullptr, rootJoint->defaultTransform);
-	   Vector3D vec = joint1.ikData.iKTargetPosition;
-	   XMVECTOR xmVec = vec.ConvertXMVEC();
-	   xmVec = XMVector3Transform(xmVec, inv);
-	   Vector3D nd = nd.GetV3Normal(rootJoint->defaultTranslation,
-		   joint2.defaultTranslation, joint1.defaultTranslation);
-	   Vector3D nt = nt.GetV3Normal(rootJoint->defaultTranslation, joint1.ikData.constraintVector,
-		   joint1.ikData.iKTargetPosition);
-	   Quaternion q1 = q1.DirToDir(nd, nt);//同一平面上にいるように
-	   Vector3D targetVector = targetVector.V3Get(rootJoint->defaultTranslation, xmVec);
-	   float angle = (pow(targetVector.V3Len(),2) + pow(joint2.boneLength,2) - pow(joint1.boneLength,2)) / 
-					 (2 * targetVector.V3Len() * joint2.boneLength);//余弦定理で角度算出
-	   Quaternion tempQ(nt, cosf(angle));//同一平面上の回転なら回転軸を法線にしてみたらダメかな？
-	   Vector3D d2 = tempQ.SetRotationVector(tempQ, joint2.boneVec);//D2算出
-	   Quaternion q2 = q2.DirToDir(joint2.boneVec,d2);
-	   Quaternion rootJointRotation = q2.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = rootJointRotation.ConvertXMVector();//
-	   ////angleと
+	   float temp = ((powf(b, 2) + powf(c, 2) - powf(a, 2)) /
+		   (2.f * b * c));
+	   return clamp(temp,-1,1);
+   }
 
+   void MCB::Skeleton::TwoBoneIK(Node& endJoint, Node& middleJoint)
+   {
+
+
+	   //座標変換(rootJointの座標系に変換)-----------------------------------
+	   Node* rootJoint = middleJoint.parent;
+	   XMMATRIX rootJointWorldMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultWarldTransform);
+	 
+	   Vector3D effectorWorldVec = endJoint.ikData.iKTargetPosition;//Objからの相対位置(objPos - targetPos)
+	   XMVECTOR xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
+
+	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointWorldMatrixinv);
+	   XMVECTOR middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
+	   XMVECTOR endJointLocalPositionFromRoot = XMVectorAdd(endJoint.defaultLocalTranslation ,middleJoint.defaultLocalTranslation);
+	   //------------------------------
+	   Vector3D nd = nd.GetV3Normal({0,0,0},
+		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
+	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, endJoint.ikData.constraintVector,
+		   xmEffectorLocalVecFromRoot);
+	   Quaternion q1 = q1.DirToDir(nd, nt);//同一平面上にいるようにする回転
+
+	   float middleJointBoneLength = middleJoint.defaultBoneVec.V3Len();
+
+	   float endJointBoneLength = endJoint.defaultBoneVec.V3Len();
+
+	   Vector3D localTargetVectorFromRootJoint = xmEffectorLocalVecFromRoot;
+
+	   float angle = cosineFrom3LineLength(endJointBoneLength, localTargetVectorFromRootJoint.V3Len(), middleJointBoneLength);//余弦定理で角度算出
+	   Quaternion d2RotaionQ(nt, acosf(angle));//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
+	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, xmEffectorLocalVecFromRoot);//D2算出
+	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
+	   
+	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
+	   UpdateNodeMatrix(rootJoint);
+	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
+	   XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
+	   XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
+	   XMVECTOR endJointLocalVecFromMiddle = XMVector3Transform(endJoint.defaultLocalTranslation, middleJointWorldMatrixinv);
+	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
+	   Quaternion q3 = q3.DirToDir(endJointLocalPositionFromRoot, localTargetVectorFromMiddle);
+	   middleJoint.rotation = q3.ConvertXMVector();
+	   UpdateNodeMatrix(rootJoint);
+	   UpdateNodeMatrix(&middleJoint);
+	   UpdateNodeMatrix(&endJoint);
    }
 
    void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
@@ -845,7 +832,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
-		   node->ikData.iKTargetPosition = targetPos;
+		   node->ikData.iKTargetPosition = objPos - targetPos;
 	   }
    }
 
@@ -890,17 +877,17 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 				   ImGui::InputFloat3("scale", node->scale.m128_f32);
 				   if (ImGui::TreeNode("Matrix"))
 				   {
-					   ImGui::Text("%f, %f, %f, %f", node->transform.r[0].m128_f32[0], node->transform.r[0].m128_f32[1],
-						   node->transform.r[0].m128_f32[2], node->transform.r[0].m128_f32[3]);
+					   ImGui::Text("%f, %f, %f, %f", node->localTransform.r[0].m128_f32[0], node->localTransform.r[0].m128_f32[1],
+						   node->localTransform.r[0].m128_f32[2], node->localTransform.r[0].m128_f32[3]);
 
-					   ImGui::Text("%f, %f, %f, %f", node->transform.r[1].m128_f32[0], node->transform.r[1].m128_f32[1],
-						   node->transform.r[1].m128_f32[2], node->transform.r[1].m128_f32[3]);
+					   ImGui::Text("%f, %f, %f, %f", node->localTransform.r[1].m128_f32[0], node->localTransform.r[1].m128_f32[1],
+						   node->localTransform.r[1].m128_f32[2], node->localTransform.r[1].m128_f32[3]);
 
-					   ImGui::Text("%f, %f, %f, %f", node->transform.r[2].m128_f32[0], node->transform.r[2].m128_f32[1],
-						   node->transform.r[2].m128_f32[2], node->transform.r[2].m128_f32[3]);
+					   ImGui::Text("%f, %f, %f, %f", node->localTransform.r[2].m128_f32[0], node->localTransform.r[2].m128_f32[1],
+						   node->localTransform.r[2].m128_f32[2], node->localTransform.r[2].m128_f32[3]);
 
-					   ImGui::Text("%f, %f, %f, %f", node->transform.r[3].m128_f32[0], node->transform.r[3].m128_f32[1],
-						   node->transform.r[3].m128_f32[2], node->transform.r[3].m128_f32[3]);
+					   ImGui::Text("%f, %f, %f, %f", node->localTransform.r[3].m128_f32[0], node->localTransform.r[3].m128_f32[1],
+						   node->localTransform.r[3].m128_f32[2], node->localTransform.r[3].m128_f32[3]);
 					   ImGui::TreePop();
 				   }
 
@@ -933,15 +920,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
 	   XMMATRIX translationM = XMMatrixTranslation(pNode->translation.m128_f32[0], pNode->translation.m128_f32[1], pNode->translation.m128_f32[2]);
 	   nodeTrans = scalingM * rotationM * translationM;
-	   if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
-	   else pNode->AnimaetionParentMat = nodeTrans;
+	   if (pNode->parent) pNode->globalTransform = nodeTrans * (pNode->parent->globalTransform);
+	   else pNode->globalTransform = nodeTrans;
 	   XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
 	   pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	   pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
 	   pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
 	   if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
 	   else pNode->startPosition = { 0,0,0 };
-	   pNode->boneVec = Vector3D().V3Get(pNode->startPosition.vec_, pNode->endPosition.vec_);
+	   pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	   pNode->boneLength = pNode->boneVec.V3Len();
    }
 
@@ -958,7 +945,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		list<LengeData> lenges;
 		for (auto& node : nodes_)
 		{
-			Vector3D pointVec = pointVec.V3Get(node->startPosition.vec_, localTargetPos.vec_);
+			Vector3D pointVec = pointVec.Vector3Substruct(node->startPosition.vec_, localTargetPos.vec_);
 			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);//Boneのベクトルから最も近い位置を算出
 			LengeData temp;
 			temp.node = node.get();

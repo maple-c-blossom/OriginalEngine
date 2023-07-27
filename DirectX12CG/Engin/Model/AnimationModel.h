@@ -66,18 +66,20 @@ namespace MCB
         DirectX::XMVECTOR scale = { 1,1,1,0 };
         DirectX::XMVECTOR rotation = { 0,0,0,0 };
         DirectX::XMVECTOR translation = { 0,0,0,1 };
-        DirectX::XMMATRIX transform = DirectX::XMMatrixIdentity();
+        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();
         DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
+        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };
         DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };
-        DirectX::XMVECTOR defaultTranslation = { 0,0,0,1 };
-        DirectX::XMMATRIX defaultTransform = DirectX::XMMatrixIdentity();
+        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };
+        DirectX::XMMATRIX defaultWarldTransform = DirectX::XMMatrixIdentity();
         Node* parent = nullptr;
         std::vector<Node*>children{};
         Vector3D endPosition;
         Vector3D startPosition;
         Vector3D boneVec;
+        Vector3D defaultBoneVec;
         float boneLength;
         bool updated = false;
         struct IKData

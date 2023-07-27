@@ -145,6 +145,10 @@ float MCB::clamp(float f)
 	return (f < 0.0f) ? 0.0f : ((f > 1.0f) ? 1.0f : f);
 }
 
+float MCB::clamp(float f,float min,float max)
+{
+	return (f < min) ? min : ((f > max) ? max : f);
+}
 MCB::SimpleFigure::SimpleFigure()
 {
 

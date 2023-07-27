@@ -25,6 +25,8 @@ namespace MCB
 	int32_t GetRand( int32_t min,  int32_t max);
 	float clamp( float f);
 
+	float clamp(float f, float min, float max);
+
 	class SimpleFigure
 	{
 	public:

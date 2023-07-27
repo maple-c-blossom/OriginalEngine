@@ -47,13 +47,13 @@ MCB::Vector3D::Vector3D( float x,  float y,  float z)
 	vec_.y_ = y;
 	vec_.z_ = z;
 }
-Vector3D MCB::Vector3D::V3Get(const Float3& start, const Float3& end)
+Vector3D MCB::Vector3D::Vector3Substruct(const Float3& start, const Float3& end)
 {
 	 Vector3D temp(start,end);
 	 return temp;
 }
 
-Vector3D MCB::Vector3D::V3Get(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end)
+Vector3D MCB::Vector3D::Vector3Substruct(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end)
 {
 	Vector3D temp(start, end);
 	return temp;
@@ -137,8 +137,10 @@ Vector3D MCB::Vector3D::GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2)
 {
 	Vector3D ans;
 	Vector3D vv1, vv2;
-	vv1 = vv1.V3Get(v0.vec_, v1.vec_);
-	vv2 = vv2.V3Get(v1.vec_, v2.vec_);
+	vv1 = vv1.Vector3Substruct(v0.vec_, v1.vec_);
+	vv2 = vv2.Vector3Substruct(v1.vec_, v2.vec_);
+	vv1.V3Norm();
+	vv2.V3Norm();
 	ans = vv1.GetV3Cross(vv2);
 	ans.V3Norm();
 	return ans;

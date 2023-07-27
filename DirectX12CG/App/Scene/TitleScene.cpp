@@ -211,12 +211,12 @@ void MCB::TitleScene::Object3DInit()
     //testsphere.model = BoxModel;
     testsphere_.model_ = sphereModel_.get();
     testsphere_.scale_ = { 1,1,1 };
-    testsphere_.position_ = { 10,4,25 };
+    testsphere_.position_ = { 0,4,2 };
     testsphere_.rotation_.y = ConvertRadius(90);
     testsphere_.camera_ = viewCamera_;
 
     test2Animation_.animationModel_ = anim2Model_.get();
     test2Animation_.scale_ = { 1,1,1 };
-    test2Animation_.position_ = { 10,4,30 };
+    test2Animation_.position_ = { 0,4,3 };
     test2Animation_.camera_ = viewCamera_;
 }

@@ -16,8 +16,8 @@ namespace MCB
 		Vector3D(const DirectX::XMVECTOR vec);
 		Vector3D( float x,  float y, float z);
 
-		Vector3D V3Get(const Float3& start, const Float3& end);
-		Vector3D V3Get(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
+		Vector3D Vector3Substruct(const Float3& start, const Float3& end);
+		Vector3D Vector3Substruct(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
 		float V3Len() const;
 		void V3Norm();
 		float GetV3Dot(const Vector3D& vector);
