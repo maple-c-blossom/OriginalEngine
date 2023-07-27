@@ -524,28 +524,28 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  if (pNodeAnim)
 	  {
 		  // //Interpolate scaling and generate scaling transformation matrix
-		  //Vector3D scaling;
-		  //calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
-		  //XMMATRIX scalingM = XMMatrixScaling(scaling.vec_.x_, scaling.vec_.y_, scaling.vec_.z_);
+		  Vector3D scaling;
+		  calcInterpolatedScaling(scaling, animationTime, pNodeAnim);
+		  XMMATRIX scalingM = XMMatrixScaling(scaling.vec_.x_, scaling.vec_.y_, scaling.vec_.z_);
 
-		  //// Interpolate rotation and generate rotation transformation matrix
-		  //Quaternion rotationQ;
-		  //calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
-		  ////quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
-		  //XMVECTOR XMrotationQ = { rotationQ.x_,rotationQ.y_,rotationQ.z_,rotationQ.w_ };
-		  //XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
+		  // Interpolate rotation and generate rotation transformation matrix
+		  Quaternion rotationQ;
+		  calcInterpolatedRotation(rotationQ, animationTime, pNodeAnim);
+		  //quat q = quat(rotationQ.x, rotationQ.y, rotationQ.z, rotationQ.w);
+		  XMVECTOR XMrotationQ = { rotationQ.x_,rotationQ.y_,rotationQ.z_,rotationQ.w_ };
+		  XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
 
-		  //// Interpolate translation and generate translation transformation matrix
-		  //Vector3D translation;
-		  //calcInterpolatedPosition(translation, animationTime, pNodeAnim);
-		  //XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
+		  // Interpolate translation and generate translation transformation matrix
+		  Vector3D translation;
+		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
+		  XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
 
-		  // //Combine the above transformations
-		  //pNode->translation = translation.ConvertXMVEC();
-		  //pNode->scale = scaling.ConvertXMVEC();
-		  //pNode->rotation = rotationQ.ConvertXMVector();
+		   //Combine the above transformations
+		  pNode->translation = translation.ConvertXMVEC();
+		  pNode->scale = scaling.ConvertXMVEC();
+		  pNode->rotation = rotationQ.ConvertXMVector();
 
-		  //nodeTrans = scalingM * rotationM * translationM;
+		  nodeTrans = scalingM * rotationM * translationM;
 
 	  }
 	  if (pNode->parent) pNode->globalTransform = nodeTrans * (pNode->parent->globalTransform);
