@@ -337,8 +337,8 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Debug\" $(TargetDir)lib\assimp\lib\Debug/Y
-xcopy "$(SolutionDir)\External\Assimp\lib\Debug\" $(TargetDir)lib\assimp\lib\Debug/Y</Command>
+      <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.lib" $(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.lib/Y
+echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.pdb" $(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.pdb/Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -363,8 +363,8 @@ xcopy "$(SolutionDir)\External\Assimp\lib\Debug\" $(TargetDir)lib\assimp\lib\Deb
       <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(SolutionDir)\External\Assimp\lib\Release\" $(TargetDir)lib\assimp\lib\Release/Y
-xcopy "$(SolutionDir)\External\Assimp\lib\Release\" $(TargetDir)lib\assimp\lib\Release /Y</Command>
+      <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Release\assimp-vc143-mt.lib" $(TargetDir)lib\assimp\lib\Release\assimp-vc143-mt.lib/Y
+echo F | xcopy "$(SolutionDir)External\Assimp\lib\Release\assimp-vc143-mt.pdb" $(TargetDir)lib\assimp\lib\Release\assimp-vc143-mt.pdb/Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
