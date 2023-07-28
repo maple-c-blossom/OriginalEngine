@@ -28,6 +28,8 @@ void MCB::TitleScene::MatrixUpdate()
     ground_.Update(viewCamera_);
     testsphere_.Update(viewCamera_);
     test2Animation_.AnimationUpdate(viewCamera_);
+    test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
+        test2Animation_.matWorld_.matWorld_,boxModel_.get());
 }
 
 void MCB::TitleScene::Update()
@@ -60,10 +62,10 @@ void MCB::TitleScene::Update()
         testsphere_.position_.x -= 0.05f;
     }
 
-    if (input_->IsKeyDown(DIK_RETURN))
-    {
-        debugStop = true;
-    }
+    //if (input_->IsKeyDown(DIK_RETURN))
+    //{
+    //    debugStop = true;
+    //}
 
     if (debugStop)
     {
@@ -82,8 +84,9 @@ void MCB::TitleScene::PostEffectDraw()
     Skydorm_.Draw();
     ground_.Draw();
     testsphere_.Draw();
+    if (input_->IsKeyDown(DIK_RETURN))test2Animation_.animationModel_->skeleton.JointObjectDraw();
     pipeline_->SetFbxPipeLine();
-    test2Animation_.AnimationDraw();
+    if(!input_->IsKeyDown(DIK_RETURN))test2Animation_.AnimationDraw();
 
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
@@ -163,6 +166,8 @@ void MCB::TitleScene::LoadModel()
     skydomeModel_ = std::make_unique<Model>("skydome");
 
     sphereModel_ = std::make_unique<Model>("sphere");
+
+    boxModel_ = std::make_unique<Model>("Box");
 
 
     animModel_ = std::make_unique<AnimationModel>();

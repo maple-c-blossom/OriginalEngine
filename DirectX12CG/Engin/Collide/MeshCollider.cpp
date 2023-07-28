@@ -1,5 +1,6 @@
 #include "MeshCollider.h"
 #include "CollisionManager.h"
+#include "AnimationModel.h"
 using namespace DirectX;
 MCB::MeshCollider::MeshCollider()
 {

@@ -13,14 +13,14 @@
 #include "Model.h"
 #include "Quaternion.h"
 #include "LightGroup.h"
-#include "AnimationModel.h"
+//#include "AnimationModel.h"
 #include "CollisionInfomation.h"
 #include <memory>
 namespace MCB
 {
     class ICamera;
     class BaseCollider;
-
+    class AnimationModel;
     class Object3d
     {
     protected:
@@ -52,6 +52,7 @@ namespace MCB
         //ÉAÉtÉBÉìïœä∑èÓïÒ
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
+        Quaternion rotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;

@@ -2,6 +2,7 @@
 #include "ICamera.h"
 #include "BaseCollider.h"
 #include "CollisionManager.h"
+#include "AnimationModel.h"
 using namespace MCB;
 using namespace std;
 

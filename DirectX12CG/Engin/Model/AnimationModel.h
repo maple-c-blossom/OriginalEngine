@@ -13,6 +13,8 @@
 #include "TextureManager.h"
 #include "Quaternion.h"
 #include <unordered_map>
+#include "ICamera.h"
+#include "Object3d.h"
 namespace MCB
 {
 
@@ -89,8 +91,12 @@ namespace MCB
             Vector3D iKTargetPosition = {};
             Vector3D constraintVector = {0,1,0};
             Vector3D temptarget = { 0,0,0 };
+            Object3d constraintObj;
         };
         IKData ikData;
+        std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
+        void JointObjectMatrixUpdate(ICamera* camera,const DirectX::XMMATRIX& worldObjMatrix,Model* model);
+        void JointObjectDraw();
     }Node;
     //struct aiMesh;
     //struct aiMaterial;
@@ -99,6 +105,7 @@ namespace MCB
     {
     private:
         std::vector< std::unique_ptr<Node>> nodes_;
+        
     public:
         Node* rootNode;
      
@@ -182,6 +189,9 @@ namespace MCB
         void DrawHeirarchy(Node* node);
 
         void UpdateNodeMatrix(Node* node);
+
+        void JointObjectMatrixUpdate(ICamera* camera, const DirectX::XMMATRIX& worldObjMatrix, Model* model);
+        void JointObjectDraw();
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "Util.h"
 #include <algorithm>
+#include "Object3d.h"
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
@@ -127,8 +128,8 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 	//Matrix4x4 transform;
 
 	std::unique_ptr<Node> newObject = std::make_unique<Node>();
-
-
+	std::unique_ptr<Object3d> object = std::make_unique<Object3d>();
+	newObject->object = move(object);
 	// if node has meshes, create a new scene object for it
 		/*targetParent.addChild(newObject);*/
 		//targetParent->parent = newObject.get();
@@ -181,20 +182,21 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->scale.m128_f32[1] = s.y;
 		newObject->scale.m128_f32[2] = s.z;
 
-		newObject->rotation.m128_f32[0] = r.x;
-		newObject->rotation.m128_f32[1] = r.y;
-		newObject->rotation.m128_f32[2] = r.z;
-		newObject->rotation.m128_f32[3] = r.w;
+		newObject->object->rotationQ_.x_ = newObject->rotation.m128_f32[0] = r.x;
+		newObject->object->rotationQ_.y_ = newObject->rotation.m128_f32[1] = r.y;
+		newObject->object->rotationQ_.z_ = newObject->rotation.m128_f32[2] = r.z;
+		newObject->object->rotationQ_.w_ = newObject->rotation.m128_f32[3] = r.w;
 
-		newObject->translation.m128_f32[0] = t.x;
-		newObject->translation.m128_f32[1] = t.y;
-		newObject->translation.m128_f32[2] = t.z;
+		newObject->object->position_.x = newObject->translation.m128_f32[0] = t.x;
+		newObject->object->position_.y = newObject->translation.m128_f32[1] = t.y;
+		newObject->object->position_.z = newObject->translation.m128_f32[2] = t.z;
 
-		
-		
+
+
 		newObject->localTransform = DirectX::XMMatrixTranspose(newObject->localTransform);
 		DirectX::XMMatrixDecompose(&newObject->defaultScale, &newObject->defaultRotation, &newObject->defaultLocalTranslation,
 			newObject->localTransform);
+
 		/*newObject->defaultTranslation = newObject->translation;
 		newObject->defaultRotation = newObject->rotation;*/
 		newObject->endPosition.vec_.x_ = newObject->translation.m128_f32[0];
@@ -213,6 +215,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 	if (targetParent)
 	{
 		parent->parent = targetParent;
+		parent->object->parent_ = targetParent->object.get();
 		parent->globalTransform *= targetParent->globalTransform;
 		parent->defaultWarldTransform = parent->globalTransform;
 		parent->globalInverseTransform = XMMatrixInverse(nullptr, parent->globalTransform);
@@ -932,6 +935,22 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   pNode->boneLength = pNode->boneVec.V3Len();
    }
 
+   void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, const DirectX::XMMATRIX& worldObjMatrix, Model* model)
+   {
+	   for (auto& node : nodes_)
+	   {
+		   node->JointObjectMatrixUpdate(camera, worldObjMatrix, model);
+	   }
+   }
+
+   void MCB::Skeleton::JointObjectDraw()
+   {
+	   for (auto& node : nodes_)
+	   {
+		  node->JointObjectDraw();
+	   }
+   }
+
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
    {
 	   struct LengeData
@@ -966,3 +985,36 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		return result;
    }
 
+   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, const XMMATRIX& worldObjMatrix,Model* model)
+   {
+	   object->model_ = model;
+	   object->color_ = { 0.5,0.5,0,1 };
+	   object->camera_ = camera;
+	   object->rotationQ_.x_ = rotation.m128_f32[0]; 
+	   object->rotationQ_.y_ = rotation.m128_f32[1]; 
+	   object->rotationQ_.z_ = rotation.m128_f32[2]; 
+	   object->rotationQ_.w_ = rotation.m128_f32[3];
+	   object->scale_ = { 0.5f,0.5f,0.5f };
+	   object->position_.x = translation.m128_f32[0];
+	   object->position_.y = translation.m128_f32[1];
+	   object->position_.z = translation.m128_f32[2];
+	   object->Update(object->rotationQ_);
+	   if (ikData.isIK)
+	   {
+		   ikData.constraintObj.position_.x = ikData.constraintVector.vec_.x_;
+		   ikData.constraintObj.position_.y = ikData.constraintVector.vec_.y_;
+		   ikData.constraintObj.position_.z = ikData.constraintVector.vec_.z_;
+		   ikData.constraintObj.scale_ = { 0.5f,0.5f,0.5f };
+		   ikData.constraintObj.model_ = model;
+		   ikData.constraintObj.color_ = { 0.5,0,0,1 };
+		   ikData.constraintObj.camera_ = camera;
+		   ikData.constraintObj.Update();
+	   }
+	   object->matWorld_.matWorld_ *= worldObjMatrix;
+   }
+
+   void MCB::Node::JointObjectDraw()
+   {
+	   object->Draw();
+	   if(ikData.isIK) ikData.constraintObj.Draw();
+   }

@@ -20,6 +20,7 @@ namespace MCB
 		std::unique_ptr<Model> groundModel_;
 		std::unique_ptr<Model> skydomeModel_;
 		std::unique_ptr<Model> sphereModel_;
+		std::unique_ptr<Model> boxModel_;
 
 		std::unique_ptr<AnimationModel> animModel_;
 		std::unique_ptr<AnimationModel> anim2Model_;

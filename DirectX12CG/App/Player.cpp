@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "CollisionManager.h"
 #include "PlayerQueryCallBack.h"
+#include "AnimationModel.h"
 using namespace std;
 void MCB::Player::Init()
 {
