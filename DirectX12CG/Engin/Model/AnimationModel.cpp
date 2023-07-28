@@ -838,6 +838,23 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   node->ikData.constraintVector = constraintPosition;
 	   }
    }
+   void MCB::Skeleton::TwoBoneIKOff(string boneName)
+   {
+	   Node* node;
+	   if (boneName == "NULL")
+	   {
+		   return;
+	   }
+
+
+		node = GetNode(boneName);
+
+	   if (node)
+	   {
+		   node->ikData.isIK = false;
+
+	   }
+   }
 
 
 
@@ -933,6 +950,37 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   else pNode->startPosition = { 0,0,0 };
 	   pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	   pNode->boneLength = pNode->boneVec.V3Len();
+
+	  XMMATRIX mat = pNode->AnimaetionParentMat;
+	   const string& nodeName = pNode->name;
+	   std::list<Bone*> bonePtr{};
+	   for (auto& itr : nodes_)
+	   {
+		   for (auto& itr2 : itr->meshes)
+		   {
+			   for (auto& itr3 : itr2->bones_)
+			   {
+
+				   if (itr3.name == nodeName)
+				   {
+					   bonePtr.push_back(&itr3);
+					   break;
+				   }
+			   }
+		   }
+	   }
+
+	   if (!bonePtr.empty())
+	   {
+		   for (auto& itr : bonePtr)
+		   {
+			   XMMATRIX* boneOff = &itr->offsetMatrix;
+			   XMMATRIX trans = (*boneOff) * (mat);
+			   itr->finalMatrix = trans;
+		   }
+
+	   }
+
    }
 
    void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj, Model* model)
@@ -998,7 +1046,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   object->rotationQ_.y_ = rotation.m128_f32[1]; 
 	   object->rotationQ_.z_ = rotation.m128_f32[2]; 
 	   object->rotationQ_.w_ = rotation.m128_f32[3];
-	   object->scale_ = { 0.9f,0.9f,0.9f };
+	   object->scale_ = { 0.8f,0.8f,0.8f };
 	   object->position_.x = translation.m128_f32[0];
 	   object->position_.y = translation.m128_f32[1];
 	   object->position_.z = translation.m128_f32[2];

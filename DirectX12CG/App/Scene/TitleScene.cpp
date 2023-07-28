@@ -62,19 +62,17 @@ void MCB::TitleScene::Update()
         testsphere_.position_.x -= 0.05f;
     }
 
-    //if (input_->IsKeyDown(DIK_RETURN))
-    //{
-    //    debugStop = true;
-    //}
 
-    if (debugStop)
+
+    if (input_->IsKeyDown(DIK_LSHIFT))
     {
-        //Sleep(2000);s
-        //debugStop = false;
+        test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 5 }, "Bone2");
     }
-        //test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-        //    { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 5 }, "Bone2");
-        
+    else
+    {
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone2");
+    }
     MatrixUpdate();
 }
 

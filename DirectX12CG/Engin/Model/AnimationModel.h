@@ -179,6 +179,10 @@ namespace MCB
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
         void SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, Vector3D constraintPosition = {0,1,0}, std::string boneName = "NULL");
+
+        void TwoBoneIKOff(std::string boneName);
+
+
         //ŠÖß‚Ì‹È‚ª‚é•ûŒü‚ğ§ŒÀ(ì)
         void Vectorconstraiont(Node& joint);
 
