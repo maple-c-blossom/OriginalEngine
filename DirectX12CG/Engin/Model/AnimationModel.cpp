@@ -206,7 +206,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		else newObject->startPosition = { 0,0,0 };
 		newObject->defaultBoneVec = Vector3D().Vector3Substruct(newObject->startPosition.vec_, newObject->endPosition.vec_);
 		newObject->globalTransform = newObject->localTransform;
-		newObject->defaultWarldTransform = newObject->globalTransform;
+		newObject->defaultModelTransform = newObject->globalTransform;
 		newObject->globalInverseTransform = XMMatrixInverse(nullptr, newObject->globalTransform);
 		skeleton.SetNode(std::move(newObject));
 		parent = skeleton.GetNodes_()->back().get();
@@ -217,7 +217,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		parent->parent = targetParent;
 		parent->object->parent_ = targetParent->object.get();
 		parent->globalTransform *= targetParent->globalTransform;
-		parent->defaultWarldTransform = parent->globalTransform;
+		parent->defaultModelTransform = parent->globalTransform;
 		parent->globalInverseTransform = XMMatrixInverse(nullptr, parent->globalTransform);
 		targetParent->children.push_back(parent);
 		//targetParent->globalInverseTransform *= parent->globalInverseTransform;
@@ -482,7 +482,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 		  float ticksPerSecond = (float)(currentAnimation->ticksPerSecond != 0 ? currentAnimation->ticksPerSecond : 25.0f);
 		  float timeInTicks = timeInSeconds * ticksPerSecond;
-		  float animationTime = timeInTicks;
+		  animationTime = timeInTicks;
 
 		  if (loop)
 			  animationTime = (float)fmod(animationTime, currentAnimation->duration);
@@ -551,9 +551,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		  nodeTrans = scalingM * rotationM * translationM;
 
 	  }
-	  if (pNode->parent) pNode->globalTransform = nodeTrans * (pNode->parent->globalTransform);
-	  else pNode->globalTransform = nodeTrans;
-	  XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
+	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
+	  else pNode->AnimaetionParentMat = nodeTrans;
+	  //XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
 	  pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	  pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
 	  pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
@@ -566,7 +566,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  {
 		  TwoBoneIK(*pNode,*pNode->parent);
 	  }
-	 mat = /*pNode->globalTransform **/ pNode->globalTransform;
+	 mat = pNode->AnimaetionParentMat;
 	 std::list<Bone*> bonePtr{};
 	  for (auto& itr : nodes_)
 	  {
@@ -574,7 +574,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		  {
 			  for (auto& itr3 : itr2->bones_)
 			  {
-				  //std::string name = nodeName.substr(0, itr.name.size());
+				  
 				  if (itr3.name == nodeName)
 				  {
 					  bonePtr.push_back(&itr3);
@@ -589,16 +589,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		  for (auto& itr : bonePtr)
 		  {
 				  XMMATRIX* boneOff = &itr->offsetMatrix;
-				  XMMATRIX trans = (*boneOff) * (/*globalInverseTransform **/ mat);
+				  XMMATRIX trans = (*boneOff) * ( mat);
 				  itr->finalMatrix = trans;
 		  }
-		  //memcpy(&boneInfo->finalTransform, &trans, sizeof(float16));
+
 	  }
 
-	  //for (uint32_t i = 0; i < pNode->mNumChildren; i++)
-	  //{
-		 // readAnimNodeHeirarchy(animationTime, pNode->mChildren[i], globalTransformation, scene, globalInverseTransform);
-	  //}
   }
 
   const NodeAnim* Skeleton::findNodeAnim(const Animation* pAnimation, const std::string& NodeName)
@@ -728,7 +724,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 
 	   joint.parent->globalInverseTransform = XMMatrixInverse(nullptr,joint.parent->AnimaetionParentMat);
-	   Vector3D vec = joint.ikData.iKTargetPosition;
+	   Vector3D vec = joint.ikData.iKEffectorPosition;
 	   XMVECTOR xmVec = vec.ConvertXMVEC();
 	   xmVec = XMVector3Transform(xmVec, joint.parent->globalInverseTransform);
 	   Vector3D axis = axis.Vector3Substruct(joint.startPosition.vec_, { xmVec.m128_f32[0],xmVec.m128_f32[1],xmVec.m128_f32[2] });
@@ -755,22 +751,25 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    void MCB::Skeleton::TwoBoneIK(Node& endJoint, Node& middleJoint)
    {
-
+	   if (&endJoint == nullptr)return;
+	   if (&middleJoint == nullptr)return;
 
 	   //座標変換(rootJointの座標系に変換)-----------------------------------
 	   Node* rootJoint = middleJoint.parent;
-	   XMMATRIX rootJointWorldMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultWarldTransform);
+	   XMMATRIX rootJointModelMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultModelTransform);
 	 
-	   Vector3D effectorWorldVec = endJoint.ikData.iKTargetPosition;//Objからの相対位置(objPos - targetPos)
+	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
 	   XMVECTOR xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
+	   XMVECTOR xmLocalconstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintVector.ConvertXMVEC(),
+		   rootJointModelMatrixinv);
 
-	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointWorldMatrixinv);
+	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
 	   XMVECTOR middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
 	   XMVECTOR endJointLocalPositionFromRoot = XMVectorAdd(endJoint.defaultLocalTranslation ,middleJoint.defaultLocalTranslation);
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal({0,0,0},
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
-	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, endJoint.ikData.constraintVector,
+	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, xmLocalconstraintVectorFromRoot,
 		   xmEffectorLocalVecFromRoot);
 	   Quaternion q1 = q1.DirToDir(nd, nt);//同一平面上にいるようにする回転
 
@@ -821,7 +820,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos,string boneName)
+   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, Vector3D constraintPosition,string boneName)
    {
 	   Node* node;
 	   if (boneName == "NULL")
@@ -835,7 +834,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
-		   node->ikData.iKTargetPosition = objPos - targetPos;
+		   node->ikData.iKEffectorPosition = objPos - targetPos;
+		   node->ikData.constraintVector = constraintPosition;
 	   }
    }
 
@@ -923,8 +923,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   XMMATRIX rotationM = XMMatrixRotationQuaternion(pNode->rotation);
 	   XMMATRIX translationM = XMMatrixTranslation(pNode->translation.m128_f32[0], pNode->translation.m128_f32[1], pNode->translation.m128_f32[2]);
 	   nodeTrans = scalingM * rotationM * translationM;
-	   if (pNode->parent) pNode->globalTransform = nodeTrans * (pNode->parent->globalTransform);
-	   else pNode->globalTransform = nodeTrans;
+	   if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
+	   else pNode->AnimaetionParentMat = nodeTrans;
 	   XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
 	   pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	   pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
@@ -935,11 +935,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   pNode->boneLength = pNode->boneVec.V3Len();
    }
 
-   void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, const DirectX::XMMATRIX& worldObjMatrix, Model* model)
+   void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj, Model* model)
    {
 	   for (auto& node : nodes_)
 	   {
-		   node->JointObjectMatrixUpdate(camera, worldObjMatrix, model);
+		   node->JointObjectMatrixUpdate(camera, Obj, model);
 	   }
    }
 
@@ -985,16 +985,20 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		return result;
    }
 
-   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, const XMMATRIX& worldObjMatrix,Model* model)
+   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model)
    {
+	   if (!object->parent_)
+	   {
+		   object->parent_ = Obj;
+	   }
 	   object->model_ = model;
-	   object->color_ = { 0.5,0.5,0,1 };
+	   object->color_ = { 0.5,0.5,0,4 };
 	   object->camera_ = camera;
 	   object->rotationQ_.x_ = rotation.m128_f32[0]; 
 	   object->rotationQ_.y_ = rotation.m128_f32[1]; 
 	   object->rotationQ_.z_ = rotation.m128_f32[2]; 
 	   object->rotationQ_.w_ = rotation.m128_f32[3];
-	   object->scale_ = { 0.5f,0.5f,0.5f };
+	   object->scale_ = { 0.9f,0.9f,0.9f };
 	   object->position_.x = translation.m128_f32[0];
 	   object->position_.y = translation.m128_f32[1];
 	   object->position_.z = translation.m128_f32[2];
@@ -1010,7 +1014,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   ikData.constraintObj.camera_ = camera;
 		   ikData.constraintObj.Update();
 	   }
-	   object->matWorld_.matWorld_ *= worldObjMatrix;
+	   //object->matWorld_.matWorld_ *= worldObjMatrix;
    }
 
    void MCB::Node::JointObjectDraw()

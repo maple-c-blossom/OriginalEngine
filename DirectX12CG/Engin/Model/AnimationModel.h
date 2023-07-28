@@ -63,39 +63,37 @@ namespace MCB
 
     typedef struct Node
     {
-        std::string name;
+        std::string name;//ノードの名前
         std::vector<std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
-        DirectX::XMVECTOR scale = { 1,1,1,0 };
-        DirectX::XMVECTOR rotation = { 0,0,0,0 };
-        DirectX::XMVECTOR translation = { 0,0,0,1 };
-        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();
-        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();
-        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();
-        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();
-        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };
-        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };
-        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };
-        DirectX::XMMATRIX defaultWarldTransform = DirectX::XMMatrixIdentity();
-        Node* parent = nullptr;
-        std::vector<Node*>children{};
-        Vector3D endPosition;
-        Vector3D startPosition;
-        Vector3D boneVec;
-        Vector3D defaultBoneVec;
-        float boneLength;
+        DirectX::XMVECTOR scale = { 1,1,1,0 };//ローカルのスケール情報
+        DirectX::XMVECTOR rotation = { 0,0,0,0 };//ローカルの回転情報
+        DirectX::XMVECTOR translation = { 0,0,0,1 };//ローカルの位置情報
+        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();//ローカルのsrtMatrix
+        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();//Model空間のMatrix
+        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();//Model空間のMatrixの逆行列
+        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();//アニメーションするときに使用するModel空間のMatrix
+        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };//初期姿勢時のローカルスケール情報
+        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };//初期姿勢時のローカル回転情報
+        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };//初期姿勢時のローカル位置情報
+        DirectX::XMMATRIX defaultModelTransform = DirectX::XMMatrixIdentity();//初期姿勢時のModel空間の行列
+        Node* parent = nullptr;//親ノードへのポインタ
+        std::vector<Node*>children{};//子ノードへのポインタ
+        Vector3D endPosition;//ボーンの先端のポジション(ローカル空間)
+        Vector3D startPosition;//ボーンの根本のポジション(ローカル空間)
+        Vector3D boneVec;//ボーンのベクトル(ローカル空間)
+        Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
+        float boneLength;//ボーンの長さ
         bool updated = false;
         struct IKData
         {
-            bool isIK = false;
-            bool rotationInv = false;
-            Vector3D iKTargetPosition = {};
-            Vector3D constraintVector = {0,1,0};
-            Vector3D temptarget = { 0,0,0 };
-            Object3d constraintObj;
+            bool isIK = false;//IKを行うか
+            Vector3D iKEffectorPosition = {};//IKのEffector位置(ワールド空間)
+            Vector3D constraintVector = {0,1,0};//PoleVector(ワールド空間)
+            Object3d constraintObj;//PoleVector表示用のオブジェクト
         };
-        IKData ikData;
+        IKData ikData;//IKに関するデータ
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
-        void JointObjectMatrixUpdate(ICamera* camera,const DirectX::XMMATRIX& worldObjMatrix,Model* model);
+        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model);
         void JointObjectDraw();
     }Node;
     //struct aiMesh;
@@ -180,7 +178,7 @@ namespace MCB
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, std::string boneName = "NULL");
+        void SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, Vector3D constraintPosition = {0,1,0}, std::string boneName = "NULL");
         //関節の曲がる方向を制限(試作)
         void Vectorconstraiont(Node& joint);
 
@@ -190,7 +188,7 @@ namespace MCB
 
         void UpdateNodeMatrix(Node* node);
 
-        void JointObjectMatrixUpdate(ICamera* camera, const DirectX::XMMATRIX& worldObjMatrix, Model* model);
+        void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model);
         void JointObjectDraw();
     };
 

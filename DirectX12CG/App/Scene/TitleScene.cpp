@@ -29,7 +29,7 @@ void MCB::TitleScene::MatrixUpdate()
     testsphere_.Update(viewCamera_);
     test2Animation_.AnimationUpdate(viewCamera_);
     test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
-        test2Animation_.matWorld_.matWorld_,boxModel_.get());
+        &test2Animation_,boxModel_.get());
 }
 
 void MCB::TitleScene::Update()
@@ -72,8 +72,8 @@ void MCB::TitleScene::Update()
         //Sleep(2000);s
         //debugStop = false;
     }
-        test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },"Bone2");
+        //test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+        //    { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 5 }, "Bone2");
         
     MatrixUpdate();
 }
@@ -84,10 +84,15 @@ void MCB::TitleScene::PostEffectDraw()
     Skydorm_.Draw();
     ground_.Draw();
     testsphere_.Draw();
-    if (input_->IsKeyDown(DIK_RETURN))test2Animation_.animationModel_->skeleton.JointObjectDraw();
+    if (input_->IsKeyDown(DIK_RETURN))
+    {
+        test2Animation_.animationModel_->skeleton.JointObjectDraw();
+    }
     pipeline_->SetFbxPipeLine();
-    if(!input_->IsKeyDown(DIK_RETURN))test2Animation_.AnimationDraw();
-
+    if (!input_->IsKeyDown(DIK_RETURN))
+    {
+        test2Animation_.AnimationDraw();
+    }
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }

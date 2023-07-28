@@ -43,8 +43,8 @@ namespace MCB
         typedef struct Bone
         {
             std::string name;
-            DirectX::XMMATRIX offsetMatrix;
-            DirectX::XMMATRIX finalMatrix;
+            DirectX::XMMATRIX offsetMatrix;//Model空間のBoneをボーン空間に変換するための行列
+            DirectX::XMMATRIX finalMatrix;//ボーン空間に変換した最終的な行列
 
         }Bone;
 
