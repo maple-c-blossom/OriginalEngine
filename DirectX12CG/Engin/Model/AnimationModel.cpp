@@ -753,9 +753,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   if (&endJoint == nullptr)return;
 	   if (&middleJoint == nullptr)return;
-
+	   
 	   //À•W•ÏŠ·(rootJoint‚ÌÀ•WŒn‚É•ÏŠ·)-----------------------------------
 	   Node* rootJoint = middleJoint.parent;
+	   rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
+	   middleJoint.object->color_ = { 0,0.5f,0,1 };
+	   endJoint.object->color_ = { 0,0,0.5f,1 };
 	   XMMATRIX rootJointModelMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultModelTransform);
 	 
 	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(objPos - targetPos)
@@ -1040,7 +1043,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   object->parent_ = Obj;
 	   }
 	   object->model_ = model;
-	   object->color_ = { 0.5,0.5,0,4 };
 	   object->camera_ = camera;
 	   object->rotationQ_.x_ = rotation.m128_f32[0]; 
 	   object->rotationQ_.y_ = rotation.m128_f32[1]; 
