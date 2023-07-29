@@ -504,7 +504,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
 	}
-    
+	AllNodeMatrixForModelToBone();
   /*  if(transforms->getCount() == 0)
       transforms->addElements((int32_t)boneMapping().size());
     
@@ -524,7 +524,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	  const NodeAnim* pNodeAnim = findNodeAnim(pAnimation, nodeName);
 
-	  XMMATRIX mat;
+	  //XMMATRIX mat;
 	  if (pNodeAnim)
 	  {
 		  // //Interpolate scaling and generate scaling transformation matrix
@@ -563,38 +563,35 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
 
-	  if (pNode->ikData.isIK)
-	  {
-		  TwoBoneIK(*pNode,*pNode->parent);
-	  }
-	 mat = pNode->AnimaetionParentMat;
-	 std::list<Bone*> bonePtr{};
-	  for (auto& itr : nodes_)
-	  {
-		  for (auto& itr2 : itr->meshes)
-		  {
-			  for (auto& itr3 : itr2->bones_)
-			  {
-				  
-				  if (itr3.name == nodeName)
-				  {
-					  bonePtr.push_back(&itr3);
-					  break;
-				  }
-			  }
-		  }
-	  }
+	  
+	 //mat = pNode->AnimaetionParentMat;
+	 //std::list<Bone*> bonePtr{};
+	 // for (auto& itr : nodes_)
+	 // {
+		//  for (auto& itr2 : itr->meshes)
+		//  {
+		//	  for (auto& itr3 : itr2->bones_)
+		//	  {
+		//		  
+		//		  if (itr3.name == nodeName)
+		//		  {
+		//			  bonePtr.push_back(&itr3);
+		//			  break;
+		//		  }
+		//	  }
+		//  }
+	 // }
 
-	  if (!bonePtr.empty())
-	  {
-		  for (auto& itr : bonePtr)
-		  {
-				  XMMATRIX* boneOff = &itr->offsetMatrix;
-				  XMMATRIX trans = (*boneOff) * ( mat);
-				  itr->finalMatrix = trans;
-		  }
+	 // if (!bonePtr.empty())
+	 // {
+		//  for (auto& itr : bonePtr)
+		//  {
+		//		  XMMATRIX* boneOff = &itr->offsetMatrix;
+		//		  XMMATRIX trans = (*boneOff) * ( mat);
+		//		  itr->finalMatrix = trans;
+		//  }
 
-	  }
+	 // }
 
   }
 
@@ -754,7 +751,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   if (&endJoint == nullptr)return;
 	   if (&middleJoint == nullptr)return;
-	   
 	   //À•W•ÏŠ·(rootJoint‚ÌÀ•WŒn‚É•ÏŠ·)-----------------------------------
 	   Node* rootJoint = middleJoint.parent;
 	   rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
@@ -775,7 +771,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJoint‚©‚ç‚Ý‚½ˆÊ’u‚Å–@üŽæ‚Á‚Ä‚é‚È‚çrootJoint‚ÍŒ´“_‚¶‚á‚ËH
 	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, xmLocalconstraintVectorFromRoot,
 		   xmEffectorLocalVecFromRoot);
-	   Quaternion q1 = q1.DirToDir(nd, nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
+	   Quaternion q1 = q1.DirToDir(nd,  nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
 
 	   float middleJointBoneLength = middleJoint.defaultBoneVec.V3Len();
 
@@ -789,18 +785,66 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
+	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJoint‚ð‰ñ“]‚³‚¹‚é
-	   XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
-	   XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
-	   XMVECTOR endJointLocalVecFromMiddle = XMVector3Transform(endJoint.defaultLocalTranslation, middleJointWorldMatrixinv);
-	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
-	   Quaternion q3 = q3.DirToDir(endJointLocalPositionFromRoot, localTargetVectorFromMiddle);
-	   middleJoint.rotation = q3.ConvertXMVector();
-	   UpdateNodeMatrix(rootJoint);
-	   UpdateNodeMatrix(&middleJoint);
 	   UpdateNodeMatrix(&endJoint);
+	   //effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(objPos - targetPos)
+	   //xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
+	   //XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
+	   //XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
+	   //XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
+	   //Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
+	   //Quaternion q3 = q3.DirToDir(endJointLocalPositionFromRoot, localTargetVectorFromMiddle);
+	   //middleJoint.rotation = q3.ConvertXMVector();
+	   //UpdateNodeMatrix(rootJoint);
+	   //UpdateNodeMatrix(&middleJoint);
+	   //UpdateNodeMatrix(&endJoint);
+   }
+
+   void MCB::Skeleton::AllNodeMatrixForModelToBone()
+   {
+	   for (auto& node : nodes_)
+	   {
+		   if (node->ikData.isIK)
+		   {
+			   TwoBoneIK(*node.get(), *node->parent);
+		   }
+	   }
+	   for (auto& node : nodes_)
+	   {
+		   XMMATRIX mat = node->AnimaetionParentMat;
+		   const string& nodeName = node->name;
+		   std::list<Bone*> bonePtr{};
+		   for (auto& itr : nodes_)
+		   {
+			   for (auto& itr2 : itr->meshes)
+			   {
+				   for (auto& itr3 : itr2->bones_)
+				   {
+
+					   if (itr3.name == nodeName)
+					   {
+						   bonePtr.push_back(&itr3);
+						   break;
+					   }
+				   }
+			   }
+		   }
+
+		   if (!bonePtr.empty())
+		   {
+			   for (auto& itr : bonePtr)
+			   {
+				   XMMATRIX* boneOff = &itr->offsetMatrix;
+				   XMMATRIX trans = (*boneOff) * (mat);
+				   itr->finalMatrix = trans;
+			   }
+
+		   }
+
+	   }
+
    }
 
    void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
@@ -917,6 +961,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 			   ImGui::Text("BoneVec:%f,%f,%f", node->boneVec.vec_.x_, node->boneVec.vec_.y_, node->boneVec.vec_.z_);
 			   ImGui::Text("BoneLength:%f", node->boneLength);
+			   ImGui::Checkbox("jointView", &node->jointView);
 			   
 			   ImGui::TreePop();
 
@@ -955,35 +1000,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	   pNode->boneLength = pNode->boneVec.V3Len();
 
-	  XMMATRIX mat = pNode->AnimaetionParentMat;
-	   const string& nodeName = pNode->name;
-	   std::list<Bone*> bonePtr{};
-	   for (auto& itr : nodes_)
-	   {
-		   for (auto& itr2 : itr->meshes)
-		   {
-			   for (auto& itr3 : itr2->bones_)
-			   {
-
-				   if (itr3.name == nodeName)
-				   {
-					   bonePtr.push_back(&itr3);
-					   break;
-				   }
-			   }
-		   }
-	   }
-
-	   if (!bonePtr.empty())
-	   {
-		   for (auto& itr : bonePtr)
-		   {
-			   XMMATRIX* boneOff = &itr->offsetMatrix;
-			   XMMATRIX trans = (*boneOff) * (mat);
-			   itr->finalMatrix = trans;
-		   }
-
-	   }
+	
 
    }
 
@@ -999,6 +1016,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   for (auto& node : nodes_)
 	   {
+		   if (!node->jointView)continue;
 		  node->JointObjectDraw();
 	   }
    }

@@ -84,6 +84,7 @@ namespace MCB
         Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
         float boneLength;//ボーンの長さ
         bool updated = false;
+        bool jointView = true;
         struct IKData
         {
             bool isIK = false;//IKを行うか
@@ -167,6 +168,7 @@ namespace MCB
         //2BoneIK(試作）
         void TwoBoneIK(Node& joint1, Node& joint2);
 
+        void AllNodeMatrixForModelToBone();
         /// <summary>
         /// CCDIK
         /// </summary>
