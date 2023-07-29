@@ -32,7 +32,8 @@ namespace MCB
 		TextureCell* titleTex_;
 
 #pragma endregion テクスチャ
-
+		bool debugView;
+		bool isIk;
 		//サウンド
 #pragma region サウンド
 		size_t selectSound_;

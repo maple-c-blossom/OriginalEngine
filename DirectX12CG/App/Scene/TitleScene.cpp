@@ -64,7 +64,7 @@ void MCB::TitleScene::Update()
 
 
 
-    if (input_->IsKeyDown(DIK_LSHIFT))
+    if (isIk)
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 5 }, "Bone2");
@@ -82,12 +82,12 @@ void MCB::TitleScene::PostEffectDraw()
     Skydorm_.Draw();
     ground_.Draw();
     testsphere_.Draw();
-    if (input_->IsKeyDown(DIK_RETURN))
+    if (debugView)
     {
         test2Animation_.animationModel_->skeleton.JointObjectDraw();
     }
     pipeline_->SetFbxPipeLine();
-    if (!input_->IsKeyDown(DIK_RETURN))
+    if (!debugView)
     {
         test2Animation_.AnimationDraw();
     }
@@ -123,7 +123,10 @@ void MCB::TitleScene::CheckAllColision()
 void MCB::TitleScene::ImGuiUpdate()
 {
     imgui_.Begin();
+    ImGui::Checkbox("debugView", &debugView);
+    ImGui::Checkbox("isIK", &isIk);
     test2Animation_.animationModel_->skeleton.DrawHeirarchy(test2Animation_.animationModel_->skeleton.rootNode);
+
     imgui_.End();
 }
 

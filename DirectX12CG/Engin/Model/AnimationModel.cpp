@@ -215,6 +215,7 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 	if (targetParent)
 	{
 		parent->parent = targetParent;
+		parent->object->nameId_ = parent->name;
 		parent->object->parent_ = targetParent->object.get();
 		parent->globalTransform *= targetParent->globalTransform;
 		parent->defaultModelTransform = parent->globalTransform;
@@ -553,7 +554,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  }
 	  if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	  else pNode->AnimaetionParentMat = nodeTrans;
-	  //XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
+	  XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
 	  pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
 	  pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
 	  pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
@@ -895,7 +896,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   if (ImGui::TreeNode(transTag.c_str()))
 		   {
 
-			   ImGui::InputFloat3("position", node->translation.m128_f32);
+				   ImGui::InputFloat3("position", node->translation.m128_f32);
 				   ImGui::InputFloat4("rotation", node->rotation.m128_f32);
 				   ImGui::InputFloat3("scale", node->scale.m128_f32);
 				   if (ImGui::TreeNode("Matrix"))
