@@ -67,11 +67,11 @@ void MCB::TitleScene::Update()
     if (isIk)
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 5 }, "Bone");
+            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z }, { test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_  .z + 5 }, "bone3");
     }
     else
     {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone");
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("bone3");
     }
     MatrixUpdate();
 }

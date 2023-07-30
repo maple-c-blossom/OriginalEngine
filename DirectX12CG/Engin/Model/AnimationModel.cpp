@@ -773,9 +773,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   xmEffectorLocalVecFromRoot);
 	   Quaternion q1 = q1.DirToDir(nd,  nt);//ìØàÍïΩñ è„Ç…Ç¢ÇÈÇÊÇ§Ç…Ç∑ÇÈâÒì]
 
-	   float middleJointBoneLength = middleJoint.defaultBoneVec.V3Len();
+	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
 
-	   float endJointBoneLength = endJoint.defaultBoneVec.V3Len();
+	   float endJointBoneLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 
 	   Vector3D localTargetVectorFromRootJoint = xmEffectorLocalVecFromRoot;
 
@@ -795,7 +795,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   //XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
 	   //XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
 	   //Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
-	   //Quaternion q3 = q3.DirToDir(endJointLocalPositionFromRoot, localTargetVectorFromMiddle);
+	   //Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
 	   //middleJoint.rotation = q3.ConvertXMVector();
 	   //UpdateNodeMatrix(rootJoint);
 	   //UpdateNodeMatrix(&middleJoint);
