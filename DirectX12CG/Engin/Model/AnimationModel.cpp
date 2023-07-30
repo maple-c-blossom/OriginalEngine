@@ -785,7 +785,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = q1.ConvertXMVector();
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJoint‚ð‰ñ“]‚³‚¹‚é
 	   UpdateNodeMatrix(&endJoint);
