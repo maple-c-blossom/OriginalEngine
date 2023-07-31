@@ -126,7 +126,8 @@ void MCB::TitleScene::ImGuiUpdate()
     ImGui::Checkbox("debugView", &debugView);
     ImGui::Checkbox("isIK", &isIk);
     test2Animation_.animationModel_->skeleton.DrawHeirarchy(test2Animation_.animationModel_->skeleton.rootNode);
-
+    ImGui::Text("effector:%f,%f,%f", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
+    ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
     imgui_.End();
 }
 

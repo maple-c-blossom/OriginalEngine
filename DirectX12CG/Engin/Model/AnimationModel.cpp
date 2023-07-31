@@ -563,35 +563,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	  pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
 
-	  
-	 //mat = pNode->AnimaetionParentMat;
-	 //std::list<Bone*> bonePtr{};
-	 // for (auto& itr : nodes_)
-	 // {
-		//  for (auto& itr2 : itr->meshes)
-		//  {
-		//	  for (auto& itr3 : itr2->bones_)
-		//	  {
-		//		  
-		//		  if (itr3.name == nodeName)
-		//		  {
-		//			  bonePtr.push_back(&itr3);
-		//			  break;
-		//		  }
-		//	  }
-		//  }
-	 // }
-
-	 // if (!bonePtr.empty())
-	 // {
-		//  for (auto& itr : bonePtr)
-		//  {
-		//		  XMMATRIX* boneOff = &itr->offsetMatrix;
-		//		  XMMATRIX trans = (*boneOff) * ( mat);
-		//		  itr->finalMatrix = trans;
-		//  }
-
-	 // }
 
   }
 
@@ -761,7 +732,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	 
 	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
 	   XMVECTOR xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
-	   XMVECTOR xmLocalConstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintVector.ConvertXMVEC(),
+	   XMVECTOR xmLocalConstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintModelVector.ConvertXMVEC(),
 		   rootJointModelMatrixinv);
 
 	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
@@ -770,12 +741,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal({0,0,0},
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
-	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, xmLocalConstraintVectorFromRoot,
-		   xmEffectorLocalVecFromRoot);
+	   Vector3D nt = nt.GetV3Normal( xmLocalConstraintVectorFromRoot,
+		   xmEffectorLocalVecFromRoot, { 0,0,0 });
 	   Quaternion q1 = q1.DirToDir(nd,  nt);//同一平面上にいるようにする回転
 
 	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
-
+	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float endJointBoneLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 
 	   Vector3D localTargetVectorFromRootJoint = xmEffectorLocalVecFromRoot;
@@ -783,25 +754,25 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   float angle = cosineFrom3LineLength(endJointBoneLength, localTargetVectorFromRootJoint.V3Len(), middleJointBoneLength);//余弦定理で角度算出
 	   Quaternion d2RotaionQ(nt, acosf(angle));//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, xmEffectorLocalVecFromRoot);//rootからmiddleにいてほしい場所までのベクトル算出
-	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
+	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
 	   
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
+	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);
 
-	   //effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
-	   //xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
-	   //XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
-	   //XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
-	   //XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
-	   //Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
-	   //Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
-	   //middleJoint.rotation = q3.ConvertXMVector();
-	   //UpdateNodeMatrix(rootJoint);
-	   //UpdateNodeMatrix(&middleJoint);
-	   //UpdateNodeMatrix(&endJoint);
+	   effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
+	   xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
+	   XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
+	   XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
+	   XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
+	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
+	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
+	   middleJoint.rotation = q3.ConvertXMVector();
+	   UpdateNodeMatrix(rootJoint);
+	   UpdateNodeMatrix(&middleJoint);
+	   UpdateNodeMatrix(&endJoint);
    }
 
    void MCB::Skeleton::AllNodeMatrixForModelToBone()
@@ -885,7 +856,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   {
 		   node->ikData.isIK = true;
 		   node->ikData.iKEffectorPosition = objPos - targetPos;
-		   node->ikData.constraintVector = constraintPosition;
+		   node->ikData.constraintWorldVector = constraintPosition;
+		   node->ikData.constraintModelVector = objPos - constraintPosition;
 	   }
    }
    void MCB::Skeleton::TwoBoneIKOff(string boneName)
@@ -910,7 +882,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    void MCB::Skeleton::Vectorconstraiont(Node& joint)
    {
-	   Vector3D vec = joint.ikData.constraintVector;
+	   Vector3D vec = joint.ikData.constraintModelVector;
 	   XMVECTOR xmVec = vec.ConvertXMVEC();
 	   xmVec = XMVector3Transform(xmVec, joint.globalInverseTransform);
 	   float root = sqrtf(powf(vec.vec_.y_, 2) + powf(vec.vec_.z_, 2));
@@ -1076,9 +1048,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   object->Update(object->rotationQ_);
 	   if (ikData.isIK)
 	   {
-		   ikData.constraintObj.position_.x = ikData.constraintVector.vec_.x_;
-		   ikData.constraintObj.position_.y = ikData.constraintVector.vec_.y_;
-		   ikData.constraintObj.position_.z = ikData.constraintVector.vec_.z_;
+		   ikData.constraintObj.position_.x = ikData.constraintWorldVector.vec_.x_;
+		   ikData.constraintObj.position_.y = ikData.constraintWorldVector.vec_.y_;
+		   ikData.constraintObj.position_.z = ikData.constraintWorldVector.vec_.z_;
 		   ikData.constraintObj.scale_ = { 0.5f,0.5f,0.5f };
 		   ikData.constraintObj.model_ = model;
 		   ikData.constraintObj.color_ = { 0.5,0,0,1 };
