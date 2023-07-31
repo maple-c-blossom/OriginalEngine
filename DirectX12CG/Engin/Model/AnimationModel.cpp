@@ -749,6 +749,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    void MCB::Skeleton::TwoBoneIK(Node& endJoint, Node& middleJoint)
    {
+	   
 	   if (&endJoint == nullptr)return;
 	   if (&middleJoint == nullptr)return;
 	   //座標変換(rootJointの座標系に変換)-----------------------------------
@@ -760,7 +761,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	 
 	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
 	   XMVECTOR xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
-	   XMVECTOR xmLocalconstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintVector.ConvertXMVEC(),
+	   XMVECTOR xmLocalConstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintVector.ConvertXMVEC(),
 		   rootJointModelMatrixinv);
 
 	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
@@ -769,7 +770,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal({0,0,0},
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
-	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, xmLocalconstraintVectorFromRoot,
+	   Vector3D nt = nt.GetV3Normal({ 0,0,0 }, xmLocalConstraintVectorFromRoot,
 		   xmEffectorLocalVecFromRoot);
 	   Quaternion q1 = q1.DirToDir(nd,  nt);//同一平面上にいるようにする回転
 
@@ -789,6 +790,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);
+
 	   //effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objからの相対位置(objPos - targetPos)
 	   //xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
 	   //XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
@@ -1067,7 +1069,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   object->rotationQ_.y_ = rotation.m128_f32[1]; 
 	   object->rotationQ_.z_ = rotation.m128_f32[2]; 
 	   object->rotationQ_.w_ = rotation.m128_f32[3];
-	   object->scale_ = { 0.8f,0.8f,0.8f };
+	   object->scale_ = { 1.f,1.f,1.f };
 	   object->position_.x = translation.m128_f32[0];
 	   object->position_.y = translation.m128_f32[1];
 	   object->position_.z = translation.m128_f32[2];

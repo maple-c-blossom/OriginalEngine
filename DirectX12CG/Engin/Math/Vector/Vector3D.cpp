@@ -107,6 +107,7 @@ DirectX::XMVECTOR MCB::Vector3D::ConvertXMVEC()
 	temp.m128_f32[0] = vec_.x_;
 	temp.m128_f32[1] = vec_.y_;
 	temp.m128_f32[2] = vec_.z_;
+	temp.m128_f32[3] = 0;
 	return temp;
 }
 

@@ -173,7 +173,7 @@ void MCB::Scene::PostEffectDraw()
     postEffect_->PreDraw();
     level_->Draw();
     goal_.Draw();
-    player_.animationModel_->skeleton.JointObjectDraw();
+    //player_.animationModel_->skeleton.JointObjectDraw();
     pipeline_->SetFbxPipeLine();
     player_.AnimationDraw();
     postEffect_->PostDraw();
