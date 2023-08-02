@@ -192,10 +192,8 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->object->position_.z = newObject->translation.m128_f32[2] = t.z;
 
 
-
 		newObject->localTransform = DirectX::XMMatrixTranspose(newObject->localTransform);
-		DirectX::XMMatrixDecompose(&newObject->defaultScale, &newObject->defaultRotation, &newObject->defaultLocalTranslation,
-			newObject->localTransform);
+		XMMatrixDecompose(&newObject->defaultScale, &newObject->defaultRotation, &newObject->defaultLocalTranslation, newObject->localTransform);
 
 		/*newObject->defaultTranslation = newObject->translation;
 		newObject->defaultRotation = newObject->rotation;*/
@@ -715,6 +713,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   float temp = ((powf(b, 2) + powf(c, 2) - powf(a, 2)) /
 		   (2.f * b * c));
+
 	   return clamp(temp,-1,1);
    }
 
@@ -728,36 +727,42 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
 	   middleJoint.object->color_ = { 0,0.5f,0,1 };
 	   endJoint.object->color_ = { 0,0,0.5f,1 };
+	   
 	   XMMATRIX rootJointModelMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultModelTransform);
 	 
-	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(objPos - targetPos)
+	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(targetPos - ObjPos)
 	   XMVECTOR xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
 	   XMVECTOR xmLocalConstraintVectorFromRoot = XMVector3Transform(endJoint.ikData.constraintModelVector.ConvertXMVEC(),
 		   rootJointModelMatrixinv);
 
 	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
 	   XMVECTOR middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
-	   XMVECTOR endJointLocalPositionFromRoot = XMVectorAdd(endJoint.defaultLocalTranslation ,middleJoint.defaultLocalTranslation);
+	   XMVECTOR endJointLocalPositionFromRoot = XMVector3Transform(XMVector3Transform(endJoint.defaultLocalTranslation, middleJoint.defaultModelTransform),rootJointModelMatrixinv);
+	   XMVECTOR rootJointLocalPositionFromRoot = XMVector3Transform(rootJoint->defaultLocalTranslation, rootJointModelMatrixinv);
+	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
-	   Vector3D nd = nd.GetV3Normal({0,0,0},
+	   Vector3D nd = nd.GetV3Normal(rootJointLocalPositionFromRoot,
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJoint‚©‚ç‚Ý‚½ˆÊ’u‚Å–@üŽæ‚Á‚Ä‚é‚È‚çrootJoint‚ÍŒ´“_‚¶‚á‚ËH
-	   Vector3D nt = nt.GetV3Normal( xmLocalConstraintVectorFromRoot,
-		   xmEffectorLocalVecFromRoot, { 0,0,0 });
-	   Quaternion q1 = q1.DirToDir(nd,  nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
+	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,
+		   xmEffectorLocalVecFromRoot, xmLocalConstraintVectorFromRoot);
+	   Quaternion q1 = q1.DirToDir( nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
+	   q1 = q1.GetDirectProduct(q1, rootJoint->defaultRotation);
 
-	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
-	   float endJointBoneLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
+	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
+	   float endJointBoneLength = XMVector3Length(endJoint.defaultLocalTranslation).m128_f32[0];
+	   float rootToEndLength = XMVector3Length(endJointLocalPositionFromRoot).m128_f32[0];
+	   float localTargetVectorFromRootJoint = XMVector3Length(xmEffectorLocalVecFromRoot).m128_f32[0];
 
-	   Vector3D localTargetVectorFromRootJoint = xmEffectorLocalVecFromRoot;
+	   float angleFromdefaultTriangle = cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength);//—]Œ·’è—‚ÅŠp“xŽZo
+	   float angleFromTargetTriangle = cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength);//—]Œ·’è—‚ÅŠp“xŽZo
 
-	   float angle = cosineFrom3LineLength(endJointBoneLength, localTargetVectorFromRootJoint.V3Len(), middleJointBoneLength);//—]Œ·’è—‚ÅŠp“xŽZo
-	   Quaternion d2RotaionQ(nt, acosf(angle));//•½–Ê‚Ì‰ñ“]‚Ål‚¦‚é‚È‚çnt(•½–Ê‚Ì–@ü)‚ð‰ñ“]Ž²‚Æ‚µ‚Ä—˜—p‚µ‚Ä‚à‚¢‚¢‚Æ—\‘z
-	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, xmEffectorLocalVecFromRoot);//root‚©‚çmiddle‚É‚¢‚Ä‚Ù‚µ‚¢êŠ‚Ü‚Å‚ÌƒxƒNƒgƒ‹ŽZo
+	   float theta = acos(angleFromTargetTriangle) - acos(angleFromdefaultTriangle);
+	   Quaternion d2RotaionQ(nt, theta);//•½–Ê‚Ì‰ñ“]‚Ål‚¦‚é‚È‚çnt(•½–Ê‚Ì–@ü)‚ð‰ñ“]Ž²‚Æ‚µ‚Ä—˜—p‚µ‚Ä‚à‚¢‚¢‚Æ—\‘z
+	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(xmEffectorLocalVecFromRoot));//root‚©‚çmiddle‚É‚¢‚Ä‚Ù‚µ‚¢êŠ‚Ü‚Å‚ÌƒxƒNƒgƒ‹ŽZo
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
-	   
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = q1.ConvertXMVector();
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJoint‚ð‰ñ“]‚³‚¹‚é
 	   UpdateNodeMatrix(&endJoint);
@@ -855,9 +860,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
-		   node->ikData.iKEffectorPosition = objPos - targetPos;
+		   node->ikData.iKEffectorPosition = targetPos - objPos;
 		   node->ikData.constraintWorldVector = constraintPosition;
-		   node->ikData.constraintModelVector = objPos - constraintPosition;
+		   node->ikData.constraintModelVector = constraintPosition - objPos;
 	   }
    }
    void MCB::Skeleton::TwoBoneIKOff(string boneName)

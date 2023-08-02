@@ -13,6 +13,7 @@ namespace MCB
 		Quaternion(const Vector3D& vec,  float angle);
 		Quaternion();
 		Quaternion( float x,  float y, float z, float w);
+		Quaternion(DirectX::XMVECTOR q);
 
 		//与えられたベクトル周りの回転を表すクォータニオンを生成
 		void SetRota( Vector3D vec, float angle);
@@ -66,6 +67,7 @@ namespace MCB
 		float SafeAcos( float a);
 
 		bool operator== (const Quaternion& q);
+		Quaternion operator= (const DirectX::XMVECTOR& q);
 		Quaternion operator-();
 	};
 	Quaternion SetRota(const Vector3D& vec,  float angle);

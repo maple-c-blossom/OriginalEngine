@@ -51,7 +51,9 @@ namespace MCB
 		Object3d testsphere_;
 		Object3d test2Animation_;
 		Player play_;
+		DirectX::XMFLOAT3 poleVec;
 
+		bool PoleVecMove;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

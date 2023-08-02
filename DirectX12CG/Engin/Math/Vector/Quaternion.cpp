@@ -32,6 +32,14 @@ MCB::Quaternion::Quaternion(float x, float y, float z, float w)
 	w_ = w;
 }
 
+MCB::Quaternion::Quaternion(DirectX::XMVECTOR q)
+{
+	x_ = q.m128_f32[0];
+	y_ = q.m128_f32[1];
+	z_ = q.m128_f32[2];
+	w_ = q.m128_f32[3];
+}
+
 Quaternion MCB::Quaternion::GetConjugated(Quaternion q)
 {
 	q.x_ *= -1;
@@ -292,6 +300,16 @@ bool MCB::Quaternion::operator==(const Quaternion& q)
 		return true;
 	}
 	return false;
+}
+
+Quaternion MCB::Quaternion::operator=(const DirectX::XMVECTOR& q)
+{
+	Quaternion temp;
+	temp.x_ = q.m128_f32[0];
+	temp.y_ = q.m128_f32[1];
+	temp.z_ = q.m128_f32[2];
+	temp.w_ = q.m128_f32[3];
+	return temp;
 }
 
 Quaternion MCB::Quaternion::operator-()

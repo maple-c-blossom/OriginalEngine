@@ -8,7 +8,7 @@ using namespace DirectX;
 
 void MCB::DebugCamera::Inilialize()
 {
-	view_.CreateMatrixView(XMFLOAT3(0.0f, 10.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	view_.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_, 0.1f, 4000.0f);
 
 	eye_.vec_.x_ = view_.eye_.x;
@@ -59,7 +59,7 @@ void MCB::DebugCamera::Update()
 	}
 
 #pragma region ’Ž‹“_‚ÆŽ‹“_‚Ì‹——£•ÏX
-	if (input_->IsKeyDown(DIK_LSHIFT)) {
+	if (input_->IsKeyDown(DIK_RSHIFT)) {
 		disEyeTarget_ += -input_->GetMousePosition().z * (disEyeTarget_ * 0.001f);
 	}
 	if (disEyeTarget_ < 10) {
@@ -71,15 +71,15 @@ void MCB::DebugCamera::Update()
 	target_ += downVec * (float)(input_->IsKeyDown(DIK_DOWN) - input_->IsKeyDown(DIK_UP));
 	target_ += -frontVec * ((float)input_->IsKeyDown(DIK_N) - input_->IsKeyDown(DIK_M));
 
-	
-	//if (rotAngle.x >= PI * 2) rotAngle.x -= PI * 2;
-	//if (rotAngle.x < 0) rotAngle.x += PI * 2;
-	//if (rotAngle.y >= PI * 2) rotAngle.y -= PI * 2;
-	//if (rotAngle.y < 0) rotAngle.y += PI * 2;
+
+	//if (rotAngle_.x_ >= PI * 2) rotAngle_.x_ -= PI * 2;
+	//if (rotAngle_.x_ < 0) rotAngle_.x_ += PI * 2;
+	//if (rotAngle_.y >= PI * 2) rotAngle_.y -= PI * 2;
+	//if (rotAngle_.y < 0) rotAngle_.y += PI * 2;
 
 	Vector2D angle = rotAngle_;
 
-#pragma region view‘ã“ü
+#pragma region view_‘ã“ü
 	view_.up_.y = cosf(angle.y_);
 	view_.target_.x = target_.vec_.x_;
 	view_.target_.y = target_.vec_.y_;
@@ -87,8 +87,8 @@ void MCB::DebugCamera::Update()
 	view_.eye_.x = target_.vec_.x_ - disEyeTarget_ * cosf(angle.y_) * sinf(angle.x_);
 	view_.eye_.y = target_.vec_.y_ + disEyeTarget_ * sinf(angle.y_);
 	view_.eye_.z = target_.vec_.z_ - disEyeTarget_ * cosf(angle.y_) * cosf(angle.x_);
+#pragma endregion
+
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();
-
-#pragma endregion
 }
