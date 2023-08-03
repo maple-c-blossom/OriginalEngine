@@ -183,7 +183,7 @@ void Triangle::DrawTriangle(ICamera* camera)
 
 
 
-	triangle_.Update(camera);
+	triangle_.Update(true);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList_->SetGraphicsRootConstantBufferView(2, triangleMaterial_.material_.constBuffMaterialB1_->GetGPUVirtualAddress());

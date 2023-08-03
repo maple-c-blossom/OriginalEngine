@@ -1064,6 +1064,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   object->position_.y = translation.m128_f32[1];
 	   object->position_.z = translation.m128_f32[2];
 
+	   boneLine.line.parent_ = object.get()->parent_;
+	   boneLine.line.camera_ = camera;
+	   boneLine.line.color_ = object->color_;
+	   boneLine.PointA_ = { 0,0,0 };
+	   boneLine.PointB_ = { object->position_.x,object->position_.y,object->position_.z };
+
 	   object->Update(object->rotationQ_);
 
 	   if (ikData.isIK)
@@ -1088,5 +1094,5 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    }
    void MCB::Node::JointLineDraw()
    {
-	   boneLine.DrawTriangle(object->camera_);
+	   boneLine.DrawLine(object->camera_);
    }

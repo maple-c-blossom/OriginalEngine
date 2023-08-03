@@ -22,7 +22,7 @@ void MCB::PipeLineManager::SetObjPipeLine(bool wireFrame,BlendMode blend)
 void MCB::PipeLineManager::SetLinePipeLine( BlendMode blend)
 {
 	if (blend >= linePipeline_.size())return;
-	linePipeline_[blend].CommonBeginDraw();
+	linePipeline_[blend].CommonBeginDraw(LINE);
 }
 
 void MCB::PipeLineManager::SetFbxPipeLine(bool wireFrame,BlendMode blend)

@@ -105,7 +105,7 @@ void MCB::TitleScene::PostEffectDraw()
     if (debugView)
     {
         test2Animation_.animationModel_->skeleton.JointObjectDraw();
-        pipeline_->SetObjPipeLine(true);
+        pipeline_->SetLinePipeLine();
         test2Animation_.animationModel_->skeleton.JointLineDraw();
     }
     pipeline_->SetFbxPipeLine();

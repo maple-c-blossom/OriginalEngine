@@ -85,7 +85,7 @@ namespace MCB
         float boneLength;//ƒ{[ƒ“‚Ì’·‚³
         bool updated = false;
         bool jointView = true;
-        PrimitiveFigure::Triangle boneLine;
+        PrimitiveFigure::Line boneLine;
         struct IKData
         {
             bool isIK = false;//IK‚ğs‚¤‚©
