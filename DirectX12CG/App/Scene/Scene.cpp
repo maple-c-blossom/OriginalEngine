@@ -88,7 +88,7 @@ void MCB::Scene::LoadModel()
    //groundModel_ = modelManager_->GetModel("ground");
    //skydomeModel_ = modelManager_->GetModel("skydome");
    playerModel_ = modelManager_->GetModel("player", playerModel_);
-   goalModel_ = modelManager_->GetModel("Box");
+   goalModel_ = modelManager_->GetModel("Boxtest");
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
@@ -173,7 +173,7 @@ void MCB::Scene::PostEffectDraw()
     postEffect_->PreDraw();
     level_->Draw();
     goal_.Draw();
-    //player_.animationModel_->skeleton.JointObjectDraw();
+
     pipeline_->SetFbxPipeLine();
     player_.AnimationDraw();
     postEffect_->PostDraw();
@@ -227,11 +227,8 @@ void MCB::Scene::ImGuiUpdate()
 
     if (ImGui::CollapsingHeader("MotionModel"))
     {
-        if (ImGui::TreeNode(playerModel_->fileName_.c_str()))
-        {
             playerModel_->DrawHeirarchy();
             ImGui::TreePop();
-        }
     }
     imgui_.End();
 }
@@ -241,7 +238,7 @@ void MCB::Scene::MatrixUpdate()
     viewCamera_->Update();
     level_->UpdateMatrix();
     player_.AnimationUpdate();
-    player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_);
+    player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_,Float3(0.025f,0.025f,0.025f));
     goal_.Update();
 
     //testParticle.Updata(matView, matProjection, true);

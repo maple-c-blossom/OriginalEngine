@@ -87,11 +87,11 @@ void MCB::TitleScene::Update()
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "bone3");
+            {poleVec.x,poleVec.y,poleVec.z}, "Bone3");
     }
     else
     {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("bone3");
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
     }
     MatrixUpdate();
 }
@@ -149,7 +149,7 @@ void MCB::TitleScene::ImGuiUpdate()
     ImGui::Checkbox("debugView", &debugView);
     ImGui::Checkbox("isIK", &isIk);
     ImGui::Checkbox("poleVectorMove", &PoleVecMove);
-    test2Animation_.animationModel_->skeleton.DrawHeirarchy(test2Animation_.animationModel_->skeleton.rootNode);
+    test2Animation_.animationModel_->DrawHeirarchy();
     ImGui::Text("effector:%f,%f,%f", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
     ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
     imgui_.End();

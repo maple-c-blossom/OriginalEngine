@@ -107,8 +107,10 @@ namespace MCB
         };
         IKData ikData;//IKに関するデータ
         IKDebugData ikDebugData;
+        bool lineColorEqualObject = false;
+        Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
-        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model);
+        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model, Float3 scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
     }Node;
@@ -209,9 +211,10 @@ namespace MCB
 
         void UpdateNodeMatrix(Node* node);
 
-        void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model);
+        void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model, const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
+        Float4 lineDefaultColor = { 1.f,1.f,0.f,1.f };
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)
@@ -257,6 +260,7 @@ namespace MCB
         void TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos);
         void Draw();//Modelの描画
         void DrawHeirarchy();
+        
     };
 }
 

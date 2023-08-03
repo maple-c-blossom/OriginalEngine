@@ -409,10 +409,21 @@ void MCB::AnimationModel::Draw()
 
 void MCB::AnimationModel::DrawHeirarchy()
 {
-	if (ImGui::TreeNode("skeleton"))
+	if (ImGui::CollapsingHeader(string(fileName_ + "::Skeleton").c_str()))
 	{
-		skeleton.DrawHeirarchy(skeleton.rootNode);
-		ImGui::TreePop();
+		float color[4] = {skeleton.lineDefaultColor.x_,skeleton.lineDefaultColor.y_
+		,skeleton.lineDefaultColor.z_,skeleton.lineDefaultColor.w_ };
+		ImGui::ColorEdit4("LineColor", color);
+		skeleton.lineDefaultColor.x_ = color[0];
+		skeleton.lineDefaultColor.y_ = color[1];
+		skeleton.lineDefaultColor.z_ = color[2];
+		skeleton.lineDefaultColor.w_ = color[3];
+		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(450, 350), ImGuiWindowFlags_NoTitleBar, ImGuiWindowFlags_HorizontalScrollbar);
+		{
+			skeleton.DrawHeirarchy(skeleton.rootNode);
+			//ImGui::TreePop();
+		}
+		ImGui::EndChild();
 	}
 }
 
@@ -918,11 +929,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   string transTag = node->name + "_Transform";
 	   string child = node->name + "_children";
-	   if (ImGui::TreeNode(node->name.c_str()))
+	   if (ImGui::CollapsingHeader(node->name.c_str()))
 	   {
 		   if (ImGui::TreeNode(transTag.c_str()))
 		   {
-
+			   ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(450, 250), ImGuiWindowFlags_NoTitleBar);
+			  {
+			   
 				   ImGui::InputFloat3("position", node->translation.m128_f32);
 				   ImGui::InputFloat4("rotation", node->rotation.m128_f32);
 				   ImGui::InputFloat3("scale", node->scale.m128_f32);
@@ -945,23 +958,27 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 			   ImGui::Text("BoneVec:%f,%f,%f", node->boneVec.vec_.x_, node->boneVec.vec_.y_, node->boneVec.vec_.z_);
 			   ImGui::Text("BoneLength:%f", node->boneLength);
 			   ImGui::Checkbox("jointView", &node->jointView);
-			   
+			   ImGui::Checkbox("objectColorLine", &node->lineColorEqualObject);
+			   }
+			   ImGui::EndChild();
 			   ImGui::TreePop();
 
 		   }
 
 		   if (node->children.size())
 		   {
-			   if (ImGui::TreeNode(child.c_str()))
-			   {
-				   for (auto& child : node->children)
-				   {
-					   DrawHeirarchy(child);
-				   }
-				   ImGui::TreePop();
-			   }
+				if (ImGui::TreeNode(child.c_str()))
+				{
+
+					for (auto& child : node->children)
+					{
+					DrawHeirarchy(child);
+					}
+					ImGui::TreePop();
+				}
+
 		   }
-		   ImGui::TreePop();
+		   
 	   }
    }
 
@@ -987,11 +1004,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj, Model* model)
+   void MCB::Skeleton::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj, Model* model, const Float3& scale)
    {
 	   for (auto& node : nodes_)
 	   {
-		   node->JointObjectMatrixUpdate(camera, Obj, model);
+		   node->lineDefaultColor = lineDefaultColor;
+		   node->JointObjectMatrixUpdate(camera, Obj, model,scale);
 	   }
    }
 
@@ -1047,11 +1065,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		return result;
    }
 
-   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model)
+   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model, Float3 scale)
    {
 	   if (!object->parent_)
 	   {
 		   object->parent_ = Obj;
+		   object->scale_.x = scale.x_;
+		   object->scale_.y = scale.y_;
+		   object->scale_.z = scale.z_;
 	   }
 	   object->model_ = model;
 	   object->camera_ = camera;
@@ -1066,7 +1087,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	   boneLine.line.parent_ = object.get()->parent_;
 	   boneLine.line.camera_ = camera;
-	   boneLine.line.color_ = object->color_;
+	   if (lineColorEqualObject)boneLine.line.color_ = object->color_;
+	   else boneLine.line.color_ = lineDefaultColor;
 	   boneLine.PointA_ = { 0,0,0 };
 	   boneLine.PointB_ = { object->position_.x,object->position_.y,object->position_.z };
 
