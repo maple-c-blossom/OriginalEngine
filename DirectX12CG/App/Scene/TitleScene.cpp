@@ -87,11 +87,11 @@ void MCB::TitleScene::Update()
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "Bone3");
+            {poleVec.x,poleVec.y,poleVec.z}, "bone3");
     }
     else
     {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("bone3");
     }
     MatrixUpdate();
 }
