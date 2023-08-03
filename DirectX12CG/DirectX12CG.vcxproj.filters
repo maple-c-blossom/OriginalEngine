@@ -175,6 +175,15 @@
     <Filter Include="リソース ファイル\ParticleShader\VertexShader">
       <UniqueIdentifier>{47a71b20-3487-4592-bf1c-9fbd3d7a5592}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\ObjSimpleShader">
+      <UniqueIdentifier>{5ff359b3-1033-4200-991a-9dfed96a5f19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\FbxSimpleShader">
+      <UniqueIdentifier>{cef169e4-9ab4-4f6d-a398-994e3037d5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\LineShader">
+      <UniqueIdentifier>{f1e3aa70-c3ea-44d4-985d-719f43368535}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\main.cpp">
@@ -443,6 +452,30 @@
     <FxCompile Include="Resources\Shaders\PostEffectShader\PostEffectVertexShader.hlsl">
       <Filter>リソース ファイル\PostEffectShader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\ObjSimpleShader\OBJSimpleGeometryShader.hlsl">
+      <Filter>リソース ファイル\ObjSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ObjSimpleShader\OBJSimplePixelShader.hlsl">
+      <Filter>リソース ファイル\ObjSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ObjSimpleShader\OBJSimpleVertexShader.hlsl">
+      <Filter>リソース ファイル\ObjSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxSimpleShader\FbxSimpleGeometryShader.hlsl">
+      <Filter>リソース ファイル\FbxSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxSimpleShader\FbxSimplePixelShader.hlsl">
+      <Filter>リソース ファイル\FbxSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\FbxSimpleShader\FbxSimpleVertexShader.hlsl">
+      <Filter>リソース ファイル\FbxSimpleShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\LineSimpleShader\LinePixelShader.hlsl">
+      <Filter>リソース ファイル\LineShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\LineSimpleShader\LineVertexShader.hlsl">
+      <Filter>リソース ファイル\LineShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engin\DirectX\DxWindow.h">
@@ -689,6 +722,15 @@
     </None>
     <None Include="Resources\Shaders\PostEffectShader\PostEffectShaderHeader.hlsli">
       <Filter>リソース ファイル\PostEffectShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\ObjSimpleShader\OBJSimpleHeader.hlsli">
+      <Filter>リソース ファイル\ObjSimpleShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\FbxSimpleShader\FbxSimpleShaderHeader.hlsli">
+      <Filter>リソース ファイル\FbxSimpleShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\LineSimpleShader\LineHeader.hlsli">
+      <Filter>リソース ファイル\LineShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,6 @@ namespace MCB
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		SimpleFigure triangle_;
 		Object3d ground_;
 		Object3d Skydorm_;
 		Object3d testsphere_;

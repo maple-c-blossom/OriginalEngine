@@ -21,6 +21,7 @@ namespace MCB
 		TRIANGLESTRIP,
 		TRIANGLELIST,
 		POINT,
+		LINE
 	};
 	class PipelineRootSignature
 	{
@@ -31,12 +32,17 @@ namespace MCB
 		TexSample texSample_;
 
 		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
+		void CreateLinePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
+
+		void Create3DObjectWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
 		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
 		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
 		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
+
+		void CreateFbxWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
 		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode);
 

@@ -743,9 +743,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal(rootJointLocalPositionFromRoot,
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJoint‚©‚ç‚Ý‚½ˆÊ’u‚Å–@üŽæ‚Á‚Ä‚é‚È‚çrootJoint‚ÍŒ´“_‚¶‚á‚ËH
+	   endJoint.ikDebugData.defaultTriangleNormal = nd;
+
 	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,
 		   xmEffectorLocalVecFromRoot, xmLocalConstraintVectorFromRoot);
-	   Quaternion q1 = q1.DirToDir( nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
+	   endJoint.ikDebugData.taregetTriangleNormal = nt;
+	   Quaternion q1 = q1.DirToDir(nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
 	   q1 = q1.GetDirectProduct(q1, rootJoint->defaultRotation);
 
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
@@ -754,15 +757,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   float rootToEndLength = XMVector3Length(endJointLocalPositionFromRoot).m128_f32[0];
 	   float localTargetVectorFromRootJoint = XMVector3Length(xmEffectorLocalVecFromRoot).m128_f32[0];
 
-	   float angleFromdefaultTriangle = cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength);//—]Œ·’è—‚ÅŠp“xŽZo
-	   float angleFromTargetTriangle = cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength);//—]Œ·’è—‚ÅŠp“xŽZo
+	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xŽZo
+	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xŽZo
 
-	   float theta = acos(angleFromTargetTriangle) - acos(angleFromdefaultTriangle);
+	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
 	   Quaternion d2RotaionQ(nt, theta);//•½–Ê‚Ì‰ñ“]‚Ål‚¦‚é‚È‚çnt(•½–Ê‚Ì–@ü)‚ð‰ñ“]Ž²‚Æ‚µ‚Ä—˜—p‚µ‚Ä‚à‚¢‚¢‚Æ—\‘z
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(xmEffectorLocalVecFromRoot));//root‚©‚çmiddle‚É‚¢‚Ä‚Ù‚µ‚¢êŠ‚Ü‚Å‚ÌƒxƒNƒgƒ‹ŽZo
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
-	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2, q1);
-	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
+	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2,q1);
+	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJoint‚ð‰ñ“]‚³‚¹‚é
 	   UpdateNodeMatrix(&endJoint);
@@ -774,6 +777,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
 	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
 	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
+	   q3 = q3.GetDirectProduct(q3, middleJoint.defaultRotation);
 	   middleJoint.rotation = q3.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);
@@ -1000,6 +1004,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   }
    }
 
+   void MCB::Skeleton::JointLineDraw()
+   {
+	   for (auto& node : nodes_)
+	   {
+		   if (!node->jointView)continue;
+		   node->JointLineDraw();
+	   }
+   }
+
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
    {
 	   struct LengeData
@@ -1050,7 +1063,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   object->position_.x = translation.m128_f32[0];
 	   object->position_.y = translation.m128_f32[1];
 	   object->position_.z = translation.m128_f32[2];
+
 	   object->Update(object->rotationQ_);
+
 	   if (ikData.isIK)
 	   {
 		   ikData.constraintObj.position_.x = ikData.constraintWorldVector.vec_.x_;
@@ -1068,5 +1083,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    void MCB::Node::JointObjectDraw()
    {
 	   object->Draw();
+
 	   if(ikData.isIK) ikData.constraintObj.Draw();
+   }
+   void MCB::Node::JointLineDraw()
+   {
+	   boneLine.DrawTriangle(object->camera_);
    }

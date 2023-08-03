@@ -65,7 +65,6 @@ namespace MCB
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		SimpleFigure triangle_;
 		Player player_;
 		Goal goal_;
 		Object3d ground_ = {};

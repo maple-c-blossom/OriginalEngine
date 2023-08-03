@@ -85,6 +85,7 @@ namespace MCB
         float boneLength;//ボーンの長さ
         bool updated = false;
         bool jointView = true;
+        PrimitiveFigure::Triangle boneLine;
         struct IKData
         {
             bool isIK = false;//IKを行うか
@@ -92,11 +93,24 @@ namespace MCB
             Vector3D constraintModelVector = {0,1,0};//PoleVector(ワールド空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
             Object3d constraintObj;//PoleVector表示用のオブジェクト
+
+        };
+
+        struct IKDebugData
+        {
+            std::array<std::string, 3> triangleNodeName;
+            std::array<Vector3D, 3> triangleNodeLocalVector;
+            Vector3D defaultTriangleNormal;
+            Vector3D taregetTriangleNormal;
+            Vector3D constraintModelVector;
+            Vector3D constraintWorldVector;
         };
         IKData ikData;//IKに関するデータ
+        IKDebugData ikDebugData;
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
         void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model);
         void JointObjectDraw();
+        void JointLineDraw();
     }Node;
     //struct aiMesh;
     //struct aiMaterial;
@@ -197,6 +211,7 @@ namespace MCB
 
         void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model);
         void JointObjectDraw();
+        void JointLineDraw();
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)

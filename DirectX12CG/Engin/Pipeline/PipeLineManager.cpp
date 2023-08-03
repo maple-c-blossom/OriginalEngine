@@ -3,22 +3,33 @@
 MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 {
 	for (int32_t i = 0; i < objPipeline_.size(); i++) objPipeline_[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < linePipeline_.size(); i++) linePipeline_[i].CreateLinePipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < objPipelineWire_.size(); i++) objPipelineWire_[i].Create3DObjectWirePipeline(*depth, *rootpamrams, i);
 	for (int32_t i = 0; i < spritePipeline_.size(); i++) spritePipeline_[i].CreateSpritePipeline(*depth, *rootpamrams, i);
 	for (int32_t i = 0; i < particlePipeline_.size(); i++) particlePipeline_[i].CreateParticlePipeline(*depth, *rootpamrams, i);
+	for (int32_t i = 0; i < animeObjPipelineWire_.size(); i++) animeObjPipelineWire_[i].CreateFbxWirePipeline(*depth, *rootpamrams, i);
 	for (int32_t i = 0; i < animeObjPipeline_.size(); i++) animeObjPipeline_[i].CreateFbxPipeline(*depth, *rootpamrams, i);
 	for (int32_t i = 0; i < postEffectPipeline_.size(); i++) postEffectPipeline_[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
 }
 
-void MCB::PipeLineManager::SetObjPipeLine(BlendMode blend)
+void MCB::PipeLineManager::SetObjPipeLine(bool wireFrame,BlendMode blend)
 {
 	if (blend >= objPipeline_.size())return;
-	objPipeline_[blend].CommonBeginDraw();
+	if (wireFrame) objPipelineWire_[blend].CommonBeginDraw();
+	else objPipeline_[blend].CommonBeginDraw();
 }
 
-void MCB::PipeLineManager::SetFbxPipeLine(BlendMode blend)
+void MCB::PipeLineManager::SetLinePipeLine( BlendMode blend)
+{
+	if (blend >= linePipeline_.size())return;
+	linePipeline_[blend].CommonBeginDraw();
+}
+
+void MCB::PipeLineManager::SetFbxPipeLine(bool wireFrame,BlendMode blend)
 {
 	if (blend >= animeObjPipeline_.size())return;
-	animeObjPipeline_[blend].CommonBeginDraw(TRIANGLELIST);
+	if(wireFrame)animeObjPipelineWire_[blend].CommonBeginDraw(TRIANGLELIST);
+	else animeObjPipeline_[blend].CommonBeginDraw(TRIANGLELIST);
 }
 
 void MCB::PipeLineManager::SetSpritePipeLine(BlendMode blend)

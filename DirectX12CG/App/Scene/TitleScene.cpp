@@ -105,12 +105,15 @@ void MCB::TitleScene::PostEffectDraw()
     if (debugView)
     {
         test2Animation_.animationModel_->skeleton.JointObjectDraw();
+        pipeline_->SetObjPipeLine(true);
+        test2Animation_.animationModel_->skeleton.JointLineDraw();
     }
     pipeline_->SetFbxPipeLine();
-    if (!debugView)
+    if (debugView)
     {
-        test2Animation_.AnimationDraw();
+        pipeline_->SetFbxPipeLine(true);
     }
+    test2Animation_.AnimationDraw();
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -252,5 +255,5 @@ void MCB::TitleScene::Object3DInit()
     test2Animation_.position_ = { 0,0,0 };
     test2Animation_.camera_ = viewCamera_;
 
-    poleVec = { 3,1,0 };
+    poleVec = { 3,2,0 };
 }
