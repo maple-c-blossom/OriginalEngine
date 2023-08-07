@@ -39,6 +39,9 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		{
 			objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
 		}
+
+		
+
 		objData->obj.camera_ = camera;
 		objData->obj.nameId_ = objData->fileName;
 		levelData->objects.emplace_back(move(objData));

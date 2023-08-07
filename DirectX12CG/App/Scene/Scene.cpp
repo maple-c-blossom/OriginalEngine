@@ -74,6 +74,13 @@ void MCB::Scene::Object3DInit()
     goal_.scale_ = { 3,3,3 };
     goal_.color_ = { 1,1,0,1 };
     goal_.popModel_ = goalModel_;
+
+    check.Init();
+    check.model_ = SpherModel_;
+    check.position_.y = 1;
+    check.position_.z = 25;
+    check.scale_ = { 3,3,3 };
+    check.color_ = { 1,1,0,1 };
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -173,7 +180,7 @@ void MCB::Scene::PostEffectDraw()
     postEffect_->PreDraw();
     level_->Draw();
     goal_.Draw();
-
+    check.Draw();
     pipeline_->SetFbxPipeLine();
     player_.AnimationDraw();
     postEffect_->PostDraw();
@@ -241,6 +248,7 @@ void MCB::Scene::MatrixUpdate()
     player_.AnimationUpdate();
     player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_,Float3(0.025f,0.025f,0.025f));
     goal_.Update();
+    check.Update();
 
     //testParticle.Updata(matView, matProjection, true);
 }

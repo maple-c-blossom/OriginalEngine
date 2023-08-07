@@ -411,6 +411,9 @@
     <ClCompile Include="Engin\Util\Timer.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
+    <ClCompile Include="App\CheckPoint.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -705,6 +708,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\Timer.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="App\CheckPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

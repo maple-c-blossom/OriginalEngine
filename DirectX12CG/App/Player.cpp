@@ -177,4 +177,13 @@ void MCB::Player::Move()
 
 }
 
+void MCB::Player::OnCollision(const CollisionInfomation& info)
+{
+	if (info.object3d_->nameId_ == "CheckPoint")
+	{
+		respownPosition_ = info.object3d_->position_;
+	}
+
+}
+
 

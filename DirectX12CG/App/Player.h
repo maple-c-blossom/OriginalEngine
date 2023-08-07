@@ -27,7 +27,7 @@ namespace MCB
         void Init();
         void UniqueUpdate() override;
         void Move();
-        void OnCollision(const CollisionInfomation& info) override { hited_ = true; };
+        void OnCollision(const CollisionInfomation& info) override;
   
     };
 

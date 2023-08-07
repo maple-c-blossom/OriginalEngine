@@ -5,6 +5,7 @@
 #include "DebugCamera.h"
 #include "Player.h"
 #include "Goal.h"
+#include "CheckPoint.h"
 #include "Camera.h"
 #include <memory>
 
@@ -67,6 +68,7 @@ namespace MCB
 #pragma region 3Dオブジェクト
 		Player player_;
 		Goal goal_;
+		CheckPoint check;
 		Object3d ground_ = {};
 		Object3d Skydorm_ = {};
 		Object3d testsphere_ = {};
