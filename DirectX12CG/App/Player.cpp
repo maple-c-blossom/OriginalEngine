@@ -35,43 +35,54 @@ void MCB::Player::UniqueUpdate()
 	PlayerQueryCallBack callback(sphere);
 
 	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
-	position_.x += callback.move.vec_.x_;
-	position_.y += callback.move.vec_.y_;
-	position_.z += callback.move.vec_.z_;
 
+	if (callback.move.V3Len() >= distoffSet)
+	{
+		position_.x += callback.move.vec_.x_;
+		position_.y += callback.move.vec_.y_;
+		position_.z += callback.move.vec_.z_;
+	}
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
 	ray.rayVec_ = { 0,-1,0,0 };
 	RayCastHit info;
+	float distRange = sphere->GetRaius() * 2.0f;
+	float distOverRange = distRange * distoffSet;
+	bool ground = CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, distRange + distOverRange);
 	if (isGraund_)
 	{
 		const float absDistance = 0.2f;
-		\
-		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		
+		if (ground)
 		{
 			isGraund_ = true;
-			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
-			//animationModel_->TwoBoneIkOrder({ position_.x,position_.y,position_.z }, { position_.x,position_.y - sphere->GetRaius() / 2,position_.z });
+			if(info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_) - sphere->GetRaius() * 2.0f);
 			Object3d::UpdateMatrix();
 		}
 		else
 		{
 			isGraund_ = false;
-			fallV_ = {0,0,0,0};
+			fallV_ = { 0,0,0,0 };
 		}
 	}
 	else if(fallV_.vec_.y_ <= 0.0f)
 	{
 		
-		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		if (ground)
 		{
 			isGraund_ = true;
-			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
-			//animationModel_->TwoBoneIkOrder({ position_.x,position_.y,position_.z }, { position_.x,position_.y - sphere->GetRaius() / 2,position_.z });
+			if (info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_ - distOverRange) - sphere->GetRaius() * 2.0f);
 			Object3d::UpdateMatrix();
 		}
+		else 
+		{
+			isGraund_ = false;
+		}
 	}
+
+
+
 	if (position_.y < outYPosition)
 	{
 		position_ = respownPosition_.ConvertXMFloat3();

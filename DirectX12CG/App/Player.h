@@ -22,6 +22,7 @@ namespace MCB
         Object3d* ground;
         Vector3D respownPosition_;
         float outYPosition = -20;
+        float distoffSet = 0.00025f;
     public:
         void SetRespowPosition(const Vector3D& pos);
         void Init();

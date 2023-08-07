@@ -39,9 +39,12 @@ void Camera::Update()
 	ray.rayVec_.V3Norm();
 	RayCastHit info;
 	OutputDebugStringW(L"camera--------------------------------------------------\n");
-	if(CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info,rayLength - 0.5f))
+	if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, rayLength - 0.5f))
 	{
-		if(info.objctPtr_ != target_)info.objctPtr_->isInvisible = true;
+		if (info.objctPtr_ != nullptr)
+		{
+			if (info.objctPtr_ != target_)info.objctPtr_->isInvisible = true;
+		}
 	}
 	OutputDebugStringW(L"end--------------------------------------------------\n");
 	view_.UpDateMatrixView();
