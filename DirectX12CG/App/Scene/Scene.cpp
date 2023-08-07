@@ -88,7 +88,7 @@ void MCB::Scene::LoadModel()
    //groundModel_ = modelManager_->GetModel("ground");
    //skydomeModel_ = modelManager_->GetModel("skydome");
    playerModel_ = modelManager_->GetModel("player", playerModel_);
-   goalModel_ = modelManager_->GetModel("Boxtest");
+   goalModel_ = modelManager_->GetModel("star");
     //testModel.Load("Resources\\testFbx\\boneTest.fbx");
     //fbxLoader->LoadModelFromFile("cube");
 }
@@ -194,6 +194,7 @@ void MCB::Scene::SpriteDraw()
     debugText_.sprite_->color_ = { 1,1,1,1 };
     debugText_.Print(10, 10, 1, "Move:WASD or LStick");
     debugText_.Print(10, 30, 1, "(debug) Reset:LCONTROL");
+    debugText_.Print(dxWindow_->sWINDOW_WIDTH_ - 200, 20, 2, "TIME:%d",goal_.GetTime() / 60);
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
 

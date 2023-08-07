@@ -7,6 +7,7 @@ void Goal::Init()
 {
 	Object3d::Init();
 	goal_ = false;
+	timer_ = 0;
 	SetCollider(make_unique<SphereCollider>(Vector3D{0,0,0},2.f));
 	collider_->SetAttribute(ATTRIBUTE_ENEMY);
 	UpdateMatrix();
@@ -15,6 +16,11 @@ void Goal::Init()
 
 void Goal::UpDate()
 {
+	if (!goal_)
+	{
+		timer_++;
+	}
+
 	for (auto& effect : effects_)
 	{
 		effect->UniqueUpdate();

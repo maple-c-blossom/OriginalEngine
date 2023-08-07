@@ -4,6 +4,10 @@
 #include "PlayerQueryCallBack.h"
 #include "AnimationModel.h"
 using namespace std;
+void MCB::Player::SetRespowPosition(const Vector3D& pos)
+{
+	respownPosition_ = pos;
+}
 void MCB::Player::Init()
 {
 	Object3d::Init();
@@ -15,11 +19,13 @@ void MCB::Player::Init()
 	collider_->Update();
 	nameId_ = "Player";
 	position_ = { 0,0,-50 };
+	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
 }
 
 void MCB::Player::UniqueUpdate()
 {
+
 	Move();
 
 	Object3d::UpdateMatrix();
@@ -66,11 +72,9 @@ void MCB::Player::UniqueUpdate()
 			Object3d::UpdateMatrix();
 		}
 	}
-
-	if (position_.y <= -20)
+	if (position_.y < outYPosition)
 	{
-		position_.y = 0;
-		position_.x = 0;
+		position_ = respownPosition_.ConvertXMFloat3();
 	}
 }
 

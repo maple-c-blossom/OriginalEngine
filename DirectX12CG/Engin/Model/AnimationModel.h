@@ -110,7 +110,7 @@ namespace MCB
         bool lineColorEqualObject = false;
         Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
-        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model, Float3 scale = {1.0f,1.0f,1.0f});
+        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
     }Node;
@@ -197,9 +197,10 @@ namespace MCB
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, Vector3D constraintPosition = {0,1,0}, std::string boneName = "NULL");
+        void SetTwoBoneIK(const Vector3D& objPos, const Vector3D& targetPos, const Vector3D& constraintPosition = {0,1,0}, 
+           const std::string& boneName = "NULL");
 
-        void TwoBoneIKOff(std::string boneName);
+        void TwoBoneIKOff(const std::string& boneName);
 
 
         //関節の曲がる方向を制限(試作)

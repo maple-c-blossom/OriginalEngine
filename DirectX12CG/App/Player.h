@@ -20,9 +20,10 @@ namespace MCB
         float maxspeed_ = 0.25f;
         MCB::Vector3D rightVec_ = {1,0,0};
         Object3d* ground;
-
-
+        Vector3D respownPosition_;
+        float outYPosition = -20;
     public:
+        void SetRespowPosition(const Vector3D& pos);
         void Init();
         void UniqueUpdate() override;
         void Move();

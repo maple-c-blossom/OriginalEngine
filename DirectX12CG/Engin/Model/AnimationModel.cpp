@@ -861,7 +861,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::SetTwoBoneIK(Vector3D objPos, Vector3D targetPos, Vector3D constraintPosition,string boneName)
+   void MCB::Skeleton::SetTwoBoneIK(const Vector3D& objPos, const Vector3D& targetPos, const Vector3D& constraintPosition,
+	   const string& boneName)
    {
 	   Node* node;
 	   if (boneName == "NULL")
@@ -880,7 +881,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   node->ikData.constraintModelVector = constraintPosition - objPos;
 	   }
    }
-   void MCB::Skeleton::TwoBoneIKOff(string boneName)
+   void MCB::Skeleton::TwoBoneIKOff(const string& boneName)
    {
 	   Node* node;
 	   if (boneName == "NULL")
@@ -1065,7 +1066,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		return result;
    }
 
-   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model, Float3 scale)
+   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model,const Float3& scale)
    {
 	   if (!object->parent_)
 	   {

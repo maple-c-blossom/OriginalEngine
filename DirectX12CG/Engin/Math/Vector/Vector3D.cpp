@@ -111,6 +111,16 @@ DirectX::XMVECTOR MCB::Vector3D::ConvertXMVEC()
 	return temp;
 }
 
+
+DirectX::XMFLOAT3 MCB::Vector3D::ConvertXMFloat3()
+{
+	DirectX::XMFLOAT3 temp;
+	temp.x = vec_.x_;
+	temp.y = vec_.y_;
+	temp.z = vec_.z_;
+	return temp;
+}
+
 Vector3D MCB::Vector3D::GetUpVec(Vector3D RightVec, Vector3D frontVec)
 {
 	Vector3D ans;
@@ -198,12 +208,25 @@ Vector3D& MCB::Vector3D::operator=(const DirectX::XMVECTOR& a)
 	return *this;
 }
 
+Vector3D& MCB::Vector3D::operator=(const DirectX::XMFLOAT3& a)
+{
+	vec_.x_ = a.x;
+	vec_.y_ = a.y;
+	vec_.z_ = a.z;
+	return *this;
+}
+
 Vector3D MCB::operator+(const Vector3D& vecA, const Vector3D& vecB)
 {
 	Vector3D temp;
 	temp = vecA;
 	temp += vecB;
 	return temp;
+}
+
+bool MCB::operator!=(const Vector3D& vecA, const DirectX::XMFLOAT3& vecB)
+{
+	return (vecA.vec_.x_ != vecB.x || vecA.vec_.y_ != vecB.y || vecA.vec_.z_ != vecB.z);
 }
 
 Vector3D MCB::operator-(const Vector3D& vecA, const Vector3D& vecB)

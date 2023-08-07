@@ -25,6 +25,7 @@ namespace MCB
 		Vector3D GetV3Cross(const Vector3D& vector);
 		Vector3D GetV3Cross(const Vector3D& aVector, const Vector3D& bVector);
 		DirectX::XMVECTOR ConvertXMVEC();
+		DirectX::XMFLOAT3 ConvertXMFloat3();
 
 
 		Vector3D GetFrontVec( Vector3D RightVec,  Vector3D UpVec = { 0,1,0 });
@@ -39,9 +40,11 @@ namespace MCB
 		Vector3D& operator*=( float k);
 		Vector3D& operator= (const Float3& a);
 		Vector3D& operator= (const DirectX::XMVECTOR& a);
+		Vector3D& operator= (const DirectX::XMFLOAT3& a);
 		
 	};
 	Vector3D operator+(const Vector3D& vecA, const Vector3D& vecB);
+	bool operator!=(const Vector3D& vecA, const DirectX::XMFLOAT3& vecB);
 	Vector3D operator-(const Vector3D& vecA, const Vector3D& vecB);
 	Vector3D operator*(const Vector3D& vecA,  float k);
 	Vector3D operator*( float k, const Vector3D& vecA);
