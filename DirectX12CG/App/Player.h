@@ -25,7 +25,7 @@ namespace MCB
         float distoffSet = 0.00025f;
     public:
         void SetRespowPosition(const Vector3D& pos);
-        void Init();
+        void Init()override;
         void UniqueUpdate() override;
         void Move();
         void OnCollision(const CollisionInfomation& info) override;

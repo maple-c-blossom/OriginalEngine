@@ -14,7 +14,7 @@ void Goal::Init()
 	collider_->Update();
 }
 
-void Goal::UpDate()
+void Goal::UniqueUpdate()
 {
 	if (!goal_)
 	{

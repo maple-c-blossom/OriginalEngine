@@ -13,8 +13,8 @@ private:
 public:
 	MCB::Model* popModel_ = nullptr;
 	static void ResetGoal() { goal_ = false; }
-	void Init();
-	void UpDate();
+	void Init()override;
+	void UniqueUpdate()override;
 	void Draw()override;
 	int GetTime() { return timer_; }
 	static bool GetIsGoal() { return goal_; };
