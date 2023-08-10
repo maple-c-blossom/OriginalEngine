@@ -3,9 +3,13 @@
 #include "PlaneCollider.h"
 #include "ModelManager.h"
 #include "Util.h"
+#include "CheckPoint.h"
+#include "Goal.h"
+#include "Player.h"
 using namespace MCB;
 using namespace std;
 using namespace nlohmann;
+
 
 const std::string LevelLoader::sBASE_FILE_DIR_ = "Resources/levels/";
 const std::string LevelLoader::sEXTEND_ = ".json";
@@ -18,32 +22,54 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 	if (type.compare("MESH") == 0)
 	{
 		std::unique_ptr<LevelData::ObjectData> objData = make_unique< LevelData::ObjectData>();
-		objData->obj.Init();
+		
+		if (objJson.contains("tag"))
+		{
+			objData->tag = objJson["tag"];
+			if (objData->tag == "checkPoint")
+			{
+				objData->obj = std::make_unique<CheckPoint>();
+			}
+			else if (objData->tag == "goal")
+			{
+				objData->obj = std::make_unique<Goal>();
+			}
+			else if (objData->tag == "player")
+			{
+				objData->obj = std::make_unique<Player>();
+			}
+			else
+			{
+				objData->obj = std::make_unique<Object3d>();
+			}
+		}
+		else objData->obj = std::make_unique<Object3d>();
+		objData->obj->Init();
 		if (objJson.contains("file_name"))
 		{
 			objData->fileName = objJson["file_name"];
-			objData->obj.model_ = ModelManager::GetModel(objData->fileName);
+			objData->obj->model_ = ModelManager::GetModel(objData->fileName);
 		}
 		json& transform = objJson["transform"];
-		objData->obj.position_.x = static_cast<float>(transform["translation"][0]);
-		objData->obj.position_.y = static_cast<float>(transform["translation"][2]);
-		objData->obj.position_.z = static_cast<float>(transform["translation"][1]);
-		objData->obj.rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][1]));
-		objData->obj.rotation_.y = ConvertRadius (-static_cast<float>(transform["rotation"][2]));
-		objData->obj.rotation_.z = ConvertRadius (-static_cast<float>(transform["rotation"][0]));
-		objData->obj.scale_.x = static_cast<float>(transform["scaling"][0]);
-		objData->obj.scale_.y = static_cast<float>(transform["scaling"][1]);
-		objData->obj.scale_.z = static_cast<float>(transform["scaling"][2]);
+		objData->obj->position_.x = static_cast<float>(transform["translation"][0]);
+		objData->obj->position_.y = static_cast<float>(transform["translation"][2]);
+		objData->obj->position_.z = static_cast<float>(transform["translation"][1]);
+		objData->obj->rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][1]));
+		objData->obj->rotation_.y = ConvertRadius (-static_cast<float>(transform["rotation"][2]));
+		objData->obj->rotation_.z = ConvertRadius (-static_cast<float>(transform["rotation"][0]));
+		objData->obj->scale_.x = static_cast<float>(transform["scaling"][0]);
+		objData->obj->scale_.y = static_cast<float>(transform["scaling"][1]);
+		objData->obj->scale_.z = static_cast<float>(transform["scaling"][2]);
 
-		if (!(objData->fileName == "skydome"))
+		if (!(objData->tag == "backGround"))
 		{
-			objData->obj.SetCollider(make_unique<MeshCollider>(objData->obj.model_));
+			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 		}
 
 		
 
-		objData->obj.camera_ = camera;
-		objData->obj.nameId_ = objData->fileName;
+		objData->obj->camera_ = camera;
+		objData->obj->nameId_ = objData->fileName;
 		levelData->objects.emplace_back(move(objData));
 	}
 	if (objJson.contains("children"))
@@ -89,7 +115,7 @@ void MCB::LevelLoader::LevelData::Update()
 {
 	for (auto& itr : objects)
 	{
-		itr->obj.UniqueUpdate();
+		itr->obj->UniqueUpdate();
 	}
 }
 
@@ -97,7 +123,7 @@ void MCB::LevelLoader::LevelData::UpdateMatrix()
 {
 	for (auto& itr : objects)
 	{
-		itr->obj.Update();
+		itr->obj->Update();
 	}
 }
 
@@ -105,8 +131,8 @@ void MCB::LevelLoader::LevelData::Draw()
 {
 	for (auto& itr : objects)
 	{
-		if (itr->obj.animationModel_)itr->obj.AnimationDraw();
-		else itr->obj.Draw();
+		if (itr->obj->animationModel_)itr->obj->AnimationDraw();
+		else itr->obj->Draw();
 	}
 }
 
@@ -121,8 +147,8 @@ MCB::LevelLoader::LevelData::~LevelData()
 		}
 
 		deleteModel[object->fileName] = true;
-		if(object->obj.model_)object->obj.model_->isDelete_ = true;
-		if (object->obj.animationModel_)object->obj.animationModel_->isDelete_ = true;
+		if(object->obj->model_)object->obj->model_->isDelete_ = true;
+		if (object->obj->animationModel_)object->obj->animationModel_->isDelete_ = true;
 	}
 }
 

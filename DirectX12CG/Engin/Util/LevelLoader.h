@@ -16,7 +16,8 @@ namespace MCB
 			struct ObjectData {
 				// ƒtƒ@ƒCƒ‹–¼
 				std::string fileName;
-				Object3d obj;
+				std::string tag;
+				std::unique_ptr<Object3d> obj;
 			};
 			std::string levelFileName;
 			ICamera* camera;
