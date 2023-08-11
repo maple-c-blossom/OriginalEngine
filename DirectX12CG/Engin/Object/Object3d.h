@@ -21,6 +21,7 @@ namespace MCB
     class ICamera;
     class BaseCollider;
     class AnimationModel;
+    class DebugText;
     class Object3d
     {
     protected:
@@ -67,6 +68,7 @@ namespace MCB
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
         bool isInvisible = false;
+        bool sceneEnd = false;
         Object3d();
 
         virtual ~Object3d();
@@ -84,6 +86,8 @@ namespace MCB
         virtual void UpdateMatrix(  Quaternion q,  bool isBillBord = false);
 
         virtual void Draw();
+
+        virtual void DebugTextDraw(DebugText* debugText) { return; };
 
         virtual void Draw( uint16_t incremant);
 

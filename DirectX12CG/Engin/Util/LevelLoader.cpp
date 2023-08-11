@@ -32,7 +32,9 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			}
 			else if (objData->tag == "goal")
 			{
-				objData->obj = std::make_unique<Goal>();
+				unique_ptr<Goal> temp = std::make_unique<Goal>();
+				temp->popModel_ = ModelManager::GetModel("star");
+				objData->obj = move(temp);
 			}
 			else if (objData->tag == "player")
 			{
@@ -43,33 +45,49 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 				objData->obj = std::make_unique<Object3d>();
 			}
 		}
-		else objData->obj = std::make_unique<Object3d>();
-		objData->obj->Init();
+		else
+		{
+			objData->tag = "NormalObject";
+			objData->obj = std::make_unique<Object3d>();
+		}
+		if (objJson.contains("modelType"))
+		{
+			objData->modelType = objJson["modelType"];
+		}
+
 		if (objJson.contains("file_name"))
 		{
 			objData->fileName = objJson["file_name"];
-			objData->obj->model_ = ModelManager::GetModel(objData->fileName);
+			if (objData->modelType == "Animation")
+			{
+				objData->obj->animationModel_ = ModelManager::GetModel(objData->fileName, objData->obj->animationModel_);
+			}
+			else
+			{
+				objData->obj->model_ = ModelManager::GetModel(objData->fileName);
+			}
 		}
 		json& transform = objJson["transform"];
 		objData->obj->position_.x = static_cast<float>(transform["translation"][0]);
 		objData->obj->position_.y = static_cast<float>(transform["translation"][2]);
 		objData->obj->position_.z = static_cast<float>(transform["translation"][1]);
-		objData->obj->rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][1]));
+		objData->obj->rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][0]));
 		objData->obj->rotation_.y = ConvertRadius (-static_cast<float>(transform["rotation"][2]));
-		objData->obj->rotation_.z = ConvertRadius (-static_cast<float>(transform["rotation"][0]));
+		objData->obj->rotation_.z = ConvertRadius (-static_cast<float>(transform["rotation"][1]));
 		objData->obj->scale_.x = static_cast<float>(transform["scaling"][0]);
 		objData->obj->scale_.y = static_cast<float>(transform["scaling"][1]);
 		objData->obj->scale_.z = static_cast<float>(transform["scaling"][2]);
 
-		if (!(objData->tag == "backGround"))
+		if ((objData->tag == "NormalObject"))
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 		}
 
-		
+
+		objData->obj->Init();
 
 		objData->obj->camera_ = camera;
-		objData->obj->nameId_ = objData->fileName;
+		objData->obj->nameId_ = objData->tag;
 		levelData->objects.emplace_back(move(objData));
 	}
 	if (objJson.contains("children"))
@@ -111,6 +129,18 @@ std::unique_ptr<LevelLoader::LevelData> LevelLoader::Load(const std::string& fil
 
 
 
+Object3d* MCB::LevelLoader::LevelData::GetObjectPtr(std::string name)
+{
+	for (auto& obj : objects)
+	{
+		if (obj->tag == name)
+		{
+			return obj->obj.get();
+		}
+	}
+	return nullptr;
+}
+
 void MCB::LevelLoader::LevelData::Update()
 {
 	for (auto& itr : objects)
@@ -123,7 +153,8 @@ void MCB::LevelLoader::LevelData::UpdateMatrix()
 {
 	for (auto& itr : objects)
 	{
-		itr->obj->Update();
+		if (itr->obj->animationModel_)itr->obj->AnimationUpdate();
+		else itr->obj->Update();
 	}
 }
 
@@ -131,8 +162,23 @@ void MCB::LevelLoader::LevelData::Draw()
 {
 	for (auto& itr : objects)
 	{
-		if (itr->obj->animationModel_)itr->obj->AnimationDraw();
-		else itr->obj->Draw();
+		if(itr->obj->model_)itr->obj->Draw();
+	}
+
+}
+void MCB::LevelLoader::LevelData::AnimationDraw()
+{
+	for (auto& itr : objects)
+	{
+		if (itr->obj->animationModel_) itr->obj->AnimationDraw();
+	}
+}
+
+void MCB::LevelLoader::LevelData::DebugTextDraw(DebugText* debugText)
+{
+	for (auto& itr : objects)
+	{
+		itr->obj->DebugTextDraw(debugText);
 	}
 }
 

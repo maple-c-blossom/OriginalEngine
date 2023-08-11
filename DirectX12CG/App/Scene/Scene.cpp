@@ -32,7 +32,8 @@ void MCB::Scene::Initialize()
     Object3d::SetLights(lights_);
     postEffect_->Init();
     postEffect_->color_.x_ = static_cast<float>(PostEffectNum::NONE);
-    maincamera_.SetCameraTarget(&player_);
+    maincamera_.SetCameraTarget(level_->GetObjectPtr("player"));
+    goal = level_->GetObjectPtr("goal");
 }
 
 void MCB::Scene::Object3DInit()
@@ -63,24 +64,24 @@ void MCB::Scene::Object3DInit()
    
     level_ = move(LevelLoader::Load("testLevel",viewCamera_));
 
-    player_.Init();
-    player_.animationModel_ = playerModel_;
-    player_.camera_ = viewCamera_;
+    //player_.Init();
+    //player_.animationModel_ = playerModel_;
+    //player_.camera_ = viewCamera_;
 
-    goal_.Init();
-    goal_.model_ = SpherModel_;
-    goal_.position_.y = 1;
-    goal_.position_.z = 50;
-    goal_.scale_ = { 3,3,3 };
-    goal_.color_ = { 1,1,0,1 };
-    goal_.popModel_ = goalModel_;
+    //goal_.Init();
+    //goal_.model_ = SpherModel_;
+    //goal_.position_.y = 1;
+    //goal_.position_.z = 50;
+    //goal_.scale_ = { 3,3,3 };
+    //goal_.color_ = { 1,1,0,1 };
+    //goal_.popModel_ = goalModel_;
 
-    check.Init();
-    check.model_ = SpherModel_;
-    check.position_.y = 1;
-    check.position_.z = 25;
-    check.scale_ = { 3,3,3 };
-    check.color_ = { 1,1,0,1 };
+    //check.Init();
+    //check.model_ = SpherModel_;
+    //check.position_.y = 1;
+    //check.position_.z = 25;
+    //check.scale_ = { 3,3,3 };
+    //check.color_ = { 1,1,0,1 };
     //sphere.Init();
     //sphere.model = BoxModel;
     //sphere.SetCollider(1);
@@ -145,11 +146,11 @@ void MCB::Scene::Update()
 {
 
     level_->Update();
-    player_.UniqueUpdate();
+    //player_.UniqueUpdate();
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
-    goal_.UniqueUpdate();
+    //goal_.UniqueUpdate();
     //Node* node = playerModel_->ReadNode("LowerArm.R");
     //node->ikData.isIK = true;
     //node->ikData.iKTargetPosition = { player_.position_.x + 1.0f,player_.position_.y + 0.5f,player_.position_.z };
@@ -160,10 +161,9 @@ void MCB::Scene::Update()
     {
        //level_ = level_->ReLoad();
         Goal::ResetGoal();
-        player_.position_ = { 0,0,-50 };
     }
 
-    if (goal_.GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
+    if (goal->sceneEnd && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
     {
         sceneEnd_ = true;
     }
@@ -179,10 +179,10 @@ void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
     level_->Draw();
-    goal_.Draw();
-    check.Draw();
+    //goal_.Draw();
+    //check.Draw();
     pipeline_->SetFbxPipeLine();
-    player_.AnimationDraw();
+    level_->AnimationDraw();
     postEffect_->PostDraw();
 
 }
@@ -193,15 +193,10 @@ void MCB::Scene::SpriteDraw()
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
 
-    if (goal_.GetIsGoal())
-    {
-        debugText_.Print(dxWindow_->sWINDOW_WIDTH_ / 2, dxWindow_->sWINDOW_HEIGHT_ / 2, 5, "Goal!!!");
-        debugText_.Print(dxWindow_->sWINDOW_WIDTH_ / 2, dxWindow_->sWINDOW_HEIGHT_ / 2 + 120, 3, "Press AButton");
-    }
     debugText_.sprite_->color_ = { 1,1,1,1 };
     debugText_.Print(10, 10, 1, "Move:WASD or LStick");
     debugText_.Print(10, 30, 1, "(debug) Reset:LCONTROL");
-    debugText_.Print(dxWindow_->sWINDOW_WIDTH_ - 200, 20, 2, "TIME:%d",goal_.GetTime() / 60);
+    level_->DebugTextDraw(&debugText_);
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
 
@@ -224,20 +219,20 @@ void MCB::Scene::ImGuiUpdate()
 {
     imgui_.Begin();
     ImGui::ShowDemoWindow();
-    if (ImGui::CollapsingHeader("Infomation"))
-    {
-        if (ImGui::TreeNode("operation"))
-        {
-            ImGui::Text("LevelReLoad:LCONTROL");
-            ImGui::TreePop();
-        }
-    }
+    //if (ImGui::CollapsingHeader("Infomation"))
+    //{
+    //    if (ImGui::TreeNode("operation"))
+    //    {
+    //        ImGui::Text("LevelReLoad:LCONTROL");
+    //        ImGui::TreePop();
+    //    }
+    //}
 
-    if (ImGui::CollapsingHeader("MotionModel"))
-    {
-            playerModel_->DrawHeirarchy();
-            ImGui::TreePop();
-    }
+    //if (ImGui::CollapsingHeader("MotionModel"))
+    //{
+    //        playerModel_->DrawHeirarchy();
+    //        ImGui::TreePop();
+    //}
     imgui_.End();
 }
 
@@ -245,10 +240,10 @@ void MCB::Scene::MatrixUpdate()
 {
     viewCamera_->Update();
     level_->UpdateMatrix();
-    player_.AnimationUpdate();
-    player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_,Float3(0.025f,0.025f,0.025f));
-    goal_.Update();
-    check.Update();
+    //player_.AnimationUpdate();
+    //player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_,Float3(0.025f,0.025f,0.025f));
+    //goal_.Update();
+    //check.Update();
 
     //testParticle.Updata(matView, matProjection, true);
 }

@@ -17,8 +17,7 @@ void MCB::Player::Init()
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
 	UpdateMatrix();
 	collider_->Update();
-	nameId_ = "Player";
-	position_ = { 0,0,-50 };
+	//position_ = { 0,0,-50 };
 	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
 }
@@ -107,9 +106,9 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.y_)
 	{
-		float accelerator = speed_ * 2;
+		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.y_;
-		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ += accelerator;
+		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ = accelerator;
 		else if (speedFront_ >= maxspeed_) speedFront_ = maxspeed_;
 		else if (speedFront_ <= -maxspeed_)speedFront_ = -maxspeed_;
 	}
@@ -134,7 +133,7 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator = speed_ * 2;
+		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.x_;
 		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
@@ -190,7 +189,7 @@ void MCB::Player::Move()
 
 void MCB::Player::OnCollision(const CollisionInfomation& info)
 {
-	if (info.object3d_->nameId_ == "CheckPoint")
+	if (info.object3d_->nameId_ == "checkPoint")
 	{
 		respownPosition_ = info.object3d_->position_;
 	}

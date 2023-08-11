@@ -4,7 +4,7 @@
 #include <DirectXMath.h>
 #include <json.hpp>
 #include "Object3d.h"
-
+#include "PipelineManager.h"
 namespace MCB
 {
 	class LevelLoader
@@ -17,15 +17,19 @@ namespace MCB
 				// ファイル名
 				std::string fileName;
 				std::string tag;
+				std::string modelType;
 				std::unique_ptr<Object3d> obj;
 			};
 			std::string levelFileName;
 			ICamera* camera;
 			// オブジェクト配列
 			std::vector<std::unique_ptr<ObjectData>> objects;
+			Object3d* GetObjectPtr(std::string name);
 			void Update();
 			void UpdateMatrix();
 			void Draw();
+			void AnimationDraw();
+			void DebugTextDraw(DebugText* debugText);
 			~LevelData();
 			std::unique_ptr<LevelData> ReLoad();
 		};

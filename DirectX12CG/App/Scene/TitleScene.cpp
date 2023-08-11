@@ -197,7 +197,7 @@ void MCB::TitleScene::LoadModel()
 
     sphereModel_ = std::make_unique<Model>("sphere");
 
-    boxModel_ = std::make_unique<Model>("Boxtest");
+    boxModel_ = std::make_unique<Model>("Bone");
 
 
     animModel_ = std::make_unique<AnimationModel>();

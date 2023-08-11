@@ -1,5 +1,6 @@
 #include "Goal.h"
-
+#include "DxWindow.h"
+#include "DebugText.h"
 using namespace MCB;
 using namespace std;
 bool Goal::goal_ = false;
@@ -39,11 +40,24 @@ void Goal::Draw()
 	}
 }
 
+void Goal::DebugTextDraw(MCB::DebugText* debugText)
+{
+
+	if (Goal::goal_)
+	{
+		debugText->Print(DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2.f, DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2.f, 5,
+			"Goal!!!");
+		debugText->Print(DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2.f, DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2.f + 120.f, 
+			3, "Press AButton");
+	}
+	debugText->Print(DxWindow::GetInstance()->sWINDOW_WIDTH_ - 200.f, 20.f, 2, "TIME:%d", timer_ / 60);
+}
+
 void Goal::OnCollision(const MCB::CollisionInfomation& info)
 {
 	hited_ = true;
 	std::string hitName = info.object3d_->nameId_;
-	if (hitName == "Player")
+	if (hitName == "player")
 	{
 		if (!goal_)
 		{
@@ -57,4 +71,5 @@ void Goal::OnCollision(const MCB::CollisionInfomation& info)
 		}
 		goal_ = true;
 	}
+	sceneEnd = goal_;
 }

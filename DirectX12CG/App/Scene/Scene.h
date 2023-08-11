@@ -66,12 +66,8 @@ namespace MCB
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		Player player_;
-		Goal goal_;
-		CheckPoint check;
-		Object3d ground_ = {};
-		Object3d Skydorm_ = {};
-		Object3d testsphere_ = {};
+
+		Object3d* goal;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

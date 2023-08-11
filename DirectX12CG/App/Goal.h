@@ -16,6 +16,7 @@ public:
 	void Init()override;
 	void UniqueUpdate()override;
 	void Draw()override;
+	void DebugTextDraw(MCB::DebugText* debugText) override;
 	int GetTime() { return timer_; }
 	static bool GetIsGoal() { return goal_; };
 	void OnCollision(const MCB::CollisionInfomation& info)override;
