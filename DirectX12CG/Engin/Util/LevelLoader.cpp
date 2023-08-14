@@ -71,7 +71,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		objData->obj->position_.x = static_cast<float>(transform["translation"][0]);
 		objData->obj->position_.y = static_cast<float>(transform["translation"][2]);
 		objData->obj->position_.z = static_cast<float>(transform["translation"][1]);
-		objData->obj->rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][0]));
+		objData->obj->rotation_.x = ConvertRadius(static_cast<float>(transform["rotation"][0] - 90));
 		objData->obj->rotation_.y = ConvertRadius (-static_cast<float>(transform["rotation"][2]));
 		objData->obj->rotation_.z = ConvertRadius (-static_cast<float>(transform["rotation"][1]));
 		objData->obj->scale_.x = static_cast<float>(transform["scaling"][0]);

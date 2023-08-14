@@ -11,7 +11,6 @@ void MCB::Player::SetRespowPosition(const Vector3D& pos)
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	position_.z = -20;
 	scale_ = { 1.25,1.25,1.25 };
 	SetCollider(make_unique<SphereCollider>(Vector3D{0,0.5f,0},0.5f));
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
@@ -20,6 +19,7 @@ void MCB::Player::Init()
 	//position_ = { 0,0,-50 };
 	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
+	rotation_.x = ConvertRadius(0);
 }
 
 void MCB::Player::UniqueUpdate()
@@ -171,7 +171,7 @@ void MCB::Player::Move()
 	position_.z += rightVec_.vec_.z_ * speedRight_;
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.03f;
+		const float fallAcc = -0.015f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		position_.x += fallV_.vec_.x_;

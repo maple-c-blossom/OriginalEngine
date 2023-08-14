@@ -23,7 +23,7 @@ void Camera::WorldPositionInit()
 
 void Camera::Update()
 {
-	Float3 offSet;
+	Float3 frongtOffSet;//‘OŒã•ûŒü
 
 	
 
@@ -33,6 +33,10 @@ void Camera::Update()
 	view_.eye_.z = target_->position_.z + (7.5f * -target_->nowFrontVec_.vec_.z_);
 	view_.target_ = target_->position_;
 	
+
+
+
+
 	Ray ray;
 	ray.StartPosition_.vec_.x_ = view_.eye_.x;
 	ray.StartPosition_.vec_.y_ = view_.eye_.y;

@@ -19,6 +19,7 @@ MCB::MeshCollider::MeshCollider(AnimationModel* model)
 }
 void MCB::MeshCollider::ConstractTriangle(Model* model)
 {
+	if (model == nullptr) return;
 	triangles_.clear();
 	int32_t start = 0;
 	size_t triangleNum = model->indices_.size() / 3;

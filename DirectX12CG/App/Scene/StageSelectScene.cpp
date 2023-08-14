@@ -1,26 +1,26 @@
-#include "TitleScene.h"
 #include "StageSelectScene.h"
+#include "Scene.h"
 using namespace MCB;
 using namespace std;
 using namespace DirectX;
 
-void MCB::TitleScene::SpriteInit()
+void MCB::StageSelectScene::SpriteInit()
 {
 
     debugText_.Init(debugTextTexture_->texture.get());
     titleSprite_.CreateSprite();
 }
 
-void MCB::TitleScene::ParticleInit()
+void MCB::StageSelectScene::ParticleInit()
 {
 }
 
-unique_ptr<MCB::IScene> MCB::TitleScene::GetNextScene()
+unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 {
-	return move(make_unique<StageSelectScene>(rootparamsPtr_, depth_, pipeline_));
+    return move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
 }
 
-void MCB::TitleScene::MatrixUpdate()
+void MCB::StageSelectScene::MatrixUpdate()
 {
     //test2Animation_.UpdateMatrix();
     viewCamera_->Update();
@@ -29,16 +29,16 @@ void MCB::TitleScene::MatrixUpdate()
     test2Animation_.AnimationUpdate();
     testsphere_.Update();
     test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
-        &test2Animation_,boxModel_.get());
+        &test2Animation_, boxModel_.get());
 }
 
-void MCB::TitleScene::Update()
+void MCB::StageSelectScene::Update()
 {
 
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
-        soundManager_->PlaySoundWave(selectSound_);
+        //soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
     DirectX::XMFLOAT3* pos = &testsphere_.position_;
@@ -57,7 +57,7 @@ void MCB::TitleScene::Update()
     {
         pos->z += 0.05f;
     }
-    
+
     if (input_->IsKeyDown(DIK_S))
     {
         pos->z -= 0.05f;
@@ -87,7 +87,7 @@ void MCB::TitleScene::Update()
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "Bone3");
+            { poleVec.x,poleVec.y,poleVec.z }, "Bone3");
     }
     else
     {
@@ -96,7 +96,7 @@ void MCB::TitleScene::Update()
     MatrixUpdate();
 }
 
-void MCB::TitleScene::PostEffectDraw()
+void MCB::StageSelectScene::PostEffectDraw()
 {
     postEffect_->PreDraw();
     Skydorm_.Draw();
@@ -118,16 +118,16 @@ void MCB::TitleScene::PostEffectDraw()
     postEffect_->PostDraw();
 }
 
-void MCB::TitleScene::Draw()
+void MCB::StageSelectScene::Draw()
 {
     //3Dオブジェクト
 
 
 }
 
-void MCB::TitleScene::SpriteDraw()
+void MCB::StageSelectScene::SpriteDraw()
 {
-    
+
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
@@ -135,15 +135,15 @@ void MCB::TitleScene::SpriteDraw()
     debugText_.AllDraw();
 }
 
-void MCB::TitleScene::ParticleDraw()
+void MCB::StageSelectScene::ParticleDraw()
 {
 }
 
-void MCB::TitleScene::CheckAllColision()
+void MCB::StageSelectScene::CheckAllColision()
 {
 }
 
-void MCB::TitleScene::ImGuiUpdate()
+void MCB::StageSelectScene::ImGuiUpdate()
 {
     imgui_.Begin();
     ImGui::Checkbox("debugView", &debugView);
@@ -155,14 +155,14 @@ void MCB::TitleScene::ImGuiUpdate()
     imgui_.End();
 }
 
-MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline)
+MCB::StageSelectScene::StageSelectScene(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
-	rootparamsPtr_ = root;
-	depth_ = depth;
+    rootparamsPtr_ = root;
+    depth_ = depth;
     pipeline_ = pipeline;
 }
 
-MCB::TitleScene::~TitleScene()
+MCB::StageSelectScene::~StageSelectScene()
 {
     soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
@@ -171,7 +171,7 @@ MCB::TitleScene::~TitleScene()
     loader_->Erase();
 }
 
-void MCB::TitleScene::Initialize()
+void MCB::StageSelectScene::Initialize()
 {
     camera_.Inilialize();
     viewCamera_ = &camera_;
@@ -188,7 +188,7 @@ void MCB::TitleScene::Initialize()
     postEffect_->Init();
 }
 
-void MCB::TitleScene::LoadModel()
+void MCB::StageSelectScene::LoadModel()
 {
 
     groundModel_ = std::make_unique<Model>("ground");
@@ -207,20 +207,20 @@ void MCB::TitleScene::LoadModel()
     anim2Model_->Load("IKTest");
 }
 
-void MCB::TitleScene::LoadTexture()
+void MCB::StageSelectScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
     titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
 }
 
-void MCB::TitleScene::LoadSound()
+void MCB::StageSelectScene::LoadSound()
 {
     selectSound_ = soundManager_->LoadWaveSound("Resources\\select.wav");
     test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
     soundManager_->SetVolume(100, selectSound_);
 }
 
-void MCB::TitleScene::Object3DInit()
+void MCB::StageSelectScene::Object3DInit()
 {
 
     ground_.Init();

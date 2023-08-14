@@ -96,6 +96,7 @@
     <ClCompile Include="Engin\Sprite\PostEffect.cpp" />
     <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp" />
     <ClCompile Include="App\Goal.cpp" />
+    <ClCompile Include="App\Scene\StageSelectScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -303,6 +304,7 @@
     <ClInclude Include="Engin\Sprite\PostEffect.h" />
     <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h" />
     <ClInclude Include="App\Goal.h" />
+    <ClInclude Include="App\Scene\StageSelectScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
