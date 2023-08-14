@@ -42,12 +42,12 @@ void MCB::StageSelectScene::Update()
 
     if (input_->IsKeyTrigger(DIK_UP) || input_->gamePad_->IsButtonTrigger(GAMEPAD_UP))
     {
-        selectStageNum++;
+        selectStageNum--;
     }
 
     if (input_->IsKeyTrigger(DIK_DOWN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_DOWN))
     {
-        selectStageNum--;
+        selectStageNum++;
     }
     selectStageNum = static_cast<int32_t>(clamp(static_cast<float>(selectStageNum), 0.f, stages.size() - 1.f));
 
