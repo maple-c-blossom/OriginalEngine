@@ -88,12 +88,15 @@ namespace MCB
         PrimitiveFigure::Line boneLine;
         struct IKData
         {
-            bool isIK = false;//IKを行うか
-            Vector3D iKEffectorPosition = {};//IKのEffector位置(ワールド空間)
-            Vector3D constraintModelVector = {0,1,0};//PoleVector(ワールド空間)
+            bool isIK = false;//IKを行うか（自分がendJointかどうか）
+            Node* middleJointNode = nullptr;//ミドルジョイントのポインタ
+            Node* rootJointNode = nullptr;//ルートジョイントのポインタ
+            Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
+            Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             PrimitiveFigure::Line constraintLine;
+            Vector3D constraintLocalPositionFromRoot;
 
         };
 
