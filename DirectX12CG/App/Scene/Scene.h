@@ -35,6 +35,7 @@ namespace MCB
 		//変換行列
 		DebugCamera debugCamera_;
 		Camera maincamera_;
+		std::string stage;
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
@@ -94,7 +95,7 @@ namespace MCB
 		Scene(RootParameter* root,Depth* depth,PipeLineManager* pipeline);
 		~Scene();
 		void Initialize() override;
-
+		void SetStage(std::string stageName);
 		//各初期化系関数群--------------------
 		void LoadModel()  override;
 		void LoadTexture()  override;

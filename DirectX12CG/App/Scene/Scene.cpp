@@ -36,6 +36,11 @@ void MCB::Scene::Initialize()
     goal = level_->GetObjectPtr("goal");
 }
 
+void MCB::Scene::SetStage(std::string stageName)
+{
+    stage = stageName;
+}
+
 void MCB::Scene::Object3DInit()
 {
 
@@ -62,13 +67,13 @@ void MCB::Scene::Object3DInit()
     //testsphere_.SetCollider(move(make_unique<SphereCollider>()));
     //testsphere_.camera_ = viewCamera_;
    
-    level_ = move(LevelLoader::Load("testLevel",viewCamera_));
+    level_ = move(LevelLoader::Load(stage,viewCamera_));
 
     //player_.Init();
     //player_.animationModel_ = playerModel_;
     //player_.camera_ = viewCamera_;
 
-    //goal_.Init();
+    //goal_.Init(); 
     //goal_.model_ = SpherModel_;
     //goal_.position_.y = 1;
     //goal_.position_.z = 50;

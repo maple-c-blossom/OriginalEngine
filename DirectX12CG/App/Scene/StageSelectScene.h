@@ -64,8 +64,10 @@ namespace MCB
 
 		DebugText debugText_;
 
+		std::array<std::string, 2> stages;
+		int32_t selectStageNum = 0;
 #pragma endregion スプライト
-
+ 
 #pragma region 通常変数
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
