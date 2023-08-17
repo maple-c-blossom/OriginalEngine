@@ -747,15 +747,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1 = q1.DirToDir(nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
 	   q1 = q1.GetDirectProduct(q1, rootJoint->defaultRotation);
-	   endJoint.ikData.effectorVec.PointB_ = {
-		   xmEffectorLocalVecFromRoot.m128_f32[0],
-		   xmEffectorLocalVecFromRoot.m128_f32[1],
-		   xmEffectorLocalVecFromRoot.m128_f32[2]};
-	   endJoint.ikData.effectorVec.line.parent_ = rootJoint->object.get()->parent_;
-	   endJoint.ikData.effectorVec.PointA_ = {
-	   0,
-	   0,
-	   0 };
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
 	   float endJointBoneLength = XMVector3Length(endJoint.defaultLocalTranslation).m128_f32[0];
