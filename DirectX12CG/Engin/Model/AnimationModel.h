@@ -95,6 +95,7 @@ namespace MCB
             Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
             Object3d constraintObj;//PoleVector表示用のオブジェクト
+            Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVec;
             Vector3D constraintLocalPositionFromRoot;
@@ -114,6 +115,7 @@ namespace MCB
         IKDebugData ikDebugData;
         bool lineColorEqualObject = false;
         Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
+        bool chengeObjectColor;
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
         void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();

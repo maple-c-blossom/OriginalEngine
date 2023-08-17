@@ -411,13 +411,9 @@ void MCB::AnimationModel::DrawHeirarchy()
 {
 	if (ImGui::CollapsingHeader(string(fileName_ + "::Skeleton").c_str()))
 	{
-		float color[4] = {skeleton.lineDefaultColor.x_,skeleton.lineDefaultColor.y_
-		,skeleton.lineDefaultColor.z_,skeleton.lineDefaultColor.w_ };
-		ImGui::ColorEdit4("LineColor", color);
-		skeleton.lineDefaultColor.x_ = color[0];
-		skeleton.lineDefaultColor.y_ = color[1];
-		skeleton.lineDefaultColor.z_ = color[2];
-		skeleton.lineDefaultColor.w_ = color[3];
+		float* color[3] = {&skeleton.lineDefaultColor.x_,&skeleton.lineDefaultColor.y_
+		,&skeleton.lineDefaultColor.z_};
+		ImGui::ColorEdit3("LineColor", *color);
 		ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(450, 350), ImGuiWindowFlags_NoTitleBar, ImGuiWindowFlags_HorizontalScrollbar);
 		{
 			skeleton.DrawHeirarchy(skeleton.rootNode);
@@ -713,9 +709,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (&middleJoint == nullptr)return;
 	   //À•W•ÏŠ·(rootJoint‚ÌÀ•WŒn‚É•ÏŠ·)-----------------------------------
 	   Node* rootJoint = middleJoint.parent;
-	   rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
-	   middleJoint.object->color_ = { 0,0.5f,0,1 };
-	   endJoint.object->color_ = { 0,0,0.5f,1 };
+	   if(!rootJoint->chengeObjectColor)rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
+	   if(!middleJoint.chengeObjectColor)middleJoint.object->color_ = { 0,0.5f,0,1 };
+	   if(!endJoint.chengeObjectColor)endJoint.object->color_ = { 0,0,0.5f,1 };
 	   
 	   endJoint.ikData.middleJointNode = &middleJoint;
 	   endJoint.ikData.rootJointNode = rootJoint;
@@ -736,6 +732,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   XMVECTOR middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
 	   XMVECTOR endJointLocalPositionFromRoot = XMVector3Transform(XMVector3Transform(endJoint.defaultLocalTranslation, middleJoint.defaultModelTransform),rootJointModelMatrixinv);
 	   XMVECTOR rootJointLocalPositionFromRoot = XMVector3Transform(rootJoint->defaultLocalTranslation, rootJointModelMatrixinv);
+	   endJoint.ikData.effectorPosFromRoot = xmEffectorLocalVecFromRoot;
 	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal(rootJointLocalPositionFromRoot,
@@ -944,6 +941,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 					ImGui::Text("BoneVec:%f,%f,%f", node->boneVec.vec_.x_, node->boneVec.vec_.y_, node->boneVec.vec_.z_);
 					ImGui::Text("BoneLength:%f", node->boneLength);
 					ImGui::Checkbox("jointView", &node->jointView);
+					Float4* objCol = &node->object->color_;
+					float* color[3] = { &objCol->x_,&objCol->y_,&objCol->z_ };
+					ImGui::Checkbox("chengeObjectColor", &node->chengeObjectColor);
+					if (node->chengeObjectColor)ImGui::ColorEdit3("JointColor", *color);
+					else for (auto& ptr : color) *ptr = 1.0f;
 					ImGui::Checkbox("objectColorLine", &node->lineColorEqualObject);
 					if (node->ikData.isIK)
 					{
@@ -1114,8 +1116,24 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   ikData.constraintLine.PointB_.x_ = ikData.constraintLocalPositionFromRoot.vec_.x_;
 		   ikData.constraintLine.PointB_.y_ = ikData.constraintLocalPositionFromRoot.vec_.y_;
 		   ikData.constraintLine.PointB_.z_ = ikData.constraintLocalPositionFromRoot.vec_.z_;
-		   if (lineColorEqualObject)ikData.constraintLine.line.color_ = ikData.rootJointNode->object->color_;
+		   if (ikData.rootJointNode->lineColorEqualObject)
+		   {
+			   ikData.constraintLine.line.color_ = ikData.rootJointNode->object->color_;
+		   }
 		   else ikData.constraintLine.line.color_ = lineDefaultColor;
+
+
+		   ikData.effectorVec.line.parent_ = ikData.rootJointNode->object.get()->parent_;
+		   ikData.effectorVec.PointA_ = { 0,0,0 };
+		   ikData.effectorVec.PointB_.x_ = ikData.effectorPosFromRoot.vec_.x_;
+		   ikData.effectorVec.PointB_.y_ = ikData.effectorPosFromRoot.vec_.y_;
+		   ikData.effectorVec.PointB_.z_ = ikData.effectorPosFromRoot.vec_.z_;
+		   if (ikData.rootJointNode->lineColorEqualObject)
+		   {
+			   ikData.effectorVec.line.color_ = ikData.rootJointNode->object->color_;
+		   }
+		   else ikData.effectorVec.line.color_ = lineDefaultColor;
+
 		   ikData.constraintObj.scale_ = { 0.5f,0.5f,0.5f };
 		   ikData.constraintObj.model_ = model;
 		   ikData.constraintObj.color_ = { 0.5,0,0,1 };
