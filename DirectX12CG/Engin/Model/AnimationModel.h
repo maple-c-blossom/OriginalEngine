@@ -96,8 +96,10 @@ namespace MCB
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
+            Vector3D effectorPosFromMiddle = {};//PoleVector(Model空間)
             PrimitiveFigure::Line constraintLine;
-            PrimitiveFigure::Line effectorVec;
+            PrimitiveFigure::Line effectorVecFromRoot;
+            PrimitiveFigure::Line effectorVecFromMiddle;
             Vector3D constraintLocalPositionFromRoot;
 
         };

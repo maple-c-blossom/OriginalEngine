@@ -767,6 +767,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
 	   XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
 	   XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
+	   endJoint.ikData.effectorPosFromMiddle = xmTargetLocalVecFromMiddle;
 	   XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
 	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
 	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
@@ -1123,16 +1124,29 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   else ikData.constraintLine.line.color_ = lineDefaultColor;
 
 
-		   ikData.effectorVec.line.parent_ = ikData.rootJointNode->object.get()->parent_;
-		   ikData.effectorVec.PointA_ = { 0,0,0 };
-		   ikData.effectorVec.PointB_.x_ = ikData.effectorPosFromRoot.vec_.x_;
-		   ikData.effectorVec.PointB_.y_ = ikData.effectorPosFromRoot.vec_.y_;
-		   ikData.effectorVec.PointB_.z_ = ikData.effectorPosFromRoot.vec_.z_;
+		   ikData.effectorVecFromRoot.line.parent_ = ikData.rootJointNode->object.get()->parent_;
+		   ikData.effectorVecFromRoot.PointA_ = { 0,0,0 };
+		   ikData.effectorVecFromRoot.PointB_.x_ = ikData.effectorPosFromRoot.vec_.x_;
+		   ikData.effectorVecFromRoot.PointB_.y_ = ikData.effectorPosFromRoot.vec_.y_;
+		   ikData.effectorVecFromRoot.PointB_.z_ = ikData.effectorPosFromRoot.vec_.z_;
 		   if (ikData.rootJointNode->lineColorEqualObject)
 		   {
-			   ikData.effectorVec.line.color_ = ikData.rootJointNode->object->color_;
+			   ikData.effectorVecFromRoot.line.color_ = ikData.rootJointNode->object->color_;
 		   }
-		   else ikData.effectorVec.line.color_ = lineDefaultColor;
+		   else ikData.effectorVecFromRoot.line.color_ = lineDefaultColor;
+
+
+		   ikData.effectorVecFromMiddle.line.parent_ = ikData.middleJointNode->object.get()->parent_;
+		   ikData.effectorVecFromMiddle.PointA_ = { 0,0,0 };
+		   ikData.effectorVecFromMiddle.PointB_.x_ = ikData.effectorPosFromMiddle.vec_.x_;
+		   ikData.effectorVecFromMiddle.PointB_.y_ = ikData.effectorPosFromMiddle.vec_.y_;
+		   ikData.effectorVecFromMiddle.PointB_.z_ = ikData.effectorPosFromMiddle.vec_.z_;
+		   if (ikData.rootJointNode->lineColorEqualObject)
+		   {
+			   ikData.effectorVecFromMiddle.line.color_ = ikData.rootJointNode->object->color_;
+		   }
+		   else ikData.effectorVecFromMiddle.line.color_ = lineDefaultColor;
+
 
 		   ikData.constraintObj.scale_ = { 0.5f,0.5f,0.5f };
 		   ikData.constraintObj.model_ = model;
@@ -1155,6 +1169,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (ikData.isIK)
 	   {
 		   ikData.constraintLine.DrawLine(object->camera_);
-		   ikData.effectorVec.DrawLine(object->camera_);
+		   ikData.effectorVecFromRoot.DrawLine(object->camera_);
+		   //ikData.effectorVecFromMiddle.DrawLine(object->camera_);
 	   }
    }
