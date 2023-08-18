@@ -1136,7 +1136,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   else ikData.effectorVecFromRoot.line.color_ = lineDefaultColor;
 
 
-		   ikData.effectorVecFromMiddle.line.parent_ = ikData.middleJointNode->object.get()->parent_;
+		   ikData.effectorVecFromMiddle.line.parent_ = ikData.middleJointNode->object.get();
 		   ikData.effectorVecFromMiddle.PointA_ = { 0,0,0 };
 		   ikData.effectorVecFromMiddle.PointB_.x_ = ikData.effectorPosFromMiddle.vec_.x_;
 		   ikData.effectorVecFromMiddle.PointB_.y_ = ikData.effectorPosFromMiddle.vec_.y_;
