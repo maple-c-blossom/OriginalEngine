@@ -233,11 +233,10 @@ void MCB::Scene::ImGuiUpdate()
     //    }
     //}
 
-    //if (ImGui::CollapsingHeader("MotionModel"))
-    //{
-    //        playerModel_->DrawHeirarchy();
-    //        ImGui::TreePop();
-    //}
+    if (ImGui::CollapsingHeader("MotionModel"))
+    {
+         playerModel_->DrawHeirarchy();
+    }
     imgui_.End();
 }
 

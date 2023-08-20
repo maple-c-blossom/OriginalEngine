@@ -107,7 +107,6 @@ namespace MCB
        ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform_; };
        ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform_.Get(); };
        std::string GetName() { return name_; };
-        //void CreateModel(const char* fileName);
     };
 
 }
