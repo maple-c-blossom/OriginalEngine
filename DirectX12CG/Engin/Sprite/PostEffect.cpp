@@ -23,7 +23,7 @@ MCB::PostEffect::PostEffect()
 
 MCB::PostEffect::~PostEffect()
 {
-    //for (auto& itr: tex)
+    //for (auto& itr: tex_)
     //{
     //    itr->free = true;
     //}
@@ -178,6 +178,6 @@ void MCB::PostEffect::Draw()
 void MCB::PostEffect::PostDraw()
 {
     ID3D12GraphicsCommandList* cmdList = Dx12::GetInstance()->commandList_.Get();
-    for(auto&itr:tex_) cmdList->ResourceBarrier(1,&CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(),D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,D3D12_RESOURCE_STATE_RENDER_TARGET));
+    for(auto&itr:tex_) cmdList->ResourceBarrier(1,&CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
 
 }

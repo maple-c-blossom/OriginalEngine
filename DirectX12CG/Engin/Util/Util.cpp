@@ -3,7 +3,7 @@
 #include <time.h>
 
 using namespace MCB;
-
+using namespace PrimitiveFigure;
 double MCB::Lerp(double startPos, double endPos, double maxTime, double time)
 {
 	time /= maxTime;
@@ -145,7 +145,11 @@ float MCB::clamp(float f)
 	return (f < 0.0f) ? 0.0f : ((f > 1.0f) ? 1.0f : f);
 }
 
-MCB::SimpleFigure::SimpleFigure()
+float MCB::clamp(float f,float min,float max)
+{
+	return (f < min) ? min : ((f > max) ? max : f);
+}
+Triangle::Triangle()
 {
 
 	triangle_.Init();
@@ -163,7 +167,7 @@ MCB::SimpleFigure::SimpleFigure()
 	triangle_.model_->texture_ = triangle_.model_->loader_->CreateNoTextureFileIsTexture();
 }
 
-void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
+void Triangle::DrawTriangle(ICamera* camera)
 {
 
 	Dx12* dx12 = Dx12::GetInstance();
@@ -179,7 +183,7 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 
 
 
-	triangle_.Update(camera);
+	triangle_.Update(true);
 
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList_->SetGraphicsRootConstantBufferView(2, triangleMaterial_.material_.constBuffMaterialB1_->GetGPUVirtualAddress());
@@ -196,4 +200,56 @@ void MCB::SimpleFigure::DrawTriangle(ICamera* camera)
 	dx12->commandList_->SetGraphicsRootConstantBufferView(0, triangle_.GetConstBuffTrans()->GetGPUVirtualAddress());
 	//描画コマンド
 	dx12->commandList_->DrawInstanced((uint32_t)triangleMaterial_.vertices_.size(), 1, 0, 0);
+}
+
+Line::Line()
+{
+
+	line.Init();
+	line.model_ = &lineMaterial;
+	lineMaterial.vertices_ = {
+		{PointA_,{1,1,1},{0,0}},
+		{PointB_,{1,1,1},{0,0}},
+	};
+	lineMaterial.SetSizeVB();
+	lineMaterial.material_.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(lineMaterial.sizeVB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+	lineMaterial.CreateVertexBuffer(lineMaterial.material_.HeapProp_, D3D12_HEAP_FLAG_NONE, lineMaterial.material_.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
+	lineMaterial.VertexMaping();
+	lineMaterial.SetVbView();
+	line.model_->texture_ = line.model_->loader_->CreateNoTextureFileIsTexture();
+}
+
+void Line::DrawLine(ICamera* camera)
+{
+
+	Dx12* dx12 = Dx12::GetInstance();
+	ShaderResource* descriptor = ShaderResource::GetInstance();
+
+	lineMaterial.vertices_ = {
+		{PointA_,{1,1,1},{0,0}},
+		{PointB_,{1,1,1},{0,0}},
+		
+	};
+
+	lineMaterial.VertexMaping();
+
+
+
+	line.Update(camera);
+
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->commandList_->SetGraphicsRootConstantBufferView(2, lineMaterial.material_.constBuffMaterialB1_->GetGPUVirtualAddress());
+
+	//SRVヒープの先頭アドレスを取得
+	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
+	srvGpuHandle.ptr += line.model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
+	//SRVヒープの先頭にあるSRVをパラメータ1番に設定
+	dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
+
+	//頂点データ
+	dx12->commandList_->IASetVertexBuffers(0, 1, &lineMaterial.vbView_);
+	//定数バッファビュー(CBV)の設定コマンド
+	dx12->commandList_->SetGraphicsRootConstantBufferView(0, line.GetConstBuffTrans()->GetGPUVirtualAddress());
+	//描画コマンド
+	dx12->commandList_->DrawInstanced((uint32_t)lineMaterial.vertices_.size(), 1, 0, 0);
 }

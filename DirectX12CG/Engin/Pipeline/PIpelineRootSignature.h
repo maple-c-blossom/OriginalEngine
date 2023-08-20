@@ -21,6 +21,7 @@ namespace MCB
 		TRIANGLESTRIP,
 		TRIANGLELIST,
 		POINT,
+		LINE
 	};
 	class PipelineRootSignature
 	{
@@ -30,19 +31,24 @@ namespace MCB
 		Shader shader_;
 		TexSample texSample_;
 
-		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, int32_t blendMode = Alpha );
+		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
+		void CreateLinePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
-		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void Create3DObjectWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
-		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode = Alpha);
+		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam,  int32_t blendMode);
+		void CreateFbxPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void SetBrendMode( int32_t blendMode = Alpha);
+		void CreateFbxWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
-		void CommonBeginDraw( int32_t toporogyType = TRIANGLESTRIP);
+		void CreatePostEffectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode);
+
+		void SetBrendMode(BlendMode blendMode = Alpha);
+
+		void CommonBeginDraw(Toporogy toporogyType = TRIANGLESTRIP);
 
 	};
 }

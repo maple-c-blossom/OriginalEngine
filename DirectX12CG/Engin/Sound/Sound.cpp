@@ -165,7 +165,7 @@ void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, uint16_t l
 	assert(SUCCEEDED(result));
 
 	XAUDIO2_BUFFER buf{};
-	buf.pAudioData = reinterpret_cast<BYTE*>(sounds_[soundHandle]->pBuffer.front());
+	buf.pAudioData = reinterpret_cast<BYTE*>(&sounds_[soundHandle]->pBuffer[0]);
 	buf.AudioBytes =static_cast<uint32_t>( sounds_[soundHandle]->bufferSize);
 	if (isLoop) buf.LoopCount = loopCount;
 	else 

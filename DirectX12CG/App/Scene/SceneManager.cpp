@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 #include "DxWindow.h"
 #include "Scene.h"
-#include "Draw.h"
+#include "TitleScene.h"
 using namespace std;
 
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
@@ -17,7 +17,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<Scene>(root_, depth_, pipeline_);
+	scene_ = make_unique<TitleScene>(root_, depth_, pipeline_);
 }
 
 MCB::SceneManager::~SceneManager()
@@ -97,12 +97,12 @@ void MCB::SceneManager::Update()
 void MCB::SceneManager::Draw()
 {
 
-		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
+		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 
 	if (isSceneReady_)//ゲーム画面
 	{
 		scene_->PostEffectDraw();
-		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(0, Alpha), scene_->clearColor_);
+		Draw::GetInstance()->AfterPostEffectPreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 		//3D描画
 		scene_->Draw();
 		//パーティクル
@@ -118,10 +118,10 @@ void MCB::SceneManager::Draw()
 		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture,(float) DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2,
 		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
 		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
-//#ifdef _DEBUG
+#ifdef _DEBUG
 		scene_->ImGuiUpdate();
 		scene_->ImGuiDraw();
-//#endif 
+#endif 
 	}
 	else//ロード画面
 	{
@@ -140,6 +140,7 @@ void MCB::SceneManager::sceneChenge()
 	OutputDebugStringW(L"SceneChengeIn\n");
 	unique_ptr<IScene> nextScene = scene_->GetNextScene();
 	OutputDebugStringW(L"SceneChengeGetNext\n");
+	ModelManager::GetInstance()->Init();
 	nextScene->Initialize();
 	OutputDebugStringW(L"SceneChengeInitComp\n");
 	scene_ = std::move(nextScene);

@@ -1,4 +1,13 @@
 #include "App.h"
+#pragma region pragma comment
+
+#pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"dxgi.lib")
+#pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib,"dinput8.lib")
+#pragma comment(lib,"dxguid.lib")
+
+#pragma endregion pragma comment
 int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,_In_ int32_t nCmdShow)
 {
     std::make_unique<MCB::App>()->Run();

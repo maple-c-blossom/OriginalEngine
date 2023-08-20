@@ -5,6 +5,7 @@
 #include "DebugCamera.h"
 #include "Player.h"
 #include "Goal.h"
+#include "CheckPoint.h"
 #include "Camera.h"
 #include <memory>
 
@@ -34,6 +35,7 @@ namespace MCB
 		//変換行列
 		DebugCamera debugCamera_;
 		Camera maincamera_;
+		std::string stage;
 #pragma endregion 変換行列
 
 #pragma region 各種リソース
@@ -43,7 +45,7 @@ namespace MCB
 		AnimationModel* playerModel_ = nullptr;
 		Model* groundModel_ = nullptr;
 		Model* skydomeModel_ = nullptr;
-
+		Model* goalModel_ = nullptr;
 		//AssimpLoader testModel;
 #pragma endregion 3Dモデル
 
@@ -65,12 +67,8 @@ namespace MCB
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		SimpleFigure triangle_;
-		Player player_;
-		Goal goal_;
-		Object3d ground_ = {};
-		Object3d Skydorm_ = {};
-		Object3d testsphere_ = {};
+
+		Object3d* goal;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト
@@ -97,7 +95,7 @@ namespace MCB
 		Scene(RootParameter* root,Depth* depth,PipeLineManager* pipeline);
 		~Scene();
 		void Initialize() override;
-
+		void SetStage(std::string stageName);
 		//各初期化系関数群--------------------
 		void LoadModel()  override;
 		void LoadTexture()  override;

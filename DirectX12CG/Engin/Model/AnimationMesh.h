@@ -43,8 +43,9 @@ namespace MCB
         typedef struct Bone
         {
             std::string name;
-            DirectX::XMMATRIX offsetMatrix;
-            DirectX::XMMATRIX finalMatrix;
+            DirectX::XMMATRIX offsetMatrix;//Model空間のBoneをボーン空間に変換するための行列
+            DirectX::XMMATRIX finalMatrix;//ボーン空間に変換した最終的な行列
+
         }Bone;
 
 	class AnimationMesh
@@ -59,16 +60,17 @@ namespace MCB
 
             Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
-            Microsoft::WRL::ComPtr<ID3D12Resource> ConstBuffSkin_ = nullptr;
+            Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;
 
             std::vector<TextureCell*> textures_;
+            ConstBuffSkin* constMapSkin_ = nullptr;
             //MCB::Texture textures;
             std::vector<AnimationVertex> vertices_;
             std::vector<uint16_t> indices_;
             //std::vector<ConstBuffSkin> vertexBones;
             
             std::unordered_map<uint16_t, std::vector<uint16_t>>smoothData_;
-
+            std::vector<Bone> bones_;
             size_t sizeVB_ = static_cast<size_t>(sizeof(AnimationVertex) * vertices_.size());
             size_t sizeIB_ = static_cast<size_t>(sizeof(uint16_t) * indices_.size());
 

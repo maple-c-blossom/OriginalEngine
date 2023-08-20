@@ -42,7 +42,7 @@
 #include "Sound.h"
 #include "Collider.h"
 #include "LightGroup.h"
-#include "FBXLoader.h"
+#include "AnimationModel.h"
 #include "PipeLineManager.h"
 #include "ImguiManager.h"
 #include "Particle.h"
@@ -60,15 +60,7 @@
 #include "LevelLoader.h"
 #include "PostEffect.h"
 #pragma endregion é©çÏ.h include
-#pragma region pragma comment
 
-#pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi.lib")
-#pragma comment(lib, "d3dcompiler.lib")
-#pragma comment(lib,"dinput8.lib")
-#pragma comment(lib,"dxguid.lib")
-
-#pragma endregion pragma comment
 
 namespace MCB
 {

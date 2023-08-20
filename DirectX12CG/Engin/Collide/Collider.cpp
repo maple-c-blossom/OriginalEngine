@@ -225,7 +225,7 @@ bool MCB::Collision::CalcRaySphere( Ray ray,const Sphere& sphere)
 	}
 	Vector3D aVec;
 
-	aVec.V3Get(sphere.centerPosition_.vec_, Temp);
+	aVec.Vector3Substruct(sphere.centerPosition_.vec_, Temp);
 
 	float a = aVec.V3Len();
 

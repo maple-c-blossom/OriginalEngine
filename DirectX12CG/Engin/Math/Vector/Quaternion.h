@@ -13,6 +13,7 @@ namespace MCB
 		Quaternion(const Vector3D& vec,  float angle);
 		Quaternion();
 		Quaternion( float x,  float y, float z, float w);
+		Quaternion(DirectX::XMVECTOR q);
 
 		//与えられたベクトル周りの回転を表すクォータニオンを生成
 		void SetRota( Vector3D vec, float angle);
@@ -32,7 +33,7 @@ namespace MCB
 		//球面線形補間
 		Quaternion Slerp( Quaternion start, const Quaternion& end,  int32_t time,  int32_t maxTime);
 		//球面線形補間
-		Quaternion Slerp( Quaternion start, const Quaternion& end,  float time);
+		Quaternion Slerp( Quaternion start,  Quaternion end,  float time);
 		//与えられたベクトル軸周りの回転をPositionVecに与える
 		Vector3D SetRotationVector(const Vector3D& rotationAxisVec,  Vector3D PositionVec,  float angle);
 		//与えられたクォータニオンの回転をPositionVecに与える
@@ -58,14 +59,20 @@ namespace MCB
 		//単位クォータニオン
 		Quaternion Identity();
 
+		DirectX::XMVECTOR ConvertXMVector();
+
 		//クォータニオンの角度
 		float GetAngle(const Quaternion& q);
 		
 		float SafeAcos( float a);
 
 		bool operator== (const Quaternion& q);
+		Quaternion operator= (const DirectX::XMVECTOR& q);
 		Quaternion operator-();
+		Quaternion operator*(float k);
+		Quaternion operator+(Quaternion q);
 	};
+		Quaternion operator*(float k, Quaternion q);
 	Quaternion SetRota(const Vector3D& vec,  float angle);
 }
 

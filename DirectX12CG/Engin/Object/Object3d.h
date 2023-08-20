@@ -13,14 +13,15 @@
 #include "Model.h"
 #include "Quaternion.h"
 #include "LightGroup.h"
-#include "FBXLoader.h"
+//#include "AnimationModel.h"
 #include "CollisionInfomation.h"
 #include <memory>
 namespace MCB
 {
     class ICamera;
     class BaseCollider;
-
+    class AnimationModel;
+    class DebugText;
     class Object3d
     {
     protected:
@@ -41,10 +42,10 @@ namespace MCB
         //---------------------------------
         //行列用定数バッファ
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform_ = nullptr;
-        Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;
+        /*Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;*/
         //行列用定数バッファマップ
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
-        ConstBuffSkin* constMapSkin_ = nullptr;
+       /* ConstBuffSkin* constMapSkin_ = nullptr;*/
     public:
         std::string nameId_;
         std::string currentAnimation_ = "Null";
@@ -52,6 +53,7 @@ namespace MCB
         //アフィン変換情報
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
+        Quaternion rotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;
@@ -66,6 +68,7 @@ namespace MCB
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
         bool isInvisible = false;
+        bool sceneEnd = false;
         Object3d();
 
         virtual ~Object3d();
@@ -83,6 +86,8 @@ namespace MCB
         virtual void UpdateMatrix(  Quaternion q,  bool isBillBord = false);
 
         virtual void Draw();
+
+        virtual void DebugTextDraw(DebugText* debugText) { return; };
 
         virtual void Draw( uint16_t incremant);
 
@@ -102,7 +107,6 @@ namespace MCB
        ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform_; };
        ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform_.Get(); };
        std::string GetName() { return name_; };
-        //void CreateModel(const char* fileName);
     };
 
 }

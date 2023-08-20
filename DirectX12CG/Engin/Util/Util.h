@@ -25,17 +25,35 @@ namespace MCB
 	int32_t GetRand( int32_t min,  int32_t max);
 	float clamp( float f);
 
-	class SimpleFigure
+	float clamp(float f, float min, float max);
+	
+	namespace PrimitiveFigure
 	{
-	public:
-		SimpleFigure();
-		Model triangleMaterial_;
-		Object3d triangle_;
+		class Triangle
+		{
+		public:
+			Triangle();
+			Model triangleMaterial_;
+			Object3d triangle_;
 
-		Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
-		Float3 PointC_ = { 0.5f,-3.5f,-4.0f }; Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
-		void  DrawTriangle(ICamera* camera);
+			Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
+			Float3 PointC_ = { 0.5f,-3.5f,-4.0f }; Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+			void  DrawTriangle(ICamera* camera);
 
-	};
+		};
+
+		class Line
+		{
+		public:
+			Line();
+			Model lineMaterial;
+			Object3d line;
+
+			Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
+			Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+			void  DrawLine(ICamera* camera);
+
+		};
+	}
 }
 

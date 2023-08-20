@@ -20,6 +20,7 @@ namespace MCB
 		std::unique_ptr<Model> groundModel_;
 		std::unique_ptr<Model> skydomeModel_;
 		std::unique_ptr<Model> sphereModel_;
+		std::unique_ptr<Model> boxModel_;
 
 		std::unique_ptr<AnimationModel> animModel_;
 		std::unique_ptr<AnimationModel> anim2Model_;
@@ -28,12 +29,14 @@ namespace MCB
 		//テクスチャ
 #pragma region テクスチャ
 		TextureCell* debugTextTexture_;
+		TextureCell* titleTex_;
 
 #pragma endregion テクスチャ
-
+		bool debugView;
+		bool isIk;
 		//サウンド
 #pragma region サウンド
-		size_t testSound_;
+		size_t selectSound_;
 		size_t test2Sound_;
 
 		int32_t volume_ = 255;
@@ -42,19 +45,20 @@ namespace MCB
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
-		SimpleFigure triangle_;
 		Object3d ground_;
 		Object3d Skydorm_;
 		Object3d testsphere_;
 		Object3d test2Animation_;
 		Player play_;
+		DirectX::XMFLOAT3 poleVec;
 
+		bool PoleVecMove;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト
 		Sprite sprite_;
 
-		Sprite zoomSprite_;
+		Sprite titleSprite_;
 
 		Sprite scopeSprite_;
 
@@ -65,6 +69,7 @@ namespace MCB
 #pragma region 通常変数
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
+		bool debugStop = false;
 #pragma endregion 通常変数
 	public:
 

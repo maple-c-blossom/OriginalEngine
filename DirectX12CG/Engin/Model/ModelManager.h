@@ -1,6 +1,6 @@
 #pragma once
 #include "Model.h"
-#include "FbxLoader.h"
+#include "AnimationModel.h"
 #include <unordered_map>
 namespace MCB
 {

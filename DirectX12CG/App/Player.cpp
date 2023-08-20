@@ -2,23 +2,29 @@
 #include "Input.h"
 #include "CollisionManager.h"
 #include "PlayerQueryCallBack.h"
+#include "AnimationModel.h"
 using namespace std;
+void MCB::Player::SetRespowPosition(const Vector3D& pos)
+{
+	respownPosition_ = pos;
+}
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	position_.z = -20;
 	scale_ = { 1.25,1.25,1.25 };
 	SetCollider(make_unique<SphereCollider>(Vector3D{0,0.5f,0},0.5f));
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
 	UpdateMatrix();
 	collider_->Update();
-	nameId_ = "Player";
-	position_ = { 0,0,-50 };
+	//position_ = { 0,0,-50 };
+	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
+	rotation_.x = ConvertRadius(0);
 }
 
 void MCB::Player::UniqueUpdate()
 {
+
 	Move();
 
 	Object3d::UpdateMatrix();
@@ -28,45 +34,57 @@ void MCB::Player::UniqueUpdate()
 	PlayerQueryCallBack callback(sphere);
 
 	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
-	position_.x += callback.move.vec_.x_;
-	position_.y += callback.move.vec_.y_;
-	position_.z += callback.move.vec_.z_;
+
+	if (callback.move.V3Len() >= distoffSet)
+	{
+		position_.x += callback.move.vec_.x_;
+		position_.y += callback.move.vec_.y_;
+		position_.z += callback.move.vec_.z_;
+	}
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
 	ray.rayVec_ = { 0,-1,0,0 };
 	RayCastHit info;
+	float distRange = sphere->GetRaius() * 2.0f;
+	float distOverRange = distRange * distoffSet;
+	bool ground = CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, distRange + distOverRange);
 	if (isGraund_)
 	{
 		const float absDistance = 0.2f;
-		\
-		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		
+		if (ground)
 		{
 			isGraund_ = true;
-			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
+			if(info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_) - sphere->GetRaius() * 2.0f);
 			Object3d::UpdateMatrix();
 		}
 		else
 		{
 			isGraund_ = false;
-			fallV_ = {0,0,0,0};
+			fallV_ = { 0,0,0,0 };
 		}
 	}
 	else if(fallV_.vec_.y_ <= 0.0f)
 	{
 		
-		if (CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, sphere->GetRaius() * 2.0f))
+		if (ground)
 		{
 			isGraund_ = true;
-			position_.y -= (info.dist_ - sphere->GetRaius() * 2.0f);
+			if (info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_ - distOverRange) - sphere->GetRaius() * 2.0f);
 			Object3d::UpdateMatrix();
+		}
+		else 
+		{
+			isGraund_ = false;
 		}
 	}
 
-	if (position_.y <= -20)
+
+
+	if (position_.y < outYPosition)
 	{
-		position_.y = 0;
-		position_.x = 0;
+		position_ = respownPosition_.ConvertXMFloat3();
 	}
 }
 
@@ -88,9 +106,9 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.y_)
 	{
-		float accelerator = speed_ * 2;
+		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.y_;
-		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ += accelerator;
+		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ = accelerator;
 		else if (speedFront_ >= maxspeed_) speedFront_ = maxspeed_;
 		else if (speedFront_ <= -maxspeed_)speedFront_ = -maxspeed_;
 	}
@@ -115,7 +133,7 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator = speed_ * 2;
+		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.x_;
 		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
@@ -153,7 +171,7 @@ void MCB::Player::Move()
 	position_.z += rightVec_.vec_.z_ * speedRight_;
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.03f;
+		const float fallAcc = -0.015f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		position_.x += fallV_.vec_.x_;
@@ -168,4 +186,14 @@ void MCB::Player::Move()
 	}
 
 }
+
+void MCB::Player::OnCollision(const CollisionInfomation& info)
+{
+	if (info.object3d_->nameId_ == "checkPoint")
+	{
+		respownPosition_ = info.object3d_->position_;
+	}
+
+}
+
 

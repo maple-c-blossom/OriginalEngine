@@ -2,6 +2,8 @@
 #include "Object3d.h"
 #include "SphereCollider.h"
 #include "Input.h"
+#include "Particle.h"
+#include "vector"
 namespace MCB
 {
     class Player :public Object3d
@@ -18,10 +20,16 @@ namespace MCB
         float maxspeed_ = 0.25f;
         MCB::Vector3D rightVec_ = {1,0,0};
         Object3d* ground;
+        Vector3D respownPosition_;
+        float outYPosition = -20;
+        float distoffSet = 0.00025f;
     public:
-        void Init();
+        void SetRespowPosition(const Vector3D& pos);
+        void Init()override;
         void UniqueUpdate() override;
         void Move();
+        void OnCollision(const CollisionInfomation& info) override;
+  
     };
 
 }
