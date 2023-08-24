@@ -56,7 +56,7 @@
 #include "BoxCollider.h"
 #include "MeshCollider.h"
 #include "ModelManager.h"
-
+#include "Timer.h"
 #include "LevelLoader.h"
 #include "PostEffect.h"
 #pragma endregion é©çÏ.h include

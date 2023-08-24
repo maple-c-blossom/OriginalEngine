@@ -36,6 +36,7 @@ void MCB::StageSelectScene::MatrixUpdate()
 void MCB::StageSelectScene::Update()
 {
 
+    if(selectMoveTime_.IsEnd())oldSelectStageNum = selectStageNum;
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
@@ -46,14 +47,18 @@ void MCB::StageSelectScene::Update()
     if (input_->IsKeyTrigger(DIK_UP) || input_->gamePad_->IsButtonTrigger(GAMEPAD_UP))
     {
         selectStageNum--;
+        uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),time);
     }
 
     if (input_->IsKeyTrigger(DIK_DOWN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_DOWN))
     {
         selectStageNum++;
+        uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(), time);
     }
     selectStageNum = static_cast<int32_t>(clamp(static_cast<float>(selectStageNum), 0.f, stages.size() - 1.f));
-
+    selectMoveTime_.SafeUpdate();
     MatrixUpdate();
 }
 
@@ -78,8 +83,28 @@ void MCB::StageSelectScene::SpriteDraw()
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
-    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 100, 2, "Stage::%s",stages[selectStageNum].c_str());
-    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 200, 2, "Press AButton");
+    for (int i = 0; i < stages.size(); i++)
+    {
+        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - oldSelectStageNum));
+        float scale = 2;
+        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - oldSelectStageNum) / 5.f);
+        scale = scale - (abs(static_cast<float>(i) - selectStageNum) / 5.f);
+        scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
+            static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
+
+        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - selectStageNum) * scale);
+        posY = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartPosy), 
+            static_cast<double>(posY), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
+
+        //if (posY > dxWindow_->sWINDOW_CENTER_HEIGHT_ + 150)
+        //{
+        //    break;
+        //}
+        debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, 
+           posY , scale,
+            "Stage::%s",stages[i].c_str());
+    }
+    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 100 , 2, "Enter: AButton");
     debugText_.AllDraw();
 }
 
@@ -117,6 +142,9 @@ void MCB::StageSelectScene::Initialize()
 {
     stages[0] = "testLevel";
     stages[1] = "testLevelCopy";
+    stages[2] = "testLevelCopy";
+    stages[3] = "testLevelCopy";
+    stages[4] = "testLevelCopy";
     camera_.Inilialize();
     viewCamera_ = &camera_;
     LoadTexture();

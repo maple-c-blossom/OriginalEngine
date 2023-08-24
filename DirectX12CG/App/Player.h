@@ -29,7 +29,7 @@ namespace MCB
         void UniqueUpdate() override;
         void Move();
         void OnCollision(const CollisionInfomation& info) override;
-  
+        
     };
 
 }

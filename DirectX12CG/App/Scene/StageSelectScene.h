@@ -64,14 +64,20 @@ namespace MCB
 
 		DebugText debugText_;
 
-		std::array<std::string, 2> stages;
-		int32_t selectStageNum = 0;
+		std::array<std::string, 5> stages;
+		
 #pragma endregion スプライト
  
 #pragma region 通常変数
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
+
+		int32_t selectStageNum = 0;
+		int32_t oldSelectStageNum = 0;
+		Timer selectMoveTime_;
+		const uint32_t selectMoveMaxTime_ = 20;
+		float selectMoveStartPosy;
 #pragma endregion 通常変数
 	public:
 
