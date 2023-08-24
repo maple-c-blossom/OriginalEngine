@@ -1112,7 +1112,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   ikData.constraintObj.position_.x = ikData.constraintWorldVector.vec_.x_;
 		   ikData.constraintObj.position_.y = ikData.constraintWorldVector.vec_.y_;
 		   ikData.constraintObj.position_.z = ikData.constraintWorldVector.vec_.z_;
-		   ikData.constraintLine.line.parent_ = ikData.rootJointNode->object.get()->parent_;
+		   ikData.constraintLine.line.parent_ = ikData.rootJointNode->object.get();
 		   ikData.constraintLine.PointA_ = { 0,0,0 };
 		   ikData.constraintLine.PointB_.x_ = ikData.constraintLocalPositionFromRoot.vec_.x_;
 		   ikData.constraintLine.PointB_.y_ = ikData.constraintLocalPositionFromRoot.vec_.y_;
@@ -1159,7 +1159,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    void MCB::Node::JointObjectDraw()
    {
-	   object->Draw();
+	   //object->Draw();
 
 	   if(ikData.isIK) ikData.constraintObj.Draw();
    }

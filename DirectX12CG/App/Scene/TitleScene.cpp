@@ -87,11 +87,11 @@ void MCB::TitleScene::Update()
     {
         test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
             { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "Bone3");
+            {poleVec.x,poleVec.y,poleVec.z}, "Wrist.L");
     }
     else
     {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Wrist.L");
     }
     MatrixUpdate();
 }
@@ -113,7 +113,7 @@ void MCB::TitleScene::PostEffectDraw()
     {
         pipeline_->SetFbxPipeLine(true);
     }
-    test2Animation_.AnimationDraw();
+    else test2Animation_.AnimationDraw();
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -204,7 +204,7 @@ void MCB::TitleScene::LoadModel()
     animModel_->Load("gamewsdsa");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-    anim2Model_->Load("IKTest");
+    anim2Model_->Load("player");
 }
 
 void MCB::TitleScene::LoadTexture()
@@ -245,7 +245,7 @@ void MCB::TitleScene::Object3DInit()
     testsphere_.Init();
     //testsphere.model = BoxModel;
     testsphere_.model_ = sphereModel_.get();
-    testsphere_.scale_ = { 1,1,1 };
+    testsphere_.scale_ = { 0.25f,0.25f,0.25f };
     testsphere_.position_ = { 5,1,0 };
     testsphere_.rotation_.y = ConvertRadius(90);
     testsphere_.camera_ = viewCamera_;
