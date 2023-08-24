@@ -15,9 +15,9 @@ namespace MCB
         float speedFront_ = 0.0f;
         float speedRight_ = 0.0f;
         float rotasionSpeed_ = 0.015f;
-        float speed_ = 0.0125f;
-        float srowspeed_ = 0.0125f;
-        float maxspeed_ = 0.25f;
+        float defualtSpeed_ = 0.05f;
+        float maxspeed_ = 0.35f;
+        float accelerator_ = 0.005f;
         MCB::Vector3D rightVec_ = {1,0,0};
         Object3d* ground;
         Vector3D respownPosition_;

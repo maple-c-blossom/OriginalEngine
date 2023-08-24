@@ -25,7 +25,10 @@ unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 void MCB::StageSelectScene::MatrixUpdate()
 {
     //test2Animation_.UpdateMatrix();
-    viewCamera_->Update();
+    //viewCamera_->Update();
+
+    viewCamera_->GetView()->UpDateMatrixView();
+    viewCamera_->GetProjection()->UpdataMatrixProjection();
     Skydorm_.Update();
     ground_.Update();
 }

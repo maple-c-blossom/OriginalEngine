@@ -91,51 +91,56 @@ void MCB::Player::UniqueUpdate()
 
 void MCB::Player::Move()
 {
-	
+
+	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
+		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
+	{
+		speedFront_ = defualtSpeed_;
+	}
+
 	if (input_->IsKeyDown(DIK_W))
 	{
-		if (speedFront_ <= maxspeed_)speedFront_ += speed_;
-		else speedFront_ = maxspeed_;
+		speedFront_ += accelerator_;
 	}
 
 	if (input_->IsKeyDown(DIK_S))
 	{
-		if (speedFront_ >= -maxspeed_)speedFront_ -= speed_;
-		else speedFront_ = -maxspeed_;
+		speedFront_ -= accelerator_;
 	}
 
-	if (input_->gamePad_->LStick_.y_)
+	if (input_->gamePad_->RTrriger_.x_)
 	{
-		float accelerator = maxspeed_;
-		accelerator *= input_->gamePad_->LStick_.y_;
-		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ = accelerator;
-		else if (speedFront_ >= maxspeed_) speedFront_ = maxspeed_;
-		else if (speedFront_ <= -maxspeed_)speedFront_ = -maxspeed_;
+		accelerator_ *= input_->gamePad_->RTrriger_.x_;
+		speedFront_ += accelerator_;
+	}
+	else if(input_->gamePad_->LTrriger_.x_)
+	{
+		accelerator_ *= input_->gamePad_->LTrriger_.x_;
+		speedFront_ -= accelerator_;
 	}
 
-	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && !input_->gamePad_->LStick_.y_)
-	{
-		speedFront_ = 0;
-	}
+	speedFront_ = clamp(speedFront_, 0.0025f, maxspeed_);
+
+
 
 
 	if (input_->IsKeyDown(DIK_D))
 	{
-		if (speedRight_ <= maxspeed_)speedRight_ += speed_;
+		if (speedRight_ <= maxspeed_)speedRight_ += accelerator_;
 		else speedRight_ = maxspeed_;
 	}
 
 	if (input_->IsKeyDown(DIK_A))
 	{
-		if (speedRight_ >= -maxspeed_)speedRight_ -= speed_;
+		if (speedRight_ >= -maxspeed_)speedRight_ -= accelerator_;
 		else speedRight_ = -maxspeed_;
 	}
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator = maxspeed_;
-		accelerator *= input_->gamePad_->LStick_.x_;
-		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
+		float accelerator_ = maxspeed_;
+		accelerator_ *= input_->gamePad_->LStick_.x_;
+		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator_;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
 		else if (speedRight_ <= -maxspeed_)speedRight_ = -maxspeed_;
 	}
