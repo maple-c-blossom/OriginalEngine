@@ -89,6 +89,8 @@ namespace MCB
 		bool startPositionReset_ = true;
 		bool ybill_ = false;
 		std::unique_ptr<LevelLoader::LevelData> level_;
+		Timer startTimer;
+		bool startDrawed;
 #pragma endregion ’Êí•Ï”
 
 	public:

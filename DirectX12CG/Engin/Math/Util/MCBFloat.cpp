@@ -31,6 +31,14 @@ MCB::Float3& Float3::operator-=(const Float3& a)
 	return *this;
 }
 
+Float3& MCB::Float3::operator=(const DirectX::XMVECTOR& a)
+{
+	x_ = a.m128_f32[0];
+	y_ = a.m128_f32[1];
+	z_ = a.m128_f32[2];
+	return *this;
+}
+
 
 MCB::Float3 MCB::operator-(MCB::Float3& a, MCB::Float3& b)
 {

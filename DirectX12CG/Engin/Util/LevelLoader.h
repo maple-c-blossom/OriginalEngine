@@ -25,7 +25,7 @@ namespace MCB
 			// オブジェクト配列
 			std::vector<std::unique_ptr<ObjectData>> objects;
 			Object3d* GetObjectPtr(std::string name);
-			void Update();
+			void Update(bool start = true);
 			void UpdateMatrix();
 			void Draw();
 			void AnimationDraw();

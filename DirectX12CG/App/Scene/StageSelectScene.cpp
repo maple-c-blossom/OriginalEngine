@@ -49,6 +49,7 @@ void MCB::StageSelectScene::Update()
         selectStageNum--;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
         selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),time);
+        selectScaleTime_.Set(360);
     }
 
     if (input_->IsKeyTrigger(DIK_DOWN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_DOWN))
@@ -86,9 +87,9 @@ void MCB::StageSelectScene::SpriteDraw()
     for (int i = 0; i < stages.size(); i++)
     {
         selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - oldSelectStageNum));
-        float scale = 2;
-        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - oldSelectStageNum) / 5.f);
-        scale = scale - (abs(static_cast<float>(i) - selectStageNum) / 5.f);
+        float scale = 3;
+        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - oldSelectStageNum) / 2.f);
+        scale = scale - (abs(static_cast<float>(i) - selectStageNum) / 2.f);
         scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
             static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
 
@@ -100,6 +101,15 @@ void MCB::StageSelectScene::SpriteDraw()
         //{
         //    break;
         //}
+
+        if (i == selectStageNum && selectMoveTime_.IsEnd())
+        {
+            float resultSize = sinf(ConvertRadius(static_cast<float>(selectScaleTime_.NowTime()) >= 180.f ? static_cast<float>(selectScaleTime_.NowTime()) * -1.f : static_cast<float>(selectScaleTime_.NowTime()))) * 0.25f + 1.2f;
+            selectScaleTime_.SafeUpdate();
+            selectScaleTime_.ReSet();
+            scale = scale + resultSize / 2;
+        }
+
         debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, 
            posY , scale,
             "Stage::%s",stages[i].c_str());
@@ -158,6 +168,8 @@ void MCB::StageSelectScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
+    selectMoveTime_.TimeSet(1, 1);
+    selectScaleTime_.Set(360);
 }
 
 void MCB::StageSelectScene::LoadModel()

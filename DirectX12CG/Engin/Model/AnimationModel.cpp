@@ -741,6 +741,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,
 		   xmEffectorLocalVecFromRoot, xmLocalConstraintVectorFromRoot);
+	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointA_ = rootJointLocalPositionFromRoot;
+	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointB_ = xmEffectorLocalVecFromRoot;
+	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointC_ = xmLocalConstraintVectorFromRoot;
+
+	   endJoint.ikData.jointTriangle.PointA_ = rootJointLocalPositionFromRoot;
+	   endJoint.ikData.jointTriangle.PointB_ = middleJointLocalPositionFromRoot;
+	   endJoint.ikData.jointTriangle.PointC_ = endJointLocalPositionFromRoot;
+
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1 = q1.DirToDir(nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
 	   q1 = q1.GetDirectProduct(q1, rootJoint->defaultRotation);
@@ -1153,6 +1161,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		   ikData.constraintObj.color_ = { 0.5,0,0,1 };
 		   ikData.constraintObj.camera_ = camera;
 		   ikData.constraintObj.Update();
+
+
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.parent_ = ikData.rootJointNode->object.get()->parent_;
+		   ikData.jointTriangle.triangle_.parent_ = ikData.rootJointNode->object.get()->parent_;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;;
+		   ikData.jointTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;
 	   }
 	   //object->matWorld_.matWorld_ *= worldObjMatrix;
    }
@@ -1161,7 +1175,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
    {
 	   //object->Draw();
 
-	   if(ikData.isIK) ikData.constraintObj.Draw();
+	   if (ikData.isIK)
+	   {
+		   ikData.constraintObj.Draw();
+		   ikData.rootAndEffectorAndConstraintTriangle.DrawTriangle(object->camera_);
+		   ikData.jointTriangle.DrawTriangle(object->camera_);
+	   }
    }
    void MCB::Node::JointLineDraw()
    {

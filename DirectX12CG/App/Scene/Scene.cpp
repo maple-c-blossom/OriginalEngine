@@ -34,6 +34,7 @@ void MCB::Scene::Initialize()
     postEffect_->color_.x_ = static_cast<float>(PostEffectNum::NONE);
     maincamera_.SetCameraTarget(level_->GetObjectPtr("player"));
     goal = level_->GetObjectPtr("goal");
+    startTimer.TimeSet(300,300);
 }
 
 void MCB::Scene::SetStage(std::string stageName)
@@ -149,8 +150,8 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 
 void MCB::Scene::Update()
 {
-
-    level_->Update();
+    startTimer.SafeDownUpdate();
+    level_->Update(startTimer.NowTime() <= 0);
     //player_.UniqueUpdate();
     lights_->UpDate();
     debugCamera_.Update();
@@ -199,8 +200,23 @@ void MCB::Scene::SpriteDraw()
     pipeline_->SetSpritePipeLine();
 
     debugText_.sprite_->color_ = { 1,1,1,1 };
-    debugText_.Print(10, 10, 1, "Move:WASD or LStick");
-    debugText_.Print(10, 30, 1, "(debug) Reset:LCONTROL");
+    debugText_.Print(10, 10, 1, "accele:W or RTrriger");
+    debugText_.Print(10, 30, 1, "brake:W or LTrriger");
+
+    if (!(startTimer.NowTime() <= 0))
+    {
+        int time = startTimer.NowTime() / 60;
+        if(time > 0) debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_, 3, "%d", time);
+        else
+        {
+            debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_, 4, "START!!");
+            if (!startDrawed)
+            {
+                startTimer.TimeSet(10, 0);
+                startDrawed = true;
+            }
+        }
+    }
     level_->DebugTextDraw(&debugText_);
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/

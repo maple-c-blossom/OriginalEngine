@@ -16,6 +16,7 @@ namespace MCB
 
 		Float3& operator+=(const Float3& a);
 		Float3& operator-=(const Float3& a);
+		Float3& operator=(const DirectX::XMVECTOR& a);
 	};
 
 	class Float2

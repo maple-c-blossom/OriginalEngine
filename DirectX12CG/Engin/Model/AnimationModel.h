@@ -100,6 +100,8 @@ namespace MCB
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
+            PrimitiveFigure::Triangle rootAndEffectorAndConstraintTriangle;
+            PrimitiveFigure::Triangle jointTriangle;
             Vector3D constraintLocalPositionFromRoot;
 
         };

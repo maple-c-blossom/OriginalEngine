@@ -141,11 +141,11 @@ Object3d* MCB::LevelLoader::LevelData::GetObjectPtr(std::string name)
 	return nullptr;
 }
 
-void MCB::LevelLoader::LevelData::Update()
+void MCB::LevelLoader::LevelData::Update(bool start)
 {
 	for (auto& itr : objects)
 	{
-		itr->obj->UniqueUpdate();
+		if(start)itr->obj->UniqueUpdate();
 	}
 }
 

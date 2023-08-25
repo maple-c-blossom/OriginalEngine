@@ -76,6 +76,7 @@ namespace MCB
 		int32_t selectStageNum = 0;
 		int32_t oldSelectStageNum = 0;
 		Timer selectMoveTime_;
+		Timer selectScaleTime_;
 		const uint32_t selectMoveMaxTime_ = 20;
 		float selectMoveStartPosy;
 #pragma endregion ’Êí•Ï”
