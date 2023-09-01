@@ -99,7 +99,9 @@ void MCB::TitleScene::Update()
 void MCB::TitleScene::PostEffectDraw()
 {
     postEffect_->PreDraw();
+    //pipeline_->SetObjPipeLine(false, true);
     Skydorm_.Draw();
+    pipeline_->SetObjPipeLine();
     ground_.Draw();
     testsphere_.Draw();
     if (debugView)

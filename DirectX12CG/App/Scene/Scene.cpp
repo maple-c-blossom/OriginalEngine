@@ -184,7 +184,7 @@ void MCB::Scene::Draw()
 void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
-    level_->Draw();
+    level_->Draw(pipeline_);
     //goal_.Draw();
     //check.Draw();
     pipeline_->SetFbxPipeLine();

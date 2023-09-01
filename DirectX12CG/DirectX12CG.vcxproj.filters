@@ -184,6 +184,9 @@
     <Filter Include="リソース ファイル\LineShader">
       <UniqueIdentifier>{f1e3aa70-c3ea-44d4-985d-719f43368535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\OBJTilingShader">
+      <UniqueIdentifier>{38730a7c-7704-449a-b77d-65c9f54ac948}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\main.cpp">
@@ -482,6 +485,15 @@
     <FxCompile Include="Resources\Shaders\LineSimpleShader\LineVertexShader.hlsl">
       <Filter>リソース ファイル\LineShader</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingGeometryShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingPixelShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingVertexShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engin\DirectX\DxWindow.h">
@@ -743,6 +755,9 @@
     </None>
     <None Include="Resources\Shaders\LineSimpleShader\LineHeader.hlsli">
       <Filter>リソース ファイル\LineShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\OBJShaderTiling\OBJTilingHeader.hlsli">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -158,11 +158,14 @@ void MCB::LevelLoader::LevelData::UpdateMatrix()
 	}
 }
 
-void MCB::LevelLoader::LevelData::Draw()
+void MCB::LevelLoader::LevelData::Draw(PipeLineManager* pipeline, bool wireFrame)
 {
 	for (auto& itr : objects)
 	{
-		if(itr->obj->model_)itr->obj->Draw();
+		if (itr->obj->model_)
+		{
+			itr->obj->Draw();
+		}
 	}
 
 }

@@ -150,8 +150,8 @@ MCB::StageSelectScene::~StageSelectScene()
 
 void MCB::StageSelectScene::Initialize()
 {
-    stages[0] = "testLevel";
-    stages[1] = "testLevelCopy";
+    stages[0] = "Tutorial";
+    stages[1] = "Level1";
     stages[2] = "testLevelCopy";
     stages[3] = "testLevelCopy";
     stages[4] = "testLevelCopy";

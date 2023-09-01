@@ -27,7 +27,7 @@ namespace MCB
 			Object3d* GetObjectPtr(std::string name);
 			void Update(bool start = true);
 			void UpdateMatrix();
-			void Draw();
+			void Draw(PipeLineManager* pipeline,bool wireFrame = false);
 			void AnimationDraw();
 			void DebugTextDraw(DebugText* debugText);
 			~LevelData();

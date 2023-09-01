@@ -716,22 +716,27 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   endJoint.ikData.middleJointNode = &middleJoint;
 	   endJoint.ikData.rootJointNode = rootJoint;
 
-	   XMMATRIX rootJointModelMatrixinv = XMMatrixInverse(nullptr, rootJoint->defaultModelTransform);
+	   MCBMatrix rootJointModelMatrixinv = rootJointModelMatrixinv.MatrixInverse(rootJoint->defaultModelTransform);
 	 
+	   //Œü‚«‚½‚¢êŠ‚ÌObjÀ•WŒn‚ÌêŠ
 	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(targetPos - ObjPos)
-	   XMVECTOR xmEffectorWorldPos = XMVector3Transform(effectorWorldVec.ConvertXMVEC(),
+	   //Œü‚«‚½‚¢êŠ(RootJoint‚ÌÀ•WŒn)
+	   Vector3D xmEffectorWorldPos = MCBMatrix::Transform(effectorWorldVec,
 		   rootJoint->defaultModelTransform);
-	   XMVECTOR xmLocalConstraintVectorFromRoot = XMVector3Transform(
-		   XMVector3Transform(endJoint.ikData.constraintModelVector.ConvertXMVEC(),
+
+
+
+	   Vector3D xmLocalConstraintVectorFromRoot = MCBMatrix::Transform(
+		   MCBMatrix::Transform(endJoint.ikData.constraintModelVector,
 		   rootJoint->defaultModelTransform),
 		   rootJointModelMatrixinv);
 
 	   endJoint.ikData.constraintLocalPositionFromRoot = xmLocalConstraintVectorFromRoot;
 
-	   XMVECTOR xmEffectorLocalVecFromRoot = XMVector3Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
-	   XMVECTOR middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
-	   XMVECTOR endJointLocalPositionFromRoot = XMVector3Transform(XMVector3Transform(endJoint.defaultLocalTranslation, middleJoint.defaultModelTransform),rootJointModelMatrixinv);
-	   XMVECTOR rootJointLocalPositionFromRoot = XMVector3Transform(rootJoint->defaultLocalTranslation, rootJointModelMatrixinv);
+	   Vector3D xmEffectorLocalVecFromRoot = MCBMatrix::Transform(xmEffectorWorldPos, rootJointModelMatrixinv);
+	   Vector3D middleJointLocalPositionFromRoot = middleJoint.defaultLocalTranslation;
+	   Vector3D endJointLocalPositionFromRoot = MCBMatrix::Transform(MCBMatrix::Transform(endJoint.defaultLocalTranslation, middleJoint.defaultModelTransform),rootJointModelMatrixinv);
+	   Vector3D rootJointLocalPositionFromRoot = rootJoint->defaultLocalTranslation; /*XMVector3Transform(rootJoint->defaultLocalTranslation, rootJointModelMatrixinv);*/
 	   endJoint.ikData.effectorPosFromRoot = xmEffectorLocalVecFromRoot;
 	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
@@ -753,10 +758,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   Quaternion q1 = q1.DirToDir(nd,nt);//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
 	   q1 = q1.GetDirectProduct(q1, rootJoint->defaultRotation);
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
-	   float middleJointBoneLength = XMVector3Length(middleJointLocalPositionFromRoot).m128_f32[0];
-	   float endJointBoneLength = XMVector3Length(endJoint.defaultLocalTranslation).m128_f32[0];
-	   float rootToEndLength = XMVector3Length(endJointLocalPositionFromRoot).m128_f32[0];
-	   float localTargetVectorFromRootJoint = XMVector3Length(xmEffectorLocalVecFromRoot).m128_f32[0];
+	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
+	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
+	   float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
+	   float localTargetVectorFromRootJoint = xmEffectorLocalVecFromRoot.V3Len();
 
 	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xŽZo
 	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xŽZo
@@ -773,10 +778,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 	   effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(objPos - targetPos)
 	   xmEffectorWorldPos = effectorWorldVec.ConvertXMVEC();
-	   XMMATRIX middleJointWorldMatrixinv = XMMatrixInverse(nullptr, middleJoint.AnimaetionParentMat);
-	   XMVECTOR xmTargetLocalVecFromMiddle = XMVector3Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
+	   MCBMatrix middleJointWorldMatrixinv = middleJointWorldMatrixinv.MatrixInverse(middleJoint.AnimaetionParentMat);
+	   Vector3D xmTargetLocalVecFromMiddle = MCBMatrix::Transform(xmEffectorWorldPos, middleJointWorldMatrixinv);
 	   endJoint.ikData.effectorPosFromMiddle = xmTargetLocalVecFromMiddle;
-	   XMVECTOR endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
+	   Vector3D endJointLocalVecFromMiddle = endJoint.defaultLocalTranslation;
 	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
 	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
 	   q3 = q3.GetDirectProduct(q3, middleJoint.defaultRotation);
@@ -1165,8 +1170,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
 		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.parent_ = ikData.rootJointNode->object.get()->parent_;
 		   ikData.jointTriangle.triangle_.parent_ = ikData.rootJointNode->object.get()->parent_;
-		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_.w_ = 0.25f;
 		   ikData.jointTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;
+		   ikData.jointTriangle.triangle_.color_.w_ = 0.25f;
 	   }
 	   //object->matWorld_.matWorld_ *= worldObjMatrix;
    }

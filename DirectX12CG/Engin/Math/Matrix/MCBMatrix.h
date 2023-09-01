@@ -1,6 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
 #include "Vector3D.h"
+#include <array>
 namespace MCB
 {
 
@@ -13,6 +14,8 @@ namespace MCB
 		float _41_; float _42_; float _43_; float _44_;
 		
 	public:
+		MCBMatrix();
+		MCBMatrix(DirectX::XMMATRIX mat);
 		void MCBMatrixIdentity();
 
 		MCBMatrix MCBMatrixTransrate( float x,  float y,  float z);
@@ -22,6 +25,10 @@ namespace MCB
 		void ConvertMatrixArray(float** ArrayMat);
 
 		void ConvertMatrixMCBMat(float** ArrayMat);
+
+		void ConvertMatrixMCBMat(std::array<std::array<float, 4>, 4> ArrayMat);
+
+		std::array<std::array<float, 4>, 4> GetArrayMat(MCBMatrix mat);
 
 		MCBMatrix MCBMatrixRotaX( float angle);
 
@@ -37,14 +44,17 @@ namespace MCB
 
 		MCBMatrix MCBMatrixLookAtLH(const Float3& eye, const Float3& target, const Float3& up);
 
-		MCBMatrix MatrixTranspose(const MCBMatrix& mat);
+		MCBMatrix MatrixTranspose( MCBMatrix mat);
 
-		MCBMatrix MatrixReverse(const MCBMatrix& mat);
+		MCBMatrix MatrixInverse( MCBMatrix mat);
 
 		//XMMatrixÇ…ïœä∑Ç∑ÇÈä÷êî
 		DirectX::XMMATRIX MatrixConvertXMMatrix(const MCBMatrix& mat);
 
 		MCBMatrix MCBMatrixConvertXMMatrix(const DirectX::XMMATRIX& mat);
+
+		static Vector3D Transform(const Vector3D& v, const MCBMatrix& m);
+
 
 		//MCBMatrix operator*(MCBMatrix matrix);
 		MCBMatrix operator*( float s);

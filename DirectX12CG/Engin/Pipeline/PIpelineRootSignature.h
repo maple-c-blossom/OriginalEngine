@@ -36,6 +36,8 @@ namespace MCB
 
 		void Create3DObjectWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
+		void Create3DObjectTilingPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode);
+
 		void CreateSpritePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
 
 		void CreateParticlePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha);
