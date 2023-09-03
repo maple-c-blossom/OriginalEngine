@@ -11,6 +11,10 @@ bool MCB::PlayerQueryCallBack::OnQueryHit(const QueryHit& info)
 	{
 		sphere_->centerPosition_ += info.reject;
 		move += info.reject;
+		if (info.obj->nameId_ == "block")
+		{
+			block = true;
+		}
 	}
 	return true;
 }

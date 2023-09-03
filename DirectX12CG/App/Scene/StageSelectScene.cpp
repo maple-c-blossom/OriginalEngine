@@ -57,7 +57,7 @@ void MCB::StageSelectScene::Update()
         sceneEnd_ = true;
     }
 
-    if (input_->IsKeyTrigger(DIK_UP) || input_->gamePad_->IsButtonTrigger(GAMEPAD_UP))
+    if (input_->IsKeyTrigger(DIK_UP) || (input_->gamePad_->LStick_.y_ >= 0.5f && selectMoveTime_.IsEnd()))
     {
         selectStageNum--;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
@@ -65,7 +65,7 @@ void MCB::StageSelectScene::Update()
         selectScaleTime_.Set(360);
     }
 
-    if (input_->IsKeyTrigger(DIK_DOWN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_DOWN))
+    if (input_->IsKeyTrigger(DIK_DOWN) || (input_->gamePad_->LStick_.y_ <= -0.5f && selectMoveTime_.IsEnd()))
     {
         selectStageNum++;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
@@ -128,6 +128,7 @@ void MCB::StageSelectScene::SpriteDraw()
             "Stage::%s",stages[i].c_str());
     }
     debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 100 , 2, "Enter: AButton");
+    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 50 , 2, "Select: LStick");
     debugText_.AllDraw();
 }
 

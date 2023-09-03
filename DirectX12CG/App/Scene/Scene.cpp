@@ -148,7 +148,7 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
     startTimer.SafeDownUpdate();
-    level_->Update(startTimer.NowTime() <= 0 || !goal_->sceneEnd);
+    level_->Update(startTimer.NowTime() <= 0 && !goal_->sceneEnd);
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
@@ -160,7 +160,7 @@ void MCB::Scene::Update()
     MatrixUpdate();
     
 
-    if (goal_->sceneEnd && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
+    if (goal_->GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
     {
         sceneEnd_ = true;
     }

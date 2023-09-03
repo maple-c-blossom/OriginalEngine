@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Particle.h"
 #include "vector"
+#include "Timer.h"
 namespace MCB
 {
     class Player :public Object3d
@@ -25,6 +26,9 @@ namespace MCB
         Vector3D respownPosition_;
         float outYPosition = -20;
         float distoffSet = 0.00025f;
+        Timer backTimer;
+        bool back;
+        Vector3D backVec;
     public:
         size_t runNormal;
         size_t runFast;

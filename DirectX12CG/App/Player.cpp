@@ -30,8 +30,10 @@ void MCB::Player::Init()
 
 void MCB::Player::UniqueUpdate()
 {
-
-	Move();
+	if (!back)
+	{
+		Move();
+	}
 
 	Object3d::UpdateMatrix();
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
@@ -83,9 +85,27 @@ void MCB::Player::UniqueUpdate()
 
 	if (callback.move.V3Len() >= distoffSet)
 	{
-		position_.x += callback.move.vec_.x_;
-		position_.y += callback.move.vec_.y_;
-		position_.z += callback.move.vec_.z_;
+		position_.x += callback.move.vec_.x_ * 2;
+		position_.y += callback.move.vec_.y_ * 2;
+		position_.z += callback.move.vec_.z_ * 2;
+	}
+
+	if (back)
+	{
+		backTimer.SafeUpdate();
+		position_.x += backVec.vec_.x_;
+		position_.y += backVec.vec_.y_;
+		position_.z += backVec.vec_.z_;
+		if (backTimer.IsEnd())
+		{
+			back = false;
+		}
+	}
+	else
+	{
+		backTimer.Set(5);
+		backVec = callback.move * 6;
+		back = callback.block;
 	}
 
 	if (position_.y < outYPosition)
