@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="App\PopEffect.cpp" />
     <ClCompile Include="App\CheckPoint.cpp" />
+    <ClCompile Include="App\Scene\DemoScene.cpp" />
     <ClCompile Include="Engin\Model\AnimationMesh.cpp" />
     <ClCompile Include="Engin\Model\AnimationModel.cpp" />
     <ClCompile Include="Engin\Model\ModelManager.cpp">
@@ -247,6 +248,7 @@
   <ItemGroup>
     <ClInclude Include="App\PopEffect.h" />
     <ClInclude Include="App\CheckPoint.h" />
+    <ClInclude Include="App\Scene\DemoScene.h" />
     <ClInclude Include="Engin\Model\AnimationMesh.h" />
     <ClInclude Include="Engin\Model\AnimationModel.h" />
     <ClInclude Include="Engin\Model\ModelManager.h" />

@@ -47,7 +47,7 @@ namespace MCB
 		/// レベルデータファイルの読み込み
 		/// </summary>
 		/// <param name="fileName">ファイル名</param>
-		static std::unique_ptr<LevelData>  Load(const std::string& fileName, ICamera* camera);
+		static std::unique_ptr<LevelData> Load(const std::string& fileName, ICamera* camera);
 		 
 	};
 

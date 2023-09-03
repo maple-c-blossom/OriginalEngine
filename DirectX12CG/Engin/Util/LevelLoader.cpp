@@ -34,6 +34,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			{
 				unique_ptr<Goal> temp = std::make_unique<Goal>();
 				temp->popModel_ = ModelManager::GetModel("star");
+				temp->SetPlayer(levelData->GetObjectPtr("player"));
 				objData->obj = move(temp);
 			}
 			else if (objData->tag == "player")

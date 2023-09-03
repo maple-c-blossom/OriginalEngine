@@ -23,6 +23,7 @@ void MCB::DebugCamera::Inilialize()
 
 void MCB::DebugCamera::Update()
 {
+	if (moveStop)return;
 	if (input_->IsKeyTrigger(DIK_R)) {
 		rotAngle_ = Vector2D();
 	}

@@ -64,7 +64,7 @@ namespace MCB
 
 		DebugText debugText_;
 
-		std::array<std::string, 5> stages;
+		std::array<std::string, 4> stages;
 		
 #pragma endregion スプライト
  

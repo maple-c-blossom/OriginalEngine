@@ -414,11 +414,14 @@
     <ClCompile Include="Engin\Util\Timer.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="App\CheckPoint.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="App\Scene\StageSelectScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Scene\DemoScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\CheckPoint.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -724,10 +727,13 @@
     <ClInclude Include="Engin\Util\Timer.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="App\CheckPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="App\Scene\StageSelectScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\CheckPoint.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Scene\DemoScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>

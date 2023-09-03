@@ -8,8 +8,6 @@ using namespace DirectX;
 MCB::Scene::~Scene()
 {
     //soundManager_.AllDeleteSound();
-    zoomTex_->free = true;
-    debugTextTexture_->free = true;
     //modelManager_->erase();
     loader_->Erase();
 }
@@ -110,7 +108,6 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
-    zoomTex_ = loader_->LoadTexture(L"Resources\\09_Test_Texture2.jpg");
     //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
     //zoomTex = loader->CreateNoTextureFileIsTexture();
 
@@ -119,11 +116,7 @@ void MCB::Scene::LoadTexture()
 
 void MCB::Scene::LoadSound()
 {
-    testSound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
-    test2Sound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
-    soundManager_->SetVolume(100, testSound_);
-    volume_ = 100;
-    soundManager_->SetVolume(volume_, test2Sound_);
+
 }
 
 void MCB::Scene::SpriteInit()
@@ -201,7 +194,8 @@ void MCB::Scene::SpriteDraw()
 
     debugText_.sprite_->color_ = { 1,1,1,1 };
     debugText_.Print(10, 10, 1, "accele:W or RTrriger");
-    debugText_.Print(10, 30, 1, "brake:W or LTrriger");
+    debugText_.Print(10, 30, 1, "brake:S or LTrriger");
+    debugText_.Print(10, 60, 1, "Move:AD or LStick");
 
     if (!(startTimer.NowTime() <= 0))
     {

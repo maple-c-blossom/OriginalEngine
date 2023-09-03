@@ -10,6 +10,7 @@ private:
 	static bool goal_;
 	std::list<std::unique_ptr<MCB::PopEffect>> effects_;
 	int timer_;
+	MCB::Object3d* player;
 public:
 	MCB::Model* popModel_ = nullptr;
 	static void ResetGoal() { goal_ = false; }
@@ -20,5 +21,6 @@ public:
 	int GetTime() { return timer_; }
 	static bool GetIsGoal() { return goal_; };
 	void OnCollision(const MCB::CollisionInfomation& info)override;
+	void SetPlayer(MCB::Object3d* playerPtr);
 };
 

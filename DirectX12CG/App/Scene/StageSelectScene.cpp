@@ -1,5 +1,7 @@
 #include "StageSelectScene.h"
 #include "Scene.h"
+#include "TitleScene.h"
+#include "DemoScene.h"
 using namespace MCB;
 using namespace std;
 using namespace DirectX;
@@ -17,6 +19,17 @@ void MCB::StageSelectScene::ParticleInit()
 
 unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 {
+    if (stages[selectStageNum] == "Demo")
+    {
+        unique_ptr<DemoScene> scene = move(make_unique<DemoScene>(rootparamsPtr_, depth_, pipeline_));
+        return move(scene);
+    }
+
+    if (stages[selectStageNum] == "Title")
+    {
+        unique_ptr<TitleScene> scene = move(make_unique<TitleScene>(rootparamsPtr_, depth_, pipeline_));
+        return move(scene);
+    }
     unique_ptr<Scene> scene = move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
     scene->SetStage(stages[selectStageNum]);
     return move(scene);
@@ -141,7 +154,7 @@ MCB::StageSelectScene::StageSelectScene(RootParameter* root, Depth* depth, PipeL
 
 MCB::StageSelectScene::~StageSelectScene()
 {
-    soundManager_->AllDeleteSound();
+    //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
 
     //modelManager_->erase();
@@ -150,12 +163,12 @@ MCB::StageSelectScene::~StageSelectScene()
 
 void MCB::StageSelectScene::Initialize()
 {
-    stages[0] = "Tutorial";
-    stages[1] = "Level1";
-    stages[2] = "testLevelCopy";
-    stages[3] = "testLevelCopy";
-    stages[4] = "testLevelCopy";
+    stages[0] = "Demo";
+    stages[1] = "Tutorial";
+    stages[2] = "Level1";
+    stages[3] = "Title";
     camera_.Inilialize();
+    camera_.moveStop = true;
     viewCamera_ = &camera_;
     LoadTexture();
     LoadModel();
@@ -191,8 +204,7 @@ void MCB::StageSelectScene::LoadTexture()
 
 void MCB::StageSelectScene::LoadSound()
 {
-    selectSound_ = soundManager_->LoadWaveSound("Resources\\select.wav");
-    test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    selectSound_ = soundManager_->LoadWaveSound("Resources\\sounds\\select.wav");
     soundManager_->SetVolume(100, selectSound_);
 }
 

@@ -42,6 +42,19 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate( float x,  float y,  float z)
 	return temp;
 }
 
+MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(Vector3D pos)
+{
+	MCBMatrix temp;
+	temp.MCBMatrixIdentity();
+
+	temp._41_ = pos.vec_.x_;
+	temp._42_ = pos.vec_.y_;
+	temp._43_ = pos.vec_.z_;
+	temp._44_ = 1;
+
+	return temp;
+}
+
 MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling( float x,  float y,  float z)
 {
 
@@ -111,7 +124,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY( float angle)
 	MCBMatrix matrix;
 
 	matrix.MCBMatrixIdentity();
-	matrix,_11_ = (float)cosf(angle);
+	matrix._11_ = (float)cosf(angle);
 	matrix._31_ = (float)-sin(angle);
 
 	matrix._13_ = (float)sinf(angle);
@@ -339,6 +352,15 @@ Vector3D MCB::MCBMatrix::Transform(const Vector3D& v, const MCBMatrix& m)
 		(v.vec_.x_ * m._13_ + v.vec_.y_ * m._23_ + v.vec_.z_ * m._33_ + m._43_) / w
 	};
 	return result;
+}
+
+Vector3D MCB::MCBMatrix::GetTranslate(const MCBMatrix& m)
+{
+	Vector3D pos;
+	pos.vec_.x_ = m._41_;
+	pos.vec_.y_ = m._42_;
+	pos.vec_.z_ = m._43_;
+	return pos;
 }
 
 MCB::MCBMatrix MCB::MCBMatrix::operator*( float s)

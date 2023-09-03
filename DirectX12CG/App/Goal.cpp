@@ -17,11 +17,14 @@ void Goal::Init()
 
 void Goal::UniqueUpdate()
 {
+	if (player->position_.z >= position_.z)
+	{
+		goal_ = true;
+	}
 	if (!goal_)
 	{
 		timer_++;
 	}
-
 	for (auto& effect : effects_)
 	{
 		effect->UniqueUpdate();
@@ -55,21 +58,9 @@ void Goal::DebugTextDraw(MCB::DebugText* debugText)
 
 void Goal::OnCollision(const MCB::CollisionInfomation& info)
 {
-	hited_ = true;
-	std::string hitName = info.object3d_->nameId_;
-	if (hitName == "player")
-	{
-		if (!goal_)
-		{
-			for (int i = 0; i < 10; i++)
-			{
-				unique_ptr<PopEffect> effect = make_unique<PopEffect>();
-				effect->Initialize(popModel_, { sinf(ConvertRadius((float)GetRand(0,360))) * cosf(ConvertRadius((float)GetRand(0,360))),sinf(ConvertRadius((float)GetRand(0,360))) * sinf(ConvertRadius((float)GetRand(0,360))),cosf(ConvertRadius((float)GetRand(0,360))) },
-					{ position_.x + GetRand(0,200) / 100,position_.y + GetRand(0,200) / 100,position_.z + GetRand(0,200) / 100 }, { (float)0.25,(float)0.25,(float)0.25 }, { 1,0,0,1 }, 0.25f, 30);
-				effects_.push_back(std::move(effect));
-			}
-		}
-		goal_ = true;
-	}
-	sceneEnd = goal_;
+}
+
+void Goal::SetPlayer(MCB::Object3d* playerPtr)
+{
+	player = playerPtr;
 }

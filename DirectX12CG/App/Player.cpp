@@ -4,6 +4,10 @@
 #include "PlayerQueryCallBack.h"
 #include "AnimationModel.h"
 using namespace std;
+float MCB::Player::GetSpeed()
+{
+	return speedFront_;
+}
 void MCB::Player::SetRespowPosition(const Vector3D& pos)
 {
 	respownPosition_ = pos;
@@ -31,16 +35,7 @@ void MCB::Player::UniqueUpdate()
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
 
-	PlayerQueryCallBack callback(sphere);
 
-	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
-
-	if (callback.move.V3Len() >= distoffSet)
-	{
-		position_.x += callback.move.vec_.x_;
-		position_.y += callback.move.vec_.y_;
-		position_.z += callback.move.vec_.z_;
-	}
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
@@ -80,7 +75,16 @@ void MCB::Player::UniqueUpdate()
 		}
 	}
 
+	PlayerQueryCallBack callback(sphere);
 
+	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
+
+	if (callback.move.V3Len() >= distoffSet)
+	{
+		position_.x += callback.move.vec_.x_;
+		position_.y += callback.move.vec_.y_;
+		position_.z += callback.move.vec_.z_;
+	}
 
 	if (position_.y < outYPosition)
 	{
@@ -100,26 +104,26 @@ void MCB::Player::Move()
 
 	if (input_->IsKeyDown(DIK_W))
 	{
-		speedFront_ += accelerator_;
+		speedFront_ += acceleratorfront_;
 	}
 
 	if (input_->IsKeyDown(DIK_S))
 	{
-		speedFront_ -= accelerator_;
+		speedFront_ -= acceleratorfront_;
 	}
 
 	if (input_->gamePad_->RTrriger_.x_)
 	{
 		accelerator_ *= input_->gamePad_->RTrriger_.x_;
-		speedFront_ += accelerator_;
+		speedFront_ += acceleratorfront_;
 	}
 	else if(input_->gamePad_->LTrriger_.x_)
 	{
 		accelerator_ *= input_->gamePad_->LTrriger_.x_;
-		speedFront_ -= accelerator_;
+		speedFront_ -= acceleratorfront_;
 	}
 
-	speedFront_ = clamp(speedFront_, 0.0025f, maxspeed_);
+	speedFront_ = clamp(speedFront_, 0.0025f, maxFrontSpeed_);
 
 
 
@@ -176,7 +180,7 @@ void MCB::Player::Move()
 	position_.z += rightVec_.vec_.z_ * speedRight_;
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.015f;
+		const float fallAcc = -0.025f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		position_.x += fallV_.vec_.x_;
