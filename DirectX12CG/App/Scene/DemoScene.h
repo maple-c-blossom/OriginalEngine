@@ -53,6 +53,7 @@ namespace MCB
 		DirectX::XMFLOAT3 poleVec;
 
 		bool PoleVecMove;
+		bool objChenge;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

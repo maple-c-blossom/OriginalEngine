@@ -148,7 +148,11 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 void MCB::Scene::Update()
 {
     startTimer.SafeDownUpdate();
-    level_->Update(startTimer.NowTime() <= 0 && !goal_->sceneEnd);
+    level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
+    if (goal_->GetIsGoal())
+    {
+        player_->currentAnimation_ = "Idle";
+    }
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
@@ -231,20 +235,20 @@ void MCB::Scene::CheckAllColision()
 void MCB::Scene::ImGuiUpdate()
 {
     imgui_.Begin();
-    ImGui::ShowDemoWindow();
-    //if (ImGui::CollapsingHeader("Infomation"))
-    //{
-    //    if (ImGui::TreeNode("operation"))
-    //    {
-    //        ImGui::Text("LevelReLoad:LCONTROL");
-    //        ImGui::TreePop();
-    //    }
-    //}
+    //ImGui::ShowDemoWindow();
+    ////if (ImGui::CollapsingHeader("Infomation"))
+    ////{
+    ////    if (ImGui::TreeNode("operation"))
+    ////    {
+    ////        ImGui::Text("LevelReLoad:LCONTROL");
+    ////        ImGui::TreePop();
+    ////    }
+    ////}
 
-    if (ImGui::CollapsingHeader("MotionModel"))
-    {
-         playerModel_->DrawHeirarchy();
-    }
+    //if (ImGui::CollapsingHeader("MotionModel"))
+    //{
+    //     playerModel_->DrawHeirarchy();
+    //}
     imgui_.End();
 }
 

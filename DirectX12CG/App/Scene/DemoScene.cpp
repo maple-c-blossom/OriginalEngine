@@ -34,7 +34,14 @@ void MCB::DemoScene::MatrixUpdate()
 
 void MCB::DemoScene::Update()
 {
-
+    if (objChenge)
+    {
+        test2Animation_.animationModel_ = animModel_.get();
+    }
+    else
+    {
+        test2Animation_.animationModel_ = anim2Model_.get();
+    }
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
@@ -85,13 +92,23 @@ void MCB::DemoScene::Update()
 
     if (isIk)
     {
-        test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "Wrist.L");
+        if (objChenge)
+        {
+            test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+                { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
+                { poleVec.x,poleVec.y,poleVec.z }, "Bone3");
+        }
+        else
+        {
+            test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
+                { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
+                { poleVec.x,poleVec.y,poleVec.z }, "Wrist.L");
+        }
     }
     else
     {
         test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Wrist.L");
+        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
     }
     MatrixUpdate();
 }
@@ -151,6 +168,7 @@ void MCB::DemoScene::ImGuiUpdate()
     ImGui::Checkbox("debugView", &debugView);
     ImGui::Checkbox("isIK", &isIk);
     ImGui::Checkbox("poleVectorMove", &PoleVecMove);
+    ImGui::Checkbox("IkModelChenge", &objChenge);
     test2Animation_.animationModel_->DrawHeirarchy();
     ImGui::Text("effector:%f,%f,%f", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
     ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
@@ -203,7 +221,7 @@ void MCB::DemoScene::LoadModel()
 
 
     animModel_ = std::make_unique<AnimationModel>();
-    animModel_->Load("gamewsdsa");
+    animModel_->Load("IKTest");
 
     anim2Model_ = std::make_unique<AnimationModel>();
     anim2Model_->Load("player");
