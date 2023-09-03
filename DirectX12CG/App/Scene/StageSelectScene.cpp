@@ -97,7 +97,7 @@ void MCB::StageSelectScene::SpriteDraw()
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
-    for (int i = 0; i < stages.size(); i++)
+    for (size_t i = 0; i < stages.size(); i++)
     {
         selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - oldSelectStageNum));
         float scale = 3;
@@ -106,7 +106,7 @@ void MCB::StageSelectScene::SpriteDraw()
         scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
             static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
 
-        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - selectStageNum) * scale);
+        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * ((static_cast<int32_t>(i) - selectStageNum) * scale));
         posY = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartPosy), 
             static_cast<double>(posY), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
 

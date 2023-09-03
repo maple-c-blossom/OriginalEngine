@@ -833,12 +833,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int numMaxIteration, float errToleranceSq)
+   void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int32_t numMaxIteration, float errToleranceSq)
    {
 	   XMVECTOR localTargetPos = XMVectorZero();
 	   XMVECTOR localEffecrPos = XMVectorZero();
 
-	   for (int i = 0; i < numMaxIteration; i++)
+	   for (int32_t i = 0; i < numMaxIteration; i++)
 	   {
 		   for (Node* joint = effectter.parent; joint != nullptr; joint = joint->parent)
 		   {
@@ -1076,7 +1076,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 		}
 
 		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });//近い順でソート(closestNumで検索掛けるため)
-		int i = 1;//添え字ではなく"何番目か"を指定するので1番目を最初に(0番を最初にするかは思案中)
+		int32_t i = 1;//添え字ではなく"何番目か"を指定するので1番目を最初に(0番を最初にするかは思案中)
 		for (auto itr = lenges.begin(); itr != lenges.end(); ++itr)
 		{
 			if (i == closestNum)//完全一致しない場合はnullptr(ずれた値出るとまずいため）

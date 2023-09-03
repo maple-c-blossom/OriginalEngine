@@ -166,7 +166,7 @@ MCB::DemoScene::DemoScene(RootParameter* root, Depth* depth,PipeLineManager* pip
 
 MCB::DemoScene::~DemoScene()
 {
-    soundManager_->AllDeleteSound();
+    //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
 
     //modelManager_->erase();

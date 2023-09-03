@@ -79,6 +79,9 @@ namespace MCB
 		Timer selectScaleTime_;
 		const uint32_t selectMoveMaxTime_ = 20;
 		float selectMoveStartPosy;
+
+		int32_t selectSE;
+		int32_t enterSE;
 #pragma endregion ’Êí•Ï”
 	public:
 

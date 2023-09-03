@@ -3,6 +3,8 @@
 #include "CollisionManager.h"
 #include "PlayerQueryCallBack.h"
 #include "AnimationModel.h"
+#include "Sound.h"
+
 using namespace std;
 float MCB::Player::GetSpeed()
 {
@@ -95,7 +97,7 @@ void MCB::Player::UniqueUpdate()
 
 void MCB::Player::Move()
 {
-
+	SoundManager* sm = SoundManager::GetInstance();
 	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
 		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
 	{

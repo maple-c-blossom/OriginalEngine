@@ -26,6 +26,8 @@ namespace MCB
         float outYPosition = -20;
         float distoffSet = 0.00025f;
     public:
+        size_t runNormal;
+        size_t runFast;
         float GetSpeed();
         void SetRespowPosition(const Vector3D& pos);
         void Init()override;
