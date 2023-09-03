@@ -9,6 +9,7 @@ void MCB::TitleScene::SpriteInit()
 
     debugText_.Init(debugTextTexture_->texture.get());
     titleSprite_.CreateSprite();
+    backGroundSprite_.CreateSprite();
 }
 
 void MCB::TitleScene::ParticleInit()
@@ -41,79 +42,14 @@ void MCB::TitleScene::Update()
         soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
-    DirectX::XMFLOAT3* pos = &testsphere_.position_;
-
-    if (PoleVecMove)
-    {
-        pos = &poleVec;
-    }
-    else
-    {
-        pos = &testsphere_.position_;
-    }
-
-
-    if (input_->IsKeyDown(DIK_W))
-    {
-        pos->z += 0.05f;
-    }
     
-    if (input_->IsKeyDown(DIK_S))
-    {
-        pos->z -= 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_D))
-    {
-        pos->x += 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_A))
-    {
-        pos->x -= 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_SPACE))
-    {
-        pos->y += 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_LCONTROL))
-    {
-        pos->y -= 0.05f;
-    }
-
-    if (isIk)
-    {
-        test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-            { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-            {poleVec.x,poleVec.y,poleVec.z}, "Bone3");
-    }
-    else
-    {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
-    }
     MatrixUpdate();
 }
 
 void MCB::TitleScene::PostEffectDraw()
 {
     postEffect_->PreDraw();
-    Skydorm_.Draw();
-    ground_.Draw();
-    testsphere_.Draw();
-    if (debugView)
-    {
-        test2Animation_.animationModel_->skeleton.JointObjectDraw();
-        pipeline_->SetLinePipeLine();
-        test2Animation_.animationModel_->skeleton.JointLineDraw();
-    }
-    pipeline_->SetFbxPipeLine();
-    if (debugView)
-    {
-        pipeline_->SetFbxPipeLine(true);
-    }
-    test2Animation_.AnimationDraw();
+    //pipeline_->SetObjPipeLine(false, true);
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -127,10 +63,15 @@ void MCB::TitleScene::Draw()
 
 void MCB::TitleScene::SpriteDraw()
 {
-    
+    float titleMove = sinf(ConvertRadius(static_cast<float>(titleMoveTime_.NowTime()) >= 180.f ? static_cast<float>(titleMoveTime_.NowTime()) * -1.f : static_cast<float>(titleMoveTime_.NowTime()))) * 10.f;
+    titleMoveTime_.SafeUpdate();
+    titleMoveTime_.ReSet();
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
-    //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
+    backGroundSprite_.SpriteDraw(*backGroundTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_,
+        dxWindow_->sWINDOW_CENTER_HEIGHT_ , dxWindow_->sWINDOW_WIDTH_, dxWindow_->sWINDOW_HEIGHT_);
+    titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_,
+        dxWindow_->sWINDOW_CENTER_HEIGHT_ + titleMove);
     debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 200, 2, "Press AButton");
     debugText_.AllDraw();
 }
@@ -146,12 +87,6 @@ void MCB::TitleScene::CheckAllColision()
 void MCB::TitleScene::ImGuiUpdate()
 {
     imgui_.Begin();
-    ImGui::Checkbox("debugView", &debugView);
-    ImGui::Checkbox("isIK", &isIk);
-    ImGui::Checkbox("poleVectorMove", &PoleVecMove);
-    test2Animation_.animationModel_->DrawHeirarchy();
-    ImGui::Text("effector:%f,%f,%f", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
-    ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
     imgui_.End();
 }
 
@@ -164,7 +99,7 @@ MCB::TitleScene::TitleScene(RootParameter* root, Depth* depth,PipeLineManager* p
 
 MCB::TitleScene::~TitleScene()
 {
-    soundManager_->AllDeleteSound();
+    //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
 
     //modelManager_->erase();
@@ -174,6 +109,7 @@ MCB::TitleScene::~TitleScene()
 void MCB::TitleScene::Initialize()
 {
     camera_.Inilialize();
+    camera_.moveStop = true;
     viewCamera_ = &camera_;
     LoadTexture();
     LoadModel();
@@ -186,6 +122,7 @@ void MCB::TitleScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
+    titleMoveTime_.Set(360);
 }
 
 void MCB::TitleScene::LoadModel()
@@ -204,19 +141,19 @@ void MCB::TitleScene::LoadModel()
     animModel_->Load("gamewsdsa");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-    anim2Model_->Load("IKTest");
+    anim2Model_->Load("player");
 }
 
 void MCB::TitleScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
+    backGroundTex_ = loader_->LoadTexture(L"Resources\\backGround.png");
     titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
 }
 
 void MCB::TitleScene::LoadSound()
 {
-    selectSound_ = soundManager_->LoadWaveSound("Resources\\select.wav");
-    test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    selectSound_ = soundManager_->LoadWaveSound("Resources\\sounds\\select.wav");
     soundManager_->SetVolume(100, selectSound_);
 }
 
@@ -245,7 +182,7 @@ void MCB::TitleScene::Object3DInit()
     testsphere_.Init();
     //testsphere.model = BoxModel;
     testsphere_.model_ = sphereModel_.get();
-    testsphere_.scale_ = { 1,1,1 };
+    testsphere_.scale_ = { 0.25f,0.25f,0.25f };
     testsphere_.position_ = { 5,1,0 };
     testsphere_.rotation_.y = ConvertRadius(90);
     testsphere_.camera_ = viewCamera_;

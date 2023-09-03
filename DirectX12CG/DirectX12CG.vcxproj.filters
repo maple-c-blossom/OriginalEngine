@@ -184,6 +184,9 @@
     <Filter Include="リソース ファイル\LineShader">
       <UniqueIdentifier>{f1e3aa70-c3ea-44d4-985d-719f43368535}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\OBJTilingShader">
+      <UniqueIdentifier>{38730a7c-7704-449a-b77d-65c9f54ac948}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App\main.cpp">
@@ -411,11 +414,14 @@
     <ClCompile Include="Engin\Util\Timer.cpp">
       <Filter>ソース ファイル\Engin\Util</Filter>
     </ClCompile>
-    <ClCompile Include="App\CheckPoint.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="App\Scene\StageSelectScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\Scene\DemoScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="App\CheckPoint.cpp">
+      <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +487,15 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\LineSimpleShader\LineVertexShader.hlsl">
       <Filter>リソース ファイル\LineShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingGeometryShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingPixelShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingVertexShader.hlsl">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,10 +727,13 @@
     <ClInclude Include="Engin\Util\Timer.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
     </ClInclude>
-    <ClInclude Include="App\CheckPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="App\Scene\StageSelectScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="App\CheckPoint.h">
+      <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Scene\DemoScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
@@ -743,6 +761,9 @@
     </None>
     <None Include="Resources\Shaders\LineSimpleShader\LineHeader.hlsli">
       <Filter>リソース ファイル\LineShader</Filter>
+    </None>
+    <None Include="Resources\Shaders\OBJShaderTiling\OBJTilingHeader.hlsli">
+      <Filter>リソース ファイル\OBJTilingShader</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@
 
 namespace MCB
 {
+	class Vector3D;
 	class Float3
 	{
 	public:
@@ -16,6 +17,8 @@ namespace MCB
 
 		Float3& operator+=(const Float3& a);
 		Float3& operator-=(const Float3& a);
+		Float3& operator=(const DirectX::XMVECTOR& a);
+		Float3& operator=(const Vector3D& a);
 	};
 
 	class Float2

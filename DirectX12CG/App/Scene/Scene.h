@@ -58,8 +58,8 @@ namespace MCB
 
 		//サウンド
 #pragma region サウンド
-		size_t testSound_ = -1;
-		size_t test2Sound_ = -1;
+		size_t runNormal;
+		size_t runFast;
 
 		int32_t volume_ = 255;
 #pragma endregion サウンド
@@ -68,7 +68,8 @@ namespace MCB
 
 #pragma region 3Dオブジェクト
 
-		Object3d* goal;
+		Goal* goal_;
+		Player* player_;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト
@@ -89,6 +90,8 @@ namespace MCB
 		bool startPositionReset_ = true;
 		bool ybill_ = false;
 		std::unique_ptr<LevelLoader::LevelData> level_;
+		Timer startTimer;
+		bool startDrawed;
 #pragma endregion 通常変数
 
 	public:

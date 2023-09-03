@@ -29,10 +29,11 @@ namespace MCB
 		std::array<PipelineRootSignature,4> postEffectPipeline_;
 		std::array<PipelineRootSignature,4> objPipelineWire_;
 		std::array<PipelineRootSignature,4> animeObjPipelineWire_;
+		std::array<PipelineRootSignature,4> ObjTilingPipeline_;
 
 	public:
 		PipeLineManager(RootParameter* rootpamrams, Depth* depth);
-		void SetObjPipeLine(bool wireFrame = false,  BlendMode blend = Alpha);
+		void SetObjPipeLine(bool wireFrame = false,  bool Tiling = false,BlendMode blend = Alpha);
 		void SetLinePipeLine(  BlendMode blend = Alpha);
 		void SetFbxPipeLine(bool wireFrame = false, BlendMode blend = Alpha);
 		void SetSpritePipeLine(BlendMode blend = Alpha);

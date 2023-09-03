@@ -16,8 +16,10 @@ namespace MCB
 		Vector2D cursorSpd_;
 		Vector3D eye_;
 		Vector3D target_;
+		
 		//Vector3D up;
 	public:
+		bool moveStop = false;
 		void Inilialize()override;
 		void Update()override;
 	};

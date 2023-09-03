@@ -10,8 +10,8 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	pipeline_ = pipeline;
 	depth_ = depth;
 	damyTexture_ = texmanager_->CreateNoTextureFileIsTexture();
-	loadBackGroundTex_ = texmanager_->CreateNoTextureFileIsTexture();
-	loadTex_ = texmanager_->LoadTexture(L"Resources\\reimu.png");
+	loadBackGroundTex_ = texmanager_->LoadTexture(L"Resources\\backGround.png");
+	loadTex_ = texmanager_->LoadTexture(L"Resources\\title.png");
 	loadBackGround_.InitMatProje();
 	loadBackGround_.color_ = { 0,0,0,0 };
 	loadSprite_.InitMatProje();
@@ -118,10 +118,10 @@ void MCB::SceneManager::Draw()
 		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture,(float) DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2,
 		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_ / 2, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_,
 		(float)DxWindow::GetInstance()->sWINDOW_HEIGHT_);
-#ifdef _DEBUG
+//#ifdef _DEBUG
 		scene_->ImGuiUpdate();
 		scene_->ImGuiDraw();
-#endif 
+//#endif 
 	}
 	else//ƒ[ƒh‰æ–Ê
 	{

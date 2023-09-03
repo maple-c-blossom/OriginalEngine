@@ -100,6 +100,8 @@ namespace MCB
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
+            PrimitiveFigure::Triangle rootAndEffectorAndConstraintTriangle;
+            PrimitiveFigure::Triangle jointTriangle;
             Vector3D constraintLocalPositionFromRoot;
 
         };
@@ -202,7 +204,7 @@ namespace MCB
         /// <param name="targetPos">目標地点</param>
         /// <param name="numMaxIteration">CCDの反復回数</param>
         /// <param name="errToleranceSq">誤差の許容数値(2乗）</param>
-        void CCDIK(Node& effectter,Vector3D targetPos,int numMaxIteration,float errToleranceSq);//理論理解段階のため未定義(引数も不十分の可能性あり)
+        void CCDIK(Node& effectter,Vector3D targetPos,int32_t numMaxIteration,float errToleranceSq);//理論理解段階のため未定義(引数も不十分の可能性あり)
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 

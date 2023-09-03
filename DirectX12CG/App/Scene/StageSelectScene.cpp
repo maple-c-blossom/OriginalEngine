@@ -1,5 +1,7 @@
 #include "StageSelectScene.h"
 #include "Scene.h"
+#include "TitleScene.h"
+#include "DemoScene.h"
 using namespace MCB;
 using namespace std;
 using namespace DirectX;
@@ -17,6 +19,17 @@ void MCB::StageSelectScene::ParticleInit()
 
 unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 {
+    if (stages[selectStageNum] == "Demo")
+    {
+        unique_ptr<DemoScene> scene = move(make_unique<DemoScene>(rootparamsPtr_, depth_, pipeline_));
+        return move(scene);
+    }
+
+    if (stages[selectStageNum] == "Title")
+    {
+        unique_ptr<TitleScene> scene = move(make_unique<TitleScene>(rootparamsPtr_, depth_, pipeline_));
+        return move(scene);
+    }
     unique_ptr<Scene> scene = move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
     scene->SetStage(stages[selectStageNum]);
     return move(scene);
@@ -25,7 +38,10 @@ unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 void MCB::StageSelectScene::MatrixUpdate()
 {
     //test2Animation_.UpdateMatrix();
-    viewCamera_->Update();
+    //viewCamera_->Update();
+
+    viewCamera_->GetView()->UpDateMatrixView();
+    viewCamera_->GetProjection()->UpdataMatrixProjection();
     Skydorm_.Update();
     ground_.Update();
 }
@@ -33,6 +49,7 @@ void MCB::StageSelectScene::MatrixUpdate()
 void MCB::StageSelectScene::Update()
 {
 
+    if(selectMoveTime_.IsEnd())oldSelectStageNum = selectStageNum;
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
@@ -40,17 +57,22 @@ void MCB::StageSelectScene::Update()
         sceneEnd_ = true;
     }
 
-    if (input_->IsKeyTrigger(DIK_UP) || input_->gamePad_->IsButtonTrigger(GAMEPAD_UP))
+    if (input_->IsKeyTrigger(DIK_UP) || (input_->gamePad_->LStick_.y_ >= 0.5f && selectMoveTime_.IsEnd()))
     {
         selectStageNum--;
+        uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),time);
+        selectScaleTime_.Set(360);
     }
 
-    if (input_->IsKeyTrigger(DIK_DOWN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_DOWN))
+    if (input_->IsKeyTrigger(DIK_DOWN) || (input_->gamePad_->LStick_.y_ <= -0.5f && selectMoveTime_.IsEnd()))
     {
         selectStageNum++;
+        uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(), time);
     }
     selectStageNum = static_cast<int32_t>(clamp(static_cast<float>(selectStageNum), 0.f, stages.size() - 1.f));
-
+    selectMoveTime_.SafeUpdate();
     MatrixUpdate();
 }
 
@@ -75,8 +97,38 @@ void MCB::StageSelectScene::SpriteDraw()
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
-    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 100, 2, "Stage::%s",stages[selectStageNum].c_str());
-    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 200, 2, "Press AButton");
+    for (size_t i = 0; i < stages.size(); i++)
+    {
+        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - oldSelectStageNum));
+        float scale = 3;
+        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - oldSelectStageNum) / 2.f);
+        scale = scale - (abs(static_cast<float>(i) - selectStageNum) / 2.f);
+        scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
+            static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
+
+        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * ((static_cast<int32_t>(i) - selectStageNum) * scale));
+        posY = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartPosy), 
+            static_cast<double>(posY), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
+
+        //if (posY > dxWindow_->sWINDOW_CENTER_HEIGHT_ + 150)
+        //{
+        //    break;
+        //}
+
+        if (i == selectStageNum && selectMoveTime_.IsEnd())
+        {
+            float resultSize = sinf(ConvertRadius(static_cast<float>(selectScaleTime_.NowTime()) >= 180.f ? static_cast<float>(selectScaleTime_.NowTime()) * -1.f : static_cast<float>(selectScaleTime_.NowTime()))) * 0.25f + 1.2f;
+            selectScaleTime_.SafeUpdate();
+            selectScaleTime_.ReSet();
+            scale = scale + resultSize / 2;
+        }
+
+        debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, 
+           posY , scale,
+            "Stage::%s",stages[i].c_str());
+    }
+    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 100 , 2, "Enter: AButton");
+    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 50 , 2, "Select: LStick");
     debugText_.AllDraw();
 }
 
@@ -103,7 +155,7 @@ MCB::StageSelectScene::StageSelectScene(RootParameter* root, Depth* depth, PipeL
 
 MCB::StageSelectScene::~StageSelectScene()
 {
-    soundManager_->AllDeleteSound();
+    //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
 
     //modelManager_->erase();
@@ -112,9 +164,12 @@ MCB::StageSelectScene::~StageSelectScene()
 
 void MCB::StageSelectScene::Initialize()
 {
-    stages[0] = "testLevel";
-    stages[1] = "testLevelCopy";
+    stages[0] = "Demo";
+    stages[1] = "Tutorial";
+    stages[2] = "Level1";
+    stages[3] = "Title";
     camera_.Inilialize();
+    camera_.moveStop = true;
     viewCamera_ = &camera_;
     LoadTexture();
     LoadModel();
@@ -127,6 +182,8 @@ void MCB::StageSelectScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
+    selectMoveTime_.TimeSet(1, 1);
+    selectScaleTime_.Set(360);
 }
 
 void MCB::StageSelectScene::LoadModel()
@@ -148,8 +205,7 @@ void MCB::StageSelectScene::LoadTexture()
 
 void MCB::StageSelectScene::LoadSound()
 {
-    selectSound_ = soundManager_->LoadWaveSound("Resources\\select.wav");
-    test2Sound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
+    selectSound_ = soundManager_->LoadWaveSound("Resources\\sounds\\select.wav");
     soundManager_->SetVolume(100, selectSound_);
 }
 

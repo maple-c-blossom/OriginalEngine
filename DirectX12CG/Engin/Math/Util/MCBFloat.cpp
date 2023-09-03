@@ -1,4 +1,5 @@
 #include "MCBFloat.h"
+#include "Vector3D.h"
 using namespace MCB;
 
 MCB::Float3::Float3(float x, float y, float z)
@@ -28,6 +29,22 @@ MCB::Float3& Float3::operator-=(const Float3& a)
 	x_ -= a.x_;
 	y_ -= a.y_;
 	z_ -= a.z_;
+	return *this;
+}
+
+Float3& MCB::Float3::operator=(const DirectX::XMVECTOR& a)
+{
+	x_ = a.m128_f32[0];
+	y_ = a.m128_f32[1];
+	z_ = a.m128_f32[2];
+	return *this;
+}
+
+Float3& MCB::Float3::operator=(const Vector3D& a)
+{
+	x_ = a.vec_.x_;
+	y_ = a.vec_.y_;
+	z_ = a.vec_.z_;
 	return *this;
 }
 

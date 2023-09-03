@@ -5,6 +5,22 @@
 using namespace DirectX;
 using namespace MCB;
 
+MCB::MCBMatrix::MCBMatrix()
+{
+	_11_ = 1.0f; _12_ = 0.0f; _13_ = 0.0f; _14_ = 0.0f;
+	_21_ = 0.0f; _22_ = 1.0f; _23_ = 0.0f; _24_ = 0.0f;
+	_31_ = 0.0f; _32_ = 0.0f; _33_ = 1.0f; _34_ = 0.0f;
+	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
+}
+
+MCB::MCBMatrix::MCBMatrix(DirectX::XMMATRIX mat)
+{
+	_11_ = mat.r[0].m128_f32[0]; _12_ = mat.r[0].m128_f32[1]; _13_ = mat.r[0].m128_f32[2]; _14_ = mat.r[0].m128_f32[3];
+	_21_ = mat.r[1].m128_f32[0]; _22_ = mat.r[1].m128_f32[1]; _23_ = mat.r[1].m128_f32[2]; _24_ = mat.r[1].m128_f32[3];
+	_31_ = mat.r[2].m128_f32[0]; _32_ = mat.r[2].m128_f32[1]; _33_ = mat.r[2].m128_f32[2]; _34_ = mat.r[2].m128_f32[3];
+	_41_ = mat.r[3].m128_f32[0]; _42_ = mat.r[3].m128_f32[1]; _43_ = mat.r[3].m128_f32[2]; _44_ = mat.r[3].m128_f32[3];
+}
+
 void MCB::MCBMatrix::MCBMatrixIdentity()
 {
 	_11_ = 1.0f; _12_ = 0.0f; _13_ = 0.0f; _14_ = 0.0f;
@@ -21,6 +37,19 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate( float x,  float y,  float z)
 	temp._41_ = x;
 	temp._42_ = y;
 	temp._43_ = z;
+	temp._44_ = 1;
+
+	return temp;
+}
+
+MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(Vector3D pos)
+{
+	MCBMatrix temp;
+	temp.MCBMatrixIdentity();
+
+	temp._41_ = pos.vec_.x_;
+	temp._42_ = pos.vec_.y_;
+	temp._43_ = pos.vec_.z_;
 	temp._44_ = 1;
 
 	return temp;
@@ -57,6 +86,24 @@ void MCB::MCBMatrix::ConvertMatrixMCBMat(float** ArrayMat)
 	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
 }
 
+void MCB::MCBMatrix::ConvertMatrixMCBMat(std::array<std::array<float, 4>, 4> ArrayMat)
+{
+	_11_ = ArrayMat[0][0], _12_ = ArrayMat[0][1], _13_ = ArrayMat[0][2], _14_ = ArrayMat[0][3];
+	_21_ = ArrayMat[1][0], _22_ = ArrayMat[1][1], _23_ = ArrayMat[1][2], _24_ = ArrayMat[1][3];
+	_31_ = ArrayMat[2][0], _32_ = ArrayMat[2][1], _33_ = ArrayMat[2][2], _34_ = ArrayMat[2][3];
+	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
+}
+
+std::array<std::array<float, 4>, 4> MCB::MCBMatrix::GetArrayMat(MCBMatrix mat)
+{
+	std::array<std::array<float, 4>, 4> ans;
+	ans[0][0] = mat._11_, ans[1][0] = mat._21_, ans[2][0] = mat._31_, ans[3][0] = mat._41_;
+	ans[0][1] = mat._12_, ans[1][1] = mat._22_, ans[2][1] = mat._32_, ans[3][1] = mat._42_;
+	ans[0][2] = mat._13_, ans[1][2] = mat._23_, ans[2][2] = mat._33_, ans[3][2] = mat._43_;
+	ans[0][3] = mat._14_, ans[1][3] = mat._24_, ans[2][3] = mat._34_, ans[3][3] = mat._44_;
+	return ans;
+}
+
 MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaX( float angle)
 {
 	MCBMatrix matrix;
@@ -77,7 +124,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixRotaY( float angle)
 	MCBMatrix matrix;
 
 	matrix.MCBMatrixIdentity();
-	matrix,_11_ = (float)cosf(angle);
+	matrix._11_ = (float)cosf(angle);
 	matrix._31_ = (float)-sin(angle);
 
 	matrix._13_ = (float)sinf(angle);
@@ -143,6 +190,69 @@ MCB::MCBMatrix MCB::MCBMatrix::ReturnMatrixIdentity()
 		ans._31_ = 0.0f; ans._32_ = 0.0f; ans._33_ = 1.0f; ans._34_ = 0.0f;
 		ans._41_ = 0.0f; ans._42_ = 0.0f; ans._43_ = 0.0f; ans._44_ = 1.0f;
 	return ans;
+}
+
+MCBMatrix MCB::MCBMatrix::MatrixTranspose(MCBMatrix mat)
+{
+	std::array<std::array<float, 4>, 4> ans;
+	std::array<std::array<float, 4>, 4> arrayMat = mat.GetArrayMat(mat);
+	for (size_t i = 0; i < 4; i++)
+	{
+		for (size_t j = 0; j < 4; j++)
+		{
+			ans[i][j] = arrayMat[j][i];
+		}
+	}
+	MCBMatrix ret;
+	ret.ConvertMatrixMCBMat(ans);
+	return ret;
+}
+
+MCBMatrix MCB::MCBMatrix::MatrixInverse( MCBMatrix mat)
+{
+
+	MCBMatrix result;
+	std::array<std::array<float, 4>, 4> tempResult;
+	std::array<std::array<float, 8>, 4> temp = {};
+	std::array<std::array<float, 4>, 4> num;
+	num = mat.GetArrayMat(mat);
+	float a;
+
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
+			temp[i][j] = num[i][j];
+
+			if (i == j)temp[i][4 + j] = 1;
+		}
+	}
+
+	for (int32_t k = 0; k < 4; k++) {
+		a = 1 / temp[k][k];
+
+		for (int32_t j = 0; j < 8; j++) {
+			temp[k][j] *= a;
+		}
+
+		for (int32_t i = 0; i < 4; i++) {
+			if (i == k) {
+				continue;
+			}
+
+			a = -temp[i][k];
+
+			for (int32_t j = 0; j < 8; j++) {
+				temp[i][j] += temp[k][j] * a;
+			}
+		}
+	}
+
+	for (int32_t i = 0; i < 4; i++) {
+		for (int32_t j = 0; j < 4; j++) {
+			tempResult[i][j] = temp[i][4 + j];
+		}
+	}
+	result.ConvertMatrixMCBMat(tempResult);
+	return result;
 }
 
 //MCB::MCBMatrix MCB::MCBMatrix::operator*(MCBMatrix matrix)
@@ -229,6 +339,28 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixConvertXMMatrix(const XMMATRIX& mat)
 	ans._43_ = mat.r[3].m128_f32[2] ;
 	ans._44_ = mat.r[3].m128_f32[3] ;
 	return MCBMatrix();
+}
+
+Vector3D MCB::MCBMatrix::Transform(const Vector3D& v, const MCBMatrix& m)
+{
+	float w = v.vec_.x_ * m._14_ + v.vec_.y_ * m._24_ + v.vec_.z_ * m._34_ + m._44_;
+	
+	Vector3D result
+	{
+		(v.vec_.x_ * m._11_ + v.vec_.y_ * m._21_ + v.vec_.z_ * m._31_ + m._41_) / w,
+		(v.vec_.x_ * m._12_ + v.vec_.y_ * m._22_ + v.vec_.z_ * m._32_ + m._42_) / w,
+		(v.vec_.x_ * m._13_ + v.vec_.y_ * m._23_ + v.vec_.z_ * m._33_ + m._43_) / w
+	};
+	return result;
+}
+
+Vector3D MCB::MCBMatrix::GetTranslate(const MCBMatrix& m)
+{
+	Vector3D pos;
+	pos.vec_.x_ = m._41_;
+	pos.vec_.y_ = m._42_;
+	pos.vec_.z_ = m._43_;
+	return pos;
 }
 
 MCB::MCBMatrix MCB::MCBMatrix::operator*( float s)

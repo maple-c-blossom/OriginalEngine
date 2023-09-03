@@ -25,9 +25,9 @@ namespace MCB
 			// オブジェクト配列
 			std::vector<std::unique_ptr<ObjectData>> objects;
 			Object3d* GetObjectPtr(std::string name);
-			void Update();
+			void Update(bool start = true);
 			void UpdateMatrix();
-			void Draw();
+			void Draw(PipeLineManager* pipeline,bool wireFrame = false);
 			void AnimationDraw();
 			void DebugTextDraw(DebugText* debugText);
 			~LevelData();
@@ -47,7 +47,7 @@ namespace MCB
 		/// レベルデータファイルの読み込み
 		/// </summary>
 		/// <param name="fileName">ファイル名</param>
-		static std::unique_ptr<LevelData>  Load(const std::string& fileName, ICamera* camera);
+		static std::unique_ptr<LevelData> Load(const std::string& fileName, ICamera* camera);
 		 
 	};
 

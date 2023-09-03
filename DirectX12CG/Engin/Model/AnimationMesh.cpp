@@ -11,7 +11,10 @@ MCB::AnimationMesh::~AnimationMesh()
 {
     for (auto& tex : textures_)
     {
-        tex->free = true;
+        if (&tex)
+        {
+            tex->free = true;
+        }
     }
 }
 

@@ -63,7 +63,7 @@ namespace MCB
         Vector3D nowFrontVec_ = {0,0,1};
         float frontAngle_ = 0;
         float animeTime_;
-        float animationSpeed_ = 0.1f;
+        float animationSpeed_ = 0.0f;
         Model* model_ = nullptr;
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;

@@ -3,7 +3,13 @@
 #include "CollisionManager.h"
 #include "PlayerQueryCallBack.h"
 #include "AnimationModel.h"
+#include "Sound.h"
+
 using namespace std;
+float MCB::Player::GetSpeed()
+{
+	return speedFront_;
+}
 void MCB::Player::SetRespowPosition(const Vector3D& pos)
 {
 	respownPosition_ = pos;
@@ -24,23 +30,16 @@ void MCB::Player::Init()
 
 void MCB::Player::UniqueUpdate()
 {
-
-	Move();
+	if (!back)
+	{
+		Move();
+	}
 
 	Object3d::UpdateMatrix();
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
 
-	PlayerQueryCallBack callback(sphere);
 
-	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
-
-	if (callback.move.V3Len() >= distoffSet)
-	{
-		position_.x += callback.move.vec_.x_;
-		position_.y += callback.move.vec_.y_;
-		position_.z += callback.move.vec_.z_;
-	}
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
@@ -80,7 +79,34 @@ void MCB::Player::UniqueUpdate()
 		}
 	}
 
+	PlayerQueryCallBack callback(sphere);
 
+	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
+
+	if (callback.move.V3Len() >= distoffSet)
+	{
+		position_.x += callback.move.vec_.x_ * 2;
+		position_.y += callback.move.vec_.y_ * 2;
+		position_.z += callback.move.vec_.z_ * 2;
+	}
+
+	if (back)
+	{
+		backTimer.SafeUpdate();
+		position_.x += backVec.vec_.x_;
+		position_.y += backVec.vec_.y_;
+		position_.z += backVec.vec_.z_;
+		if (backTimer.IsEnd())
+		{
+			back = false;
+		}
+	}
+	else
+	{
+		backTimer.Set(5);
+		backVec = callback.move * 6;
+		back = callback.block;
+	}
 
 	if (position_.y < outYPosition)
 	{
@@ -91,51 +117,56 @@ void MCB::Player::UniqueUpdate()
 
 void MCB::Player::Move()
 {
-	
+	SoundManager* sm = SoundManager::GetInstance();
+	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
+		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
+	{
+		speedFront_ = defualtSpeed_;
+	}
+
 	if (input_->IsKeyDown(DIK_W))
 	{
-		if (speedFront_ <= maxspeed_)speedFront_ += speed_;
-		else speedFront_ = maxspeed_;
+		speedFront_ += acceleratorfront_;
 	}
 
 	if (input_->IsKeyDown(DIK_S))
 	{
-		if (speedFront_ >= -maxspeed_)speedFront_ -= speed_;
-		else speedFront_ = -maxspeed_;
+		speedFront_ -= acceleratorfront_;
 	}
 
-	if (input_->gamePad_->LStick_.y_)
+	if (input_->gamePad_->RTrriger_.x_)
 	{
-		float accelerator = maxspeed_;
-		accelerator *= input_->gamePad_->LStick_.y_;
-		if (speedFront_ <= maxspeed_ && speedFront_ >= -maxspeed_)speedFront_ = accelerator;
-		else if (speedFront_ >= maxspeed_) speedFront_ = maxspeed_;
-		else if (speedFront_ <= -maxspeed_)speedFront_ = -maxspeed_;
+		accelerator_ *= input_->gamePad_->RTrriger_.x_;
+		speedFront_ += acceleratorfront_;
+	}
+	else if(input_->gamePad_->LTrriger_.x_)
+	{
+		accelerator_ *= input_->gamePad_->LTrriger_.x_;
+		speedFront_ -= acceleratorfront_;
 	}
 
-	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && !input_->gamePad_->LStick_.y_)
-	{
-		speedFront_ = 0;
-	}
+	speedFront_ = clamp(speedFront_, 0.0025f, maxFrontSpeed_);
+
+
 
 
 	if (input_->IsKeyDown(DIK_D))
 	{
-		if (speedRight_ <= maxspeed_)speedRight_ += speed_;
+		if (speedRight_ <= maxspeed_)speedRight_ += accelerator_;
 		else speedRight_ = maxspeed_;
 	}
 
 	if (input_->IsKeyDown(DIK_A))
 	{
-		if (speedRight_ >= -maxspeed_)speedRight_ -= speed_;
+		if (speedRight_ >= -maxspeed_)speedRight_ -= accelerator_;
 		else speedRight_ = -maxspeed_;
 	}
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator = maxspeed_;
-		accelerator *= input_->gamePad_->LStick_.x_;
-		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
+		float accelerator_ = maxspeed_;
+		accelerator_ *= input_->gamePad_->LStick_.x_;
+		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator_;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
 		else if (speedRight_ <= -maxspeed_)speedRight_ = -maxspeed_;
 	}
@@ -171,7 +202,7 @@ void MCB::Player::Move()
 	position_.z += rightVec_.vec_.z_ * speedRight_;
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.015f;
+		const float fallAcc = -0.025f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		position_.x += fallV_.vec_.x_;

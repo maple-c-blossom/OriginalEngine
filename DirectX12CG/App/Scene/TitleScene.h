@@ -30,6 +30,7 @@ namespace MCB
 #pragma region テクスチャ
 		TextureCell* debugTextTexture_;
 		TextureCell* titleTex_;
+		TextureCell* backGroundTex_;
 
 #pragma endregion テクスチャ
 		bool debugView;
@@ -60,7 +61,7 @@ namespace MCB
 
 		Sprite titleSprite_;
 
-		Sprite scopeSprite_;
+		Sprite backGroundSprite_;
 
 		DebugText debugText_;
 
@@ -70,6 +71,7 @@ namespace MCB
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
+		Timer titleMoveTime_;
 #pragma endregion 通常変数
 	public:
 

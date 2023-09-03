@@ -34,6 +34,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			{
 				unique_ptr<Goal> temp = std::make_unique<Goal>();
 				temp->popModel_ = ModelManager::GetModel("star");
+				temp->SetPlayer(levelData->GetObjectPtr("player"));
 				objData->obj = move(temp);
 			}
 			else if (objData->tag == "player")
@@ -79,6 +80,10 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		objData->obj->scale_.z = static_cast<float>(transform["scaling"][2]);
 
 		if ((objData->tag == "NormalObject"))
+		{
+			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
+		}
+		else if ((objData->tag == "block"))
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 		}
@@ -141,11 +146,11 @@ Object3d* MCB::LevelLoader::LevelData::GetObjectPtr(std::string name)
 	return nullptr;
 }
 
-void MCB::LevelLoader::LevelData::Update()
+void MCB::LevelLoader::LevelData::Update(bool start)
 {
 	for (auto& itr : objects)
 	{
-		itr->obj->UniqueUpdate();
+		if(start)itr->obj->UniqueUpdate();
 	}
 }
 
@@ -158,11 +163,14 @@ void MCB::LevelLoader::LevelData::UpdateMatrix()
 	}
 }
 
-void MCB::LevelLoader::LevelData::Draw()
+void MCB::LevelLoader::LevelData::Draw(PipeLineManager* pipeline, bool wireFrame)
 {
 	for (auto& itr : objects)
 	{
-		if(itr->obj->model_)itr->obj->Draw();
+		if (itr->obj->model_)
+		{
+			itr->obj->Draw();
+		}
 	}
 
 }

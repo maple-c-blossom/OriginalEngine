@@ -13,6 +13,7 @@ namespace MCB
 		Sphere* sphere_ = nullptr;
 		Vector3D move = {};
 		Vector3D inter = {};
+		bool block = false;
 		bool OnQueryHit(const QueryHit& info)override;
 
 	};

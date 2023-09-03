@@ -23,6 +23,7 @@ void MCB::DebugCamera::Inilialize()
 
 void MCB::DebugCamera::Update()
 {
+	if (moveStop)return;
 	if (input_->IsKeyTrigger(DIK_R)) {
 		rotAngle_ = Vector2D();
 	}
@@ -67,9 +68,9 @@ void MCB::DebugCamera::Update()
 	}
 #pragma endregion
 
-	target_ += rightVec * (float)(input_->IsKeyDown(DIK_RIGHT) - input_->IsKeyDown(DIK_LEFT));
-	target_ += downVec * (float)(input_->IsKeyDown(DIK_DOWN) - input_->IsKeyDown(DIK_UP));
-	target_ += -frontVec * ((float)input_->IsKeyDown(DIK_N) - input_->IsKeyDown(DIK_M));
+	target_ += rightVec * ((float)(input_->IsKeyDown(DIK_RIGHT) - input_->IsKeyDown(DIK_LEFT)) * 0.25f);
+	target_ += downVec * ((float)(input_->IsKeyDown(DIK_DOWN) - input_->IsKeyDown(DIK_UP)) * 0.25f);
+	target_ += -frontVec * (((float)input_->IsKeyDown(DIK_N) - input_->IsKeyDown(DIK_M)) * 0.25f);
 
 
 	//if (rotAngle_.x_ >= PI * 2) rotAngle_.x_ -= PI * 2;

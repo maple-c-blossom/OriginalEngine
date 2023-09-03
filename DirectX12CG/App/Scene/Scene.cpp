@@ -8,8 +8,6 @@ using namespace DirectX;
 MCB::Scene::~Scene()
 {
     //soundManager_.AllDeleteSound();
-    zoomTex_->free = true;
-    debugTextTexture_->free = true;
     //modelManager_->erase();
     loader_->Erase();
 }
@@ -33,7 +31,11 @@ void MCB::Scene::Initialize()
     postEffect_->Init();
     postEffect_->color_.x_ = static_cast<float>(PostEffectNum::NONE);
     maincamera_.SetCameraTarget(level_->GetObjectPtr("player"));
-    goal = level_->GetObjectPtr("goal");
+    startTimer.TimeSet(300,300);
+    goal_ = dynamic_cast<Goal*>(level_->GetObjectPtr("goal"));
+    player_ = dynamic_cast<Player*>(level_->GetObjectPtr("player"));
+    player_->runFast = runFast;
+    player_->runNormal = runNormal;
 }
 
 void MCB::Scene::SetStage(std::string stageName)
@@ -109,7 +111,6 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
-    zoomTex_ = loader_->LoadTexture(L"Resources\\09_Test_Texture2.jpg");
     //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
     //zoomTex = loader->CreateNoTextureFileIsTexture();
 
@@ -118,11 +119,8 @@ void MCB::Scene::LoadTexture()
 
 void MCB::Scene::LoadSound()
 {
-    testSound_ = soundManager_->LoadWaveSound("Resources\\fanfare.wav");
-    test2Sound_ = soundManager_->LoadWaveSound("Resources\\cat1.wav");
-    soundManager_->SetVolume(100, testSound_);
-    volume_ = 100;
-    soundManager_->SetVolume(volume_, test2Sound_);
+    runNormal = soundManager_->LoadWaveSound("Resources\\sounds\\runNormal.wav");
+    runFast = soundManager_->LoadWaveSound("Resources\\sounds\\runFast.wav");
 }
 
 void MCB::Scene::SpriteInit()
@@ -149,9 +147,12 @@ unique_ptr<IScene> MCB::Scene::GetNextScene()
 
 void MCB::Scene::Update()
 {
-
-    level_->Update();
-    //player_.UniqueUpdate();
+    startTimer.SafeDownUpdate();
+    level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
+    if (goal_->GetIsGoal())
+    {
+        player_->currentAnimation_ = "Idle";
+    }
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
@@ -162,13 +163,8 @@ void MCB::Scene::Update()
     CheckAllColision();
     MatrixUpdate();
     
-    if (input_->IsKeyTrigger(DIK_LCONTROL))
-    {
-       //level_ = level_->ReLoad();
-        Goal::ResetGoal();
-    }
 
-    if (goal->sceneEnd && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
+    if (goal_->GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
     {
         sceneEnd_ = true;
     }
@@ -183,7 +179,7 @@ void MCB::Scene::Draw()
 void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
-    level_->Draw();
+    level_->Draw(pipeline_);
     //goal_.Draw();
     //check.Draw();
     pipeline_->SetFbxPipeLine();
@@ -199,8 +195,24 @@ void MCB::Scene::SpriteDraw()
     pipeline_->SetSpritePipeLine();
 
     debugText_.sprite_->color_ = { 1,1,1,1 };
-    debugText_.Print(10, 10, 1, "Move:WASD or LStick");
-    debugText_.Print(10, 30, 1, "(debug) Reset:LCONTROL");
+    debugText_.Print(10, 10, 1, "accele:W or RTrriger");
+    debugText_.Print(10, 30, 1, "brake:S or LTrriger");
+    debugText_.Print(10, 60, 1, "Move:AD or LStick");
+
+    if (!(startTimer.NowTime() <= 0))
+    {
+        int32_t time = startTimer.NowTime() / 60;
+        if(time > 0) debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_, 3, "%d", time);
+        else
+        {
+            debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_, 4, "START!!");
+            if (!startDrawed)
+            {
+                startTimer.TimeSet(10, 0);
+                startDrawed = true;
+            }
+        }
+    }
     level_->DebugTextDraw(&debugText_);
     //postEffect->Draw();
  /*   sprite.SpriteDraw(*zoomTex->texture.get(), 500, 100);*/
@@ -223,20 +235,20 @@ void MCB::Scene::CheckAllColision()
 void MCB::Scene::ImGuiUpdate()
 {
     imgui_.Begin();
-    ImGui::ShowDemoWindow();
-    //if (ImGui::CollapsingHeader("Infomation"))
-    //{
-    //    if (ImGui::TreeNode("operation"))
-    //    {
-    //        ImGui::Text("LevelReLoad:LCONTROL");
-    //        ImGui::TreePop();
-    //    }
-    //}
+    //ImGui::ShowDemoWindow();
+    ////if (ImGui::CollapsingHeader("Infomation"))
+    ////{
+    ////    if (ImGui::TreeNode("operation"))
+    ////    {
+    ////        ImGui::Text("LevelReLoad:LCONTROL");
+    ////        ImGui::TreePop();
+    ////    }
+    ////}
 
-    if (ImGui::CollapsingHeader("MotionModel"))
-    {
-         playerModel_->DrawHeirarchy();
-    }
+    //if (ImGui::CollapsingHeader("MotionModel"))
+    //{
+    //     playerModel_->DrawHeirarchy();
+    //}
     imgui_.End();
 }
 
