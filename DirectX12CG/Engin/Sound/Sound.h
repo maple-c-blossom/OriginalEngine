@@ -6,7 +6,7 @@
 #include <array>
 #include <memory>
 
-#pragma comment(lib,"xaudio2.lib")
+
 
 namespace MCB
 {

@@ -17,7 +17,7 @@ namespace MCB
         float speedRight_ = 0.0f;
         float rotasionSpeed_ = 0.015f;
         float defualtSpeed_ = 0.15f;
-        float maxFrontSpeed_ = 0.7f;
+        float maxFrontSpeed_ = 0.35f;
         float maxspeed_ = 0.35f;
         float accelerator_ = 0.005f;
         float acceleratorfront_ = 0.05f;

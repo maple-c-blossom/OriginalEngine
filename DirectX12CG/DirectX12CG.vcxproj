@@ -413,8 +413,9 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.lib" $(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.lib/Y
-echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.pdb" $(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.pdb/Y</Command>
+      <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.lib" "$(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.lib"/Y
+echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.pdb" "$(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.pdb"/Y
+echo D | xcopy "$(ProjectDir)Resources" "$(TargetDir)"/Y</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
