@@ -457,7 +457,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 	return textures;
 }
 
-void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
+void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 {
 	skeleton.SetTwoBoneIK(objPos, targetPos);
 }
@@ -854,13 +854,16 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::SetTwoBoneIK(const Vector3D& objPos, const Vector3D& targetPos, const Vector3D& constraintPosition,
+   void MCB::Skeleton::SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition,
 	   const string& boneName)
    {
+	   Vector3D pos(obj.position_.x,obj.position_.y,obj.position_.z);
+	   WorldMatrix mat = obj.matWorld_;
+	   MCBMatrix worldMatInv = XMMatrixInverse(nullptr,mat.matWorld_);
 	   Node* node;
 	   if (boneName == "NULL")
 	   {
-			 node = GetNearPositionNode(targetPos,objPos);
+			 node = GetNearPositionNode(targetPos,pos);
 	   }
 	   else
 	   {
@@ -869,9 +872,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
-		   node->ikData.iKEffectorPosition = targetPos - objPos;
+		  
+		   node->ikData.iKEffectorPosition = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(targetPos) * worldMatInv);
 		   node->ikData.constraintWorldVector = constraintPosition;
-		   node->ikData.constraintModelVector = constraintPosition - objPos;
+		   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
 	   }
    }
    void MCB::Skeleton::TwoBoneIKOff(const string& boneName)
@@ -1191,8 +1195,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos)
 	   boneLine.DrawLine(object->camera_);
 	   if (ikData.isIK)
 	   {
-		   //ikData.constraintLine.DrawLine(object->camera_);
-		   //ikData.effectorVecFromRoot.DrawLine(object->camera_);
-		   //ikData.effectorVecFromMiddle.DrawLine(object->camera_);
+		   ikData.constraintLine.DrawLine(object->camera_);
+		   ikData.effectorVecFromRoot.DrawLine(object->camera_);
+		   ikData.effectorVecFromMiddle.DrawLine(object->camera_);
 	   }
    }

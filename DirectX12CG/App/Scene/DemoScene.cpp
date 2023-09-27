@@ -27,14 +27,17 @@ void MCB::DemoScene::MatrixUpdate()
     Skydorm_.Update();
     ground_.Update();
     test2Animation_.AnimationUpdate();
-    testsphere_.Update();
+    for (auto& obj : effectorObjects_)
+    {
+        obj.Update();
+    }
     test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
         &test2Animation_,boxModel_.get());
 }
 
 void MCB::DemoScene::Update()
 {
-    if (objChenge)
+    if (objChenge_)
     {
         test2Animation_.animationModel_ = animModel_.get();
     }
@@ -48,67 +51,75 @@ void MCB::DemoScene::Update()
         soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
-    DirectX::XMFLOAT3* pos = &testsphere_.position_;
 
-    if (PoleVecMove)
+    for (int8_t i = 0; i < 4; i++)
     {
-        pos = &poleVec;
-    }
-    else
-    {
-        pos = &testsphere_.position_;
-    }
+        if (noMove[i]) continue;
+        DirectX::XMFLOAT3* pos = &effectorObjects_[i].position_;
 
-
-    if (input_->IsKeyDown(DIK_W))
-    {
-        pos->z += 0.05f;
-    }
-    
-    if (input_->IsKeyDown(DIK_S))
-    {
-        pos->z -= 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_D))
-    {
-        pos->x += 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_A))
-    {
-        pos->x -= 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_SPACE))
-    {
-        pos->y += 0.05f;
-    }
-
-    if (input_->IsKeyDown(DIK_LCONTROL))
-    {
-        pos->y -= 0.05f;
-    }
-
-    if (isIk)
-    {
-        if (objChenge)
+        if (PoleVecMove_[i])
         {
-            test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-                { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-                { poleVec.x,poleVec.y,poleVec.z }, "Bone3");
+            pos = &poleVec_[i];
         }
         else
         {
-            test2Animation_.animationModel_->skeleton.SetTwoBoneIK({ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z },
-                { testsphere_.position_.x,testsphere_.position_.y,testsphere_.position_.z },
-                { poleVec.x,poleVec.y,poleVec.z }, "Wrist.L");
+            pos = &effectorObjects_[i].position_;
+        }
+
+
+        if (input_->IsKeyDown(DIK_W))
+        {
+            pos->z += 0.05f;
+        }
+
+        if (input_->IsKeyDown(DIK_S))
+        {
+            pos->z -= 0.05f;
+        }
+
+        if (input_->IsKeyDown(DIK_D))
+        {
+            pos->x += 0.05f;
+        }
+
+        if (input_->IsKeyDown(DIK_A))
+        {
+            pos->x -= 0.05f;
+        }
+
+        if (input_->IsKeyDown(DIK_SPACE))
+        {
+            pos->y += 0.05f;
+        }
+
+        if (input_->IsKeyDown(DIK_LCONTROL))
+        {
+            pos->y -= 0.05f;
         }
     }
-    else
+
+    for (int8_t i = 0; i < 4; i++)
     {
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Wrist.L");
-        test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+        if (isIk_[i])
+        {
+            if (objChenge_)
+            {
+                test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
+                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, "Bone3");
+            }
+            else
+            {
+                test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
+                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].c_str());
+            }
+        }
+        else
+        {
+            test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].c_str());
+            test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+        }
     }
     MatrixUpdate();
 }
@@ -120,15 +131,18 @@ void MCB::DemoScene::PostEffectDraw()
     Skydorm_.Draw();
     pipeline_->SetObjPipeLine();
     ground_.Draw();
-    testsphere_.Draw();
-    if (debugView)
+    for (auto& obj : effectorObjects_)
+    {
+        obj.Draw();
+    }
+    if (debugView_)
     {
         test2Animation_.animationModel_->skeleton.JointObjectDraw();
         pipeline_->SetLinePipeLine();
         test2Animation_.animationModel_->skeleton.JointLineDraw();
     }
     pipeline_->SetFbxPipeLine();
-    if (debugView)
+    if (debugView_)
     {
         pipeline_->SetFbxPipeLine(true);
     }
@@ -165,12 +179,31 @@ void MCB::DemoScene::CheckAllColision()
 void MCB::DemoScene::ImGuiUpdate()
 {
     imgui_.Begin();
-    ImGui::Checkbox("debugView", &debugView);
-    ImGui::Checkbox("isIK", &isIk);
-    ImGui::Checkbox("poleVectorMove", &PoleVecMove);
-    ImGui::Checkbox("IkModelChenge", &objChenge);
+    ImGui::Checkbox("debugView", &debugView_);
+    if (ImGui::TreeNode("IkSet"))
+    {
+        for (int8_t i = 0; i < 4; i++)
+        {
+            std::string bone = ikBoneName_[i];
+            if (ImGui::TreeNode(bone.c_str()))
+            {
+                bone = bone + ":isIk";
+                ImGui::Checkbox(bone.c_str(), &isIk_[i]);
+                bone = bone + ":NoMove";
+                ImGui::Checkbox(bone.c_str(), &noMove[i]);
+                bone = ikBoneName_[i];
+                bone = bone + ":poleVectorMove";
+                ImGui::Checkbox(bone.c_str(), &PoleVecMove_[i]);
+                bone = ikBoneName_[i];
+                bone = bone + ":effector";
+                ImGui::Text("%s:%f,%f,%f", bone.c_str(), effectorObjects_[i].position_.x, effectorObjects_[i].position_.y, effectorObjects_[i].position_.z);
+                ImGui::TreePop();
+            }
+        }
+        ImGui::TreePop();
+    }
+    ImGui::Checkbox("IkModelChenge", &objChenge_);
     test2Animation_.animationModel_->DrawHeirarchy();
-    ImGui::Text("effector:%f,%f,%f", testsphere_.position_.x, testsphere_.position_.y, testsphere_.position_.z);
     ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
     imgui_.End();
 }
@@ -261,18 +294,23 @@ void MCB::DemoScene::Object3DInit()
     Skydorm_.scale_ = { 4,4,4 };
     Skydorm_.camera_ = viewCamera_;
 
-    testsphere_.Init();
-    //testsphere.model = BoxModel;
-    testsphere_.model_ = sphereModel_.get();
-    testsphere_.scale_ = { 0.25f,0.25f,0.25f };
-    testsphere_.position_ = { 5,1,0 };
-    testsphere_.rotation_.y = ConvertRadius(90);
-    testsphere_.camera_ = viewCamera_;
-
+    for (int8_t i = 0; i < 4; i++)
+    {
+        effectorObjects_[i].Init();
+        //testsphere.model = BoxModel;
+        effectorObjects_[i].model_ = sphereModel_.get();
+        effectorObjects_[i].scale_ = { 0.25f,0.25f,0.25f };
+        effectorObjects_[i].position_ = { 5,1,0 };
+        effectorObjects_[i].rotation_.y = ConvertRadius(90);
+        effectorObjects_[i].camera_ = viewCamera_;
+    }
     test2Animation_.animationModel_ = anim2Model_.get();
     test2Animation_.scale_ = { 1,1,1 };
     test2Animation_.position_ = { 0,0,0 };
     test2Animation_.camera_ = viewCamera_;
 
-    poleVec = { 3,2,0 };
+    poleVec_[0] = {3,2,0};
+    poleVec_[1] = {3,2,0};
+    poleVec_[2] = {3,2,0};
+    poleVec_[3] = {3,2,0};
 }

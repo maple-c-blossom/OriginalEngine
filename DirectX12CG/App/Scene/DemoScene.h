@@ -32,13 +32,14 @@ namespace MCB
 		TextureCell* titleTex_;
 
 #pragma endregion テクスチャ
-		bool debugView;
-		bool isIk;
+		bool debugView_;
+		std::array<bool,4> isIk_;
+		std::array<bool,4> noMove;
 		//サウンド
 #pragma region サウンド
 		size_t selectSound_;
 		size_t test2Sound_;
-
+		
 		int32_t volume_ = 255;
 #pragma endregion サウンド
 
@@ -47,13 +48,13 @@ namespace MCB
 #pragma region 3Dオブジェクト
 		Object3d ground_;
 		Object3d Skydorm_;
-		Object3d testsphere_;
+		std::array<Object3d,4> effectorObjects_;
 		Object3d test2Animation_;
 		Player play_;
-		DirectX::XMFLOAT3 poleVec;
-
-		bool PoleVecMove;
-		bool objChenge;
+		std::array<DirectX::XMFLOAT3,4> poleVec_;
+		std::array<bool, 4> PoleVecMove_ = { false,false,false,false };
+		bool objChenge_;
+		std::array<std::string, 4> ikBoneName_ = {"Wrist.L","Wrist.R","Foot.L","Foot.R"};
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

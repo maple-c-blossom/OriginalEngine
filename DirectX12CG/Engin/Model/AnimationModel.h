@@ -208,7 +208,7 @@ namespace MCB
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(const Vector3D& objPos, const Vector3D& targetPos, const Vector3D& constraintPosition = {0,1,0}, 
+        void SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition = {0,1,0},
            const std::string& boneName = "NULL");
 
         void TwoBoneIKOff(const std::string& boneName);
@@ -269,7 +269,7 @@ namespace MCB
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeの階層構造並びにmeshの解析、抽出
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh内のデータを解析、抽出
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material内のTexture情報の解析,抽出
-        void TwoBoneIkOrder(Vector3D objPos, Vector3D targetPos);
+        void TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos);
         void Draw();//Modelの描画
         void DrawHeirarchy();
         
