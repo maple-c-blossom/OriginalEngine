@@ -1,27 +1,30 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <DirectXMath.h>
 #include <Windows.h>
 #include <wrl.h>
-#include "Dx12.h"
 #include <d3d12.h>
-#include "ObjectMaterial.h"
 #include <vector>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
+#include <string>
+WarningIgnoreEnd
+#include "Dx12.h"
+#include "ObjectMaterial.h"
 #include "MCBFloat.h"
 #include "TextureManager.h"
-#include <unordered_map>
 #include "Vector3D.h"
-#include <string>
 namespace MCB
 {
-    //’¸“_ƒf[ƒ^\‘¢‘Ì-------------------------------------
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“-------------------------------------
     typedef struct ObjectVertex
     {
-        Float3 pos;//xyzÀ•W
-        Float3 normal;//–@üƒxƒNƒgƒ‹
-        Float2 uv;//uvÀ•W
+        Float3 pos;//xyzåº§æ¨™
+        Float3 normal;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+        Float2 uv;//uvåº§æ¨™
     }ObjectVertex;
     //--------------------------------------
     class Model
@@ -37,6 +40,7 @@ namespace MCB
         Microsoft::WRL::ComPtr<ID3D12Resource> vertBuff_ = nullptr;
 
         bool isDelete_ = false;
+		Byte7 pad1;
         std::string fileName_;
 
         TextureManager* loader_ = TextureManager::GetInstance();
@@ -52,9 +56,9 @@ namespace MCB
 
         D3D12_VERTEX_BUFFER_VIEW vbView_{};
 
-        //D3D12_HEAP_PROPERTIES heapprop{};   // ƒq[ƒvİ’è
+        //D3D12_HEAP_PROPERTIES heapprop{};   // ãƒ’ãƒ¼ãƒ—è¨­å®š
 
-        //D3D12_RESOURCE_DESC resdesc{};  // ƒŠƒ\[ƒXİ’è
+        //D3D12_RESOURCE_DESC resdesc{};  // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 
         ObjectMaterial material_;
 

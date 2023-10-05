@@ -1,7 +1,11 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
-#include "Vector3D.h"
 #include <array>
+WarningIgnoreEnd
+#include "Vector3D.h"
+#include "Pading.h"
 
 namespace MCB
 {
@@ -15,13 +19,14 @@ namespace MCB
 		MESH
 	};
 
-	const uint16_t ATTRIBUTE_LANDSHAPE = 0b1 << 0;//ínñ 
-	const uint16_t ATTRIBUTE_FLENDRY = 0b1 << 1;//ñ°ï˚
-	const uint16_t ATTRIBUTE_ENEMY = 0b1 << 2;//ìG
+	const uint16_t ATTRIBUTE_LANDSHAPE = 0b1 << 0;//Âú∞Èù¢
+	const uint16_t ATTRIBUTE_FLENDRY = 0b1 << 1;//Âë≥Êñπ
+	const uint16_t ATTRIBUTE_ENEMY = 0b1 << 2;//Êïµ
 
 	class Triangle
 	{
 	public:
+
 		std::array<Vector3D,3> vertexPoint_ = {};
 		Vector3D normal_ = {};
 		void NormalCalculation();
@@ -34,6 +39,8 @@ namespace MCB
 		float range_ = 0;
 		float radius_ = 0;
 		bool rayCasted_ = false;
+	private:
+		Byte3 pad1;
 	};
 
 	class Box
@@ -54,7 +61,7 @@ namespace MCB
 	{
 	public:
 		Vector3D normal_ = {0,1,0};
-		float originDistance_ = 0;//å¥ì_Ç©ÇÁÇÃãóó£
+		float originDistance_ = 0;//ÂéüÁÇπ„Åã„Çâ„ÅÆË∑ùÈõ¢
 	};
 
 

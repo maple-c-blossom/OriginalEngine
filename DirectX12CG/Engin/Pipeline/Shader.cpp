@@ -1,7 +1,9 @@
 #include "Shader.h"
+WarningIgnoreBegin
 #include <d3dcompiler.h>
 #include <string>
 #include <cassert>
+WarningIgnoreEnd
 
 using namespace std;
 
@@ -14,16 +16,16 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
     {
     case VS:
         result = D3DCompileFromFile(
-            shaderFileName,  // ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹–¼
+            shaderFileName,  // ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«å
             nullptr,
-            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ƒCƒ“ƒNƒ‹[ƒh‰Â”\‚É‚·‚é
-            entryPoint, "vs_5_0", // ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg–¼AƒVƒF[ƒ_[ƒ‚ƒfƒ‹w’è
-            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ƒfƒoƒbƒO—pİ’è
+            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰å¯èƒ½ã«ã™ã‚‹
+            entryPoint, "vs_5_0", // ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆåã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«æŒ‡å®š
+            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ãƒ‡ãƒãƒƒã‚°ç”¨è¨­å®š
             0,
             &vsBlob_, &errorBlob_);
 
         if (FAILED(result)) {
-            // errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
+            // errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
             std::string error;
             error.resize(errorBlob_->GetBufferSize());
 
@@ -31,48 +33,48 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
                 errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
-            // ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
+            // ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
             OutputDebugStringA(error.c_str());
-            assert(0 && "VSƒRƒ“ƒpƒCƒ‹ƒGƒ‰[");
+            assert(0 && "VSã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼");
         }
         break;
 
     case PS:
         result = D3DCompileFromFile(
-            shaderFileName,  // ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹–¼
+            shaderFileName,  // ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«å
             nullptr,
-            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ƒCƒ“ƒNƒ‹[ƒh‰Â”\‚É‚·‚é
-            entryPoint, "ps_5_0", // ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg–¼AƒVƒF[ƒ_[ƒ‚ƒfƒ‹w’è
-            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ƒfƒoƒbƒO—pİ’è
+            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰å¯èƒ½ã«ã™ã‚‹
+            entryPoint, "ps_5_0", // ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆåã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«æŒ‡å®š
+            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ãƒ‡ãƒãƒƒã‚°ç”¨è¨­å®š
             0,
             &psBlob_, &errorBlob_);
 
         if (FAILED(result)) {
-            // errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
+            // errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
             std::string error;
             error.resize(errorBlob_->GetBufferSize());
-
+			
             copy_n((char*)errorBlob_->GetBufferPointer(),
                 errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
-            // ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
+            // ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
             OutputDebugStringA(error.c_str());
-            assert(0 && "PSƒRƒ“ƒpƒCƒ‹ƒGƒ‰[");
+            assert(0 && "PSã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼");
         }
         break;
     case GS:
         result = D3DCompileFromFile(
-            shaderFileName,  // ƒVƒF[ƒ_ƒtƒ@ƒCƒ‹–¼
+            shaderFileName,  // ã‚·ã‚§ãƒ¼ãƒ€ãƒ•ã‚¡ã‚¤ãƒ«å
             nullptr,
-            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ƒCƒ“ƒNƒ‹[ƒh‰Â”\‚É‚·‚é
-            entryPoint, "gs_5_0", // ƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg–¼AƒVƒF[ƒ_[ƒ‚ƒfƒ‹w’è
-            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ƒfƒoƒbƒO—pİ’è
+            D3D_COMPILE_STANDARD_FILE_INCLUDE, // ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰å¯èƒ½ã«ã™ã‚‹
+            entryPoint, "gs_5_0", // ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆåã€ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒ¢ãƒ‡ãƒ«æŒ‡å®š
+            D3DCOMPILE_DEBUG | D3DCOMPILE_SKIP_OPTIMIZATION, // ãƒ‡ãƒãƒƒã‚°ç”¨è¨­å®š
             0,
             &gsBlob_, &errorBlob_);
 
         if (FAILED(result)) {
-            // errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
+            // errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
             std::string error;
             error.resize(errorBlob_->GetBufferSize());
 
@@ -80,9 +82,9 @@ void MCB::Shader::ShaderCompile(const wchar_t* shaderFileName, const char* entry
                 errorBlob_->GetBufferSize(),
                 error.begin());
             error += "\n";
-            // ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
+            // ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
             OutputDebugStringA(error.c_str());
-            assert(0 && "GSƒRƒ“ƒpƒCƒ‹ƒGƒ‰[");
+            assert(0 && "GSã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã‚¨ãƒ©ãƒ¼");
         }
         break;
     default:

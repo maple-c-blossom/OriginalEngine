@@ -112,12 +112,12 @@ void MCB::DemoScene::Update()
             {
                 test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
                     { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
-                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].c_str());
+                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
             }
         }
         else
         {
-            test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].c_str());
+            test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
             test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
         }
     }
@@ -184,17 +184,17 @@ void MCB::DemoScene::ImGuiUpdate()
     {
         for (int8_t i = 0; i < 4; i++)
         {
-            std::string bone = ikBoneName_[i];
+            std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
                 bone = bone + ":isIk";
                 ImGui::Checkbox(bone.c_str(), &isIk_[i]);
                 bone = bone + ":NoMove";
                 ImGui::Checkbox(bone.c_str(), &noMove[i]);
-                bone = ikBoneName_[i];
+                bone = ikBoneName_[i].endJointName;
                 bone = bone + ":poleVectorMove";
                 ImGui::Checkbox(bone.c_str(), &PoleVecMove_[i]);
-                bone = ikBoneName_[i];
+                bone = ikBoneName_[i].endJointName;
                 bone = bone + ":effector";
                 ImGui::Text("%s:%f,%f,%f", bone.c_str(), effectorObjects_[i].position_.x, effectorObjects_[i].position_.y, effectorObjects_[i].position_.z);
                 ImGui::TreePop();

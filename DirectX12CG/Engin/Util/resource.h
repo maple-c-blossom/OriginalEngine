@@ -1,12 +1,13 @@
 //{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ ‚Å¶¬‚³‚ê‚½ƒCƒ“ƒNƒ‹[ƒh ƒtƒ@ƒCƒ‹B
-// DirectX12CG.rc ‚Åg—p
+// Microsoft Visual C++ ã§ç”Ÿæˆã•ã‚ŒãŸã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ ãƒ•ã‚¡ã‚¤ãƒ«ã€‚
+// DirectX12CG.rc ã§ä½¿ç”¨
 //
 #define IDI_ICON1                       101
 #define MapleIcon                       101
 
 // Next default values for new objects
-// 
+//
+
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        102

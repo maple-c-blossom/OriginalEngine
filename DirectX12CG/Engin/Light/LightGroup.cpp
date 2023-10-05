@@ -9,15 +9,29 @@ ID3D12Device* MCB::LightGroup::sdevice_ = nullptr;
 
 void LightGroup::StaticInitialize()
 {
-	// Ä‰Šú‰»ƒ`ƒFƒbƒN
+	// å†åˆæœŸåŒ–ãƒã‚§ãƒƒã‚¯
 	assert(!LightGroup::sdevice_);
 
-	// nullptrƒ`ƒFƒbƒN
+	// nullptrãƒã‚§ãƒƒã‚¯
 	assert(Dx12::GetInstance()->device_.Get());
 
 	LightGroup::sdevice_ = Dx12::GetInstance()->device_.Get();
 }
 
+
+LightGroup& MCB::LightGroup::operator=(const LightGroup&) = default;
+
+MCB::LightGroup::~LightGroup()
+{
+}
+
+MCB::LightGroup::LightGroup()
+{
+}
+
+MCB::LightGroup::LightGroup(const LightGroup&)
+{
+}
 
 LightGroup* MCB::LightGroup::GetInstance()
 {
@@ -35,18 +49,20 @@ LightGroup* MCB::LightGroup::GetInitInstance()
 }
 void LightGroup::Initialize()
 {
-	// nullptrƒ`ƒFƒbƒN
+	// nullptrãƒã‚§ãƒƒã‚¯
 	assert(sdevice_);
 
 	DefaultLightSet();
 
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Ì¶¬
+	CD3DX12_HEAP_PROPERTIES cd3dx12heap(D3D12_HEAP_TYPE_UPLOAD);
+	CD3DX12_RESOURCE_DESC cd3dx12rd = CD3DX12_RESOURCE_DESC::Buffer(( sizeof(LightGroupConstBuff) + 0xff ) & ~0xff);
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = sdevice_->CreateCommittedResource
 	(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), 	// ƒAƒbƒvƒ[ƒh‰Â”\
+		&cd3dx12heap,
 		D3D12_HEAP_FLAG_NONE,
-		&CD3DX12_RESOURCE_DESC::Buffer((sizeof(LightGroupConstBuff) + 0xff) & ~0xff),
+		&cd3dx12rd,
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuff_)
@@ -56,13 +72,13 @@ void LightGroup::Initialize()
 		assert(0);
 	}
 
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	TransferConstBuff();
 }
 
 void LightGroup::UpDate()
 {
-	// ’l‚ÌXV‚ª‚ ‚Á‚½Žž‚¾‚¯’è”ƒoƒbƒtƒ@‚É“]‘—‚·‚é
+	// å€¤ã®æ›´æ–°ãŒã‚ã£ãŸæ™‚ã ã‘å®šæ•°ãƒãƒƒãƒ•ã‚¡ã«è»¢é€ã™ã‚‹
 	if (isUpdate_) 
 	{
 		TransferConstBuff();
@@ -72,7 +88,7 @@ void LightGroup::UpDate()
 
 void LightGroup::Draw( uint32_t rootParameterIndex)
 {
-	// ’è”ƒoƒbƒtƒ@ƒrƒ…[‚ðƒZƒbƒg
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(rootParameterIndex,
 		constBuff_->GetGPUVirtualAddress());
 }
@@ -80,7 +96,7 @@ void LightGroup::Draw( uint32_t rootParameterIndex)
 void LightGroup::TransferConstBuff()
 {
 	HRESULT result;
-	// ’è”ƒoƒbƒtƒ@‚Öƒf[ƒ^“]‘—
+	// å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ãƒ‡ãƒ¼ã‚¿è»¢é€
 	LightGroupConstBuff* constMap = nullptr;
 	result = constBuff_->Map(0, nullptr, (void**)&constMap);
 	if (SUCCEEDED(result)) 
@@ -88,7 +104,7 @@ void LightGroup::TransferConstBuff()
 		constMap->ambientColor = ambientColor_;
 		for (int32_t i = 0; i < sDIR_LIGHT_NUM_; i++) 
 		{
-			// ƒ‰ƒCƒg‚ª—LŒø‚È‚çÝ’è‚ð“]‘—
+			// ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (dirLights_[i].IsActive())
 			{
 				constMap->dirLights[i].active = 1;
@@ -96,7 +112,7 @@ void LightGroup::TransferConstBuff()
 				constMap->dirLights[i].lightColor = dirLights_[i].GetLightColor();
 				constMap->dirLights[i].shininess = dirLights_[i].GetLightShininess();
 			}
-			// ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒgF‚ð0‚É
+			// ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆè‰²ã‚’0ã«
 			else 
 			{
 				constMap->dirLights[i].active = 0;
@@ -105,7 +121,7 @@ void LightGroup::TransferConstBuff()
 
 		for (int32_t i = 0; i < sP_LIGHT_NUM_; i++)
 		{
-			// ƒ‰ƒCƒg‚ª—LŒø‚È‚çÝ’è‚ð“]‘—
+			// ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (PLights_[i].IsActive()) 
 			{
 				constMap->PLights[i].active = 1;
@@ -114,7 +130,7 @@ void LightGroup::TransferConstBuff()
 				constMap->PLights[i].lightAtten = PLights_[i].GetPLightAtten();
 				constMap->PLights[i].shininess = PLights_[i].GetPLightShininess();
 			}
-			// ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒgF‚ð0‚É
+			// ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆè‰²ã‚’0ã«
 			else {
 				constMap->PLights[i].active = 0;
 			}
@@ -122,7 +138,7 @@ void LightGroup::TransferConstBuff()
 
 		for (int32_t i = 0; i < sS_LIGHT_NUM_; i++) 
 		{
-			// ƒ‰ƒCƒg‚ª—LŒø‚È‚çÝ’è‚ð“]‘—
+			// ãƒ©ã‚¤ãƒˆãŒæœ‰åŠ¹ãªã‚‰è¨­å®šã‚’è»¢é€
 			if (SLights_[i].IsActive()) 
 			{
 				constMap->SLights[i].active = 1;
@@ -133,7 +149,7 @@ void LightGroup::TransferConstBuff()
 				constMap->SLights[i].shininess = SLights_[i].GetSLightShininess();
 				constMap->SLights[i].lightFactorAngleCos = SLights_[i].GetSLightFactorAngle();
 			}
-			// ƒ‰ƒCƒg‚ª–³Œø‚È‚çƒ‰ƒCƒgF‚ð0‚É
+			// ãƒ©ã‚¤ãƒˆãŒç„¡åŠ¹ãªã‚‰ãƒ©ã‚¤ãƒˆè‰²ã‚’0ã«
 			else 
 			{
 				constMap->SLights[i].active = 0;

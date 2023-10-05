@@ -4,6 +4,7 @@ using namespace MCB;
 
 uint16_t MCB::ShaderResource::sAllincrementNum_ = 0;
 
+
 void MCB::ShaderResource::Init()
 {
     SetHeapDesc(D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE);
@@ -15,8 +16,8 @@ void MCB::ShaderResource::Init()
 void MCB::ShaderResource::SetHeapDesc(const D3D12_DESCRIPTOR_HEAP_FLAGS& flags)
 {
     srvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
-    srvHeapDesc_.Flags = flags; //�V�F�[�_�[���猩����悤��
-    srvHeapDesc_.NumDescriptors = (uint32_t)MAX_SRV_COUNT_;//�萔�o�b�t�@�̐�
+    srvHeapDesc_.Flags = flags; //シェーダーから見えるように
+    srvHeapDesc_.NumDescriptors = (uint32_t)MAX_SRV_COUNT_;//定数バッファの数
 }
 
 HRESULT MCB::ShaderResource::SetDescriptorHeap()
@@ -26,11 +27,11 @@ HRESULT MCB::ShaderResource::SetDescriptorHeap()
 
 void MCB::ShaderResource::SetShaderResourceView(TextureBuffer& texBuffer)
 {
-    //�q�[�v�̓�ԖڂɃV�F�[�_�[���\�[�X�r���[�쐬
+    //ヒープの二番目にシェーダーリソースビュー作成
     Dx12::GetInstance()->device_->CreateShaderResourceView(texBuffer.texbuff_.Get(), &srvDesc_, srvHandle_);
 }
 
-void MCB::ShaderResource::SetDescriptorRange( int32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, 
+void MCB::ShaderResource::SetDescriptorRange( uint32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type, 
      int32_t BaseShaderRegister,  size_t index)
 {
     size_t i = min(static_cast<size_t>(descriptorRange_.size()) - 1, index);

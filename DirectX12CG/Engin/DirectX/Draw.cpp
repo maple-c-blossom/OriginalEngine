@@ -1,36 +1,38 @@
 #include "Draw.h"
 #include "FPS.h"
+using namespace MCB;
 void MCB::Draw::SetBeforeResourceBarrier()
 {
     barrierDesc_ = {};
-    barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // ƒoƒbƒNƒoƒbƒtƒ@‚ğw’è
-    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // •\¦‚©‚ç
-    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æ
+    barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’æŒ‡å®š
+    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT; // è¡¨ç¤ºã‹ã‚‰
+    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // æç”»
     Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 void MCB::Draw::SetBeforeResourceBarrierAfterPostEffect()
 {
     //barrierDesc_ = {};
-    //barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // ƒoƒbƒNƒoƒbƒtƒ@‚ğw’è
-    //barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // •\¦‚©‚ç
-    //barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æ
+    //barrierDesc_.Transition.pResource = Dx12::GetInstance()->backBuffers_[bbIndex_].Get(); // ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡ã‚’æŒ‡å®š
+    //barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // è¡¨ç¤ºã‹ã‚‰
+    //barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET; // æç”»
     //Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 
 void MCB::Draw::BeforeDraw(const Depth& depth, const PipelineRootSignature& pipeline)
 {
+	static_cast< void >( depth );
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* srv = ShaderResource::GetInstance();
     dx12->commandList_->SetPipelineState(pipeline.pipeline_.pipelinestate_.Get());
     dx12->commandList_->SetGraphicsRootSignature(pipeline.rootsignature_.rootsignature_.Get());
 
 
-    //ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒhiOŠpŒ`ƒŠƒXƒgj--------------------------
+    //ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆä¸‰è§’å½¢ãƒªã‚¹ãƒˆï¼‰--------------------------
     dx12->commandList_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-    //SRVƒq[ƒv‚Ìİ’èƒRƒ}ƒ“ƒh
+    //SRVãƒ’ãƒ¼ãƒ—ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
     dx12->commandList_->SetDescriptorHeaps(1, srv->srvHeap_.GetAddressOf());
 }
 
@@ -38,6 +40,12 @@ void MCB::Draw::SetBeforeBbIndex()
 {
 
     bbIndex_ = Dx12::GetInstance()->swapchain_->GetCurrentBackBufferIndex();
+}
+
+Draw& MCB::Draw::operator=(const Draw&) = default;
+
+MCB::Draw::~Draw()
+{
 }
 
 D3D12_RESOURCE_BARRIER MCB::Draw::GetResouceBarrier()
@@ -52,17 +60,17 @@ uint32_t MCB::Draw::GetBbIndex()
 
 void MCB::Draw::SetAfterResourceBarrier()
 {
-    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // •`‰æ
-    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // •\¦‚É
+    barrierDesc_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET; // æç”»
+    barrierDesc_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;   // è¡¨ç¤ºã«
     Dx12::GetInstance()->commandList_->ResourceBarrier(1, &barrierDesc_);
 }
 
 void MCB::Draw::CloseDrawCommandOrder()
 {
     Dx12* dx12 = Dx12::GetInstance();
-    // –½—ß‚ÌƒNƒ[ƒY----------------------------------
+    // å‘½ä»¤ã®ã‚¯ãƒ­ãƒ¼ã‚º----------------------------------
     dx12->result_ = dx12->commandList_->Close();
-    assert(SUCCEEDED(dx12->result_) && "–½—ßƒNƒ[ƒY’iŠK‚Å‚ÌƒGƒ‰[");
+    assert(SUCCEEDED(dx12->result_) && "å‘½ä»¤ã‚¯ãƒ­ãƒ¼ã‚ºæ®µéšã§ã®ã‚¨ãƒ©ãƒ¼");
     //------------
 }
 
@@ -114,18 +122,18 @@ void MCB::Draw::CommandListExecution()
 {
 
     Dx12* dx12 = Dx12::GetInstance();
-    // ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀs-------------------------------------
-#pragma region ƒRƒ}ƒ“ƒhƒŠƒXƒgÀs
-    ID3D12CommandList* commandLists[] = { dx12->commandList_.Get() }; // ƒRƒ}ƒ“ƒhƒŠƒXƒg‚Ì”z—ñ
+    // ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å®Ÿè¡Œ-------------------------------------
+#pragma region ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆå®Ÿè¡Œ
+    ID3D12CommandList* commandLists[] = { dx12->commandList_.Get() }; // ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®é…åˆ—
     dx12->commandQueue_->ExecuteCommandLists(1, commandLists);
 
-    // ƒoƒbƒtƒ@‚ğƒtƒŠƒbƒvi— •\‚Ì“ü‘Ö‚¦)-----------------------
+    // ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ•ãƒªãƒƒãƒ—ï¼ˆè£è¡¨ã®å…¥æ›¿ãˆ)-----------------------
     dx12->result_ = dx12->swapchain_->Present(1, 0);
-    assert(SUCCEEDED(dx12->result_) && "ƒoƒbƒtƒ@ƒtƒŠƒbƒv’iŠK‚Å‚ÌƒGƒ‰[");
+    assert(SUCCEEDED(dx12->result_) && "ãƒãƒƒãƒ•ã‚¡ãƒ•ãƒªãƒƒãƒ—æ®µéšã§ã®ã‚¨ãƒ©ãƒ¼");
     //-----------------
 
-#pragma region ƒRƒ}ƒ“ƒhÀsŠ®—¹‘Ò‚¿
-    // ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ÌÀsŠ®—¹‚ğ‘Ò‚Â
+#pragma region ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œå®Œäº†å¾…ã¡
+    // ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã®å®Ÿè¡Œå®Œäº†ã‚’å¾…ã¤
     dx12->commandQueue_->Signal(dx12->fence_.Get(), ++dx12->fenceVal_);
     if (dx12->fence_->GetCompletedValue() != dx12->fenceVal_)
     {
@@ -137,7 +145,7 @@ void MCB::Draw::CommandListExecution()
             CloseHandle(event);
         }
     }
-#pragma endregion ƒRƒ}ƒ“ƒhÀsŠ®—¹‘Ò‚¿
+#pragma endregion ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œå®Œäº†å¾…ã¡
 }
 
 void MCB::Draw::SetScissorrect()
@@ -148,10 +156,10 @@ void MCB::Draw::SetScissorrect()
 
     scissorrect_ = {};
 
-    scissorrect_.left = 0;                                       // Ø‚è”²‚«À•W¶
-    scissorrect_.right = scissorrect_.left + dxWindow->sWINDOW_WIDTH_;        // Ø‚è”²‚«À•W‰E
-    scissorrect_.top = 0;                                        // Ø‚è”²‚«À•Wã
-    scissorrect_.bottom = scissorrect_.top + dxWindow->sWINDOW_HEIGHT_;       // Ø‚è”²‚«À•W‰º
+    scissorrect_.left = 0;                                       // åˆ‡ã‚ŠæŠœãåº§æ¨™å·¦
+    scissorrect_.right = scissorrect_.left + dxWindow->sWINDOW_WIDTH_;        // åˆ‡ã‚ŠæŠœãåº§æ¨™å³
+    scissorrect_.top = 0;                                        // åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸Š
+    scissorrect_.bottom = scissorrect_.top + dxWindow->sWINDOW_HEIGHT_;       // åˆ‡ã‚ŠæŠœãåº§æ¨™ä¸‹
 
     dx12->commandList_->RSSetScissorRects(1, &scissorrect_);
 }
@@ -159,13 +167,13 @@ void MCB::Draw::SetScissorrect()
 void MCB::Draw::ResetQueAndCommandList()
 {
     Dx12* dx12 = Dx12::GetInstance();
-    //ƒLƒ…[‚ğƒNƒŠƒA
-    dx12->result_ = dx12->commandAllocator_->Reset(); // ƒLƒ…[‚ğƒNƒŠƒA
-    assert(SUCCEEDED(dx12->result_) && "ƒLƒ…[ƒNƒŠƒA’iŠK‚Å‚ÌƒGƒ‰[");
+    //ã‚­ãƒ¥ãƒ¼ã‚’ã‚¯ãƒªã‚¢
+    dx12->result_ = dx12->commandAllocator_->Reset(); // ã‚­ãƒ¥ãƒ¼ã‚’ã‚¯ãƒªã‚¢
+    assert(SUCCEEDED(dx12->result_) && "ã‚­ãƒ¥ãƒ¼ã‚¯ãƒªã‚¢æ®µéšã§ã®ã‚¨ãƒ©ãƒ¼");
 
-    //Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ‚½‚ß‚é€”õ
-    dx12->result_ = dx12->commandList_->Reset(dx12->commandAllocator_.Get(), nullptr);  // Ä‚ÑƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ’™‚ß‚é€”õ
-    assert(SUCCEEDED(dx12->result_) && "ƒRƒ}ƒ“ƒhƒŠƒXƒgÄ’™’~€”õ’iŠK‚Å‚ÌƒGƒ‰[");
+    //å†ã³ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ãŸã‚ã‚‹æº–å‚™
+    dx12->result_ = dx12->commandList_->Reset(dx12->commandAllocator_.Get(), nullptr);  // å†ã³ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’è²¯ã‚ã‚‹æº–å‚™
+    assert(SUCCEEDED(dx12->result_) && "ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆå†è²¯è“„æº–å‚™æ®µéšã§ã®ã‚¨ãƒ©ãƒ¼");
 }
 
 void MCB::Draw::PreDraw(const Depth& depth,const PipelineRootSignature& pipeline, const float* clearColor)

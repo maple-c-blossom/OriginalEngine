@@ -17,4 +17,5 @@ bool MCB::PlayerQueryCallBack::OnQueryHit(const QueryHit& info)
 		}
 	}
 	return true;
+
 }

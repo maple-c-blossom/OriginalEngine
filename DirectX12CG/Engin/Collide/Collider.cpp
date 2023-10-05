@@ -15,6 +15,7 @@ bool MCB::Collision::CalcSphere(const Sphere& sphereA, const Sphere& sphereB, Ve
 	float hit = hitX + hitY + hitZ;
 
 
+
 	if (hit <= hitR)
 	{
 		if (reject)
@@ -114,22 +115,22 @@ bool MCB::Collision::CalcTriangleSpher(Triangle triangle, Sphere sphere, Vector3
 
 void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& point, Vector3D& closest)
 {
-	// Ž‘—¿—Ìˆæƒ`ƒFƒbƒN‡@‚Ì‘O€”õ
+	// è³‡æ–™é ˜åŸŸãƒã‚§ãƒƒã‚¯â‘ ã®å‰æº–å‚™
 	Vector3D p0p1 = triangle.vertexPoint_[1] - triangle.vertexPoint_[0];
 	Vector3D p0p2 = triangle.vertexPoint_[2] - triangle.vertexPoint_[0];
 	Vector3D p0pt = point - triangle.vertexPoint_[0];
-	//Ž‘—¿—Ìˆæƒ`ƒFƒbƒN‡@
+	//è³‡æ–™é ˜åŸŸãƒã‚§ãƒƒã‚¯â‘ 
 	float d1 = p0p1.GetV3Dot(p0pt);
 	float d2 = p0p2.GetV3Dot(p0pt);
 
 	if (d1 <= 0.0f && d2 <= 0.0f)
 	{
-		// p0‚ªÅ‹ß–T
+		// p0ãŒæœ€è¿‘å‚
 		closest = triangle.vertexPoint_[0];
 		return;
 	}
 	//-------------
-	// Ž‘—¿—Ìˆæƒ`ƒFƒbƒN‡A‚Ì‘O€”õ
+	// è³‡æ–™é ˜åŸŸãƒã‚§ãƒƒã‚¯â‘¡ã®å‰æº–å‚™
 	Vector3D p1pt = point - triangle.vertexPoint_[1];
 
 	float d3 = p0p1.GetV3Dot(p1pt);
@@ -137,12 +138,12 @@ void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& 
 
 	if (d3 >= 0.0f && d4 <= d3)
 	{
-		// p1‚ªÅ‹ß–T
+		// p1ãŒæœ€è¿‘å‚
 		closest = triangle.vertexPoint_[1];
 		return;
 	}
 
-	// point‚ªp0_p1‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p1ã‚É‘Î‚·‚éŽË‰e‚ð•Ô‚·
+	// pointãŒp0_p1ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p1ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vc = d1 * d4 - d3 * d2;
 	if (vc <= 0.0f && d1 >= 0.0f && d3 <= 0.0f)
 	{
@@ -153,7 +154,7 @@ void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& 
 		return;
 	}
 
-	// point‚ªp2‚ÌŠO‘¤‚Ì’¸“_—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN
+	// pointãŒp2ã®å¤–å´ã®é ‚ç‚¹é ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯
 	Vector3D p2pt = point - triangle.vertexPoint_[2];
 
 	float d5 = p0p1.GetV3Dot(p2pt);
@@ -164,7 +165,7 @@ void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& 
 		return;
 	}
 
-	// point‚ªp0_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp0_p2ã‚É‘Î‚·‚éŽË‰e‚ð•Ô‚·
+	// pointãŒp0_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p0_p2ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float vb = d5 * d2 - d1 * d6;
 	if (vb <= 0.0f && d2 >= 0.0f && d6 <= 0.0f)
 	{
@@ -173,7 +174,7 @@ void MCB::Collision::CalcTrianglePoint(const Triangle& triangle,const Vector3D& 
 		return;
 	}
 
-	// point‚ªp1_p2‚Ì•Ó—Ìˆæ‚Ì’†‚É‚ ‚é‚©‚Ç‚¤‚©ƒ`ƒFƒbƒN‚µA‚ ‚ê‚Îpoint‚Ìp1_p2ã‚É‘Î‚·‚éŽË‰e‚ð•Ô‚·
+	// pointãŒp1_p2ã®è¾ºé ˜åŸŸã®ä¸­ã«ã‚ã‚‹ã‹ã©ã†ã‹ãƒã‚§ãƒƒã‚¯ã—ã€ã‚ã‚Œã°pointã®p1_p2ä¸Šã«å¯¾ã™ã‚‹å°„å½±ã‚’è¿”ã™
 	float va = d3 * d6 - d5* d4;
 	if (va <= 0.0f && (d4 - d3) >= 0.0f && (d5 - d6) >= 0.0f)
 	{
@@ -218,7 +219,7 @@ bool MCB::Collision::CalcRaySphere( Ray ray,const Sphere& sphere)
 	Temp.x_ = ray.rayVec_.vec_.x_ + ray.StartPosition_.vec_.x_;
 	Temp.y_ = ray.rayVec_.vec_.y_ + ray.StartPosition_.vec_.y_;
 	Temp.z_ = ray.rayVec_.vec_.z_ + ray.StartPosition_.vec_.z_;
-	//Õ“Ë’n“_‚ªƒŒƒC‚ÌŽË’ö‚ð’´‚¦‚Ä‚¢‚é‚©ƒŒƒC‚Ì‹t•ûŒü‚¾‚Á‚½ê‡
+	//è¡çªåœ°ç‚¹ãŒãƒ¬ã‚¤ã®å°„ç¨‹ã‚’è¶…ãˆã¦ã„ã‚‹ã‹ãƒ¬ã‚¤ã®é€†æ–¹å‘ã ã£ãŸå ´åˆ
 	if (tempPos > ray.range_ || tempPos < 0)
 	{
 		return false;

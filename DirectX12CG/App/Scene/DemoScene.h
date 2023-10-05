@@ -54,7 +54,28 @@ namespace MCB
 		std::array<DirectX::XMFLOAT3,4> poleVec_;
 		std::array<bool, 4> PoleVecMove_ = { false,false,false,false };
 		bool objChenge_;
-		std::array<std::string, 4> ikBoneName_ = {"Wrist.L","Wrist.R","Foot.L","Foot.R"};
+		struct IKDataSet
+		{
+			std::string endJointName = "NULL";
+			std::string middleJointName = "NULL";
+			std::string rootJointName = "NULL";
+			IKDataSet() {};
+			IKDataSet(std::string endJoint) {
+				endJointName = endJoint;
+			};
+			IKDataSet(std::string endJoint,std::string middlejoint) {
+				endJointName = endJoint;
+				middleJointName = middlejoint;
+			};
+			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint) {
+				endJointName = endJoint;
+				middleJointName = middleJoint;
+				rootJointName = rootJoint;
+			};
+		};
+		std::array<IKDataSet,4> ikBoneName_ = { "mixamorig:LeftHand",
+												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
+
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト

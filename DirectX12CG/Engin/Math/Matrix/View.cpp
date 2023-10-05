@@ -1,8 +1,8 @@
 #include "View.h"
-#include <DirectXMath.h>
 
 using namespace DirectX;
 using namespace MCB;
+
 
 void View::CreateMatrixView(const XMFLOAT3& eye, const XMFLOAT3& target, const XMFLOAT3& up)
 {
@@ -56,7 +56,8 @@ void View::UpDateMatrixView( bool billbordY)
 	{
 		XMVECTOR yBillAxisX, yBillAxisY, yBillAxisZ;
 		yBillAxisX = cameraAxisX;
-		yBillAxisY = XMVector3Normalize(XMVECTOR{up_.x, up_.y, up_.z});
+		yBillAxisY = XMVector3Normalize(XMVECTOR{ { up_.x, up_.y, up_.z }
+	} );
 		yBillAxisZ = XMVector3Cross(yBillAxisX, yBillAxisY);
 
 		billMat_.r[0] = yBillAxisX;

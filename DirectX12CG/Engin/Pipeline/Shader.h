@@ -1,7 +1,10 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <wrl.h>
 #include <d3d12.h>
 #include <vector>
+WarningIgnoreEnd
 
 namespace MCB
 {
@@ -14,43 +17,43 @@ namespace MCB
     class Shader
     {
     public:
-        Microsoft::WRL::ComPtr<ID3DBlob> vsBlob_ = nullptr; // í∏ì_ÉVÉFÅ[É_ÉIÉuÉWÉFÉNÉg
-        Microsoft::WRL::ComPtr<ID3DBlob> gsBlob_ = nullptr; // ÉWÉIÉÅÉgÉäÉVÉFÅ[É_ÉIÉuÉWÉFÉNÉg
-        Microsoft::WRL::ComPtr<ID3DBlob> psBlob_ = nullptr; // ÉsÉNÉZÉãÉVÉFÅ[É_ÉIÉuÉWÉFÉNÉg
-        Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_ = nullptr; // ÉGÉâÅ[ÉIÉuÉWÉFÉNÉg
+        Microsoft::WRL::ComPtr<ID3DBlob> vsBlob_ = nullptr; // È†ÇÁÇπ„Ç∑„Çß„Éº„ÉÄ„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
+        Microsoft::WRL::ComPtr<ID3DBlob> gsBlob_ = nullptr; // „Ç∏„Ç™„É°„Éà„É™„Ç∑„Çß„Éº„ÉÄ„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
+        Microsoft::WRL::ComPtr<ID3DBlob> psBlob_ = nullptr; // „Éî„ÇØ„Çª„É´„Ç∑„Çß„Éº„ÉÄ„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
+        Microsoft::WRL::ComPtr<ID3DBlob> errorBlob_ = nullptr; // „Ç®„É©„Éº„Ç™„Éñ„Ç∏„Çß„ÇØ„Éà
 
        /* std::vector<D3D12_INPUT_ELEMENT_DESC> inputLayout;*/
 
-      // í∏ì_ÉåÉCÉAÉEÉg------------------
-#pragma region í∏ì_ÉåÉCÉAÉEÉg
+      // È†ÇÁÇπ„É¨„Ç§„Ç¢„Ç¶„Éà------------------
+#pragma region È†ÇÁÇπ„É¨„Ç§„Ç¢„Ç¶„Éà
 
         D3D12_INPUT_ELEMENT_DESC inputLayout_[3] =
         {
-            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1çsÇ≈èëÇ¢ÇΩÇŸÇ§Ç™å©Ç‚Ç∑Ç¢)
-            {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//ñ@ê¸ÉxÉNÉgÉã
-            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uvç¿ïW
+            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1Ë°å„ÅßÊõ∏„ÅÑ„Åü„Åª„ÅÜ„ÅåË¶ã„ÇÑ„Åô„ÅÑ)
+            {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//Ê≥ïÁ∑ö„Éô„ÇØ„Éà„É´
+            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uvÂ∫ßÊ®ô
         };
 
         D3D12_INPUT_ELEMENT_DESC fbxinputLayout_[5] =
         {
-            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1çsÇ≈èëÇ¢ÇΩÇŸÇ§Ç™å©Ç‚Ç∑Ç¢)
-            {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//ñ@ê¸ÉxÉNÉgÉã
-            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//uvç¿ïW,
-            {"BONEID", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//É{Å[ÉìID
-            {"BONEWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//É{Å[ÉìÉEÉFÉCÉg
+            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1Ë°å„ÅßÊõ∏„ÅÑ„Åü„Åª„ÅÜ„ÅåË¶ã„ÇÑ„Åô„ÅÑ)
+            {"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//Ê≥ïÁ∑ö„Éô„ÇØ„Éà„É´
+            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//uvÂ∫ßÊ®ô,
+            {"BONEID", 0, DXGI_FORMAT_R32G32B32A32_UINT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0},//„Éú„Éº„É≥ID
+            {"BONEWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//„Éú„Éº„É≥„Ç¶„Çß„Ç§„Éà
         };
 
         D3D12_INPUT_ELEMENT_DESC SpriteinputLayout_[2] =
         {
-            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1çsÇ≈èëÇ¢ÇΩÇŸÇ§Ç™å©Ç‚Ç∑Ç¢)
-            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uvç¿ïW
+            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1Ë°å„ÅßÊõ∏„ÅÑ„Åü„Åª„ÅÜ„ÅåË¶ã„ÇÑ„Åô„ÅÑ)
+            {"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}//uvÂ∫ßÊ®ô
         };
         D3D12_INPUT_ELEMENT_DESC ParticleinputLayout_[1] =
         {
-            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1çsÇ≈èëÇ¢ÇΩÇŸÇ§Ç™å©Ç‚Ç∑Ç¢
+            {"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D12_APPEND_ALIGNED_ELEMENT, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0}, // (1Ë°å„ÅßÊõ∏„ÅÑ„Åü„Åª„ÅÜ„ÅåË¶ã„ÇÑ„Åô„ÅÑ
         };
 
-#pragma endregion í∏ì_ÉåÉCÉAÉEÉg
+#pragma endregion È†ÇÁÇπ„É¨„Ç§„Ç¢„Ç¶„Éà
      //--------------------
 
 

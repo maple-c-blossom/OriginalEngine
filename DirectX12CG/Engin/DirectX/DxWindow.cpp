@@ -1,6 +1,9 @@
 #include "DxWindow.h"
 #include "resource.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <MyImgui/imgui_impl_win32.h>
+WarningIgnoreEnd
 #pragma comment(lib, "winmm.lib")
 using namespace MCB;
 
@@ -11,15 +14,15 @@ LRESULT DxWindow::WindowProc( HWND hwnd, uint32_t msg, WPARAM wparam, LPARAM lpa
     {
         return true;
     }
-     // ƒƒbƒZ[ƒW‚É‰‚¶‚ÄƒQ[ƒ€ŒÅ—L‚Ìˆ—‚ğs‚¤ 
+     // ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã«å¿œã˜ã¦ã‚²ãƒ¼ãƒ å›ºæœ‰ã®å‡¦ç†ã‚’è¡Œã† 
         switch (msg) {
-            // ƒEƒBƒ“ƒhƒE‚ª”jŠü‚³‚ê‚½ 
+            // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãŒç ´æ£„ã•ã‚ŒãŸ 
         case WM_DESTROY:
-            // OS‚É‘Î‚µ‚ÄAƒAƒvƒŠ‚ÌI—¹‚ğ“`‚¦‚é 
+            // OSã«å¯¾ã—ã¦ã€ã‚¢ãƒ—ãƒªã®çµ‚äº†ã‚’ä¼ãˆã‚‹ 
             PostQuitMessage(0);
             return 0;
         }
-        // •W€‚ÌƒƒbƒZ[ƒWˆ—‚ğs‚¤ 
+        // æ¨™æº–ã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å‡¦ç†ã‚’è¡Œã† 
         return DefWindowProc(hwnd, msg, wparam, lparam);
     
 }
@@ -29,25 +32,26 @@ bool MCB::DxWindow::IsBreak()
     return breakFlag_;
 }
 
+
 void DxWindow::messageUpdate()
 {
-    //ƒƒbƒZ[ƒWŠÖŒW------------------
-#pragma region ƒƒbƒZ[ƒWŠÖŒW
+    //ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢ä¿‚------------------
+#pragma region ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢ä¿‚
 
-// ƒƒbƒZ[ƒW‚ª‚ ‚éH
+// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚‹ï¼Ÿ
     if (PeekMessage(&msg_, nullptr, 0, 0, PM_REMOVE))
     {
-        TranslateMessage(&msg_); // ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-        DispatchMessage(&msg_); // ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+        TranslateMessage(&msg_); // ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+        DispatchMessage(&msg_); // ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
     }
 
-    // xƒ{ƒ^ƒ“‚ÅI—¹ƒƒbƒZ[ƒW‚ª—ˆ‚½‚çƒQ[ƒ€ƒ‹[ƒv‚ğ”²‚¯‚é
+    // xãƒœã‚¿ãƒ³ã§çµ‚äº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ãŸã‚‰ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
     if (msg_.message == WM_QUIT)
     {
         breakFlag_ = true;
     }
 
-#pragma endregion ƒƒbƒZ[ƒWŠÖŒW
+#pragma endregion ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸é–¢ä¿‚
     //--------------------
 }
 
@@ -55,35 +59,38 @@ void DxWindow::Init()
 {
     timeBeginPeriod(1);
     window_.cbSize = sizeof(WNDCLASSEX);
-    window_.lpfnWndProc = (WNDPROC)WindowProc; // ƒEƒBƒ“ƒhƒEƒvƒƒV[ƒWƒƒ‚ğİ’è
-    window_.lpszClassName = windowName; // ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX–¼
-    window_.hInstance = GetModuleHandle(nullptr); // ƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-    window_.hCursor = LoadCursor(NULL, IDC_ARROW); // ƒJ[ƒ\ƒ‹w’è
+    window_.lpfnWndProc = (WNDPROC)WindowProc; // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã‚’è¨­å®š
+    window_.lpszClassName = windowName; // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å
+    window_.hInstance = GetModuleHandle(nullptr); // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+    window_.hCursor = LoadCursor(NULL, IDC_ARROW); // ã‚«ãƒ¼ã‚½ãƒ«æŒ‡å®š
     window_.hIcon = LoadIcon(window_.hInstance, MAKEINTRESOURCE(MapleIcon));
     window_.hIconSm = LoadIcon(window_.hInstance, MAKEINTRESOURCE(MapleIcon));
-    // ƒEƒBƒ“ƒhƒEƒNƒ‰ƒX‚ğOS‚É“o˜^
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’OSã«ç™»éŒ²
     RegisterClassEx(&window_);
 
-    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false); // ©“®‚ÅƒTƒCƒY•â³
+    AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false); // è‡ªå‹•ã§ã‚µã‚¤ã‚ºè£œæ­£
 
 
-    // ƒEƒBƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
-    hwnd_ = CreateWindow(window_.lpszClassName, // ƒNƒ‰ƒX–¼
-        windowName,         // ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶š
-        WS_OVERLAPPEDWINDOW,        // •W€“I‚ÈƒEƒBƒ“ƒhƒEƒXƒ^ƒCƒ‹
-        CW_USEDEFAULT,              // •\¦XÀ•WiOS‚É”C‚¹‚éj
-        CW_USEDEFAULT,              // •\¦YÀ•WiOS‚É”C‚¹‚éj
-        wrc.right - wrc.left,       // ƒEƒBƒ“ƒhƒE‰¡•
-        wrc.bottom - wrc.top,   // ƒEƒBƒ“ƒhƒEc•
-        nullptr,                // eƒEƒBƒ“ƒhƒEƒnƒ“ƒhƒ‹
-        nullptr,                // ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-        window_.hInstance,            // ŒÄ‚Ño‚µƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹
-        nullptr);               // ƒIƒvƒVƒ‡ƒ“
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+    hwnd_ = CreateWindow(window_.lpszClassName, // ã‚¯ãƒ©ã‚¹å
+        windowName,         // ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®æ–‡å­—
+        WS_OVERLAPPEDWINDOW,        // æ¨™æº–çš„ãªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+        CW_USEDEFAULT,              // è¡¨ç¤ºXåº§æ¨™ï¼ˆOSã«ä»»ã›ã‚‹ï¼‰
+        CW_USEDEFAULT,              // è¡¨ç¤ºYåº§æ¨™ï¼ˆOSã«ä»»ã›ã‚‹ï¼‰
+        wrc.right - wrc.left,       // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æ¨ªå¹…
+        wrc.bottom - wrc.top,   // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ç¸¦å¹…
+        nullptr,                // è¦ªã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+        nullptr,                // ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+        window_.hInstance,            // å‘¼ã³å‡ºã—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ³ãƒ‰ãƒ«
+        nullptr);               // ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 
-    // ƒEƒBƒ“ƒhƒE•\¦
+    // ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
     ShowWindow(hwnd_, SW_SHOW);
 }
 
+DxWindow& MCB::DxWindow::operator=(const DxWindow&) = default;
+DxWindow::DxWindow(){}
+DxWindow::DxWindow(const DxWindow&) {}
 DxWindow::~DxWindow()
 {
     UnregisterClass(window_.lpszClassName, window_.hInstance);

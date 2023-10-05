@@ -16,20 +16,21 @@ namespace MCB
         ShaderResource& operator=(const ShaderResource& shaderResource) {};
         ~ShaderResource() {};
 		public:
-            //’è”ƒoƒbƒtƒ@—p‚ÌƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+            //å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ã®ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 
-            //İ’è\‘¢‘Ì
+            //è¨­å®šæ§‹é€ ä½“
             D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc_{};
 
-            //ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì¶¬  
+
+            //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ç”Ÿæˆ  
             Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap_ = nullptr;
             
             D3D12_CPU_DESCRIPTOR_HANDLE srvHandle_; 
 
-            //ƒVƒF[ƒ_[ƒŠƒ\[ƒXƒrƒ…[İ’è
+            //ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
             D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc_{};
 
-            //ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
+            //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
             std::array<D3D12_DESCRIPTOR_RANGE, 2> descriptorRange_ = {};
 
             static uint16_t sAllincrementNum_;
@@ -58,7 +59,7 @@ namespace MCB
 
             void SetShaderResourceView(TextureBuffer& texBuffer);
 
-            void SetDescriptorRange ( int32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,
+            void SetDescriptorRange (uint32_t NumDescriptors, const D3D12_DESCRIPTOR_RANGE_TYPE& type,
                 int32_t BaseShaderRegister,  size_t index = 0);
 	};
 }

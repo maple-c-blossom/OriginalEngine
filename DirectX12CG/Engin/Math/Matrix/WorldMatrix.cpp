@@ -60,6 +60,7 @@ void WorldMatrix::SetMatRot( float angleX,  float angleY,  float angleZ, bool Co
 XMMATRIX WorldMatrix::ReturnMatRot(const XMMATRIX& matRot ,  float angleX, 
 	 float angleY,  float angleZ,  bool ConvertToRadians)
 {
+	static_cast< void >( matRot );
 	if (ConvertToRadians)
 	{
 		matRot_ *= XMMatrixRotationZ(XMConvertToRadians(angleZ));

@@ -1,9 +1,12 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <dinput.h>
+WarningIgnoreEnd
 #include "Dx12.h"
 #include "DxWindow.h"
 #include "GamePad.h"
-#define DIRECINPUT_VERSION 0x0800 //DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+#define DIRECINPUT_VERSION 0x0800 //DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 
 namespace MCB
 {
@@ -22,10 +25,10 @@ namespace MCB
         Microsoft::WRL::ComPtr <IDirectInputDevice8> devmouse_ = nullptr;
 
         Microsoft::WRL::ComPtr <IDirectInput8> dinput_ = nullptr;
-        Input() {};
-        Input(const Input& input) {};
-        ~Input() {};
-        Input& operator= (const Input & Input){};
+        Input();
+        Input(const Input&);
+        ~Input();
+        Input& operator= (const Input &);
 
     public:
         typedef enum MouseBotton
@@ -39,7 +42,7 @@ namespace MCB
         static Input* GetInitInstance();
         GamePad* gamePad_ = GamePad::GetInitInstance();
 
-        //ƒL[‰Šú‰»----------------------
+        //ã‚­ãƒ¼åˆæœŸåŒ–----------------------
         BYTE key_[256] = {};
         BYTE oldkey_[256] = {};
         //-----------------------
@@ -47,39 +50,39 @@ namespace MCB
         DIMOUSESTATE2 oldmouse_ = {};
         //Input(HRESULT& result, WNDCLASSEX w, HWND hwnd);
 
-        //ƒL[ƒ{[ƒh‰Šú‰»-------------------------------
+        //ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰åˆæœŸåŒ–-------------------------------
         void KeyUpdate();
         //---------------------
 
         void MouseUpdate();
 
-        //“ü—ÍŠÖ”-----------------------------------
-#pragma region “ü—ÍŠÖ”
-//‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
+        //å…¥åŠ›é–¢æ•°-----------------------------------
+#pragma region å…¥åŠ›é–¢æ•°
+//æŠ¼ã—ã¦ã„ã‚‹çŠ¶æ…‹
         bool IsKeyDown( size_t keyNum);
-        //‰Ÿ‚µ‚Ä‚¢‚È‚¢ó‘Ô
+        //æŠ¼ã—ã¦ã„ãªã„çŠ¶æ…‹
         bool IsKeyNDown( size_t keyNum);
-        //’·‰Ÿ‚µó‘Ô
+        //é•·æŠ¼ã—çŠ¶æ…‹
         bool IsKeyPress( size_t keyNum);
-        //‰Ÿ‚µ‚½uŠÔ
+        //æŠ¼ã—ãŸç¬é–“
         bool IsKeyTrigger( size_t keyNum);
-        //—£‚µ‚½uŠÔ
+        //é›¢ã—ãŸç¬é–“
         bool IsKeyRelease( size_t keyNum);
 
-        //‰Ÿ‚µ‚Ä‚¢‚éó‘Ô
+        //æŠ¼ã—ã¦ã„ã‚‹çŠ¶æ…‹
         bool IsMouseDown( size_t MouseBotton);
-        //‰Ÿ‚µ‚Ä‚¢‚È‚¢ó‘Ô
+        //æŠ¼ã—ã¦ã„ãªã„çŠ¶æ…‹
         bool IsMouseNDown( size_t MouseBotton);
-        //’·‰Ÿ‚µó‘Ô
+        //é•·æŠ¼ã—çŠ¶æ…‹
         bool IsMousePress( size_t MouseBotton);
-        //‰Ÿ‚µ‚½uŠÔ
+        //æŠ¼ã—ãŸç¬é–“
         bool IsMouseTrigger( size_t MouseBotton);
-        //—£‚µ‚½uŠÔ
+        //é›¢ã—ãŸç¬é–“
         bool IsMouseRelease( size_t MouseBotton);
 
 
         MCB::Mouse GetMousePosition();
-#pragma endregion “ü—ÍŠÖ”
+#pragma endregion å…¥åŠ›é–¢æ•°
         //--------------------
 
         void Init();

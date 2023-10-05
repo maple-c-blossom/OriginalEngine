@@ -20,6 +20,8 @@ namespace MCB
 		//Vector3D up;
 	public:
 		bool moveStop = false;
+		Byte5 pad1;
+		Byte6 pad2;
 		void Inilialize()override;
 		void Update()override;
 	};

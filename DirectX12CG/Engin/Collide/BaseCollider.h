@@ -2,7 +2,7 @@
 #include "Collider.h"
 #include "Object3d.h"
 #include "CollisionInfomation.h"
-
+#include "Pading.h"
 namespace MCB
 {
 	class BaseCollider
@@ -38,8 +38,10 @@ namespace MCB
 		inline Object3d* GetObject3D() { return object3d_; }
 	protected:
 		uint16_t attribute_ = ATTRIBUTE_LANDSHAPE;
+		Byte6 pad1;
 		Object3d* object3d_ = nullptr;
 		MCB::PrimitiveType primitive_ = MCB::PrimitiveType::SPHERE;
+		Byte4 pad2;
 
 	};
 }

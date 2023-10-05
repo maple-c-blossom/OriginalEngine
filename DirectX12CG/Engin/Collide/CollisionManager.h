@@ -6,7 +6,7 @@
 #include "RayCollider.h"
 #include "Query.h"
 
-namespace MCB
+namespace MCB 
 {
 	class BaseCollider;
 	class CollisionManager final

@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector3D.h"
-
+#include "Pading.h"
 namespace MCB
 {
 	class PointLight
@@ -15,24 +15,24 @@ namespace MCB
 			Float3 lightAtten;
 			uint32_t active;
 		}PointLConstBuffData;
-		inline void SetPLightPos(const Float3& pos) { lightPos_ = pos; }
-		inline void SetPLightColor(const Float3& color) { lightColor_ = color; }
-		inline void SetPLightAtten(const Float3& atten) { lightAtten_ = atten; }
-		inline void SetPLightShininess( float shininess) { shininess_ = shininess; }
-		inline void SetIsActive( bool flag) { isActive_ = flag; }
-		inline Float3 GetPLightPos() { return lightPos_; }
-		inline Float3 GetPLightColor() { return lightColor_; }
-		inline Float3 GetPLightAtten() { return lightAtten_; }
-		inline float GetPLightShininess() { return shininess_; }
-		inline bool IsActive() { return isActive_; }
+		void SetPLightPos(const Float3& pos);
+		void SetPLightColor(const Float3& color);
+		void SetPLightAtten(const Float3& atten);
+		void SetPLightShininess(float shininess);
+		void SetIsActive(bool flag);
+		Float3 GetPLightPos();
+		Float3 GetPLightColor();
+		Float3 GetPLightAtten();
+		float GetPLightShininess();
+		bool IsActive();
 
 	private:
 		Float3 lightPos_ = {0,0,0};
 		Float3 lightColor_ = {1,1,1};
-		Float3 lightAtten_ = {1.0f,1.0f,1.0f};//å∏êäÇÃã≠Ç≥(ëÂÇ´ÇØÇÍÇŒëÂÇ´Ç¢Ç⁄Ç«å∏êäÇ∑ÇÈ
+		Float3 lightAtten_ = {1.0f,1.0f,1.0f};//Ê∏õË°∞„ÅÆÂº∑„Åï(Â§ß„Åç„Åë„Çå„Å∞Â§ß„Åç„ÅÑ„Åº„Å©Ê∏õË°∞„Åô„Çã
 		float shininess_ = 3.0f;
 		bool isActive_ = false;
-
+		Byte3 pad1;
 	};
 }
 

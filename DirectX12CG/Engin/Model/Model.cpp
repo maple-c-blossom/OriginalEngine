@@ -16,6 +16,7 @@ MCB::Model::Model()
     material_.Init();
 }
 
+
 MCB::Model::~Model()
 {
     texture_->free = true;
@@ -26,9 +27,9 @@ void MCB::Model::CreateVertexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp,const
     const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
     Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
-        &HeapProp, // ÉqÅ[Évê›íË
+        &HeapProp, // „Éí„Éº„ÉóË®≠ÂÆö
         flag,
-        &Resdesc, // ÉäÉ\Å[ÉXê›íË
+        &Resdesc, // „É™„ÇΩ„Éº„ÇπË®≠ÂÆö
         state,
         nullptr,
         IID_PPV_ARGS(&vertBuff_));
@@ -62,13 +63,13 @@ HRESULT MCB::Model::IndexMaping()
 
 
     uint16_t* indexMap = nullptr;
-    //GPUè„ÇÃÉoÉbÉtÉ@Ç…ëŒâûÇµÇΩâºëzÉÅÉÇÉäÇéÊìæ----------------------------
+    //GPU‰∏ä„ÅÆ„Éê„ÉÉ„Éï„Ç°„Å´ÂØæÂøú„Åó„Åü‰ªÆÊÉ≥„É°„É¢„É™„ÇíÂèñÂæó----------------------------
     result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
     //---------------------------------------
     
     std::copy(indices_.begin(), indices_.end(), indexMap);
     
-    //åqÇ™ÇËÇâèú---------------------
+    //Áπã„Åå„Çä„ÇíËß£Èô§---------------------
     indexBuff_->Unmap(0, nullptr);
     //------------------------
 
@@ -93,7 +94,7 @@ HRESULT MCB::Model::VertexMaping()
 
     std::copy(vertices_.begin(), vertices_.end(), vertMap);
 
-    // É}ÉbÉvÇâèú
+    // „Éû„ÉÉ„Éó„ÇíËß£Èô§
     vertBuff_->Unmap(0, nullptr);
 
     return result;
@@ -104,9 +105,9 @@ void MCB::Model::CreateModel(const string& fileName,  bool smooth)
 {
     std::ifstream file;
 
-    std::vector<Float3> positions;//í∏ì_ç¿ïW
-    std::vector<Float3> normals;//ñ@ê¸ÉxÉNÉgÉã
-    std::vector<Float2> texcoords;//ÉeÉNÉXÉ`ÉÉUV
+    std::vector<Float3> positions;//È†ÇÁÇπÂ∫ßÊ®ô
+    std::vector<Float3> normals;//Ê≥ïÁ∑ö„Éô„ÇØ„Éà„É´
+    std::vector<Float2> texcoords;//„ÉÜ„ÇØ„Çπ„ÉÅ„É£UV
 
 
 
@@ -131,14 +132,14 @@ void MCB::Model::CreateModel(const string& fileName,  bool smooth)
         getline(line_stream, key, ' ');
         if (key == "v")
         {
-            //äeç¿ïWì«Ç›çûÇ›
+            //ÂêÑÂ∫ßÊ®ôË™≠„ÅøËæº„Åø
             Float3 position{};
             line_stream >> position.x_;
             line_stream >> position.y_;
             line_stream >> position.z_;
-            //ç¿ïWÉfÅ[É^Ç…í«â¡
+            //Â∫ßÊ®ô„Éá„Éº„Çø„Å´ËøΩÂä†
             positions.emplace_back(position);
-            ////í∏ì_ÉfÅ[É^Ç…í«â¡
+            ////È†ÇÁÇπ„Éá„Éº„Çø„Å´ËøΩÂä†
             //ObjectVertex vertex{};
             //vertex.pos = position;
             //vertices.emplace_back(vertex);
@@ -188,12 +189,12 @@ void MCB::Model::CreateModel(const string& fileName,  bool smooth)
 
 
                 ObjectVertex vertex{};
-                vertex.pos = positions[indexPosition - 1];
-                vertex.normal = normals[indexNormal - 1];
-                vertex.uv = texcoords[indexTexcoord - 1];
+                vertex.pos = positions[static_cast<uint64_t> (indexPosition - 1)];
+                vertex.normal = normals[static_cast<uint64_t> (indexNormal - 1)];
+                vertex.uv = texcoords[static_cast<uint64_t> (indexTexcoord - 1)];
                 vertices_.emplace_back(vertex);
-                indices_.emplace_back((uint16_t)indices_.size());
-                if(smooth) AddSmoothData(indexPosition, (uint16_t)GetVertexCount() - 1);
+				indices_.emplace_back(static_cast< uint64_t >( indices_.size() ));
+                if(smooth) AddSmoothData(static_cast< uint16_t >(indexPosition), (uint16_t)GetVertexCount() - 1u);
                 //if (smooth) CalculateSmoothedVertexNormals();
 
             }

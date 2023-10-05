@@ -19,5 +19,6 @@ namespace MCB
 		virtual ~QueryCallBack() = default;
 
 		virtual bool OnQueryHit(const QueryHit& info) = 0;
+
 	};
 }

@@ -1,16 +1,21 @@
 #pragma once
+#include "IgnoreWarning.h"
+#include "Pading.h"
+WarningIgnoreBegin
 #include <DirectXMath.h>
 #include <Windows.h>
 #include <wrl.h>
-#include "Dx12.h"
 #include <d3d12.h>
-#include "ObjectMaterial.h"
 #include <vector>
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "MCBFloat.h"
 #include <unordered_map>
+WarningIgnoreEnd
+
+#include "Dx12.h"
+#include "ObjectMaterial.h"
+#include "MCBFloat.h"
 #include "Vector3D.h"
 #include "TextureManager.h"
 
@@ -18,12 +23,12 @@ namespace MCB
 {
         static const uint16_t NUM_BONES_PER_VERTEX = 4;
         static const uint16_t MAX_BONE = 128;
-        //’¸“_ƒf[ƒ^\‘¢‘Ì-------------------------------------
+        //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“-------------------------------------
         typedef struct AnimationVertex
         {
-            Float3 pos;//xyzÀ•W
-            Float3 normal;//–@üƒxƒNƒgƒ‹
-            Float2 uv;//uvÀ•W
+            Float3 pos;//xyzåº§æ¨™
+            Float3 normal;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+            Float2 uv;//uvåº§æ¨™
             int32_t ids[NUM_BONES_PER_VERTEX] = {};
             float weights[NUM_BONES_PER_VERTEX] = {};
         }AnimationVertex;
@@ -43,8 +48,9 @@ namespace MCB
         typedef struct Bone
         {
             std::string name;
-            DirectX::XMMATRIX offsetMatrix;//Model‹óŠÔ‚ÌBone‚ğƒ{[ƒ“‹óŠÔ‚É•ÏŠ·‚·‚é‚½‚ß‚Ìs—ñ
-            DirectX::XMMATRIX finalMatrix;//ƒ{[ƒ“‹óŠÔ‚É•ÏŠ·‚µ‚½ÅI“I‚Ès—ñ
+			int32_t pad;
+            DirectX::XMMATRIX offsetMatrix;//Modelç©ºé–“ã®Boneã‚’ãƒœãƒ¼ãƒ³ç©ºé–“ã«å¤‰æ›ã™ã‚‹ãŸã‚ã®è¡Œåˆ—
+            DirectX::XMMATRIX finalMatrix;//ãƒœãƒ¼ãƒ³ç©ºé–“ã«å¤‰æ›ã—ãŸæœ€çµ‚çš„ãªè¡Œåˆ—
 
         }Bone;
 
@@ -80,9 +86,9 @@ namespace MCB
 
  
 
-            //D3D12_HEAP_PROPERTIES heapprop{};   // ƒq[ƒvİ’è
+            //D3D12_HEAP_PROPERTIES heapprop{};   // ãƒ’ãƒ¼ãƒ—è¨­å®š
 
-            //D3D12_RESOURCE_DESC resdesc{};  // ƒŠƒ\[ƒXİ’è
+            //D3D12_RESOURCE_DESC resdesc{};  // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 
             std::vector<ObjectMaterial> material_;
 
@@ -106,7 +112,7 @@ namespace MCB
 
             void Init();
 
-            inline size_t GetVertexCount() { return vertices_.size(); }
+			size_t GetVertexCount();
 
         };
 	};

@@ -6,6 +6,7 @@
 MCB::CollisionManager* MCB::CollisionManager::GetInstance()
 {
     static CollisionManager inst;
+
     return &inst;
 }
 
@@ -16,10 +17,11 @@ void MCB::CollisionManager::CheckAllCollision()
     //std::forward_list<BaseCollider*>::iterator itrB;
 
     //*itrA = colliders_.begin()->get();
+	// 
     //BaseCollider* itr_hit = nullptr;
     for (auto& itr : colliders_)
     {
-
+         
         for (auto& itr2 : colliders_)
         {
             BaseCollider* itrCollA = itr.get();
@@ -211,9 +213,9 @@ void MCB::CollisionManager::CheckAllCollision()
                 Sphere* sphereA = dynamic_cast<Sphere*>(itrCollA);
                 MeshCollider* meshB = dynamic_cast<MeshCollider*>(itrCollB);
                 Vector3D inter;
-                //if (Collision::CalcSphere(meshB->sphere, *sphereA, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
+                //if (Collision::CalcSphere(meshB->sphere, *sphereA, &inter)) //çƒåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã§è»½ãåˆ¤å®š(radius1.5å€)
                 //{
-                    if (meshB->ChakeCollisionSphere(*sphereA, &inter))//–{”Ô
+                    if (meshB->ChakeCollisionSphere(*sphereA, &inter))//æœ¬ç•ª
                     {
                         itrCollA->OnCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                         itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
@@ -230,9 +232,9 @@ void MCB::CollisionManager::CheckAllCollision()
             MeshCollider* meshA = dynamic_cast<MeshCollider*>(itrCollA);
             Sphere* sphereB = dynamic_cast<Sphere*>(itrCollB);
             Vector3D inter;
-            //if (Collision::CalcSphere(meshA->sphere, *sphereB, &inter)) //‹…“¯Žm‚Ì“–‚½‚è”»’è‚ÅŒy‚­”»’è(radius1.5”{)
+            //if (Collision::CalcSphere(meshA->sphere, *sphereB, &inter)) //çƒåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã§è»½ãåˆ¤å®š(radius1.5å€)
             //{
-                if (meshA->ChakeCollisionSphere(*sphereB, &inter))//–{”Ô
+                if (meshA->ChakeCollisionSphere(*sphereB, &inter))//æœ¬ç•ª
                 {
                     itrCollA->OnCollision(CollisionInfomation(itrCollB->GetObject3D(), itrCollB, inter));
                     itrCollB->OnCollision(CollisionInfomation(itrCollA->GetObject3D(), itrCollA, inter));
@@ -313,7 +315,7 @@ bool MCB::CollisionManager::Raycast(Ray& ray, uint16_t attribute, RayCastHit* hi
             MeshCollider* prim = dynamic_cast<MeshCollider*>(col);
             float disttemp;
             Vector3D intertemp;
-            //if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//‚Ü‚¸‚Í‹…‚Å”»’è
+            //if (!Collision::CalcRaySphere(raytemp, prim->sphere, &disttemp, &intertemp))continue;//ã¾ãšã¯çƒã§åˆ¤å®š
             if (!prim->ChakeCollisionRay(raytemp, &disttemp, &intertemp))
             {
                 continue;

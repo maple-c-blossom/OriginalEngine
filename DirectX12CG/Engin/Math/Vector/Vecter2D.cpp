@@ -1,6 +1,6 @@
 #include "Vecter2D.h"
 #include <cmath>
-//float Vec2::GetCrossProduct(Vec2 startVec,Vec2 endVec)//’ñoŒã‰ü—Ç
+//float Vec2::GetCrossProduct(Vec2 startVec,Vec2 endVec)//æå‡ºå¾Œæ”¹è‰¯
 //{
 //    VECTOR vecLine = VGet(endVec.GetX() - startVec.GetX(), endVec.GetY() - startVec.GetY(), 0);
 //    vecLine = VNorm(vecLine);
@@ -17,6 +17,7 @@ Vector2D Vector2D::VecGet(const Vector2D& startVec,const Vector2D& endVec)
     Vectol.SetY(endVec.GetY() - startVec.GetY());
     return Vectol;
 }
+
 
 Vector2D Vector2D::VecGet(const Vector2D& startVec)
 {
@@ -174,7 +175,7 @@ Vector2D& Vector2D::operator+=(const Vector2D& vec)
     x_ = x_ + vec.x_;
     y_ = y_ + vec.y_;
     return *this;
-    // TODO: return ƒXƒe[ƒgƒƒ“ƒg‚ğ‚±‚±‚É‘}“ü‚µ‚Ü‚·
+    // TODO: return ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã‚’ã“ã“ã«æŒ¿å…¥ã—ã¾ã™
 }
 
 Vector2D& Vector2D::operator-=(const Vector2D& vec)
@@ -182,7 +183,7 @@ Vector2D& Vector2D::operator-=(const Vector2D& vec)
     x_ = x_ - vec.x_;
     y_ = y_ - vec.y_;
     return *this;
-    // TODO: return ƒXƒe[ƒgƒƒ“ƒg‚ğ‚±‚±‚É‘}“ü‚µ‚Ü‚·
+    // TODO: return ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã‚’ã“ã“ã«æŒ¿å…¥ã—ã¾ã™
 }
 
 Vector2D& Vector2D::operator*=( float speed)
@@ -190,7 +191,7 @@ Vector2D& Vector2D::operator*=( float speed)
     x_ *= speed;
     y_ *= speed;
     return *this;
-    // TODO: return ƒXƒe[ƒgƒƒ“ƒg‚ğ‚±‚±‚É‘}“ü‚µ‚Ü‚·
+    // TODO: return ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã‚’ã“ã“ã«æŒ¿å…¥ã—ã¾ã™
 }
 
 Vector2D& Vector2D::operator/=( float Lenge)
@@ -198,7 +199,7 @@ Vector2D& Vector2D::operator/=( float Lenge)
     x_ /= Lenge;
     y_ /= Lenge;
     return *this;
-    // TODO: return ƒXƒe[ƒgƒƒ“ƒg‚ğ‚±‚±‚É‘}“ü‚µ‚Ü‚·
+    // TODO: return ã‚¹ãƒ†ãƒ¼ãƒˆãƒ¡ãƒ³ãƒˆã‚’ã“ã“ã«æŒ¿å…¥ã—ã¾ã™
 }
 
 Vector2D operator- (const Vector2D& a, const Vector2D& b)

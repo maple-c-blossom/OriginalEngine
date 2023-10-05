@@ -1,31 +1,36 @@
 #pragma once
+#include "Pading.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <DirectXMath.h>
-
+WarningIgnoreEnd
 
 namespace MCB
 {
     class View
     {
         public:
-        DirectX::XMMATRIX mat_ = DirectX::XMMatrixIdentity();//s—ñ
-        DirectX::XMFLOAT3 eye_{ 0,0,0 }; //‹“_À•W(ƒJƒƒ‰©g‚ÌÀ•W)
-        //’‹“_À•W(ƒJƒƒ‰‚ªŒ©‚Ä‚¢‚éÀ•WAXMMatrixLookAtLH‚Í‚±‚ÌÀ•W‚©‚ç
-        //‹“_À•W‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é‚±‚Æ‚ÅŒü‚«‚ğŒˆ’è‚µ‚Ä‚¢‚é)
+        DirectX::XMMATRIX mat_ = DirectX::XMMatrixIdentity();//è¡Œåˆ—
+        DirectX::XMFLOAT3 eye_{ 0,0,0 }; //è¦–ç‚¹åº§æ¨™(ã‚«ãƒ¡ãƒ©è‡ªèº«ã®åº§æ¨™)
+        //æ³¨è¦–ç‚¹åº§æ¨™(ã‚«ãƒ¡ãƒ©ãŒè¦‹ã¦ã„ã‚‹åº§æ¨™ã€XMMatrixLookAtLHã¯ã“ã®åº§æ¨™ã‹ã‚‰
+        //è¦–ç‚¹åº§æ¨™ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹ã“ã¨ã§å‘ãã‚’æ±ºå®šã—ã¦ã„ã‚‹)
         DirectX::XMFLOAT3 target_{ 0,0,1 };
-        DirectX::XMFLOAT3 up_{ 0,1,0 };//ã•ûŒüƒxƒNƒgƒ‹(ƒJƒƒ‰‚Ìã‘¤‚ª‚Ç‚±‚©‚ğŒˆ’è‚·‚éÀ•WB)
+        DirectX::XMFLOAT3 up_{ 0,1,0 };//ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«(ã‚«ãƒ¡ãƒ©ã®ä¸Šå´ãŒã©ã“ã‹ã‚’æ±ºå®šã™ã‚‹åº§æ¨™ã€‚)
+		Byte6 pad1;
+		Byte6 pad2;
         DirectX::XMMATRIX billMat_ = DirectX::XMMatrixIdentity();
 
 
         /// <summary>
-        /// ˆø”‚Ì’l‚ğƒNƒ‰ƒX‚Ì‚»‚ê‚¼‚ê‚Ì•Ï”‚É‘ã“ü‚µ‚½ã‚Åƒrƒ…[•ÏŠ·s—ñ‚ğì¬‚µ‚Ü‚·B
+        /// å¼•æ•°ã®å€¤ã‚’ã‚¯ãƒ©ã‚¹ã®ãã‚Œãã‚Œã®å¤‰æ•°ã«ä»£å…¥ã—ãŸä¸Šã§ãƒ“ãƒ¥ãƒ¼å¤‰æ›è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="eye">‹“_À•W</param>
-        /// <param name="target">’‹“_À•W</param>
-        /// <param name="up">ã•ûŒüƒxƒNƒgƒ‹</param>
+        /// <param name="eye">è¦–ç‚¹åº§æ¨™</param>
+        /// <param name="target">æ³¨è¦–ç‚¹åº§æ¨™</param>
+        /// <param name="up">ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«</param>
         void CreateMatrixView(const DirectX::XMFLOAT3& eye, const DirectX::XMFLOAT3& target, const DirectX::XMFLOAT3& up);
 
         /// <summary>
-        /// ‚·‚Å‚É‚ ‚é•Ï”‚ğ—˜—p‚µ‚Äs—ñ‚ğì¬‚µ‚Ü‚·
+        /// ã™ã§ã«ã‚ã‚‹å¤‰æ•°ã‚’åˆ©ç”¨ã—ã¦è¡Œåˆ—ã‚’ä½œæˆã—ã¾ã™
         /// </summary>
         void UpDateMatrixView( bool billbordY = false);
     };

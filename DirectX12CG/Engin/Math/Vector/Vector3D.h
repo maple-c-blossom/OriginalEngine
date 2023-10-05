@@ -1,6 +1,9 @@
 #pragma once
 #include "MCBFloat.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include "DirectXMath.h"
+WarningIgnoreEnd
 namespace MCB
 {
 

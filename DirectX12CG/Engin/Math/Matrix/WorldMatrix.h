@@ -1,6 +1,6 @@
 #pragma once
 
-#include <DirectXMath.h>
+
 #include "View.h"
 
 namespace MCB
@@ -8,57 +8,58 @@ namespace MCB
 	class WorldMatrix
 	{
 	public:
-		//ƒ[ƒ‹ƒhs—ñ
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 		DirectX::XMMATRIX matWorld_ = DirectX::XMMatrixIdentity();
-		//ƒXƒP[ƒ‹s—ñ
+		//ã‚¹ã‚±ãƒ¼ãƒ«è¡Œåˆ—
 		DirectX::XMMATRIX matScale_ = DirectX::XMMatrixIdentity();
-		//‰ñ“]s—ñ
+		//å›è»¢è¡Œåˆ—
 		DirectX::XMMATRIX matRot_ = DirectX::XMMatrixIdentity();
-		//•½sˆÚ“®s—ñ
+		//å¹³è¡Œç§»å‹•è¡Œåˆ—
 		DirectX::XMMATRIX matTransform_;
 
 
 
 
 
+
 		/// <summary>
-		/// X‰ñ“]‚Ìİ’è
+		/// Xå›è»¢ã®è¨­å®š
 		/// </summary>
-		/// <param name="angle">Šp“x</param>
-		/// <param name="ConvertToRadians">ŒÊ“x–@‚É•ÏŠ·‚·‚éƒtƒ‰ƒOAangle‚ğŒÊ“x–@‚Å‘‚¢‚½‚ç"false"‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢</param>
+		/// <param name="angle">è§’åº¦</param>
+		/// <param name="ConvertToRadians">å¼§åº¦æ³•ã«å¤‰æ›ã™ã‚‹ãƒ•ãƒ©ã‚°ã€angleã‚’å¼§åº¦æ³•ã§æ›¸ã„ãŸã‚‰"false"ã‚’è¨­å®šã—ã¦ãã ã•ã„</param>
 		void SetMatRotX( float angle,  bool ConvertToRadians = true);
 		/// <summary>
-		/// Y‰ñ“]İ’è
+		/// Yå›è»¢è¨­å®š
 		/// </summary>
-		/// <param name="angle">Šp“x</param>
-		/// <param name="ConvertToRadians">ŒÊ“x–@‚É•ÏŠ·‚·‚éƒtƒ‰ƒOAangle‚ğŒÊ“x–@‚Å‘‚¢‚½‚ç"false"‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢</param>
+		/// <param name="angle">è§’åº¦</param>
+		/// <param name="ConvertToRadians">å¼§åº¦æ³•ã«å¤‰æ›ã™ã‚‹ãƒ•ãƒ©ã‚°ã€angleã‚’å¼§åº¦æ³•ã§æ›¸ã„ãŸã‚‰"false"ã‚’è¨­å®šã—ã¦ãã ã•ã„</param>
 		void SetMatRotY( float angle,  bool ConvertToRadians = true);
 		/// <summary>
-		/// Z‰ñ“]‚Ìİ’è
+		/// Zå›è»¢ã®è¨­å®š
 		/// </summary>
-		/// <param name="angle">Šp“x</param>
-		/// <param name="ConvertToRadians">ŒÊ“x–@‚É•ÏŠ·‚·‚éƒtƒ‰ƒOAangle‚ğŒÊ“x–@‚Å‘‚¢‚½‚ç"false"‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢</param>
+		/// <param name="angle">è§’åº¦</param>
+		/// <param name="ConvertToRadians">å¼§åº¦æ³•ã«å¤‰æ›ã™ã‚‹ãƒ•ãƒ©ã‚°ã€angleã‚’å¼§åº¦æ³•ã§æ›¸ã„ãŸã‚‰"false"ã‚’è¨­å®šã—ã¦ãã ã•ã„</param>
 		void SetMatRotZ( float angle,  bool ConvertToRadians = true);
 
 		/// <summary>
-		/// ‰ñ“]İ’è
+		/// å›è»¢è¨­å®š
 		/// </summary>
-		/// <param name="angleX">X‚ÌŠp“x</param>
-		/// <param name="angleY">Y‚ÌŠp“x</param>
-		/// <param name="angleZ">Z‚ÌŠp“x</param>
-		/// <param name="ConvertToRadians">ŒÊ“x–@‚É•ÏŠ·‚·‚éƒtƒ‰ƒOAangle‚ğŒÊ“x–@‚Å‘‚¢‚½‚ç"false"‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢</param>
+		/// <param name="angleX">Xã®è§’åº¦</param>
+		/// <param name="angleY">Yã®è§’åº¦</param>
+		/// <param name="angleZ">Zã®è§’åº¦</param>
+		/// <param name="ConvertToRadians">å¼§åº¦æ³•ã«å¤‰æ›ã™ã‚‹ãƒ•ãƒ©ã‚°ã€angleã‚’å¼§åº¦æ³•ã§æ›¸ã„ãŸã‚‰"false"ã‚’è¨­å®šã—ã¦ãã ã•ã„</param>
 		void SetMatRot( float angleX,  float angleY,  float angleZ,  bool ConvertToRadians = true);
 
 
 
 		/// <summary>
-		/// ˆø”‚Å—^‚¦‚ç‚ê‚½Šp“x‚É•ÏŠ·‚³‚ê‚½‰ñ“]s—ñ‚ğ•Ô‚µ‚Ü‚·
+		/// å¼•æ•°ã§ä¸ãˆã‚‰ã‚ŒãŸè§’åº¦ã«å¤‰æ›ã•ã‚ŒãŸå›è»¢è¡Œåˆ—ã‚’è¿”ã—ã¾ã™
 		/// </summary>
-		/// <param name="matRot">‰ñ“]Œ³‚Ìs—ñ</param>
-		/// <param name="angleX">X‚ÌŠp“x</param>
-		/// <param name="angleY">Y‚ÌŠp“x</param>
-		/// <param name="angleZ">Z‚ÌŠp“x</param>
-		/// <param name="ConvertToRadians">ŒÊ“x–@‚É•ÏŠ·‚·‚éƒtƒ‰ƒOAangle‚ğŒÊ“x–@‚Å‘‚¢‚½‚ç"false"‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢</param>
+		/// <param name="matRot">å›è»¢å…ƒã®è¡Œåˆ—</param>
+		/// <param name="angleX">Xã®è§’åº¦</param>
+		/// <param name="angleY">Yã®è§’åº¦</param>
+		/// <param name="angleZ">Zã®è§’åº¦</param>
+		/// <param name="ConvertToRadians">å¼§åº¦æ³•ã«å¤‰æ›ã™ã‚‹ãƒ•ãƒ©ã‚°ã€angleã‚’å¼§åº¦æ³•ã§æ›¸ã„ãŸã‚‰"false"ã‚’è¨­å®šã—ã¦ãã ã•ã„</param>
 		/// <returns></returns>
 		DirectX::XMMATRIX ReturnMatRot(const DirectX::XMMATRIX& matRot,  float angleX,  float angleY,
 			 float angleZ,  bool ConvertToRadians = true);

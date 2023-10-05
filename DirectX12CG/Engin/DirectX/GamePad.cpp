@@ -1,17 +1,14 @@
 #include "GamePad.h"
-#define INPUT_DEADZONE 6000
-#define INPUT_TRRIGERDEADZONE 10
-#define MAX_MAGNITUDE 32767
-#define MAX_TRRIGERMAGNITUDE 255
+
 using namespace MCB;
 
 void MCB::GamePad::GetState()
 {
 	DWORD result;
-	for (int32_t i = 0; i < 4; i++)
+	for (uint32_t i = 0; i < 4; i++)
 	{
 		oldstate_[i] = state_[i];
-		result = XInputGetState(i, &state_[i]);
+		result = XInputGetState(static_cast<DWORD>(i), &state_[i]);
 		if (result != ERROR_SUCCESS) break;
 	}
 }
@@ -207,19 +204,25 @@ void MCB::GamePad::Vibration( int32_t LeftMotorSpeed,  int32_t RightMotorSpeed, 
 {
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
-	vibration.wLeftMotorSpeed = LeftMotorSpeed; // use any value between 0-65535 here
-	vibration.wRightMotorSpeed = RightMotorSpeed; // use any value between 0-65535 here
-	XInputSetState(Userindex, &vibration);
+	vibration.wLeftMotorSpeed = static_cast<WORD>(LeftMotorSpeed); // use any value between 0-65535 here
+	vibration.wRightMotorSpeed = static_cast< WORD >(RightMotorSpeed); // use any value between 0-65535 here
+	XInputSetState(static_cast<DWORD>(Userindex), &vibration);
 }
 
 void MCB::GamePad::StopVibration( int16_t Userindex)
 {
 	XINPUT_VIBRATION vibration;
 	ZeroMemory(&vibration, sizeof(XINPUT_VIBRATION));
-	vibration.wLeftMotorSpeed = 0; // use any value between 0-65535 here
-	vibration.wRightMotorSpeed = 0; // use any value between 0-65535 here
-	XInputSetState(Userindex, &vibration);
+	vibration.wLeftMotorSpeed = static_cast<WORD>(0); // use any value between 0-65535 here
+	vibration.wRightMotorSpeed = static_cast<WORD>(0); // use any value between 0-65535 here
+	XInputSetState(static_cast<DWORD>(Userindex), &vibration);
 }
+
+MCB::GamePad::~GamePad()
+{
+}
+
+GamePad& MCB::GamePad::operator=(const GamePad&) = default;
 
 GamePad* MCB::GamePad::GetInstance()
 {
@@ -229,7 +232,7 @@ GamePad* MCB::GamePad::GetInstance()
 
 void MCB::GamePad::AllStopVibration()
 {
-	for (int32_t i = 0; i < 4; i++)
+	for (int16_t i = 0; i < 4; i++)
 	{
 		GamePad::GetInstance()->StopVibration(i);
 	}

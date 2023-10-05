@@ -1,33 +1,44 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <Windows.h>
 #include <Xinput.h>
+WarningIgnoreEnd
 #include "MCBFloat.h"
 #pragma comment (lib, "xinput.lib")
 
-#define	GAMEPAD_UP		XINPUT_GAMEPAD_DPAD_UP
-#define	GAMEPAD_DOWN	XINPUT_GAMEPAD_DPAD_DOWN
-#define	GAMEPAD_LEFT	XINPUT_GAMEPAD_DPAD_LEFT
-#define	GAMEPAD_RIGHT	XINPUT_GAMEPAD_DPAD_RIGHT
-#define	GAMEPAD_START	XINPUT_GAMEPAD_START
-#define	GAMEPAD_BACK	XINPUT_GAMEPAD_BACK
-#define	GAMEPAD_STICK_L	XINPUT_GAMEPAD_LEFT_THUMB
-#define	GAMEPAD_STICK_R	XINPUT_GAMEPAD_RIGHT_THUMB
-#define	GAMEPAD_LB		XINPUT_GAMEPAD_LEFT_SHOULDER
-#define	GAMEPAD_RB		XINPUT_GAMEPAD_RIGHT_SHOULDER
-#define	GAMEPAD_A		XINPUT_GAMEPAD_A
-#define	GAMEPAD_B		XINPUT_GAMEPAD_B
-#define	GAMEPAD_X		XINPUT_GAMEPAD_X
-#define	GAMEPAD_Y		XINPUT_GAMEPAD_Y
+enum GAMEPAD
+{
+	GAMEPAD_UP		= XINPUT_GAMEPAD_DPAD_UP,
+	GAMEPAD_DOWN	= XINPUT_GAMEPAD_DPAD_DOWN,
+	GAMEPAD_LEFT	= XINPUT_GAMEPAD_DPAD_LEFT,
+	GAMEPAD_RIGHT	= XINPUT_GAMEPAD_DPAD_RIGHT,
+	GAMEPAD_START	= XINPUT_GAMEPAD_START,
+	GAMEPAD_BACK	= XINPUT_GAMEPAD_BACK,
+	GAMEPAD_STICK_L	= XINPUT_GAMEPAD_LEFT_THUMB,
+	GAMEPAD_STICK_R	= XINPUT_GAMEPAD_RIGHT_THUMB,
+	GAMEPAD_LB		= XINPUT_GAMEPAD_LEFT_SHOULDER,
+	GAMEPAD_RB		= XINPUT_GAMEPAD_RIGHT_SHOULDER,
+	GAMEPAD_A		= XINPUT_GAMEPAD_A,
+	GAMEPAD_B		= XINPUT_GAMEPAD_B,
+	GAMEPAD_X		= XINPUT_GAMEPAD_X,
+	GAMEPAD_Y		= XINPUT_GAMEPAD_Y,
 
+};
+
+static const int32_t INPUT_DEADZONE = 6000;
+static const int32_t INPUT_TRRIGERDEADZONE = 10;
+static const int32_t MAX_MAGNITUDE = 32767;
+static const int32_t MAX_TRRIGERMAGNITUDE = 255;
 namespace MCB
 {
 	class GamePad
 	{
 	private:
-		GamePad() {};
-		GamePad(const GamePad& input) {};
-		~GamePad() {};
-		GamePad& operator= (const GamePad& Input) {};
+		GamePad();
+		GamePad(const GamePad&);
+		~GamePad();
+		GamePad& operator= (const GamePad&);
 	public:
 		static GamePad* GetInstance();
 		static void AllStopVibration();

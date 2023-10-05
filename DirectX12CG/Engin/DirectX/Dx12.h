@@ -1,11 +1,14 @@
 #pragma once
+#include "IgnoreWarning.h"
 
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <cassert>
 #include <wrl.h>
 #include <vector>
 #include <string>
+WarningIgnoreEnd
 #include "DxWindow.h"
 
 #pragma comment(lib, "d3d12.lib")
@@ -19,16 +22,20 @@ namespace MCB
     class Dx12
     {
     private:
-        Dx12() {};
-        Dx12(const Dx12& dx12) {};
-        Dx12& operator=(const Dx12& dx12) {};
-        ~Dx12() {};
+        Dx12();
+        Dx12(const Dx12&/* dx12*/);
+        Dx12& operator=(const Dx12& /*dx12*/);
+        ~Dx12();
     public:
 
-        //Šî–{•Ï”‰Šú‰»-----
-    #pragma region Šî–{•Ï”‰Šú‰»
+        //åŸºæœ¬å¤‰æ•°åˆæœŸåŒ–-----
+    #pragma region åŸºæœ¬å¤‰æ•°åˆæœŸåŒ–
+
 
         HRESULT result_;
+    private:
+        int32_t pad1__;
+    public:
         Microsoft::WRL::ComPtr<ID3D12Device> device_ = nullptr;
         Microsoft::WRL::ComPtr<IDXGIFactory6> dxgiFactory_ = nullptr;
         Microsoft::WRL::ComPtr<IDXGISwapChain4> swapchain_ = nullptr;
@@ -37,11 +44,11 @@ namespace MCB
         Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_ = nullptr;
         Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> rtvHeaps_ = nullptr;
 
-    #pragma endregion Šî–{•Ï”‰Šú‰»
+    #pragma endregion åŸºæœ¬å¤‰æ•°åˆæœŸåŒ–
         //--------------
 
-        //ƒfƒoƒCƒX•Ï”-----------------------
-        //‘Î‰ƒŒƒxƒ‹‚Ì”z—ñ
+        //ãƒ‡ãƒã‚¤ã‚¹å¤‰æ•°-----------------------
+        //å¯¾å¿œãƒ¬ãƒ™ãƒ«ã®é…åˆ—
         D3D_FEATURE_LEVEL levels_[4] =
         {
             D3D_FEATURE_LEVEL_12_1,
@@ -53,27 +60,29 @@ namespace MCB
         D3D_FEATURE_LEVEL featureLevel_;
         //---------------------------
 
-        //ƒRƒ}ƒ“ƒhƒLƒ…[
+        //ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
         D3D12_COMMAND_QUEUE_DESC commandQueueDesc_{};
-
-        //ƒXƒƒbƒvƒ`ƒF[ƒ“
+    private:
+        int32_t pad2__;
+    public:
+        //ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
         Microsoft::WRL::ComPtr<IDXGISwapChain1> swapchain1_;
 
-        //Šeíİ’è
+        //å„ç¨®è¨­å®š
         DXGI_SWAP_CHAIN_DESC1 swapChainDesc_{};
 
-        // ƒfƒXƒNƒŠƒvƒ^•Ï”
+        // ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿å¤‰æ•°
         D3D12_DESCRIPTOR_HEAP_DESC rtvHeapDesc_{};
 
-        //ƒoƒbƒNƒoƒbƒtƒ@•Ï”
+        //ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡å¤‰æ•°
         std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>> backBuffers_ = std::vector< Microsoft::WRL::ComPtr<ID3D12Resource>>(2);
 
         D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_;
 
-        //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
+        //ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®è¨­å®š
         D3D12_RENDER_TARGET_VIEW_DESC rtvDesc_{};
 
-        //ƒtƒFƒ“ƒX•Ï”
+        //ãƒ•ã‚§ãƒ³ã‚¹å¤‰æ•°
         Microsoft::WRL::ComPtr<ID3D12Fence> fence_ = nullptr;
         UINT64 fenceVal_ = 0;
 

@@ -1,7 +1,11 @@
 #pragma once
-#include <DirectXMath.h>
 #include "Vector3D.h"
+#include "IgnoreWarning.h"
+#include "Pading.h"
+WarningIgnoreBegin
+#include <DirectXMath.h>
 #include <array>
+WarningIgnoreEnd
 namespace MCB
 {
 
@@ -50,7 +54,7 @@ namespace MCB
 
 		static MCBMatrix MatrixInverse( MCBMatrix mat);
 
-		//XMMatrix‚É•ÏŠ·‚·‚éŠÖ”
+		//XMMatrixã«å¤‰æ›ã™ã‚‹é–¢æ•°
 		static DirectX::XMMATRIX MatrixConvertXMMatrix(const MCBMatrix& mat);
 
 		static MCBMatrix MCBMatrixConvertXMMatrix(const DirectX::XMMATRIX& mat);

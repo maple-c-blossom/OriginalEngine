@@ -3,6 +3,7 @@
 #define PI 3.14159265358979323846264338327950288f
 using namespace MCB;
 
+
 MCB::Quaternion::Quaternion(const Vector3D& vec, float angle)
 {
 	SetRota(vec, angle);
@@ -177,6 +178,7 @@ void MCB::Quaternion::Normalize()
 
 MCBMatrix MCB::Quaternion::GetQuaternionRotaMat(const Quaternion& rotaQ)
 {
+	static_cast< void >( rotaQ );
 	MCBMatrix mat;
 	mat.MCBMatrixIdentity();
 	mat._11_ = 1 - (2 * (y_ * y_)) - (2 * (z_ * z_));
@@ -339,7 +341,7 @@ Quaternion MCB::Quaternion::Identity()
 
 DirectX::XMVECTOR MCB::Quaternion::ConvertXMVector()
 {
-	return DirectX::XMVECTOR{ x_,y_,z_,w_ };
+	return DirectX::XMVECTOR{ {x_,y_,z_,w_} };
 }
 
 MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
@@ -388,7 +390,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start, Quaternion end, float time)//ŒW”‚ğ’¼‚Å“ü—Í‚·‚é—p
+MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start, Quaternion end, float time)//ä¿‚æ•°ã‚’ç›´ã§å…¥åŠ›ã™ã‚‹ç”¨
 {
 	if (start == end) return start;
 	Quaternion ans;

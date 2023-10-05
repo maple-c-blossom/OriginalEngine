@@ -26,10 +26,10 @@ namespace MCB
 	private: 
 
 		static ID3D12Device* sdevice_;
-		LightGroup() {};
-		LightGroup(const LightGroup& lghtGroup) {};
-		LightGroup& operator=(const LightGroup& lightGroup) {};
-		~LightGroup() {};
+		LightGroup();
+		LightGroup(const LightGroup& );
+		LightGroup& operator=(const LightGroup&);
+		~LightGroup();
 	public: 
 
 		static LightGroup* GetInstance();
@@ -94,6 +94,7 @@ namespace MCB
 		PointLight PLights_[sP_LIGHT_NUM_];
 		SpotLight SLights_[sS_LIGHT_NUM_];
 		bool isUpdate_ = false;
+		Byte7 pad1;
 	};
 
 }

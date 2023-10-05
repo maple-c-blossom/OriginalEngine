@@ -5,13 +5,13 @@ MCB::RootParameter::~RootParameter()
     rootparams_.clear();
 }
 
-void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType,  int32_t ShaderRegister,
-     int32_t RegisterSpace, const D3D12_SHADER_VISIBILITY& shaderVisibility,
-     int32_t NumDescriptorRanges, size_t descriptorIndex)
+void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType,  uint32_t ShaderRegister,
+     uint32_t RegisterSpace, const D3D12_SHADER_VISIBILITY& shaderVisibility,
+     uint32_t NumDescriptorRanges, size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
-    rootparam.ParameterType = paramType;//í—Ş
-    rootparam.ShaderVisibility = shaderVisibility;//‘S‚Ä‚ÌƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é
+    rootparam.ParameterType = paramType;//ç¨®é¡
+    rootparam.ShaderVisibility = shaderVisibility;//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
@@ -22,8 +22,8 @@ void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
     {
-        rootparam.Descriptor.ShaderRegister = ShaderRegister;//’è”ƒoƒbƒtƒ@”Ô†
-        rootparam.Descriptor.RegisterSpace = RegisterSpace;//ƒfƒtƒHƒ‹ƒg’l
+        rootparam.Descriptor.ShaderRegister = ShaderRegister;//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+        rootparam.Descriptor.RegisterSpace = RegisterSpace;//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
     }
     else
     {
@@ -35,11 +35,11 @@ void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType
 }
 
 void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType,
-     int32_t ShaderRegister, size_t descriptorIndex)
+     uint32_t ShaderRegister, size_t descriptorIndex)
 {
     D3D12_ROOT_PARAMETER rootparam{};
-    rootparam.ParameterType = paramType;//í—Ş
-    rootparam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//‘S‚Ä‚ÌƒVƒF[ƒ_[‚©‚çŒ©‚¦‚é
+    rootparam.ParameterType = paramType;//ç¨®é¡
+    rootparam.ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;//å…¨ã¦ã®ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‹ã‚‰è¦‹ãˆã‚‹
 
     if (paramType == D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE)
     {
@@ -50,8 +50,8 @@ void MCB::RootParameter::SetRootParam(const D3D12_ROOT_PARAMETER_TYPE& paramType
     }
     else if (paramType == D3D12_ROOT_PARAMETER_TYPE_CBV)
     {
-        rootparam.Descriptor.ShaderRegister = ShaderRegister;//’è”ƒoƒbƒtƒ@”Ô†
-        rootparam.Descriptor.RegisterSpace = 0;//ƒfƒtƒHƒ‹ƒg’l
+        rootparam.Descriptor.ShaderRegister = ShaderRegister;//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç•ªå·
+        rootparam.Descriptor.RegisterSpace = 0;//ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤
     }
     else
     {

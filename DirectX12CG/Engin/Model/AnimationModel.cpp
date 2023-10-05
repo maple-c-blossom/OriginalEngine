@@ -1,11 +1,14 @@
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <MyImgui/imgui.h>
-#include "AnimationModel.h"
-#include "Dx12.h"
 #include <list>
 #include <algorithm>
+WarningIgnoreEnd
+#include "AnimationModel.h"
+#include "Dx12.h"
 #include "Util.h"
-#include <algorithm>
 #include "Object3d.h"
+
 using namespace MCB;
 using namespace Assimp;
 using namespace DirectX;
@@ -44,13 +47,13 @@ bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType)
 	std::string extend = "." + fileType;
 	fileName = baseDirectory + fileName + "\\" + fileName + extend;
 	const aiScene* scene = importer.ReadFile(fileName,
-		aiProcess_CalcTangentSpace | //ƒCƒ“ƒ|[ƒg‚µ‚½ƒƒbƒVƒ…‚Ìƒ^ƒ“ƒWƒFƒ“ƒg‚Æ‚©‚ğŒvZ
-		aiProcess_Triangulate | //OŠp–Ê‰»
-		aiProcess_JoinIdenticalVertices | //ƒCƒ“ƒ|[ƒg‚³‚ê‚½‚·‚×‚Ä‚ÌƒƒbƒVƒ…‚Ì’†‚ÅA“¯ˆê‚Ì’¸“_ƒf[ƒ^ƒZƒbƒg‚ğ¯•Ê‚µAŒ‹‡
-		aiProcess_SortByPType |//2‚ÂˆÈã‚ÌƒvƒŠƒ~ƒeƒBƒuƒ^ƒCƒv‚ğ‚ÂƒƒbƒVƒ…‚ğ‹Ï¿‚ÈƒTƒuƒƒbƒVƒ…‚É•ªŠ„
-		aiProcess_GenNormals |//–@ü‚ª‚È‚¢ê‡–@ü‚ğŒvZ
-		aiProcess_FixInfacingNormals |//–@ü‚ª“à‘¤‚ğŒü‚¢‚Ä‚¢‚éê‡A–@ü‚ğ”½“]‚µ‚Ä‚­‚ê‚é
-		aiProcess_ConvertToLeftHanded);//¶èÀ•W‚É•K—v‚ÈŒ`‚É•ÏŠ·
+		aiProcess_CalcTangentSpace | //ã‚¤ãƒ³ãƒãƒ¼ãƒˆã—ãŸãƒ¡ãƒƒã‚·ãƒ¥ã®ã‚¿ãƒ³ã‚¸ã‚§ãƒ³ãƒˆã¨ã‹ã‚’è¨ˆç®—
+		aiProcess_Triangulate | //ä¸‰è§’é¢åŒ–
+		aiProcess_JoinIdenticalVertices | //ã‚¤ãƒ³ãƒãƒ¼ãƒˆã•ã‚ŒãŸã™ã¹ã¦ã®ãƒ¡ãƒƒã‚·ãƒ¥ã®ä¸­ã§ã€åŒä¸€ã®é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚»ãƒƒãƒˆã‚’è­˜åˆ¥ã—ã€çµåˆ
+		aiProcess_SortByPType |//2ã¤ä»¥ä¸Šã®ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã‚¿ã‚¤ãƒ—ã‚’æŒã¤ãƒ¡ãƒƒã‚·ãƒ¥ã‚’å‡è³ªãªã‚µãƒ–ãƒ¡ãƒƒã‚·ãƒ¥ã«åˆ†å‰²
+		aiProcess_GenNormals |//æ³•ç·šãŒãªã„å ´åˆæ³•ç·šã‚’è¨ˆç®—
+		aiProcess_FixInfacingNormals |//æ³•ç·šãŒå†…å´ã‚’å‘ã„ã¦ã„ã‚‹å ´åˆã€æ³•ç·šã‚’åè»¢ã—ã¦ãã‚Œã‚‹
+		aiProcess_ConvertToLeftHanded);//å·¦æ‰‹åº§æ¨™ã«å¿…è¦ãªå½¢ã«å¤‰æ›
 
 	// If the import failed, report it
 	if (nullptr == scene) {
@@ -136,12 +139,12 @@ void MCB::AnimationModel::CopyNodesWithMeshes( aiNode* ainode,const aiScene* sce
 		newObject->name = ainode->mName.C_Str();
 		// copy the meshes
 		//CopyMeshes(node, newObject);
-		for (uint32_t i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]‚ÌŒ´ˆö
+		for (uint32_t i = 0; i < ainode->mNumMeshes; i++)//D3D12 ERROR: ID3D12Resource2::ID3D12Resource::Unmap: Resource (0x000001F358E61980:'Unnamed ID3D12Resource Object'), Subresource (0) is not mapped. [ RESOURCE_MANIPULATION ERROR #310: RESOURCE_UNMAP_NOTMAPPED]ã®åŸå› 
 		{
 			std::unique_ptr<AnimationMesh> tempmodel = std::make_unique<AnimationMesh>();
-			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, *tempmodel.get()); //D3D12 ERROR ŠÖ””²‚¯‚½uŠÔ
+			processMesh(scene->mMeshes[ainode->mMeshes[i]], scene, *tempmodel.get()); //D3D12 ERROR é–¢æ•°æŠœã‘ãŸç¬é–“
 			newObject->meshes.push_back(move(tempmodel));
-			for (auto& itr :newObject->meshes)//‚È‚º‚©return‚³‚ê‚é‚Ü‚Åfalse‚¾‚Á‚½texture‚Ìfree‚ªtrue‚É‚³‚ê‚Ä‚¢‚é‚Ì‚ÅC³(ã‹L‚Ì‚â‚Â‚ª“¯‚¶Œ´ˆö‚Á‚Û‚¢j
+			for (auto& itr :newObject->meshes)//ãªãœã‹returnã•ã‚Œã‚‹ã¾ã§falseã ã£ãŸtextureã®freeãŒtrueã«ã•ã‚Œã¦ã„ã‚‹ã®ã§ä¿®æ­£(ä¸Šè¨˜ã®ã‚„ã¤ãŒåŒã˜åŸå› ã£ã½ã„ï¼‰
 			{
 				for (auto& itr2 : itr->textures_)
 				{
@@ -385,21 +388,21 @@ void MCB::AnimationModel::Draw()
 		for (auto& itr2 : itr->meshes)
 		{
 			dx12->commandList_->SetGraphicsRootConstantBufferView(4, itr2->constBuffSkin_->GetGPUVirtualAddress());
-			//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚Ìİ’èƒRƒ}ƒ“ƒh
+			//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
 			dx12->commandList_->SetGraphicsRootConstantBufferView(2, itr2->material_.begin()->constBuffMaterialB1_->GetGPUVirtualAddress());
-			//SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ğæ“¾
+			//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 			D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 			srvGpuHandle.ptr += itr2->textures_.front()->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-			//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒpƒ‰ƒ[ƒ^1”Ô‚Éİ’è
+			//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
 			dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-			//’¸“_ƒf[ƒ^
+			//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 			dx12->commandList_->IASetVertexBuffers(0, 1, &itr2->vbView_);
-			//ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+			//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
 			dx12->commandList_->IASetIndexBuffer(&itr2->ibView_);
-			//•`‰æƒRƒ}ƒ“ƒh
+			//æç”»ã‚³ãƒãƒ³ãƒ‰
 			dx12->commandList_->DrawIndexedInstanced((uint32_t)itr2->indices_.size(), 1, 0, 0, 0);
 		}
 	}
@@ -702,13 +705,21 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   return clamp(temp,-1,1);
    }
 
-   void MCB::Skeleton::TwoBoneIK(Node& endJoint, Node& middleJoint)
+   void MCB::Skeleton::TwoBoneIK(Node& endJoint)
    {
 	   
-	   if (&endJoint == nullptr)return;
-	   if (&middleJoint == nullptr)return;
-	   //À•W•ÏŠ·(rootJoint‚ÌÀ•WŒn‚É•ÏŠ·)-----------------------------------
-	   Node* rootJoint = middleJoint.parent;
+	   if (!endJoint.ikData.middleJointNode)
+	   {
+		   endJoint.ikData.middleJointNode = endJoint.parent;
+	   }
+
+	   if (!endJoint.ikData.rootJointNode)
+	   {
+		   endJoint.ikData.rootJointNode = endJoint.ikData.middleJointNode->parent;
+	   }
+	   //åº§æ¨™å¤‰æ›(rootJointã®åº§æ¨™ç³»ã«å¤‰æ›)-----------------------------------
+	   Node* rootJoint = endJoint.ikData.rootJointNode;
+	   Node& middleJoint = *endJoint.ikData.middleJointNode;
 	   if(!rootJoint->chengeObjectColor)rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
 	   if(!middleJoint.chengeObjectColor)middleJoint.object->color_ = { 0,0.5f,0,1 };
 	   if(!endJoint.chengeObjectColor)endJoint.object->color_ = { 0,0,0.5f,1 };
@@ -717,9 +728,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   endJoint.ikData.rootJointNode = rootJoint;
 
 	   MCBMatrix rootJointModelMatrixinv = rootJointModelMatrixinv.MatrixInverse(rootJoint->defaultModelTransform);
-	   //Œü‚«‚½‚¢êŠ‚ÌObjÀ•WŒn‚ÌêŠ
-	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(targetPos - ObjPos)
-	   //Œü‚«‚½‚¢êŠ(RootJoint‚ÌÀ•WŒn)
+	   //å‘ããŸã„å ´æ‰€ã®Objåº§æ¨™ç³»ã®å ´æ‰€
+	   Vector3D effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objã‹ã‚‰ã®ç›¸å¯¾ä½ç½®(targetPos - ObjPos)
+	   //å‘ããŸã„å ´æ‰€(RootJointã®åº§æ¨™ç³»)
 	   Vector3D EffectorLocalFromRootPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(effectorWorldVec) * rootJointModelMatrixinv);
 
 
@@ -736,7 +747,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
 	   Vector3D nd = nd.GetV3Normal(rootJointLocalPositionFromRoot,
-		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJoint‚©‚ç‚İ‚½ˆÊ’u‚Å–@üæ‚Á‚Ä‚é‚È‚çrootJoint‚ÍŒ´“_‚¶‚á‚ËH
+		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointã‹ã‚‰ã¿ãŸä½ç½®ã§æ³•ç·šå–ã£ã¦ã‚‹ãªã‚‰rootJointã¯åŸç‚¹ã˜ã‚ƒã­ï¼Ÿ
 	   endJoint.ikDebugData.defaultTriangleNormal = nd;
 
 	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,
@@ -750,7 +761,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   endJoint.ikData.jointTriangle.PointC_ = endJointLocalPositionFromRoot;
 
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
-	   Quaternion q1;//“¯ˆê•½–Êã‚É‚¢‚é‚æ‚¤‚É‚·‚é‰ñ“]
+	   Quaternion q1;//åŒä¸€å¹³é¢ä¸Šã«ã„ã‚‹ã‚ˆã†ã«ã™ã‚‹å›è»¢
 	   q1 = q1.GetDirectProduct(rootJoint->defaultRotation,q1.DirToDir(nd, nt));
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
@@ -758,20 +769,20 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
 	   float localTargetVectorFromRootJoint = EffectorLocalFromRootPos.V3Len();
 
-	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xZo
-	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//—]Œ·’è—‚ÅŠp“xZo
+	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//ä½™å¼¦å®šç†ã§è§’åº¦ç®—å‡º
+	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//ä½™å¼¦å®šç†ã§è§’åº¦ç®—å‡º
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
-	   Quaternion d2RotaionQ(nt, theta);//•½–Ê‚Ì‰ñ“]‚Ål‚¦‚é‚È‚çnt(•½–Ê‚Ì–@ü)‚ğ‰ñ“]²‚Æ‚µ‚Ä—˜—p‚µ‚Ä‚à‚¢‚¢‚Æ—\‘z
-	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//root‚©‚çmiddle‚É‚¢‚Ä‚Ù‚µ‚¢êŠ‚Ü‚Å‚ÌƒxƒNƒgƒ‹Zo
+	   Quaternion d2RotaionQ(nt, theta);//å¹³é¢ã®å›è»¢ã§è€ƒãˆã‚‹ãªã‚‰nt(å¹³é¢ã®æ³•ç·š)ã‚’å›è»¢è»¸ã¨ã—ã¦åˆ©ç”¨ã—ã¦ã‚‚ã„ã„ã¨äºˆæƒ³
+	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootã‹ã‚‰middleã«ã„ã¦ã»ã—ã„å ´æ‰€ã¾ã§ã®ãƒ™ã‚¯ãƒˆãƒ«ç®—å‡º
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2,q1);
 	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
-	   UpdateNodeMatrix(&middleJoint);//middleJoint‚ğ‰ñ“]‚³‚¹‚é
+	   UpdateNodeMatrix(&middleJoint);//middleJointã‚’å›è»¢ã•ã›ã‚‹
 	   UpdateNodeMatrix(&endJoint);
 
-	   effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Obj‚©‚ç‚Ì‘Š‘ÎˆÊ’u(objPos - targetPos)
+	   effectorWorldVec = endJoint.ikData.iKEffectorPosition;//Objã‹ã‚‰ã®ç›¸å¯¾ä½ç½®(objPos - targetPos)
 	   EffectorLocalFromRootPos = effectorWorldVec.ConvertXMVEC();
 	   MCBMatrix middleJointWorldMatrixinv = middleJointWorldMatrixinv.MatrixInverse(middleJoint.AnimaetionParentMat);
 	   Vector3D xmTargetLocalVecFromMiddle = MCBMatrix::GetTranslate(
@@ -782,9 +793,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
 	   q3 = q3.GetDirectProduct(middleJoint.defaultRotation,q3);
 	   middleJoint.rotation = q3.ConvertXMVector();
-	   UpdateNodeMatrix(rootJoint);
-	   UpdateNodeMatrix(&middleJoint);
-	   UpdateNodeMatrix(&endJoint);
+	   //ã“ã®å¾Œã§å…¨éƒ¨ã®ãƒãƒ¼ãƒ‰ã‚’æ›´æ–°ã™ã‚‹ãŸã‚ã€å‰Šé™¤
+	   //UpdateNodeMatrix(rootJoint);
+	   //UpdateNodeMatrix(&middleJoint);
+	   //UpdateNodeMatrix(&endJoint);
    }
 
    void MCB::Skeleton::AllNodeMatrixForModelToBone()
@@ -793,9 +805,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   {
 		   if (node->ikData.isIK)
 		   {
-			   TwoBoneIK(*node.get(), *node->parent);
+			   TwoBoneIK(*node.get());
+			   for (auto& updateNode : nodes_)
+			   {
+				   UpdateNodeMatrix(updateNode.get());
+			   }
 		   }
-		   UpdateNodeMatrix(node.get());
 	   }
 	   for (auto& node : nodes_)
 	   {
@@ -855,7 +870,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    }
 
    void MCB::Skeleton::SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition,
-	   const string& boneName)
+	   const string& boneName,
+	   const std::string& middleJointName, const std::string& rootJointName)
    {
 	   Vector3D pos(obj.position_.x,obj.position_.y,obj.position_.z);
 	   WorldMatrix mat = obj.matWorld_;
@@ -869,6 +885,17 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   {
 		   node = GetNode(boneName);
 	   }
+
+	   if (middleJointName != "NULL")
+	   {
+		   node->ikData.middleJointNode = GetNode(middleJointName);
+	   }
+
+	   if ( rootJointName != "NULL")
+	   {
+		   node->ikData.rootJointNode = GetNode(rootJointName);
+	   }
+
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
@@ -1067,23 +1094,23 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   };
 
 		Node* result = nullptr;
-		Vector3D localTargetPos = targetPos - objectPositoin;//Mesh‹óŠÔ‚É•ÏŠ·
+		Vector3D localTargetPos = targetPos - objectPositoin;//Meshç©ºé–“ã«å¤‰æ›
 		list<LengeData> lenges;
 		for (auto& node : nodes_)
 		{
 			Vector3D pointVec = pointVec.Vector3Substruct(node->startPosition.vec_, localTargetPos.vec_);
-			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);//Bone‚ÌƒxƒNƒgƒ‹‚©‚çÅ‚à‹ß‚¢ˆÊ’u‚ğZo
+			float lenge =pointVec.V3Len() - node->boneVec.GetV3Dot(pointVec);//Boneã®ãƒ™ã‚¯ãƒˆãƒ«ã‹ã‚‰æœ€ã‚‚è¿‘ã„ä½ç½®ã‚’ç®—å‡º
 			LengeData temp;
 			temp.node = node.get();
 			temp.lenge = lenge;
 			lenges.push_back(temp);
 		}
 
-		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });//‹ß‚¢‡‚Åƒ\[ƒg(closestNum‚ÅŒŸõŠ|‚¯‚é‚½‚ß)
-		int32_t i = 1;//“Y‚¦š‚Å‚Í‚È‚­"‰½”Ô–Ú‚©"‚ğw’è‚·‚é‚Ì‚Å1”Ô–Ú‚ğÅ‰‚É(0”Ô‚ğÅ‰‚É‚·‚é‚©‚ÍvˆÄ’†)
+		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });//è¿‘ã„é †ã§ã‚½ãƒ¼ãƒˆ(closestNumã§æ¤œç´¢æ›ã‘ã‚‹ãŸã‚)
+		int32_t i = 1;//æ·»ãˆå­—ã§ã¯ãªã"ä½•ç•ªç›®ã‹"ã‚’æŒ‡å®šã™ã‚‹ã®ã§1ç•ªç›®ã‚’æœ€åˆã«(0ç•ªã‚’æœ€åˆã«ã™ã‚‹ã‹ã¯æ€æ¡ˆä¸­)
 		for (auto itr = lenges.begin(); itr != lenges.end(); ++itr)
 		{
-			if (i == closestNum)//Š®‘Sˆê’v‚µ‚È‚¢ê‡‚Ínullptr(‚¸‚ê‚½’lo‚é‚Æ‚Ü‚¸‚¢‚½‚ßj
+			if (i == closestNum)//å®Œå…¨ä¸€è‡´ã—ãªã„å ´åˆã¯nullptr(ãšã‚ŒãŸå€¤å‡ºã‚‹ã¨ã¾ãšã„ãŸã‚ï¼‰
 			{
 				result = itr->node;
 			}

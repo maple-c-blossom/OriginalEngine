@@ -736,6 +736,12 @@
     <ClInclude Include="App\Scene\DemoScene.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Engin\Util\IgnoreWarning.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Util\Pading.h">
+      <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\ParticleShader\ParticleHeader.hlsli">

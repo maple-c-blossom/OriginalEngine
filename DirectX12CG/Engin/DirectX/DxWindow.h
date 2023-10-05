@@ -1,39 +1,43 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <Windows.h>
+WarningIgnoreEnd
 #include <cstdint>
-
+#include <Pading.h>
 namespace MCB
 {
     class DxWindow
     {
     private:
-        DxWindow() {};
-        DxWindow(const DxWindow& dx12) {};
-        DxWindow& operator=(const DxWindow& dx12) {};
+        DxWindow();
+        DxWindow(const DxWindow&);
+        DxWindow& operator=(const DxWindow&);
         ~DxWindow();
         bool breakFlag_ = false;
-
+        Byte7 pad;
     public:
         static DxWindow* GetInstance();
         static DxWindow* GetInitInstance();
         static void DeleteInstance();
 
-        // ÉEÉBÉìÉhÉEÉTÉCÉY
-        static const int32_t sWINDOW_WIDTH_ = 1280;  // â°ïù
-        static const int32_t sWINDOW_HEIGHT_ = 720;  // ècïù
-        static const int32_t sWINDOW_CENTER_WIDTH_ = 1280 / 2;  // â°ïù
-        static const int32_t sWINDOW_CENTER_HEIGHT_ = 720 / 2;  // ècïù
+
+        // „Ç¶„Ç£„É≥„Éâ„Ç¶„Çµ„Ç§„Ç∫
+        static const int32_t sWINDOW_WIDTH_ = 1280;  // Ê®™ÂπÖ
+        static const int32_t sWINDOW_HEIGHT_ = 720;  // Á∏¶ÂπÖ
+        static const int32_t sWINDOW_CENTER_WIDTH_ = 1280 / 2;  // Ê®™ÂπÖ
+        static const int32_t sWINDOW_CENTER_HEIGHT_ = 720 / 2;  // Á∏¶ÂπÖ
 
 
-        MSG msg_{}; //ÉÅÉbÉZÅ[ÉWÇ±Ç±Ç©ÇÁ
-        WNDCLASSEX window_{}; // ÉEÉBÉìÉhÉEÉNÉâÉXÇÃê›íË
-            // ÉEÉBÉìÉhÉEÉTÉCÉY{ Xç¿ïW Yç¿ïW â°ïù ècïù }
+        MSG msg_{}; //„É°„ÉÉ„Çª„Éº„Ç∏„Åì„Åì„Åã„Çâ
+        WNDCLASSEX window_{}; // „Ç¶„Ç£„É≥„Éâ„Ç¶„ÇØ„É©„Çπ„ÅÆË®≠ÂÆö
+            // „Ç¶„Ç£„É≥„Éâ„Ç¶„Çµ„Ç§„Ç∫{ XÂ∫ßÊ®ô YÂ∫ßÊ®ô Ê®™ÂπÖ Á∏¶ÂπÖ }
         RECT wrc = { 0, 0, sWINDOW_WIDTH_, sWINDOW_HEIGHT_ };
         HWND hwnd_;
         const wchar_t* windowName = L"MapleEngin";
 
 
-        // ÉEÉBÉìÉhÉEÉvÉçÉVÅ[ÉWÉÉ 
+        // „Ç¶„Ç£„É≥„Éâ„Ç¶„Éó„É≠„Ç∑„Éº„Ç∏„É£ 
         static LRESULT WindowProc( HWND hwnd,  uint32_t msg,  WPARAM wparam,  LPARAM lparam);
         bool IsBreak();
         void messageUpdate();

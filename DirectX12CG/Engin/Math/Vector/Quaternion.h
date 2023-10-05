@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector3D.h"
 #include "MCBMatrix.h"
+
 namespace MCB
 {
 	class Quaternion
@@ -15,53 +16,53 @@ namespace MCB
 		Quaternion( float x,  float y, float z, float w);
 		Quaternion(DirectX::XMVECTOR q);
 
-		//—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹ü‚è‚Ì‰ñ“]‚ğ•\‚·ƒNƒH[ƒ^ƒjƒIƒ“‚ğ¶¬
+		//ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«å‘¨ã‚Šã®å›è»¢ã‚’è¡¨ã™ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”Ÿæˆ
 		void SetRota( Vector3D vec, float angle);
-		//‹¤–ğ
+		//å…±å½¹
 		Quaternion GetConjugated ( Quaternion q);
-		//‹t”i”Šw—pŒê‚æ‚è
+		//é€†æ•°ï¼ˆæ•°å­¦ç”¨èªã‚ˆã‚Š
 		Quaternion GetReciprocal( Quaternion q);
-		//’·‚³
+		//é•·ã•
 		double GetNorm();
-		//q*p‚Ì’¼Ï
+		//q*pã®ç›´ç©
 		Quaternion GetDirectProduct(const Quaternion& q, const Quaternion& p);
-		//“àÏ
+		//å†…ç©
 		float Dot(const Quaternion& a, const Quaternion& b);
-		//“ñ‚Â‚ÌƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠp“x·
+		//äºŒã¤ã®ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®è§’åº¦å·®
 		float GetAngle(const Quaternion& a, const Quaternion& b, float& dot,bool& nan);
 		float GetAngle(const Quaternion& a, const Quaternion& b);
-		//‹…–ÊüŒ`•âŠÔ
+		//çƒé¢ç·šå½¢è£œé–“
 		Quaternion Slerp( Quaternion start, const Quaternion& end,  int32_t time,  int32_t maxTime);
-		//‹…–ÊüŒ`•âŠÔ
+		//çƒé¢ç·šå½¢è£œé–“
 		Quaternion Slerp( Quaternion start,  Quaternion end,  float time);
-		//—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹²ü‚è‚Ì‰ñ“]‚ğPositionVec‚É—^‚¦‚é
+		//ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«è»¸å‘¨ã‚Šã®å›è»¢ã‚’PositionVecã«ä¸ãˆã‚‹
 		Vector3D SetRotationVector(const Vector3D& rotationAxisVec,  Vector3D PositionVec,  float angle);
-		//—^‚¦‚ç‚ê‚½ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‰ñ“]‚ğPositionVec‚É—^‚¦‚é
+		//ä¸ãˆã‚‰ã‚ŒãŸã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å›è»¢ã‚’PositionVecã«ä¸ãˆã‚‹
 		Vector3D SetRotationVector(const Quaternion& rotationQuaternion,  Vector3D PositionVec);
-		//‰½‚Ì‚½‚ß‚Éì‚Á‚½‚Ìì‚Á‚½‚ñ‚Å‚µ‚å‚¤‚©‚Ë
+		//ä½•ã®ãŸã‚ã«ä½œã£ãŸã®ä½œã£ãŸã‚“ã§ã—ã‚‡ã†ã‹ã­
 		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec);
 
 		Quaternion DirToDir( Vector3D u,  Vector3D v);
-		//³‹K‰»‚·‚é
+		//æ­£è¦åŒ–ã™ã‚‹
 		void Normalize();
-		//³‹K‰»‚µ‚½’l‚ğ•Ô‚·
+		//æ­£è¦åŒ–ã—ãŸå€¤ã‚’è¿”ã™
 		static Quaternion Normalize( Quaternion q);
-		//‰ñ“]s—ñ‚É•ÏŠ·
+		//å›è»¢è¡Œåˆ—ã«å¤‰æ›
 		MCBMatrix GetQuaternionRotaMat(const Quaternion& rotaQ);
 		
 		void SinCos(float* returnSin, float* returnCos, float theta);
-		//‘½•ªƒIƒCƒ‰[Šp‚©‚çƒNƒH[ƒ^ƒjƒIƒ“‚ğ¶¬
+		//å¤šåˆ†ã‚ªã‚¤ãƒ©ãƒ¼è§’ã‹ã‚‰ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã‚’ç”Ÿæˆ
 		Quaternion SetToRorateObjectToInternal(const Float3& eulerAngle);
-		//ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‰ñ“]²‚ğZo
+		//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å›è»¢è»¸ã‚’ç®—å‡º
 		Vector3D GetRotationAxis(const Quaternion& q);
-		//ƒNƒH[ƒ^ƒjƒIƒ“‚Ì‰ñ“]²‚ğZo(AxisVec‚ğ‘‚«Š·‚¦‚é)
+		//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®å›è»¢è»¸ã‚’ç®—å‡º(AxisVecã‚’æ›¸ãæ›ãˆã‚‹)
 		void GetRotationAxis(const Quaternion& q,Vector3D& AxisVec);
-		//’PˆÊƒNƒH[ƒ^ƒjƒIƒ“
+		//å˜ä½ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³
 		Quaternion Identity();
 
 		DirectX::XMVECTOR ConvertXMVector();
 
-		//ƒNƒH[ƒ^ƒjƒIƒ“‚ÌŠp“x
+		//ã‚¯ã‚©ãƒ¼ã‚¿ãƒ‹ã‚ªãƒ³ã®è§’åº¦
 		float GetAngle(const Quaternion& q);
 		
 		float SafeAcos( float a);

@@ -7,6 +7,7 @@
 //    //material.Init();
 //}
 //
+
 MCB::AnimationMesh::~AnimationMesh()
 {
     for (auto& tex : textures_)
@@ -22,9 +23,9 @@ void MCB::AnimationMesh::CreateVertexBuffer(const D3D12_HEAP_PROPERTIES& HeapPro
     const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
     Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
-        &HeapProp, // ƒq[ƒvÝ’è
+        &HeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
         flag,
-        &Resdesc, // ƒŠƒ\[ƒXÝ’è
+        &Resdesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         state,
         nullptr,
         IID_PPV_ARGS(&vertBuff_));
@@ -58,13 +59,13 @@ HRESULT MCB::AnimationMesh::IndexMaping()
 
 
     uint16_t* indexMap = nullptr;
-    //GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰ž‚µ‚½‰¼‘zƒƒ‚ƒŠ‚ðŽæ“¾----------------------------
+    //GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒªã‚’å–å¾—----------------------------
     result = indexBuff_->Map(0, nullptr, (void**)&indexMap);
     //---------------------------------------
 
     std::copy(indices_.begin(), indices_.end(), indexMap);
 
-    //Œq‚ª‚è‚ð‰ðœ---------------------
+    //ç¹‹ãŒã‚Šã‚’è§£é™¤---------------------
     indexBuff_->Unmap(0, nullptr);
     //------------------------
 
@@ -89,7 +90,7 @@ HRESULT MCB::AnimationMesh::VertexMaping()
 
     std::copy(vertices_.begin(), vertices_.end(), vertMap);
 
-    // ƒ}ƒbƒv‚ð‰ðœ
+    // ãƒžãƒƒãƒ—ã‚’è§£é™¤
     vertBuff_->Unmap(0, nullptr);
 
     return result;
@@ -112,7 +113,6 @@ void MCB::AnimationMesh::Init()
 
     SetSizeIB();
     for (auto& itr : material_)
-    for (auto& itr : material_)
     {
         itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
         CreateIndexBuffer(itr.HeapProp_, D3D12_HEAP_FLAG_NONE, itr.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
@@ -122,10 +122,10 @@ void MCB::AnimationMesh::Init()
     SetIbView(DXGI_FORMAT_R16_UINT);
 
     SetSizeVB();
-    for (auto& itr : material_)
+    for (auto& itr2 : material_)
     {
-        itr.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER,static_cast<uint32_t>(sizeVB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-        CreateVertexBuffer(itr.HeapProp_, D3D12_HEAP_FLAG_NONE, itr.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
+        itr2.SetVertexBuffer(D3D12_HEAP_TYPE_UPLOAD, D3D12_RESOURCE_DIMENSION_BUFFER,static_cast<uint32_t>(sizeVB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
+        CreateVertexBuffer(itr2.HeapProp_, D3D12_HEAP_FLAG_NONE, itr2.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
     }
     VertexMaping();
     SetVbView();
@@ -144,9 +144,9 @@ void MCB::AnimationMesh::Init()
     Dx12* dx12 = Dx12::GetInstance();
     dx12->result_ = dx12->device_->CreateCommittedResource
     (
-        &HeapProp,        //ƒq[ƒvÝ’è
+        &HeapProp,        //ãƒ’ãƒ¼ãƒ—è¨­å®š
         D3D12_HEAP_FLAG_NONE,
-        &ResdescFbx,//ƒŠƒ\[ƒXÝ’è
+        &ResdescFbx,//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&constBuffSkin_)
@@ -156,6 +156,11 @@ void MCB::AnimationMesh::Init()
 
     dx12->result_ = constBuffSkin_->Map(0, nullptr, (void**)&constMapSkin_);
 
+}
+
+size_t MCB::AnimationMesh::GetVertexCount()
+{
+	return vertices_.size();
 }
 
 //void MCB::AnimationModel::AddSmoothData(uint16_t indexPosition, uint16_t indexVertex)

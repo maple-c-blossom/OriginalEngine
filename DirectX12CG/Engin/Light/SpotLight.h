@@ -1,17 +1,21 @@
 #pragma once
-#include <wrl.h>
-#include <Windows.h>
 #include "Dx12.h"
+#include "Pading.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
+#include <Windows.h>
+#include <wrl.h>
 #include <d3d12.h>
 #include <d3dx12.h>
+WarningIgnoreEnd
 #include "Vector3D.h"
-#define PI 3.14159265358979323846264338327950288f
+static const float PI = 3.14159265358979323846264338327950288f;
 namespace MCB
 {
 	class SpotLight
 	{
 	private:
-		inline float ConvertRadius(float angle)//Util.hì«Ç›çûÇﬂÇ»Ç¢ÇÃÇ≈Ç±Ç±Ç≈Ç¬Ç≠ÇÈ
+		inline float ConvertRadius(float angle)//Util.hË™≠„ÅøËæº„ÇÅ„Å™„ÅÑ„ÅÆ„Åß„Åì„Åì„Åß„Å§„Åè„Çã
 		{
 			return angle * PI / 180.0f;
 		};
@@ -30,32 +34,21 @@ namespace MCB
 			uint32_t active;
 			float pad5;
 		}SpotLConstBuffData;
-		inline void SetSLightDir(const Vector3D& lightDir){ ligntDir_ = lightDir; }
-		inline void SetSLightColor(const Float3& lightcolor) { lightColor_ = lightcolor; }
-		inline void SetSLightPos(const Float3& pos) { lightPos_ = pos; }
-		inline void SetSLightAtten(const Float3& atten) { lightAtten_ = atten; }
-		inline void SetIsActive( bool active) { active_ = active; }
-		inline void SetSLightFactorAngle(const Float2& factorCos, bool convertFlag = true)
-		{
-			if (convertFlag)
-			{
-				lightFactorAngleCos_.x_ = ConvertRadius(factorCos.x_);
-				lightFactorAngleCos_.y_ = ConvertRadius(factorCos.y_);
-			}
-			else
-			{
-				lightFactorAngleCos_ = factorCos;
-			}
-		}
-		inline void SetSLightShininess( float shininess) { shininess_ = shininess; }
+		void SetSLightDir(const Vector3D& lightDir);
+		void SetSLightColor(const Float3& lightcolor);
+		void SetSLightPos(const Float3& pos);
+		void SetSLightAtten(const Float3& atten);
+		void SetIsActive(bool active);
+		void SetSLightFactorAngle(const Float2& factorCos,bool convertFlag = true);
+		void SetSLightShininess(float shininess);
 
-		inline float GetSLightShininess() { return shininess_; }
-		inline Vector3D GetSLightDir() { return ligntDir_; }
-		inline Float3 GetSLightColor() { return lightColor_; }
-		inline Float3 GetSLightPos() { return lightPos_; }
-		inline Float3 GetSLightAtten() { return lightAtten_; }
-		inline bool IsActive() { return active_; }
-		inline Float2 GetSLightFactorAngle() { return lightFactorAngleCos_; }
+		float GetSLightShininess();
+		Vector3D GetSLightDir();
+		Float3 GetSLightColor();
+		Float3 GetSLightPos();
+		Float3 GetSLightAtten();
+		size_t IsActive();
+		Float2 GetSLightFactorAngle();
 	private:
 		Vector3D ligntDir_ = {1,0,0};
 		Float3 lightPos_ = {0,0,0};
@@ -63,6 +56,7 @@ namespace MCB
 		Float3 lightAtten_ = {1.f,1.f,1.f};
 		Float2 lightFactorAngleCos_ = {0.5f,0.2f};
 		float shininess_ = 3.0f;
+		Byte4 pad1;
 		size_t active_ = false;
 
 	};

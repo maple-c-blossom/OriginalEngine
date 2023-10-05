@@ -1,29 +1,35 @@
 #pragma once
-#include "Dx12.h"
+
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <string>
 #include <memory>
-#include "ObjectMaterial.h"
-#include "Texture.h"
 #include <assimp/IOStream.hpp>
 #include <assimp/IOSystem.hpp>
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
+#include <unordered_map>
+WarningIgnoreEnd
+
+#include "Dx12.h"
+#include "ObjectMaterial.h"
+#include "Texture.h"
 #include "AnimationMesh.h"
 #include "TextureManager.h"
 #include "Quaternion.h"
-#include <unordered_map>
 #include "ICamera.h"
 #include "Object3d.h"
+
 namespace MCB
 {
 
-    //’¸“_ƒf[ƒ^\‘¢‘Ì-------------------------------------
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“-------------------------------------
     typedef struct FbxVertex
     {
-        Float3 pos;//xyzÀ•W
-        Float3 normal;//–@üƒxƒNƒgƒ‹
-        Float2 uv;//uvÀ•W
+        Float3 pos;//xyzåº§æ¨™
+        Float3 normal;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+        Float2 uv;//uvåº§æ¨™
     }FbxVertex;
     //--------------------------------------
     typedef struct Mesh
@@ -36,10 +42,10 @@ namespace MCB
 
     typedef struct ImportSetting
     {
-        const std::string fileName;//ƒtƒ@ƒCƒ‹ƒpƒX
-        std::vector<Mesh> meshies; //o—ÍæƒƒbƒVƒ…”z—ñ
-        bool inversU = false; //UÀ•W”½“]ƒtƒ‰ƒO
-        bool inversV = false; //VÀ•W”½“]ƒtƒ‰ƒO
+        const std::string fileName;//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹
+        std::vector<Mesh> meshies; //å‡ºåŠ›å…ˆãƒ¡ãƒƒã‚·ãƒ¥é…åˆ—
+        bool inversU = false; //Uåº§æ¨™åè»¢ãƒ•ãƒ©ã‚°
+        bool inversV = false; //Våº§æ¨™åè»¢ãƒ•ãƒ©ã‚°
     }ImportSetting;
 
     typedef struct NodeAnim
@@ -63,40 +69,40 @@ namespace MCB
 
     typedef struct Node
     {
-        std::string name;//ƒm[ƒh‚Ì–¼‘O
-        std::vector<std::unique_ptr<AnimationMesh>> meshes; //o—ÍæƒƒbƒVƒ…”z—ñ
-        DirectX::XMVECTOR scale = { 1,1,1,0 };//ƒ[ƒJƒ‹‚ÌƒXƒP[ƒ‹î•ñ
-        DirectX::XMVECTOR rotation = { 0,0,0,0 };//ƒ[ƒJƒ‹‚Ì‰ñ“]î•ñ
-        DirectX::XMVECTOR translation = { 0,0,0,1 };//ƒ[ƒJƒ‹‚ÌˆÊ’uî•ñ
-        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();//ƒ[ƒJƒ‹‚ÌsrtMatrix
-        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();//Model‹óŠÔ‚ÌMatrix
-        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();//Model‹óŠÔ‚ÌMatrix‚Ì‹ts—ñ
-        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();//ƒAƒjƒ[ƒVƒ‡ƒ“‚·‚é‚Æ‚«‚Ég—p‚·‚éModel‹óŠÔ‚ÌMatrix
-        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };//‰Šúp¨‚Ìƒ[ƒJƒ‹ƒXƒP[ƒ‹î•ñ
-        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };//‰Šúp¨‚Ìƒ[ƒJƒ‹‰ñ“]î•ñ
-        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };//‰Šúp¨‚Ìƒ[ƒJƒ‹ˆÊ’uî•ñ
-        DirectX::XMMATRIX defaultModelTransform = DirectX::XMMatrixIdentity();//‰Šúp¨‚ÌModel‹óŠÔ‚Ìs—ñ
-        Node* parent = nullptr;//eƒm[ƒh‚Ö‚Ìƒ|ƒCƒ“ƒ^
-        std::vector<Node*>children{};//qƒm[ƒh‚Ö‚Ìƒ|ƒCƒ“ƒ^
-        Vector3D endPosition;//ƒ{[ƒ“‚Ìæ’[‚Ìƒ|ƒWƒVƒ‡ƒ“(ƒ[ƒJƒ‹‹óŠÔ)
-        Vector3D startPosition;//ƒ{[ƒ“‚Ìª–{‚Ìƒ|ƒWƒVƒ‡ƒ“(ƒ[ƒJƒ‹‹óŠÔ)
-        Vector3D boneVec;//ƒ{[ƒ“‚ÌƒxƒNƒgƒ‹(ƒ[ƒJƒ‹‹óŠÔ)
-        Vector3D defaultBoneVec;//‰Šú‚Ìƒ{[ƒ“‚ÌƒxƒNƒgƒ‹(ƒ[ƒJƒ‹‹óŠÔ)
-        float boneLength;//ƒ{[ƒ“‚Ì’·‚³
+        std::string name;//ãƒãƒ¼ãƒ‰ã®åå‰
+        std::vector<std::unique_ptr<AnimationMesh>> meshes; //å‡ºåŠ›å…ˆãƒ¡ãƒƒã‚·ãƒ¥é…åˆ—
+        DirectX::XMVECTOR scale = { 1,1,1,0 };//ãƒ­ãƒ¼ã‚«ãƒ«ã®ã‚¹ã‚±ãƒ¼ãƒ«æƒ…å ±
+        DirectX::XMVECTOR rotation = { 0,0,0,0 };//ãƒ­ãƒ¼ã‚«ãƒ«ã®å›è»¢æƒ…å ±
+        DirectX::XMVECTOR translation = { 0,0,0,1 };//ãƒ­ãƒ¼ã‚«ãƒ«ã®ä½ç½®æƒ…å ±
+        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();//ãƒ­ãƒ¼ã‚«ãƒ«ã®srtMatrix
+        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();//Modelç©ºé–“ã®Matrix
+        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();//Modelç©ºé–“ã®Matrixã®é€†è¡Œåˆ—
+        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã™ã‚‹ã¨ãã«ä½¿ç”¨ã™ã‚‹Modelç©ºé–“ã®Matrix
+        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };//åˆæœŸå§¿å‹¢æ™‚ã®ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«æƒ…å ±
+        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };//åˆæœŸå§¿å‹¢æ™‚ã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢æƒ…å ±
+        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };//åˆæœŸå§¿å‹¢æ™‚ã®ãƒ­ãƒ¼ã‚«ãƒ«ä½ç½®æƒ…å ±
+        DirectX::XMMATRIX defaultModelTransform = DirectX::XMMatrixIdentity();//åˆæœŸå§¿å‹¢æ™‚ã®Modelç©ºé–“ã®è¡Œåˆ—
+        Node* parent = nullptr;//è¦ªãƒãƒ¼ãƒ‰ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+        std::vector<Node*>children{};//å­ãƒãƒ¼ãƒ‰ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+        Vector3D endPosition;//ãƒœãƒ¼ãƒ³ã®å…ˆç«¯ã®ãƒã‚¸ã‚·ãƒ§ãƒ³(ãƒ­ãƒ¼ã‚«ãƒ«ç©ºé–“)
+        Vector3D startPosition;//ãƒœãƒ¼ãƒ³ã®æ ¹æœ¬ã®ãƒã‚¸ã‚·ãƒ§ãƒ³(ãƒ­ãƒ¼ã‚«ãƒ«ç©ºé–“)
+        Vector3D boneVec;//ãƒœãƒ¼ãƒ³ã®ãƒ™ã‚¯ãƒˆãƒ«(ãƒ­ãƒ¼ã‚«ãƒ«ç©ºé–“)
+        Vector3D defaultBoneVec;//åˆæœŸã®ãƒœãƒ¼ãƒ³ã®ãƒ™ã‚¯ãƒˆãƒ«(ãƒ­ãƒ¼ã‚«ãƒ«ç©ºé–“)
+        float boneLength;//ãƒœãƒ¼ãƒ³ã®é•·ã•
         bool updated = false;
         bool jointView = true;
         PrimitiveFigure::Line boneLine;
         struct IKData
         {
-            bool isIK = false;//IK‚ğs‚¤‚©i©•ª‚ªendJoint‚©‚Ç‚¤‚©j
-            Node* middleJointNode = nullptr;//ƒ~ƒhƒ‹ƒWƒ‡ƒCƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
-            Node* rootJointNode = nullptr;//ƒ‹[ƒgƒWƒ‡ƒCƒ“ƒg‚Ìƒ|ƒCƒ“ƒ^
-            Vector3D iKEffectorPosition = {};//IK‚ÌEffectorˆÊ’u(Obj‹óŠÔ)
-            Vector3D constraintModelVector = {0,1,0};//PoleVector(Model‹óŠÔ)
-            Vector3D constraintWorldVector = {0,1,0};//PoleVector(ƒ[ƒ‹ƒh‹óŠÔ)
-            Object3d constraintObj;//PoleVector•\¦—p‚ÌƒIƒuƒWƒFƒNƒg
-            Vector3D effectorPosFromRoot = {};//PoleVector(Model‹óŠÔ)
-            Vector3D effectorPosFromMiddle = {};//PoleVector(Model‹óŠÔ)
+            bool isIK = false;//IKã‚’è¡Œã†ã‹ï¼ˆè‡ªåˆ†ãŒendJointã‹ã©ã†ã‹ï¼‰
+            Node* middleJointNode = nullptr;//ãƒŸãƒ‰ãƒ«ã‚¸ãƒ§ã‚¤ãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
+            Node* rootJointNode = nullptr;//ãƒ«ãƒ¼ãƒˆã‚¸ãƒ§ã‚¤ãƒ³ãƒˆã®ãƒã‚¤ãƒ³ã‚¿
+            Vector3D iKEffectorPosition = {};//IKã®Effectorä½ç½®(Objç©ºé–“)
+            Vector3D constraintModelVector = {0,1,0};//PoleVector(Modelç©ºé–“)
+            Vector3D constraintWorldVector = {0,1,0};//PoleVector(ãƒ¯ãƒ¼ãƒ«ãƒ‰ç©ºé–“)
+            Object3d constraintObj;//PoleVectorè¡¨ç¤ºç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+            Vector3D effectorPosFromRoot = {};//PoleVector(Modelç©ºé–“)
+            Vector3D effectorPosFromMiddle = {};//PoleVector(Modelç©ºé–“)
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
@@ -115,12 +121,12 @@ namespace MCB
             Vector3D constraintModelVector;
             Vector3D constraintWorldVector;
         };
-        IKData ikData;//IK‚ÉŠÖ‚·‚éƒf[ƒ^
+        IKData ikData;//IKã«é–¢ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
         IKDebugData ikDebugData;
         bool lineColorEqualObject = false;
         Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
         bool chengeObjectColor;
-        std::unique_ptr<Object3d> object;//ƒWƒ‡ƒCƒ“ƒg•\¦—p‚ÌƒIƒuƒWƒFƒNƒg
+        std::unique_ptr<Object3d> object;//ã‚¸ãƒ§ã‚¤ãƒ³ãƒˆè¡¨ç¤ºç”¨ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
         void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
@@ -136,18 +142,18 @@ namespace MCB
     public:
         Node* rootNode;
      
-        //ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì•âŠÔ‚Ég‚¤‚Æ—\‘z‚µ‚Äì‚Á‚Ä‚¨‚­----------
-        Animation* currentAnimation = nullptr;//Œ»İAnimation
-        Animation* prevAnimation = nullptr;//‘O‰ñAnimation
-        Animation* nextAnimation = nullptr;//Ÿ‚ÌAnimation
+        //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®è£œé–“ã«ä½¿ã†ã¨äºˆæƒ³ã—ã¦ä½œã£ã¦ãŠã----------
+        Animation* currentAnimation = nullptr;//ç¾åœ¨Animation
+        Animation* prevAnimation = nullptr;//å‰å›Animation
+        Animation* nextAnimation = nullptr;//æ¬¡ã®Animation
         //--------------
 
-        //ŒÀ’è“I‚Ég—p‚·‚éNodes‚ğ’¼Úæ“¾‚·‚é•¨(for‚Å‘SQÆ‚µ‚½‚¢‚Æ‚«‚Æ‚©)
+        //é™å®šçš„ã«ä½¿ç”¨ã™ã‚‹Nodesã‚’ç›´æ¥å–å¾—ã™ã‚‹ç‰©(forã§å…¨å‚ç…§ã—ãŸã„ã¨ãã¨ã‹)
         std::vector< std::unique_ptr<Node>>* GetNodes_()
         {
             return &nodes_;
         };
-        Node* GetNode(std::string name)//—^‚¦‚ç‚ê‚½–¼‘O‚ÌNode‚ğ•Ô‚·
+        Node* GetNode(std::string name)//ä¸ãˆã‚‰ã‚ŒãŸåå‰ã®Nodeã‚’è¿”ã™
         {
             for (auto& node : nodes_)
             {
@@ -158,63 +164,64 @@ namespace MCB
             }
             return nullptr; 
         }
-        void SetNode(std::unique_ptr<Node> node)//Node‚ğ’Ç‰Á
+        void SetNode(std::unique_ptr<Node> node)//Nodeã‚’è¿½åŠ 
         {
             nodes_.push_back(std::move(node));
         }
         /// <summary>
-        /// —^‚¦‚ç‚ê‚½ƒ|ƒWƒVƒ‡ƒ“‚É‹ß‚¢Node‚ğ•Ô‚·
+        /// ä¸ãˆã‚‰ã‚ŒãŸãƒã‚¸ã‚·ãƒ§ãƒ³ã«è¿‘ã„Nodeã‚’è¿”ã™
         /// </summary>
-        /// <param name="targetPos">‘ÎÛ‚Æ‚È‚éƒ|ƒWƒVƒ‡ƒ“</param>
-        /// <param name="objectPositoin">ƒ‚ƒfƒ‹‚ğ•Û—L‚µ‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg‚Ìƒ|ƒWƒVƒ‡ƒ“(‰‚ß‚©‚çMesh‹óŠÔã‚ÌÀ•W‚ğ“n‚·ê‡•s—v)</param>
-        /// <param name="closestNum">‰½”Ô–Ú‚É‹ß‚¢ƒm[ƒh‚ª—~‚µ‚¢‚Ì‚©</param>
+        /// <param name="targetPos">å¯¾è±¡ã¨ãªã‚‹ãƒã‚¸ã‚·ãƒ§ãƒ³</param>
+        /// <param name="objectPositoin">ãƒ¢ãƒ‡ãƒ«ã‚’ä¿æœ‰ã—ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒã‚¸ã‚·ãƒ§ãƒ³(åˆã‚ã‹ã‚‰Meshç©ºé–“ä¸Šã®åº§æ¨™ã‚’æ¸¡ã™å ´åˆä¸è¦)</param>
+        /// <param name="closestNum">ä½•ç•ªç›®ã«è¿‘ã„ãƒãƒ¼ãƒ‰ãŒæ¬²ã—ã„ã®ã‹</param>
         /// <returns></returns>
         Node* GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin = {0,0,0}, uint32_t closestNum = 1);
 
-        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);//Animation‘O‚Ì€”õ“™
+        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);//Animationå‰ã®æº–å‚™ç­‰
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);//ÀÛ‚ÉŠK‘w\‘¢“Ç‚İ‚ñ‚ÅAnimation‚ÌŒvZ‚ğ‚·‚éŠÖ”
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);//å®Ÿéš›ã«éšå±¤æ§‹é€ èª­ã¿è¾¼ã‚“ã§Animationã®è¨ˆç®—ã‚’ã™ã‚‹é–¢æ•°
 
-        static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);//‚Ç‚ÌNode‚ÌƒL[ƒtƒŒ[ƒ€‚ğŒ©‚é‚Ì‚©
-        //ƒL[ƒtƒŒ[ƒ€‚Ì•âŠ®-------------
+        static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);//ã©ã®Nodeã®ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’è¦‹ã‚‹ã®ã‹
+        //ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã®è£œå®Œ-------------
         static void calcInterpolatedPosition(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
         static void calcInterpolatedRotation(Quaternion& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
 
         static void calcInterpolatedScaling(Vector3D& Out,  float AnimationTime, const NodeAnim* pNodeAnim);
         //------------
-        //ƒL[ƒtƒŒ[ƒ€‚Ì’l‚ğŒŸõ‚µ•Ô‚·------------------------
+        //ã‚­ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ã®å€¤ã‚’æ¤œç´¢ã—è¿”ã™------------------------
         static size_t findPosition( float AnimationTime, const NodeAnim* pNodeAnim);
 
         static size_t findRotation( float AnimationTime, const NodeAnim* pNodeAnim);
 
         static size_t findScaling( float AnimationTime, const NodeAnim* pNodeAnim);
         //---------------------
-        //IKŠÖ˜A‚Ì‘S–Ê‰üC‚ª•K—v‚»‚¤(Node‚ªIK‚Ì‘ÎÛ‚©‚Ç‚¤‚©‚Ìî•ñ‚Á‚Ä‚é‚¯‚ÇSkeleton‚ªW–ñŠÇ—‚µ‚½•û‚ª‚¢‚¢‚Á‚Û‚¢j
-        //1BoneIK(ì)
+        //IKé–¢é€£ã®å…¨é¢æ”¹ä¿®ãŒå¿…è¦ãã†(NodeãŒIKã®å¯¾è±¡ã‹ã©ã†ã‹ã®æƒ…å ±æŒã£ã¦ã‚‹ã‘ã©SkeletonãŒé›†ç´„ç®¡ç†ã—ãŸæ–¹ãŒã„ã„ã£ã½ã„ï¼‰
+        //1BoneIK(è©¦ä½œ)
         void OneBoneIK(Node& joint);
-        //2BoneIK(ìj
-        void TwoBoneIK(Node& joint1, Node& joint2);
+        //2BoneIK(è©¦ä½œï¼‰
+        void TwoBoneIK(Node& joint1);
 
         void AllNodeMatrixForModelToBone();
         /// <summary>
         /// CCDIK
         /// </summary>
-        /// <param name="effectter">–Ú•W’n“_‚ÉŒü‚¯‚éæ’[‚ÌNode</param>
-        /// <param name="targetPos">–Ú•W’n“_</param>
-        /// <param name="numMaxIteration">CCD‚Ì”½•œ‰ñ”</param>
-        /// <param name="errToleranceSq">Œë·‚Ì‹–—e”’l(2æj</param>
-        void CCDIK(Node& effectter,Vector3D targetPos,int32_t numMaxIteration,float errToleranceSq);//—˜_—‰ğ’iŠK‚Ì‚½‚ß–¢’è‹`(ˆø”‚à•s\•ª‚Ì‰Â”\«‚ ‚è)
+        /// <param name="effectter">ç›®æ¨™åœ°ç‚¹ã«å‘ã‘ã‚‹å…ˆç«¯ã®Node</param>
+        /// <param name="targetPos">ç›®æ¨™åœ°ç‚¹</param>
+        /// <param name="numMaxIteration">CCDã®åå¾©å›æ•°</param>
+        /// <param name="errToleranceSq">èª¤å·®ã®è¨±å®¹æ•°å€¤(2ä¹—ï¼‰</param>
+        void CCDIK(Node& effectter,Vector3D targetPos,int32_t numMaxIteration,float errToleranceSq);//ç†è«–ç†è§£æ®µéšã®ãŸã‚æœªå®šç¾©(å¼•æ•°ã‚‚ä¸ååˆ†ã®å¯èƒ½æ€§ã‚ã‚Š)
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition = {0,1,0},
-           const std::string& boneName = "NULL");
+        void SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition = { 0,1,0 },
+            const std::string& boneName = "NULL", 
+            const std::string& middleJointName = "NULL", const std::string& rootJointName = "NULL");
 
         void TwoBoneIKOff(const std::string& boneName);
 
 
-        //ŠÖß‚Ì‹È‚ª‚é•ûŒü‚ğ§ŒÀ(ì)
+        //é–¢ç¯€ã®æ›²ãŒã‚‹æ–¹å‘ã‚’åˆ¶é™(è©¦ä½œ)
         void Vectorconstraiont(Node& joint);
 
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
@@ -229,12 +236,12 @@ namespace MCB
         Float4 lineDefaultColor = { 1.f,1.f,0.f,1.f };
     };
 
-    //Model–‚É‚»‚ÌModel‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠÇ—‚·‚é—p‚ÌƒNƒ‰ƒX(Model–‚æ‚èSkeleton–ˆ‚Ì•û‚ª‚¢‚¢‚©vˆÄ’†)
+    //Modeläº‹ã«ãã®Modelã®ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç®¡ç†ã™ã‚‹ç”¨ã®ã‚¯ãƒ©ã‚¹(Modeläº‹ã‚ˆã‚ŠSkeletonæ¯ã®æ–¹ãŒã„ã„ã‹æ€æ¡ˆä¸­)
     class AnimationManager
     {
         std::unordered_map<std::string, std::unique_ptr<Animation>> animations_;
     public:
-        Animation* GetAnimation(std::string name) //ƒAƒjƒ[ƒVƒ‡ƒ“‚ğæ“¾
+        Animation* GetAnimation(std::string name) //ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å–å¾—
         {
             auto& itr = animations_.find(name);
             if (itr == animations_.end())
@@ -247,7 +254,7 @@ namespace MCB
         };
         void SetAnimation(std::unique_ptr<Animation> animation) {
             animations_[animation->name] = std::move(animation);
-        }//ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ’Ç‰Á
+        }//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è¿½åŠ 
     };
 
     class AnimationModel
@@ -258,19 +265,19 @@ namespace MCB
         //void LoadMesh(Mesh& dst,const aiMesh* src,bool inversU, bool inverV);
     public:
         TextureManager* textureManager_ = TextureManager::GetInstance();
-        Skeleton skeleton;//ƒXƒPƒ‹ƒgƒ“î•ñ
-        AnimationManager animationManager;//ƒAƒjƒ[ƒVƒ‡ƒ“î•ñ
-        //CurrentAnimation‚Ì–¼‘O‚©‚çAnimation‚ğŒŸõ‚µ‚Äskeleton‚ÉAnimation‚·‚é‚æ‚¤‚ÉˆË—Š‚·‚éB(AnimationOrder‚Á‚Ä–¼‘O‚É‚µ‚½•û‚ª—Ç‚¢H)
+        Skeleton skeleton;//ã‚¹ã‚±ãƒ«ãƒˆãƒ³æƒ…å ±
+        AnimationManager animationManager;//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³æƒ…å ±
+        //CurrentAnimationã®åå‰ã‹ã‚‰Animationã‚’æ¤œç´¢ã—ã¦skeletonã«Animationã™ã‚‹ã‚ˆã†ã«ä¾é ¼ã™ã‚‹ã€‚(AnimationOrderã£ã¦åå‰ã«ã—ãŸæ–¹ãŒè‰¯ã„ï¼Ÿ)
         void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
         ~AnimationModel();
-        std::string fileName_;//Model‚Ìƒtƒ@ƒCƒ‹–¼
-        bool isDelete_ = false;//Š®‘S‚Éíœ‚µ‚Ä‚¢‚¢‚©‚Ç‚¤‚©
-        bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelƒf[ƒ^‚ğƒ[ƒh
-        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Node‚ÌŠK‘w\‘¢•À‚Ñ‚Émesh‚Ì‰ğÍA’Šo
-        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh“à‚Ìƒf[ƒ^‚ğ‰ğÍA’Šo
-        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material“à‚ÌTextureî•ñ‚Ì‰ğÍ,’Šo
+        std::string fileName_;//Modelã®ãƒ•ã‚¡ã‚¤ãƒ«å
+        bool isDelete_ = false;//å®Œå…¨ã«å‰Šé™¤ã—ã¦ã„ã„ã‹ã©ã†ã‹
+        bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelãƒ‡ãƒ¼ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰
+        void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeã®éšå±¤æ§‹é€ ä¸¦ã³ã«meshã®è§£æã€æŠ½å‡º
+        void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMeshå†…ã®ãƒ‡ãƒ¼ã‚¿ã‚’è§£æã€æŠ½å‡º
+        std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Materialå†…ã®Textureæƒ…å ±ã®è§£æ,æŠ½å‡º
         void TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos);
-        void Draw();//Model‚Ì•`‰æ
+        void Draw();//Modelã®æç”»
         void DrawHeirarchy();
         
     };

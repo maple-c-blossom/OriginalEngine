@@ -21,15 +21,16 @@ using namespace std;
 //    SetFence();
 //}
 
+
 void Dx12::SetAdapter()
 {
-    //ƒAƒ_ƒvƒ^[İ’è‚±‚±‚©‚ç--------------------------------------------------------------------------------------------
-#pragma region ƒAƒ_ƒvƒ^[İ’è
+    //ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼è¨­å®šã“ã“ã‹ã‚‰--------------------------------------------------------------------------------------------
+#pragma region ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼è¨­å®š
 
-    //ƒAƒ_ƒvƒ^[‚Ì—ñ‹“—p------------
+    //ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã®åˆ—æŒ™ç”¨------------
     vector<IDXGIAdapter4*> adapters;
 
-    //‚±‚±‚É“Á’è‚Ì–¼‘O‚ğ‚ÂƒAƒ_ƒvƒ^[ƒIƒuƒWƒFƒNƒg‚ª“ü‚é
+    //ã“ã“ã«ç‰¹å®šã®åå‰ã‚’æŒã¤ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒå…¥ã‚‹
     IDXGIAdapter4* tmpAdapter = nullptr;
     //---------------------
 
@@ -55,18 +56,18 @@ void Dx12::SetAdapter()
     
     tmpAdapter->Release();
 
-#pragma endregion ƒAƒ_ƒvƒ^[İ’è
-    //ƒAƒ_ƒvƒ^[İ’è‚±‚±‚Ü‚Å-----------------------------------------------------------------------
+#pragma endregion ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼è¨­å®š
+    //ã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼è¨­å®šã“ã“ã¾ã§-----------------------------------------------------------------------
 }
 
 void Dx12::SetDevice(IDXGIAdapter4* tmpAdapter)
 {
-    //ƒfƒoƒCƒX¶¬‚±‚±‚©‚ç----------------------------------------------------------------------------------------------------------
-#pragma region ƒfƒoƒCƒX¶¬
+    //ãƒ‡ãƒã‚¤ã‚¹ç”Ÿæˆã“ã“ã‹ã‚‰----------------------------------------------------------------------------------------------------------
+#pragma region ãƒ‡ãƒã‚¤ã‚¹ç”Ÿæˆ
 
     for (int32_t i = 0; i < _countof(levels_); i++)
     {
-        //Ì—p‚µ‚½ƒAƒ_ƒvƒ^[‚ÅƒfƒoƒCƒX‚ğ¶¬
+        //æ¡ç”¨ã—ãŸã‚¢ãƒ€ãƒ—ã‚¿ãƒ¼ã§ãƒ‡ãƒã‚¤ã‚¹ã‚’ç”Ÿæˆ
         result_ = D3D12CreateDevice(tmpAdapter, levels_[i], IID_PPV_ARGS(&device_));
         if (result_ == S_OK)
         {
@@ -75,39 +76,44 @@ void Dx12::SetDevice(IDXGIAdapter4* tmpAdapter)
         }
     }
 
-#pragma endregion ƒfƒoƒCƒX¶¬
-    //ƒfƒoƒCƒX¶¬‚±‚±‚Ü‚Å----------------------------------------------------------------------
+#pragma endregion ãƒ‡ãƒã‚¤ã‚¹ç”Ÿæˆ
+    //ãƒ‡ãƒã‚¤ã‚¹ç”Ÿæˆã“ã“ã¾ã§----------------------------------------------------------------------
 
 }
 
 void Dx12::SetCommandListAndQueue()
 {
-    //ƒRƒ}ƒ“ƒhƒŠƒXƒg‚±‚±‚©‚ç--------------------------------------------------------------------------------------------------------
-#pragma region ƒRƒ}ƒ“ƒhƒŠƒXƒg
+    //ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã“ã“ã‹ã‚‰--------------------------------------------------------------------------------------------------------
+#pragma region ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 
-    //ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^‚ğ¶¬
+    //ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿ã‚’ç”Ÿæˆ
     result_ = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
     assert(SUCCEEDED(result_));
 
-    //ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğ¶¬
+    //ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆ
     result_ = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
     assert(SUCCEEDED(result_));
 
 
-    //ƒRƒ}ƒ“ƒhƒLƒ…[‚Ì¶¬
+    //ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼ã®ç”Ÿæˆ
 
     result_ = device_->CreateCommandQueue(&commandQueueDesc_, IID_PPV_ARGS(&commandQueue_));
     assert(SUCCEEDED(result_));
 
-#pragma endregion ƒRƒ}ƒ“ƒhƒŠƒXƒg
-    //ƒRƒ}ƒ“ƒhƒŠƒXƒg‚±‚±‚Ü‚Å------------------------------------------------------------------------------------------
+#pragma endregion ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
+    //ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã“ã“ã¾ã§------------------------------------------------------------------------------------------
 }
 
+Dx12& MCB::Dx12::operator=(const Dx12&) = default;
+MCB::Dx12::~Dx12() {}
+MCB::Dx12::Dx12() {}
+MCB::Dx12::Dx12(const Dx12&) {}
 Dx12* MCB::Dx12::GetInstance()
 {
     static Dx12 instance;
     return &instance;
 }
+
 
 
 Dx12* MCB::Dx12::GetInitInstance()
@@ -138,22 +144,22 @@ void MCB::Dx12::Init()
 
 void Dx12::SetDXFactory()
 {
-    //DXGIƒtƒ@ƒNƒgƒŠ[¶¬----------------
-#pragma region DXGIƒtƒ@ƒNƒgƒŠ[¶¬
+    //DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ç”Ÿæˆ----------------
+#pragma region DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ç”Ÿæˆ
 
-//DXGIƒtƒ@ƒNƒgƒŠ[‚Ì¶¬
+//DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ã®ç”Ÿæˆ
     result_ = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
     assert(SUCCEEDED(result_));
 
-#pragma endregion DXGIƒtƒ@ƒNƒgƒŠ[¶¬
+#pragma endregion DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼ç”Ÿæˆ
     //-------------------
 }
 
 void Dx12::SetSwapChain()
 {
     DxWindow* dxWindow = DxWindow::GetInstance();
-    //ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬‚±‚±‚©‚ç------------------------------------------------------------------
-#pragma region ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
+    //ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆã“ã“ã‹ã‚‰------------------------------------------------------------------
+#pragma region ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆ
 
     swapChainDesc_.Width = dxWindow->sWINDOW_WIDTH_;
     swapChainDesc_.Height = dxWindow->sWINDOW_HEIGHT_;
@@ -173,30 +179,30 @@ void Dx12::SetSwapChain()
 
 
 
-#pragma endregion ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬
-    //ƒXƒƒbƒvƒ`ƒF[ƒ“‚Ì¶¬‚±‚±‚Ü‚Å--------------------------------------------------------------
+#pragma endregion ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆ
+    //ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã®ç”Ÿæˆã“ã“ã¾ã§--------------------------------------------------------------
 }
 
 void Dx12::SetDesctiptor()
 {
-    //ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬‚±‚±‚©‚ç--------------
-#pragma region ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv¶¬
+    //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆã“ã“ã‹ã‚‰--------------
+#pragma region ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç”Ÿæˆ
 
-//Šeíİ’è
+//å„ç¨®è¨­å®š
 
     rtvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvHeapDesc_.NumDescriptors = swapChainDesc_.BufferCount;
     device_->CreateDescriptorHeap(&rtvHeapDesc_, IID_PPV_ARGS(&rtvHeaps_));
 
-#pragma endregion ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv¶¬
-    //ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬‚±‚±‚Ü‚Å------------
+#pragma endregion ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ç”Ÿæˆ
+    //ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆã“ã“ã¾ã§------------
 
 }
 
 void Dx12::SetBackBuffer()
 {
-    //ƒ_ƒuƒ‹ƒoƒbƒtƒ@----------------------
-#pragma region ƒ_ƒuƒ‹ƒoƒbƒtƒ@
+    //ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡----------------------
+#pragma region ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡
 
     
 
@@ -204,30 +210,30 @@ void Dx12::SetBackBuffer()
 
     for (size_t i = 0; i < backBuffers_.size(); i++)
     {
-        //ƒXƒƒbƒvƒ`ƒF[ƒ“‚©‚çƒoƒbƒtƒ@‚ğæ“¾
+        //ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³ã‹ã‚‰ãƒãƒƒãƒ•ã‚¡ã‚’å–å¾—
         swapchain_->GetBuffer((uint32_t)i, IID_PPV_ARGS(&backBuffers_[i]));
-        //‚ÅƒXƒNƒŠƒvƒ^ƒq[ƒvƒnƒ“ƒhƒ‹‚ğæ“¾
+        //ã§ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
         rtvHandle_ = rtvHeaps_->GetCPUDescriptorHandleForHeapStart();
-        //— ‚©•\‚©‚ÅƒAƒhƒŒƒX‚ª‚¸‚ê‚é
+        //è£ã‹è¡¨ã‹ã§ã‚¢ãƒ‰ãƒ¬ã‚¹ãŒãšã‚Œã‚‹
         rtvHandle_.ptr += i * device_->GetDescriptorHandleIncrementSize(rtvHeapDesc_.Type);
 
-        //ƒVƒF[ƒ_[‚ÌŒvZŒ‹‰Ê‚ğSRGB‚É•ÏŠ·‚µ‚Ä‘‚«‚Ş
+        //ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã®è¨ˆç®—çµæœã‚’SRGBã«å¤‰æ›ã—ã¦æ›¸ãè¾¼ã‚€
         rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
         rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-        //ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ì¶¬
+        //ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®ç”Ÿæˆ
         device_->CreateRenderTargetView(backBuffers_[i].Get(), &rtvDesc_, rtvHandle_);
 
     }
 
-#pragma endregion ƒ_ƒuƒ‹ƒoƒbƒtƒ@
+#pragma endregion ãƒ€ãƒ–ãƒ«ãƒãƒƒãƒ•ã‚¡
     //------------------
 }
 
 void Dx12::SetFence()
 {
-    //ƒtƒFƒ“ƒX‚Ì¶¬---------
-#pragma region ƒtƒFƒ“ƒX‚Ì¶¬
+    //ãƒ•ã‚§ãƒ³ã‚¹ã®ç”Ÿæˆ---------
+#pragma region ãƒ•ã‚§ãƒ³ã‚¹ã®ç”Ÿæˆ
     result_ = device_->CreateFence(fenceVal_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
-#pragma endregion ƒtƒFƒ“ƒX‚Ì¶¬
+#pragma endregion ãƒ•ã‚§ãƒ³ã‚¹ã®ç”Ÿæˆ
     //------------
 }

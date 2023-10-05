@@ -4,20 +4,25 @@
 #include "Descriptor.h"
 #include "PIpelineRootSignature.h"
 #include "DxWindow.h"
+#include "Pading.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <memory>
+WarningIgnoreEnd
 
 namespace MCB
 {
 	class Draw
 	{
 	private:
-		Draw() {};
-		Draw(const Draw& draw) {};
-		Draw& operator=(const Draw& draw) {};
-		~Draw() {};
+		Draw();
+		Draw(const Draw&);
+		Draw& operator=(const Draw&);
+		~Draw();
 	public:
 		D3D12_RESOURCE_BARRIER barrierDesc_ = {};
 		uint32_t bbIndex_ = {};
+		Byte4 pad;
 		D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle_ = {};
 		D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle_ = {};
 		D3D12_VIEWPORT viewport_ = {};

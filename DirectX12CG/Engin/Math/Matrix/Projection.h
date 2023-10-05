@@ -1,17 +1,18 @@
 #pragma once
-
+#include <IgnoreWarning.h>
+WarningIgnoreBegin
 #include <DirectXMath.h>
-
+WarningIgnoreEnd
 namespace MCB
 {
 	class Projection
 	{
 	public:
-		DirectX::XMMATRIX mat_; //s—ñ
-		float fovAngle_; //ã‰º‰æŠp
-		float aspectRatio_; //ƒAƒXƒyƒNƒg”ä
-		float nearZ_;//ƒtƒ@[ƒNƒŠƒbƒv‹——£(‘O)
-		float farZ_;//ƒtƒ@[ƒNƒŠƒbƒv‹——£(Œã‚ë)
+		DirectX::XMMATRIX mat_; //è¡Œåˆ—
+		float fovAngle_; //ä¸Šä¸‹ç”»è§’
+		float aspectRatio_; //ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”
+		float nearZ_;//ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢(å‰)
+		float farZ_;//ãƒ•ã‚¡ãƒ¼ã‚¯ãƒªãƒƒãƒ—è·é›¢(å¾Œã‚)
 
 		void CreateMatrixProjection( float fovAngle,  float aspectRatio,  float nearZ,  float farZ);
 		void UpdataMatrixProjection();

@@ -1,16 +1,19 @@
 #include "Camera.h"
-#include "DirectXMath.h"
 #include "Util.h"
 #include "DxWindow.h"
 #include "RayCollider.h"
 #include "CollisionManager.h"
+WarningIgnoreBegin
+#include "DirectXMath.h"
+WarningIgnoreEnd
 using namespace MCB;
 using namespace DirectX;
 
 void Camera::Inilialize()
 {
 	view_.CreateMatrixView(XMFLOAT3(0.0f, 10.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
-	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_, 0.1f, 4000.0f);
+	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), static_cast<float>(DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_), 0.1f, 4000.0f);
+
 }
 
 void Camera::WorldPositionInit()
@@ -68,7 +71,8 @@ void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
 	, bool isBillBord)
 {
 	//object3d->Update(view,projection);
-
+	static_cast<void>(playerMatrix);
+	static_cast<void>(playerPosition);
 	object3d_->matWorld_.SetMatScale(object3d_->scale_.x, object3d_->scale_.y, object3d_->scale_.z);
 	object3d_->matWorld_.SetMatRot(object3d_->rotation_.x, object3d_->rotation_.y, object3d_->rotation_.z, false);
 	object3d_->matWorld_.SetMatTrans(object3d_->position_.x, object3d_->position_.y, object3d_->position_.z);

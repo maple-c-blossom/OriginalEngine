@@ -64,7 +64,10 @@
     <ClCompile Include="Engin\Pipeline\RootSignature.cpp" />
     <ClCompile Include="App\Scene\Scene.cpp" />
     <ClCompile Include="App\Scene\SceneManager.cpp" />
-    <ClCompile Include="Engin\Pipeline\Shader.cpp" />
+    <ClCompile Include="Engin\Pipeline\Shader.cpp">
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5045</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5045</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="Engin\Sound\Sound.cpp" />
     <ClCompile Include="Engin\Light\SpotLight.cpp" />
     <ClCompile Include="Engin\Sprite\Sprite.cpp" />
@@ -289,6 +292,7 @@
     <ClInclude Include="Engin\Light\PointLight.h" />
     <ClInclude Include="Engin\Math\Matrix\Projection.h" />
     <ClInclude Include="Engin\Math\Vector\Quaternion.h" />
+    <ClInclude Include="Engin\Util\Pading.h" />
     <ClInclude Include="Engin\Util\resource.h" />
     <ClInclude Include="Engin\Pipeline\RootParameter.h" />
     <ClInclude Include="Engin\Pipeline\RootSignature.h" />
@@ -325,6 +329,7 @@
     <ClInclude Include="Engin\Collide\PlayerQueryCallBack.h" />
     <ClInclude Include="App\Goal.h" />
     <ClInclude Include="App\Scene\StageSelectScene.h" />
+    <ClInclude Include="Engin\Util\IgnoreWarning.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
@@ -399,18 +404,22 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5045;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
       <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Debug\assimp-vc143-mtd.lib" "$(TargetDir)lib\assimp\lib\Debug\assimp-vc143-mtd.lib"/Y
@@ -430,6 +439,9 @@ echo D | xcopy "$(ProjectDir)Resources" "$(TargetDir)"/Y</Command>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>5045;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

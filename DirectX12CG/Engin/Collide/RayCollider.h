@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseCollider.h"
 #include "Vector3D.h"
+#include "Pading.h"
 namespace MCB
 {
 	class RayCollider:public BaseCollider,public Ray
@@ -20,6 +21,7 @@ namespace MCB
 		Vector3D rayVec_;
         float radius_;
 		float range_;
+		Byte4 pad;
 	};
 
 }

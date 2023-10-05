@@ -1,4 +1,5 @@
 #pragma once
+#include "Pading.h"
 #include "Query.h"
 #include "BaseCollider.h"
 #include "Collider.h"
@@ -14,7 +15,9 @@ namespace MCB
 		Vector3D move = {};
 		Vector3D inter = {};
 		bool block = false;
+		Byte7 pad;
 		bool OnQueryHit(const QueryHit& info)override;
+
 
 	};
 }

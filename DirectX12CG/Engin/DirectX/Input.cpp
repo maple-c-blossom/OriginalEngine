@@ -1,6 +1,8 @@
 #include "Input.h"
+WarningIgnoreBegin
 #include <cassert>
-#define DIRECINPUT_VERSION 0x0800 //DirectInput‚Ìƒo[ƒWƒ‡ƒ“w’è
+WarningIgnoreEnd
+#define DIRECINPUT_VERSION 0x0800 //DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 
 using namespace MCB;
 
@@ -8,67 +10,67 @@ void Input::Init()
 {
 	Dx12* dx12 = Dx12::GetInstance();
 	DxWindow* dxWindow = DxWindow::GetInstance();
-	//“ü—ÍŒn‰Šú‰»--------------
-#pragma region “ü—ÍŒn‰Šú‰»
+	//å…¥åŠ›ç³»åˆæœŸåŒ–--------------
+#pragma region å…¥åŠ›ç³»åˆæœŸåŒ–
 
 	dx12->result_ = DirectInput8Create(dxWindow->window_.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8,
 		(void**)&dinput_, nullptr);
 	assert(SUCCEEDED(dx12->result_));
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬-----------------
-#pragma region ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ-----------------
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	dx12->result_ = dinput_->CreateDevice(GUID_SysKeyboard, &devkeyboard_, NULL);
 	assert(SUCCEEDED(dx12->result_));
-#pragma endregion ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+#pragma endregion ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 
-	//“ü—Íƒf[ƒ^Œ`®ƒZƒbƒg--------------------------------
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã‚»ãƒƒãƒˆ--------------------------------
 	dx12->result_ = devkeyboard_->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(dx12->result_));
 	//---------------------------------
 
-	//”r‘¼ƒŒƒxƒ‹§Œä-------------------------------------------------------------
+	//æ’ä»–ãƒ¬ãƒ™ãƒ«åˆ¶å¾¡-------------------------------------------------------------
 	dx12->result_ = devkeyboard_->SetCooperativeLevel(dxWindow->hwnd_,
 		DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(dx12->result_));
 	//--------------------------
 
-	//ƒ}ƒEƒXƒfƒoƒCƒX‚Ì¶¬-----------------
-#pragma region ƒ}ƒEƒXƒfƒoƒCƒX‚Ì¶¬
+	//ãƒã‚¦ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ-----------------
+#pragma region ãƒã‚¦ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	dx12->result_ = dinput_->CreateDevice(GUID_SysMouse, &devmouse_, NULL);
 	assert(SUCCEEDED(dx12->result_));
-#pragma endregion ƒ}ƒEƒXƒfƒoƒCƒX‚Ì¶¬
+#pragma endregion ãƒã‚¦ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 	//--------------------------
-	// “ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	dx12->result_ = devmouse_->SetDataFormat(&c_dfDIMouse2); // •W€Œ`®
+	// å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	dx12->result_ = devmouse_->SetDataFormat(&c_dfDIMouse2); // æ¨™æº–å½¢å¼
 	assert(SUCCEEDED(dx12->result_));
-	// ”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	// æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	dx12->result_ = devmouse_->SetCooperativeLevel(
 		dxWindow->hwnd_, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 	assert(SUCCEEDED(dx12->result_));
 
-#pragma endregion “ü—ÍŒn‰Šú‰»
+#pragma endregion å…¥åŠ›ç³»åˆæœŸåŒ–
 	//----------------
 }
 
 void Input::UpDateInit()
 {
 	
-	//ƒL[ƒ{[ƒh‰Šú‰»-------------------------------------
-#pragma region ƒL[ƒ{[ƒh‰Šú‰»
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰åˆæœŸåŒ–-------------------------------------
+#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰åˆæœŸåŒ–
 
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn-----------------
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹-----------------
 	devkeyboard_->Acquire();
 	//----------------------------
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é---------------------------
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹---------------------------
 	KeyUpdate();
 	Dx12::GetInstance()->result_ = devkeyboard_->GetDeviceState(sizeof(key_), key_);
 	//----------------------------
 
-	// ƒ}ƒEƒX
-	devmouse_->Acquire();	// ƒ}ƒEƒX“®ìŠJn
+	// ãƒã‚¦ã‚¹
+	devmouse_->Acquire();	// ãƒã‚¦ã‚¹å‹•ä½œé–‹å§‹
 	MouseUpdate();
-	// ƒ}ƒEƒX‚Ì“ü—Í
+	// ãƒã‚¦ã‚¹ã®å…¥åŠ›
 	Dx12::GetInstance()->result_ = devmouse_->GetDeviceState(sizeof(mouse_), &mouse_);
-#pragma endregion ƒL[ƒ{[ƒh‰Šú‰»
+#pragma endregion ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰åˆæœŸåŒ–
 		//----------------------------------------
 	gamePad_->GetState();
 	gamePad_->LStick_ = gamePad_->IsInputLStick();
@@ -79,35 +81,45 @@ void Input::UpDateInit()
 
 //Input::Input(HRESULT& result, WNDCLASSEX w, HWND hwnd)
 //{
-//	//“ü—ÍŒn‰Šú‰»--------------
-//#pragma region “ü—ÍŒn‰Šú‰»
+//	//å…¥åŠ›ç³»åˆæœŸåŒ–--------------
+//#pragma region å…¥åŠ›ç³»åˆæœŸåŒ–
 //
 //
 //	result = DirectInput8Create(w.hInstance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
 //	assert(SUCCEEDED(result));
-//	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬-----------------
-//#pragma region ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+//	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ-----------------
+//#pragma region ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 //
 //
 //	result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
 //	assert(SUCCEEDED(result));
 //
-//#pragma endregion ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ì¶¬
+//#pragma endregion ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®ç”Ÿæˆ
 //	//--------------------------
 //
-//	//“ü—Íƒf[ƒ^Œ`®ƒZƒbƒg--------------------------------
+//	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã‚»ãƒƒãƒˆ--------------------------------
 //	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);
 //	assert(SUCCEEDED(result));
 //	//---------------------------------
 //
-//	//”r‘¼ƒŒƒxƒ‹§Œä-------------------------------------------------------------
+//	//æ’ä»–ãƒ¬ãƒ™ãƒ«åˆ¶å¾¡-------------------------------------------------------------
 //	result = devkeyboard->SetCooperativeLevel(hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 //	assert(SUCCEEDED(result));
 //
-//#pragma endregion “ü—ÍŒn‰Šú‰»
+//#pragma endregion å…¥åŠ›ç³»åˆæœŸåŒ–
 //	//----------------
 //}
 
+
+MCB::Input::~Input()
+{
+}
+
+MCB::Input::Input() {}
+MCB::Input::Input(const Input&) {}
+
+
+Input& MCB::Input::operator=(const Input&) = default;
 
 Input* MCB::Input::GetInstance()
 {
