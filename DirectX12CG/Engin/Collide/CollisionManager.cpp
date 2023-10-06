@@ -10,6 +10,17 @@ MCB::CollisionManager* MCB::CollisionManager::GetInstance()
     return &inst;
 }
 
+MCB::BaseCollider* MCB::CollisionManager::AddCollider(std::unique_ptr<BaseCollider> coll)
+{
+	colliders_.push_front(move(coll));
+	return colliders_.front().get();
+}
+
+void MCB::CollisionManager::RemoveCollider(BaseCollider* coll)
+{
+	colliders_.remove_if(
+		[&](auto& itr) {return itr.get() == coll; });
+}
 void MCB::CollisionManager::CheckAllCollision()
 {
 

@@ -1,15 +1,17 @@
 #include "Vertex.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <DirectXMath.h>
-
+WarningIgnoreEnd
 using namespace DirectX;
 
 void MCB::Vertex::CreateVertexBuffer(Dx12& dx12, const D3D12_HEAP_PROPERTIES& HeapProp, const D3D12_HEAP_FLAGS& flag,
     const D3D12_RESOURCE_DESC& Resdesc, const D3D12_RESOURCE_STATES& state)
 {
     dx12.result_ = dx12.device_->CreateCommittedResource(
-        &HeapProp, // ƒq[ƒvİ’è
+        &HeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
         flag,
-        &Resdesc, // ƒŠƒ\[ƒXİ’è
+        &Resdesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         state,
         nullptr,
         IID_PPV_ARGS(&vertBuff_));
@@ -30,6 +32,7 @@ void MCB::Vertex::SetVbView()
     vbView_.StrideInBytes = sizeof(vertices_[0]);
 }
 
+
 //void MCB::Vertex::CreateIndexBuffer(Dx12 &dx12,const D3D12_HEAP_PROPERTIES& HeapProp, D3D12_HEAP_FLAGS flag,const D3D12_RESOURCE_DESC Resdesc ,D3D12_RESOURCE_STATES state)
 //{
 //    dx12.result = dx12.device->CreateCommittedResource(
@@ -47,29 +50,29 @@ void MCB::Vertex::SetVbView()
 //{
 //    for (int32_t i = 0; i < _countof(boxIndices) / 3; i++)
 //    {
-//        //OŠpŒ`1‚Â‚²‚Æ‚ÉŒvZ
+//        //ä¸‰è§’å½¢1ã¤ã”ã¨ã«è¨ˆç®—
 //
-//        //OŠpŒ`‚ÌƒCƒ“ƒfƒbƒNƒX‚ğæ‚èo‚µ‚ÄAˆê“I‚È•Ï”‚É“ü‚ê‚é
+//        //ä¸‰è§’å½¢ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’å–ã‚Šå‡ºã—ã¦ã€ä¸€æ™‚çš„ãªå¤‰æ•°ã«å…¥ã‚Œã‚‹
 //        uint16_t index0 = boxIndices[i * 3 + 0];
 //        uint16_t index1 = boxIndices[i * 3 + 1];
 //        uint16_t index2 = boxIndices[i * 3 + 2];
 //
-//        //OŠpŒ`‚ğ\¬‚·‚é’¸“_À•W
+//        //ä¸‰è§’å½¢ã‚’æ§‹æˆã™ã‚‹é ‚ç‚¹åº§æ¨™
 //        XMVECTOR p0 = XMLoadFloat3(&Box[index0].pos);
 //        XMVECTOR p1 = XMLoadFloat3(&Box[index1].pos);
 //        XMVECTOR p2 = XMLoadFloat3(&Box[index2].pos);
 //
-//        //p0->p1ƒxƒNƒgƒ‹Ap0->p2ƒxƒNƒgƒ‹‚ğŒvZiƒxƒNƒgƒ‹‚ÌŒ¸Zj
+//        //p0->p1ãƒ™ã‚¯ãƒˆãƒ«ã€p0->p2ãƒ™ã‚¯ãƒˆãƒ«ã‚’è¨ˆç®—ï¼ˆãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—ï¼‰
 //        XMVECTOR v1 = XMVectorSubtract(p1, p0);
 //        XMVECTOR v2 = XMVectorSubtract(p2, p0);
 //
-//        //ŠOÏ‚Í—¼•û‚©‚ç‚’¼‚ÈƒxƒNƒgƒ‹
+//        //å¤–ç©ã¯ä¸¡æ–¹ã‹ã‚‰å‚ç›´ãªãƒ™ã‚¯ãƒˆãƒ«
 //        XMVECTOR normal = XMVector3Cross(v1, v2);
 //
-//        //³‹K‰»i’·‚³‚ğˆê‚É‚·‚é)
+//        //æ­£è¦åŒ–ï¼ˆé•·ã•ã‚’ä¸€ã«ã™ã‚‹)
 //        normal = XMVector3Normalize(normal);
 //
-//        //‹‚ß‚½–@ü‚ğ’¸“_ƒf[ƒ^‚É‘ã“ü
+//        //æ±‚ã‚ãŸæ³•ç·šã‚’é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã«ä»£å…¥
 //        XMStoreFloat3(&Box[index0].normal, normal);
 //        XMStoreFloat3(&Box[index1].normal, normal);
 //        XMStoreFloat3(&Box[index2].normal, normal);
@@ -80,18 +83,18 @@ void MCB::Vertex::SetVbView()
 //HRESULT MCB::Vertex::IndexMaping()
 //{
 //    HRESULT result;
-//    //GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ‚ğæ“¾----------------------------
+//    //GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒªã‚’å–å¾—----------------------------
 //    result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 //    //---------------------------------------
 //
-//    //‘SƒCƒ“ƒfƒbƒNƒX‚É‘Î‚µ‚Ä-------------------------
+//    //å…¨ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã«å¯¾ã—ã¦-------------------------
 //    for (int32_t i = 0; i < _countof(boxIndices); i++)
 //    {
 //        indexMap[i] = boxIndices[i];
 //    }
 //    //-----------------------
 //
-//    //Œq‚ª‚è‚ğ‰ğœ---------------------
+//    //ç¹‹ãŒã‚Šã‚’è§£é™¤---------------------
 //    indexBuff->Unmap(0, nullptr);
 //    //------------------------
 //
@@ -105,13 +108,13 @@ HRESULT MCB::Vertex::VertexMaping()
     result = vertBuff_->Map(0, nullptr, (void**)&vertMap_);
     assert(SUCCEEDED(result));
 
-    // ‘S’¸“_‚É‘Î‚µ‚Ä
+    // å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
     for (int32_t i = 0; i < _countof(vertices_); i++)
     {
-        vertMap_[i] = vertices_[i];   // À•W‚ğƒRƒs[
+        vertMap_[i] = vertices_[i];   // åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
     }
 
-    // ƒ}ƒbƒv‚ğ‰ğœ
+    // ãƒãƒƒãƒ—ã‚’è§£é™¤
     vertBuff_->Unmap(0, nullptr);
 
     return result;

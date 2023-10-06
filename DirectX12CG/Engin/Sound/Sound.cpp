@@ -1,7 +1,9 @@
 #include "Sound.h"
+WarningIgnoreBegin
 #include <combaseapi.h>
 #include <memory>
 #include <vector>
+WarningIgnoreEnd
 using namespace MCB;
 using namespace std;
 
@@ -10,6 +12,7 @@ SoundManager* MCB::SoundManager::GetInstance()
 	static SoundManager inst;
 	return &inst;
 }
+
 
 void MCB::SoundManager::ReleasexAudio2()
 {
@@ -43,15 +46,16 @@ void MCB::SoundManager::AllDeleteSound()
 	}
 }
 
+
 SoundManager::SoundManager()
 {
 	HRESULT result = S_FALSE;
 
-	//‰¹‚Å‚È‚©‚Á‚½‚çŽŽ‚µ‚Ä‚Ý‚ëI
+	//éŸ³ã§ãªã‹ã£ãŸã‚‰è©¦ã—ã¦ã¿ã‚ï¼
 	//result = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	result = XAudio2Create(&xAudio2_, 0, XAUDIO2_DEFAULT_PROCESSOR);
 
-	assert(SUCCEEDED(result) && "XAudioƒCƒ“ƒXƒ^ƒ“ƒX¶¬ŽžƒGƒ‰[");
+	assert(SUCCEEDED(result) && "XAudioã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆæ™‚ã‚¨ãƒ©ãƒ¼");
 
 	result = xAudio2_->CreateMasteringVoice(&masterVoice_);
 
@@ -141,14 +145,14 @@ size_t MCB::SoundManager::LoadWaveSound(const string& fileName)
 		assert(0);
 	}
 
-	vector<char> pBuffer (data.size);
+	vector<char> pBuffer (static_cast<uint64_t>(data.size));
 	file.read(&pBuffer.front(), data.size);
 
 	file.close();
 
 	temp->wfex = format.fmt;
 	temp->pBuffer = move(pBuffer);
-	temp->bufferSize = data.size;
+	temp->bufferSize = static_cast<size_t>(data.size);
 	temp->name = fileName;
 	sounds_.push_back(move(temp));
 	handleNum = sounds_.size() - 1;
@@ -186,6 +190,7 @@ void MCB::SoundManager::PlaySoundWave(size_t soundHandle,bool isLoop, uint16_t l
 
 void MCB::SoundManager::StopSoundWave(size_t soundHandle,bool startPosReset)
 {
+	static_cast<void>(startPosReset);
 	HRESULT result = S_FALSE;
 	if (soundHandle >= sounds_.size())return;
 	if (sounds_[soundHandle]->pSourceVoice == nullptr)return;
@@ -196,7 +201,7 @@ void MCB::SoundManager::StopSoundWave(size_t soundHandle,bool startPosReset)
 
 void MCB::SoundManager::SetVolume(size_t volume,size_t soundHandle)
 {
-	float tempVolume = volume / 100.0f;
+	float tempVolume = static_cast<float>(volume) / 100.0f;
 	if (soundHandle >= sounds_.size())return;
 	sounds_[soundHandle]->volume = tempVolume;
 	if (sounds_[soundHandle]->pSourceVoice != nullptr)

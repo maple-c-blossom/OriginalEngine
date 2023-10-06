@@ -302,6 +302,11 @@ void MCB::Model::Init(const std::string& fileName, bool smooth)
 
 }
 
+size_t MCB::Model::GetVertexCount()
+{
+	return vertices_.size();
+}
+
 void MCB::Model::AddSmoothData( uint16_t indexPosition,  uint16_t indexVertex)
 {
     smoothData_[indexPosition].emplace_back(indexVertex);

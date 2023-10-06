@@ -17,6 +17,7 @@ void PopEffect::Initialize(MCB::Model* model, MCB::Vector3D Velocity, MCB::Float
 	nowFrontVec_.vec_.z_ = Velocity.vec_.z_;
 	nowFrontVec_.V3Norm();
 	this->color_ = color;
+
 }
 
 void PopEffect::UniqueUpdate()
@@ -43,7 +44,22 @@ void PopEffect::UpdateMatrix(MCB::ICamera* camera)
 	Object3d::Update();
 }
 
+void MCB::PopEffect::UpdateMatrix(bool)
+{
+	Object3d::Update();
+}
+
+void MCB::PopEffect::UpdateMatrix(Quaternion ,bool )
+{
+	Object3d::Update();
+}
+
 void PopEffect::Draw()
+{
+	Object3d::Draw();
+}
+
+void MCB::PopEffect::Draw(uint16_t)
 {
 	Object3d::Draw();
 }

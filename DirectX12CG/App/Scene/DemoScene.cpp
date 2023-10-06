@@ -52,7 +52,7 @@ void MCB::DemoScene::Update()
         sceneEnd_ = true;
     }
 
-    for (int8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
         if (noMove[i]) continue;
         DirectX::XMFLOAT3* pos = &effectorObjects_[i].position_;
@@ -98,8 +98,9 @@ void MCB::DemoScene::Update()
         }
     }
 
-    for (int8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
+
         if (isIk_[i])
         {
             if (objChenge_)
@@ -153,7 +154,7 @@ void MCB::DemoScene::PostEffectDraw()
 
 void MCB::DemoScene::Draw()
 {
-    //3DƒIƒuƒWƒFƒNƒg
+    //3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 
 }
@@ -182,7 +183,7 @@ void MCB::DemoScene::ImGuiUpdate()
     ImGui::Checkbox("debugView", &debugView_);
     if (ImGui::TreeNode("IkSet"))
     {
-        for (int8_t i = 0; i < 4; i++)
+        for (uint8_t i = 0; i < 4; i++)
         {
             std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
@@ -214,6 +215,7 @@ MCB::DemoScene::DemoScene(RootParameter* root, Depth* depth,PipeLineManager* pip
 	depth_ = depth;
     pipeline_ = pipeline;
 }
+
 
 MCB::DemoScene::~DemoScene()
 {
@@ -294,7 +296,7 @@ void MCB::DemoScene::Object3DInit()
     Skydorm_.scale_ = { 4,4,4 };
     Skydorm_.camera_ = viewCamera_;
 
-    for (int8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 4; i++)
     {
         effectorObjects_[i].Init();
         //testsphere.model = BoxModel;
@@ -314,3 +316,24 @@ void MCB::DemoScene::Object3DInit()
     poleVec_[2] = {3,2,0};
     poleVec_[3] = {3,2,0};
 }
+
+MCB::DemoScene::IKDataSet::IKDataSet()
+{
+
+};
+
+MCB::DemoScene::IKDataSet::IKDataSet(std::string endJoint)
+{
+	endJointName = endJoint;
+}
+MCB::DemoScene::IKDataSet::IKDataSet(std::string endJoint,std::string middlejoint)
+{
+	endJointName = endJoint;
+	middleJointName = middlejoint;
+}
+MCB::DemoScene::IKDataSet::IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint)
+{
+	endJointName = endJoint;
+	middleJointName = middleJoint;
+	rootJointName = rootJoint;
+};

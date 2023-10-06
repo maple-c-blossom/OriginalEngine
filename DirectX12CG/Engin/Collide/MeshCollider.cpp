@@ -24,12 +24,12 @@ void MCB::MeshCollider::ConstractTriangle(Model* model)
 	int32_t start = 0;
 	size_t triangleNum = model->indices_.size() / 3;
 	triangles_.resize(triangles_.size() + triangleNum);
-	for (int32_t i = 0; i < triangleNum; i++)
+	for ( size_t i = 0; i < triangleNum; i++)
 	{
 		Triangle& tri = triangles_[start + i];
-		int32_t idx0 = model->indices_[i * 3 + 0];
-		int32_t idx1 = model->indices_[i * 3 + 1];
-		int32_t idx2 = model->indices_[i * 3 + 2];
+		size_t idx0 = model->indices_[i * 3 + 0];
+		size_t idx1 = model->indices_[i * 3 + 1];
+		size_t idx2 = model->indices_[i * 3 + 2];
 
 		tri.vertexPoint_[0].vec_ = { model->vertices_[idx0].pos.x_,
 			model->vertices_[idx0].pos.y_,model->vertices_[idx0].pos.z_ };
@@ -48,19 +48,19 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 	triangles_.clear();
 	int32_t start = 0;
 
-	size_t i = 0;
+	size_t k = 0;
 	for (auto& itr: *model->skeleton.GetNodes_())
 	{
-		for (int32_t j = 0; j <itr->meshes.size(); j++)
+		for ( size_t j = 0; j <itr->meshes.size(); j++)
 		{
 			size_t triangleNum =itr->meshes[j]->indices_.size() / 3;
 			triangles_.resize(triangles_.size() + triangleNum);
-			for (int32_t i = 0; i < triangleNum; i++)
+			for ( size_t i = 0; i < triangleNum; i++)
 			{
 				Triangle& tri = triangles_[start + i];
-				int32_t idx0 =itr->meshes[j]->indices_[i * 3 + 0];
-				int32_t idx1 =itr->meshes[j]->indices_[i * 3 + 1];
-				int32_t idx2 =itr->meshes[j]->indices_[i * 3 + 2];
+				size_t idx0 =itr->meshes[j]->indices_[i * 3 + 0];
+				size_t idx1 =itr->meshes[j]->indices_[i * 3 + 1];
+				size_t idx2 =itr->meshes[j]->indices_[i * 3 + 2];
 
 				tri.vertexPoint_[0].vec_ = {itr->meshes[j]->vertices_[idx0].pos.x_,
 					itr->meshes[j]->vertices_[idx0].pos.y_
@@ -79,7 +79,7 @@ void MCB::MeshCollider::ConstractTriangle(AnimationModel* model)
 			}
 			start += (int32_t)triangleNum;
 		}
-		i++;
+		k++;
 	}
 	
 }
@@ -102,7 +102,7 @@ void MCB::MeshCollider::Update()
 bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* inter, Vector3D* reject)
 {
 	Sphere local;
-	local.centerPosition_ = XMVector3Transform(XMVECTOR{ sphere.centerPosition_.vec_.x_, sphere.centerPosition_.vec_.y_, sphere.centerPosition_.vec_.z_ }, invWorldMat_);
+	local.centerPosition_ = XMVector3Transform(XMVECTOR{ { sphere.centerPosition_.vec_.x_, sphere.centerPosition_.vec_.y_, sphere.centerPosition_.vec_.z_ } },invWorldMat_);
 	local.radius_ = sphere.radius_ * XMVector3Length(invWorldMat_.r[0]).m128_f32[0];
 
 	std::vector<Triangle>::const_iterator itr = triangles_.cbegin();
@@ -131,9 +131,9 @@ bool MCB::MeshCollider::ChakeCollisionSphere(const Sphere& sphere, Vector3D* int
 bool MCB::MeshCollider::ChakeCollisionRay(const Ray& ray, float* dist, Vector3D* inter)
 {
 	Ray local;
-	local.StartPosition_ = XMVector3Transform(XMVECTOR{ ray.StartPosition_.vec_.x_,ray.StartPosition_.vec_.y_, ray.StartPosition_.vec_.z_,1 }, invWorldMat_);
+	local.StartPosition_ = XMVector3Transform(XMVECTOR{ {ray.StartPosition_.vec_.x_,ray.StartPosition_.vec_.y_, ray.StartPosition_.vec_.z_,1 } },invWorldMat_);
 	local.rayVec_ = XMVector3TransformNormal(
-		XMVECTOR{ ray.rayVec_.vec_.x_,ray.rayVec_.vec_.y_, ray.rayVec_.vec_.z_,1 },invWorldMat_);
+		XMVECTOR{ { ray.rayVec_.vec_.x_,ray.rayVec_.vec_.y_, ray.rayVec_.vec_.z_,1 } },invWorldMat_);
 
 	std::vector<Triangle>::const_iterator itr = triangles_.cbegin();
 	for (; itr != triangles_.cend(); ++itr)

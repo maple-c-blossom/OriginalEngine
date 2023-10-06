@@ -12,10 +12,12 @@
 PragmaWarningNum(4061) \
 PragmaWarningNum(4062) \
 PragmaWarningNum(4127) \
+PragmaWarningNum(4244) \
 PragmaWarningNum(4263) \
 PragmaWarningNum(4264) \
-PragmaWarningNum(4266) \
 PragmaWarningNum(4265) \
+PragmaWarningNum(4266) \
+PragmaWarningNum(4355) \
 PragmaWarningNum(4365) \
 PragmaWarningNum(4514) \
 PragmaWarningNum(4619) \
@@ -28,6 +30,7 @@ PragmaWarningNum(4710) \
 PragmaWarningNum(4711) \
 PragmaWarningNum(4777) \
 PragmaWarningNum(4820) \
+PragmaWarningNum(5026) \
 PragmaWarningNum(5027) \
 PragmaWarningNum(5039) \
 PragmaWarningNum(5204) \

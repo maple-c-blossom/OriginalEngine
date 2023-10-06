@@ -9,6 +9,7 @@ using namespace std;
 float MCB::Player::GetSpeed()
 {
 	return speedFront_;
+
 }
 void MCB::Player::SetRespowPosition(const Vector3D& pos)
 {
@@ -43,16 +44,16 @@ void MCB::Player::UniqueUpdate()
 	Ray ray;
 	ray.StartPosition_ = sphere->centerPosition_;
 	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
-	ray.rayVec_ = { 0,-1,0,0 };
+	ray.rayVec_ = { {{0,-1,0,0}} };
 	RayCastHit info;
 	float distRange = sphere->GetRaius() * 2.0f;
 	float distOverRange = distRange * distoffSet;
-	bool ground = CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, distRange + distOverRange);
+	bool isGround = CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, distRange + distOverRange);
 	if (isGraund_)
 	{
-		const float absDistance = 0.2f;
+		//const float absDistance = 0.2f;
 		
-		if (ground)
+		if (isGround)
 		{
 			isGraund_ = true;
 			if(info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_) - sphere->GetRaius() * 2.0f);
@@ -61,13 +62,13 @@ void MCB::Player::UniqueUpdate()
 		else
 		{
 			isGraund_ = false;
-			fallV_ = { 0,0,0,0 };
+			fallV_ = { {{0,0,0,0}} };
 		}
 	}
 	else if(fallV_.vec_.y_ <= 0.0f)
 	{
 		
-		if (ground)
+		if ( isGround )
 		{
 			isGraund_ = true;
 			if (info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_ - distOverRange) - sphere->GetRaius() * 2.0f);
@@ -117,7 +118,7 @@ void MCB::Player::UniqueUpdate()
 
 void MCB::Player::Move()
 {
-	SoundManager* sm = SoundManager::GetInstance();
+	//SoundManager* sm = SoundManager::GetInstance();
 	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
 		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
 	{
@@ -164,9 +165,9 @@ void MCB::Player::Move()
 
 	if (input_->gamePad_->LStick_.x_)
 	{
-		float accelerator_ = maxspeed_;
-		accelerator_ *= input_->gamePad_->LStick_.x_;
-		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator_;
+		float accelerator = maxspeed_;
+		accelerator *= input_->gamePad_->LStick_.x_;
+		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
 		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
 		else if (speedRight_ <= -maxspeed_)speedRight_ = -maxspeed_;
 	}
@@ -213,7 +214,7 @@ void MCB::Player::Move()
 	{
 		isGraund_ = false;
 		const float jumpVYFist = 0.45f;
-		fallV_ = { 0,jumpVYFist,0,0 };
+		fallV_ = { {{0,jumpVYFist,0,0}} };
 	}
 
 }

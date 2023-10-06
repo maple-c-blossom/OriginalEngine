@@ -17,10 +17,11 @@ using namespace std;
 //	textures.push_back(move(temp));
 //}
 
+
 TextureCell* MCB::TextureManager::LoadTexture(const wchar_t* FileName)
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
-	int32_t tempin = 0;
+	uint16_t tempin = 0;
 	for (auto& itr : textures_)
 	{
 		if (tempin == itr->texture->incrementNum_)
@@ -40,7 +41,7 @@ TextureCell* MCB::TextureManager::LoadTexture(const wchar_t* FileName)
 TextureCell* MCB::TextureManager::LoadTexture(const std::string& directoryPath, const std::string& filename)
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
-	int32_t tempin = 0;
+	uint16_t tempin = 0;
 	for (auto& itr : textures_)
 	{
 		if (tempin == itr->texture->incrementNum_)
@@ -60,7 +61,7 @@ TextureCell* MCB::TextureManager::LoadTexture(const std::string& directoryPath, 
 TextureCell* MCB::TextureManager::CreateNoTextureFileIsTexture(bool postEffect)
 {
 	std::unique_ptr<TextureCell> temp = make_unique<TextureCell>();
-	int32_t tempin = 0;
+	uint16_t tempin = 0;
 	for (auto& itr : textures_)
 	{
 		if (tempin == itr->texture->incrementNum_)
@@ -108,7 +109,20 @@ TextureManager* MCB::TextureManager::GetInstance()
 	return &instance;
 }
 
+MCB::TextureManager::~TextureManager()
+{
+}
+
+MCB::TextureManager::TextureManager()
+{
+}
+
 void MCB::TextureManager::DeleteInstace()
 {
 	//delete TextureManager::GetInstance();
+}
+
+MCB::TextureCell::TextureCell()
+{
+	texture = std::make_unique<Texture>();
 }

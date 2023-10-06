@@ -69,7 +69,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling( float x,  float y,  float z)
 	temp._44_ = 1;
 
 	return temp;
-	return MCBMatrix();
+
 }
 
 void MCB::MCBMatrix::ConvertMatrixArray(float** ArrayMat)
@@ -570,12 +570,10 @@ float MCB::MCBMatrix::operator[]( size_t n)
 		break;
 	default:
 		throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
-		return -114514.1919810f;
 		break;
 	}
 
-	throw std::out_of_range(std::string("無効な値が入力されました。0～15までの範囲の整数を入力してください。"));
-	return -114514.1919810f;
+
 }
 
 MCBMatrix MCB::operator*(const MCBMatrix& matrix1, const MCBMatrix& matrix2)

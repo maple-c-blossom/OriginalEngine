@@ -26,10 +26,12 @@ namespace MCB
 	class PipelineRootSignature
 	{
 	public:
+
 		Pipeline pipeline_;
 		RootSignature rootsignature_;
 		Shader shader_;
 		TexSample texSample_;
+		Byte4 pad;
 
 		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 		void CreateLinePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
@@ -52,6 +54,9 @@ namespace MCB
 
 		void CommonBeginDraw(Toporogy toporogyType = TRIANGLESTRIP);
 
+		PipelineRootSignature();
+		PipelineRootSignature(const PipelineRootSignature&) = delete;
+		PipelineRootSignature& operator=(const PipelineRootSignature&) = delete;
 	};
 }
 

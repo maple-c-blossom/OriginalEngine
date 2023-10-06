@@ -1,20 +1,22 @@
 #pragma once
-
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
+#include <array>
 #include <wrl.h>
+WarningIgnoreEnd
 #include "Dx12.h"
 #include "TextureBuffer.h"
-#include <array>
 
 namespace MCB
 {
 
 	class ShaderResource
 	{
-        ShaderResource() {};
-        ShaderResource(const ShaderResource& shaderResource) {};
-        ShaderResource& operator=(const ShaderResource& shaderResource) {};
-        ~ShaderResource() {};
+        ShaderResource();
+        ShaderResource(const ShaderResource&);
+        ShaderResource& operator=(const ShaderResource&) = delete;
+        ~ShaderResource();
 		public:
             //定数バッファ用のデスクリプタヒープ
 

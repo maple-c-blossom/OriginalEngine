@@ -9,18 +9,19 @@
 #include "Camera.h"
 #include <memory>
 
-#pragma region ƒQ[ƒ€Œn.h include
+#pragma region ã‚²ãƒ¼ãƒ ç³».h include
 
 
-#pragma endregion ƒQ[ƒ€Œn.h include
+#pragma endregion ã‚²ãƒ¼ãƒ ç³».h include
 
 
 namespace MCB
 {
+
 	class Scene :public IScene
 	{
 	private:
-
+		int64_t pad;
 		enum PostEffectNum
 		{
 			STRIPE = 1,
@@ -32,47 +33,49 @@ namespace MCB
 			NONE = 7
 		};
 
-		//•ÏŠ·s—ñ
+		//å¤‰æ›è¡Œåˆ—
 		DebugCamera debugCamera_;
 		Camera maincamera_;
 		std::string stage;
-#pragma endregion •ÏŠ·s—ñ
+#pragma endregion å¤‰æ›è¡Œåˆ—
 
-#pragma region ŠeíƒŠƒ\[ƒX
-		//3Dƒ‚ƒfƒ‹
-#pragma region 3Dƒ‚ƒfƒ‹
+#pragma region å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
+		//3Dãƒ¢ãƒ‡ãƒ«
+#pragma region 3Dãƒ¢ãƒ‡ãƒ«
 		Model* SpherModel_ = nullptr;
 		AnimationModel* playerModel_ = nullptr;
 		Model* groundModel_ = nullptr;
 		Model* skydomeModel_ = nullptr;
 		Model* goalModel_ = nullptr;
 		//AssimpLoader testModel;
-#pragma endregion 3Dƒ‚ƒfƒ‹
+#pragma endregion 3Dãƒ¢ãƒ‡ãƒ«
 
-		//ƒeƒNƒXƒ`ƒƒ
-#pragma region ƒeƒNƒXƒ`ƒƒ
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£
+#pragma region ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		TextureCell* debugTextTexture_ = nullptr;
 		TextureCell* zoomTex_ = nullptr;
 
-#pragma endregion ƒeƒNƒXƒ`ƒƒ
+#pragma endregion ãƒ†ã‚¯ã‚¹ãƒãƒ£
 
-		//ƒTƒEƒ“ƒh
-#pragma region ƒTƒEƒ“ƒh
+		//ã‚µã‚¦ãƒ³ãƒ‰
+#pragma region ã‚µã‚¦ãƒ³ãƒ‰
 		size_t runNormal;
 		size_t runFast;
 
 		int32_t volume_ = 255;
-#pragma endregion ƒTƒEƒ“ƒh
+		Byte4 pad2;
+#pragma endregion ã‚µã‚¦ãƒ³ãƒ‰
 
-#pragma endregion ŠeíƒŠƒ\[ƒX
+#pragma endregion å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
 
-#pragma region 3DƒIƒuƒWƒFƒNƒg
+#pragma region 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 		Goal* goal_;
 		Player* player_;
-#pragma endregion 3DƒIƒuƒWƒFƒNƒg
+		int64_t pad3;
+#pragma endregion 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-#pragma region ƒXƒvƒ‰ƒCƒg
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 		Sprite sprite_ = {};
 
 		Sprite zoomSprite_ = {};
@@ -81,25 +84,29 @@ namespace MCB
 
 		DebugText debugText_ = {};
 
-#pragma endregion ƒXƒvƒ‰ƒCƒg
-#pragma region ƒp[ƒeƒBƒNƒ‹
+#pragma endregion ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+#pragma region ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 
 #pragma endregion
-#pragma region ’Êí•Ï”
+#pragma region é€šå¸¸å¤‰æ•°
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool ybill_ = false;
+		Byte5 pad4;
 		std::unique_ptr<LevelLoader::LevelData> level_;
 		Timer startTimer;
 		bool startDrawed;
-#pragma endregion ’Êí•Ï”
+		Byte7 pad5;
+#pragma endregion é€šå¸¸å¤‰æ•°
 
 	public:
 		Scene(RootParameter* root,Depth* depth,PipeLineManager* pipeline);
+		Scene(const Scene&) =delete;
+		Scene& operator=(const Scene&) = delete;
 		~Scene();
 		void Initialize() override;
 		void SetStage(std::string stageName);
-		//Še‰Šú‰»ŒnŠÖ”ŒQ--------------------
+		//å„åˆæœŸåŒ–ç³»é–¢æ•°ç¾¤--------------------
 		void LoadModel()  override;
 		void LoadTexture()  override;
 		void LoadSound()  override;

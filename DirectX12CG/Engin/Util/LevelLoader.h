@@ -1,8 +1,11 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <string>
 #include <vector>
 #include <DirectXMath.h>
 #include <json.hpp>
+WarningIgnoreEnd
 #include "Object3d.h"
 #include "PipelineManager.h"
 namespace MCB
@@ -10,19 +13,24 @@ namespace MCB
 	class LevelLoader
 	{
 		public:
-		// ƒŒƒxƒ‹ƒf[ƒ^
+		// ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿
 		struct LevelData {
 
+
 			struct ObjectData {
-				// ƒtƒ@ƒCƒ‹–¼
+				// ãƒ•ã‚¡ã‚¤ãƒ«å
 				std::string fileName;
 				std::string tag;
 				std::string modelType;
 				std::unique_ptr<Object3d> obj;
+				ObjectData();
+				ObjectData(const ObjectData&) = delete;
+				ObjectData& operator=(const ObjectData&) = delete;
+
 			};
 			std::string levelFileName;
 			ICamera* camera;
-			// ƒIƒuƒWƒFƒNƒg”z—ñ
+			// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆé…åˆ—
 			std::vector<std::unique_ptr<ObjectData>> objects;
 			Object3d* GetObjectPtr(std::string name);
 			void Update(bool start = true);
@@ -33,20 +41,20 @@ namespace MCB
 			~LevelData();
 			std::unique_ptr<LevelData> ReLoad();
 		};
-		//’è”
-		// ƒfƒtƒHƒ‹ƒg‚Ì“Ç‚İ‚İƒfƒBƒŒƒNƒgƒŠ
+		//å®šæ•°
+		// ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã®èª­ã¿è¾¼ã¿ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 		static const std::string sBASE_FILE_DIR_;
-		// ƒtƒ@ƒCƒ‹Šg’£q
+		// ãƒ•ã‚¡ã‚¤ãƒ«æ‹¡å¼µå­
 		static const std::string sEXTEND_;
 
-		public:// ƒƒ“ƒoŠÖ”
+		public:// ãƒ¡ãƒ³ãƒé–¢æ•°
 
 		static void RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson,ICamera* camera);
 
 		/// <summary>
-		/// ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+		/// ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 		/// </summary>
-		/// <param name="fileName">ƒtƒ@ƒCƒ‹–¼</param>
+		/// <param name="fileName">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 		static std::unique_ptr<LevelData> Load(const std::string& fileName, ICamera* camera);
 		 
 	};

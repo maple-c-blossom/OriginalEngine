@@ -1,7 +1,10 @@
 #pragma once
 #include "Texture.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <list>
 #include <memory>
+WarningIgnoreEnd
 namespace MCB
 {
 
@@ -9,15 +12,19 @@ namespace MCB
 	{
 		std::unique_ptr<Texture> texture;
 		bool free = false;
-		TextureCell() { texture = std::make_unique<Texture>(); }
+		Byte7 pad;
+		TextureCell();
+		TextureCell(const TextureCell&) = delete;
+		TextureCell& operator=(const TextureCell& ) = delete;
 
 	}TextureCell;
+
 	class TextureManager
 	{
-		TextureManager() { };
+		TextureManager();
 		TextureManager(const TextureManager& textureManager) = delete;
 		TextureManager& operator=(const TextureManager& textureManager) = delete;
-		~TextureManager() {};
+		~TextureManager();
 		 std::list<std::unique_ptr<TextureCell>> textures_;
 		//std::vector<int32_t> texincrement;
 	public:

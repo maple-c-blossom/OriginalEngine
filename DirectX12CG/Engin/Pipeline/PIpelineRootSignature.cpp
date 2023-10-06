@@ -6,49 +6,50 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
 
      texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJPixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
      pipeline_.SetGpipleneDescAll(& shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
      pipeline_.SetSampleMask();
 
      pipeline_.SetAllAddRasterizerState();
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
      pipeline_.SetRenderTaegetBlendDesc( pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -75,24 +76,24 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
      pipeline_.pipelineDesc_.InputLayout.pInputElementDescs =   shader_.inputLayout_;
      pipeline_.pipelineDesc_.InputLayout.NumElements = _countof( shader_.inputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
      pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
      pipeline_.SetNumRenderTargets(2);
@@ -100,13 +101,13 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
      pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
      pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState( pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
      rootsignature_.InitRootSignatureDesc(rootparams,  texSample_);
@@ -115,19 +116,19 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
 
      rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
      pipeline_.SetRootSignature( rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
      pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -139,49 +140,49 @@ void MCB::PipelineRootSignature::CreateLinePipeline(Depth& depth, RootParameter&
 
     texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\LineSimpleShader\\LineVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     //shader_.ShaderCompile(L"Resources\\Shaders\\LineSimpleShader\\LineGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\LineSimpleShader\\LinePixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetAllAddRasterizerState();
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -208,24 +209,24 @@ void MCB::PipelineRootSignature::CreateLinePipeline(Depth& depth, RootParameter&
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.inputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.inputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_LINE);
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
     pipeline_.SetNumRenderTargets(2);
@@ -233,13 +234,13 @@ void MCB::PipelineRootSignature::CreateLinePipeline(Depth& depth, RootParameter&
     pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparams, texSample_);
@@ -248,19 +249,19 @@ void MCB::PipelineRootSignature::CreateLinePipeline(Depth& depth, RootParameter&
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -272,49 +273,49 @@ void MCB::PipelineRootSignature::Create3DObjectWirePipeline(Depth& depth, RootPa
 
     texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\ObjSimpleShader\\OBJSimpleVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\ObjSimpleShader\\OBJSimpleGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\ObjSimpleShader\\OBJSimplePixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetRasterizerState(true,D3D12_CULL_MODE_BACK, D3D12_FILL_MODE_WIREFRAME);
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -341,24 +342,24 @@ void MCB::PipelineRootSignature::Create3DObjectWirePipeline(Depth& depth, RootPa
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.inputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.inputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
     pipeline_.SetNumRenderTargets(2);
@@ -366,13 +367,13 @@ void MCB::PipelineRootSignature::Create3DObjectWirePipeline(Depth& depth, RootPa
     pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparam, texSample_);
@@ -381,19 +382,19 @@ void MCB::PipelineRootSignature::Create3DObjectWirePipeline(Depth& depth, RootPa
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -406,49 +407,49 @@ void MCB::PipelineRootSignature::Create3DObjectTilingPipeline(Depth& depth, Root
 
     texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\OBJShaderTiling\\OBJTilingVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\OBJShaderTiling\\OBJTilingGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\OBJShaderTiling\\OBJTilingPixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetAllAddRasterizerState();
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -475,24 +476,24 @@ void MCB::PipelineRootSignature::Create3DObjectTilingPipeline(Depth& depth, Root
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.inputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.inputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
     pipeline_.SetNumRenderTargets(2);
@@ -500,13 +501,13 @@ void MCB::PipelineRootSignature::Create3DObjectTilingPipeline(Depth& depth, Root
     pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparam, texSample_);
@@ -515,19 +516,19 @@ void MCB::PipelineRootSignature::Create3DObjectTilingPipeline(Depth& depth, Root
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -540,41 +541,41 @@ void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParamete
 
      texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\SpriteShader\\SpriteVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\SpriteShader\\SpritePixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
      pipeline_.SetSpriteGpipleneDescAll(& shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
      pipeline_.SetSampleMask();
 
      pipeline_.SetSpriteAllAddRasterizerState();
 
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
      pipeline_.SetRenderTaegetBlendDesc( pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -601,36 +602,36 @@ void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParamete
         break;
     }
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
      pipeline_.pipelineDesc_.InputLayout.pInputElementDescs =  shader_.SpriteinputLayout_;
      pipeline_.pipelineDesc_.InputLayout.NumElements = _countof( shader_.SpriteinputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
      pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
      pipeline_.SetNumRenderTargets();
      pipeline_.SetRTVFormats();
      pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetSpriteDepthStencilState( pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
      rootsignature_.InitRootSignatureDesc(rootparams,  texSample_);
@@ -639,19 +640,19 @@ void MCB::PipelineRootSignature::CreateSpritePipeline(Depth& depth, RootParamete
 
      rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
      pipeline_.SetRootSignature( rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
      pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -663,49 +664,49 @@ void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParame
 
      texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\ParticleShader\\ParticleVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\ParticleShader\\ParticleGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
      shader_.ShaderCompile(L"Resources\\Shaders\\ParticleShader\\ParticlePixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
      pipeline_.SetGpipleneDescAll(& shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
      pipeline_.SetSampleMask();
 
      pipeline_.SetAllAddRasterizerState();
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
      pipeline_.SetRenderTaegetBlendDesc( pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -730,36 +731,36 @@ void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParame
          pipeline_.SetAlphaBlend();
         break;
     }
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
      pipeline_.pipelineDesc_.InputLayout.pInputElementDescs =  shader_.inputLayout_;
      pipeline_.pipelineDesc_.InputLayout.NumElements = _countof( shader_.inputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
      pipeline_.SetPrimitiveTopologyType(D3D12_PRIMITIVE_TOPOLOGY_TYPE_POINT);
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
      pipeline_.SetNumRenderTargets();
      pipeline_.SetRTVFormats();
      pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetParticleDepthStencilState( pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
      rootsignature_.InitRootSignatureDesc(rootparams,  texSample_);
@@ -768,19 +769,19 @@ void MCB::PipelineRootSignature::CreateParticlePipeline(Depth& depth, RootParame
 
      rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
      pipeline_.SetRootSignature( rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
      pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -793,49 +794,49 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
 
     texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxShader\\FbxVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxShader\\FbxGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxShader\\FbxPixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetAllAddRasterizerState();
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -862,24 +863,24 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.fbxinputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.fbxinputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
     pipeline_.SetNumRenderTargets(2);
@@ -887,13 +888,13 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
     pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparam, texSample_);
@@ -902,19 +903,19 @@ void MCB::PipelineRootSignature::CreateFbxPipeline(Depth& depth, RootParameter& 
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -926,49 +927,49 @@ void MCB::PipelineRootSignature::CreateFbxWirePipeline(Depth& depth, RootParamet
 
     texSample_.Init();
 
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxSimpleShader\\FbxSimpleVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
-     //ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹---------------
-#pragma region ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+     //ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«---------------
+#pragma region ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxSimpleShader\\FbxSimpleGeometryShader.hlsl", "main", GS);
 
-#pragma endregion ƒWƒIƒƒgƒŠƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ã‚¸ã‚ªãƒ¡ãƒˆãƒªã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //---------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\FbxSimpleShader\\FbxSimplePixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetRasterizerState(true, D3D12_CULL_MODE_BACK, D3D12_FILL_MODE_WIREFRAME);
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -995,24 +996,24 @@ void MCB::PipelineRootSignature::CreateFbxWirePipeline(Depth& depth, RootParamet
     }
 
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.fbxinputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.fbxinputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
 
     pipeline_.SetNumRenderTargets(2);
@@ -1020,13 +1021,13 @@ void MCB::PipelineRootSignature::CreateFbxWirePipeline(Depth& depth, RootParamet
     pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, 1);
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparam, texSample_);
@@ -1035,19 +1036,19 @@ void MCB::PipelineRootSignature::CreateFbxWirePipeline(Depth& depth, RootParamet
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -1061,42 +1062,42 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
     texSample_.Init();
     texSample_.samplerDesc_.AddressU = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
     texSample_.samplerDesc_.AddressV = D3D12_TEXTURE_ADDRESS_MODE_BORDER;
-    // ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹--------------------------------
-#pragma region ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«--------------------------------
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\PostEffectShader\\PostEffectVertexShader.hlsl", "main", VS);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //------------------------------------------
 
 
-    // ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹-------------------------------
-#pragma region ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+    // ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«-------------------------------
+#pragma region ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
 
     shader_.ShaderCompile(L"Resources\\Shaders\\PostEffectShader\\PostEffectPixelShader.hlsl", "main", PS);
 
-#pragma endregion ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ‚ÆƒRƒ“ƒpƒCƒ‹
+#pragma endregion ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ã¨ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
     //--------------------------------
 
-#pragma region ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma region é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
 
     pipeline_.SetSpriteGpipleneDescAll(&shader_);
 
-#pragma endregion ’¸“_ƒVƒF[ƒ_‚ÆƒsƒNƒZƒ‹ƒVƒF[ƒ_‚ğƒpƒCƒvƒ‰ƒCƒ“‚Éİ’è
+#pragma endregion é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã¨ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã‚’ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«è¨­å®š
     //-----------------------------------
 
-    //ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è------------------------------------
-#pragma region ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+    //ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š------------------------------------
+#pragma region ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     pipeline_.SetSampleMask();
 
     pipeline_.SetSpriteAllAddRasterizerState();
 
-#pragma endregion ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Æƒ‰ƒXƒ^ƒ‰ƒCƒUƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã¨ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //------------------------------------
 
 
-     //ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è-------------------------------
-#pragma region ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+     //ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š-------------------------------
+#pragma region ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
 
     pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[0]);
 
@@ -1123,36 +1124,36 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
         break;
     }
 
-#pragma endregion ƒuƒŒƒ“ƒhƒXƒe[ƒg‚Ìİ’è
+#pragma endregion ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆã®è¨­å®š
     //--------------------------
 
-    //’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è------------------
-#pragma region ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+    //é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š------------------
+#pragma region é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
 
     pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.SpriteinputLayout_;
     pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.SpriteinputLayout_);
 
-#pragma endregion ’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
+#pragma endregion é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
     //----------------------------
 
-    //}Œ`‚ÌŒ`ó‚ğOŠpŒ`‚Éİ’è-------------------------
+    //å›³å½¢ã®å½¢çŠ¶ã‚’ä¸‰è§’å½¢ã«è¨­å®š-------------------------
     pipeline_.SetPrimitiveTopologyType();
     //------------------
 
-    //‚»‚Ì‘¼‚Ìİ’è----------------
-#pragma region ‚»‚Ì‘¼‚Ìİ’è
+    //ãã®ä»–ã®è¨­å®š----------------
+#pragma region ãã®ä»–ã®è¨­å®š
 
     pipeline_.SetNumRenderTargets();
     pipeline_.SetRTVFormats();
     pipeline_.SetSampleDescCount();
 
-#pragma endregion ‚»‚Ì‘¼‚Ìİ’è
+#pragma endregion ãã®ä»–ã®è¨­å®š
     //----------------
 
     depth.SetSpriteDepthStencilState(pipeline_.pipelineDesc_);
 
-    //ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬--------------------------
-#pragma region ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+    //ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ--------------------------
+#pragma region ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
 
 
     rootsignature_.InitRootSignatureDesc(rootparam, texSample_);
@@ -1161,19 +1162,19 @@ void MCB::PipelineRootSignature::CreatePostEffectPipeline(Depth& depth, RootPara
 
     rootsignature_.CreateRootSignature();
 
-    // ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
+    // ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
 
     pipeline_.SetRootSignature(rootsignature_);
 
-#pragma endregion ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ì¶¬
+#pragma endregion ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ç”Ÿæˆ
     //--------------------------------
 
-   //ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬-------------------------
-#pragma region ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+   //ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ-------------------------
+#pragma region ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
 
     pipeline_.CreateGraphicsPipelineState();
 
-#pragma endregion ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
+#pragma endregion ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
     //-----------------------------
 
 
@@ -1224,9 +1225,13 @@ void MCB::PipelineRootSignature::CommonBeginDraw(Toporogy toporogyType)
     default:
         break;
     }
-    //ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒhiOŠpŒ`ƒŠƒXƒgj--------------------------
+    //ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰ï¼ˆä¸‰è§’å½¢ãƒªã‚¹ãƒˆï¼‰--------------------------
 
-    //SRVƒq[ƒv‚Ìİ’èƒRƒ}ƒ“ƒh
+    //SRVãƒ’ãƒ¼ãƒ—ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
     Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { ShaderResource::GetInstance()->srvHeap_ };
     dx12->commandList_->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
+}
+
+MCB::PipelineRootSignature::PipelineRootSignature()
+{
 }

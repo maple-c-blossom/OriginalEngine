@@ -6,7 +6,8 @@ using namespace DirectX;
 HRESULT MCB::MipMap::GenerateMipMap(TextureFile* scratchimg,const DirectX::TEX_FILTER_FLAGS& flag, size_t levels)
 {
 	HRESULT result;
-	//ミップマップ生成
+
+	//繝溘ャ繝励�槭ャ繝礼函謌�
 	result = GenerateMipMaps(scratchimg->scratchImg_.GetImages(), scratchimg->scratchImg_.GetImageCount(), scratchimg->scratchImg_.GetMetadata(), flag, levels, mipChain_);
 	if (SUCCEEDED(result))
 	{
@@ -16,4 +17,8 @@ HRESULT MCB::MipMap::GenerateMipMap(TextureFile* scratchimg,const DirectX::TEX_F
 	scratchimg->metadata_.format = MakeSRGB(scratchimg->metadata_.format);
 	
 	return result;
+}
+
+MCB::MipMap::MipMap()
+{
 }

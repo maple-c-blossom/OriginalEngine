@@ -6,6 +6,7 @@
 using namespace MCB;
 using namespace DirectX;
 
+
 void MCB::DebugCamera::Inilialize()
 {
 	view_.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
@@ -28,7 +29,7 @@ void MCB::DebugCamera::Update()
 		rotAngle_ = Vector2D();
 	}
 
-#pragma region マウスの移動量
+#pragma region 繝槭え繧ｹ縺ｮ遘ｻ蜍暮㍼
 	Vector2D moveCursor((float)input_->GetMousePosition().x,
 		(float)input_->GetMousePosition().y);
 	float cursorDisPrev = moveCursor.GetLenge();
@@ -59,7 +60,7 @@ void MCB::DebugCamera::Update()
 		}
 	}
 
-#pragma region 注視点と視点の距離変更
+#pragma region 豕ｨ隕也せ縺ｨ隕也せ縺ｮ霍晞屬螟画峩
 	if (input_->IsKeyDown(DIK_RSHIFT)) {
 		disEyeTarget_ += static_cast<float>( -input_->GetMousePosition().z) * (disEyeTarget_ * 0.001f);
 	}
@@ -80,7 +81,7 @@ void MCB::DebugCamera::Update()
 
 	Vector2D angle = rotAngle_;
 
-#pragma region view_代入
+#pragma region view_莉｣蜈･
 	view_.up_.y = cosf(angle.y_);
 	view_.target_.x = target_.vec_.x_;
 	view_.target_.y = target_.vec_.y_;

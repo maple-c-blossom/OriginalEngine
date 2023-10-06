@@ -1,7 +1,15 @@
-#define _CRTDBG_MAP_ALLOC 
+#define _CRTDBG_MAP_ALLOC
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <crtdbg.h>
 #include <cstdlib>
+WarningIgnoreEnd
 #include "App.h"
+
+MCB::App::App()
+{
+
+}
 
 void MCB::App::Init()
 {
@@ -32,6 +40,7 @@ void MCB::App::Init()
     }
 #endif
     input_ = Input::GetInitInstance();
+
     depth_ = std::make_unique<Depth>();
     ShaderResource::GetInitInstance();
     LightGroup::GetInitInstance();

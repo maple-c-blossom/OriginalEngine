@@ -222,6 +222,11 @@ MCB::GamePad::~GamePad()
 {
 }
 
+
+MCB::GamePad::GamePad()
+{
+}
+
 GamePad& MCB::GamePad::operator=(const GamePad&) = default;
 
 GamePad* MCB::GamePad::GetInstance()

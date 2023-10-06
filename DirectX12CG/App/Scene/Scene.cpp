@@ -12,6 +12,7 @@ MCB::Scene::~Scene()
     loader_->Erase();
 }
 
+
 void MCB::Scene::Initialize()
 {
 

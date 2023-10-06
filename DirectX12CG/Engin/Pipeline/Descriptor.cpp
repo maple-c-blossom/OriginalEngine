@@ -37,7 +37,7 @@ void MCB::ShaderResource::SetDescriptorRange( uint32_t NumDescriptors, const D3D
     size_t i = min(static_cast<size_t>(descriptorRange_.size()) - 1, index);
     descriptorRange_[i].NumDescriptors = NumDescriptors;
     descriptorRange_[i].RangeType = type;
-    descriptorRange_[i].BaseShaderRegister = BaseShaderRegister;
+    descriptorRange_[i].BaseShaderRegister =static_cast<UINT>(BaseShaderRegister);
     descriptorRange_[i].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 }
 
@@ -66,6 +66,14 @@ void MCB::ShaderResource::InitAllincrementNum()
     ShaderResource::sAllincrementNum_ = 0;
 }
 
+
+MCB::ShaderResource::ShaderResource()
+{
+}
+
+MCB::ShaderResource::~ShaderResource()
+{
+}
 
 ShaderResource* MCB::ShaderResource::GetInstance()
 {

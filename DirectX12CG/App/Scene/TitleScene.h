@@ -1,7 +1,10 @@
 #pragma once
 #include "IScene.h"
 #define _USE_MATH_DEFINES
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
+WarningIgnoreEnd
 #include "DebugCamera.h"
 #include "Player.h"
 namespace MCB
@@ -9,14 +12,15 @@ namespace MCB
 	class TitleScene :public IScene
 	{
 	private:
-#pragma region •ÏŠ·s—ñ
-		//•ÏŠ·s—ñ
+		int64_t pad;
+#pragma region å¤‰æ›è¡Œåˆ—
+		//å¤‰æ›è¡Œåˆ—
 		DebugCamera camera_;
-#pragma endregion •ÏŠ·s—ñ
+#pragma endregion å¤‰æ›è¡Œåˆ—
 
-#pragma region ŠeíƒŠƒ\[ƒX
-		//3Dƒ‚ƒfƒ‹
-#pragma region 3Dƒ‚ƒfƒ‹
+#pragma region å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
+		//3Dãƒ¢ãƒ‡ãƒ«
+#pragma region 3Dãƒ¢ãƒ‡ãƒ«
 		std::unique_ptr<Model> groundModel_;
 		std::unique_ptr<Model> skydomeModel_;
 		std::unique_ptr<Model> sphereModel_;
@@ -24,28 +28,31 @@ namespace MCB
 
 		std::unique_ptr<AnimationModel> animModel_;
 		std::unique_ptr<AnimationModel> anim2Model_;
-#pragma endregion 3Dƒ‚ƒfƒ‹
+#pragma endregion 3Dãƒ¢ãƒ‡ãƒ«
 
-		//ƒeƒNƒXƒ`ƒƒ
-#pragma region ƒeƒNƒXƒ`ƒƒ
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£
+#pragma region ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		TextureCell* debugTextTexture_;
 		TextureCell* titleTex_;
 		TextureCell* backGroundTex_;
 
-#pragma endregion ƒeƒNƒXƒ`ƒƒ
+#pragma endregion ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		bool debugView;
 		bool isIk;
-		//ƒTƒEƒ“ƒh
-#pragma region ƒTƒEƒ“ƒh
+		Byte6 pad2;
+		//ã‚µã‚¦ãƒ³ãƒ‰
+#pragma region ã‚µã‚¦ãƒ³ãƒ‰
 		size_t selectSound_;
 		size_t test2Sound_;
 
 		int32_t volume_ = 255;
-#pragma endregion ƒTƒEƒ“ƒh
+		Byte6 pad3;
+		Byte6 pad4;
+#pragma endregion ã‚µã‚¦ãƒ³ãƒ‰
 
-#pragma endregion ŠeíƒŠƒ\[ƒX
+#pragma endregion å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
 
-#pragma region 3DƒIƒuƒWƒFƒNƒg
+#pragma region 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		Object3d ground_;
 		Object3d Skydorm_;
 		Object3d testsphere_;
@@ -54,9 +61,10 @@ namespace MCB
 		DirectX::XMFLOAT3 poleVec;
 
 		bool PoleVecMove;
-#pragma endregion 3DƒIƒuƒWƒFƒNƒg
+		Byte3 pad5;
+#pragma endregion 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-#pragma region ƒXƒvƒ‰ƒCƒg
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 		Sprite sprite_;
 
 		Sprite titleSprite_;
@@ -65,21 +73,25 @@ namespace MCB
 
 		DebugText debugText_;
 
-#pragma endregion ƒXƒvƒ‰ƒCƒg
+#pragma endregion ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-#pragma region ’Êí•Ï”
+#pragma region é€šå¸¸å¤‰æ•°
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
+		Byte1 pad6;
 		Timer titleMoveTime_;
-#pragma endregion ’Êí•Ï”
+		Byte4 pad7;
+#pragma endregion é€šå¸¸å¤‰æ•°
 	public:
 
 		TitleScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline);
+		TitleScene(const TitleScene&)=delete;
+		TitleScene& operator=(const TitleScene&) = delete;
 		~TitleScene();
 		void Initialize() override;
 
-		//Še‰Šú‰»ŒnŠÖ”ŒQ--------------------
+		//å„åˆæœŸåŒ–ç³»é–¢æ•°ç¾¤--------------------
 		void LoadModel()  override;
 		void LoadTexture()  override;
 		void LoadSound()  override;

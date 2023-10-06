@@ -26,7 +26,7 @@ void Camera::WorldPositionInit()
 
 void Camera::Update()
 {
-	Float3 frongtOffSet;//‘OŒã•ûŒü
+	Float3 frongtOffSet;//å‰å¾Œæ–¹å‘
 
 	
 
@@ -114,7 +114,7 @@ void Camera::WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
 
 XMMATRIX Camera::GetMadWorld()
 {
-	//ƒ[ƒ‹ƒhÀ•W‚ð“ü‚ê‚é•Ï”
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 	XMMATRIX matWorld;
 	matWorld = object3d_->matWorld_.matWorld_;
 
@@ -126,6 +126,10 @@ void MCB::Camera::SetCameraTarget(Object3d* target)
 	target_ = target;
 }
 
+MCB::Camera::Camera()
+{
+}
+
 
 //void MCB::Camera::SetPlayerMatrix(DirectX::XMMATRIX playerMatrix)
 //{
@@ -135,7 +139,7 @@ void MCB::Camera::SetCameraTarget(Object3d* target)
 ////
 //WorldMatrix Camera::GetMadWorld2()
 //{
-//	//ƒ[ƒ‹ƒhÀ•W‚ð“ü‚ê‚é•Ï”
+//	//ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã‚’å…¥ã‚Œã‚‹å¤‰æ•°
 //	WorldMatrix matWorld;
 //	matWorld = object3d->matWorld;
 //

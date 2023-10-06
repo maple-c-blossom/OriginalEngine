@@ -1,7 +1,9 @@
 #include "TextureBuffer.h"
+WarningIgnoreBegin
 #include <d3dx12.h>
 #include <memory>
 #include <array>
+WarningIgnoreEnd
 using namespace DirectX;
 using namespace std;
 HRESULT MCB::TextureBuffer::CommitResouce(const D3D12_HEAP_FLAGS& flags,const D3D12_RESOURCE_STATES& resouceState, const D3D12_CLEAR_VALUE* clearValue)
@@ -9,13 +11,14 @@ HRESULT MCB::TextureBuffer::CommitResouce(const D3D12_HEAP_FLAGS& flags,const D3
     return Dx12::GetInstance()->device_->CreateCommittedResource(&texHeapProp_, flags, &texresDesc_, resouceState, clearValue, IID_PPV_ARGS(&texbuff_));
 }
 
+
 void MCB::TextureBuffer::TransferMipmatToTexBuff(const TextureFile &texFile, D3D12_BOX* DsrBox, HRESULT &result)
 {
     for (size_t i = 0; i < texFile.metadata_.mipLevels; i++)
     {
-        //ƒ~ƒbƒvƒ}ƒbƒvƒŒƒxƒ‹‚ðŽw’è‚µ‚ÄƒCƒ[ƒW‚ðŽæ“¾
+        //ãƒŸãƒƒãƒ—ãƒžãƒƒãƒ—ãƒ¬ãƒ™ãƒ«ã‚’æŒ‡å®šã—ã¦ã‚¤ãƒ¡ãƒ¼ã‚¸ã‚’å–å¾—
         const Image* img = texFile.scratchImg_.GetImage(i, 0, 0);
-        //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
         result = texbuff_->WriteToSubresource((uint32_t)i, DsrBox, img->pixels, (uint32_t)img->rowPitch, (uint32_t)img->slicePitch);
         assert(SUCCEEDED(result));
     }
@@ -32,7 +35,7 @@ void MCB::TextureBuffer::SetTexHeapProp(const D3D12_HEAP_TYPE& heaptype,
 
 }
 
-void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile,const D3D12_RESOURCE_DIMENSION& resouceDimenSion, int32_t SampleDescCount)
+void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile, int32_t SampleDescCount)
 {
     texresDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     texresDesc_.Format = texFile.metadata_.format;
@@ -40,7 +43,7 @@ void MCB::TextureBuffer::SetTexResourceDesc(TextureFile &texFile,const D3D12_RES
     texresDesc_.Height = (uint32_t)texFile.metadata_.height;
     texresDesc_.DepthOrArraySize = (uint16_t)texFile.metadata_.arraySize;
     texresDesc_.MipLevels = (uint16_t)texFile.metadata_.mipLevels;
-    texresDesc_.SampleDesc.Count = SampleDescCount;
+    texresDesc_.SampleDesc.Count = static_cast<UINT>(SampleDescCount);
 }
 
 void MCB::TextureBuffer::SetNoTextureFileTexResourceDesc()
@@ -67,7 +70,7 @@ void MCB::TextureBuffer::SetNoTextureFileTexResourceDescForPostEffect()
 
 void MCB::TextureBuffer::TransferMipmatToTexBuff(const TexImgData& teximg,HRESULT& result)
 {
-    //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+    //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
     result = texbuff_->WriteToSubresource(0, nullptr, &teximg.imageData_[0], 
         sizeof(Float4) * (uint32_t)teximg.textureWidth_, sizeof(Float4) * (uint32_t)teximg.imageDataCount_);
     assert(SUCCEEDED(result));

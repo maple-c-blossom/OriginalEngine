@@ -5,6 +5,7 @@
 #include "TextureFile.h"
 #include "Descriptor.h"
 
+
 namespace MCB
 {
 	class Texture
@@ -16,8 +17,9 @@ namespace MCB
 		TextureFile texfile_ = {};
 		ShaderResource* srvptr_ = nullptr;
 		uint16_t incrementNum_ = 0;
-		Texture() {};
-		Texture(const Texture& texture) {};
+		Byte6 pad;
+		Texture();
+		Texture(const Texture& );
 		~Texture();
 
 		void CreateTexture(const wchar_t* FileName, uint16_t incrementNum);
@@ -34,6 +36,7 @@ namespace MCB
 
 		void SetSrvHeap();
 
+		Texture& operator=(const Texture&) = delete;
 	};
 
 }

@@ -1,84 +1,88 @@
 #pragma once
 #include "IScene.h"
 #define _USE_MATH_DEFINES
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
+WarningIgnoreEnd
 #include "DebugCamera.h"
 #include "Player.h"
 namespace MCB
 {
 	class DemoScene :public IScene
 	{
+		int64_t pad;
 	private:
-#pragma region •ÏŠ·s—ñ
-		//•ÏŠ·s—ñ
+#pragma region å¤‰æ›è¡Œåˆ—
+		//å¤‰æ›è¡Œåˆ—
 		DebugCamera camera_;
-#pragma endregion •ÏŠ·s—ñ
 
-#pragma region ŠeíƒŠƒ\[ƒX
-		//3Dƒ‚ƒfƒ‹
-#pragma region 3Dƒ‚ƒfƒ‹
+#pragma endregion å¤‰æ›è¡Œåˆ—
+
+#pragma region å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
+		//3Dãƒ¢ãƒ‡ãƒ«
+#pragma region 3Dãƒ¢ãƒ‡ãƒ«
 		std::unique_ptr<Model> groundModel_;
 		std::unique_ptr<Model> skydomeModel_;
 		std::unique_ptr<Model> sphereModel_;
 		std::unique_ptr<Model> boxModel_;
 
 		std::unique_ptr<AnimationModel> animModel_;
-		std::unique_ptr<AnimationModel> anim2Model_;
-#pragma endregion 3Dƒ‚ƒfƒ‹
 
-		//ƒeƒNƒXƒ`ƒƒ
-#pragma region ƒeƒNƒXƒ`ƒƒ
+		std::unique_ptr<AnimationModel> anim2Model_;
+#pragma endregion 3Dãƒ¢ãƒ‡ãƒ«
+
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£
+#pragma region ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		TextureCell* debugTextTexture_;
 		TextureCell* titleTex_;
 
-#pragma endregion ƒeƒNƒXƒ`ƒƒ
+#pragma endregion ãƒ†ã‚¯ã‚¹ãƒãƒ£
 		bool debugView_;
 		std::array<bool,4> isIk_;
 		std::array<bool,4> noMove;
-		//ƒTƒEƒ“ƒh
-#pragma region ƒTƒEƒ“ƒh
+		Byte7 pad2;
+		//ã‚µã‚¦ãƒ³ãƒ‰
+#pragma region ã‚µã‚¦ãƒ³ãƒ‰
 		size_t selectSound_;
 		size_t test2Sound_;
 		
 		int32_t volume_ = 255;
-#pragma endregion ƒTƒEƒ“ƒh
+		Byte6 pad3;
+		Byte6 pad4;
+		int64_t pad9;
+		int64_t pad10;
+#pragma endregion ã‚µã‚¦ãƒ³ãƒ‰
 
-#pragma endregion ŠeíƒŠƒ\[ƒX
+#pragma endregion å„ç¨®ãƒªã‚½ãƒ¼ã‚¹
 
-#pragma region 3DƒIƒuƒWƒFƒNƒg
+#pragma region 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 		Object3d ground_;
 		Object3d Skydorm_;
 		std::array<Object3d,4> effectorObjects_;
 		Object3d test2Animation_;
 		Player play_;
 		std::array<DirectX::XMFLOAT3,4> poleVec_;
-		std::array<bool, 4> PoleVecMove_ = { false,false,false,false };
+		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
 		bool objChenge_;
+		Byte3 pad5;
 		struct IKDataSet
 		{
 			std::string endJointName = "NULL";
 			std::string middleJointName = "NULL";
 			std::string rootJointName = "NULL";
-			IKDataSet() {};
-			IKDataSet(std::string endJoint) {
-				endJointName = endJoint;
-			};
-			IKDataSet(std::string endJoint,std::string middlejoint) {
-				endJointName = endJoint;
-				middleJointName = middlejoint;
-			};
-			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint) {
-				endJointName = endJoint;
-				middleJointName = middleJoint;
-				rootJointName = rootJoint;
-			};
+			IKDataSet();
+			IKDataSet(std::string endJoint);
+			IKDataSet(std::string endJoint,std::string middlejoint);
+			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint);
 		};
-		std::array<IKDataSet,4> ikBoneName_ = { "mixamorig:LeftHand",
+		std::array<IKDataSet,4> ikBoneName_ = { std::string("mixamorig:LeftHand"),
 												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
+		int64_t pad6;
 
-#pragma endregion 3DƒIƒuƒWƒFƒNƒg
+#pragma endregion 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
-#pragma region ƒXƒvƒ‰ƒCƒg
+#pragma region ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 		Sprite sprite_;
 
 		Sprite titleSprite_;
@@ -87,20 +91,24 @@ namespace MCB
 
 		DebugText debugText_;
 
-#pragma endregion ƒXƒvƒ‰ƒCƒg
+#pragma endregion ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 
-#pragma region ’Êí•Ï”
+#pragma region é€šå¸¸å¤‰æ•°
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
-#pragma endregion ’Êí•Ï”
+		Byte6 pad7;
+		Byte7 pad8;
+#pragma endregion é€šå¸¸å¤‰æ•°
 	public:
 
 		DemoScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline);
+		DemoScene(const DemoScene&) = delete;
+		DemoScene& operator=(const DemoScene&) = delete;
 		~DemoScene();
 		void Initialize() override;
 
-		//Še‰Šú‰»ŒnŠÖ”ŒQ--------------------
+		//å„åˆæœŸåŒ–ç³»é–¢æ•°ç¾¤--------------------
 		void LoadModel()  override;
 		void LoadTexture()  override;
 		void LoadSound()  override;

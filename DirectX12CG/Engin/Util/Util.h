@@ -21,6 +21,7 @@ namespace MCB
 	double Abs( double num);
 	float ConvertRadius( float angle);
 
+
 	void InitRand();
 	int32_t GetRand( int32_t min,  int32_t max);
 	float clamp( float f);
@@ -34,10 +35,14 @@ namespace MCB
 		public:
 			Triangle();
 			Model triangleMaterial_;
+			int32_t pad;
+			Byte4 pad2;
 			Object3d triangle_;
 
 			Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
 			Float3 PointC_ = { 0.5f,-3.5f,-4.0f }; Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+			Byte6 pad3;
+			Byte6 pad4;
 			void  DrawTriangle(ICamera* camera);
 
 		};
@@ -47,10 +52,14 @@ namespace MCB
 		public:
 			Line();
 			Model lineMaterial;
+			int32_t pad;
+			Byte4 pad3;
 			Object3d line;
 
 			Float3 PointA_ = { -1.5f,-0.5f,4.0f }; Float3 PointB_ = { 4.5f,0.5f,1.0f };
 			Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
+			int32_t pad2;
+			Byte4 pad4;
 			void  DrawLine(ICamera* camera);
 
 		};

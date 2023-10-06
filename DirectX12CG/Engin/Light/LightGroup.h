@@ -95,6 +95,7 @@ namespace MCB
 		SpotLight SLights_[sS_LIGHT_NUM_];
 		bool isUpdate_ = false;
 		Byte7 pad1;
+		Byte4 pad2;
 	};
 
 }

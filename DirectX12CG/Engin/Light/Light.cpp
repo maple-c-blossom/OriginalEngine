@@ -1,5 +1,7 @@
 #include "Light.h"
+WarningIgnoreBegin
 #include <memory>
+WarningIgnoreEnd
 using namespace MCB;
 
 void MCB::DirLight::SetLightDir(const Vector3D& lightdir)

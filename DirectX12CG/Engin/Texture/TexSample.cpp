@@ -12,3 +12,4 @@ void MCB::TexSample::Init()
     samplerDesc_.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
     samplerDesc_.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 }
+

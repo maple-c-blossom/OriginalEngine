@@ -1,30 +1,31 @@
 #include "Timer.h"
 
-void Timer::Set(int end)
+void Timer::Set(int32_t end)
 {
-	this->end = end;
-	timer = 0;
+	this->end_ = end;
+	timer_ = 0;
 }
 
 void Timer::ReSet()
 {
-	if (IsEnd())Set(end);
+	if (IsEnd())Set(end_);
 }
 
-void Timer::TimeSet(int timer, int end)
+
+void Timer::TimeSet(int32_t timer,int32_t end)
 {
-	this->timer = timer;
-	this->end = end;
+	this->timer_ = timer;
+	this->end_ = end;
 }
 
-void Timer::SetIf(int end, bool flag)
+void Timer::SetIf(int32_t end, bool flag)
 {
 	if (flag)Set(end);
 }
 
 void Timer::Update()
 {
-	timer++;
+	timer_++;
 }
 
 void Timer::LoopUpdate()
@@ -35,9 +36,9 @@ void Timer::LoopUpdate()
 
 void Timer::SafeDownUpdate()
 {
-	if (timer > 0)
+	if (timer_ > 0)
 	{
-		timer--;
+		timer_--;
 	}
 }
 
@@ -47,20 +48,20 @@ void Timer::SafeUpdate()
 	{
 		return;
 	}
-	timer++;
+	timer_++;
 }
 
 int Timer::NowTime() const
 {
-	return timer;
+	return timer_;
 }
 
 bool Timer::IsEnd() const
 {
-	return timer >= end;
+	return timer_ >= end_;
 }
 
 int Timer::GetEndTime() const
 {
-	return end;
+	return end_;
 }

@@ -7,17 +7,21 @@ void MCB::DebugText::Init(Texture* texture)
 	dx12_ = Dx12::GetInstance();
 }
 
-void MCB::DebugText::Print(float x, float y, float scale, const std::string text, ...)
+
+void MCB::DebugText::Print(float x, float y, float scale, const std::string& text, ...)
 {
 	
 	va_list args;
-	va_start(args, text);
+	PragmaPush
+	PragmaWarningNum(4840);
+	va_start(args,noexcept(text));
+	PragmaPop
 	int32_t w = vsnprintf(buffer_, sMAX_CHAR_COUNT_ - 1, text.c_str(), args);
 	for (int32_t i = 0; i < w; i++)
 	{
 		if (spriteIndex_ >= sMAX_CHAR_COUNT_) break;
 
-		const unsigned char& character = buffer_[i];
+		const unsigned char& character = static_cast<unsigned char>(buffer_[i]);
 
 		int32_t fontIndex = character - 32;
 		if (character >= 0x7f)
@@ -28,7 +32,7 @@ void MCB::DebugText::Print(float x, float y, float scale, const std::string text
 		int32_t fontIndexY = fontIndex / sFONT_LINE_COUNT;
 		int32_t fontIndexX = fontIndex % sFONT_LINE_COUNT;
 
-		sprite_[spriteIndex_].position_ = {x + sFONT_WIDTH_ * scale * i,y,0};
+		sprite_[spriteIndex_].position_ = {x + static_cast<float>(sFONT_WIDTH_) * scale * static_cast< float >(i),y,0};
 		sprite_[spriteIndex_].texLeftTop_ = {(float)fontIndexX * sFONT_WIDTH_,(float)fontIndexY * sFONT_HEIGHT};
 		sprite_[spriteIndex_].cuttingSize_ = {sFONT_WIDTH_,sFONT_HEIGHT};
 		sprite_[spriteIndex_].size_ = {sFONT_WIDTH_ * scale,sFONT_HEIGHT * scale};
@@ -48,20 +52,20 @@ void MCB::DebugText::AllDraw()
 	ShaderResource* descriptor = ShaderResource::GetInstance();
 	for (int32_t i = 0; i < spriteIndex_; i++)
 	{
-		//SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+		//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 		D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
 		srvGpuHandle.ptr += debugfont_->incrementNum_ * dx12_->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-		//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+		//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
 		dx12_->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-		//’¸“_ƒf[ƒ^
+		//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 		dx12_->commandList_->IASetVertexBuffers(0, 1, &sprite_[i].vbView_);
-		//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 		dx12_->commandList_->SetGraphicsRootConstantBufferView(0, sprite_[i].constBuff_->GetGPUVirtualAddress());
-		//•`‰æƒRƒ}ƒ“ƒh
+		//æç”»ã‚³ãƒžãƒ³ãƒ‰
 		dx12_->commandList_->DrawInstanced(4, 1, 0, 0);
 	}
 	spriteIndex_ = 0;

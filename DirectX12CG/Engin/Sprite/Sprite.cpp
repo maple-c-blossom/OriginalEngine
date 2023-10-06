@@ -3,6 +3,7 @@
 using namespace MCB;
 using namespace DirectX;
 
+
 DirectX::XMMATRIX Sprite::smatProje_{};
 
 MCB::Sprite::Sprite()
@@ -51,10 +52,10 @@ void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
     {
         D3D12_RESOURCE_DESC resDesc = tex->texBuff_.texbuff_->GetDesc();
 
-        float tex_left = texLeftTop_.x_ / resDesc.Width;
-        float tex_right = (texLeftTop_.x_ + cuttingSize_.x_) / resDesc.Width;
-        float tex_top = texLeftTop_.y_ / resDesc.Height;
-        float tex_bottom = (texLeftTop_.y_ + cuttingSize_.y_) / resDesc.Height;
+        float tex_left = texLeftTop_.x_ / static_cast<float>(resDesc.Width);
+        float tex_right = (texLeftTop_.x_ + cuttingSize_.x_) / static_cast<float>(resDesc.Width);
+        float tex_top = texLeftTop_.y_ / static_cast<float>(resDesc.Height);
+        float tex_bottom = (texLeftTop_.y_ + cuttingSize_.y_) / static_cast<float>(resDesc.Height);
 
         vertices[LB].uv = { tex_left,tex_bottom };
         vertices[LT].uv = { tex_left,tex_top };
@@ -67,7 +68,7 @@ void MCB::Sprite::SpriteTransferVertexBuffer(Texture* tex)
 
     SpriteVertex* vertexMap = nullptr;
     result = vertBuff_->Map(0, nullptr, (void**)&vertexMap);
-    assert(SUCCEEDED(result) && "SpriteTransferVertexBufferéûÇÃvertBuff->MapÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteTransferVertexBufferÊôÇ„ÅÆvertBuff->Map„Ç®„É©„Éº");
     memcpy(vertexMap, vertices, sizeof(vertices));
     vertBuff_->Unmap(0, nullptr);
 
@@ -82,7 +83,7 @@ void MCB::Sprite::SpriteUpdate()
 
     SpriteConstBufferDataTransform* constMap = nullptr;
     result = constBuff_->Map(0, nullptr, (void**)&constMap);
-    assert(SUCCEEDED(result) && "SpriteUpdateéûÇÃconstBuff->MapÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteUpdateÊôÇ„ÅÆconstBuff->Map„Ç®„É©„Éº");
     constMap->color = color_;
     constMap->mat = matWorld_ * Sprite::smatProje_;
 
@@ -130,7 +131,7 @@ void MCB::Sprite::CreateSprite()
         &Resdesc_,
         D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff_));
 
-    assert(SUCCEEDED(result) && "Spriteê∂ê¨éûÇÃí∏ì_ÉoÉbÉtÉ@CommittedResourceÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteÁîüÊàêÊôÇ„ÅÆÈ†ÇÁÇπ„Éê„ÉÉ„Éï„Ç°CommittedResource„Ç®„É©„Éº");
 
     float left = (0.0f - anchorPoint_.x_) * size_.x_;
     float right = (1.0f - anchorPoint_.x_) * size_.x_;
@@ -148,7 +149,7 @@ void MCB::Sprite::CreateSprite()
 
     SpriteVertex* vertexMap = nullptr;
     result = vertBuff_->Map(0, nullptr, (void**)&vertexMap);
-    assert(SUCCEEDED(result) && "Spriteê∂ê¨éûÇÃvertBuff->MapÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteÁîüÊàêÊôÇ„ÅÆvertBuff->Map„Ç®„É©„Éº");
     memcpy(vertexMap, vertices, sizeof(vertices));
     vertBuff_->Unmap(0, nullptr);
 
@@ -176,10 +177,10 @@ void MCB::Sprite::CreateSprite()
         D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&constBuff_)
     );
 
-    assert(SUCCEEDED(result) && "Spriteê∂ê¨éûÇÃíËêîÉoÉbÉtÉ@ÇÃCommittedResourceÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteÁîüÊàêÊôÇ„ÅÆÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„ÅÆCommittedResource„Ç®„É©„Éº");
     SpriteConstBufferDataTransform* constMap = nullptr;
     result = constBuff_->Map(0, nullptr, (void**)&constMap);
-    assert(SUCCEEDED(result) && "Spriteê∂ê¨éûÇÃconstBuff->MapÉGÉâÅ[");
+    assert(SUCCEEDED(result) && "SpriteÁîüÊàêÊôÇ„ÅÆconstBuff->Map„Ç®„É©„Éº");
     Float4 tempcolor; tempcolor.x_ = 1; tempcolor.y_ = 1;tempcolor.z_ = 1;tempcolor.w_ = 1;
     constMap->color = tempcolor;
     constMap->mat = Sprite::smatProje_;
@@ -193,10 +194,10 @@ void MCB::Sprite::CreateSprite()
 //    dx12->commandList->SetGraphicsRootSignature(pipeline.rootsignature.rootsignature.Get());
 //
 //
-//    //ÉvÉäÉ~ÉeÉBÉuå`èÛÇÃê›íËÉRÉ}ÉìÉhÅiéOäpå`ÉäÉXÉgÅj--------------------------
+//    //„Éó„É™„Éü„ÉÜ„Ç£„ÉñÂΩ¢Áä∂„ÅÆË®≠ÂÆö„Ç≥„Éû„É≥„ÉâÔºà‰∏âËßíÂΩ¢„É™„Çπ„ÉàÔºâ--------------------------
 //    dx12->commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 //
-//    //SRVÉqÅ[ÉvÇÃê›íËÉRÉ}ÉìÉh
+//    //SRV„Éí„Éº„Éó„ÅÆË®≠ÂÆö„Ç≥„Éû„É≥„Éâ
 //    Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> ppHeaps[] = { ShaderResource::GetInstance()->srvHeap};
 //    dx12->commandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps->GetAddressOf());
 //}
@@ -258,20 +259,20 @@ void MCB::Sprite::SpriteDraw(Texture& tex, float positionX, float positionY,
         size_ = tempsprite.size_;
     }
 
-    //SRVÉqÅ[ÉvÇÃêÊì™ÉAÉhÉåÉXÇéÊìæ
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Ç¢„Éâ„É¨„Çπ„ÇíÂèñÂæó
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVÉqÅ[ÉvÇÃêÊì™Ç…Ç†ÇÈSRVÇÉpÉâÉÅÅ[É^1î‘Ç…ê›íË
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Å´„ÅÇ„ÇãSRV„Çí„Éë„É©„É°„Éº„Çø1Áï™„Å´Ë®≠ÂÆö
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //í∏ì_ÉfÅ[É^
+    //È†ÇÁÇπ„Éá„Éº„Çø
     dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
-    //íËêîÉoÉbÉtÉ@ÉrÉÖÅ[(CBV)ÇÃê›íËÉRÉ}ÉìÉh
+    //ÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„Éì„É•„Éº(CBV)„ÅÆË®≠ÂÆö„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff_->GetGPUVirtualAddress());
-    //ï`âÊÉRÉ}ÉìÉh
+    //ÊèèÁîª„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->DrawInstanced(4,1,0,0);
 
 }
@@ -299,20 +300,20 @@ void MCB::Sprite::SpriteFlipDraw(Texture& tex, float positionX, float positionY,
 
     tempSprite.SpriteTransferVertexBuffer();
 
-    //SRVÉqÅ[ÉvÇÃêÊì™ÉAÉhÉåÉXÇéÊìæ
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Ç¢„Éâ„É¨„Çπ„ÇíÂèñÂæó
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVÉqÅ[ÉvÇÃêÊì™Ç…Ç†ÇÈSRVÇÉpÉâÉÅÅ[É^1î‘Ç…ê›íË
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Å´„ÅÇ„ÇãSRV„Çí„Éë„É©„É°„Éº„Çø1Áï™„Å´Ë®≠ÂÆö
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //í∏ì_ÉfÅ[É^
+    //È†ÇÁÇπ„Éá„Éº„Çø
     dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
-    //íËêîÉoÉbÉtÉ@ÉrÉÖÅ[(CBV)ÇÃê›íËÉRÉ}ÉìÉh
+    //ÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„Éì„É•„Éº(CBV)„ÅÆË®≠ÂÆö„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuff_->GetGPUVirtualAddress());
-    //ï`âÊÉRÉ}ÉìÉh
+    //ÊèèÁîª„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->DrawInstanced(4, 1, 0, 0);
 
 }
@@ -333,20 +334,20 @@ void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positi
     tempSprite.SpriteUpdate();
     tempSprite.SpriteTransferVertexBuffer(&tex);
 
-    //SRVÉqÅ[ÉvÇÃêÊì™ÉAÉhÉåÉXÇéÊìæ
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Ç¢„Éâ„É¨„Çπ„ÇíÂèñÂæó
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += tex.incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVÉqÅ[ÉvÇÃêÊì™Ç…Ç†ÇÈSRVÇÉpÉâÉÅÅ[É^1î‘Ç…ê›íË
+    //SRV„Éí„Éº„Éó„ÅÆÂÖàÈ†≠„Å´„ÅÇ„ÇãSRV„Çí„Éë„É©„É°„Éº„Çø1Áï™„Å´Ë®≠ÂÆö
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //í∏ì_ÉfÅ[É^
+    //È†ÇÁÇπ„Éá„Éº„Çø
     dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
-    //íËêîÉoÉbÉtÉ@ÉrÉÖÅ[(CBV)ÇÃê›íËÉRÉ}ÉìÉh
+    //ÂÆöÊï∞„Éê„ÉÉ„Éï„Ç°„Éì„É•„Éº(CBV)„ÅÆË®≠ÂÆö„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuff_->GetGPUVirtualAddress());
-    //ï`âÊÉRÉ}ÉìÉh
+    //ÊèèÁîª„Ç≥„Éû„É≥„Éâ
     dx12->commandList_->DrawInstanced(4, 1, 0, 0);
 }
 

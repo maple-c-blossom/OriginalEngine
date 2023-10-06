@@ -11,31 +11,16 @@ namespace MCB
 		friend class CollisionManager;
 		BaseCollider() = default;
 		virtual ~BaseCollider() = default;
-		inline void SetObject(Object3d* object) { object3d_ = object; };
+		void SetObject(Object3d* object);
 		virtual void Update() = 0;
-		inline MCB::PrimitiveType GetPrimitive() { return primitive_; }
-		inline void OnCollision(const CollisionInfomation& info)
-		{
-			object3d_->OnCollision(info);
-		}
-		inline void OffCollision(const CollisionInfomation& info)
-		{
-			object3d_->OffCollision(&info);
-		}
+		MCB::PrimitiveType GetPrimitive();
+		void OnCollision(const CollisionInfomation& info);
+		void OffCollision(const CollisionInfomation& info);
 
-		inline void SetAttribute( uint16_t attribute)
-		{
-			attribute_ = attribute;
-		}
-		inline void AddAttribute( uint16_t attribute)
-		{
-			attribute_ |= attribute;
-		}
-		inline void RemoveAttribute( uint16_t attribute)
-		{
-			attribute_ &= !attribute;
-		}
-		inline Object3d* GetObject3D() { return object3d_; }
+		void SetAttribute(uint16_t attribute);
+		void AddAttribute(uint16_t attribute);
+		void RemoveAttribute(uint16_t attribute);
+		Object3d* GetObject3D();
 	protected:
 		uint16_t attribute_ = ATTRIBUTE_LANDSHAPE;
 		Byte6 pad1;

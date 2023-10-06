@@ -1,7 +1,9 @@
 #include "ImguiManager.h"
+WarningIgnoreBegin
 #include <MyImgui/imgui.h>
 #include <MyImgui/imgui_impl_win32.h>
 #include <MyImgui/imgui_impl_dx12.h>
+WarningIgnoreEnd
 #include "DxWindow.h"
 #include "Dx12.h"
 #include "Descriptor.h"
@@ -11,6 +13,7 @@ void ImguiManager::Init()
 {
 	//D3D12_DESCRIPTOR_HEAP_DESC desc = {};
 	//desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+	// 
 	//desc.NumDescriptors = 1;
 	//desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	//HRESULT result = S_OK;

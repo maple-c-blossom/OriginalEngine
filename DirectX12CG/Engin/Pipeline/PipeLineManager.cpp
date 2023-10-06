@@ -2,16 +2,18 @@
 
 MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 {
-	for (int32_t i = 0; i < objPipeline_.size(); i++) objPipeline_[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < linePipeline_.size(); i++) linePipeline_[i].CreateLinePipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < objPipelineWire_.size(); i++) objPipelineWire_[i].Create3DObjectWirePipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < ObjTilingPipeline_.size(); i++) ObjTilingPipeline_[i].Create3DObjectTilingPipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < spritePipeline_.size(); i++) spritePipeline_[i].CreateSpritePipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < particlePipeline_.size(); i++) particlePipeline_[i].CreateParticlePipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < animeObjPipelineWire_.size(); i++) animeObjPipelineWire_[i].CreateFbxWirePipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < animeObjPipeline_.size(); i++) animeObjPipeline_[i].CreateFbxPipeline(*depth, *rootpamrams, i);
-	for (int32_t i = 0; i < postEffectPipeline_.size(); i++) postEffectPipeline_[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < objPipeline_.size(); i++) objPipeline_[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < linePipeline_.size(); i++) linePipeline_[i].CreateLinePipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < objPipelineWire_.size(); i++) objPipelineWire_[i].Create3DObjectWirePipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < ObjTilingPipeline_.size(); i++) ObjTilingPipeline_[i].Create3DObjectTilingPipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < spritePipeline_.size(); i++) spritePipeline_[i].CreateSpritePipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < particlePipeline_.size(); i++) particlePipeline_[i].CreateParticlePipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < animeObjPipelineWire_.size(); i++) animeObjPipelineWire_[i].CreateFbxWirePipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < animeObjPipeline_.size(); i++) animeObjPipeline_[i].CreateFbxPipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < postEffectPipeline_.size(); i++) postEffectPipeline_[i].CreatePostEffectPipeline(*depth, *rootpamrams, i);
 }
+
+
 
 void MCB::PipeLineManager::SetObjPipeLine(bool wireFrame,bool tiling,BlendMode blend)
 {
@@ -85,3 +87,4 @@ MCB::PipelineRootSignature* MCB::PipeLineManager::Getpipeline(PLN::Pipelinename 
 		break;
 	}
 }
+

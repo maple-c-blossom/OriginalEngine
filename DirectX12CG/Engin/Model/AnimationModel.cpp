@@ -34,6 +34,10 @@ MCB::AnimationModel::~AnimationModel()
 	}
 }
 
+MCB::AnimationModel::AnimationModel()
+{
+}
+
 
 bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType) {
 	// Create an instance of the Importer class
@@ -264,10 +268,10 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		aiFace face = mesh->mFaces[i];
 
 		for (uint32_t j = 0; j < face.mNumIndices; j++)
-			tempmodel.indices_.push_back(face.mIndices[j]);
+			tempmodel.indices_.push_back(static_cast<uint16_t>(face.mIndices[j]));
 	}
 
-	if (mesh->mMaterialIndex >= 0) {
+	if (mesh->mMaterialIndex > 0) {
 		aiColor3D color;
 		ObjectMaterial mat;
 		aiString name;
@@ -295,6 +299,13 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		tempmodel.material_.push_back(mat);
 		tempmodel.textures_ = loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
 		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
+	}
+	else
+	{
+		ObjectMaterial mat;
+		mat.Init();
+		tempmodel.textures_.push_back(textureManager_->CreateNoTextureFileIsTexture());
+		tempmodel.material_.push_back(mat);
 	}
 	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices_.size());
 	for (uint32_t i = 0; i < mesh->mNumBones; i++)
@@ -329,7 +340,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		{
 
 			SetWeight tempVer;
-			tempVer.id = i;
+			tempVer.id = static_cast<int32_t>(i);
 			tempVer.weight = mesh->mBones[i]->mWeights[j].mWeight;
 			weightList[ mesh->mBones[i]->mWeights[j].mVertexId].push_back(tempVer);
 		}
@@ -337,7 +348,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 
 		tempmodel.bones_.push_back(temp);
 	}
-	for (int32_t i = 0; i < tempmodel.vertices_.size(); i++)
+	for (size_t i = 0; i < tempmodel.vertices_.size(); i++)
 	{
 		auto& weightL = weightList[i];
 		weightL.sort([](auto const& lhs, auto const rhs) {return lhs.weight > rhs.weight; });
@@ -431,6 +442,8 @@ void MCB::AnimationModel::DrawHeirarchy()
 std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,const aiTextureType& type,
 	const std::string& typeName, const aiScene* scene)
 {
+	static_cast< void >(scene);
+	static_cast< void >( typeName );
 	std::vector<TextureCell*> textures;
 	for (uint32_t i = 0; i < mat->GetTextureCount(type); i++) {
 		aiString str;
@@ -444,7 +457,7 @@ std::vector<TextureCell*> AnimationModel::loadMaterialTextures(aiMaterial* mat,c
 		}
 		path = "Resources\\" + fileName_ + "\\" + path;
 		wchar_t wfilepath[128];
-		int32_t iBufferSize = MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
+		MultiByteToWideChar(CP_ACP, 0, path.c_str(), -1, wfilepath, _countof(wfilepath));
 		tempTex = textureManager_->LoadTexture(wfilepath);
 		textures.push_back(tempTex);
 
@@ -522,11 +535,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
     }*/
   }
 
-  void Skeleton::readAnimNodeHeirarchy( float animationTime, Node* pNode,  Animation* currentAnimation)
+  void Skeleton::readAnimNodeHeirarchy( float animationTime, Node* pNode,  Animation* currentAnimationPtr)
   {
 	  const string& nodeName = pNode->name;
 
-	  const Animation* pAnimation = currentAnimation;
+	  const Animation* pAnimation = currentAnimationPtr;
 
 	  XMMATRIX nodeTrans = pNode->localTransform;
 
@@ -850,6 +863,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int32_t numMaxIteration, float errToleranceSq)
    {
+	   static_cast< void >( errToleranceSq );
 	   XMVECTOR localTargetPos = XMVectorZero();
 	   XMVECTOR localEffecrPos = XMVectorZero();
 
@@ -1024,9 +1038,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				if (ImGui::TreeNode(child.c_str()))
 				{
 
-					for (auto& child : node->children)
+					for (auto& child2 : node->children)
 					{
-					DrawHeirarchy(child);
+					DrawHeirarchy(child2);
 					}
 					ImGui::TreePop();
 				}
@@ -1085,12 +1099,34 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   }
    }
 
+   std::vector<std::unique_ptr<Node>>* MCB::Skeleton::GetNodes_()
+   {
+	   return &nodes_;
+   }
+   Node* MCB::Skeleton::GetNode(std::string name)
+   {
+	   for ( auto& node : nodes_ )
+	   {
+		   if ( node->name == name )
+		   {
+			   return node.get();
+		   }
+	   }
+	   return nullptr;
+   }
+   MCB::Node::Node() {};
+   void MCB::Skeleton::SetNode(std::unique_ptr<Node> node)
+   {
+	   nodes_.push_back(std::move(node));
+   }
+
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
    {
 	   struct LengeData
 	   {
 		   Node* node;
 		   float lenge;
+		   Byte4 pad;
 	   };
 
 		Node* result = nullptr;
@@ -1107,7 +1143,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		}
 
 		lenges.sort([](auto const& lhs, auto const rhs) {return lhs.lenge < rhs.lenge; });//近い順でソート(closestNumで検索掛けるため)
-		int32_t i = 1;//添え字ではなく"何番目か"を指定するので1番目を最初に(0番を最初にするかは思案中)
+		uint32_t i = 1;//添え字ではなく"何番目か"を指定するので1番目を最初に(0番を最初にするかは思案中)
 		for (auto itr = lenges.begin(); itr != lenges.end(); ++itr)
 		{
 			if (i == closestNum)//完全一致しない場合はnullptr(ずれた値出るとまずいため）
@@ -1119,14 +1155,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		return result;
    }
 
-   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model,const Float3& scale)
+   void MCB::Node::JointObjectMatrixUpdate(ICamera* camera, Object3d* Obj,Model* model,const Float3& scale__)
    {
 	   if (!object->parent_)
 	   {
 		   object->parent_ = Obj;
-		   object->scale_.x = scale.x_;
-		   object->scale_.y = scale.y_;
-		   object->scale_.z = scale.z_;
+		   object->scale_.x = scale__.x_;
+		   object->scale_.y = scale__.y_;
+		   object->scale_.z = scale__.z_;
 	   }
 	   object->model_ = model;
 	   object->camera_ = camera;
@@ -1226,4 +1262,24 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   ikData.effectorVecFromRoot.DrawLine(object->camera_);
 		   ikData.effectorVecFromMiddle.DrawLine(object->camera_);
 	   }
+   }
+
+   Animation* MCB::AnimationManager::GetAnimation(std::string name)
+   {
+	   auto itr = animations_.find(name);
+	   if ( itr == animations_.end() )
+	   {
+		   if ( !animations_.empty() ) return animations_.begin()->second.get();
+		   return nullptr;
+	   }
+	   return animations_[ name ].get();
+
+   };
+   void MCB::AnimationManager::SetAnimation(std::unique_ptr<Animation> animation)
+   {
+	   animations_[ animation->name ] = std::move(animation);
+   }
+
+   MCB::AnimationManager::AnimationManager()
+   {
    }

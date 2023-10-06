@@ -1,21 +1,24 @@
 #pragma once
-
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <DirectXMath.h>
 #include<vector>
+WarningIgnoreEnd
 #include "MCBFloat.h"
+
 
 namespace MCB
 {
 	class TexImgData
 	{
 	public:
-        //‰¡•ûŒüƒsƒNƒZƒ‹”
+        //æ¨ªæ–¹å‘ãƒ”ã‚¯ã‚»ãƒ«æ•°
         size_t textureWidth_ = 256;
-        //c•ûŒüƒsƒNƒZƒ‹”
+        //ç¸¦æ–¹å‘ãƒ”ã‚¯ã‚»ãƒ«æ•°
         size_t textureHeight_ = 256;
-        //”z—ñ‚Ì—v‘f”
+        //é…åˆ—ã®è¦ç´ æ•°
         size_t imageDataCount_ = textureWidth_ * textureHeight_;
-        //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ì”z—ñ
+        //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®é…åˆ—
        std::vector<DirectX::XMFLOAT4> imageData_;
     
        ~TexImgData();

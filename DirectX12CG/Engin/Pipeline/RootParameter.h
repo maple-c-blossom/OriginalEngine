@@ -1,6 +1,9 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <vector>
+WarningIgnoreEnd
 #include "Descriptor.h"
 
 namespace MCB

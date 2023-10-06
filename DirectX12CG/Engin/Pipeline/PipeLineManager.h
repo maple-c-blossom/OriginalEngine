@@ -21,6 +21,7 @@ namespace MCB
 	class PipeLineManager
 	{
 	private:
+
 		std::array<PipelineRootSignature,4> objPipeline_;
 		std::array<PipelineRootSignature,4> linePipeline_;
 		std::array<PipelineRootSignature,4> animeObjPipeline_;
@@ -33,6 +34,7 @@ namespace MCB
 
 	public:
 		PipeLineManager(RootParameter* rootpamrams, Depth* depth);
+		void Init();
 		void SetObjPipeLine(bool wireFrame = false,  bool Tiling = false,BlendMode blend = Alpha);
 		void SetLinePipeLine(  BlendMode blend = Alpha);
 		void SetFbxPipeLine(bool wireFrame = false, BlendMode blend = Alpha);
@@ -40,6 +42,8 @@ namespace MCB
 		void SetParticlePipeLine(BlendMode blend = Alpha);
 		void SetPostEffectPipeLine(BlendMode blend = Alpha);
 		PipelineRootSignature* Getpipeline(PLN::Pipelinename pipelineSelect, BlendMode blend);
+		PipeLineManager(const PipeLineManager&) = delete;
+		PipeLineManager& operator=(const PipeLineManager&)=delete;
 	};
 
 }

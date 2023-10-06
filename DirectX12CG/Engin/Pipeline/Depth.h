@@ -1,16 +1,20 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3dcompiler.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <DirectXMath.h>
+#include <wrl.h>
+WarningIgnoreEnd
 #include "DxWindow.h"
 #include "Dx12.h"
-#include <wrl.h>
 
 namespace MCB
 {
 	class Depth
 	{
+
 	public:
 		D3D12_RESOURCE_DESC depthResDesc_{};
 		D3D12_HEAP_PROPERTIES depthHeapProp_{};

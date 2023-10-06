@@ -17,6 +17,7 @@ MCB::Object3d::Object3d()
 
 
 
+
 MCB::Object3d::~Object3d()
 {
     if (collider_)
@@ -54,9 +55,9 @@ void MCB::Object3d::CreateBuff()
 
     dx12->result_ = dx12->device_->CreateCommittedResource
     (
-        &HeapProp,        //ƒq[ƒvÝ’è
+        &HeapProp,        //ãƒ’ãƒ¼ãƒ—è¨­å®š
         D3D12_HEAP_FLAG_NONE,
-        &Resdesc,//ƒŠƒ\[ƒXÝ’è
+        &Resdesc,//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&constBuffTranceform_)
@@ -167,27 +168,32 @@ void Object3d::Draw()
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(2, model_->material_.constBuffMaterialB1_->GetGPUVirtualAddress());
     slights_->Draw(3);
-    //SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //’¸“_ƒf[ƒ^
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetVertexBuffers(0, 1, &model_->vbView_);
-    //ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+    //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetIndexBuffer(&model_->ibView_);
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
-    //•`‰æƒRƒ}ƒ“ƒh
+    //æç”»ã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->DrawIndexedInstanced(static_cast<uint32_t>( model_->indices_.size()), 1, 0, 0, 0);
 
+}
+
+void MCB::Object3d::DebugTextDraw(DebugText* debugText)
+{
+	static_cast< void >( debugText );
 }
 
 void Object3d::Draw(uint16_t incremant)
@@ -197,27 +203,27 @@ void Object3d::Draw(uint16_t incremant)
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(2, model_->material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
     slights_->Draw(3);
 
-    //SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += incremant * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //’¸“_ƒf[ƒ^
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetVertexBuffers(0, 1, &model_->vbView_);
-    //ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+    //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetIndexBuffer(&model_->ibView_);
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
-    //•`‰æƒRƒ}ƒ“ƒh
+    //æç”»ã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->DrawIndexedInstanced(static_cast<uint32_t>(model_->indices_.size()), 1, 0, 0, 0);
 
 }
@@ -271,7 +277,7 @@ void MCB::Object3d::AnimationUpdate( Quaternion q, bool isBillBord)
 void MCB::Object3d::AnimationDraw()
 {
     if (animationModel_ == nullptr || isInvisible)return;
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     //Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(4, constBuffSkin_->GetGPUVirtualAddress());
     animationModel_->Draw();
@@ -279,10 +285,16 @@ void MCB::Object3d::AnimationDraw()
 
 void MCB::Object3d::AnimationDraw(uint16_t incremant)
 {
+	static_cast< void >( incremant );
     if (animationModel_ == nullptr || isInvisible)return;
     Dx12::GetInstance()->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
     
     animationModel_->Draw();
+}
+
+const DirectX::XMMATRIX MCB::Object3d::GetMatWorld()
+{
+	return matWorld_.matWorld_;
 }
 
 void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
@@ -292,7 +304,39 @@ void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
     collider_ = CollisionManager::GetInstance()->AddCollider(move(collider));
 }
 
+BaseCollider* MCB::Object3d::GetCollider()
+{
+	return collider_;
+}
+
+void MCB::Object3d::OnCollision(const CollisionInfomation& info)
+{
+	static_cast< void >( info );
+	color_ = { 1,0,0,1 }; hited_ = true;
+}
+
+void MCB::Object3d::OffCollision(const CollisionInfomation* info)
+{
+	static_cast< void >( info );
+	color_ = { 1,1,1,1 };  hited_ = false;
+}
+
 void MCB::Object3d::SetLights(LightGroup* lights)
 {
     Object3d::slights_ = lights;
+}
+
+Object3d::ConstBufferDataTransform* MCB::Object3d::GetConstMapTrans()
+{
+	return constMapTranceform_;
+}
+
+ID3D12Resource* MCB::Object3d::GetConstBuffTrans()
+{
+	return constBuffTranceform_.Get();
+}
+
+std::string MCB::Object3d::GetName()
+{
+	return name_;
 }

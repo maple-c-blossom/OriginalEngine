@@ -4,6 +4,21 @@ using namespace MCB;
 using namespace std::chrono;
 using namespace std;
 
+FPS& MCB::FPS::operator=(const FPS&) = default;
+
+MCB::FPS::~FPS()
+{
+}
+
+MCB::FPS::FPS()
+{
+}
+
+
+MCB::FPS::FPS(const FPS&)
+{
+}
+
 FPS* MCB::FPS::GetInstance()
 {
     static FPS instance;

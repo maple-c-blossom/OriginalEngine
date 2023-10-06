@@ -8,7 +8,6 @@ using namespace std;
 using namespace DirectX;
 
 
-
 MCB::PostEffect::PostEffect()
 {
 	size_ = { 0,0 };
@@ -33,33 +32,35 @@ void MCB::PostEffect::Init()
 {
 	HRESULT result = S_FALSE;
 	
-    ID3D12Device* device = Dx12::GetInstance()->device_.Get();//–ˆ‰ñGetInstanceŒÄ‚Ô‚Ì‚Í”ñŒø—¦‚È‚Ì‚Åƒ|ƒCƒ“ƒ^Šm•Û
+    ID3D12Device* device = Dx12::GetInstance()->device_.Get();//æ¯Žå›žGetInstanceå‘¼ã¶ã®ã¯éžåŠ¹çŽ‡ãªã®ã§ãƒã‚¤ãƒ³ã‚¿ç¢ºä¿
     int32_t i = 0;
-    D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeapì¬
+    D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};//RTVDescHeapä½œæˆ
     rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
     rtvDescHeapDesc.NumDescriptors = 2;
     result = device->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV_));
     assert(SUCCEEDED(result));
     for (auto& itr : tex_)
     {
-        itr = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//ƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ—p‚ÌƒeƒNƒXƒ`ƒƒ‚ð¶¬(‚±‚ê‚àTextureManagerŠÇ—BSRVHeap•¡”ì‚Á‚½‚ç“®‚©‚È‚­‚È‚Á‚½‚½‚ß)
+        itr = TextureManager::GetInstance()->CreateNoTextureFileIsTexture(true);//ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ç”Ÿæˆ(ã“ã‚Œã‚‚TextureManagerç®¡ç†ã€‚SRVHeapè¤‡æ•°ä½œã£ãŸã‚‰å‹•ã‹ãªããªã£ãŸãŸã‚)
         device->CreateRenderTargetView(itr->texture->texBuff_.texbuff_.Get(), nullptr, CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapRTV_->GetCPUDescriptorHandleForHeapStart(), i, device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV)));
         i++;
     }
-    //[“xƒoƒbƒtƒ@ì¬
+    //æ·±åº¦ãƒãƒƒãƒ•ã‚¡ä½œæˆ
     CD3DX12_RESOURCE_DESC depthResDesc =
         CD3DX12_RESOURCE_DESC::Tex2D(DXGI_FORMAT_D32_FLOAT,
-            DxWindow::GetInstance()->sWINDOW_WIDTH_,
-            DxWindow::GetInstance()->sWINDOW_HEIGHT_,
+            static_cast<UINT64>(DxWindow::GetInstance()->sWINDOW_WIDTH_),
+            static_cast<UINT>(DxWindow::GetInstance()->sWINDOW_HEIGHT_),
             1,0,
             1,0,
             D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL);
+	CD3DX12_HEAP_PROPERTIES heapP(D3D12_HEAP_TYPE_DEFAULT);
+	CD3DX12_CLEAR_VALUE clearV(DXGI_FORMAT_D32_FLOAT,1.0f,0);
     result = device->CreateCommittedResource(
-        &CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
+        &heapP,
         D3D12_HEAP_FLAG_NONE,
         &depthResDesc,
         D3D12_RESOURCE_STATE_DEPTH_WRITE,
-        &CD3DX12_CLEAR_VALUE(DXGI_FORMAT_D32_FLOAT, 1.0f, 0),
+        &clearV,
         IID_PPV_ARGS(&depthBuff_));
     assert(SUCCEEDED(result));
 
@@ -83,10 +84,10 @@ void MCB::PostEffect::PreDraw()
     ID3D12Device* device = Dx12::GetInstance()->device_.Get();
     for (auto& itr : tex_)
     {
-        cmdList->ResourceBarrier(
-            1, &CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(),
-                D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
-                D3D12_RESOURCE_STATE_RENDER_TARGET));
+		CD3DX12_RESOURCE_BARRIER resouceB(CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(),
+			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
+			D3D12_RESOURCE_STATE_RENDER_TARGET));
+        cmdList->ResourceBarrier(1, &resouceB);
     }
     array<D3D12_CPU_DESCRIPTOR_HANDLE, 2> rtvH;
     int32_t i = 0;
@@ -151,26 +152,26 @@ void MCB::PostEffect::Draw()
         size_ = tempsprite.size_;
     }
 
-    //SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
     D3D12_GPU_DESCRIPTOR_HANDLE startHeap = srvGpuHandle;
     uint32_t size = dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
     srvGpuHandle.ptr = startHeap.ptr + tex_[0]->texture->incrementNum_ * size;
 
-    //SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
    
     srvGpuHandle.ptr = startHeap.ptr + tex_[1]->texture->incrementNum_ * size;
-    //SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
     dx12->commandList_->SetGraphicsRootDescriptorTable(5, srvGpuHandle);
 
-    //’¸“_ƒf[ƒ^
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, tempsprite.constBuff_->GetGPUVirtualAddress());
-    //•`‰æƒRƒ}ƒ“ƒh
+    //æç”»ã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->DrawInstanced(4, 1, 0, 0);
 
 }
@@ -178,6 +179,9 @@ void MCB::PostEffect::Draw()
 void MCB::PostEffect::PostDraw()
 {
     ID3D12GraphicsCommandList* cmdList = Dx12::GetInstance()->commandList_.Get();
-    for(auto&itr:tex_) cmdList->ResourceBarrier(1,&CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(), D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
-
+	for ( auto& itr : tex_ )
+	{
+		CD3DX12_RESOURCE_BARRIER resourceB(CD3DX12_RESOURCE_BARRIER::Transition(itr->texture.get()->texBuff_.texbuff_.Get(),D3D12_RESOURCE_STATE_RENDER_TARGET,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+		cmdList->ResourceBarrier(1,&resourceB);
+	}
 }

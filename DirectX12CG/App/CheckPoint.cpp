@@ -4,8 +4,6 @@ using namespace std;
 using namespace MCB;
 
 
-
-
 void CheckPoint::Init()
 {
 	Object3d::Init();

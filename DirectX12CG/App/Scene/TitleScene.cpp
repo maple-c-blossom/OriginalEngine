@@ -7,6 +7,7 @@ using namespace DirectX;
 void MCB::TitleScene::SpriteInit()
 {
 
+
     debugText_.Init(debugTextTexture_->texture.get());
     titleSprite_.CreateSprite();
     backGroundSprite_.CreateSprite();
@@ -56,7 +57,7 @@ void MCB::TitleScene::PostEffectDraw()
 
 void MCB::TitleScene::Draw()
 {
-    //3DƒIƒuƒWƒFƒNƒg
+    //3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 
 }

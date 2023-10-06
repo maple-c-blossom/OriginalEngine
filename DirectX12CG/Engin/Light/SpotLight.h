@@ -15,10 +15,7 @@ namespace MCB
 	class SpotLight
 	{
 	private:
-		inline float ConvertRadius(float angle)//Util.h読み込めないのでここでつくる
-		{
-			return angle * PI / 180.0f;
-		};
+		 float ConvertRadius(float angle);//Util.h読み込めないのでここでつくる
 	public:
 		typedef struct SpotLConstBuffData
 		{
@@ -47,7 +44,7 @@ namespace MCB
 		Float3 GetSLightColor();
 		Float3 GetSLightPos();
 		Float3 GetSLightAtten();
-		size_t IsActive();
+		bool IsActive();
 		Float2 GetSLightFactorAngle();
 	private:
 		Vector3D ligntDir_ = {1,0,0};
@@ -57,8 +54,8 @@ namespace MCB
 		Float2 lightFactorAngleCos_ = {0.5f,0.2f};
 		float shininess_ = 3.0f;
 		Byte4 pad1;
-		size_t active_ = false;
-
+		bool active_ = false;
+		Byte3 pad2;
 	};
 
 }

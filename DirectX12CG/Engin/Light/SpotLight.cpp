@@ -1,5 +1,9 @@
 #include "SpotLight.h"
 using namespace MCB;
+float MCB::SpotLight::ConvertRadius(float angle)
+{
+	return angle * PI / 180.0f;
+};
 void MCB::SpotLight::SetSLightDir(const Vector3D& lightDir)
 {
 	ligntDir_ = lightDir;
@@ -68,7 +72,7 @@ void MCB::SpotLight::SetSLightShininess(float shininess)
 	 return lightAtten_;
  }
 
- size_t MCB::SpotLight::IsActive()
+ bool MCB::SpotLight::IsActive()
  {
 	 return active_;
  }

@@ -1,6 +1,8 @@
 #include "LightGroup.h"
-#include <assert.h>
 #include "Dx12.h"
+WarningIgnoreBegin
+#include <assert.h>
+WarningIgnoreEnd
 using namespace DirectX;
 using namespace MCB;
 

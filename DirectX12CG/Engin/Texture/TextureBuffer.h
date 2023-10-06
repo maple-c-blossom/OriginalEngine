@@ -1,7 +1,9 @@
 #pragma once
-
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <wrl.h>
+WarningIgnoreEnd
 #include "TextureFile.h"
 #include "Dx12.h"
 #include "TexImgData.h"
@@ -11,9 +13,10 @@ namespace MCB
 
     class TextureBuffer
     {
+
     public:
         D3D12_HEAP_PROPERTIES texHeapProp_{};
-
+		Byte4 pad;
         D3D12_RESOURCE_DESC texresDesc_{};
 
         Microsoft::WRL::ComPtr<ID3D12Resource> texbuff_ = nullptr;
@@ -26,8 +29,7 @@ namespace MCB
         void SetTexHeapProp(const D3D12_HEAP_TYPE& heaptype,const D3D12_CPU_PAGE_PROPERTY& cpuPagePropety,
             const D3D12_MEMORY_POOL& memorypool);
 
-        void SetTexResourceDesc(TextureFile& texFile,const D3D12_RESOURCE_DIMENSION& resouceDimension,
-            int32_t SampleDescCount);
+        void SetTexResourceDesc(TextureFile& texFile,int32_t SampleDescCount);
 
         void SetNoTextureFileTexResourceDesc();
 

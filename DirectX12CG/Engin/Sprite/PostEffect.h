@@ -1,10 +1,14 @@
 #pragma once
 #include "Sprite.h"
+#include "TextureManager.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <array>
 #include <memory>
-#include "TextureManager.h"
+WarningIgnoreEnd
 namespace MCB
 {
+
 	class PostEffect :public Sprite
 	{
 	private:
@@ -17,6 +21,7 @@ namespace MCB
 	public:
 		PostEffect();
 		~PostEffect();
+		PostEffect& operator=(const PostEffect&) = delete;
 		std::array < TextureCell*,2> tex_;
 		void Init();
 		void PreDraw();

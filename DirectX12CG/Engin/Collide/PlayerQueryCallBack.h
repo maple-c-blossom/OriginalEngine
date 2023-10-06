@@ -10,7 +10,7 @@ namespace MCB
 	class PlayerQueryCallBack :public MCB::QueryCallBack
 	{
 	public:
-		PlayerQueryCallBack(Sphere* sphere):sphere_(sphere) {};
+		PlayerQueryCallBack(Sphere* sphere);
 		Sphere* sphere_ = nullptr;
 		Vector3D move = {};
 		Vector3D inter = {};

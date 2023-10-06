@@ -255,9 +255,6 @@
     <ClCompile Include="Engin\Pipeline\Pipeline.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
-    <ClCompile Include="Engin\Texture\TexSample.cpp">
-      <Filter>ソース ファイル\Engin\Pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="Engin\Pipeline\RootSignature.cpp">
       <Filter>ソース ファイル\Engin\Pipeline</Filter>
     </ClCompile>
@@ -422,6 +419,9 @@
     </ClCompile>
     <ClCompile Include="App\CheckPoint.cpp">
       <Filter>ソース ファイル\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Texture\TexSample.cpp">
+      <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

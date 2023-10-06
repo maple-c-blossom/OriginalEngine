@@ -1,21 +1,25 @@
 #pragma once
+#include "IgnoreWarning.h"
+#include "pading.h"
+WarningIgnoreBegin
 #include <d3dcompiler.h>
 #include <Windows.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <DirectXMath.h>
 #include <wrl.h>
+#include <vector>
+#include <memory>
+WarningIgnoreEnd
 #include "WorldMatrix.h"
 #include "Dx12.h"
 #include "Vector3D.h"
 #include "Descriptor.h"
-#include <vector>
 #include "Model.h"
 #include "Quaternion.h"
 #include "LightGroup.h"
 //#include "AnimationModel.h"
 #include "CollisionInfomation.h"
-#include <memory>
 namespace MCB
 {
     class ICamera;
@@ -27,7 +31,7 @@ namespace MCB
     protected:
         std::string name_;
         BaseCollider* collider_ = nullptr;
-        //’è”ƒoƒbƒtƒ@—p\‘¢‘Ì(s—ñ)------------------------
+        //å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨æ§‹é€ ä½“(è¡Œåˆ—)------------------------
         typedef struct ConstBufferDataTransform
         {
             //DirectX::XMMATRIX mat;
@@ -40,42 +44,48 @@ namespace MCB
 
         }ConstBufferDataTransform;
         //---------------------------------
-        //s—ñ—p’è”ƒoƒbƒtƒ@
+        //è¡Œåˆ—ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform_ = nullptr;
         /*Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;*/
-        //s—ñ—p’è”ƒoƒbƒtƒ@ƒ}ƒbƒv
+        //è¡Œåˆ—ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ—
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
        /* ConstBuffSkin* constMapSkin_ = nullptr;*/
     public:
         std::string nameId_;
         std::string currentAnimation_ = "Null";
         static LightGroup* slights_;
-        //ƒAƒtƒBƒ“•ÏŠ·î•ñ
+        //ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
         Quaternion rotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;
-        //ƒ[ƒ‹ƒhs—ñ
+		int32_t pad;
+		Byte4 pad5;
+        //ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
         WorldMatrix matWorld_ = {};
         Vector3D normFrontVec_ = {};
         Vector3D nowFrontVec_ = {0,0,1};
         float frontAngle_ = 0;
         float animeTime_;
         float animationSpeed_ = 0.0f;
+		Byte4 pad2;
         Model* model_ = nullptr;
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
         bool isInvisible = false;
         bool sceneEnd = false;
-        Object3d();
-
-        virtual ~Object3d();
-        static ICamera* camera_;
-        //eƒIƒuƒWƒFƒNƒg‚Ö‚Ìƒ|ƒCƒ“ƒ^
-        Object3d* parent_ = nullptr;
         bool trackingFlag_ = false;
+		Byte4 pad3;
+        Object3d* parent_ = nullptr;
+		int32_t pad4;
+		Byte4 pad6;
+        static ICamera* camera_;
+
+        Object3d();
+        virtual ~Object3d();
+        //è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¸ã®ãƒã‚¤ãƒ³ã‚¿
         virtual void Init();
         virtual void CreateBuff();
         virtual void UniqueUpdate();
@@ -85,9 +95,10 @@ namespace MCB
         virtual void Update(  Quaternion q,  bool isBillBord = false);
         virtual void UpdateMatrix(  Quaternion q,  bool isBillBord = false);
 
+
         virtual void Draw();
 
-        virtual void DebugTextDraw(DebugText* debugText) { return; };
+        virtual void DebugTextDraw(DebugText* debugText);
 
         virtual void Draw( uint16_t incremant);
 
@@ -98,15 +109,15 @@ namespace MCB
         virtual void AnimationDraw();
 
        virtual void AnimationDraw( uint16_t incremant);
-       const DirectX::XMMATRIX GetMatWorld() { return matWorld_.matWorld_; };
+       const DirectX::XMMATRIX GetMatWorld();
        void SetCollider(std::unique_ptr<BaseCollider> collider);
-       BaseCollider* GetCollider() { return collider_; };
-       virtual void OnCollision(const CollisionInfomation& info) { color_ = { 1,0,0,1 }; hited_ = true; }
-       virtual void OffCollision(const CollisionInfomation* info = nullptr) { color_ = { 1,1,1,1 };  hited_ = false;}
+       BaseCollider* GetCollider() ;
+	   virtual void OnCollision(const CollisionInfomation& info);
+	   virtual void OffCollision(const CollisionInfomation* info = nullptr);
        static void SetLights(LightGroup* light);
-       ConstBufferDataTransform* GetConstMapTrans() { return constMapTranceform_; };
-       ID3D12Resource* GetConstBuffTrans() { return constBuffTranceform_.Get(); };
-       std::string GetName() { return name_; };
+       ConstBufferDataTransform* GetConstMapTrans();
+       ID3D12Resource* GetConstBuffTrans();
+       std::string GetName() ;
     };
 
 }

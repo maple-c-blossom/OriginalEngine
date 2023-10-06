@@ -16,9 +16,10 @@ void MCB::StageSelectScene::SpriteInit()
 void MCB::StageSelectScene::ParticleInit()
 {
 }
-
 unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
 {
+	PragmaPush
+	PragmaWarningNum(5263)
     if (stages[selectStageNum] == "Demo")
     {
         unique_ptr<DemoScene> scene = move(make_unique<DemoScene>(rootparamsPtr_, depth_, pipeline_));
@@ -33,6 +34,7 @@ unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
     unique_ptr<Scene> scene = move(make_unique<Scene>(rootparamsPtr_, depth_, pipeline_));
     scene->SetStage(stages[selectStageNum]);
     return move(scene);
+	PragmaPop
 }
 
 void MCB::StageSelectScene::MatrixUpdate()
@@ -61,7 +63,7 @@ void MCB::StageSelectScene::Update()
     {
         selectStageNum--;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
-        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),time);
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),static_cast<int32_t>(time));
         selectScaleTime_.Set(360);
     }
 
@@ -69,9 +71,9 @@ void MCB::StageSelectScene::Update()
     {
         selectStageNum++;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
-        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(), time);
+        selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),static_cast< int32_t >( time));
     }
-    selectStageNum = static_cast<int32_t>(clamp(static_cast<float>(selectStageNum), 0.f, stages.size() - 1.f));
+    selectStageNum = static_cast<uint32_t>(clamp(static_cast<float>(selectStageNum), 0.f,(static_cast< float >(stages.size()) - 1.f)));
     selectMoveTime_.SafeUpdate();
     MatrixUpdate();
 }
@@ -86,7 +88,7 @@ void MCB::StageSelectScene::PostEffectDraw()
 
 void MCB::StageSelectScene::Draw()
 {
-    //3DƒIƒuƒWƒFƒNƒg
+    //3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 
 
 }
@@ -99,14 +101,15 @@ void MCB::StageSelectScene::SpriteDraw()
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
     for (size_t i = 0; i < stages.size(); i++)
     {
-        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * (i - oldSelectStageNum));
+        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * static_cast<float>((i - oldSelectStageNum)));
         float scale = 3;
-        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - oldSelectStageNum) / 2.f);
-        scale = scale - (abs(static_cast<float>(i) - selectStageNum) / 2.f);
+        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - ( static_cast< float >(oldSelectStageNum)) / 2.f));
+        scale = scale - (abs(static_cast<float>(i) - ( static_cast< float >( selectStageNum)) / 2.f));
         scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
             static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
 
-        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * ((static_cast<int32_t>(i) - selectStageNum) * scale));
+        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * ((static_cast<float>(i) -
+			(static_cast< float >(selectStageNum)) * scale)));
         posY = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartPosy), 
             static_cast<double>(posY), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
 

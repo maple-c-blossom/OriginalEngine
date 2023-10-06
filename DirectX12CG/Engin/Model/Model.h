@@ -84,7 +84,7 @@ namespace MCB
 
         void Init(const std::string& fileName,  bool smooth = false);
         
-        inline size_t GetVertexCount() { return vertices_.size(); }
+		size_t GetVertexCount();
 
         void AddSmoothData( uint16_t indexPosition,  uint16_t indexVertex);
 

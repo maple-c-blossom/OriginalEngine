@@ -7,6 +7,7 @@ MCB::Particle::Particle()
 
 }
 
+
 MCB::Particle::~Particle()
 {
     //delete vertex;
@@ -38,9 +39,9 @@ void Particle::Init(TextureCell* tex)
 
     dx12->result_ = dx12->device_->CreateCommittedResource
     (
-        &HeapProp,        //ƒq[ƒvÝ’è
+        &HeapProp,        //ãƒ’ãƒ¼ãƒ—è¨­å®š
         D3D12_HEAP_FLAG_NONE,
-        &Resdesc,//ƒŠƒ\[ƒXÝ’è
+        &Resdesc,//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&constBuffTranceform_)
@@ -52,9 +53,9 @@ void Particle::Init(TextureCell* tex)
     material_.Init();
     tex_ = tex;
     Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateCommittedResource(
-        &HeapProp, // ƒq[ƒvÝ’è
+        &HeapProp, // ãƒ’ãƒ¼ãƒ—è¨­å®š
         D3D12_HEAP_FLAG_NONE,
-        &Resdesc, // ƒŠƒ\[ƒXÝ’è
+        &Resdesc, // ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&vertBuff_));
@@ -102,35 +103,35 @@ void Particle::Update(ICamera* camera, bool isBillBord)
 
 void Particle::Draw()
 {
-    //ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚ÌÝ’èƒRƒ}ƒ“ƒhiŽOŠpŒ`ƒŠƒXƒgj--------------------------
+    //ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰ï¼ˆä¸‰è§’å½¢ãƒªã‚¹ãƒˆï¼‰--------------------------
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
 
 
-    ////’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    ////å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(2,material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
     //lights->Draw(3);
 
-    //SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
     D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 
 
     srvGpuHandle.ptr += tex_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
 
-    //SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+    //SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
     dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
     dx12->commandList_->SetGraphicsRootConstantBufferView(0, constBuffTranceform_->GetGPUVirtualAddress());
-    //’¸“_ƒf[ƒ^
+    //é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
     dx12->commandList_->IASetVertexBuffers(0, 1, &vbView_);
-    //•`‰æƒRƒ}ƒ“ƒh
-    dx12->commandList_->DrawInstanced(vertNum_, 1, 0, 0);
-    //ƒCƒ“ƒfƒbƒNƒXƒf[ƒ^
+    //æç”»ã‚³ãƒžãƒ³ãƒ‰
+    dx12->commandList_->DrawInstanced(static_cast<UINT>(vertNum_), 1, 0, 0);
+    //ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒ‡ãƒ¼ã‚¿
     //dx12.commandList->IASetIndexBuffer(&model->ibView);
-    //’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
-    //•`‰æƒRƒ}ƒ“ƒh
+    //å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
+    //æç”»ã‚³ãƒžãƒ³ãƒ‰
     //dx12.commandList->DrawInstanced(_countof(vert.vertices), 1, 0, 0);
 
 }

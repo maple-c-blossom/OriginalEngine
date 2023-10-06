@@ -4,6 +4,7 @@
 #include "TitleScene.h"
 using namespace std;
 
+
 MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManager* pipeline)
 {
 	root_ = root;
@@ -34,7 +35,7 @@ void MCB::SceneManager::Initialize()
 
 void MCB::SceneManager::Update()
 {
-	if (isSceneReady_)//ƒQ[ƒ€‰æ–Ê‚Ö‚Ìˆ—
+	if (isSceneReady_)//ã‚²ãƒ¼ãƒ ç”»é¢ã¸ã®å‡¦ç†
 	{
 		if (isChengeSceneTimer_ <= 0)
 		{
@@ -45,7 +46,7 @@ void MCB::SceneManager::Update()
 		}
 		if (scene_->GetIsSceneEnd())
 		{
-			//ƒ[ƒh‰æ–Ê‚Ö‚Ì‘JˆÚƒAƒjƒ[ƒVƒ‡ƒ“I—¹Œã
+			//ãƒ­ãƒ¼ãƒ‰ç”»é¢ã¸ã®é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†å¾Œ
 			if ( isChengeSceneTimer_ >= isChengeSceneTime_)
 			{
 				isSceneReady_ = false;
@@ -53,7 +54,7 @@ void MCB::SceneManager::Update()
 				sceneInitialize_ = std::async(std::launch::async, [this] {return sceneChenge(); });
 				OutputDebugStringW(L"asyncCallEnd\n");
 			}
-			else//ƒ[ƒh‰æ–Ê‚Ö‚Ì‘JˆÚƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
+			else//ãƒ­ãƒ¼ãƒ‰ç”»é¢ã¸ã®é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†
 			{
 				isChengeSceneTimer_++;
 				if (isChengeSceneTimer_ >= isChengeSceneTime_)isChengeSceneTimer_ = isChengeSceneTime_;
@@ -63,7 +64,7 @@ void MCB::SceneManager::Update()
 				angle_ = 0;
 			}
 		}
-		else//ƒQ[ƒ€‰æ–Ê‚Ö‚Ì‘JˆÚƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
+		else//ã‚²ãƒ¼ãƒ ç”»é¢ã¸ã®é·ç§»ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å‡¦ç†
 		{
 			if (isChengeSceneTimer_ > 0)
 			{
@@ -81,7 +82,7 @@ void MCB::SceneManager::Update()
 			}
 		}
 	}
-	else//ƒ[ƒh‰æ–Ê‚Ìˆ—
+	else//ãƒ­ãƒ¼ãƒ‰ç”»é¢ã®å‡¦ç†
 	{
 		loadBackGround_.color_.w_ = 1;
 		loadSprite_.color_.w_ = loadBackGround_.color_.w_;
@@ -99,16 +100,16 @@ void MCB::SceneManager::Draw()
 
 		Draw::GetInstance()->PreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
 
-	if (isSceneReady_)//ƒQ[ƒ€‰æ–Ê
+	if (isSceneReady_)//ã‚²ãƒ¼ãƒ ç”»é¢
 	{
 		scene_->PostEffectDraw();
 		Draw::GetInstance()->AfterPostEffectPreDraw(scene_->GetDepth(), *scene_->Getpipeline().Getpipeline(PLN::Obj, Alpha), scene_->clearColor_);
-		//3D•`‰æ
+		//3Dæç”»
 		scene_->Draw();
-		//ƒp[ƒeƒBƒNƒ‹
+		//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 		scene_->Getpipeline().SetParticlePipeLine(Alpha);
 		scene_->ParticleDraw();
-		//ƒXƒvƒ‰ƒCƒg
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	
 		scene_->Getpipeline().SetSpritePipeLine(Alpha);
 		scene_->SpriteDraw();
@@ -123,7 +124,7 @@ void MCB::SceneManager::Draw()
 		scene_->ImGuiDraw();
 //#endif 
 	}
-	else//ƒ[ƒh‰æ–Ê
+	else//ãƒ­ãƒ¼ãƒ‰ç”»é¢
 	{
 		scene_->Getpipeline().SetSpritePipeLine(Alpha);
 		loadBackGround_.SpriteDraw(*loadBackGroundTex_->texture, (float)DxWindow::GetInstance()->sWINDOW_WIDTH_ / 2, 

@@ -1,6 +1,9 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <wrl.h>
+WarningIgnoreEnd
 namespace MCB
 {
 	class ImguiManager
@@ -15,6 +18,7 @@ namespace MCB
 		void Draw();
 		void Final();
 	};
+
 
 }
 

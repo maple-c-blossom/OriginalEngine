@@ -12,6 +12,7 @@ namespace MCB
 		void Inilialize()override;
 		void Update()override;
 
+
 		void WorldPositionUpdate(const DirectX::XMMATRIX& playerMatrix,
 			const DirectX::XMFLOAT3& playerPosition, bool isBillBord);
 
@@ -19,13 +20,14 @@ namespace MCB
 
 		DirectX::XMFLOAT3 Transform(const DirectX::XMFLOAT3& forward,const WorldMatrix& matworld);
 
-		//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+		//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 		DirectX::XMMATRIX GetMadWorld();
 
 		//WorldMatrix GetMadWorld2();
 		void SetCameraTarget(Object3d* target);
 		 
 		Camera(const Camera&) = delete;
+		Camera();
 		Camera& MCB::Camera::operator=(const Camera&) = delete;
 	private:
 
@@ -37,11 +39,11 @@ namespace MCB
  
 		DirectX::XMFLOAT3 eyeStartPos_;
 		Byte4 pad1;
-		//ƒvƒŒƒCƒ„[‚Ìƒ[ƒ‹ƒh•ÏŠ·s—ñ
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 		DirectX::XMMATRIX playerMatrix_;
 
 		 
-		//ƒŒ[ƒ‹ƒJƒƒ‰‚Ì‰ŠúÀ•W
+		//ãƒ¬ãƒ¼ãƒ«ã‚«ãƒ¡ãƒ©ã®åˆæœŸåº§æ¨™
 		DirectX::XMFLOAT3 firstPos_ = { 0,0,0 };
 
 

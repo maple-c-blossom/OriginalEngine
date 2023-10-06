@@ -1,6 +1,9 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <wrl.h>
+WarningIgnoreEnd
 #include "RootParameter.h"
 #include "TexSample.h"
 #include "Shader.h"
@@ -21,4 +24,5 @@ namespace MCB
 		void CreateRootSignature();
 	};
 }
+
 

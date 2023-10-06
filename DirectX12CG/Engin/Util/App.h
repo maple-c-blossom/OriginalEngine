@@ -6,6 +6,7 @@ namespace MCB
 {
 	class App
 	{
+
 	private:
 		DxWindow* dxWindow_ = nullptr;
 		FPS* fps_ = nullptr;
@@ -16,7 +17,10 @@ namespace MCB
 		std::unique_ptr <RootParameter> rootparams_ = nullptr;
 		std::unique_ptr <PipeLineManager> pipeline_ = nullptr;
 		std::unique_ptr <SceneManager> scene_ = nullptr;
+		App(const App&) = delete;
+		App& operator=(const App&) = delete;
 	public:
+		App();
 		void Init();
 		void MainLoop();
 		void Final();

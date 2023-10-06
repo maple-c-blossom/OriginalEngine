@@ -48,6 +48,10 @@ MCB::Draw::~Draw()
 {
 }
 
+MCB::Draw::Draw()
+{
+}
+
 D3D12_RESOURCE_BARRIER MCB::Draw::GetResouceBarrier()
 {
     return barrierDesc_;

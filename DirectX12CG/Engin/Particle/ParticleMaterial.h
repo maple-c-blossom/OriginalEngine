@@ -1,10 +1,13 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3dcompiler.h>
 #include <Windows.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <DirectXMath.h>
 #include <wrl.h>
+WarningIgnoreEnd
 #include "WorldMatrix.h"
 #include "Dx12.h"
 #include "View.h"
@@ -16,7 +19,8 @@ namespace MCB
 	class ParticleMaterial
 	{
 	public:
-		////’è”ƒoƒbƒtƒ@—p\‘¢‘Ì(ƒ}ƒeƒŠƒAƒ‹)-----------------------------------
+		
+		////å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨æ§‹é€ ä½“(ãƒãƒ†ãƒªã‚¢ãƒ«)-----------------------------------
 		//typedef struct ConstBufferDataMaterial
 		//{
 		//	DirectX::XMFLOAT4 color = { 0,0,0,1 };
@@ -46,20 +50,15 @@ namespace MCB
 			Float4 color;
 			std::string textureFileName;
 
-			Material()
-			{
-				ambient = { 0.3f,0.3f,0.3f };
-				diffuse = { 0.0f,0.0f,0.0f };
-				specular = { 0.0f,0.0f,0.0f };
-				alpha = 1.0f;
-				color = { 1.f,1.f,1.f,1.f };
-			}
+			Material();
+
 		}Material;
 
 
 
 		Material material_;
 		D3D12_HEAP_PROPERTIES HeapProp_{};
+		Byte4 pad;
 		D3D12_RESOURCE_DESC Resdesc_{};
 		//Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterial = nullptr;
 		Microsoft::WRL::ComPtr<ID3D12Resource> constBuffMaterialB1_ = nullptr;

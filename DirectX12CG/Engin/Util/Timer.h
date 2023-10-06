@@ -1,10 +1,13 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
+#include <cstdint>
+WarningIgnoreEnd
 class Timer
 {
 private:
-	int timer = 0;
-	int end = 0;
-
+	int timer_ = 0;
+	int end_ = 0;
 public:
 	void Set(int end);
 	void ReSet();
@@ -13,7 +16,7 @@ public:
 	void Update();
 	void LoopUpdate();
 	void SafeDownUpdate();
-	void SafeUpdate();//�^�C�}�[��end�̐��l�𒴂��ăJ�E���g����Ȃ��悤�ɂȂ��Ă��܂��B
+	void SafeUpdate();//タイマーがendの数値を超えてカウントされないようになっています。
 	int NowTime()const;
 	bool IsEnd()const;
 	int GetEndTime()const;

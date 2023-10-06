@@ -1,5 +1,8 @@
 #include "Vecter2D.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
+WarningIgnoreEnd
 //float Vec2::GetCrossProduct(Vec2 startVec,Vec2 endVec)//提出後改良
 //{
 //    VECTOR vecLine = VGet(endVec.GetX() - startVec.GetX(), endVec.GetY() - startVec.GetY(), 0);

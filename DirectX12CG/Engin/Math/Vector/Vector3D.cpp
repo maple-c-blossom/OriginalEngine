@@ -1,5 +1,8 @@
 #include "Vector3D.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
+WarningIgnoreEnd
 
 
 using namespace MCB;

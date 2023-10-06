@@ -11,6 +11,7 @@ using namespace std;
 using namespace nlohmann;
 
 
+
 const std::string LevelLoader::sBASE_FILE_DIR_ = "Resources/levels/";
 const std::string LevelLoader::sEXTEND_ = ".json";
 
@@ -108,17 +109,17 @@ std::unique_ptr<LevelLoader::LevelData> LevelLoader::Load(const std::string& fil
 	file.open(path);
 	if (file.fail())
 	{
-		assert(0 && "ƒŒƒxƒ‹ƒf[ƒ^“Ç‚İ‚İ•s—Ç");
+		assert(0 && "ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿ä¸è‰¯");
 	}
 
 	json deserialize;
 
 	file >> deserialize;
-	assert(deserialize.is_object() && "ƒŒƒxƒ‹ƒf[ƒ^‚ÉˆÙí‚ª‚ ‚è‚Ü‚·");
-	assert(deserialize.contains("name") && "ƒŒƒxƒ‹ƒf[ƒ^‚ÉˆÙí‚ª‚ ‚è‚Ü‚·");
-	assert(deserialize["name"].is_string() && "ƒŒƒxƒ‹ƒf[ƒ^‚ÉˆÙí‚ª‚ ‚è‚Ü‚·");
+	assert(deserialize.is_object() && "ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ç•°å¸¸ãŒã‚ã‚Šã¾ã™");
+	assert(deserialize.contains("name") && "ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ç•°å¸¸ãŒã‚ã‚Šã¾ã™");
+	assert(deserialize["name"].is_string() && "ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã«ç•°å¸¸ãŒã‚ã‚Šã¾ã™");
 	string name = deserialize["name"].get<string>();
-	assert(name.compare("scene") == 0 && "ƒŒƒxƒ‹ƒf[ƒ^‚ª³‚µ‚­‚ ‚è‚Ü‚¹‚ñ");
+	assert(name.compare("scene") == 0 && "ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãŒæ­£ã—ãã‚ã‚Šã¾ã›ã‚“");
 	unique_ptr<LevelData> levelData = make_unique<LevelData>();
 	levelData->levelFileName = fileName;
 	levelData->camera = camera;
@@ -165,6 +166,8 @@ void MCB::LevelLoader::LevelData::UpdateMatrix()
 
 void MCB::LevelLoader::LevelData::Draw(PipeLineManager* pipeline, bool wireFrame)
 {
+	static_cast< void >( wireFrame );
+	static_cast< void >( pipeline );
 	for (auto& itr : objects)
 	{
 		if (itr->obj->model_)
@@ -209,4 +212,8 @@ MCB::LevelLoader::LevelData::~LevelData()
 std::unique_ptr<LevelLoader::LevelData> MCB::LevelLoader::LevelData::ReLoad()
 {
 	return Load(levelFileName,camera);
+}
+
+MCB::LevelLoader::LevelData::ObjectData::ObjectData()
+{
 }

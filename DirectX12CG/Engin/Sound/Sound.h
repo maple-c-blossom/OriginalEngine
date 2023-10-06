@@ -1,10 +1,13 @@
 #pragma once
+#include "Dx12.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <xaudio2.h>
 #include <fstream>
-#include "Dx12.h"
 #include <wrl.h>
 #include <array>
 #include <memory>
+WarningIgnoreEnd
 
 
 
@@ -12,9 +15,10 @@ namespace MCB
 {
 	class SoundManager
 	{
+
 		private:
-			SoundManager(const SoundManager& SoundManager) {};
-			SoundManager& operator=(const SoundManager& SoundManager) {};
+			SoundManager(const SoundManager& ) = delete;
+			SoundManager& operator=(const SoundManager& )=delete;
 			SoundManager();
 			~SoundManager();
 
@@ -34,17 +38,21 @@ namespace MCB
 		{
 			ChunkHeader chunk;
 			WAVEFORMATEX fmt;
+			Byte2 pad;
 		}FormatChunk;
 
 		typedef struct SoundData
 		{
 			WAVEFORMATEX wfex;
+			Byte6 pad;
 			std::vector<char> pBuffer;
 			size_t bufferSize;
 			bool free = true;
+			Byte7 pad2;
 			std::string name;
 			IXAudio2SourceVoice* pSourceVoice = nullptr;
 			float volume = 1;
+			Byte4 pad3;
 		}SoundData;
 
 		Microsoft::WRL::ComPtr<IXAudio2> xAudio2_;

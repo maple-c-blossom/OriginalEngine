@@ -1,7 +1,10 @@
 #pragma once
-#include "MCBFloat.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
 #include <wrl.h>
+WarningIgnoreEnd
+#include "MCBFloat.h"
 #include "Dx12.h"
 #include "DxWindow.h"
 #include "Object3d.h"
@@ -11,11 +14,10 @@
 namespace MCB
 {
 
-
 	class Sprite
 	{
 	public:
-		//’è”ƒoƒbƒtƒ@—p\‘¢‘Ì(s—ñ)------------------------
+		//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨æ§‹é€ ä½“(è¡Œåˆ—)------------------------
 		typedef struct SpriteConstBufferDataTransform
 		{
 			Float4 color;
@@ -40,6 +42,8 @@ namespace MCB
 
 		float rotation_ = 0.0f;
 		Float3 position_ = { 0,0,0 };
+		int32_t pad;
+		Byte4 pad4;
 		DirectX::XMMATRIX matWorld_;
 		Float4 color_ = { 1.0f,1.0f,1.0f,1.0f };
 		static DirectX::XMMATRIX smatProje_;
@@ -49,7 +53,8 @@ namespace MCB
 		Float2 cuttingSize_ = { 0,0 };
 		bool isFlipX_ = false;
 		bool isFlipY_ = false;
-
+		Byte7 pad2;
+		Byte7 pad3;
 
 		void SpriteTransferVertexBuffer( Texture* tex = nullptr);
 		void SpriteUpdate();

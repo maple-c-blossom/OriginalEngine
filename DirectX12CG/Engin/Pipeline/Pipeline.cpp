@@ -1,5 +1,6 @@
 #include "Pipeline.h"
 
+
 void MCB::Pipeline::SetSampleMask()
 {
 	pipelineDesc_.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
@@ -12,23 +13,23 @@ void MCB::Pipeline::SetSampleMask(size_t sampleMask)
 
 void MCB::Pipeline::SetRasterizerState(bool DepthClipEnable ,const D3D12_CULL_MODE& cullmode,const D3D12_FILL_MODE& fillmode)
 {
-	pipelineDesc_.RasterizerState.CullMode = cullmode;  // ”w–ÊƒJƒŠƒ“ƒO
-	pipelineDesc_.RasterizerState.FillMode = fillmode; // ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
-	pipelineDesc_.RasterizerState.DepthClipEnable = DepthClipEnable; // [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
+	pipelineDesc_.RasterizerState.CullMode = cullmode;  // èƒŒé¢ã‚«ãƒªãƒ³ã‚°
+	pipelineDesc_.RasterizerState.FillMode = fillmode; // ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—
+	pipelineDesc_.RasterizerState.DepthClipEnable = DepthClipEnable; // æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
 }
 
 void MCB::Pipeline::SetAllAddRasterizerState()
 {
-	pipelineDesc_.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;  // ”w–ÊƒJƒŠƒ“ƒO
-	pipelineDesc_.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
-	pipelineDesc_.RasterizerState.DepthClipEnable = true; // [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
+	pipelineDesc_.RasterizerState.CullMode = D3D12_CULL_MODE_BACK;  // èƒŒé¢ã‚«ãƒªãƒ³ã‚°
+	pipelineDesc_.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—
+	pipelineDesc_.RasterizerState.DepthClipEnable = true; // æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
 }
 
 void MCB::Pipeline::SetSpriteAllAddRasterizerState()
 {
-	pipelineDesc_.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;  // ”w–ÊƒJƒŠƒ“ƒO
-	pipelineDesc_.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
-	pipelineDesc_.RasterizerState.DepthClipEnable = true; // [“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
+	pipelineDesc_.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;  // èƒŒé¢ã‚«ãƒªãƒ³ã‚°
+	pipelineDesc_.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID; // ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—
+	pipelineDesc_.RasterizerState.DepthClipEnable = true; // æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
 }
 
 void MCB::Pipeline::SetGpipleneDesc(D3D12_SHADER_BYTECODE &byteCode, ID3DBlob* blob)
@@ -88,7 +89,7 @@ void MCB::Pipeline::SetSpriteGpipleneDescAll(Shader* shader)
 
 void MCB::Pipeline::SetNormalBlendDesc()
 {
-	//‹¤’Êİ’è
+	//å…±é€šè¨­å®š
 	blenddesc_.BlendEnable = true;
 	blenddesc_.BlendOpAlpha = D3D12_BLEND_OP_ADD;
 	blenddesc_.SrcBlendAlpha = D3D12_BLEND_ONE;
@@ -166,6 +167,12 @@ void MCB::Pipeline::CreateGraphicsPipelineState()
 	assert(SUCCEEDED(Dx12::GetInstance()->result_));
 }
 
+MCB::Pipeline::Pipeline()
+{
+}
+
+
+
 
 
 void MCB::Pipeline::SetRenderTaegetBlendDesc(const D3D12_RENDER_TARGET_BLEND_DESC& renderTarget)
@@ -175,5 +182,5 @@ void MCB::Pipeline::SetRenderTaegetBlendDesc(const D3D12_RENDER_TARGET_BLEND_DES
 
 void MCB::Pipeline::SetRenderTargetWriteMask(const D3D12_COLOR_WRITE_ENABLE& writeEnable)
 {
-	blenddesc_.RenderTargetWriteMask = writeEnable;//•W€İ’è
+	blenddesc_.RenderTargetWriteMask = static_cast<UINT8>(writeEnable);//æ¨™æº–è¨­å®š
 }

@@ -1,28 +1,35 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
+#include <string>
+WarningIgnoreEnd
 #include "Sprite.h"
 #include "Dx12.h"
 #include "DxWindow.h"
 #include "Descriptor.h"
-#include <string>
 
 namespace MCB
 {
 	class DebugText
 	{
+
 	private:
-		static const int32_t sMAX_CHAR_COUNT_ = 0xff;//1ƒtƒŒ“–‚½‚è‚ÌÅ‘å•\¦”
-		static const int32_t sFONT_WIDTH_ = 9;//ƒtƒHƒ“ƒg‚Ì‰¡•
-		static const int32_t sFONT_HEIGHT = 18;//ƒtƒHƒ“ƒg‚Ìc•
-		static const int32_t sFONT_LINE_COUNT = 14;//ƒtƒHƒ“ƒg‚Ì‚Ps“–‚½‚è‚Ì•¶š”
+		static const int32_t sMAX_CHAR_COUNT_ = 0xff;//1ãƒ•ãƒ¬å½“ãŸã‚Šã®æœ€å¤§è¡¨ç¤ºæ•°
+		static const int32_t sFONT_WIDTH_ = 9;//ãƒ•ã‚©ãƒ³ãƒˆã®æ¨ªå¹…
+		static const int32_t sFONT_HEIGHT = 18;//ãƒ•ã‚©ãƒ³ãƒˆã®ç¸¦å¹…
+		static const int32_t sFONT_LINE_COUNT = 14;//ãƒ•ã‚©ãƒ³ãƒˆã®ï¼‘è¡Œå½“ãŸã‚Šã®æ–‡å­—æ•°
 		char buffer_[sMAX_CHAR_COUNT_]{};
+		Byte1 pad;
 	public:
 		Sprite sprite_[sMAX_CHAR_COUNT_];
 		int32_t spriteIndex_ = 0;
+		Byte4 pad1;
 		Texture* debugfont_ = nullptr;
 		Dx12* dx12_ = nullptr;
-
+		int32_t pad2;
+		Byte4 pad3;
 		void Init(Texture* texture);
-		void Print( float x,  float y,  float scale, const std::string text, ... );
+		void Print( float x,  float y,  float scale, const std::string& text, ... );
 		void AllDraw();
 	};
 

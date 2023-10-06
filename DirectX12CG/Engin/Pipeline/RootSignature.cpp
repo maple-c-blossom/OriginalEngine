@@ -3,8 +3,8 @@
 void MCB::RootSignature::InitRootSignatureDesc(RootParameter& rootparams, TexSample& sample)
 {
     rootSignatureDesc_.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
-    rootSignatureDesc_.pParameters = &rootparams.rootparams_.front(); //ルートパラメータの先頭アドレス
-    rootSignatureDesc_.NumParameters = (uint32_t)rootparams.rootparams_.size(); //ルートパラメータ数
+    rootSignatureDesc_.pParameters = &rootparams.rootparams_.front(); //繝ｫ繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ縺ｮ蜈磯ｭ繧｢繝峨Ξ繧ｹ
+    rootSignatureDesc_.NumParameters = (uint32_t)rootparams.rootparams_.size(); //繝ｫ繝ｼ繝医ヱ繝ｩ繝｡繝ｼ繧ｿ謨ｰ
     rootSignatureDesc_.pStaticSamplers = &sample.samplerDesc_;
     rootSignatureDesc_.NumStaticSamplers = 1;
 }
@@ -17,7 +17,7 @@ void MCB::RootSignature::SetSerializeRootSignature(Shader& shader)
     //    shader.errorBlob->GetBufferSize(),
     //    error.begin());
     //error += "\n";
-    //// エラー内容を出力ウィンドウに表示
+    //// 繧ｨ繝ｩ繝ｼ蜀�螳ｹ繧貞�ｺ蜉帙え繧｣繝ｳ繝峨え縺ｫ陦ｨ遉ｺ
     //OutputDebugStringA(error.c_str());
     assert(SUCCEEDED(Dx12::GetInstance()->result_));
 }
@@ -27,4 +27,5 @@ void MCB::RootSignature::CreateRootSignature()
     Dx12::GetInstance()->result_ = Dx12::GetInstance()->device_->CreateRootSignature(0, rootSigBlob_->GetBufferPointer(), rootSigBlob_->GetBufferSize(), IID_PPV_ARGS(&rootsignature_));
     assert(SUCCEEDED(Dx12::GetInstance()->result_));
 }
+
 

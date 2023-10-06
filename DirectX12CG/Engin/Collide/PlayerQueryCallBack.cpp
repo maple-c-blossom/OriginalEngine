@@ -1,5 +1,7 @@
 #include "PlayerQueryCallBack.h"
 
+MCB::PlayerQueryCallBack::PlayerQueryCallBack(Sphere* sphere):sphere_(sphere) {}
+
 bool MCB::PlayerQueryCallBack::OnQueryHit(const QueryHit& info)
 {
 	const Vector3D up = { 0,1,0 };

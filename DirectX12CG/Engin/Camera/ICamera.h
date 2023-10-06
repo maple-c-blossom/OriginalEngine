@@ -16,44 +16,24 @@ namespace MCB
 		virtual ~ICamera() {};
 		virtual void Inilialize() = 0;
 		virtual void Update() = 0;
-		View* GetView()
-		{
-			return &view_;
-		}
-		Projection* GetProjection()
-		{
-			return &projection_;
-		}
+		View* GetView();
+		Projection* GetProjection();
 
-		void SetViewEye(const Float3& eyePos)
-		{
-			view_.eye_ = { eyePos.x_,eyePos.y_,eyePos.z_ };
-		}
+		void SetViewEye(const Float3& eyePos);
 
-		void SetViewTarget(const Float3& targetPos)
-		{
-			view_.target_ = { targetPos.x_,targetPos.y_,targetPos.z_ };
-		}
+		void SetViewTarget(const Float3& targetPos);
 
-		void SetViewUp(const Float3& up)
-		{
-			view_.up_ = { up.x_, up.y_, up.z_ };
-		}
+		void SetViewUp(const Float3& up);
 
-		void SetProjectionFarZ(float farZ)
-		{
-			projection_.farZ_ = farZ;
-		}
 
-		void SetProjectionFovAngle( float fovAngle)
-		{
-			projection_.fovAngle_ = fovAngle;
-		}
+		void SetProjectionFarZ(float farZ);
 
-		void SetProjection( float nearZ)
-		{
-			projection_.nearZ_ = nearZ;
-		}
+
+		void SetProjectionFovAngle(float fovAngle);
+
+
+		void SetProjection(float nearZ);
+
 
 		void MatrixUpdate();
 

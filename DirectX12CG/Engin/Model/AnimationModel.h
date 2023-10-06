@@ -46,6 +46,9 @@ namespace MCB
         std::vector<Mesh> meshies; //出力先メッシュ配列
         bool inversU = false; //U座標反転フラグ
         bool inversV = false; //V座標反転フラグ
+		Byte6 pad;
+		ImportSetting(const ImportSetting&) = delete;
+		ImportSetting& operator=( const ImportSetting&) =delete;
     }ImportSetting;
 
     typedef struct NodeAnim
@@ -71,44 +74,54 @@ namespace MCB
     {
         std::string name;//ノードの名前
         std::vector<std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
-        DirectX::XMVECTOR scale = { 1,1,1,0 };//ローカルのスケール情報
-        DirectX::XMVECTOR rotation = { 0,0,0,0 };//ローカルの回転情報
-        DirectX::XMVECTOR translation = { 0,0,0,1 };//ローカルの位置情報
-        DirectX::XMMATRIX localTransform = DirectX::XMMatrixIdentity();//ローカルのsrtMatrix
-        DirectX::XMMATRIX globalTransform = DirectX::XMMatrixIdentity();//Model空間のMatrix
-        DirectX::XMMATRIX globalInverseTransform = DirectX::XMMatrixIdentity();//Model空間のMatrixの逆行列
-        DirectX::XMMATRIX AnimaetionParentMat = DirectX::XMMatrixIdentity();//アニメーションするときに使用するModel空間のMatrix
-        DirectX::XMVECTOR defaultScale = { 0,0,0,1 };//初期姿勢時のローカルスケール情報
-        DirectX::XMVECTOR defaultRotation = { 0,0,0,0 };//初期姿勢時のローカル回転情報
-        DirectX::XMVECTOR defaultLocalTranslation = { 0,0,0,1 };//初期姿勢時のローカル位置情報
-        DirectX::XMMATRIX defaultModelTransform = DirectX::XMMatrixIdentity();//初期姿勢時のModel空間の行列
+		int32_t pad1;
+		Byte4 pad3;
+		DirectX::XMVECTOR scale = { { 1,1,1,0 } };//ローカルのスケール情報
+		DirectX::XMVECTOR rotation = { { 0,0,0,0 } };//ローカルの回転情報
+		DirectX::XMVECTOR translation = { { 0,0,0,1 } };//ローカルの位置情報
+		DirectX::XMMATRIX localTransform = { DirectX::XMMatrixIdentity() };//ローカルのsrtMatrix
+		DirectX::XMMATRIX globalTransform = { DirectX::XMMatrixIdentity() };//Model空間のMatrix
+		DirectX::XMMATRIX globalInverseTransform = { DirectX::XMMatrixIdentity() };//Model空間のMatrixの逆行列
+		DirectX::XMMATRIX AnimaetionParentMat = { DirectX::XMMatrixIdentity() };//アニメーションするときに使用するModel空間のMatrix
+		DirectX::XMVECTOR defaultScale = { { 0,0,0,1 } };//初期姿勢時のローカルスケール情報
+		DirectX::XMVECTOR defaultRotation = { { 0,0,0,0 } };//初期姿勢時のローカル回転情報
+		DirectX::XMVECTOR defaultLocalTranslation = { { 0,0,0,1 } };//初期姿勢時のローカル位置情報
+		DirectX::XMMATRIX defaultModelTransform = { DirectX::XMMatrixIdentity() };//初期姿勢時のModel空間の行列
         Node* parent = nullptr;//親ノードへのポインタ
         std::vector<Node*>children{};//子ノードへのポインタ
         Vector3D endPosition;//ボーンの先端のポジション(ローカル空間)
         Vector3D startPosition;//ボーンの根本のポジション(ローカル空間)
         Vector3D boneVec;//ボーンのベクトル(ローカル空間)
         Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
+		Byte4 pad2;
         float boneLength;//ボーンの長さ
         bool updated = false;
+		Byte7 pad4;
         bool jointView = true;
+		Byte7 pad5;
         PrimitiveFigure::Line boneLine;
         struct IKData
         {
             bool isIK = false;//IKを行うか（自分がendJointかどうか）
+			Byte7 pad1;
             Node* middleJointNode = nullptr;//ミドルジョイントのポインタ
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
             Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
+			Byte4 pad2;
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
             Vector3D effectorPosFromMiddle = {};//PoleVector(Model空間)
+			int32_t pad3;
+			Byte4 pad5;
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
             PrimitiveFigure::Triangle rootAndEffectorAndConstraintTriangle;
             PrimitiveFigure::Triangle jointTriangle;
             Vector3D constraintLocalPositionFromRoot;
+			Byte4 pad4;
 
         };
 
@@ -120,16 +133,25 @@ namespace MCB
             Vector3D taregetTriangleNormal;
             Vector3D constraintModelVector;
             Vector3D constraintWorldVector;
+			Byte4 pad1;
         };
         IKData ikData;//IKに関するデータ
         IKDebugData ikDebugData;
         bool lineColorEqualObject = false;
+		Byte7 pad9;
         Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
+		int32_t pad7;
         bool chengeObjectColor;
+		Byte7 pad8;
+		Byte4 pad10;
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
+
         void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
+		Node(const Node&) = delete;
+		Node();
+		Node& operator=(const Node&) = delete;
     }Node;
     //struct aiMesh;
     //struct aiMaterial;
@@ -149,25 +171,11 @@ namespace MCB
         //--------------
 
         //限定的に使用するNodesを直接取得する物(forで全参照したいときとか)
-        std::vector< std::unique_ptr<Node>>* GetNodes_()
-        {
-            return &nodes_;
-        };
-        Node* GetNode(std::string name)//与えられた名前のNodeを返す
-        {
-            for (auto& node : nodes_)
-            {
-                if (node->name == name)
-                {
-                    return node.get();
-                }
-            }
-            return nullptr; 
-        }
-        void SetNode(std::unique_ptr<Node> node)//Nodeを追加
-        {
-            nodes_.push_back(std::move(node));
-        }
+		std::vector< std::unique_ptr<Node>>* GetNodes_();
+		Node* GetNode(std::string name);//与えられた名前のNodeを返す
+
+		void SetNode(std::unique_ptr<Node> node);//Nodeを追加
+
         /// <summary>
         /// 与えられたポジションに近いNodeを返す
         /// </summary>
@@ -179,7 +187,7 @@ namespace MCB
 
         void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);//Animation前の準備等
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimation = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimationPtr = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);//どのNodeのキーフレームを見るのか
         //キーフレームの補完-------------
@@ -239,22 +247,14 @@ namespace MCB
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)
     class AnimationManager
     {
-        std::unordered_map<std::string, std::unique_ptr<Animation>> animations_;
+		std::unordered_map<std::string,std::unique_ptr<Animation>> animations_;
     public:
-        Animation* GetAnimation(std::string name) //アニメーションを取得
-        {
-            auto& itr = animations_.find(name);
-            if (itr == animations_.end())
-            {
-                if (!animations_.empty()) return animations_.begin()->second.get();
-                return nullptr;
-            }
-            return animations_[name].get();
+		Animation* GetAnimation(std::string name); //アニメーションを取得
 
-        };
-        void SetAnimation(std::unique_ptr<Animation> animation) {
-            animations_[animation->name] = std::move(animation);
-        }//アニメーションを追加
+		void SetAnimation(std::unique_ptr<Animation> animation);//アニメーションを追加
+		AnimationManager();
+		AnimationManager(const AnimationManager&) = delete;
+		AnimationManager& operator= (const AnimationManager&) = delete;
     };
 
     class AnimationModel
@@ -270,8 +270,13 @@ namespace MCB
         //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
         void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
         ~AnimationModel();
+
+		AnimationModel();
         std::string fileName_;//Modelのファイル名
         bool isDelete_ = false;//完全に削除していいかどうか
+	private:
+		Byte7 pad;
+	public:
         bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelデータをロード
         void CopyNodesWithMeshes( aiNode* node,const aiScene* scene, Node* targetParent = nullptr);//Nodeの階層構造並びにmeshの解析、抽出
         void processMesh(aiMesh* mesh, const aiScene* scene, AnimationMesh& tempmodel);//aiMesh内のデータを解析、抽出
@@ -279,7 +284,8 @@ namespace MCB
         void TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos);
         void Draw();//Modelの描画
         void DrawHeirarchy();
-        
+		AnimationModel(const AnimationModel&) = delete;
+		AnimationModel& operator=(const AnimationModel&) = delete;
     };
 }
 

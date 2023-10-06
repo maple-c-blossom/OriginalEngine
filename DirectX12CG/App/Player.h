@@ -9,8 +9,10 @@ namespace MCB
 {
     class Player :public Object3d
     {
+
     private:
         bool isGraund_ = true;
+		Byte3 pad;
         Vector3D fallV_;
         Input* input_ = Input::GetInstance();
         float speedFront_ = 0.0f;
@@ -22,13 +24,16 @@ namespace MCB
         float accelerator_ = 0.005f;
         float acceleratorfront_ = 0.05f;
         MCB::Vector3D rightVec_ = {1,0,0};
+		Byte4 pad2;
         Object3d* ground;
         Vector3D respownPosition_;
         float outYPosition = -20;
         float distoffSet = 0.00025f;
         Timer backTimer;
         bool back;
+		Byte3 pad3;
         Vector3D backVec;
+		Byte4 pad4;
     public:
         size_t runNormal;
         size_t runFast;

@@ -1,5 +1,8 @@
 #include "Quaternion.h"
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cmath>
+WarningIgnoreEnd
 #define PI 3.14159265358979323846264338327950288f
 using namespace MCB;
 
@@ -392,7 +395,10 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start,const Quaternion& end,
 
 MCB::Quaternion MCB::Quaternion::Slerp( Quaternion start, Quaternion end, float time)//係数を直で入力する用
 {
-	if (start == end) return start;
+	if ( start.operator== (end) )
+	{
+		return start;
+	}
 	Quaternion ans;
 	float dot;
 	Quaternion endDemo = end;

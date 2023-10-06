@@ -4,6 +4,12 @@ using namespace std;
 
 std::unordered_map<std::string, std::unique_ptr<Model>> ModelManager::modelMap_ = {};
 std::unordered_map<std::string, std::unique_ptr<AnimationModel>> ModelManager::animModelMap_ = {};
+MCB::ModelManager::~ModelManager()
+{
+}
+MCB::ModelManager::ModelManager()
+{
+}
 ModelManager* ModelManager::GetInstance()
 {
     static ModelManager inst;
@@ -12,10 +18,11 @@ ModelManager* ModelManager::GetInstance()
 
 ModelManager* MCB::ModelManager::GetInitInstance()
 {
-    static ModelManager inst;
-    inst.Init();
-    return &inst;
+    ModelManager* inst = GetInstance();
+    inst->Init();
+    return inst;
 }
+
 
 void MCB::ModelManager::Init()
 {
@@ -75,6 +82,7 @@ Model* MCB::ModelManager::GetModel(const string& fileName, bool smooth)
 
 AnimationModel* MCB::ModelManager::GetModel(const string& fileName, AnimationModel* ptr)
 {
+	static_cast< void >( ptr );
     auto itr = animModelMap_.find(fileName);
     if (itr == animModelMap_.end())
     {

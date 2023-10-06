@@ -8,6 +8,7 @@ MCB::ObjectMaterial::~ObjectMaterial()
     //constBuffMaterialB1->Unmap(0, nullptr);
 }
 
+
 void ObjectMaterial::Init()
 {
     Dx12* dx12 = Dx12::GetInstance();
@@ -24,9 +25,9 @@ void ObjectMaterial::Init()
 
     dx12->result_ = dx12->device_->CreateCommittedResource
     (
-        &HeapProp_,        //ÉqÅ[Évê›íË
+        &HeapProp_,        //„Éí„Éº„ÉóË®≠ÂÆö
         D3D12_HEAP_FLAG_NONE,
-        &Resdesc_,//ÉäÉ\Å[ÉXê›íË
+        &Resdesc_,//„É™„ÇΩ„Éº„ÇπË®≠ÂÆö
         D3D12_RESOURCE_STATE_GENERIC_READ,
         nullptr,
         IID_PPV_ARGS(&constBuffMaterialB1_)
@@ -44,7 +45,13 @@ void ObjectMaterial::Init()
 
     //constMapMaterial->color = XMFLOAT4(1, 1, 1, 1.0f);
 }
-
+MCB::ObjectMaterial::Material::Material()
+{
+		ambient = { 0.3f,0.3f,0.3f };
+		diffuse = { 0.0f,0.0f,0.0f };
+		specular = { 0.0f,0.0f,0.0f };
+		alpha = 1.0f;
+}
 void MCB::ObjectMaterial::Update()
 {
     constMapMaterial_->ambient = material_.ambient;
@@ -59,11 +66,11 @@ void MCB::ObjectMaterial::SetIndex(const D3D12_RESOURCE_DIMENSION& dimension, ui
     const D3D12_TEXTURE_LAYOUT& layput)
 {
     Resdesc_.Dimension = dimension;
-    Resdesc_.Width = sizeIB;
-    Resdesc_.Height = height;
-    Resdesc_.DepthOrArraySize = DepthOrArraySize;
-    Resdesc_.MipLevels = MipLevels;
-    Resdesc_.SampleDesc.Count = SampleDescCount;
+    Resdesc_.Width = static_cast<UINT64>(sizeIB);
+    Resdesc_.Height = static_cast< UINT >( height);
+    Resdesc_.DepthOrArraySize = static_cast< UINT16 >( DepthOrArraySize);
+    Resdesc_.MipLevels = static_cast< UINT16 >( MipLevels);
+    Resdesc_.SampleDesc.Count = static_cast< UINT >( SampleDescCount);
     Resdesc_.Layout = layput;
 }
 
@@ -71,14 +78,14 @@ void MCB::ObjectMaterial::SetVertexBuffer(const D3D12_HEAP_TYPE& heaptype,const 
     uint32_t sizeVB, int32_t height, int32_t DepthOrArraySize, 
     int32_t MipLevels, int32_t SampleDescCount,const D3D12_TEXTURE_LAYOUT& layput)
 {
-    HeapProp_.Type = heaptype; // GPUÇ÷ÇÃì]ëóóp
+    HeapProp_.Type = heaptype; // GPU„Å∏„ÅÆËª¢ÈÄÅÁî®
 
     Resdesc_.Dimension = dimension;
-    Resdesc_.Width = sizeVB; // í∏ì_ÉfÅ[É^ëSëÃÇÃÉTÉCÉY
-    Resdesc_.Height = height;
-    Resdesc_.DepthOrArraySize = DepthOrArraySize;
-    Resdesc_.MipLevels = MipLevels;
-    Resdesc_.SampleDesc.Count = SampleDescCount;
+    Resdesc_.Width = static_cast< UINT64 > (sizeVB); // È†ÇÁÇπ„Éá„Éº„ÇøÂÖ®‰Ωì„ÅÆ„Çµ„Ç§„Ç∫
+    Resdesc_.Height = static_cast< UINT >(height);
+    Resdesc_.DepthOrArraySize = static_cast< UINT16 >(DepthOrArraySize);
+    Resdesc_.MipLevels = static_cast< UINT16 > (MipLevels);
+    Resdesc_.SampleDesc.Count = static_cast< UINT >(SampleDescCount);
     Resdesc_.Layout = layput;
 
 }

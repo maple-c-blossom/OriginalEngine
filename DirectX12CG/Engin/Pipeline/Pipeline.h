@@ -1,12 +1,14 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <d3d12.h>
+WarningIgnoreEnd
 #include "RootSignature.h"
 namespace MCB
 {
 	class Pipeline
 	{
 	public:
-
 
 		D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc_{};
 
@@ -70,6 +72,9 @@ namespace MCB
 
 		void CreateGraphicsPipelineState();
 
+		Pipeline(const Pipeline&) = delete;
+		Pipeline& operator=(const Pipeline&) = delete;
+		Pipeline();
 	};
 }
 

@@ -22,6 +22,7 @@ double MCB::InQuad(double startPos, double endPos, double maxTime, double time)
 	double change = endPos - startPos;
 	return change * time * time + startPos;
 }
+
 double MCB::OutQuad(double startPos, double endPos, double maxTime, double time)
 {
 	time /= maxTime;
@@ -169,7 +170,7 @@ Triangle::Triangle()
 
 void Triangle::DrawTriangle(ICamera* camera)
 {
-
+	static_cast< void >( camera );
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
 
@@ -185,20 +186,20 @@ void Triangle::DrawTriangle(ICamera* camera)
 
 	triangle_.Update(true);
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->SetGraphicsRootConstantBufferView(2, triangleMaterial_.material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
-	//SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 	srvGpuHandle.ptr += triangle_.model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
-	//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
 	dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	dx12->commandList_->IASetVertexBuffers(0, 1, &triangleMaterial_.vbView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->SetGraphicsRootConstantBufferView(0, triangle_.GetConstBuffTrans()->GetGPUVirtualAddress());
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->DrawInstanced((uint32_t)triangleMaterial_.vertices_.size(), 1, 0, 0);
 }
 
@@ -221,7 +222,7 @@ Line::Line()
 
 void Line::DrawLine(ICamera* camera)
 {
-
+	static_cast< void >( camera );
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
 
@@ -235,21 +236,21 @@ void Line::DrawLine(ICamera* camera)
 
 
 
-	line.Update(camera);
+	line.Update();
 
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->SetGraphicsRootConstantBufferView(2, lineMaterial.material_.constBuffMaterialB1_->GetGPUVirtualAddress());
 
-	//SRVƒq[ƒv‚Ìæ“ªƒAƒhƒŒƒX‚ðŽæ“¾
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’å–å¾—
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = descriptor->srvHeap_->GetGPUDescriptorHandleForHeapStart();
 	srvGpuHandle.ptr += line.model_->texture_->texture->incrementNum_ * dx12->device_.Get()->GetDescriptorHandleIncrementSize(descriptor->srvHeapDesc_.Type);
-	//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ðƒpƒ‰ƒ[ƒ^1”Ô‚ÉÝ’è
+	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1ç•ªã«è¨­å®š
 	dx12->commandList_->SetGraphicsRootDescriptorTable(1, srvGpuHandle);
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	dx12->commandList_->IASetVertexBuffers(0, 1, &lineMaterial.vbView_);
-	//’è”ƒoƒbƒtƒ@ƒrƒ…[(CBV)‚ÌÝ’èƒRƒ}ƒ“ƒh
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(CBV)ã®è¨­å®šã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->SetGraphicsRootConstantBufferView(0, line.GetConstBuffTrans()->GetGPUVirtualAddress());
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒžãƒ³ãƒ‰
 	dx12->commandList_->DrawInstanced((uint32_t)lineMaterial.vertices_.size(), 1, 0, 0);
 }

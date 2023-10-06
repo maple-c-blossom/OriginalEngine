@@ -12,6 +12,10 @@
 
 int32_t WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine,_In_ int32_t nCmdShow)
 {
+	static_cast< void >( hInstance );
+	static_cast< void >( hPrevInstance );
+	static_cast< void >( lpCmdLine );
+	static_cast< void >( nCmdShow );
     std::make_unique<MCB::App>()->Run();
 	return 0;
 }

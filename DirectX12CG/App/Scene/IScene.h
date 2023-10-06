@@ -1,7 +1,7 @@
 #pragma once
-
-#pragma region •W€.h include
-
+#include"IgnoreWarning.h"
+#pragma region æ¨™æº–.h include
+WarningIgnoreBegin
 #include <d3dcompiler.h>
 #include <Windows.h>
 #include <d3d12.h>
@@ -14,10 +14,11 @@
 #include <memory>
 #include <DirectXTex.h>
 #include <array>
+#include <MyImgui/imgui.h>
+WarningIgnoreEnd
+#pragma endregion æ¨™æº–.h include
 
-#pragma endregion •W€.h include
-
-#pragma region ©ì.h include
+#pragma region è‡ªä½œ.h include
 #include "CollisionManager.h"
 #include "Input.h"
 #include "DxWindow.h"
@@ -48,7 +49,6 @@
 #include "Particle.h"
 #include "ICamera.h"
 #include "TextureManager.h"
-#include <MyImgui/imgui.h>
 #include "SphereCollider.h"
 #include "PlaneCollider.h"
 #include "RayCollider.h"
@@ -59,26 +59,27 @@
 #include "Timer.h"
 #include "LevelLoader.h"
 #include "PostEffect.h"
-#pragma endregion ©ì.h include
+#pragma endregion è‡ªä½œ.h include
 
 
 namespace MCB
 {
+
 	class IScene
 	{
 
 	protected:
-#pragma region DirectXŠî‘b‹@”\ŒQ
+#pragma region DirectXåŸºç¤æ©Ÿèƒ½ç¾¤
 		DxWindow* dxWindow_ = DxWindow::GetInstance();
-		//DirectXƒNƒ‰ƒX¶¬
+		//DirectXã‚¯ãƒ©ã‚¹ç”Ÿæˆ
 		Dx12* dx_ = Dx12::GetInstance();
-		//inputƒNƒ‰ƒX¶¬
+		//inputã‚¯ãƒ©ã‚¹ç”Ÿæˆ
 		Input* input_ = Input::GetInstance();
 
 		ShaderResource* descriptor_ = ShaderResource::GetInstance();
 
 		Depth* depth_;
-		//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^
+		//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 		RootParameter* rootparamsPtr_;
 
 		PipeLineManager* pipeline_;
@@ -91,18 +92,18 @@ namespace MCB
 
 		LightGroup* lights_ = LightGroup::GetInstance();
 
-		//•`‰æ‘Oˆ—‚Æ•`‰æŒãˆ—
+		//æç”»å‰å‡¦ç†ã¨æç”»å¾Œå‡¦ç†
 		MCB::Draw* draw_ = Draw::GetInstance();
 
 		//FBXLoader* fbxLoader = FBXLoader::GetInstance();
 	
-		//ƒTƒEƒ“ƒhƒ}ƒl[ƒWƒƒ[
+		//ã‚µã‚¦ãƒ³ãƒ‰ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 		SoundManager* soundManager_ = SoundManager::GetInstance();
 		ModelManager* modelManager_ = ModelManager::GetInstance();
-		//ƒNƒŠƒAƒJƒ‰[
-#pragma endregion DirectXŠî‘b‹@”\ŒQ
+		//ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
+#pragma endregion DirectXåŸºç¤æ©Ÿèƒ½ç¾¤
 		bool sceneEnd_ = false;
-
+		Byte7 pad;
 		std::shared_ptr<IScene> nextScene_ = nullptr;
 
 		ICamera* viewCamera_;
@@ -112,8 +113,14 @@ namespace MCB
 		std::unique_ptr<PostEffect> postEffect_ = std::make_unique<PostEffect>();
 	public:
 		ImguiManager imgui_;
-		float clearColor_[4] = { 0.0f,0.25f, 0.5f,0.0f }; // Â‚Á‚Û‚¢F
-		virtual ~IScene() {};
+		Byte3 pad2;
+		float clearColor_[4] = { 0.0f,0.25f, 0.5f,0.0f }; // é’ã£ã½ã„è‰²
+		Byte4 pad3;
+		virtual ~IScene();
+		IScene();
+		IScene(const IScene&) = delete;
+		IScene& operator=(const IScene&) = delete;
+
 		virtual void Initialize() = 0;
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
@@ -127,19 +134,19 @@ namespace MCB
 		virtual void SpriteInit() = 0;
 		virtual void ParticleInit() = 0;
 		virtual void MatrixUpdate() = 0;
-		void ImGuiDraw() { imgui_.Draw(); }
+		void ImGuiDraw();
 		virtual void ImGuiUpdate() = 0;
 		virtual std::unique_ptr<IScene> GetNextScene() = 0;
 		virtual void CheckAllColision() = 0;
-		bool GetIsSceneEnd() { return sceneEnd_; }
+		bool GetIsSceneEnd();
 
-		Depth* GetDepthPtr() { return depth_; }
-		Depth& GetDepth() { return *depth_; }
-		//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^
-		RootParameter* GetRootparamsPtr() { return rootparamsPtr_; }
+		Depth* GetDepthPtr();
+		Depth& GetDepth();
+		//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
+		RootParameter* GetRootparamsPtr();
 		
-		PipeLineManager* GetpipelinePtr() { return pipeline_; }
-		PipeLineManager& Getpipeline() { return *pipeline_; }
+		PipeLineManager* GetpipelinePtr();
+		PipeLineManager& Getpipeline();
 	};
 
 }

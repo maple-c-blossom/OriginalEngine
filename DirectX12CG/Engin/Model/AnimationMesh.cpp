@@ -115,8 +115,8 @@ void MCB::AnimationMesh::Init()
     for (auto& itr : material_)
     {
         itr.SetIndex(D3D12_RESOURCE_DIMENSION_BUFFER, static_cast<uint32_t>(sizeIB_), 1, 1, 1, 1, D3D12_TEXTURE_LAYOUT_ROW_MAJOR);
-        CreateIndexBuffer(itr.HeapProp_, D3D12_HEAP_FLAG_NONE, itr.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
 
+        CreateIndexBuffer(itr.HeapProp_, D3D12_HEAP_FLAG_NONE, itr.Resdesc_, D3D12_RESOURCE_STATE_GENERIC_READ);
     }
     Dx12::GetInstance()->result_ = IndexMaping();
     SetIbView(DXGI_FORMAT_R16_UINT);

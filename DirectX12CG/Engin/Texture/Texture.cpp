@@ -1,11 +1,20 @@
 #include "Texture.h"
 #include "MCBFloat.h"
+WarningIgnoreBegin
 #include <assert.h>
-
+WarningIgnoreEnd
 using namespace MCB;
 using namespace DirectX;
 
+MCB::Texture::Texture()
+{
 
+}
+
+MCB::Texture::Texture(const Texture&)
+{
+
+}
 
 MCB::Texture::~Texture()
 {
@@ -14,12 +23,12 @@ MCB::Texture::~Texture()
 
 void MCB::Texture::CreateTexture(const wchar_t* FileName, uint16_t incrementNum)
 {
-    Dx12* dx12 = Dx12::GetInstance();
+    
     ShaderResource* srv = ShaderResource::GetInstance();
 
     HRESULT result = texfile_.LoadTexture(FileName, WIC_FLAGS_NONE);
 
-    assert(SUCCEEDED(result) && "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼");
  /*   if (!SUCCEEDED(result))
     {
         CreateNoTextureFileIsTexture();
@@ -29,19 +38,19 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName, uint16_t incrementNum)
     result = mipMap_.GenerateMipMap(&texfile_, TEX_FILTER_DEFAULT, 0);
     //----------------------------
 
-    assert(SUCCEEDED(result) && "ƒ~ƒbƒvƒ}ƒbƒv¶¬ƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆã‚¨ãƒ©ãƒ¼");
 
-    //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+    //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
     texImg_.SetImageDataRGBA(Float4(1.0f, 0.0f, 0.0f, 1.0f));
     //------------------------------------
 
-     //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+     //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
     texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
-    texBuff_.SetTexResourceDesc(texfile_, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+    texBuff_.SetTexResourceDesc(texfile_, 1);
     //--------------------------------------
 
 
-    //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+    //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
     result = texBuff_.CommitResouce( D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
@@ -57,29 +66,29 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName, uint16_t incrementNum)
 
 void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::string& filename, uint16_t incrementNum)
 {
-    Dx12* dx12 = Dx12::GetInstance();
+   
     ShaderResource* srv = ShaderResource::GetInstance();
 
     HRESULT result = texfile_.LoadTexture(directoryPath, filename);
 
-    assert(SUCCEEDED(result) && "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼");
 
     result = mipMap_.GenerateMipMap(&texfile_, TEX_FILTER_DEFAULT, 0);
     //----------------------------
 
-    assert(SUCCEEDED(result) && "ƒ~ƒbƒvƒ}ƒbƒv¶¬ƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆã‚¨ãƒ©ãƒ¼");
 
-    //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+    //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
     texImg_.SetImageDataRGBA(Float4(1.0f, 0.0f, 0.0f, 1.0f));
     //------------------------------------
 
-     //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+     //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
     texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
-    texBuff_.SetTexResourceDesc(texfile_, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+    texBuff_.SetTexResourceDesc(texfile_, 1);
     //--------------------------------------
 
 
-    //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+    //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
     result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
@@ -96,7 +105,7 @@ void MCB::Texture::SetSrvHeap()
 {
     if (srvptr_ == nullptr)
     {
-        assert("SRVƒfƒXƒNƒŠƒvƒ^ì‚Á‚½Œã‚Ésrvptr‚Éƒ|ƒCƒ“ƒ^‚ğ“n‚µ‚Ä‚­‚¾‚³‚¢Bsrvptr‚Ínullptr‚Å‚µ‚½B");
+        assert("SRVãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ä½œã£ãŸå¾Œã«srvptrã«ãƒã‚¤ãƒ³ã‚¿ã‚’æ¸¡ã—ã¦ãã ã•ã„ã€‚srvptrã¯nullptrã§ã—ãŸã€‚");
     }
 
     srvptr_->SetSrvHeap(incrementNum_);
@@ -108,29 +117,29 @@ void MCB::Texture::SetSrvHeap()
 
 void MCB::Texture::CreateTexture(const wchar_t* FileName)
 {
-    Dx12* dx12 = Dx12::GetInstance();
+    
     ShaderResource* srv = ShaderResource::GetInstance();
 
     HRESULT result = texfile_.LoadTexture(FileName, WIC_FLAGS_NONE);
 
-    assert(SUCCEEDED(result) && "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼");
 
     result = mipMap_.GenerateMipMap(&texfile_, TEX_FILTER_DEFAULT, 0);
     //----------------------------
 
-    assert(SUCCEEDED(result) && "ƒ~ƒbƒvƒ}ƒbƒv¶¬ƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆã‚¨ãƒ©ãƒ¼");
 
-    //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+    //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
     texImg_.SetImageDataRGBA(Float4(1.0f, 0.0f, 0.0f, 1.0f));
     //------------------------------------
 
-     //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+     //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
     texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
-    texBuff_.SetTexResourceDesc(texfile_, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+    texBuff_.SetTexResourceDesc(texfile_, 1);
     //--------------------------------------
 
 
-    //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+    //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
     result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
@@ -144,29 +153,29 @@ void MCB::Texture::CreateTexture(const wchar_t* FileName)
 
 void MCB::Texture::CreateTexture(const std::string& directoryPath, const std::string& filename)
 {
-    Dx12* dx12 = Dx12::GetInstance();
+   ;
     ShaderResource* srv = ShaderResource::GetInstance();
 
     HRESULT result = texfile_.LoadTexture(directoryPath, filename);
 
-    assert(SUCCEEDED(result) && "ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚¨ãƒ©ãƒ¼");
 
     result = mipMap_.GenerateMipMap(&texfile_, TEX_FILTER_DEFAULT, 0);
     //----------------------------
 
-    assert(SUCCEEDED(result) && "ƒ~ƒbƒvƒ}ƒbƒv¶¬ƒGƒ‰[");
+    assert(SUCCEEDED(result) && "ãƒŸãƒƒãƒ—ãƒãƒƒãƒ—ç”Ÿæˆã‚¨ãƒ©ãƒ¼");
 
-    //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+    //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
     texImg_.SetImageDataRGBA(Float4(1.0f, 0.0f, 0.0f, 1.0f));
     //------------------------------------
 
-     //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+     //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
     texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
-    texBuff_.SetTexResourceDesc(texfile_, D3D12_RESOURCE_DIMENSION_TEXTURE2D, 1);
+    texBuff_.SetTexResourceDesc(texfile_, 1);
     //--------------------------------------
 
 
-    //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+    //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
     result = texBuff_.CommitResouce( D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
     texBuff_.TransferMipmatToTexBuff(texfile_, nullptr, result);
     //-----------------------------------
@@ -183,14 +192,14 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
 {
     if (postEffect)
     {
-        Dx12* dx12 = Dx12::GetInstance();
+       
         ShaderResource* srv = ShaderResource::GetInstance();
 
-        //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+        //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
         texImg_.SetImageDataRGBA(Float4(1.0f, 1.0f, 1.0f, 1.0f));
         //------------------------------------
 
-         //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+         //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
         texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
         texBuff_.SetNoTextureFileTexResourceDescForPostEffect();
         //--------------------------------------
@@ -198,7 +207,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
         D3D12_CLEAR_VALUE val;
         val.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
         val.Color[0] = 0.25f; val.Color[1] = 0.5f; val.Color[2] = 0.1f; val.Color[3] = 1.0f;
-        //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------
@@ -211,20 +220,20 @@ void MCB::Texture::CreateNoTextureFileIsTexture(bool postEffect)
     }
     else
     {
-        Dx12* dx12 = Dx12::GetInstance();
+        
         ShaderResource* srv = ShaderResource::GetInstance();
 
-        //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+        //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
         texImg_.SetImageDataRGBA(Float4(1.0f, 1.0f, 1.0f, 1.0f));
         //------------------------------------
 
-         //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+         //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
         texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
         texBuff_.SetNoTextureFileTexResourceDesc();
         //--------------------------------------
 
 
-        //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------
@@ -242,11 +251,11 @@ void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool post
 {
     if (postEffect)
     {
-        Dx12* dx12 = Dx12::GetInstance();
+        
         ShaderResource* srv = ShaderResource::GetInstance();
 
 
-         //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+         //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
         texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
         texBuff_.SetNoTextureFileTexResourceDescForPostEffect();
         //--------------------------------------
@@ -254,7 +263,7 @@ void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool post
         D3D12_CLEAR_VALUE val;
         val.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
         val.Color[0] = 0.25f; val.Color[1] = 0.5f; val.Color[2] = 0.1f; val.Color[3] = 1.0f;
-        //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &val);
         texBuff_.TransferMipmatToTexBuff(result);
         //-----------------------------------
@@ -267,20 +276,20 @@ void MCB::Texture::CreateNoTextureFileIsTexture(uint16_t incrementNum, bool post
     }
     else
     {
-        Dx12* dx12 = Dx12::GetInstance();
+       
         ShaderResource* srv = ShaderResource::GetInstance();
 
-        //‰æ‘œƒCƒ[ƒWƒf[ƒ^‚Ìì¬----------------------
+        //ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ‡ãƒ¼ã‚¿ã®ä½œæˆ----------------------
         texImg_.SetImageDataRGBA(Float4(1.0f, 1.0f, 1.0f, 1.0f));
         //------------------------------------
 
-         //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@İ’è---------------------------------------
+         //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡è¨­å®š---------------------------------------
         texBuff_.SetTexHeapProp(D3D12_HEAP_TYPE_CUSTOM, D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
         texBuff_.SetNoTextureFileTexResourceDesc();
         //--------------------------------------
 
 
-        //ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬----------------------
+        //ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ----------------------
         HRESULT result = texBuff_.CommitResouce(D3D12_HEAP_FLAG_NONE, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr);
         texBuff_.TransferMipmatToTexBuff(texImg_, result);
         //-----------------------------------

@@ -49,6 +49,7 @@ namespace MCB
         {
             std::string name;
 			int32_t pad;
+			Byte4 pad2;
             DirectX::XMMATRIX offsetMatrix;//Model空間のBoneをボーン空間に変換するための行列
             DirectX::XMMATRIX finalMatrix;//ボーン空間に変換した最終的な行列
 

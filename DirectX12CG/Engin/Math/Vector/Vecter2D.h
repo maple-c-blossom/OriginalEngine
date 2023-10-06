@@ -1,5 +1,8 @@
 #pragma once
+#include "IgnoreWarning.h"
+WarningIgnoreBegin
 #include <cstdint>
+WarningIgnoreEnd
 namespace MCB
 {
 

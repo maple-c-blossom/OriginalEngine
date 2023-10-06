@@ -11,15 +11,16 @@ Depth::Depth()
     InitDepthStencilView();
 }
 
+
 void Depth::InitDepthResDesc()
 {
     DxWindow* dxWindow = DxWindow::GetInstance();
     depthResDesc_.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
-    depthResDesc_.Width = dxWindow->sWINDOW_WIDTH_;
-    depthResDesc_.Height = dxWindow->sWINDOW_HEIGHT_;
-    depthResDesc_.DepthOrArraySize = 1;
+    depthResDesc_.Width = static_cast<UINT64> (dxWindow->sWINDOW_WIDTH_);
+    depthResDesc_.Height = static_cast< UINT > ( dxWindow->sWINDOW_HEIGHT_);
+    depthResDesc_.DepthOrArraySize = static_cast< UINT16 > (1);
     depthResDesc_.Format = DXGI_FORMAT_D32_FLOAT;
-    depthResDesc_.SampleDesc.Count = 1;
+    depthResDesc_.SampleDesc.Count = static_cast< UINT > (1);
     depthResDesc_.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 }
 
@@ -38,7 +39,7 @@ void Depth::InitDepthBuffer()
 {
     Dx12* dx12 = Dx12::GetInstance();
     dx12->result_ = dx12->device_->CreateCommittedResource(&depthHeapProp_, D3D12_HEAP_FLAG_NONE, &depthResDesc_, D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue_, IID_PPV_ARGS(&depthBuffer_));
-    assert(SUCCEEDED(dx12->result_) && "InitDepthBuffer関数でエラー");
+    assert(SUCCEEDED(dx12->result_) && "InitDepthBuffer髢｢謨ｰ縺ｧ繧ｨ繝ｩ繝ｼ");
 }
 
 void Depth::InitDepthDescriptorHeap()
@@ -48,7 +49,7 @@ void Depth::InitDepthDescriptorHeap()
     dsvHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 
     dx12->result_ = dx12->device_->CreateDescriptorHeap(&dsvHeapDesc_, IID_PPV_ARGS(&dsvHeap_));
-    assert(SUCCEEDED(dx12->result_) && "InitDepthDescriptorHeap関数でエラー");
+    assert(SUCCEEDED(dx12->result_) && "InitDepthDescriptorHeap髢｢謨ｰ縺ｧ繧ｨ繝ｩ繝ｼ");
 }
 
 void Depth::InitDepthStencilView()
@@ -57,7 +58,7 @@ void Depth::InitDepthStencilView()
     dsvDesc_.Format = DXGI_FORMAT_D32_FLOAT;
     dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
     dx12->device_->CreateDepthStencilView(depthBuffer_.Get(), &dsvDesc_, dsvHeap_->GetCPUDescriptorHandleForHeapStart());
-    assert(SUCCEEDED(dx12->result_) && "InitDepthStencilView関数でエラー");
+    assert(SUCCEEDED(dx12->result_) && "InitDepthStencilView髢｢謨ｰ縺ｧ繧ｨ繝ｩ繝ｼ");
 }
 
 void Depth::SetDepthStencilState(D3D12_GRAPHICS_PIPELINE_STATE_DESC& pipelineDesc)
