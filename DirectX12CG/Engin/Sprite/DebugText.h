@@ -29,7 +29,7 @@ namespace MCB
 		int32_t pad2;
 		Byte4 pad3;
 		void Init(Texture* texture);
-		void Print( float x,  float y,  float scale, const std::string& text, ... );
+		void Print( float x,  float y,  float scale, const char* text, ... );
 		void AllDraw();
 	};
 

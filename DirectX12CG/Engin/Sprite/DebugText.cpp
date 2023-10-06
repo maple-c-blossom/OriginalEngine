@@ -8,12 +8,12 @@ void MCB::DebugText::Init(Texture* texture)
 }
 
 
-void MCB::DebugText::Print(float x, float y, float scale, const std::string& text, ...)
+void MCB::DebugText::Print(float x, float y, float scale, const char* text, ...)
 {
 	
 	va_list args;
 	va_start(args,text);
-	int32_t w = vsnprintf(buffer_, sMAX_CHAR_COUNT_ - 1, text.c_str(), args);
+	int32_t w = vsnprintf(buffer_, sMAX_CHAR_COUNT_ - 1, text, args);
 	for (int32_t i = 0; i < w; i++)
 	{
 		if (spriteIndex_ >= sMAX_CHAR_COUNT_) break;

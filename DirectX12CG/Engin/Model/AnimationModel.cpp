@@ -271,7 +271,7 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 			tempmodel.indices_.push_back(static_cast<uint16_t>(face.mIndices[j]));
 	}
 
-	if (mesh->mMaterialIndex > 0) {
+	
 		aiColor3D color;
 		ObjectMaterial mat;
 		aiString name;
@@ -298,15 +298,6 @@ void AnimationModel::processMesh(aiMesh* mesh, const aiScene* scene, AnimationMe
 		mat.Init();
 		tempmodel.material_.push_back(mat);
 		tempmodel.textures_ = loadMaterialTextures(scene->mMaterials[mesh->mMaterialIndex], aiTextureType_DIFFUSE, "texture_diffuse", scene);
-		//textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-	}
-	else
-	{
-		ObjectMaterial mat;
-		mat.Init();
-		tempmodel.textures_.push_back(textureManager_->CreateNoTextureFileIsTexture());
-		tempmodel.material_.push_back(mat);
-	}
 	std::vector<std::list<SetWeight>> weightList(tempmodel.vertices_.size());
 	for (uint32_t i = 0; i < mesh->mNumBones; i++)
 	{
