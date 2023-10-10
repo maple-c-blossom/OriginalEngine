@@ -20,6 +20,8 @@ WarningIgnoreEnd
 #include "Quaternion.h"
 #include "ICamera.h"
 #include "Object3d.h"
+#include "RayCollider.h"
+#include <CollisionManager.h>
 
 namespace MCB
 {
@@ -93,17 +95,19 @@ namespace MCB
         Vector3D startPosition;//ボーンの根本のポジション(ローカル空間)
         Vector3D boneVec;//ボーンのベクトル(ローカル空間)
         Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
+		Ray worldBoneRay;//ボーンをレイに見立てて当たり判定を行う。
 		Byte4 pad2;
         float boneLength;//ボーンの長さ
         bool updated = false;
 		Byte7 pad4;
         bool jointView = true;
-		Byte7 pad5;
+		Byte3 pad5;
         PrimitiveFigure::Line boneLine;
         struct IKData
         {
             bool isIK = false;//IKを行うか（自分がendJointかどうか）
-			Byte7 pad1;
+			bool isCollisionIk = false;
+			Byte6 pad1;
             Node* middleJointNode = nullptr;//ミドルジョイントのポインタ
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
@@ -185,7 +189,7 @@ namespace MCB
         /// <returns></returns>
         Node* GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin = {0,0,0}, uint32_t closestNum = 1);
 
-        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, bool loop = true);//Animation前の準備等
+        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, Object3d* obj = nullptr,bool loop = true);//Animation前の準備等
 
         void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimationPtr = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
 
@@ -268,7 +272,7 @@ namespace MCB
         Skeleton skeleton;//スケルトン情報
         AnimationManager animationManager;//アニメーション情報
         //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
-        void AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation = "Null", bool loop = true);
+		void AnimationUpdate(float& timeInSeconds,const std::string& currentAnimation = "Null",Object3d* obj = nullptr ,bool loop = true);
         ~AnimationModel();
 
 		AnimationModel();

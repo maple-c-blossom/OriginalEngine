@@ -14,10 +14,10 @@ using namespace Assimp;
 using namespace DirectX;
 using namespace std;
 
-void MCB::AnimationModel::AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation, bool loop)
+void MCB::AnimationModel::AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation,Object3d* obj ,bool loop)
 {
 	Animation* anim = animationManager.GetAnimation(currentAnimation);
-	skeleton.boneAnimTransform(timeInSeconds,anim,loop);
+	skeleton.boneAnimTransform(timeInSeconds,anim,obj,loop);
 }
 
 MCB::AnimationModel::~AnimationModel()
@@ -469,7 +469,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	skeleton.SetTwoBoneIK(objPos, targetPos);
 }
 
-  void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation, bool loop)
+  void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation,Object3d* obj, bool loop)
   {
     
     //if(!nodeAnimMapPtr)
@@ -515,6 +515,35 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	for (auto& itr : nodes_)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
+		if ( obj  && itr->ikData.isCollisionIk)
+		{
+			if ( itr->ikData.isCollisionIk )
+			{
+				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
+				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
+				itr->ikData.middleJointNode->worldBoneRay.StartPosition_ =
+					MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
+					(itr->ikData.middleJointNode->worldBoneRay.StartPosition_) * obj->matWorld_.matWorld_);
+				//itr->ikData.middleJointNode->worldBoneRay.rayVec_ *= -1;
+				itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
+				RayCastHit info;
+				float distRange = itr->ikData.middleJointNode->worldBoneRay.range_ + 4;
+				bool hit = CollisionManager::GetInstance()->Raycast(itr->ikData.middleJointNode->worldBoneRay,
+					ATTRIBUTE_LANDSHAPE,&info,distRange);
+				if ( hit )
+				{
+					itr->ikData.iKEffectorPosition = info.inter_;
+					itr->ikData.isIK = true;
+					itr->ikData.constraintWorldVector = obj->nowFrontVec_ + info.inter_;
+				}
+				else
+				{
+					itr->ikData.isIK = false;
+				}
+				
+			}
+
+		}
 	}
 	AllNodeMatrixForModelToBone();
   /*  if(transforms->getCount() == 0)
@@ -574,6 +603,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	  else pNode->startPosition = { 0,0,0 };
 	  pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
 	  pNode->boneLength = pNode->boneVec.V3Len();
+	  pNode->worldBoneRay.rayVec_ = pNode->boneVec;
+	  pNode->worldBoneRay.StartPosition_ = MCB::MCBMatrix::GetTranslate(pNode->AnimaetionParentMat);
+	  pNode->worldBoneRay.range_ = pNode->boneLength;
 
 
   }
@@ -904,7 +936,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   if (node)
 	   {
 		   node->ikData.isIK = true;
-		  
+		   if ( node->ikData.isCollisionIk && node->ikData.middleJointNode == nullptr)
+		   {
+			   node->ikData.middleJointNode = node->parent;
+
+			   node->ikData.middleJointNode->worldBoneRay.StartPosition_ =
+				   MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
+				   (node->ikData.middleJointNode->worldBoneRay.StartPosition_) * mat.matWorld_);
+		   }
 		   node->ikData.iKEffectorPosition = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(targetPos) * worldMatInv);
 		   node->ikData.constraintWorldVector = constraintPosition;
 		   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
@@ -1011,6 +1050,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 								nodeIkData.iKEffectorPosition.vec_.y_, nodeIkData.iKEffectorPosition.vec_.z_);
 							ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f", nodeIkData.constraintWorldVector.vec_.x_,
 								nodeIkData.constraintWorldVector.vec_.y_, nodeIkData.constraintWorldVector.vec_.z_);
+							if ( node->ikData.isCollisionIk )
+							{
+								ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",
+									node->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.x_,
+								node->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.y_,
+									node->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.z_);
+
+							}
 							ImGui::TreePop();
 						}
 					}
@@ -1105,10 +1152,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   }
 	   return nullptr;
    }
-   MCB::Node::Node() {};
+   MCB::Node::Node() {
+	   
+   };
    void MCB::Skeleton::SetNode(std::unique_ptr<Node> node)
    {
 	   nodes_.push_back(std::move(node));
+	   
    }
 
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)

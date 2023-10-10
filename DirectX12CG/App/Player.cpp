@@ -18,7 +18,7 @@ void MCB::Player::SetRespowPosition(const Vector3D& pos)
 void MCB::Player::Init()
 {
 	Object3d::Init();
-	scale_ = { 1.25,1.25,1.25 };
+	scale_ = { 0.01f,0.01f,0.01f };
 	SetCollider(make_unique<SphereCollider>(Vector3D{0,0.5f,0},0.5f));
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
 	UpdateMatrix();
@@ -27,6 +27,7 @@ void MCB::Player::Init()
 	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
 	rotation_.x = ConvertRadius(0);
+
 }
 
 void MCB::Player::UniqueUpdate()
@@ -58,6 +59,11 @@ void MCB::Player::UniqueUpdate()
 			isGraund_ = true;
 			if(info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_) - sphere->GetRaius() * 2.0f);
 			Object3d::UpdateMatrix();
+			for ( uint8_t i = 0; i < footBoneName.size(); i++ )
+			{
+				animationModel_->skeleton.GetNode(footBoneName[ i ])->ikData.isCollisionIk = true;
+				//animationModel_->skeleton.SetTwoBoneIK();
+			}
 		}
 		else
 		{

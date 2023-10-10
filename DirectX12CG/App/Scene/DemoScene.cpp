@@ -111,6 +111,7 @@ void MCB::DemoScene::Update()
             }
             else
             {
+				//test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName)->ikData.isCollisionIk = true;
                 test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
                     { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
                     { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
@@ -287,7 +288,7 @@ void MCB::DemoScene::Object3DInit()
 
     play_.Init();
     play_.model_ = sphereModel_.get();
-    play_.position_ = { 0,3,0 };
+    play_.position_ = { 0,2,0 };
     play_.camera_ = viewCamera_;
 
 
@@ -307,8 +308,8 @@ void MCB::DemoScene::Object3DInit()
         effectorObjects_[i].camera_ = viewCamera_;
     }
     test2Animation_.animationModel_ = anim2Model_.get();
-    test2Animation_.scale_ = { 1,1,1 };
-    test2Animation_.position_ = { 0,0,0 };
+    test2Animation_.scale_ = { 0.01f,0.01f,0.01f };
+    test2Animation_.position_ = { 0,2,0 };
     test2Animation_.camera_ = viewCamera_;
 
     poleVec_[0] = {3,2,0};

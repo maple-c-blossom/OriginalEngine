@@ -34,6 +34,8 @@ namespace MCB
 		Byte3 pad3;
         Vector3D backVec;
 		Byte4 pad4;
+
+		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
     public:
         size_t runNormal;
         size_t runFast;

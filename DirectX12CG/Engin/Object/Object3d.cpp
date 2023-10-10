@@ -246,7 +246,7 @@ void MCB::Object3d::AnimationUpdate(bool isBillBord)
 
   
     
-    animationModel_->AnimationUpdate(animeTime_,currentAnimation_);
+    animationModel_->AnimationUpdate(animeTime_,currentAnimation_,this);
 
 
 }
