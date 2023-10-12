@@ -9,7 +9,7 @@ using namespace DirectX;
 
 void MCB::DebugCamera::Inilialize()
 {
-	view_.CreateMatrixView(XMFLOAT3(0.0f, 0.0f, -10.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
+	view_.CreateMatrixView(XMFLOAT3( 0,3.0f,-4.5f ), XMFLOAT3( 0,3.0f,0.f ), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), static_cast<float>(DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_), 0.1f, 4000.0f);
 
 	eye_.vec_.x_ = view_.eye_.x;
@@ -64,9 +64,9 @@ void MCB::DebugCamera::Update()
 	if (input_->IsKeyDown(DIK_RSHIFT)) {
 		disEyeTarget_ += static_cast<float>( -input_->GetMousePosition().z) * (disEyeTarget_ * 0.001f);
 	}
-	if (disEyeTarget_ < 10) {
-		disEyeTarget_ = 10;
-	}
+	//if (disEyeTarget_ < 10) {
+	//	disEyeTarget_ = 4;
+	//}
 #pragma endregion
 
 	target_ += rightVec * ((float)(input_->IsKeyDown(DIK_RIGHT) - input_->IsKeyDown(DIK_LEFT)) * 0.25f);

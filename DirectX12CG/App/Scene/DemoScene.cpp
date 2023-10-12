@@ -37,6 +37,9 @@ void MCB::DemoScene::MatrixUpdate()
 
 void MCB::DemoScene::Update()
 {
+	
+	if ( debugView_ )test2Animation_.color_.w_ = { 0.05f };
+	else test2Animation_.color_.w_ = { 1.0f };
     if (objChenge_)
     {
         test2Animation_.animationModel_ = animModel_.get();
@@ -137,18 +140,11 @@ void MCB::DemoScene::PostEffectDraw()
     {
         obj.Draw();
     }
-    if (debugView_)
-    {
-        test2Animation_.animationModel_->skeleton.JointObjectDraw();
-        pipeline_->SetLinePipeLine();
-        test2Animation_.animationModel_->skeleton.JointLineDraw();
-    }
+    test2Animation_.animationModel_->skeleton.JointObjectDraw();
+    pipeline_->SetLinePipeLine();
+    test2Animation_.animationModel_->skeleton.JointLineDraw();
     pipeline_->SetFbxPipeLine();
-    if (debugView_)
-    {
-        pipeline_->SetFbxPipeLine(true);
-    }
-    else test2Animation_.AnimationDraw();
+	test2Animation_.AnimationDraw();
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -230,6 +226,7 @@ MCB::DemoScene::~DemoScene()
 void MCB::DemoScene::Initialize()
 {
     camera_.Inilialize();
+
     viewCamera_ = &camera_;
     LoadTexture();
     LoadModel();
@@ -242,6 +239,14 @@ void MCB::DemoScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
+	for ( uint8_t i = 0; i < 4; i++ )
+	{
+		test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+			{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },
+			{ poleVec_[ i ].x,poleVec_[ i ].y,poleVec_[ i ].z },ikBoneName_[ i ].endJointName.c_str(),ikBoneName_[ i ].middleJointName.c_str(),ikBoneName_[ i ].rootJointName.c_str());
+		test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
+
+	}
 }
 
 void MCB::DemoScene::LoadModel()
@@ -302,8 +307,8 @@ void MCB::DemoScene::Object3DInit()
         effectorObjects_[i].Init();
         //testsphere.model = BoxModel;
         effectorObjects_[i].model_ = sphereModel_.get();
-        effectorObjects_[i].scale_ = { 0.25f,0.25f,0.25f };
-        effectorObjects_[i].position_ = { 5,1,0 };
+        effectorObjects_[i].scale_ = { 0.05f,0.05f,0.05f };
+        effectorObjects_[i].position_ = effectorPos[i];
         effectorObjects_[i].rotation_.y = ConvertRadius(90);
         effectorObjects_[i].camera_ = viewCamera_;
     }

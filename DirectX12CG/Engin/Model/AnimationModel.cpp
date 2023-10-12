@@ -472,12 +472,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
   void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation,Object3d* obj, bool loop)
   {
     
-    //if(!nodeAnimMapPtr)
-    //{
-    //  nodeAnimMapPtr = new NodeAnimMap();
-    //}
-    
-    //NSLog(@"%d", scene->mNumAnimations);
 	  float animationTime = 0;
 	  if (animation != nullptr)
 	  {
@@ -517,8 +511,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
 		if ( obj  && itr->ikData.isCollisionIk)
 		{
-			if ( itr->ikData.isCollisionIk )
-			{
 				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
 				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
 				itr->ikData.middleJointNode->worldBoneRay.StartPosition_ =
@@ -540,8 +532,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				{
 					itr->ikData.isIK = false;
 				}
-				
-			}
 
 		}
 	}
@@ -1225,11 +1215,16 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 	   object->Update(object->rotationQ_);
 
+		ikData.constraintObj.position_.x = ikData.constraintWorldVector.vec_.x_;
+		ikData.constraintObj.position_.y = ikData.constraintWorldVector.vec_.y_;
+		ikData.constraintObj.position_.z = ikData.constraintWorldVector.vec_.z_;
+		ikData.constraintObj.scale_ = { 0.15f,0.15f,0.15f };
+		ikData.constraintObj.model_ = model;
+		ikData.constraintObj.color_ = { 0.5,0,0,1 };
+		ikData.constraintObj.camera_ = camera;
+		ikData.constraintObj.Update();
 	   if (ikData.isIK)
 	   {
-		   ikData.constraintObj.position_.x = ikData.constraintWorldVector.vec_.x_;
-		   ikData.constraintObj.position_.y = ikData.constraintWorldVector.vec_.y_;
-		   ikData.constraintObj.position_.z = ikData.constraintWorldVector.vec_.z_;
 		   ikData.constraintLine.line.parent_ = ikData.rootJointNode->object.get();
 		   ikData.constraintLine.PointA_ = { 0,0,0 };
 		   ikData.constraintLine.PointB_.x_ = ikData.constraintLocalPositionFromRoot.vec_.x_;
@@ -1266,11 +1261,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   else ikData.effectorVecFromMiddle.line.color_ = lineDefaultColor;
 
 
-		   ikData.constraintObj.scale_ = { 0.5f,0.5f,0.5f };
-		   ikData.constraintObj.model_ = model;
-		   ikData.constraintObj.color_ = { 0.5,0,0,1 };
-		   ikData.constraintObj.camera_ = camera;
-		   ikData.constraintObj.Update();
 
 
 		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.parent_ = ikData.rootJointNode->object.get();
@@ -1287,9 +1277,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    {
 	   //object->Draw();
 
+		ikData.constraintObj.Draw();
 	   if (ikData.isIK)
 	   {
-		   ikData.constraintObj.Draw();
 		   //ikData.rootAndEffectorAndConstraintTriangle.DrawTriangle(object->camera_);
 		   //ikData.jointTriangle.DrawTriangle(object->camera_);
 	   }
