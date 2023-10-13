@@ -27,7 +27,7 @@ void ImguiManager::Init()
 		ShaderResource::GetInstance()->srvHeap_->GetCPUDescriptorHandleForHeapStart(),
 		ShaderResource::GetInstance()->srvHeap_->GetGPUDescriptorHandleForHeapStart());
 	ImGuiIO& io = GetIO();
-	io.Fonts->AddFontDefault();
+	io.Fonts->AddFontFromFileTTF("Resources\\meiryo.ttc",18.0f,NULL,io.Fonts->GetGlyphRangesJapanese());
 }
 
 void MCB::ImguiManager::Begin()

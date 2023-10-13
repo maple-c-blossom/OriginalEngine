@@ -39,9 +39,10 @@ namespace MCB
 
 #pragma endregion テクスチャ
 		bool debugView_;
+		bool objInvisibleView_;
 		std::array<bool,4> isIk_;
-		std::array<bool,4> noMove;
-		Byte7 pad2;
+		std::array<bool,4> noMove = { {true,true,true,true} };
+		Byte6 pad2;
 		//サウンド
 #pragma region サウンド
 		size_t selectSound_;
@@ -68,7 +69,7 @@ namespace MCB
 		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.2f,1.94f,-0.2f),DirectX::XMFLOAT3(0.15f,3.3f,-0.75),
 			DirectX::XMFLOAT3(0.2f,2.1f,0.9f),DirectX::XMFLOAT3(-0.09f,2.20f,0.9f) 
 		};
-		std::array<bool,4> PoleVecMove_ = { {true,true,true,true} };
+		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
 		bool objChenge_;
 		Byte3 pad5;
 		struct IKDataSet

@@ -143,7 +143,7 @@ namespace MCB
         IKDebugData ikDebugData;
         bool lineColorEqualObject = false;
 		Byte7 pad9;
-        Float4 lineDefaultColor = {1.f,1.f,0.f,1.f};
+        Float4 lineDefaultColor = {0.f,0.f,0.f,1.f};
 		int32_t pad7;
         bool chengeObjectColor;
 		Byte7 pad8;
@@ -245,7 +245,7 @@ namespace MCB
         void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model, const Float3& scale = {1.0f,1.0f,1.0f});
         void JointObjectDraw();
         void JointLineDraw();
-        Float4 lineDefaultColor = { 1.f,1.f,0.f,1.f };
+        Float4 lineDefaultColor = { 0.f,0.f,0.f,1.f };
     };
 
     //Model事にそのModelのアニメーションを管理する用のクラス(Model事よりSkeleton毎の方がいいか思案中)

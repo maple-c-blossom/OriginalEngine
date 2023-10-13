@@ -1287,12 +1287,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    void MCB::Node::JointLineDraw()
    {
 	   boneLine.DrawLine(object->camera_);
-	   if (ikData.isIK)
-	   {
-		   ikData.constraintLine.DrawLine(object->camera_);
-		   ikData.effectorVecFromRoot.DrawLine(object->camera_);
-		   ikData.effectorVecFromMiddle.DrawLine(object->camera_);
-	   }
+	   //if (ikData.isIK)
+	   //{
+		  // ikData.constraintLine.DrawLine(object->camera_);
+		  // ikData.effectorVecFromRoot.DrawLine(object->camera_);
+		  // ikData.effectorVecFromMiddle.DrawLine(object->camera_);
+	   //}
    }
 
    Animation* MCB::AnimationManager::GetAnimation(std::string name)

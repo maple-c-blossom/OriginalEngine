@@ -38,7 +38,7 @@ void MCB::DemoScene::MatrixUpdate()
 void MCB::DemoScene::Update()
 {
 	
-	if ( debugView_ )test2Animation_.color_.w_ = { 0.05f };
+	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
 	else test2Animation_.color_.w_ = { 1.0f };
     if (objChenge_)
     {
@@ -109,8 +109,8 @@ void MCB::DemoScene::Update()
             if (objChenge_)
             {
                 test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
-                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, "Bone3");
+                    { effectorObjects_[0].position_.x,effectorObjects_[0].position_.y,effectorObjects_[0].position_.z },
+                    { poleVec_[0].x,poleVec_[0].y,poleVec_[0].z }, "Bone3");
             }
             else
             {
@@ -120,31 +120,40 @@ void MCB::DemoScene::Update()
                     { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
             }
         }
-        else
+        else if(!objChenge_)
         {
             test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
             test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
         }
+		else if(objChenge_  && isIk_[0])
+		{
+			test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
+			test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+		}
     }
     MatrixUpdate();
 }
 
 void MCB::DemoScene::PostEffectDraw()
 {
-    postEffect_->PreDraw();
-    //pipeline_->SetObjPipeLine(false, true);
-    Skydorm_.Draw();
-    pipeline_->SetObjPipeLine();
-    ground_.Draw();
-    for (auto& obj : effectorObjects_)
-    {
-        obj.Draw();
-    }
-    test2Animation_.animationModel_->skeleton.JointObjectDraw();
-    pipeline_->SetLinePipeLine();
-    test2Animation_.animationModel_->skeleton.JointLineDraw();
-    pipeline_->SetFbxPipeLine();
-	test2Animation_.AnimationDraw();
+	postEffect_->PreDraw();
+	//pipeline_->SetObjPipeLine(false, true);
+	Skydorm_.Draw();
+	pipeline_->SetObjPipeLine();
+	ground_.Draw();
+	for ( auto& obj : effectorObjects_ )
+	{
+		obj.Draw();
+	}
+	test2Animation_.animationModel_->skeleton.JointObjectDraw();
+	pipeline_->SetLinePipeLine();
+	test2Animation_.animationModel_->skeleton.JointLineDraw();
+	if ( !objInvisibleView_ )
+	{
+	
+		pipeline_->SetFbxPipeLine();
+		test2Animation_.AnimationDraw();
+	}
     pipeline_->SetObjPipeLine();
     postEffect_->PostDraw();
 }
@@ -177,22 +186,40 @@ void MCB::DemoScene::CheckAllColision()
 void MCB::DemoScene::ImGuiUpdate()
 {
     imgui_.Begin();
-    ImGui::Checkbox("debugView", &debugView_);
-    if (ImGui::TreeNode("IkSet"))
+	if ( ImGui::TreeNode("説明") )
+	{
+		ImGui::Text("このデモシーンはIKの挙動を確認するためのシーンです。");
+		ImGui::Text("球がEffector,四角錐がPoleVectorです");
+		ImGui::Text("操作:WASDでEffectorやPoleVectorを移動させることができます");
+		ImGui::Text("操作:SPACE,LCONTROLでEffectorやPoleVectorを上下に移動させることができます");
+		ImGui::TreePop();
+	}
+
+	ImGui::Text(" ");
+	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
+	ImGui::Checkbox("半透明表示",&debugView_);
+	ImGui::Checkbox("オブジェクトの表示を表示しない",&objInvisibleView_);
+
+    if (ImGui::TreeNode("IK 制御"))
     {
         for (uint8_t i = 0; i < 4; i++)
         {
             std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
-                bone = bone + ":isIk";
+				ImGui::Text("ONの時、IKを行う");
+                bone = bone + ":isIK";
                 ImGui::Checkbox(bone.c_str(), &isIk_[i]);
-                bone = bone + ":NoMove";
+				ImGui::Text("ONの時、エフェクター,PoleVectorの移動を禁止");
+				bone = ikBoneName_[ i ].endJointName;
+                bone = bone + ":エフェクター,PoleVectorの移動を禁止";
                 ImGui::Checkbox(bone.c_str(), &noMove[i]);
                 bone = ikBoneName_[i].endJointName;
-                bone = bone + ":poleVectorMove";
+				ImGui::Text("ONの時、エフェクターの代わりにPoleVectorを移動する");
+                bone = bone + ":PoleVectorを動かす(Effectorは動かない)";
                 ImGui::Checkbox(bone.c_str(), &PoleVecMove_[i]);
                 bone = ikBoneName_[i].endJointName;
+				ImGui::Text("エフェクターの位置");
                 bone = bone + ":effector";
                 ImGui::Text("%s:%f,%f,%f", bone.c_str(), effectorObjects_[i].position_.x, effectorObjects_[i].position_.y, effectorObjects_[i].position_.z);
                 ImGui::TreePop();
@@ -200,9 +227,9 @@ void MCB::DemoScene::ImGuiUpdate()
         }
         ImGui::TreePop();
     }
-    ImGui::Checkbox("IkModelChenge", &objChenge_);
+    //ImGui::Checkbox("IkModelChenge", &objChenge_);
     test2Animation_.animationModel_->DrawHeirarchy();
-    ImGui::Text("testAni:%f,%f,%f", test2Animation_.position_.x, test2Animation_.position_.y, test2Animation_.position_.z);
+
     imgui_.End();
 }
 
@@ -317,10 +344,6 @@ void MCB::DemoScene::Object3DInit()
     test2Animation_.position_ = { 0,2,0 };
     test2Animation_.camera_ = viewCamera_;
 
-    poleVec_[0] = {3,2,0};
-    poleVec_[1] = {3,2,0};
-    poleVec_[2] = {3,2,0};
-    poleVec_[3] = {3,2,0};
 }
 
 MCB::DemoScene::IKDataSet::IKDataSet()
