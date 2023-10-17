@@ -2,6 +2,7 @@
 
 #include "IgnoreWarning.h"
 WarningIgnoreBegin
+
 #include <string>
 #include <memory>
 #include <assimp/IOStream.hpp>
@@ -26,6 +27,8 @@ WarningIgnoreEnd
 namespace MCB
 {
 
+PragmaPush
+PragmaWarningNum(4324)
     //頂点データ構造体-------------------------------------
     typedef struct FbxVertex
     {
@@ -74,10 +77,10 @@ namespace MCB
 
     typedef struct Node
     {
+
         std::string name;//ノードの名前
         std::vector<std::unique_ptr<AnimationMesh>> meshes; //出力先メッシュ配列
-		int32_t pad1;
-		Byte4 pad3;
+		int64_t pad;
 		DirectX::XMVECTOR scale = { { 1,1,1,0 } };//ローカルのスケール情報
 		DirectX::XMVECTOR rotation = { { 0,0,0,0 } };//ローカルの回転情報
 		DirectX::XMVECTOR translation = { { 0,0,0,1 } };//ローカルの位置情報
@@ -91,17 +94,17 @@ namespace MCB
 		DirectX::XMMATRIX defaultModelTransform = { DirectX::XMMatrixIdentity() };//初期姿勢時のModel空間の行列
         Node* parent = nullptr;//親ノードへのポインタ
         std::vector<Node*>children{};//子ノードへのポインタ
+		Vector3D worldPosition;
         Vector3D endPosition;//ボーンの先端のポジション(ローカル空間)
         Vector3D startPosition;//ボーンの根本のポジション(ローカル空間)
         Vector3D boneVec;//ボーンのベクトル(ローカル空間)
         Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
 		Ray worldBoneRay;//ボーンをレイに見立てて当たり判定を行う。
-		Byte4 pad2;
         float boneLength;//ボーンの長さ
         bool updated = false;
-		Byte7 pad4;
         bool jointView = true;
-		Byte3 pad5;
+		bool lineView = false;
+		Byte1 pad4;
         PrimitiveFigure::Line boneLine;
         struct IKData
         {
@@ -117,8 +120,9 @@ namespace MCB
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
             Vector3D effectorPosFromMiddle = {};//PoleVector(Model空間)
+            Vector3D effectorWorldPos = {};//PoleVector(Model空間)
 			int32_t pad3;
-			Byte4 pad5;
+			int64_t pad6;
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
@@ -159,7 +163,7 @@ namespace MCB
     }Node;
     //struct aiMesh;
     //struct aiMaterial;
-
+PragmaPop
     class Skeleton
     {
     private:

@@ -509,33 +509,40 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	for (auto& itr : nodes_)
 	{
 		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
+		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
+		itr->worldPosition = temp.GetTranslate(temp);
 		if ( obj  && itr->ikData.isCollisionIk)
 		{
-				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
-				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
-				itr->ikData.middleJointNode->worldBoneRay.StartPosition_ =
-					MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
-					(itr->ikData.middleJointNode->worldBoneRay.StartPosition_) * obj->matWorld_.matWorld_);
-				//itr->ikData.middleJointNode->worldBoneRay.rayVec_ *= -1;
-				itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
-				RayCastHit info;
-				float distRange = itr->ikData.middleJointNode->worldBoneRay.range_ + 4;
-				bool hit = CollisionManager::GetInstance()->Raycast(itr->ikData.middleJointNode->worldBoneRay,
-					ATTRIBUTE_LANDSHAPE,&info,distRange);
-				if ( hit )
-				{
-					itr->ikData.iKEffectorPosition = info.inter_;
-					itr->ikData.isIK = true;
-					itr->ikData.constraintWorldVector = obj->nowFrontVec_ + info.inter_;
-				}
-				else
-				{
-					itr->ikData.isIK = false;
-				}
+				//if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
+				//itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
+				//itr->ikData.middleJointNode->worldBoneRay.StartPosition_ =
+				//	MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
+				//	(itr->ikData.middleJointNode->worldBoneRay.StartPosition_) * obj->matWorld_.matWorld_);
+				////itr->ikData.middleJointNode->worldBoneRay.rayVec_ *= -1;
+				//itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
+				//RayCastHit info;
+				//float distRange = itr->ikData.middleJointNode->worldBoneRay.range_ + 4;
+				//bool hit = CollisionManager::GetInstance()->Raycast(itr->ikData.middleJointNode->worldBoneRay,
+				//	ATTRIBUTE_LANDSHAPE,&info,distRange);
+				//if ( hit )
+				//{
+				//	itr->ikData.iKEffectorPosition = info.inter_;
+				//	itr->ikData.isIK = true;
+				//	itr->ikData.constraintWorldVector = obj->nowFrontVec_ + info.inter_;
+				//}
+				//else
+				//{
+				//	itr->ikData.isIK = false;
+				//}
 
 		}
 	}
 	AllNodeMatrixForModelToBone();
+	for ( auto& itr : nodes_ )
+	{
+		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
+		itr->worldPosition = temp.GetTranslate(temp);
+	}
   /*  if(transforms->getCount() == 0)
       transforms->addElements((int32_t)boneMapping().size());
     
@@ -934,6 +941,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
 				   (node->ikData.middleJointNode->worldBoneRay.StartPosition_) * mat.matWorld_);
 		   }
+		   node->ikData.effectorWorldPos = targetPos;
 		   node->ikData.iKEffectorPosition = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(targetPos) * worldMatInv);
 		   node->ikData.constraintWorldVector = constraintPosition;
 		   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
@@ -1016,7 +1024,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 					ImGui::Text("BoneVec:%f,%f,%f", node->boneVec.vec_.x_, node->boneVec.vec_.y_, node->boneVec.vec_.z_);
 					ImGui::Text("BoneLength:%f", node->boneLength);
-					ImGui::Checkbox("jointView", &node->jointView);
 					Float4* objCol = &node->object->color_;
 					float* color[3] = { &objCol->x_,&objCol->y_,&objCol->z_ };
 					ImGui::Checkbox("chengeObjectColor", &node->chengeObjectColor);
@@ -1028,6 +1035,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 						if (ImGui::TreeNode("IkData"))
 						{
 							Node::IKData& nodeIkData = node->ikData;
+							//ImGui::Checkbox("lineView",&node->lineView);
 							if (node->ikData.rootJointNode)
 							{
 								ImGui::Text("RootJointName:%s", nodeIkData.rootJointNode->name.c_str());
@@ -1223,13 +1231,16 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		ikData.constraintObj.color_ = { 0.5,0,0,1 };
 		ikData.constraintObj.camera_ = camera;
 		ikData.constraintObj.Update();
+		if ( lineView )
+		{
+			ikData.constraintLine.PointA_ = ikData.middleJointNode->worldPosition;
+			ikData.constraintLine.PointB_ = ikData.constraintWorldVector;
+			ikData.effectorVecFromRoot.PointA_ = worldPosition;
+			ikData.effectorVecFromRoot.PointB_ = ikData.effectorWorldPos;
+
+		}
 	   if (ikData.isIK)
 	   {
-		   ikData.constraintLine.line.parent_ = ikData.rootJointNode->object.get();
-		   ikData.constraintLine.PointA_ = { 0,0,0 };
-		   ikData.constraintLine.PointB_.x_ = ikData.constraintLocalPositionFromRoot.vec_.x_;
-		   ikData.constraintLine.PointB_.y_ = ikData.constraintLocalPositionFromRoot.vec_.y_;
-		   ikData.constraintLine.PointB_.z_ = ikData.constraintLocalPositionFromRoot.vec_.z_;
 		   if (ikData.rootJointNode->lineColorEqualObject)
 		   {
 			   ikData.constraintLine.line.color_ = ikData.rootJointNode->object->color_;
@@ -1237,11 +1248,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   else ikData.constraintLine.line.color_ = lineDefaultColor;
 
 
-		   ikData.effectorVecFromRoot.line.parent_ = ikData.rootJointNode->object.get();
-		   ikData.effectorVecFromRoot.PointA_ = { 0,0,0 };
-		   ikData.effectorVecFromRoot.PointB_.x_ = ikData.effectorPosFromRoot.vec_.x_;
-		   ikData.effectorVecFromRoot.PointB_.y_ = ikData.effectorPosFromRoot.vec_.y_;
-		   ikData.effectorVecFromRoot.PointB_.z_ = ikData.effectorPosFromRoot.vec_.z_;
+		 
 		   if (ikData.rootJointNode->lineColorEqualObject)
 		   {
 			   ikData.effectorVecFromRoot.line.color_ = ikData.rootJointNode->object->color_;
@@ -1287,12 +1294,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    void MCB::Node::JointLineDraw()
    {
 	   boneLine.DrawLine(object->camera_);
-	   //if (ikData.isIK)
-	   //{
-		  // ikData.constraintLine.DrawLine(object->camera_);
-		  // ikData.effectorVecFromRoot.DrawLine(object->camera_);
+	   if (lineView)
+	   {
+		   ikData.constraintLine.DrawLine(object->camera_);
+		   ikData.effectorVecFromRoot.DrawLine(object->camera_);
 		  // ikData.effectorVecFromMiddle.DrawLine(object->camera_);
-	   //}
+	   }
    }
 
    Animation* MCB::AnimationManager::GetAnimation(std::string name)

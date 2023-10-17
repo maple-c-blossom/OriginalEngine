@@ -208,16 +208,13 @@ void MCB::DemoScene::ImGuiUpdate()
             if (ImGui::TreeNode(bone.c_str()))
             {
 				ImGui::Text("ONの時、IKを行う");
-                bone = bone + ":isIK";
-                ImGui::Checkbox(bone.c_str(), &isIk_[i]);
+                ImGui::Checkbox("isIK", &isIk_[i]);
 				ImGui::Text("ONの時、エフェクター,PoleVectorの移動を禁止");
-				bone = ikBoneName_[ i ].endJointName;
-                bone = bone + ":エフェクター,PoleVectorの移動を禁止";
-                ImGui::Checkbox(bone.c_str(), &noMove[i]);
-                bone = ikBoneName_[i].endJointName;
+                ImGui::Checkbox("エフェクター,PoleVectorの移動を禁止", &noMove[i]);
 				ImGui::Text("ONの時、エフェクターの代わりにPoleVectorを移動する");
-                bone = bone + ":PoleVectorを動かす(Effectorは動かない)";
-                ImGui::Checkbox(bone.c_str(), &PoleVecMove_[i]);
+                ImGui::Checkbox("PoleVectorを動かす(Effectorは動かない)", &PoleVecMove_[i]);
+				ImGui::Text("EffectorとPoleVectorまでの線を描画");
+				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
                 bone = ikBoneName_[i].endJointName;
 				ImGui::Text("エフェクターの位置");
                 bone = bone + ":effector";
@@ -271,9 +268,10 @@ void MCB::DemoScene::Initialize()
 		test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
 			{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },
 			{ poleVec_[ i ].x,poleVec_[ i ].y,poleVec_[ i ].z },ikBoneName_[ i ].endJointName.c_str(),ikBoneName_[ i ].middleJointName.c_str(),ikBoneName_[ i ].rootJointName.c_str());
-		test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
+		//test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
 
 	}
+		test2Animation_.currentAnimation_ = "Tpose.001";
 }
 
 void MCB::DemoScene::LoadModel()
