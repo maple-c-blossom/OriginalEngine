@@ -187,20 +187,20 @@ void MCB::Player::Move()
 	{
 		if (speedFront_ != 0)
 		{
-			if (speedFront_ > 0)currentAnimation_ = "Run";
-			if (speedFront_ < 0)currentAnimation_ = "Run_Back";
+			if (speedFront_ > 0)currentAnimation_ = "Run.001";
+			if (speedFront_ < 0)currentAnimation_ = "Run.001";
 
 		}
 	}
 	else if(speedRight_ != 0)
 	{
-		if (speedRight_ > 0)currentAnimation_ = "Run_Right";
-		if (speedRight_ < 0)currentAnimation_ = "Run_Left";
+		if (speedRight_ > 0)currentAnimation_ = "Run.001";
+		if (speedRight_ < 0)currentAnimation_ = "Run.001";
 	}
 	else
 	{
 		animationSpeed_ = 0.05f;
-		currentAnimation_ = "Idle";
+		currentAnimation_ = "Tpose.001";
 	}
 	animationSpeed_ = max(abs(speedFront_) / 7, abs(speedRight_) / 7);
 	position_.x += nowFrontVec_.vec_.x_ * speedFront_;

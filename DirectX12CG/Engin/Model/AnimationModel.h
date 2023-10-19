@@ -282,7 +282,8 @@ PragmaPop
 		AnimationModel();
         std::string fileName_;//Modelのファイル名
         bool isDelete_ = false;//完全に削除していいかどうか
-	private:
+
+		private:
 		Byte7 pad;
 	public:
         bool Load( std::string fileName,const std::string& fileType = "gltf");//Modelデータをロード

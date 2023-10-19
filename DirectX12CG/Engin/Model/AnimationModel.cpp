@@ -39,6 +39,8 @@ MCB::AnimationModel::AnimationModel()
 }
 
 
+
+
 bool MCB::AnimationModel::Load(std::string fileName,const std::string& fileType) {
 	// Create an instance of the Importer class
 	Assimp::Importer importer;
@@ -511,37 +513,38 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
-		if ( obj  && itr->ikData.isCollisionIk)
-		{
-				//if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
-				//itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
-				//itr->ikData.middleJointNode->worldBoneRay.StartPosition_ =
-				//	MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate
-				//	(itr->ikData.middleJointNode->worldBoneRay.StartPosition_) * obj->matWorld_.matWorld_);
-				////itr->ikData.middleJointNode->worldBoneRay.rayVec_ *= -1;
-				//itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
-				//RayCastHit info;
-				//float distRange = itr->ikData.middleJointNode->worldBoneRay.range_ + 4;
-				//bool hit = CollisionManager::GetInstance()->Raycast(itr->ikData.middleJointNode->worldBoneRay,
-				//	ATTRIBUTE_LANDSHAPE,&info,distRange);
-				//if ( hit )
-				//{
-				//	itr->ikData.iKEffectorPosition = info.inter_;
-				//	itr->ikData.isIK = true;
-				//	itr->ikData.constraintWorldVector = obj->nowFrontVec_ + info.inter_;
-				//}
-				//else
-				//{
-				//	itr->ikData.isIK = false;
-				//}
-
-		}
+	
 	}
 	AllNodeMatrixForModelToBone();
 	for ( auto& itr : nodes_ )
 	{
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
+		if ( obj && itr->ikData.isCollisionIk )
+		{
+				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
+				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
+				itr->ikData.middleJointNode->worldBoneRay.StartPosition_ = itr->ikData.middleJointNode->worldPosition;
+				itr->ikData.middleJointNode->worldBoneRay.rayVec_ = Vector3D(itr->ikData.middleJointNode->worldPosition,
+																			 itr->worldPosition);
+				itr->ikData.middleJointNode->worldBoneRay.range_ = itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Len();
+				itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
+				RayCastHit info;
+				float distRange = itr->ikData.middleJointNode->worldBoneRay.range_;
+				bool hit = CollisionManager::GetInstance()->Raycast(itr->ikData.middleJointNode->worldBoneRay,
+					ATTRIBUTE_LANDSHAPE,&info,distRange);
+				if ( hit )
+				{
+					itr->ikData.iKEffectorPosition = info.inter_;
+					itr->ikData.isIK = true;
+					itr->ikData.constraintWorldVector = obj->nowFrontVec_ + info.inter_;
+				}
+				else
+				{
+					itr->ikData.isIK = false;
+				}
+
+		}
 	}
   /*  if(transforms->getCount() == 0)
       transforms->addElements((int32_t)boneMapping().size());

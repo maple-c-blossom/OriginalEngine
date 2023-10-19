@@ -61,13 +61,14 @@ namespace MCB
 		Object3d ground_;
 		Object3d Skydorm_;
 		std::array<Object3d,4> effectorObjects_;
-		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.25f,3.f,0.05f),
-			DirectX::XMFLOAT3(-0.15f,3.0f,-0.5f),
-			DirectX::XMFLOAT3(0.09f,2.4f,0.05f),DirectX::XMFLOAT3(-0.1f,2.0f,0.3f)};
+		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,0.05f),
+			DirectX::XMFLOAT3(-0.6f,3.45f,0.0f),
+			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f)};
 		Object3d test2Animation_;
 		Player play_;
-		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.2f,1.94f,-0.2f),DirectX::XMFLOAT3(0.15f,3.3f,-0.75),
-			DirectX::XMFLOAT3(0.2f,2.1f,0.9f),DirectX::XMFLOAT3(-0.09f,2.20f,0.9f) 
+		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.24f,0.05f),
+			DirectX::XMFLOAT3(-0.4f,3.25f,-0.05f),
+			DirectX::XMFLOAT3(-0.05f,2.6f,0.3f),DirectX::XMFLOAT3(0.11f,2.6f,0.3f) 
 		};
 		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
 		bool objChenge_;
