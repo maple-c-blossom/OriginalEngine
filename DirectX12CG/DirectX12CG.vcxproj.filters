@@ -423,6 +423,9 @@
     <ClCompile Include="Engin\Texture\TexSample.cpp">
       <Filter>ソース ファイル\Engin\Texture</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Camera\DemoCamera.cpp">
+      <Filter>ソース ファイル\Engin\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -741,6 +744,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Util\Pading.h">
       <Filter>ヘッダー ファイル\Engin\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Camera\DemoCamera.h">
+      <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

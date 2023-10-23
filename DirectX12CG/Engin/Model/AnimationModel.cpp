@@ -788,13 +788,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,
 		   EffectorLocalFromRootPos, xmLocalConstraintVectorFromRoot);
-	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointA_ = rootJointLocalPositionFromRoot;
-	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointB_ = EffectorLocalFromRootPos;
-	   endJoint.ikData.rootAndEffectorAndConstraintTriangle.PointC_ = xmLocalConstraintVectorFromRoot;
 
-	   endJoint.ikData.jointTriangle.PointA_ = rootJointLocalPositionFromRoot;
-	   endJoint.ikData.jointTriangle.PointB_ = middleJointLocalPositionFromRoot;
-	   endJoint.ikData.jointTriangle.PointC_ = endJointLocalPositionFromRoot;
+
+
 
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1;//同一平面上にいるようにする回転
@@ -1271,14 +1267,22 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   else ikData.effectorVecFromMiddle.line.color_ = lineDefaultColor;
 
 
-
-
-		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.parent_ = ikData.rootJointNode->object.get();
-		   ikData.jointTriangle.triangle_.parent_ = ikData.rootJointNode->object.get();
-		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;
+		   ikData.rootAndEffectorAndConstraintTriangle.PointA_ = ikData.rootJointNode->worldPosition;
+		   ikData.rootAndEffectorAndConstraintTriangle.PointB_ = ikData.effectorWorldPos;
+		   ikData.rootAndEffectorAndConstraintTriangle.PointC_ = ikData.constraintWorldVector;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_.x_ = 1.f;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_.y_ = 0.f;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_.z_ = 0.f;
 		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.color_.w_ = 0.25f;
-		   ikData.jointTriangle.triangle_.color_ = ikData.rootJointNode->object->color_;
+		   ikData.rootAndEffectorAndConstraintTriangle.triangle_.position_ = { 0,0,0 };
+		   ikData.jointTriangle.PointA_ = ikData.rootJointNode->worldPosition;
+		   ikData.jointTriangle.PointB_ = ikData.middleJointNode->worldPosition;
+		   ikData.jointTriangle.PointC_ = worldPosition;
+		   ikData.jointTriangle.triangle_.color_.x_ = 0.f;
+		   ikData.jointTriangle.triangle_.color_.y_ = 1.f;
+		   ikData.jointTriangle.triangle_.color_.z_ = 0.f;
 		   ikData.jointTriangle.triangle_.color_.w_ = 0.25f;
+		   ikData.jointTriangle.triangle_.position_ = {0,0,0};
 	   }
 	   //object->matWorld_.matWorld_ *= worldObjMatrix;
    }
@@ -1290,8 +1294,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		ikData.constraintObj.Draw();
 	   if (ikData.isIK)
 	   {
-		   //ikData.rootAndEffectorAndConstraintTriangle.DrawTriangle(object->camera_);
-		   //ikData.jointTriangle.DrawTriangle(object->camera_);
+		   ikData.rootAndEffectorAndConstraintTriangle.DrawTriangle(object->camera_);
+		   ikData.jointTriangle.DrawTriangle(object->camera_);
 	   }
    }
    void MCB::Node::JointLineDraw()

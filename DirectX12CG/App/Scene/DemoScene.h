@@ -5,7 +5,7 @@
 WarningIgnoreBegin
 #include <cmath>
 WarningIgnoreEnd
-#include "DebugCamera.h"
+#include "DemoCamera.h"
 #include "Player.h"
 namespace MCB
 {
@@ -15,7 +15,7 @@ namespace MCB
 	private:
 #pragma region 変換行列
 		//変換行列
-		DebugCamera camera_;
+		DemoCamera camera_;
 
 #pragma endregion 変換行列
 

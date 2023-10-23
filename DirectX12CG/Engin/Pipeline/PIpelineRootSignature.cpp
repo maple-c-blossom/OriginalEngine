@@ -135,6 +135,144 @@ void MCB::PipelineRootSignature::Create3DObjectPipeline( Depth& depth, RootParam
 
 }
 
+
+
+void MCB::PipelineRootSignature::Create3DObjectNoCullingPipeline(Depth& depth,RootParameter& rootparams,uint16_t blendMode)
+{
+
+	texSample_.Init();
+
+   // 頂点シェーダの読み込みとコンパイル--------------------------------
+#pragma region 頂点シェーダの読み込みとコンパイル
+
+	shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJVertexShader.hlsl","main",VS);
+
+#pragma endregion 頂点シェーダの読み込みとコンパイル
+	//------------------------------------------
+
+	 //ジオメトリシェーダの読み込みとコンパイル---------------
+#pragma region ジオメトリシェーダの読み込みとコンパイル
+
+	shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJGeometryShader.hlsl","main",GS);
+
+#pragma endregion ジオメトリシェーダの読み込みとコンパイル
+	//---------------------------------
+
+
+
+	// ピクセルシェーダの読み込みとコンパイル-------------------------------
+#pragma region ピクセルシェーダの読み込みとコンパイル
+
+	shader_.ShaderCompile(L"Resources\\Shaders\\OBJShader\\OBJPixelShader.hlsl","main",PS);
+
+#pragma endregion ピクセルシェーダの読み込みとコンパイル
+	//--------------------------------
+
+#pragma region 頂点シェーダとピクセルシェーダをパイプラインに設定
+
+	pipeline_.SetGpipleneDescAll(&shader_);
+
+#pragma endregion 頂点シェーダとピクセルシェーダをパイプラインに設定
+	//-----------------------------------
+
+	//サンプルマスクとラスタライザステートの設定------------------------------------
+#pragma region サンプルマスクとラスタライザステートの設定
+	pipeline_.SetSampleMask();
+
+	pipeline_.SetSpriteAllAddRasterizerState();
+#pragma endregion サンプルマスクとラスタライザステートの設定
+	//------------------------------------
+
+
+	 //ブレンドステートの設定-------------------------------
+#pragma region ブレンドステートの設定
+
+	pipeline_.SetRenderTaegetBlendDesc(pipeline_.pipelineDesc_.BlendState.RenderTarget[ 0 ]);
+
+	pipeline_.SetRenderTargetWriteMask();
+
+	pipeline_.SetNormalBlendDesc();
+	switch ( blendMode )
+	{
+	case Alpha:
+		pipeline_.SetAlphaBlend();
+		break;
+	case Add:
+		pipeline_.SetAddBlend();
+		break;
+	case Sub:
+		pipeline_.SetSubBlend();
+		break;
+	case Inv:
+		pipeline_.SetInvBlend();
+		break;
+	default:
+		pipeline_.SetAlphaBlend();
+		break;
+	}
+
+
+#pragma endregion ブレンドステートの設定
+	//--------------------------
+
+	//頂点レイアウトの設定------------------
+#pragma region 頂点レイアウトの設定
+
+	pipeline_.pipelineDesc_.InputLayout.pInputElementDescs = shader_.inputLayout_;
+	pipeline_.pipelineDesc_.InputLayout.NumElements = _countof(shader_.inputLayout_);
+
+#pragma endregion 頂点レイアウトの設定
+	//----------------------------
+
+	//図形の形状を三角形に設定-------------------------
+	pipeline_.SetPrimitiveTopologyType();
+   //------------------
+
+   //その他の設定----------------
+#pragma region その他の設定
+
+
+	pipeline_.SetNumRenderTargets(2);
+	pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,0);
+	pipeline_.SetRTVFormats(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,1);
+	pipeline_.SetSampleDescCount();
+
+#pragma endregion その他の設定
+	//----------------
+
+	depth.SetDepthStencilState(pipeline_.pipelineDesc_);
+
+	//ルートシグネチャの生成--------------------------
+#pragma region ルートシグネチャの生成
+
+
+	rootsignature_.InitRootSignatureDesc(rootparams,texSample_);
+
+	rootsignature_.SetSerializeRootSignature(shader_);
+
+	rootsignature_.CreateRootSignature();
+
+   // パイプラインにルートシグネチャをセット
+
+	pipeline_.SetRootSignature(rootsignature_);
+
+#pragma endregion ルートシグネチャの生成
+	//--------------------------------
+
+   //パイプラインステートの生成-------------------------
+#pragma region パイプラインステートの生成
+
+	pipeline_.CreateGraphicsPipelineState();
+
+#pragma endregion パイプラインステートの生成
+	//-----------------------------
+
+
+
+}
+
+
+
 void MCB::PipelineRootSignature::CreateLinePipeline(Depth& depth, RootParameter& rootparams, uint16_t blendMode)
 {
 

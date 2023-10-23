@@ -3,6 +3,7 @@
 MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 {
 	for (uint16_t i = 0; i < objPipeline_.size(); i++) objPipeline_[i].Create3DObjectPipeline(*depth, *rootpamrams, i);
+	for (uint16_t i = 0; i < objNoCullingPipeline_.size(); i++) objNoCullingPipeline_[i].Create3DObjectNoCullingPipeline(*depth, *rootpamrams, i);
 	for (uint16_t i = 0; i < linePipeline_.size(); i++) linePipeline_[i].CreateLinePipeline(*depth, *rootpamrams, i);
 	for (uint16_t i = 0; i < objPipelineWire_.size(); i++) objPipelineWire_[i].Create3DObjectWirePipeline(*depth, *rootpamrams, i);
 	for (uint16_t i = 0; i < ObjTilingPipeline_.size(); i++) ObjTilingPipeline_[i].Create3DObjectTilingPipeline(*depth, *rootpamrams, i);
@@ -15,12 +16,16 @@ MCB::PipeLineManager::PipeLineManager(RootParameter* rootpamrams, Depth* depth)
 
 
 
-void MCB::PipeLineManager::SetObjPipeLine(bool wireFrame,bool tiling,BlendMode blend)
+void MCB::PipeLineManager::SetObjPipeLine(bool wireFrame,bool culling ,bool tiling,BlendMode blend)
 {
 	if (blend >= objPipeline_.size())return;
 	if (wireFrame)
 	{
 		objPipelineWire_[blend].CommonBeginDraw();
+	}
+	else if ( !culling )
+	{
+		objNoCullingPipeline_[ blend ].CommonBeginDraw();
 	}
 	else if (tiling)
 	{

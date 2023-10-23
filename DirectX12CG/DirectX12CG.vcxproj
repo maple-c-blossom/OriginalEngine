@@ -16,6 +16,7 @@
     <ClCompile Include="App\Scene\DemoScene.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableAllWarnings</WarningLevel>
     </ClCompile>
+    <ClCompile Include="Engin\Camera\DemoCamera.cpp" />
     <ClCompile Include="Engin\Model\AnimationMesh.cpp" />
     <ClCompile Include="Engin\Model\AnimationModel.cpp" />
     <ClCompile Include="Engin\Model\ModelManager.cpp">
@@ -254,6 +255,7 @@
     <ClInclude Include="App\PopEffect.h" />
     <ClInclude Include="App\CheckPoint.h" />
     <ClInclude Include="App\Scene\DemoScene.h" />
+    <ClInclude Include="Engin\Camera\DemoCamera.h" />
     <ClInclude Include="Engin\Model\AnimationMesh.h" />
     <ClInclude Include="Engin\Model\AnimationModel.h" />
     <ClInclude Include="Engin\Model\ModelManager.h" />

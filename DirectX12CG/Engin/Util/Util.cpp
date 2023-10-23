@@ -170,7 +170,7 @@ Triangle::Triangle()
 
 void Triangle::DrawTriangle(ICamera* camera)
 {
-	static_cast< void >( camera );
+	triangle_.camera_ = camera;
 	Dx12* dx12 = Dx12::GetInstance();
 	ShaderResource* descriptor = ShaderResource::GetInstance();
 
@@ -184,7 +184,7 @@ void Triangle::DrawTriangle(ICamera* camera)
 
 
 
-	triangle_.Update(true);
+	triangle_.Update();
 
 	//定数バッファビュー(CBV)の設定コマンド
 	dx12->commandList_->SetGraphicsRootConstantBufferView(2, triangleMaterial_.material_.constBuffMaterialB1_->GetGPUVirtualAddress());

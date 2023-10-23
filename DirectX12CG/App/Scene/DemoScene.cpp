@@ -145,6 +145,7 @@ void MCB::DemoScene::PostEffectDraw()
 	{
 		obj.Draw();
 	}
+	pipeline_->SetObjPipeLine(false,false);
 	test2Animation_.animationModel_->skeleton.JointObjectDraw();
 	pipeline_->SetLinePipeLine();
 	test2Animation_.animationModel_->skeleton.JointLineDraw();
@@ -198,7 +199,7 @@ void MCB::DemoScene::ImGuiUpdate()
 	ImGui::Text(" ");
 	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
 	ImGui::Checkbox("半透明表示",&debugView_);
-	ImGui::Checkbox("オブジェクトの表示を表示しない",&objInvisibleView_);
+	ImGui::Checkbox("オブジェクトを表示しない",&objInvisibleView_);
 
     if (ImGui::TreeNode("IK 制御"))
     {

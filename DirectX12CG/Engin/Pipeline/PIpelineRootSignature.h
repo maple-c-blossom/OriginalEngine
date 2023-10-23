@@ -34,6 +34,9 @@ namespace MCB
 		Byte4 pad;
 
 		void Create3DObjectPipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
+
+		void Create3DObjectNoCullingPipeline(Depth& depth, RootParameter& rootparams, uint16_t blendMode = Alpha);
+
 		void CreateLinePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
 
 		void Create3DObjectWirePipeline(Depth& depth, RootParameter& rootparam, uint16_t blendMode = Alpha );
