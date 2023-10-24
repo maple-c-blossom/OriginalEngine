@@ -53,9 +53,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;IMGUI_DEFINE_MATH_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>$(ProjectDir)Guizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -69,10 +70,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;IMGUI_DEFINE_MATH_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)Guizmo</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -86,23 +88,50 @@
     <Text Include="LICENSE.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GraphEditor.h" />
+    <ClInclude Include="Guizmo\ImSequencer.h" />
     <ClInclude Include="imconfig.h" />
+    <ClInclude Include="ImCurveEdit.h" />
+    <ClInclude Include="ImGradient.h" />
     <ClInclude Include="imgui.h" />
+    <ClInclude Include="ImGuizmo.h" />
     <ClInclude Include="imgui_impl_dx12.h" />
     <ClInclude Include="imgui_impl_win32.h" />
     <ClInclude Include="imgui_internal.h" />
+    <ClInclude Include="ImSequencer.h" />
     <ClInclude Include="imstb_rectpack.h" />
     <ClInclude Include="imstb_textedit.h" />
     <ClInclude Include="imstb_truetype.h" />
+    <ClInclude Include="ImZoomSlider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GraphEditor.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="ImCurveEdit.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="ImGradient.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="imgui.cpp" />
+    <ClCompile Include="ImGuizmo.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="imgui_demo.cpp" />
     <ClCompile Include="imgui_draw.cpp" />
     <ClCompile Include="imgui_impl_dx12.cpp" />
     <ClCompile Include="imgui_impl_win32.cpp" />
     <ClCompile Include="imgui_tables.cpp" />
     <ClCompile Include="imgui_widgets.cpp" />
+    <ClCompile Include="ImSequencer.cpp">
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

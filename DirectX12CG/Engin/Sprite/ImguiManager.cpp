@@ -7,6 +7,7 @@ WarningIgnoreEnd
 #include "DxWindow.h"
 #include "Dx12.h"
 #include "Descriptor.h"
+#include "Object3D.h"
 using namespace MCB;
 using namespace ImGui;
 void ImguiManager::Init()
@@ -30,16 +31,29 @@ void ImguiManager::Init()
 	io.Fonts->AddFontFromFileTTF("Resources\\meiryo.ttc",18.0f,NULL,io.Fonts->GetGlyphRangesJapanese());
 }
 
+void MCB::ImguiManager::GuizmoEnable(bool flag)
+{
+	ImGuizmo::Enable(flag);
+}
+
 void MCB::ImguiManager::Begin()
 {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
+
 }
 
 void MCB::ImguiManager::End()
 {
 	ImGui::Render();
+}
+
+void MCB::ImguiManager::GuizmoDraw(Object3D* obj,ImGuizmo::OPERATION operation,
+						ImGuizmo::MODE mode, Float3 snap,float* deltaMat)
+{
+	//ImGuizmo::Manipulate();
 }
 
 void MCB::ImguiManager::Draw()
