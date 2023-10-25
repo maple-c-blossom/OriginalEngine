@@ -110,7 +110,8 @@ PragmaWarningNum(4324)
         {
             bool isIK = false;//IKを行うか（自分がendJointかどうか）
 			bool isCollisionIk = false;
-			Byte6 pad1;
+			bool triangleDraw = false;
+			Byte5 pad1;
             Node* middleJointNode = nullptr;//ミドルジョイントのポインタ
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)

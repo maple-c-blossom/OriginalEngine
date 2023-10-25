@@ -73,7 +73,8 @@ namespace MCB
 		std::array<Object3d,4> poleVecObjects_;
 		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
 		bool objChenge_;
-		Byte3 pad5;
+		bool gizmoDraw_ = true;
+		Byte2 pad5;
 		struct IKDataSet
 		{
 			std::string endJointName = "NULL";

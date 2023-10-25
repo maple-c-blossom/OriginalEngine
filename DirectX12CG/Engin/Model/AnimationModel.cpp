@@ -1295,7 +1295,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   //object->Draw();
 
 		ikData.constraintObj.Draw();
-	   if (ikData.isIK)
+	   if (ikData.triangleDraw)
 	   {
 		   ikData.rootAndEffectorAndConstraintTriangle.DrawTriangle(object->camera_);
 		   ikData.jointTriangle.DrawTriangle(object->camera_);

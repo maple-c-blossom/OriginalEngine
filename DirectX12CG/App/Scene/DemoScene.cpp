@@ -193,23 +193,30 @@ void MCB::DemoScene::CheckAllColision()
 void MCB::DemoScene::ImGuiUpdate()
 {
     imgui_.Begin();
-	size_t matId = 0;
-	for ( auto& obj : effectorObjects_ )
+	if ( ImGui::Button("ギズモの表示") )
 	{
-		ImGuizmo::SetID(static_cast<int32_t>(matId));
-		matId++;
-		ImguiManager::GuizmoDraw(&obj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+		gizmoDraw_ = !gizmoDraw_;
 	}
-
-
-	for ( auto& poleObj : poleVecObjects_ )
+	if ( gizmoDraw_ )
 	{
-		ImGuizmo::SetID(static_cast< int32_t >(matId));
-		poleVec_[ matId - 4u ] = poleObj.position_;
-		matId++;
-		ImguiManager::GuizmoDraw(&poleObj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
-	}
+		size_t matId = 0;
+		for ( auto& obj : effectorObjects_ )
+		{
+			ImGuizmo::SetID(static_cast< int32_t >( matId ));
+			matId++;
+			ImguiManager::GuizmoDraw(&obj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+		}
 
+
+		for ( auto& poleObj : poleVecObjects_ )
+		{
+			ImGuizmo::SetID(static_cast< int32_t >( matId ));
+			poleVec_[ matId - 4u ] = poleObj.position_;
+			matId++;
+			ImguiManager::GuizmoDraw(&poleObj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+		}
+
+	}
 
 	if ( ImGui::TreeNode("説明") )
 	{
@@ -240,6 +247,8 @@ void MCB::DemoScene::ImGuiUpdate()
                 ImGui::Checkbox("PoleVectorを動かす(Effectorは動かない)", &PoleVecMove_[i]);
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
+				ImGui::Text("三角形を描画");
+				ImGui::Checkbox("TriangleDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->ikData.triangleDraw);
                 bone = ikBoneName_[i].endJointName;
 				ImGui::Text("エフェクターの位置");
                 bone = bone + ":effector";
