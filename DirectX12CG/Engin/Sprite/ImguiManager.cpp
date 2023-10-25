@@ -1,3 +1,4 @@
+#include "Object3D.h"
 #include "ImguiManager.h"
 WarningIgnoreBegin
 #include <MyImgui/imgui.h>
@@ -7,7 +8,11 @@ WarningIgnoreEnd
 #include "DxWindow.h"
 #include "Dx12.h"
 #include "Descriptor.h"
-#include "Object3D.h"
+#include "ICamera.h"
+#include "BaseCollider.h"
+#include "CollisionManager.h"
+#include "AnimationModel.h"
+
 using namespace MCB;
 using namespace ImGui;
 void ImguiManager::Init()
@@ -42,7 +47,8 @@ void MCB::ImguiManager::Begin()
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
-
+	ImGuizmo::SetRect(0.f,0.f,static_cast<float>(DxWindow::GetInstance()->sWINDOW_WIDTH_),
+		static_cast< float >(DxWindow::GetInstance()->sWINDOW_CENTER_WIDTH_));
 }
 
 void MCB::ImguiManager::End()
@@ -50,10 +56,26 @@ void MCB::ImguiManager::End()
 	ImGui::Render();
 }
 
-void MCB::ImguiManager::GuizmoDraw(Object3D* obj,ImGuizmo::OPERATION operation,
+ void MCB::ImguiManager::GuizmoDraw(MCB::Object3d* obj,ImGuizmo::OPERATION operation,
 						ImGuizmo::MODE mode, Float3 snap,float* deltaMat)
 {
-	//ImGuizmo::Manipulate();
+	MCBMatrix tempMatV(obj->camera_->GetView()->mat_);
+	MCBMatrix tempMatP(obj->camera_->GetProjection()->mat_);
+	MCBMatrix tempMatW(obj->matWorld_.matWorld_);
+	float* v = tempMatV.matOneArray;
+	float* p = tempMatP.matOneArray;
+	float* w = tempMatW.matOneArray;
+	ImGuizmo::Manipulate(v,p,operation,mode,w,deltaMat,snap.arrayFloat);
+	tempMatW = w;
+	obj->matWorld_.matWorld_ = tempMatW.MatrixConvertXMMatrix(tempMatW);
+	DirectX::XMVECTOR scaleVec = DirectX::XMLoadFloat3(&obj->scale_);
+	DirectX::XMVECTOR rotateVec = DirectX::XMLoadFloat3(&obj->rotation_);
+	DirectX::XMVECTOR positionVec = DirectX::XMLoadFloat3(&obj->position_);
+	DirectX::XMMatrixDecompose(&scaleVec,&rotateVec,&positionVec,obj->matWorld_.matWorld_);
+	obj->scale_.x = scaleVec.m128_f32[0]; obj->scale_.y = scaleVec.m128_f32[1]; obj->scale_.z = scaleVec.m128_f32[2];
+	obj->rotation_.x = rotateVec.m128_f32[0]; obj->rotation_.y = rotateVec.m128_f32[1]; obj->rotation_.z = rotateVec.m128_f32[2];
+	obj->position_.x = positionVec.m128_f32[0]; obj->position_.y = positionVec.m128_f32[1]; obj->position_.z = positionVec.m128_f32[2];
+	obj->constMapTranceform_->world = obj->matWorld_.matWorld_;
 }
 
 void MCB::ImguiManager::Draw()

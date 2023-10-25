@@ -1,8 +1,11 @@
 #pragma once
 #include "IgnoreWarning.h"
+#include "MCBFloat.h"
+
 WarningIgnoreBegin
 #include <d3d12.h>
 #include <wrl.h>
+#include <MyImgui/imgui.h>
 #include <MyImgui/ImGuizmo.h>
 WarningIgnoreEnd
 namespace MCB
@@ -18,7 +21,7 @@ namespace MCB
 		void GuizmoEnable(bool flag);
 		void Begin();
 		void End();
-		void GuizmoDraw(Object3D* obj,ImGuizmo::OPERATION operation,ImGuizmo::MODE mode, Float3 snap = {0.f,0.f,0.f},float* deltaMat = nullptr);
+		static void GuizmoDraw(Object3d* obj,ImGuizmo::OPERATION operation,ImGuizmo::MODE mode, Float3 snap = {0.f,0.f,0.f},float* deltaMat = nullptr);
 		void Draw();
 		void Final();
 	};

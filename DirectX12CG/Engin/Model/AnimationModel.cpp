@@ -8,6 +8,8 @@ WarningIgnoreEnd
 #include "Dx12.h"
 #include "Util.h"
 #include "Object3d.h"
+#include "ImguiManager.h"
+
 
 using namespace MCB;
 using namespace Assimp;
@@ -995,6 +997,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    {
 	   string transTag = node->name + "_Transform";
 	   string child = node->name + "_children";
+	  
 	   if (ImGui::CollapsingHeader(node->name.c_str()))
 	   {
 		   if (ImGui::TreeNode(transTag.c_str()))
@@ -1033,6 +1036,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 					{
 						if (ImGui::TreeNode("IkData"))
 						{
+							
 							Node::IKData& nodeIkData = node->ikData;
 							//ImGui::Checkbox("lineView",&node->lineView);
 							if (node->ikData.rootJointNode)
@@ -1284,7 +1288,6 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   ikData.jointTriangle.triangle_.color_.w_ = 0.25f;
 		   ikData.jointTriangle.triangle_.position_ = {0,0,0};
 	   }
-	   //object->matWorld_.matWorld_ *= worldObjMatrix;
    }
 
    void MCB::Node::JointObjectDraw()

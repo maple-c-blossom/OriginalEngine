@@ -31,6 +31,12 @@ void MCB::DemoScene::MatrixUpdate()
     {
         obj.Update();
     }
+
+
+	for ( auto& obj : poleVecObjects_ )
+	{
+		obj.Update();
+	}
     test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
         &test2Animation_,boxModel_.get());
 }
@@ -187,6 +193,24 @@ void MCB::DemoScene::CheckAllColision()
 void MCB::DemoScene::ImGuiUpdate()
 {
     imgui_.Begin();
+	size_t matId = 0;
+	for ( auto& obj : effectorObjects_ )
+	{
+		ImGuizmo::SetID(static_cast<int32_t>(matId));
+		matId++;
+		ImguiManager::GuizmoDraw(&obj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+	}
+
+
+	for ( auto& poleObj : poleVecObjects_ )
+	{
+		ImGuizmo::SetID(static_cast< int32_t >(matId));
+		poleVec_[ matId - 4u ] = poleObj.position_;
+		matId++;
+		ImguiManager::GuizmoDraw(&poleObj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+	}
+
+
 	if ( ImGui::TreeNode("説明") )
 	{
 		ImGui::Text("このデモシーンはIKの挙動を確認するためのシーンです。");
@@ -335,8 +359,15 @@ void MCB::DemoScene::Object3DInit()
         effectorObjects_[i].model_ = sphereModel_.get();
         effectorObjects_[i].scale_ = { 0.05f,0.05f,0.05f };
         effectorObjects_[i].position_ = effectorPos[i];
-        effectorObjects_[i].rotation_.y = ConvertRadius(90);
         effectorObjects_[i].camera_ = viewCamera_;
+
+
+		poleVecObjects_[ i ].Init();
+	//testsphere.model = BoxModel;
+		poleVecObjects_[ i ].model_ = sphereModel_.get();
+		poleVecObjects_[ i ].scale_ = { 0.05f,0.05f,0.05f };
+		poleVecObjects_[ i ].position_ = poleVec_[ i ];
+		poleVecObjects_[ i ].camera_ = viewCamera_;
     }
     test2Animation_.animationModel_ = anim2Model_.get();
     test2Animation_.scale_ = { 0.01f,0.01f,0.01f };

@@ -12,11 +12,21 @@ namespace MCB
 	class MCBMatrix
 	{
 	public:
-		float _11_; float _12_; float _13_; float _14_;
-		float _21_; float _22_; float _23_; float _24_;
-		float _31_; float _32_; float _33_; float _34_;
-		float _41_; float _42_; float _43_; float _44_;
-		
+#pragma warning(push)
+#pragma warning(disable:4201)
+		union
+		{
+			float matOneArray[ 16 ];
+			float matTowArray[4][4];
+			struct 
+			{
+				float _11_; float _12_; float _13_; float _14_;
+				float _21_; float _22_; float _23_; float _24_;
+				float _31_; float _32_; float _33_; float _34_;
+				float _41_; float _42_; float _43_; float _44_;
+			};
+		};
+#pragma warning(pop)
 	public:
 		MCBMatrix();
 		MCBMatrix(DirectX::XMMATRIX mat);
@@ -78,6 +88,7 @@ namespace MCB
 		MCBMatrix& operator-=(const MCBMatrix& matrix);
 
 		float operator[]( size_t n);
+		MCBMatrix& operator=(float* m);
 
 	};
 		MCBMatrix operator*(const MCBMatrix& matrix1, const MCBMatrix& matrix2);

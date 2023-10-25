@@ -48,9 +48,9 @@ namespace MCB
         Microsoft::WRL::ComPtr<ID3D12Resource> constBuffTranceform_ = nullptr;
         /*Microsoft::WRL::ComPtr<ID3D12Resource> constBuffSkin_ = nullptr;*/
         //行列用定数バッファマップ
-        ConstBufferDataTransform* constMapTranceform_ = nullptr;
        /* ConstBuffSkin* constMapSkin_ = nullptr;*/
     public:
+        ConstBufferDataTransform* constMapTranceform_ = nullptr;
         std::string nameId_;
         std::string currentAnimation_ = "Null";
         static LightGroup* slights_;

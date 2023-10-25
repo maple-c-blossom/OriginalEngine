@@ -576,6 +576,15 @@ float MCB::MCBMatrix::operator[]( size_t n)
 
 }
 
+MCBMatrix& MCB::MCBMatrix::operator=(float* m)
+{
+	for ( int i = 0; i < 16; i++ )
+	{
+		matOneArray[ i ] = m[ i ];
+	}
+	return *this;
+}
+
 MCBMatrix MCB::operator*(const MCBMatrix& matrix1, const MCBMatrix& matrix2)
 {
 	MCBMatrix ans;

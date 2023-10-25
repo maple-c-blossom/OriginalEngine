@@ -10,9 +10,20 @@ namespace MCB
 	class Float3
 	{
 	public:
-		float x_;
-		float y_;
-		float z_;
+#pragma warning(push)
+#pragma warning(disable:4201)
+		union 
+		{
+			float arrayFloat[ 3 ];
+
+			struct 
+			{
+				float x_;
+				float y_;
+				float z_;
+			};
+		};
+#pragma warning(pop)
 
 		Float3( float x,  float y,  float z);
 		Float3();
