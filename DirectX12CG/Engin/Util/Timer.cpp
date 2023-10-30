@@ -23,9 +23,9 @@ void Timer::SetIf(int32_t end, bool flag)
 	if (flag)Set(end);
 }
 
-void Timer::Update()
+void Timer::Update(int32_t count)
 {
-	timer_++;
+	timer_+= count;
 }
 
 void Timer::LoopUpdate()

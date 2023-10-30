@@ -312,7 +312,7 @@ BaseCollider* MCB::Object3d::GetCollider()
 void MCB::Object3d::OnCollision(const CollisionInfomation& info)
 {
 	static_cast< void >( info );
-	color_ = { 1,0,0,1 }; hited_ = true;
+	color_ = { 1,1,1,1 }; hited_ = true;
 }
 
 void MCB::Object3d::OffCollision(const CollisionInfomation* info)

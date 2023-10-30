@@ -66,9 +66,9 @@ namespace MCB
 			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f)};
 		Object3d test2Animation_;
 		Player play_;
-		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.24f,0.05f),
-			DirectX::XMFLOAT3(-0.4f,3.25f,-0.05f),
-			DirectX::XMFLOAT3(-0.05f,2.6f,0.3f),DirectX::XMFLOAT3(0.11f,2.6f,0.3f) 
+		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.85f,0.05f),
+			DirectX::XMFLOAT3(-0.4f,3.85f,-0.05f),
+			DirectX::XMFLOAT3(0.23f,2.6f,-0.16f),DirectX::XMFLOAT3(-0.23f,2.6f,-0.16f)
 		};
 		std::array<Object3d,4> poleVecObjects_;
 		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };

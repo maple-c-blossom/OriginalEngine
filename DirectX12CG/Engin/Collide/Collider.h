@@ -22,6 +22,7 @@ namespace MCB
 	const uint16_t ATTRIBUTE_LANDSHAPE = 0b1 << 0;//地面
 	const uint16_t ATTRIBUTE_FLENDRY = 0b1 << 1;//味方
 	const uint16_t ATTRIBUTE_ENEMY = 0b1 << 2;//敵
+	const uint16_t ATTRIBUTE_WALL = 0b1 << 3;//敵
 
 	class Triangle
 	{

@@ -87,6 +87,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		else if ((objData->tag == "block"))
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
+			objData->obj->GetCollider()->SetAttribute(9);
 		}
 
 

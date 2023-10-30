@@ -14,6 +14,7 @@ namespace MCB
 		Vector3D(const Float3& start, const Float3& end);
 		Vector3D(const Vector3D& start, const Vector3D& end);
 		Vector3D(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
+		Vector3D(const DirectX::XMFLOAT3& vec);
 		Vector3D();
 		Vector3D(const Float3& vec);
 		Vector3D(const DirectX::XMVECTOR vec);

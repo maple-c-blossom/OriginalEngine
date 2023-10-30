@@ -31,18 +31,26 @@ namespace MCB
 		float distoffSet = 0.00025f;
 		Timer backTimer;
 		bool back;
-		Byte3 pad3;
+		bool isGrab;
+		bool prevWallHit_;
+		bool wallHit_;
 		Ray wallCheckRay;
 		Ray upperCheckRay;
+		Timer wallUPTimer;
+		Timer wallTimer;
 		float wallCheckOffSet;
 		float upperCheckOffSet;
 		Vector3D backVec;
-		Byte4 pad4;
+		Vector3D climbOldPos;
+		Vector3D climbPos;
+		bool isClimb;
+		Byte3 pad4;
 
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 	public:
 		size_t runNormal;
 		size_t runFast;
+		int64_t pad5;
 		float GetSpeed();
 		void SetRespowPosition(const Vector3D& pos);
 		void Init()override;

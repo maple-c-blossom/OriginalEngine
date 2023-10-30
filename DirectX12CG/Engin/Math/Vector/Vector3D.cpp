@@ -27,6 +27,13 @@ MCB::Vector3D::Vector3D(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR&
 	vec_ = temp.vec_;
 }
 
+MCB::Vector3D::Vector3D(const DirectX::XMFLOAT3& vec)
+{
+	vec_.x_ = vec.x;
+	vec_.y_ = vec.y;
+	vec_.z_ = vec.z;
+}
+
 
 MCB::Vector3D::Vector3D()
 {

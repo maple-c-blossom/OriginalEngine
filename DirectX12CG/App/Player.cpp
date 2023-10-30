@@ -92,28 +92,28 @@ void MCB::Player::UniqueUpdate()
 
 	if (callback.move.V3Len() >= distoffSet)
 	{
-		position_.x += callback.move.vec_.x_ * 2;
-		position_.y += callback.move.vec_.y_ * 2;
-		position_.z += callback.move.vec_.z_ * 2;
+		position_.x += callback.move.vec_.x_ * 6.f;
+		position_.y += callback.move.vec_.y_ * 6.f;
+		position_.z += callback.move.vec_.z_ * 6.f;
 	}
 
-	if (back)
-	{
-		backTimer.SafeUpdate();
-		position_.x += backVec.vec_.x_;
-		position_.y += backVec.vec_.y_;
-		position_.z += backVec.vec_.z_;
-		if (backTimer.IsEnd())
-		{
-			back = false;
-		}
-	}
-	else
-	{
-		backTimer.Set(5);
-		backVec = callback.move * 6;
-		back = callback.block;
-	}
+	//if (back)
+	//{
+	//	backTimer.SafeUpdate();
+	//	position_.x += backVec.vec_.x_;
+	//	position_.y += backVec.vec_.y_;
+	//	position_.z += backVec.vec_.z_;
+	//	if (backTimer.IsEnd())
+	//	{
+	//		back = false;
+	//	}
+	//}
+	//else
+	//{
+	//	backTimer.Set(5);
+	//	backVec = callback.move * 6;
+	//	back = callback.block;
+	//}
 
 	if (position_.y < outYPosition)
 	{
@@ -203,18 +203,13 @@ void MCB::Player::Move()
 		currentAnimation_ = "Tpose.001";
 	}
 	animationSpeed_ = max(abs(speedFront_) / 7, abs(speedRight_) / 7);
-	position_.x += nowFrontVec_.vec_.x_ * speedFront_;
-	position_.z += nowFrontVec_.vec_.z_ * speedFront_;
-	position_.x += rightVec_.vec_.x_ * speedRight_;
-	position_.z += rightVec_.vec_.z_ * speedRight_;
+
 	if (!isGraund_)
 	{
 		const float fallAcc = -0.025f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
-		position_.x += fallV_.vec_.x_;
-		position_.y += fallV_.vec_.y_;
-		position_.z += fallV_.vec_.z_;
+
 	}
 	else if (Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))
 	{
@@ -222,6 +217,83 @@ void MCB::Player::Move()
 		const float jumpVYFist = 0.45f;
 		fallV_ = { {{0,jumpVYFist,0,0}} };
 	}
+	else if ( isGraund_ )
+	{
+		fallV_.vec_.y_ = 0;
+	}
+	wallCheckRay.StartPosition_ = position_;
+	wallCheckRay.rayVec_ = nowFrontVec_;
+
+	upperCheckRay.StartPosition_ = position_;
+	upperCheckRay.StartPosition_.vec_.y_ += 1.5f;
+	upperCheckRay.rayVec_ = nowFrontVec_;
+	prevWallHit_ = wallHit_;
+	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
+	bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
+	
+	if ( wallHit_ && !upperHit && !isGraund_ )
+	{
+		isGrab = true;
+	}
+
+	if ( isGrab && !wallHit_)
+	{
+		fallV_.vec_.y_ = 0;
+		//  開始位置を保持
+		climbOldPos = position_;
+		//  終了位置を算出
+		climbPos = Vector3D(position_) + nowFrontVec_ + Vector3D(0,1,0) * 0.5f;
+		//  掴みを解除
+		isGrab = false;
+		//  よじ登りを実行
+		isClimb = true;
+		wallUPTimer.Set(60);
+	}
+	else if(wallHit_)
+	{
+		if ( !prevWallHit_ ||(wallTimer.IsEnd()&&isGraund_) )
+		{
+			wallTimer.Set(10);
+		}
+		wallTimer.Update();
+		if ( !wallTimer.IsEnd() )
+		{
+			fallV_.vec_.y_ = 0;
+			fallV_.vec_.y_ = speedFront_;
+		}
+	}
+
+	if ( isClimb )
+	{
+		
+		wallUPTimer.Update(static_cast< int32_t >( animationSpeed_ * 100 ));
+
+		//  左右は後半にかけて早く移動する
+		position_.x = static_cast<float>(Lerp(climbOldPos.vec_.x_,climbPos.vec_.x_,InQuad(0,1,wallUPTimer.GetEndTime(),wallUPTimer.NowTime())));
+		position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbPos.vec_.z_,InQuad(0,1,wallUPTimer.GetEndTime(),wallUPTimer.NowTime())));
+		//  上下は等速直線で移動
+		position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,wallUPTimer.GetEndTime(),wallUPTimer.NowTime()));
+
+		//  座標を更新
+		fallV_.vec_.y_ = 0.0f;
+		//  進行度が8割を超えたらよじ登りの終了
+		if ( wallUPTimer.IsEnd() )
+		{
+			isClimb = false;
+		}
+	}
+
+	if ( !wallHit_ && !isClimb )
+	{
+		position_.x += nowFrontVec_.vec_.x_ * speedFront_;
+		position_.z += nowFrontVec_.vec_.z_ * speedFront_;
+		position_.x += rightVec_.vec_.x_ * speedRight_;
+		position_.z += rightVec_.vec_.z_ * speedRight_;
+	}
+
+	position_.x += fallV_.vec_.x_;
+	position_.y += fallV_.vec_.y_;
+	position_.z += fallV_.vec_.z_;
 
 }
 
