@@ -304,6 +304,12 @@ void MCB::Object3d::SetCollider(unique_ptr<BaseCollider> collider)
     collider_ = CollisionManager::GetInstance()->AddCollider(move(collider));
 }
 
+void MCB::Object3d::SetIK()
+{
+	animationModel_->skeleton.SetTwoBoneIK(*this,settingIK.targetPos,settingIK.constraintPosition,
+		settingIK.boneName,settingIK.middleJointName,settingIK.rootJointName,settingIK.useConstraintFromRoot);
+}
+
 BaseCollider* MCB::Object3d::GetCollider()
 {
 	return collider_;

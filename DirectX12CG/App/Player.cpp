@@ -222,10 +222,12 @@ void MCB::Player::Move()
 		fallV_.vec_.y_ = 0;
 	}
 	wallCheckRay.StartPosition_ = position_;
+	wallCheckRay.StartPosition_.vec_.y_ += 1.f;
 	wallCheckRay.rayVec_ = nowFrontVec_;
 
 	upperCheckRay.StartPosition_ = position_;
 	upperCheckRay.StartPosition_.vec_.y_ += 1.5f;
+
 	upperCheckRay.rayVec_ = nowFrontVec_;
 	prevWallHit_ = wallHit_;
 	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
@@ -241,6 +243,7 @@ void MCB::Player::Move()
 		fallV_.vec_.y_ = 0;
 		//  開始位置を保持
 		climbOldPos = position_;
+		
 		//  終了位置を算出
 		climbPos = Vector3D(position_) + nowFrontVec_ + Vector3D(0,1,0) * 0.5f;
 		//  掴みを解除

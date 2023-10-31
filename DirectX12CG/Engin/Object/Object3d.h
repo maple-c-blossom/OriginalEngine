@@ -50,6 +50,17 @@ namespace MCB
         //行列用定数バッファマップ
        /* ConstBuffSkin* constMapSkin_ = nullptr;*/
     public:
+		struct SettingIK
+		{
+			Vector3D targetPos;
+			Vector3D constraintPosition = { 0,1,0 };
+			std::string boneName = "NULL";
+			std::string middleJointName = "NULL";
+			std::string rootJointName = "NULL";
+			bool useConstraintFromRoot = false;
+			Byte7 pad;
+		};
+		SettingIK settingIK;
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
         std::string nameId_;
         std::string currentAnimation_ = "Null";
@@ -61,26 +72,23 @@ namespace MCB
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;
-		int32_t pad;
-		Byte4 pad5;
         //ワールド行列
         WorldMatrix matWorld_ = {};
         Vector3D normFrontVec_ = {};
         Vector3D nowFrontVec_ = {0,0,1};
         float frontAngle_ = 0;
         float animeTime_;
-        float animationSpeed_ = 0.0f;
-		Byte4 pad2;
+		float animationSpeed_ = 0.0f;
+		Byte4 pad;
         Model* model_ = nullptr;
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
         bool isInvisible = false;
         bool sceneEnd = false;
         bool trackingFlag_ = false;
-		Byte4 pad3;
+		Byte4 pad2;
         Object3d* parent_ = nullptr;
-		int32_t pad4;
-		Byte4 pad6;
+		int64_t pad3;
         static ICamera* camera_;
 
         Object3d();
@@ -111,6 +119,7 @@ namespace MCB
        virtual void AnimationDraw( uint16_t incremant);
        const DirectX::XMMATRIX GetMatWorld();
        void SetCollider(std::unique_ptr<BaseCollider> collider);
+	   void SetIK();
        BaseCollider* GetCollider() ;
 	   virtual void OnCollision(const CollisionInfomation& info);
 	   virtual void OffCollision(const CollisionInfomation* info = nullptr);

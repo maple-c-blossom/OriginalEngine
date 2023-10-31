@@ -114,14 +114,13 @@ void MCB::DemoScene::Update()
         {
             if (objChenge_)
             {
-                test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
                     { effectorObjects_[0].position_.x,effectorObjects_[0].position_.y,effectorObjects_[0].position_.z },
                     { poleVec_[0].x,poleVec_[0].y,poleVec_[0].z }, "Bone3");
             }
             else
             {
-				//test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName)->ikData.isCollisionIk = true;
-                test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
                     { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
                     { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
             }

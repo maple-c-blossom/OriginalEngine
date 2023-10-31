@@ -773,9 +773,16 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 
 
-	   Vector3D xmLocalConstraintVectorFromRoot = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(endJoint.ikData.constraintModelVector) * 
-		   rootJointModelMatrixinv);
-
+	   Vector3D xmLocalConstraintVectorFromRoot;
+	   if ( endJoint.ikData.IkUseConstraintIsLocalFromRoot )
+	   {
+		   xmLocalConstraintVectorFromRoot = endJoint.ikData.constraintLocalPositionFromRoot;
+	   }
+	   else
+	   {
+		   xmLocalConstraintVectorFromRoot = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(endJoint.ikData.constraintModelVector)
+			   * rootJointModelMatrixinv);
+	   }
 	   endJoint.ikData.constraintLocalPositionFromRoot = xmLocalConstraintVectorFromRoot;
 
 	   Vector3D middleJointLocalPositionFromRoot = MCBMatrix::GetTranslate(middleJoint.defaultModelTransform * rootJointModelMatrixinv);
@@ -906,7 +913,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    void MCB::Skeleton::SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition,
 	   const string& boneName,
-	   const std::string& middleJointName, const std::string& rootJointName)
+	   const std::string& middleJointName, const std::string& rootJointName,bool useConstraintFromRoot)
    {
 	   Vector3D pos(obj.position_.x,obj.position_.y,obj.position_.z);
 	   WorldMatrix mat = obj.matWorld_;
@@ -944,8 +951,25 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   }
 		   node->ikData.effectorWorldPos = targetPos;
 		   node->ikData.iKEffectorPosition = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(targetPos) * worldMatInv);
-		   node->ikData.constraintWorldVector = constraintPosition;
-		   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
+		   if ( useConstraintFromRoot )
+		   {
+			   node->ikData.constraintFromRootVector = constraintPosition;
+
+			   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(
+				   node->ikData.constraintFromRootVector) * (node->defaultModelTransform));
+
+			   node->ikData.constraintWorldVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * mat.matWorld_);
+		   }
+		   else
+		   {
+			   node->ikData.constraintWorldVector = constraintPosition;
+			   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
+
+			   node->ikData.constraintFromRootVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(
+				   node->ikData.constraintModelVector) * MCBMatrix::MatrixInverse(node->defaultModelTransform));
+
+
+		   }
 	   }
    }
    void MCB::Skeleton::TwoBoneIKOff(const string& boneName)
@@ -1051,6 +1075,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 								nodeIkData.iKEffectorPosition.vec_.y_, nodeIkData.iKEffectorPosition.vec_.z_);
 							ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f", nodeIkData.constraintWorldVector.vec_.x_,
 								nodeIkData.constraintWorldVector.vec_.y_, nodeIkData.constraintWorldVector.vec_.z_);
+							ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromRootVector.vec_.x_,
+									nodeIkData.constraintFromRootVector.vec_.y_,nodeIkData.constraintFromRootVector.vec_.z_);
 							if ( node->ikData.isCollisionIk )
 							{
 								ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",

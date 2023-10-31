@@ -181,10 +181,14 @@ void MCB::Scene::PostEffectDraw()
 {
     postEffect_->PreDraw();
     level_->Draw(pipeline_);
-    //goal_.Draw();
-    //check.Draw();
     pipeline_->SetFbxPipeLine();
     level_->AnimationDraw();
+	playerModel_->skeleton.GetNode("mixamorig:LeftFoot")->jointView = true;
+	pipeline_->SetObjPipeLine(false,false);
+	playerModel_->skeleton.JointObjectDraw();
+	pipeline_->SetLinePipeLine();
+	playerModel_->skeleton.JointLineDraw();
+
     postEffect_->PostDraw();
 
 }
@@ -237,19 +241,19 @@ void MCB::Scene::ImGuiUpdate()
 {
     imgui_.Begin();
     //ImGui::ShowDemoWindow();
-    ////if (ImGui::CollapsingHeader("Infomation"))
-    ////{
-    ////    if (ImGui::TreeNode("operation"))
-    ////    {
-    ////        ImGui::Text("LevelReLoad:LCONTROL");
-    ////        ImGui::TreePop();
-    ////    }
-    ////}
-
-    //if (ImGui::CollapsingHeader("MotionModel"))
+    //if (ImGui::CollapsingHeader("Infomation"))
     //{
-    //     playerModel_->DrawHeirarchy();
+    //    if (ImGui::TreeNode("operation"))
+    //    {
+    //        ImGui::Text("LevelReLoad:LCONTROL");
+    //        ImGui::TreePop();
+    //    }
     //}
+
+    if (ImGui::CollapsingHeader("MotionModel"))
+    {
+         playerModel_->DrawHeirarchy();
+    }
     imgui_.End();
 }
 

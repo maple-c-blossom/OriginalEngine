@@ -111,13 +111,15 @@ PragmaWarningNum(4324)
             bool isIK = false;//IKを行うか（自分がendJointかどうか）
 			bool isCollisionIk = false;
 			bool triangleDraw = false;
-			Byte5 pad1;
+			bool IkUseConstraintIsLocalFromRoot = false;
+			Byte4 pad1;
             Node* middleJointNode = nullptr;//ミドルジョイントのポインタ
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
             Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
+            Vector3D constraintFromRootVector = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
-			Byte4 pad2;
+			int64_t pad2;
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
             Vector3D effectorPosFromMiddle = {};//PoleVector(Model空間)
@@ -231,9 +233,9 @@ PragmaPop
 
         void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
-        void SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition = { 0,1,0 },
-            const std::string& boneName = "NULL", 
-            const std::string& middleJointName = "NULL", const std::string& rootJointName = "NULL");
+		void SetTwoBoneIK(const Object3d& obj,const Vector3D& targetPos,const Vector3D& constraintPosition = { 0,1,0 },
+			const std::string& boneName = "NULL",
+			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",bool useConstraintFromRoot = false);
 
         void TwoBoneIKOff(const std::string& boneName);
 
