@@ -183,11 +183,11 @@ void MCB::Scene::PostEffectDraw()
     level_->Draw(pipeline_);
     pipeline_->SetFbxPipeLine();
     level_->AnimationDraw();
-	playerModel_->skeleton.GetNode("mixamorig:LeftFoot")->jointView = true;
+	//playerModel_->skeleton.GetNode("mixamorig:LeftFoot")->jointView = true;
 	pipeline_->SetObjPipeLine(false,false);
-	playerModel_->skeleton.JointObjectDraw();
+	//playerModel_->skeleton.JointObjectDraw();
 	pipeline_->SetLinePipeLine();
-	playerModel_->skeleton.JointLineDraw();
+	level_->GetObjectPtr("player")->animationModel_->skeleton.JointLineDraw();
 
     postEffect_->PostDraw();
 
@@ -262,7 +262,8 @@ void MCB::Scene::MatrixUpdate()
     viewCamera_->Update();
     level_->UpdateMatrix();
     //player_.AnimationUpdate();
-    //player_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_, &player_, goalModel_,Float3(0.025f,0.025f,0.025f));
+	level_->GetObjectPtr("player")->animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
+		level_->GetObjectPtr("player"),goalModel_);
     //goal_.Update();
     //check.Update();
 

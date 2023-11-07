@@ -117,7 +117,7 @@ PragmaWarningNum(4324)
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
             Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
-            Vector3D constraintFromRootVector = {0,1,0};//PoleVector(Model空間)
+            Vector3D constraintFromEffectorVector = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
 			int64_t pad2;
             Object3d constraintObj;//PoleVector表示用のオブジェクト
@@ -235,7 +235,7 @@ PragmaPop
 
 		void SetTwoBoneIK(const Object3d& obj,const Vector3D& targetPos,const Vector3D& constraintPosition = { 0,1,0 },
 			const std::string& boneName = "NULL",
-			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",bool useConstraintFromRoot = false);
+			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",bool useConstraintFromEffector = false);
 
         void TwoBoneIKOff(const std::string& boneName);
 

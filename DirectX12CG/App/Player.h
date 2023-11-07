@@ -43,8 +43,9 @@ namespace MCB
 		Vector3D backVec;
 		Vector3D climbOldPos;
 		Vector3D climbPos;
+		Vector3D effectorPos;
 		bool isClimb;
-		Byte3 pad4;
+		Byte7 pad4;
 
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 	public:

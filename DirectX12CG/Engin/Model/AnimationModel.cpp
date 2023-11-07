@@ -512,7 +512,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 	for (auto& itr : nodes_)
 	{
-		readAnimNodeHeirarchy(animationTime, itr.get(),  currentAnimation);
+		if ( !itr->ikData.isIK )
+		{
+			readAnimNodeHeirarchy(animationTime,itr.get(),currentAnimation);
+		}
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
 	
@@ -774,15 +777,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 
 	   Vector3D xmLocalConstraintVectorFromRoot;
-	   if ( endJoint.ikData.IkUseConstraintIsLocalFromRoot )
+	/*   if ( endJoint.ikData.IkUseConstraintIsLocalFromRoot )
 	   {
-		   xmLocalConstraintVectorFromRoot = endJoint.ikData.constraintLocalPositionFromRoot;
+		   xmLocalConstraintVectorFromRoot = endJoint.ikData.constraintFromEffectorVector;
 	   }
 	   else
-	   {
+	   {*/
 		   xmLocalConstraintVectorFromRoot = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(endJoint.ikData.constraintModelVector)
 			   * rootJointModelMatrixinv);
-	   }
+	   //}
 	   endJoint.ikData.constraintLocalPositionFromRoot = xmLocalConstraintVectorFromRoot;
 
 	   Vector3D middleJointLocalPositionFromRoot = MCBMatrix::GetTranslate(middleJoint.defaultModelTransform * rootJointModelMatrixinv);
@@ -953,20 +956,19 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   node->ikData.iKEffectorPosition = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(targetPos) * worldMatInv);
 		   if ( useConstraintFromRoot )
 		   {
-			   node->ikData.constraintFromRootVector = constraintPosition;
+			   //node->ikData.constraintFromEffectorVector = constraintPosition;
 
-			   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(
-				   node->ikData.constraintFromRootVector) * (node->defaultModelTransform));
+			   node->ikData.constraintModelVector = constraintPosition;
 
-			   node->ikData.constraintWorldVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * mat.matWorld_);
+			   node->ikData.constraintWorldVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * MCBMatrix(mat.matWorld_));
 		   }
 		   else
 		   {
 			   node->ikData.constraintWorldVector = constraintPosition;
 			   node->ikData.constraintModelVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(constraintPosition) * worldMatInv);
 
-			   node->ikData.constraintFromRootVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(
-				   node->ikData.constraintModelVector) * MCBMatrix::MatrixInverse(node->defaultModelTransform));
+			   node->ikData.constraintFromEffectorVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(
+				   constraintPosition) * MCBMatrix::MatrixInverse( MCBMatrix::MCBMatrixTransrate(targetPos)));
 
 
 		   }
@@ -1075,8 +1077,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 								nodeIkData.iKEffectorPosition.vec_.y_, nodeIkData.iKEffectorPosition.vec_.z_);
 							ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f", nodeIkData.constraintWorldVector.vec_.x_,
 								nodeIkData.constraintWorldVector.vec_.y_, nodeIkData.constraintWorldVector.vec_.z_);
-							ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromRootVector.vec_.x_,
-									nodeIkData.constraintFromRootVector.vec_.y_,nodeIkData.constraintFromRootVector.vec_.z_);
+							ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromEffectorVector.vec_.x_,
+									nodeIkData.constraintFromEffectorVector.vec_.y_,nodeIkData.constraintFromEffectorVector.vec_.z_);
 							if ( node->ikData.isCollisionIk )
 							{
 								ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",
@@ -1268,7 +1270,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			ikData.effectorVecFromRoot.PointB_ = ikData.effectorWorldPos;
 
 		}
-	   if (ikData.isIK)
+	   if (ikData.isIK && ikData.rootJointNode)
 	   {
 		   if (ikData.rootJointNode->lineColorEqualObject)
 		   {

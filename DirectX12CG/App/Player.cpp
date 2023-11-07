@@ -222,17 +222,24 @@ void MCB::Player::Move()
 		fallV_.vec_.y_ = 0;
 	}
 	wallCheckRay.StartPosition_ = position_;
-	wallCheckRay.StartPosition_.vec_.y_ += 1.f;
+	wallCheckRay.StartPosition_.vec_.y_ += 1.5f;
 	wallCheckRay.rayVec_ = nowFrontVec_;
 
 	upperCheckRay.StartPosition_ = position_;
-	upperCheckRay.StartPosition_.vec_.y_ += 1.5f;
+	upperCheckRay.StartPosition_.vec_.y_ += 2.0f;
 
 	upperCheckRay.rayVec_ = nowFrontVec_;
 	prevWallHit_ = wallHit_;
-	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
+	RayCastHit info;
+	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,&info,0.15f);
 	bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
-	
+
+	if ( info.objctPtr_ )
+	{
+		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y / 2;
+		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z / 2;
+	}
+
 	if ( wallHit_ && !upperHit && !isGraund_ )
 	{
 		isGrab = true;
@@ -251,10 +258,14 @@ void MCB::Player::Move()
 		//  よじ登りを実行
 		isClimb = true;
 		wallUPTimer.Set(60);
+		animationModel_->skeleton.SetTwoBoneIK(*this,{position_.x - 0.05f,effectorPos.vec_.y_,effectorPos.vec_.z_},
+			{ 10.f,15.6f,-5.0f },"mixamorig:LeftHand","NULL","NULL",true);
+		animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.05f,effectorPos.vec_.y_,effectorPos.vec_.z_},
+			{ -10.f,15.6f,-5.0f },"mixamorig:RightHand","NULL","NULL",true);
 	}
 	else if(wallHit_)
 	{
-		if ( !prevWallHit_ ||(wallTimer.IsEnd()&&isGraund_) )
+		if (/* !prevWallHit_ ||*/isGraund_) 
 		{
 			wallTimer.Set(10);
 		}
@@ -269,7 +280,7 @@ void MCB::Player::Move()
 	if ( isClimb )
 	{
 		
-		wallUPTimer.Update(static_cast< int32_t >( animationSpeed_ * 100 ));
+		wallUPTimer.Update(1);
 
 		//  左右は後半にかけて早く移動する
 		position_.x = static_cast<float>(Lerp(climbOldPos.vec_.x_,climbPos.vec_.x_,InQuad(0,1,wallUPTimer.GetEndTime(),wallUPTimer.NowTime())));
@@ -283,6 +294,8 @@ void MCB::Player::Move()
 		if ( wallUPTimer.IsEnd() )
 		{
 			isClimb = false;
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
 		}
 	}
 
