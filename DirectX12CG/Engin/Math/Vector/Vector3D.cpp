@@ -88,6 +88,13 @@ void MCB::Vector3D::V3Norm()
 
 }
 
+Vector3D MCB::Vector3D::GetV3Norm()
+{
+	Vector3D ans = *this;
+	ans.V3Norm();
+	return ans;
+}
+
 float MCB::Vector3D::GetV3Dot(const Vector3D& vector)
 {
 	return (vec_.x_ * vector.vec_.x_) + (vec_.y_ * vector.vec_.y_) + (vec_.z_ * vector.vec_.z_);

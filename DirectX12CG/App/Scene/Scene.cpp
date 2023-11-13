@@ -185,7 +185,7 @@ void MCB::Scene::PostEffectDraw()
     level_->AnimationDraw();
 	//playerModel_->skeleton.GetNode("mixamorig:LeftFoot")->jointView = true;
 	pipeline_->SetObjPipeLine(false,false);
-	//playerModel_->skeleton.JointObjectDraw();
+	player_->animationModel_->skeleton.JointObjectDraw();
 	pipeline_->SetLinePipeLine();
 	level_->GetObjectPtr("player")->animationModel_->skeleton.JointLineDraw();
 

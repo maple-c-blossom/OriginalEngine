@@ -24,6 +24,7 @@ namespace MCB
 		Vector3D Vector3Substruct(const DirectX::XMVECTOR& start, const DirectX::XMVECTOR& end);
 		float V3Len() const;
 		void V3Norm();
+		Vector3D GetV3Norm();
 		float GetV3Dot(const Vector3D& vector);
 		float GetInnerProduct( Vector3D vector);
 		Vector3D GetV3Cross(const Vector3D& vector);

@@ -807,21 +807,27 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1;//同一平面上にいるようにする回転
 	   q1 = q1.GetDirectProduct(rootJoint->defaultRotation,q1.DirToDir(nd, nt));
+	   rootJoint->rotation = q1.ConvertXMVector();
+	   UpdateNodeMatrix(rootJoint);
+	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
+	   UpdateNodeMatrix(&endJoint);
+
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
 	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
-	   float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
+	   //float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
+	   float rootToEndLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 	   float localTargetVectorFromRootJoint = EffectorLocalFromRootPos.V3Len();
 
 	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//余弦定理で角度算出
 	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//余弦定理で角度算出
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
-	   Quaternion d2RotaionQ(nt, theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
+	   Quaternion d2RotaionQ(q1.SetRotationVector(q1,nd),theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
-	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2,q1);
-	   rootJoint->rotation = q1.ConvertXMVector();
+	   Quaternion rootJointRotation = q2.GetDirectProduct(q2,q1);
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);

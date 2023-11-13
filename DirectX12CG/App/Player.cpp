@@ -128,7 +128,7 @@ void MCB::Player::Move()
 	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
 		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
 	{
-		speedFront_ = defualtSpeed_;
+		speedFront_ = 0.f;
 	}
 
 	if (input_->IsKeyDown(DIK_W))
@@ -152,7 +152,7 @@ void MCB::Player::Move()
 		speedFront_ -= acceleratorfront_;
 	}
 
-	speedFront_ = clamp(speedFront_, 0.0025f, maxFrontSpeed_);
+	speedFront_ = clamp(speedFront_, -0.25f, maxFrontSpeed_);
 
 
 
@@ -236,8 +236,8 @@ void MCB::Player::Move()
 
 	if ( info.objctPtr_ )
 	{
-		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y / 2;
-		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z / 2;
+		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y;
+		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
 	}
 
 	if ( wallHit_ && !upperHit && !isGraund_ )
@@ -252,16 +252,18 @@ void MCB::Player::Move()
 		climbOldPos = position_;
 		
 		//  終了位置を算出
-		climbPos = Vector3D(position_) + nowFrontVec_ + Vector3D(0,1,0) * 0.5f;
+		climbPos = Vector3D(position_.x,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_);
 		//  掴みを解除
 		isGrab = false;
 		//  よじ登りを実行
 		isClimb = true;
 		wallUPTimer.Set(60);
-		animationModel_->skeleton.SetTwoBoneIK(*this,{position_.x - 0.05f,effectorPos.vec_.y_,effectorPos.vec_.z_},
-			{ 10.f,15.6f,-5.0f },"mixamorig:LeftHand","NULL","NULL",true);
-		animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.05f,effectorPos.vec_.y_,effectorPos.vec_.z_},
-			{ -10.f,15.6f,-5.0f },"mixamorig:RightHand","NULL","NULL",true);
+		animationModel_->skeleton.SetTwoBoneIK(*this,{position_.x - 0.25f,effectorPos.vec_.y_,effectorPos.vec_.z_},
+			{ 20.f,100.6f,-5.0f },"mixamorig:LeftHand","NULL","NULL",true);
+		animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.25f,effectorPos.vec_.y_,effectorPos.vec_.z_},
+			{ -20.f,100.6f,-5.0f },"mixamorig:RightHand","NULL","NULL",true);
+		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
+		animationModel_->skeleton.GetNode("mixamorig:RightHand")->lineView = true;
 	}
 	else if(wallHit_)
 	{
