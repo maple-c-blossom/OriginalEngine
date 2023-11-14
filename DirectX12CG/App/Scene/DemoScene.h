@@ -61,13 +61,13 @@ namespace MCB
 		Object3d ground_;
 		Object3d Skydorm_;
 		std::array<Object3d,4> effectorObjects_;
-		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,0.05f),
-			DirectX::XMFLOAT3(-0.6f,3.45f,0.0f),
+		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,-0.48f),
+			DirectX::XMFLOAT3(-0.6f,3.45f,-0.48f),
 			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f)};
 		Object3d test2Animation_;
 		Player play_;
-		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.85f,-0.05f),
-			DirectX::XMFLOAT3(-0.4f,3.85f,-0.05f),
+		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.44f,-0.05f),
+			DirectX::XMFLOAT3(-0.4f,3.44f,-0.05f),
 			DirectX::XMFLOAT3(0.23f,2.6f,-0.16f),DirectX::XMFLOAT3(-0.23f,2.6f,-0.16f)
 		};
 		std::array<Object3d,4> poleVecObjects_;

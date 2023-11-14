@@ -41,48 +41,50 @@ void MCB::Player::UniqueUpdate()
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
 
-
-	Ray ray;
-	ray.StartPosition_ = sphere->centerPosition_;
-	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
-	ray.rayVec_ = { {{0,-1,0,0}} };
-	RayCastHit info;
-	float distRange = sphere->GetRaius() * 2.0f;
-	float distOverRange = distRange * distoffSet;
-	bool isGround = CollisionManager::GetInstance()->Raycast(ray, ATTRIBUTE_LANDSHAPE, &info, distRange + distOverRange);
-	if (isGraund_)
+	if ( !isClimb )
 	{
-		//const float absDistance = 0.2f;
-		
-		if (isGround)
+		Ray ray;
+		ray.StartPosition_ = sphere->centerPosition_;
+		ray.StartPosition_.vec_.y_ += sphere->GetRaius();
+		ray.rayVec_ = { {{0,-1,0,0}} };
+		RayCastHit info;
+		float distRange = sphere->GetRaius() * 2.0f;
+		float distOverRange = distRange * distoffSet;
+		bool isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange);
+		if ( isGraund_ )
 		{
-			isGraund_ = true;
-			if(info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_) - sphere->GetRaius() * 2.0f);
-			Object3d::UpdateMatrix();
-			for ( uint8_t i = 0; i < footBoneName.size(); i++ )
+			//const float absDistance = 0.2f;
+
+			if ( isGround )
 			{
-				animationModel_->skeleton.GetNode(footBoneName[ i ])->ikData.isCollisionIk = true;
-				//animationModel_->skeleton.SetTwoBoneIK();
+				isGraund_ = true;
+				if ( info.dist_ <= 1.f - distOverRange ) position_.y -= ( ( info.dist_ ) - sphere->GetRaius() * 2.0f );
+				Object3d::UpdateMatrix();
+				for ( uint8_t i = 0; i < footBoneName.size(); i++ )
+				{
+					animationModel_->skeleton.GetNode(footBoneName[ i ])->ikData.isCollisionIk = true;
+					//animationModel_->skeleton.SetTwoBoneIK();
+				}
+			}
+			else
+			{
+				isGraund_ = false;
+				fallV_ = { {{0,0,0,0}} };
 			}
 		}
-		else
+		else if ( fallV_.vec_.y_ <= 0.0f )
 		{
-			isGraund_ = false;
-			fallV_ = { {{0,0,0,0}} };
-		}
-	}
-	else if(fallV_.vec_.y_ <= 0.0f)
-	{
-		
-		if ( isGround )
-		{
-			isGraund_ = true;
-			if (info.dist_ <= 1.f - distOverRange) position_.y -= ((info.dist_ - distOverRange) - sphere->GetRaius() * 2.0f);
-			Object3d::UpdateMatrix();
-		}
-		else 
-		{
-			isGraund_ = false;
+
+			if ( isGround )
+			{
+				isGraund_ = true;
+				if ( info.dist_ <= 1.f - distOverRange ) position_.y -= ( ( info.dist_ - distOverRange ) - sphere->GetRaius() * 2.0f );
+				Object3d::UpdateMatrix();
+			}
+			else
+			{
+				isGraund_ = false;
+			}
 		}
 	}
 
@@ -90,7 +92,7 @@ void MCB::Player::UniqueUpdate()
 
 	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
 
-	if (callback.move.V3Len() >= distoffSet)
+	if (callback.move.V3Len() >= distoffSet && !isClimb)
 	{
 		position_.x += callback.move.vec_.x_ * 6.f;
 		position_.y += callback.move.vec_.y_ * 6.f;
@@ -187,20 +189,21 @@ void MCB::Player::Move()
 	{
 		if (speedFront_ != 0)
 		{
-			if (speedFront_ > 0)currentAnimation_ = "Run.001";
-			if (speedFront_ < 0)currentAnimation_ = "Run.001";
+			if (speedFront_ > 0)currentAnimation_ = "Run";
+			if (speedFront_ < 0)currentAnimation_ = "Run";
 
 		}
 	}
 	else if(speedRight_ != 0)
 	{
-		if (speedRight_ > 0)currentAnimation_ = "Run.001";
-		if (speedRight_ < 0)currentAnimation_ = "Run.001";
+		if (speedRight_ > 0)currentAnimation_ = "Run";
+		if (speedRight_ < 0)currentAnimation_ = "Run";
 	}
 	else
 	{
 		animationSpeed_ = 0.05f;
-		currentAnimation_ = "Tpose.001";
+		currentAnimation_ = "Tpose";
+
 	}
 	animationSpeed_ = max(abs(speedFront_) / 7, abs(speedRight_) / 7);
 
@@ -209,6 +212,9 @@ void MCB::Player::Move()
 		const float fallAcc = -0.025f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
+		//animationPositionRock = true;
+		//currentAnimation_ = "Jump";
+		animationSpeed_ = 0.05f;
 
 	}
 	else if (Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))
@@ -220,19 +226,20 @@ void MCB::Player::Move()
 	else if ( isGraund_ )
 	{
 		fallV_.vec_.y_ = 0;
+		animationPositionRock = false;
 	}
 	wallCheckRay.StartPosition_ = position_;
-	wallCheckRay.StartPosition_.vec_.y_ += 1.5f;
+	wallCheckRay.StartPosition_.vec_.y_ += 0.f;
 	wallCheckRay.rayVec_ = nowFrontVec_;
 
 	upperCheckRay.StartPosition_ = position_;
-	upperCheckRay.StartPosition_.vec_.y_ += 2.0f;
+	upperCheckRay.StartPosition_.vec_.y_ += 1.5f;
 
 	upperCheckRay.rayVec_ = nowFrontVec_;
 	prevWallHit_ = wallHit_;
 	RayCastHit info;
-	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,&info,0.15f);
-	bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
+	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,&info,0.25f);
+	//bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
 
 	if ( info.objctPtr_ )
 	{
@@ -240,28 +247,27 @@ void MCB::Player::Move()
 		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
 	}
 
-	if ( wallHit_ && !upperHit && !isGraund_ )
-	{
-		isGrab = true;
-	}
-
-	if ( isGrab && !wallHit_)
+	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE) )
 	{
 		fallV_.vec_.y_ = 0;
+		position_.z = effectorPos.vec_.z_-0.025f;
 		//  開始位置を保持
 		climbOldPos = position_;
 		
 		//  終了位置を算出
-		climbPos = Vector3D(position_.x,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_);
+		climbPos = Vector3D(position_.x,effectorPos.vec_.y_+0.01f,effectorPos.vec_.z_ + 0.02f);
 		//  掴みを解除
 		isGrab = false;
 		//  よじ登りを実行
 		isClimb = true;
+
+		animeTime_ = 0;
 		wallUPTimer.Set(60);
-		animationModel_->skeleton.SetTwoBoneIK(*this,{position_.x - 0.25f,effectorPos.vec_.y_,effectorPos.vec_.z_},
-			{ 20.f,100.6f,-5.0f },"mixamorig:LeftHand","NULL","NULL",true);
-		animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.25f,effectorPos.vec_.y_,effectorPos.vec_.z_},
-			{ -20.f,100.6f,-5.0f },"mixamorig:RightHand","NULL","NULL",true);
+
+		poleVecLeft = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_ - 2.f) ;
+		poleVecRight = Vector3D(position_.x + 1.15f,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_ - 2.f) ;
+		poleVecLF = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
+		poleVecRF = Vector3D(position_.x + 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
 		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
 		animationModel_->skeleton.GetNode("mixamorig:RightHand")->lineView = true;
 	}
@@ -281,15 +287,26 @@ void MCB::Player::Move()
 
 	if ( isClimb )
 	{
-		
-		wallUPTimer.Update(1);
+		animationPositionRock = true;
+		currentAnimation_ = "Climb";
+		//currentAnimation_ = "Tpose";
+		//animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+		//	poleVecLeft,
+		//	"mixamorig:LeftHand","NULL","NULL",false);
+		//animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+		//	poleVecRight,
+		//	"mixamorig:RightHand","NULL","NULL",false);
+	
+		wallUPTimer.Update(input_->IsKeyDown(DIK_W));
 
 		//  左右は後半にかけて早く移動する
 		position_.x = static_cast<float>(Lerp(climbOldPos.vec_.x_,climbPos.vec_.x_,InQuad(0,1,wallUPTimer.GetEndTime(),wallUPTimer.NowTime())));
 		position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbPos.vec_.z_,InQuad(0,1,wallUPTimer.GetEndTime(),wallUPTimer.NowTime())));
 		//  上下は等速直線で移動
-		position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,wallUPTimer.GetEndTime(),wallUPTimer.NowTime()));
-
+		position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,wallUPTimer.GetEndTime() - 30,wallUPTimer.NowTime()));
+		//currentAnimation->duration - 0.0001f
+		//Animation* anim = animationModel_->animationManager.GetAnimation(currentAnimation_);
+		animationSpeed_ = 0.f;
 		//  座標を更新
 		fallV_.vec_.y_ = 0.0f;
 		//  進行度が8割を超えたらよじ登りの終了

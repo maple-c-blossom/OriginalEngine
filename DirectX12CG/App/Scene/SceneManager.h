@@ -8,6 +8,8 @@ namespace MCB
 {
 	class SceneManager
 	{
+		class AnimationModel;
+		class Object3d;
 	private:
 		std::unique_ptr<IScene> scene_;
 		RootParameter* root_;

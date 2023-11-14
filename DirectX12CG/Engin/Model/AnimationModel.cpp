@@ -16,10 +16,10 @@ using namespace Assimp;
 using namespace DirectX;
 using namespace std;
 
-void MCB::AnimationModel::AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation,Object3d* obj ,bool loop)
+void MCB::AnimationModel::AnimationUpdate(float& timeInSeconds, const std::string& currentAnimation,Object3d* obj ,bool loop,bool animtionPositionRock)
 {
 	Animation* anim = animationManager.GetAnimation(currentAnimation);
-	skeleton.boneAnimTransform(timeInSeconds,anim,obj,loop);
+	skeleton.boneAnimTransform(timeInSeconds,anim,obj,loop,animtionPositionRock);
 }
 
 MCB::AnimationModel::~AnimationModel()
@@ -473,7 +473,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	skeleton.SetTwoBoneIK(objPos, targetPos);
 }
 
-  void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation,Object3d* obj, bool loop)
+  void Skeleton::boneAnimTransform( float& timeInSeconds, Animation* animation,Object3d* obj, bool loop,bool animtionPositionRock )
   {
     
 	  float animationTime = 0;
@@ -510,11 +510,17 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		}
 	}
 
+	bool rootAnim = false;
+	if ( animtionPositionRock )
+	{
+		rootAnim = true;
+	}
 	for (auto& itr : nodes_)
 	{
 		if ( !itr->ikData.isIK )
 		{
-			readAnimNodeHeirarchy(animationTime,itr.get(),currentAnimation);
+
+			readAnimNodeHeirarchy(animationTime,itr.get(),rootAnim,currentAnimation);
 		}
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
@@ -560,7 +566,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
     }*/
   }
 
-  void Skeleton::readAnimNodeHeirarchy( float animationTime, Node* pNode,  Animation* currentAnimationPtr)
+  void Skeleton::readAnimNodeHeirarchy( float animationTime, Node* pNode,bool& animationPositionRock,Animation* currentAnimationPtr)
   {
 	  const string& nodeName = pNode->name;
 
@@ -586,10 +592,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		  XMMATRIX rotationM = XMMatrixRotationQuaternion(XMrotationQ);
 
 		  // Interpolate translation and generate translation transformation matrix
-		  Vector3D translation;
-		  calcInterpolatedPosition(translation, animationTime, pNodeAnim);
-		  XMMATRIX translationM = XMMatrixTranslation( translation.vec_.x_, translation.vec_.y_, translation.vec_.z_ );
+		  Vector3D translation = { 0,0,0 };
+		  calcInterpolatedPosition(translation,animationTime,pNodeAnim);
+		  if ( animationPositionRock && translation != Vector3D(0,0,0))
+		  {
+			  animationPositionRock = false;
+			  translation = { 0,0,0 };
+		  }
 
+		   XMMATRIX translationM = XMMatrixTranslation(translation.vec_.x_,translation.vec_.y_,translation.vec_.z_);
 		   //Combine the above transformations
 		  pNode->translation = translation.ConvertXMVEC();
 		  pNode->scale = scaling.ConvertXMVEC();
@@ -798,8 +809,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
 	   endJoint.ikDebugData.defaultTriangleNormal = nd;
 
-	   Vector3D nt = nt.GetV3Normal(xmLocalConstraintVectorFromRoot,
-		   EffectorLocalFromRootPos,rootJointLocalPositionFromRoot );
+	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,xmLocalConstraintVectorFromRoot,
+		   EffectorLocalFromRootPos );
 
 
 
@@ -807,23 +818,22 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1;//同一平面上にいるようにする回転
 	   q1 = q1.GetDirectProduct(rootJoint->defaultRotation,q1.DirToDir(nd, nt));
-	   rootJoint->rotation = q1.ConvertXMVector();
-	   UpdateNodeMatrix(rootJoint);
-	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
-	   UpdateNodeMatrix(&endJoint);
-
+	   //rootJoint->rotation = q1.ConvertXMVector();
+	   //UpdateNodeMatrix(rootJoint);
+	   //UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
+	   //UpdateNodeMatrix(&endJoint);
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
 	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
 	   //float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
-	   float rootToEndLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
+	   float rootToEndLength = Vector3D(rootJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 	   float localTargetVectorFromRootJoint = EffectorLocalFromRootPos.V3Len();
 
 	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//余弦定理で角度算出
 	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//余弦定理で角度算出
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
-	   Quaternion d2RotaionQ(q1.SetRotationVector(q1,nd),theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
+	   Quaternion d2RotaionQ(nt,theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
 	   Quaternion rootJointRotation = q2.GetDirectProduct(q2,q1);

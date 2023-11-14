@@ -246,6 +246,11 @@ bool MCB::operator!=(const Vector3D& vecA, const DirectX::XMFLOAT3& vecB)
 	return (vecA.vec_.x_ != vecB.x || vecA.vec_.y_ != vecB.y || vecA.vec_.z_ != vecB.z);
 }
 
+bool MCB::operator!=(const Vector3D& vecA,const Vector3D& vecB)
+{
+	return ( vecA.vec_.x_ != vecB.vec_.x_ || vecA.vec_.y_ != vecB.vec_.x_ || vecA.vec_.z_ != vecB.vec_.x_ );
+}
+
 Vector3D MCB::operator-(const Vector3D& vecA, const Vector3D& vecB)
 {
 	Vector3D temp;

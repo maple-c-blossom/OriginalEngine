@@ -86,11 +86,11 @@ namespace MCB
         bool isInvisible = false;
         bool sceneEnd = false;
         bool trackingFlag_ = false;
-		Byte4 pad2;
+		bool animationPositionRock = false;
+		Byte3 pad2;
         Object3d* parent_ = nullptr;
 		int64_t pad3;
         static ICamera* camera_;
-
         Object3d();
         virtual ~Object3d();
         //親オブジェクトへのポインタ
@@ -110,9 +110,9 @@ namespace MCB
 
         virtual void Draw( uint16_t incremant);
 
-        virtual void AnimationUpdate( bool isBillBord = false);
+        virtual void AnimationUpdate(bool isBillBord = false);
 
-        virtual void AnimationUpdate( Quaternion q,  bool isBillBord = false);
+        virtual void AnimationUpdate( Quaternion q,bool isBillBord = false);
 
         virtual void AnimationDraw();
 

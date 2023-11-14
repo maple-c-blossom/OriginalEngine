@@ -73,6 +73,7 @@ PragmaWarningNum(4324)
         double duration;
         double ticksPerSecond;
         std::vector<NodeAnim> channels;
+		std::string animationRootNode = "NULL";
     }Animation;
 
     typedef struct Node
@@ -153,6 +154,7 @@ PragmaWarningNum(4324)
         Float4 lineDefaultColor = {0.f,0.f,0.f,1.f};
 		int32_t pad7;
         bool chengeObjectColor;
+
 		Byte7 pad8;
 		Byte4 pad10;
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
@@ -196,9 +198,9 @@ PragmaPop
         /// <returns></returns>
         Node* GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin = {0,0,0}, uint32_t closestNum = 1);
 
-        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, Object3d* obj = nullptr,bool loop = true);//Animation前の準備等
+        void boneAnimTransform(  float& timeInSeconds,Animation* currentAnimation = nullptr, Object3d* obj = nullptr,bool loop = true,bool animtionPositionRock = false);//Animation前の準備等
 
-        void readAnimNodeHeirarchy(  float animationTime, Node* pNode, Animation* currentAnimationPtr = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
+        void readAnimNodeHeirarchy(  float animationTime, Node* pNode,bool& animationPositionRock,Animation* currentAnimationPtr = nullptr);//実際に階層構造読み込んでAnimationの計算をする関数
 
         static const NodeAnim* findNodeAnim(const Animation* pAnimation, const std::string& NodeName);//どのNodeのキーフレームを見るのか
         //キーフレームの補完-------------
@@ -221,7 +223,7 @@ PragmaPop
         //2BoneIK(試作）
         void TwoBoneIK(Node& joint1);
 
-        void AllNodeMatrixForModelToBone();
+		void AllNodeMatrixForModelToBone();
         /// <summary>
         /// CCDIK
         /// </summary>
@@ -279,7 +281,7 @@ PragmaPop
         Skeleton skeleton;//スケルトン情報
         AnimationManager animationManager;//アニメーション情報
         //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
-		void AnimationUpdate(float& timeInSeconds,const std::string& currentAnimation = "Null",Object3d* obj = nullptr ,bool loop = true);
+		void AnimationUpdate(float& timeInSeconds,const std::string& currentAnimation = "Null",Object3d* obj = nullptr,bool loop = true,bool animtionPositionRock = false);
         ~AnimationModel();
 
 		AnimationModel();

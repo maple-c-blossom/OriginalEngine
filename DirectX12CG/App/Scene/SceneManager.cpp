@@ -2,6 +2,8 @@
 #include "DxWindow.h"
 #include "Scene.h"
 #include "TitleScene.h"
+#include "AnimationModel.h"
+#include "Object3d.h"
 using namespace std;
 
 

@@ -152,7 +152,7 @@ void MCB::Scene::Update()
     level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
     if (goal_->GetIsGoal())
     {
-        player_->currentAnimation_ = "Idle";
+        player_->currentAnimation_ = "Tpose";
     }
     lights_->UpDate();
     debugCamera_.Update();

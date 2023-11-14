@@ -50,6 +50,7 @@ namespace MCB
 	};
 	Vector3D operator+(const Vector3D& vecA, const Vector3D& vecB);
 	bool operator!=(const Vector3D& vecA, const DirectX::XMFLOAT3& vecB);
+	bool operator!=(const Vector3D& vecA, const Vector3D& vecB);
 	Vector3D operator-(const Vector3D& vecA, const Vector3D& vecB);
 	Vector3D operator*(const Vector3D& vecA,  float k);
 	Vector3D operator*( float k, const Vector3D& vecA);
