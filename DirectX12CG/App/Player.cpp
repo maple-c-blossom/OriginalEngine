@@ -261,7 +261,7 @@ void MCB::Player::Move()
 		//  よじ登りを実行
 		isClimb = true;
 
-		animeTime_ = 0;
+		animeTime_ = 0.f;
 		wallUPTimer.Set(60);
 
 		poleVecLeft = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_ - 2.f) ;

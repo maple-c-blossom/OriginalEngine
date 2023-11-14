@@ -1280,7 +1280,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		ikData.constraintObj.Update();
 		if ( lineView )
 		{
-			ikData.constraintLine.PointA_ = ikData.middleJointNode->worldPosition;
+			if ( ikData.middleJointNode )
+			{
+				ikData.constraintLine.PointA_ = ikData.middleJointNode->worldPosition;
+			}
 			ikData.constraintLine.PointB_ = ikData.constraintWorldVector;
 			ikData.effectorVecFromRoot.PointA_ = worldPosition;
 			ikData.effectorVecFromRoot.PointB_ = ikData.effectorWorldPos;
