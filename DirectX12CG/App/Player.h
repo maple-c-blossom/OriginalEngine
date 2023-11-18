@@ -49,7 +49,8 @@ namespace MCB
 		Vector3D climbPos;
 		Vector3D effectorPos;
 		bool isClimb;
-		Byte3 pad6;
+		bool isIkClimb;
+		Byte2 pad6;
 		Vector3D poleVecLeft;
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;

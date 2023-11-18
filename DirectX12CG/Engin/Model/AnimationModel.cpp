@@ -838,7 +838,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
 	   Quaternion q2 = q2.DirToDir(middleBoneVector,targetMiddleVector);
 	   Quaternion rootJointRotation = q2.GetDirectProduct(q2,q1);
-	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
+	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);

@@ -297,13 +297,15 @@ void MCB::Player::Move()
 		animationPositionRock = isRootStop;
 		currentAnimation_ = "Climb";
 		//currentAnimation_ = "Tpose";
-		//animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ },
-		//	poleVecLeft,
-		//	"mixamorig:LeftHand","NULL","NULL",false);
-		//animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
-		//	poleVecRight,
-		//	"mixamorig:RightHand","NULL","NULL",false);
-
+		if ( isIkClimb )
+		{
+			animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+				poleVecLeft,
+				"mixamorig:LeftHand","NULL","NULL",false);
+			animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+				poleVecRight,
+				"mixamorig:RightHand","NULL","NULL",false);
+		}
 		//y0.7,z54.8;
 
 
@@ -367,12 +369,16 @@ void MCB::Player::Move()
 			}
 			if ( climbUpMove )
 			{
-				if ( time >= 0.35f /*&& time <= 1.08f*/ )
+				if ( time >= 0.35f && time <= 2.58f )
 				{
 
 					position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
-						3.80 - 0.35f,time - 0.35f) );
-
+						2.58f - 0.35f,time - 0.35f) );
+					if ( time + animationSpeed_ > 2.58f)
+					{
+						animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
+						animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
+					}
 				}
 				//else if ( time >= 1.08f && time <= 3.80f )
 				//{
@@ -423,6 +429,8 @@ void MCB::Player::Debug()
 	ImGui::Checkbox("climbUpMove",&climbUpMove);
 	ImGui::Checkbox("climbFrontMove",&climbFrontMove);
 	ImGui::Checkbox("isRootStop",&isRootStop);
+	ImGui::Checkbox("ObjectSideView",&cameraViewFromSide_);
+	ImGui::Checkbox("isIk",&isIkClimb);
 	if ( isDebug_ )
 	{
 		ImguiManager::GuizmoDraw(this,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
