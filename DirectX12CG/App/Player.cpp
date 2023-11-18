@@ -324,7 +324,11 @@ void MCB::Player::Move()
 		*/
 
 		
-		/*全体の動きの順
+		
+
+		if ( animationPositionRock )
+		{
+			/*全体の動きの順
 		* 1.足をかける動き->後方に移動
 		* 2.上る動き->上に移動
 		* 3.上る動き(速度変化)->上に移動
@@ -335,36 +339,59 @@ void MCB::Player::Move()
 		* 3. 1.08～2.58
 		* 4. 2.03～3.80※終了
 		* 移動量
-		* 1.
-		* 2.
-		* 3.
-		* 4.
+		* 1. z
+		* 2. y
+		* 3. y
+		* 4. z
 		*/
+			animationSpeed_ = 3.8f / 60.f;
+			float time = animeTime_ + animationSpeed_;
+			// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
+			if ( climbFrontMove )
+			{
+				if ( time <= 1.08f )
+				{
 
+					position_.x = static_cast< float >( Lerp(climbOldPos.vec_.x_,climbOldPos.vec_.x_ - 0.45f,
+						1.08f,time) );
+					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbOldPos.vec_.z_ - 0.45f,
+						1.08f,time) );
+				}
+				else if ( time >= 2.03f && time <= 3.80f )
+				{
+					position_.x = static_cast< float >( Lerp(climbOldPos.vec_.x_ - 0.45f,climbPos.vec_.x_,
+						3.80f - 2.03f,time - 2.03f) );
+					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_ - 0.45f,climbPos.vec_.z_,
+						3.80f - 2.03f,time - 2.03f) );
+				}
+			}
+			if ( climbUpMove )
+			{
+				if ( time >= 0.35f /*&& time <= 1.08f*/ )
+				{
 
-		int time = static_cast< int >( static_cast< float >( wallUPTimer.GetEndTime() ) * 0.73f );
-		// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
-		if ( time <= wallUPTimer.NowTime() && climbFrontMove)
-		{
-			
-			position_.x = static_cast< float >( Lerp(climbOldPos.vec_.x_,climbPos.vec_.x_,
-				wallUPTimer.GetEndTime() - time,wallUPTimer.NowTime() - time) );
-			position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbPos.vec_.z_,
-				wallUPTimer.GetEndTime() - time,wallUPTimer.NowTime() - time) );
-		}
-		//  上下は等速直線で移動//上への動きが独り歩きしている（開始、速度全部ぐちゃぐちゃ）
-		if ( time >= wallUPTimer.NowTime() && climbUpMove)
-		{
-			
-			position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
-				time,wallUPTimer.NowTime()) );
+					position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
+						3.80 - 0.35f,time - 0.35f) );
+
+				}
+				//else if ( time >= 1.08f && time <= 3.80f )
+				//{
+				//	position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
+				//		3.80f,wallUPTimer.NowTime() - 1.08f) );
+				//}
+			}
+			//  上下は等速直線で移動//上への動きが独り歩きしている（開始、速度全部ぐちゃぐちゃ）
+		/*	if ( time >= wallUPTimer.NowTime() && climbUpMove )
+			{
+
+				
+			}*/
 		}
 		//currentAnimation->duration - 0.0001f
 		//Animation* anim = animationModel_->animationManager.GetAnimation(currentAnimation_);
 		animationSpeed_ = 3.8f / 60.f;
 		//  座標を更新
 		fallV_.vec_.y_ = 0.0f;
-		//  進行度が8割を超えたらよじ登りの終了
 		if ( wallUPTimer.IsEnd() )
 		{
 			isClimb = false;
