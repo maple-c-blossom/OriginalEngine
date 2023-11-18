@@ -254,6 +254,7 @@ void MCB::Scene::ImGuiUpdate()
     {
          playerModel_->DrawHeirarchy();
     }
+	player_->Debug();
     imgui_.End();
 }
 

@@ -11,15 +11,15 @@ namespace MCB
 	{
 
 	private:
-		bool isGraund_ = true;
+		bool isGraund_ = false;
 		Byte3 pad;
 		Vector3D fallV_;
 		Input* input_ = Input::GetInstance();
 		float speedFront_ = 0.0f;
 		float speedRight_ = 0.0f;
 		float rotasionSpeed_ = 0.015f;
-		float defualtSpeed_ = 0.15f;
-		float maxFrontSpeed_ = 0.35f;
+		float defualtSpeed_ = 0.05f;
+		float maxFrontSpeed_ = 0.15f;
 		float maxspeed_ = 0.35f;
 		float accelerator_ = 0.005f;
 		float acceleratorfront_ = 0.05f;
@@ -34,6 +34,10 @@ namespace MCB
 		bool isGrab;
 		bool prevWallHit_;
 		bool wallHit_;
+		bool isDebug_ = true;
+		bool climbUpMove = true;
+		bool climbFrontMove = true;
+		bool isRootStop = true;
 		Ray wallCheckRay;
 		Ray upperCheckRay;
 		Timer wallUPTimer;
@@ -45,7 +49,7 @@ namespace MCB
 		Vector3D climbPos;
 		Vector3D effectorPos;
 		bool isClimb;
-		Byte7 pad4;
+		Byte3 pad6;
 		Vector3D poleVecLeft;
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
@@ -61,6 +65,7 @@ namespace MCB
 		void Init()override;
 		void UniqueUpdate() override;
 		void Move();
+		void Debug();
 		void OnCollision(const CollisionInfomation& info) override;
 
 	};

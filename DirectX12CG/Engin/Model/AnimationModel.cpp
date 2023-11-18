@@ -531,7 +531,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	{
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
-		if ( obj && itr->ikData.isCollisionIk )
+		if (false)
 		{
 				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
 				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
@@ -597,7 +597,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		  if ( animationPositionRock && translation != Vector3D(0,0,0))
 		  {
 			  animationPositionRock = false;
-			  translation = { 0,0,0 };
+			  translation = pNode->defaultLocalTranslation;
+			  currentAnimationPtr->name = pNodeAnim->name;
 		  }
 
 		   XMMATRIX translationM = XMMatrixTranslation(translation.vec_.x_,translation.vec_.y_,translation.vec_.z_);
