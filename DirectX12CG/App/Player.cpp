@@ -257,7 +257,8 @@ void MCB::Player::Move()
 		fallV_.vec_.y_ = 0;
 		position_.z = effectorPos.vec_.z_-0.025f;
 		//  開始位置を保持
-		climbOldPos = Vector3D(position_.x,effectorPos.vec_.y_ - 2.63f,effectorPos.vec_.z_ - 0.18f);
+		//climbOldPos = Vector3D(position_.x,effectorPos.vec_.y_ - 2.63f,effectorPos.vec_.z_ - 0.18f);
+		climbOldPos = Vector3D(position_.x,position_.y,position_.z);
 		position_.x = climbOldPos.vec_.x_;
 		position_.y = climbOldPos.vec_.y_;
 		position_.z = climbOldPos.vec_.z_;
