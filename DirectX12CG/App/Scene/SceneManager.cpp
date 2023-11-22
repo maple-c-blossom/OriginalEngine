@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "DxWindow.h"
 #include "Scene.h"
+#include "StageSelectScene.h"
 #include "TitleScene.h"
 #include "AnimationModel.h"
 #include "Object3d.h"
@@ -20,8 +21,8 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<Scene>(root_, depth_, pipeline_);
-	dynamic_cast< Scene* >( scene_.get() )->SetStage("Tutorial");
+	scene_ = make_unique<StageSelectScene>(root_, depth_, pipeline_);
+	//dynamic_cast< Scene* >( scene_.get() )->SetStage("Tutorial");
 }
 
 MCB::SceneManager::~SceneManager()

@@ -50,6 +50,7 @@ void MCB::Player::UniqueUpdate()
 	{
 		Ray ray;
 		ray.StartPosition_ = sphere->centerPosition_;
+		ray.StartPosition_.vec_.y_ = sphere->centerPosition_.vec_.y_ - 1.f;
 		ray.StartPosition_.vec_.y_ += sphere->GetRaius();
 		ray.rayVec_ = { {{0,-1,0,0}} };
 		RayCastHit info;
@@ -231,7 +232,7 @@ void MCB::Player::Move()
 	else if ( isGraund_ )
 	{
 		fallV_.vec_.y_ = 0;
-		animationPositionRock = false;
+		animationPositionRock = true;
 	}
 	wallCheckRay.StartPosition_ = position_;
 	wallCheckRay.StartPosition_.vec_.y_ += 0.f;
@@ -263,17 +264,17 @@ void MCB::Player::Move()
 		position_.y = climbOldPos.vec_.y_;
 		position_.z = climbOldPos.vec_.z_;
 		//  終了位置を算出
-		climbPos = Vector3D(position_.x,effectorPos.vec_.y_,effectorPos.vec_.z_ + 0.15f);
+		climbPos = Vector3D(position_.x,effectorPos.vec_.y_ + 0.75f,effectorPos.vec_.z_ + 0.15f);
 		//  掴みを解除
 		isGrab = false;
 		//  よじ登りを実行
 		isClimb = true;
 
 		animeTime_ = 0;
-		wallUPTimer.Set(60);
+		wallUPTimer.Set(uptime);
 
-		poleVecLeft = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_ - 2.f) ;
-		poleVecRight = Vector3D(position_.x + 1.15f,effectorPos.vec_.y_ + 0.5f,effectorPos.vec_.z_ - 2.f) ;
+		poleVecLeft = Vector3D(4.55f,125.92f,50.00f) ;
+		poleVecRight = Vector3D(-4.55f,125.92f,50.00f) ;
 		poleVecLF = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
 		poleVecRF = Vector3D(position_.x + 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
 		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
@@ -302,10 +303,10 @@ void MCB::Player::Move()
 		{
 			animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ },
 				poleVecLeft,
-				"mixamorig:LeftHand","NULL","NULL",false);
+				"mixamorig:LeftHand","NULL","NULL",true);
 			animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
 				poleVecRight,
-				"mixamorig:RightHand","NULL","NULL",false);
+				"mixamorig:RightHand","NULL","NULL",true);
 		}
 		//y0.7,z54.8;
 
@@ -347,7 +348,7 @@ void MCB::Player::Move()
 		* 3. y
 		* 4. z
 		*/
-			animationSpeed_ = 3.8f / 60.f;
+			animationSpeed_ = 3.8f / static_cast<float>(uptime);
 			float time = animeTime_ + animationSpeed_;
 			// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
 			if ( climbFrontMove )
@@ -375,12 +376,12 @@ void MCB::Player::Move()
 
 					position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
 						2.58f - 0.35f,time - 0.35f) );
+				}
 					if ( time + animationSpeed_ > 2.58f)
 					{
 						animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
 						animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
 					}
-				}
 				//else if ( time >= 1.08f && time <= 3.80f )
 				//{
 				//	position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
@@ -396,7 +397,7 @@ void MCB::Player::Move()
 		}
 		//currentAnimation->duration - 0.0001f
 		//Animation* anim = animationModel_->animationManager.GetAnimation(currentAnimation_);
-		animationSpeed_ = 3.8f / 60.f;
+		animationSpeed_ = 3.8f / static_cast< float >( uptime );
 		//  座標を更新
 		fallV_.vec_.y_ = 0.0f;
 		if ( wallUPTimer.IsEnd() )

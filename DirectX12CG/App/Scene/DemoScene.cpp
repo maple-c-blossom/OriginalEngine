@@ -304,7 +304,7 @@ void MCB::DemoScene::Initialize()
 		//test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
 
 	}
-		test2Animation_.currentAnimation_ = "Tpose.001";
+		test2Animation_.currentAnimation_ = "Tpose..";
 }
 
 void MCB::DemoScene::LoadModel()

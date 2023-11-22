@@ -24,7 +24,7 @@ namespace MCB
 		float accelerator_ = 0.005f;
 		float acceleratorfront_ = 0.05f;
 		MCB::Vector3D rightVec_ = { 1,0,0 };
-		Byte4 pad2;
+		int32_t uptime = 300;
 		Object3d* ground;
 		Vector3D respownPosition_;
 		float outYPosition = -20;
@@ -55,7 +55,7 @@ namespace MCB
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
 		Vector3D poleVecLF;
-
+		
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 	public:
 		size_t runNormal;
