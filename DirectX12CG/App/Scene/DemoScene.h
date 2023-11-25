@@ -74,7 +74,8 @@ namespace MCB
 		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
 		bool objChenge_;
 		bool gizmoDraw_ = true;
-		Byte2 pad5;
+		uint8_t animationNum = 4;
+		Byte1 pad5;
 		struct IKDataSet
 		{
 			std::string endJointName = "NULL";
@@ -88,6 +89,7 @@ namespace MCB
 		std::array<IKDataSet,4> ikBoneName_ = { std::string("mixamorig:LeftHand"),
 												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
 		int64_t pad6;
+		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"} };
 
 #pragma endregion 3Dオブジェクト
 

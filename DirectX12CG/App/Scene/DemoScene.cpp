@@ -257,6 +257,24 @@ void MCB::DemoScene::ImGuiUpdate()
         }
         ImGui::TreePop();
     }
+
+
+	if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
+	{
+		for ( uint8_t i = 0; i < animationName.size(); i++ )
+		{
+			if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
+			{
+				animationNum = i;
+
+			}
+		}
+		ImGui::EndCombo();
+	}
+	test2Animation_.currentAnimation_ = animationName[ animationNum ];
+	float animTime = test2Animation_.animeTime_;
+	ImGui::SliderFloat("AnimTime",&animTime,0.f,7.f);
+	test2Animation_.animeTime_ = animTime;
     //ImGui::Checkbox("IkModelChenge", &objChenge_);
     test2Animation_.animationModel_->DrawHeirarchy();
 
@@ -383,7 +401,6 @@ void MCB::DemoScene::Object3DInit()
     test2Animation_.camera_ = viewCamera_;
 	test2Animation_.currentAnimation_ = "Tpose";
 	test2Animation_.AnimationUpdate();
-
 }
 
 MCB::DemoScene::IKDataSet::IKDataSet()

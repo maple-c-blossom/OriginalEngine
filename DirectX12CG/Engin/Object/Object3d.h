@@ -88,7 +88,8 @@ namespace MCB
         bool trackingFlag_ = false;
 		bool animationPositionRock = false;
 		bool cameraViewFromSide_ = false;
-		Byte2 pad2;
+		bool animationLoop_ = true;
+		Byte1 pad2;
         Object3d* parent_ = nullptr;
 		int64_t pad3;
         static ICamera* camera_;

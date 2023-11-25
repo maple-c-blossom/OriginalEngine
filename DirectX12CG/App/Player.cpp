@@ -75,7 +75,7 @@ void MCB::Player::UniqueUpdate()
 			else
 			{
 				isGraund_ = false;
-				fallV_ = { {{0,0,0,0}} };
+				if(currentAnimation_ != "Jump" )fallV_ = {{{0,0,0,0}}};
 			}
 		}
 		else if ( fallV_.vec_.y_ <= 0.0f )
@@ -207,33 +207,66 @@ void MCB::Player::Move()
 	}
 	else
 	{
-		animationSpeed_ = 0.05f;
-		currentAnimation_ = "Tpose";
+		currentAnimation_ = "Idle";
 
 	}
-	animationSpeed_ = max(abs(speedFront_) / 7, abs(speedRight_) / 7);
-
+	if ( currentAnimation_ == "Idle" )
+	{
+		animationSpeed_ = 0.005f;
+	}
+	else
+	{
+		animationSpeed_ = max(abs(speedFront_) / 7,abs(speedRight_) / 7);
+	}
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.025f;
+		const float fallAcc = -0.0025f;
 		const float VYMin = -0.5f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
-		//animationPositionRock = true;
-		//currentAnimation_ = "Jump";
-		animationSpeed_ = 0.05f;
+		
+		animationPositionRock = true;
+		isJump = false;
+		currentAnimation_ = "Jump";
+		animationSpeed_ = 0.005f;
+		if ( animeTime_ >=  1.160f)
+		{
+			animationSpeed_ = 0;
+		}
 
 	}
-	else if (Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))
+	else if ((Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))&&!isJump)
 	{
-		isGraund_ = false;
-		const float jumpVYFist = 0.45f;
-		fallV_ = { {{0,jumpVYFist,0,0}} };
+		isJump = true;
+		animeTime_ = 0;
 	}
 	else if ( isGraund_ )
 	{
-		fallV_.vec_.y_ = 0;
+		if ( currentAnimation_ != "Jump" )
+		{
+			fallV_.vec_.y_ = 0;
+		}
 		animationPositionRock = true;
 	}
+
+
+	if ( isJump )
+	{
+		currentAnimation_ = "Jump";
+		animationSpeed_ = 0.025f;
+		animationPositionRock = true;
+		speedFront_ = 0;
+		if ( animeTime_ + animationSpeed_ >= 0.516 )
+		{
+			const float jumpVYFist = 0.1f;
+			fallV_ = { {{0,jumpVYFist,0,0}} };
+		}
+	}
+
+	if ( fallV_.vec_.y_ < 0 && animeTime_ < 0.516f && currentAnimation_ == "Jump" )
+	{
+		animeTime_ = 0.516f;
+	}
+
 	wallCheckRay.StartPosition_ = position_;
 	wallCheckRay.StartPosition_.vec_.y_ += 0.f;
 	wallCheckRay.rayVec_ = nowFrontVec_;
@@ -255,6 +288,7 @@ void MCB::Player::Move()
 
 	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE) )
 	{
+		isJump = false;
 		fallV_.vec_.y_ = 0;
 		position_.z = effectorPos.vec_.z_-0.025f;
 		//  開始位置を保持
@@ -273,25 +307,34 @@ void MCB::Player::Move()
 		animeTime_ = 0;
 		wallUPTimer.Set(uptime);
 
-		poleVecLeft = Vector3D(4.55f,125.92f,50.00f) ;
-		poleVecRight = Vector3D(-4.55f,125.92f,50.00f) ;
-		poleVecLF = Vector3D(position_.x - 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
-		poleVecRF = Vector3D(position_.x + 1.15f,effectorPos.vec_.y_ - 1.5f,effectorPos.vec_.z_ + 2.f) ;
+		poleVecLeft = Vector3D(4.55f,125.92f,-5.00f) ;
+		poleVecRight = Vector3D(-4.55f,125.92f,-5.00f) ;
+		poleVecLF = Vector3D(position_.x - 1.15f,position_.y - 1.5f,position_.z + 2.f) ;
+		poleVecRF = Vector3D(position_.x + 1.15f,position_.y - 1.5f,position_.z + 2.f) ;
 		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
 		animationModel_->skeleton.GetNode("mixamorig:RightHand")->lineView = true;
 	}
-	else if(wallHit_)
+	//else if(wallHit_)
+	//{
+	//	if (/* !prevWallHit_ ||*/isGraund_) 
+	//	{
+	//		wallTimer.Set(10);
+	//	}
+	//	wallTimer.Update();
+	//	if ( !wallTimer.IsEnd() )
+	//	{
+	//		//fallV_.vec_.y_ = 0;
+	//		//fallV_.vec_.y_ = speedFront_;
+	//	}
+	//}
+
+	if ( currentAnimation_ == "Run" || currentAnimation_ == "Idle" || currentAnimation_ == "Tpose" )
 	{
-		if (/* !prevWallHit_ ||*/isGraund_) 
-		{
-			wallTimer.Set(10);
-		}
-		wallTimer.Update();
-		if ( !wallTimer.IsEnd() )
-		{
-			fallV_.vec_.y_ = 0;
-			fallV_.vec_.y_ = speedFront_;
-		}
+		animationLoop_ = true;
+	}
+	else
+	{
+		animationLoop_ = false;
 	}
 
 	if ( isClimb )
@@ -307,6 +350,7 @@ void MCB::Player::Move()
 			animationModel_->skeleton.SetTwoBoneIK(*this,{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
 				poleVecRight,
 				"mixamorig:RightHand","NULL","NULL",true);
+
 		}
 		//y0.7,z54.8;
 
@@ -408,6 +452,8 @@ void MCB::Player::Move()
 			position_.x = climbPos.vec_.x_;
 			position_.y = climbPos.vec_.y_;
 			position_.z = climbPos.vec_.z_;//最後に目的の場所に最終調整
+			fallV_.vec_.y_ = 0.0f;
+			isJump = false;
 		}
 	}
 
@@ -433,10 +479,22 @@ void MCB::Player::Debug()
 	ImGui::Checkbox("isRootStop",&isRootStop);
 	ImGui::Checkbox("ObjectSideView",&cameraViewFromSide_);
 	ImGui::Checkbox("isIk",&isIkClimb);
+	currentAnimation_ = animationName[ animationNum ];
 	if ( isDebug_ )
 	{
 		ImguiManager::GuizmoDraw(this,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
-		currentAnimation_ = "Climb";
+		if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
+		{
+			for ( uint8_t i = 0; i < animationName.size(); i++ )
+			{
+				if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
+				{
+					animationNum = i;
+					
+				}
+			}
+			ImGui::EndCombo();
+		}
 		rotation_.y = ConvertRadius(180);
 		animationSpeed_ = 0;
 		animationPositionRock = isRootStop;
@@ -449,6 +507,7 @@ void MCB::Player::Debug()
 	ImGui::Text("EffectorPositin:%f,%f,%f",effectorPos.vec_.x_,effectorPos.vec_.y_,effectorPos.vec_.z_);
 	ImGui::Text("ClimbStartPositin:%f,%f,%f",climbOldPos.vec_.x_,climbOldPos.vec_.y_,climbOldPos.vec_.z_);
 	ImGui::Text("animationRootPos:%f,%f,%f",nodePos.vec_.x_,nodePos.vec_.y_,nodePos.vec_.z_);
+	ImGui::Text("fallV:%f",fallV_.vec_.y_);
 	//position_.y = 2.88f;
 	//position_.z = 55.96f;
 	//0.73f;

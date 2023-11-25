@@ -19,7 +19,7 @@ MCB::Model::Model()
 
 MCB::Model::~Model()
 {
-    texture_->free = true;
+    //texture_->free = true;
 }
 
 void MCB::Model::CreateVertexBuffer( const D3D12_HEAP_PROPERTIES& HeapProp,const D3D12_HEAP_FLAGS& flag,

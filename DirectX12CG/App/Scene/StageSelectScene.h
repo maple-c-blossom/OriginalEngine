@@ -67,7 +67,7 @@ namespace MCB
 
 		DebugText debugText_;
 
-		std::array<std::string, 4> stages;
+		std::array<std::string, 3> stages;
 		
 #pragma endregion スプライト
  
@@ -81,11 +81,12 @@ namespace MCB
 		Timer selectMoveTime_;
 		Timer selectScaleTime_;
 		const uint32_t selectMoveMaxTime_ = 20;
+		Byte4 pad6;
 		float selectMoveStartPosy;
 
 		int32_t selectSE;
 		int32_t enterSE;
-		Byte4 pad6;
+		int64_t pad7;
 #pragma endregion 通常変数
 	public:
 

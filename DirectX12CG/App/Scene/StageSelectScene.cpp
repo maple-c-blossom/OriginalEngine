@@ -168,9 +168,8 @@ MCB::StageSelectScene::~StageSelectScene()
 void MCB::StageSelectScene::Initialize()
 {
     stages[0] = "Demo";
-    stages[1] = "Tutorial";
-    stages[2] = "Level1";
-    stages[3] = "Title";
+    stages[1] = "Game";
+    stages[2] = "Title";
     camera_.Inilialize();
     camera_.moveStop = true;
     viewCamera_ = &camera_;

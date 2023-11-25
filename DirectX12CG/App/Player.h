@@ -34,7 +34,7 @@ namespace MCB
 		bool isGrab;
 		bool prevWallHit_;
 		bool wallHit_;
-		bool isDebug_ = true;
+		bool isDebug_ = false;
 		bool climbUpMove = true;
 		bool climbFrontMove = true;
 		bool isRootStop = true;
@@ -49,18 +49,20 @@ namespace MCB
 		Vector3D climbPos;
 		Vector3D effectorPos;
 		bool isClimb;
-		bool isIkClimb;
-		Byte2 pad6;
+		bool isIkClimb = true;
+		uint8_t animationNum = 0;
+		bool isJump;
 		Vector3D poleVecLeft;
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
 		Vector3D poleVecLF;
 		
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
+		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
+
 	public:
 		size_t runNormal;
 		size_t runFast;
-		int64_t pad5;
 		float GetSpeed();
 		void SetRespowPosition(const Vector3D& pos);
 		void Init()override;

@@ -810,19 +810,19 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
 	   endJoint.ikDebugData.defaultTriangleNormal = nd;
 
-	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,EffectorLocalFromRootPos,
-		   xmLocalConstraintVectorFromRoot);
+	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,xmLocalConstraintVectorFromRoot,
+		   EffectorLocalFromRootPos);
 
 
 
 
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1;//同一平面上にいるようにする回転
-	   q1 = /*q1.GetDirectProduct(rootJoint->defaultRotation,*/q1.DirToDir(nd, nt)/*)*/;
-	   //rootJoint->rotation = q1.ConvertXMVector();
-	   //UpdateNodeMatrix(rootJoint);
-	   //UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
-	   //UpdateNodeMatrix(&endJoint);
+	   q1 = q1.GetDirectProduct(rootJoint->defaultRotation,q1.DirToDir(nd, nt));
+	   rootJoint->rotation = q1.ConvertXMVector();
+	   UpdateNodeMatrix(rootJoint);
+	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
+	   UpdateNodeMatrix(&endJoint);
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
 	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
