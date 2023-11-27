@@ -818,7 +818,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
 	   Quaternion q1;//同一平面上にいるようにする回転
-	   q1 = q1.GetDirectProduct(rootJoint->defaultRotation,q1.DirToDir(nd, nt));
+	   q1 = q1.GetDirectProduct(rootJoint->rotation,q1.DirToDir(nd, nt));
 	   rootJoint->rotation = q1.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
@@ -852,7 +852,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   Vector3D endJointLocalVecFromMiddle = MCBMatrix::GetTranslate(endJoint.AnimaetionParentMat * middleJointWorldMatrixinv);
 	   Vector3D localTargetVectorFromMiddle =  xmTargetLocalVecFromMiddle;
 	   Quaternion q3 = q3.DirToDir(endJointLocalVecFromMiddle, localTargetVectorFromMiddle);
-	   q3 = q3.GetDirectProduct(middleJoint.defaultRotation,q3);
+	   q3 = q3.GetDirectProduct(middleJoint.rotation,q3);
 	   middleJoint.rotation = q3.ConvertXMVector();
 	   //この後で全部のノードを更新するため、削除
 	   //UpdateNodeMatrix(rootJoint);
