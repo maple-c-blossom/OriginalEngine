@@ -90,7 +90,7 @@ namespace MCB
 												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
 		int64_t pad6;
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"} };
-
+		int64_t pad114514;
 #pragma endregion 3Dオブジェクト
 
 #pragma region スプライト
