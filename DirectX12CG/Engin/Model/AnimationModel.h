@@ -118,22 +118,23 @@ PragmaWarningNum(4324)
             Node* rootJointNode = nullptr;//ルートジョイントのポインタ
             Vector3D iKEffectorPosition = {};//IKのEffector位置(Obj空間)
             Vector3D constraintModelVector = {0,1,0};//PoleVector(Model空間)
-            Vector3D constraintFromEffectorVector = {0,1,0};//PoleVector(Model空間)
+            Vector3D constraintFromRoot = {0,1,0};//PoleVector(Model空間)
             Vector3D constraintWorldVector = {0,1,0};//PoleVector(ワールド空間)
 			int64_t pad2;
             Object3d constraintObj;//PoleVector表示用のオブジェクト
             Vector3D effectorPosFromRoot = {};//PoleVector(Model空間)
             Vector3D effectorPosFromMiddle = {};//PoleVector(Model空間)
             Vector3D effectorWorldPos = {};//PoleVector(Model空間)
-			int32_t pad3;
-			int64_t pad6;
+			Byte6 pad3;
+			Byte6 pad4;
+			PrimitiveFigure::Line triangleNormalLine;
             PrimitiveFigure::Line constraintLine;
             PrimitiveFigure::Line effectorVecFromRoot;
             PrimitiveFigure::Line effectorVecFromMiddle;
             PrimitiveFigure::Triangle rootAndEffectorAndConstraintTriangle;
             PrimitiveFigure::Triangle jointTriangle;
             Vector3D constraintLocalPositionFromRoot;
-			Byte4 pad4;
+			Byte4 pad5;
 
         };
 
@@ -145,6 +146,7 @@ PragmaWarningNum(4324)
             Vector3D taregetTriangleNormal;
             Vector3D constraintModelVector;
             Vector3D constraintWorldVector;
+
 			Byte4 pad1;
         };
         IKData ikData;//IKに関するデータ

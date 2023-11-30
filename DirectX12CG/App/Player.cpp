@@ -268,7 +268,6 @@ void MCB::Player::Move()
 	}
 
 	wallCheckRay.StartPosition_ = position_;
-	wallCheckRay.StartPosition_.vec_.y_ += 0.f;
 	wallCheckRay.rayVec_ = nowFrontVec_;
 
 	upperCheckRay.StartPosition_ = position_;
@@ -307,8 +306,8 @@ void MCB::Player::Move()
 		animeTime_ = 0;
 		wallUPTimer.Set(uptime);
 
-		poleVecLeft = Vector3D(4.55f,125.92f,-5.00f) ;
-		poleVecRight = Vector3D(-4.55f,125.92f,-5.00f) ;
+		poleVecLeft = Vector3D(0.1134f,-0.4093f,-0.4241f) ;
+		poleVecRight = Vector3D(-0.1134f,-0.4093f,-0.4241f) ;
 		poleVecLF = Vector3D(position_.x - 1.15f,position_.y - 1.5f,position_.z + 2.f) ;
 		poleVecRF = Vector3D(position_.x + 1.15f,position_.y - 1.5f,position_.z + 2.f) ;
 		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
