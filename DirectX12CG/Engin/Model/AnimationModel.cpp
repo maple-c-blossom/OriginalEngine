@@ -862,6 +862,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    void MCB::Skeleton::AllNodeMatrixForModelToBone()
    {
+	   ikNodes_.clear();
 	   for (auto& node : nodes_)
 	   {
 		   if (node->ikData.isIK)
@@ -871,6 +872,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   {
 				   UpdateNodeMatrix(updateNode.get());
 			   }
+			   ikNodes_.push_back(node.get());
 		   }
 	   }
 	   for (auto& node : nodes_)
@@ -1131,6 +1133,43 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 		   }
 		   
+	   }
+   }
+
+   void MCB::Skeleton::DrawIkNode()
+   {
+	   for ( auto& itr : ikNodes_ )
+	   {
+		   string tag = itr->name + ":IKData";
+		   if ( ImGui::TreeNode(tag.c_str()) )
+		   {
+
+			   Node::IKData& nodeIkData = itr->ikData;
+			   //ImGui::Checkbox("lineView",&node->lineView);
+			   if ( itr->ikData.rootJointNode )
+			   {
+				   ImGui::Text("RootJointName:%s",nodeIkData.rootJointNode->name.c_str());
+			   }
+			   if ( itr->ikData.middleJointNode )
+			   {
+				   ImGui::Text("MiddleJointName:%s",nodeIkData.middleJointNode->name.c_str());
+			   }
+			   ImGui::Text("EffectorPositionFromObj:%f,%f,%f",nodeIkData.iKEffectorPosition.vec_.x_,
+				   nodeIkData.iKEffectorPosition.vec_.y_,nodeIkData.iKEffectorPosition.vec_.z_);
+			   ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f",nodeIkData.constraintWorldVector.vec_.x_,
+				   nodeIkData.constraintWorldVector.vec_.y_,nodeIkData.constraintWorldVector.vec_.z_);
+			   ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromEffectorVector.vec_.x_,
+					   nodeIkData.constraintFromEffectorVector.vec_.y_,nodeIkData.constraintFromEffectorVector.vec_.z_);
+			   if ( itr->ikData.isCollisionIk )
+			   {
+				   ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",
+					   itr->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.x_,
+				   itr->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.y_,
+					   itr->ikData.middleJointNode->worldBoneRay.StartPosition_.vec_.z_);
+
+			   }
+			   ImGui::TreePop();
+		   }
 	   }
    }
 

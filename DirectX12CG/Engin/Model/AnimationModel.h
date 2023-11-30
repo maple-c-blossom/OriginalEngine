@@ -173,6 +173,7 @@ PragmaPop
     {
     private:
         std::vector< std::unique_ptr<Node>> nodes_;
+		std::vector<Node*> ikNodes_;
         
     public:
         Node* rootNode;
@@ -248,6 +249,7 @@ PragmaPop
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
 
         void DrawHeirarchy(Node* node);
+        void DrawIkNode();
 
         void UpdateNodeMatrix(Node* node);
 

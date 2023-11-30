@@ -33,7 +33,7 @@ void Camera::Update()
 	if ( target_->cameraViewFromSide_ )
 	{
 		view_.eye_.x = target_->position_.x + ( 7.5f * -target_->nowFrontVec_.vec_.x_ ) + 5.5f;
-		view_.eye_.y = target_->position_.y + 2.5f;
+		view_.eye_.y = target_->position_.y;
 		view_.eye_.z = target_->position_.z;
 		view_.target_ = target_->position_;
 		view_.target_.y = view_.eye_.y;

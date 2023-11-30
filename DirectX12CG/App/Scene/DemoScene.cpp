@@ -255,6 +255,7 @@ void MCB::DemoScene::ImGuiUpdate()
                 ImGui::TreePop();
             }
         }
+		test2Animation_.animationModel_->skeleton.DrawIkNode();
         ImGui::TreePop();
     }
 
