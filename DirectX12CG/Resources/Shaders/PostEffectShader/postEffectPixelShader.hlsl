@@ -7,20 +7,20 @@ SamplerState smp : register(s0);
 float4 AverageBlur(VSOutput input, Texture2D<float4> tex)
 {
     float4 texColor1 = float4(tex.Sample(smp, input.uv));
-    const float uChange = 1 / 1280.f;
-    const float vChange = 1 / 720.f;
-    float4 texColor1sum = { 0, 0, 0, 0 };
-    const float uForRange = 6;
-    const float vForRange = 6;
-    for (float v = 0; v < vForRange; v++)
-    {
-        for (float u = 0; u < uForRange; u++)
-        {
-            float2 offSet = float2((u - 1) * uChange, (v - 1) * vChange);
-            texColor1sum += tex.Sample(smp, saturate(input.uv - offSet));
-        }
-    }
-    return texColor1sum / (uForRange * vForRange);
+    //const float uChange = 1 / 1280.f;
+    //const float vChange = 1 / 720.f;
+    //float4 texColor1sum = { 0, 0, 0, 0 };
+    //const float uForRange = 6;
+    //const float vForRange = 6;
+    //for (float v = 0; v < vForRange; v++)
+    //{
+    //    for (float u = 0; u < uForRange; u++)
+    //    {
+    //        float2 offSet = float2((u - 1) * uChange, (v - 1) * vChange);
+    //        texColor1sum += tex.Sample(smp, saturate(input.uv - offSet));
+    //    }
+    //}
+    return texColor1;
 }
 
 float4 inv(VSOutput input, Texture2D<float4> tex)
