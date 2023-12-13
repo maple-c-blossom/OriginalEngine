@@ -1164,8 +1164,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   nodeIkData.iKEffectorPosition.vec_.y_,nodeIkData.iKEffectorPosition.vec_.z_);
 			   ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f",nodeIkData.constraintWorldVector.vec_.x_,
 				   nodeIkData.constraintWorldVector.vec_.y_,nodeIkData.constraintWorldVector.vec_.z_);
-			   ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromEffectorVector.vec_.x_,
-					   nodeIkData.constraintFromEffectorVector.vec_.y_,nodeIkData.constraintFromEffectorVector.vec_.z_);
+			   ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintLocalPositionFromRoot.vec_.x_,
+					   nodeIkData.constraintLocalPositionFromRoot.vec_.y_,nodeIkData.constraintLocalPositionFromRoot.vec_.z_);
 			   if ( itr->ikData.isCollisionIk )
 			   {
 				   ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",

@@ -12,7 +12,9 @@ namespace MCB
 
 	private:
 		bool isGraund_ = false;
-		Byte3 pad;
+		bool animePlay = false;
+		bool isMoveBlock = false;
+		Byte1 pad;
 		Vector3D fallV_;
 		Input* input_ = Input::GetInstance();
 		float speedFront_ = 0.0f;
@@ -20,12 +22,15 @@ namespace MCB
 		float rotasionSpeed_ = 0.015f;
 		float defualtSpeed_ = 0.05f;
 		float maxFrontSpeed_ = 0.15f;
-		float maxspeed_ = 0.35f;
+		float maxspeed_ = 0.15f;
 		float accelerator_ = 0.005f;
 		float acceleratorfront_ = 0.05f;
+		float animationPlaySpeed;
 		MCB::Vector3D rightVec_ = { 1,0,0 };
 		int32_t uptime = 300;
+		int32_t pad2;
 		Object3d* ground;
+		Object3d* moveBlock;
 		Vector3D respownPosition_;
 		float outYPosition = -20;
 		float distoffSet = 0.00025f;
@@ -63,6 +68,7 @@ namespace MCB
 	public:
 		size_t runNormal;
 		size_t runFast;
+		int64_t pad3;
 		float GetSpeed();
 		void SetRespowPosition(const Vector3D& pos);
 		void Init()override;

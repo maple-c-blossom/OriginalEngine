@@ -163,10 +163,10 @@ void LightGroup::TransferConstBuff()
 
 void LightGroup::DefaultLightSet()
 {
-	dirLights_[0].SetIsActive(true);
+	dirLights_[0].SetIsActive(false);
 	dirLights_[0].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights_[0].SetLightDir({ -1.0f, -1.0f, 0.0f});
-	dirLights_[0].SetLightShininess(4.0f);
+	dirLights_[0].SetLightShininess(1.0f);
 
 	dirLights_[1].SetIsActive(false);
 	dirLights_[1].SetLightColor({ 1.0f, 1.0f, 1.0f });
@@ -180,7 +180,7 @@ void LightGroup::DefaultLightSet()
 
 	PLights_[0].SetIsActive(false);
 	PLights_[0].SetPLightPos({ 0, 2, 10 });
-	PLights_[0].SetPLightColor({ 0,1,1 });
+	PLights_[0].SetPLightColor({ 1,1,1 });
 	PLights_[0].SetPLightAtten({0.01f,0.01f,0.01f});
 	
 	PLights_[1].SetIsActive(false);
@@ -193,19 +193,19 @@ void LightGroup::DefaultLightSet()
 	PLights_[2].SetPLightColor({ 1,1,1 });
 	PLights_[2].SetPLightAtten({ 0.001f,0.001f,0.001f });
 
-	SLights_[0].SetIsActive(false);
+	SLights_[0].SetIsActive(true);
 	SLights_[0].SetSLightPos({ 0.0f,3.0f,20.0f });
-	SLights_[0].SetSLightColor({ 1,0,0 });
-	SLights_[0].SetSLightAtten({ 0.0,0.0,0.0 });
+	SLights_[0].SetSLightColor({ 1,1,1 });
+	SLights_[0].SetSLightAtten({ 0.001f,0.001f,0.001f });
 	SLights_[0].SetSLightDir({ 0,-1,0 });
-	SLights_[0].SetSLightFactorAngle({ 20.0f,30.0f},false);
+	SLights_[0].SetSLightFactorAngle({ 5.f,5.f },true);
 
 	SLights_[1].SetIsActive(false);
 	SLights_[1].SetSLightPos({ 10.0f,2.0f,20.0f });
 	SLights_[1].SetSLightColor({ 1,1,1 });
 	SLights_[1].SetSLightAtten({ 0.001f,0.001f,0.001f });
 	SLights_[1].SetSLightDir({ 0.0,0.0,0.0 });
-	SLights_[1].SetSLightFactorAngle({ 0.001f,0.001f });
+	SLights_[1].SetSLightFactorAngle({ 5.f,5.f },true);
 
 	SLights_[2].SetIsActive(false);
 	SLights_[2].SetSLightPos({ 10.0f,2.0f,20.0f });

@@ -5,7 +5,7 @@
 #include "AnimationModel.h"
 #include "Sound.h"
 #include "ImGuiManager.h"
-
+#include "MoveBlock.h"
 
 using namespace std;
 float MCB::Player::GetSpeed()
@@ -29,11 +29,14 @@ void MCB::Player::Init()
 	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
 	rotation_.x = ConvertRadius(0);
-
+	LightGroup::GetInstance()->SetSLightIsActive(1,false);
 }
 
 void MCB::Player::UniqueUpdate()
 {
+	slights_->SetSLightPos(0,{ position_.x, position_.y + 1.f, position_.z });
+	slights_->SetSLightForLightDir(0,{ 0,-1,0 });
+	slights_->SetSLightIsActive(0,true);
 	if ( !isDebug_ )
 	{
 		if ( !back )
@@ -53,6 +56,7 @@ void MCB::Player::UniqueUpdate()
 		ray.StartPosition_.vec_.y_ = sphere->centerPosition_.vec_.y_ - 1.f;
 		ray.StartPosition_.vec_.y_ += sphere->GetRaius();
 		ray.rayVec_ = { {{0,-1,0,0}} };
+
 		RayCastHit info;
 		float distRange = sphere->GetRaius() * 2.0f;
 		float distOverRange = distRange * distoffSet;
@@ -68,8 +72,17 @@ void MCB::Player::UniqueUpdate()
 				Object3d::UpdateMatrix();
 				for ( uint8_t i = 0; i < footBoneName.size(); i++ )
 				{
-					animationModel_->skeleton.GetNode(footBoneName[ i ])->ikData.isCollisionIk = true;
+					//animationModel_->skeleton.GetNode(footBoneName[ i ])->ikData.isCollisionIk = true;
 					//animationModel_->skeleton.SetTwoBoneIK();
+				}
+				if ( info.objctPtr_ )
+				{
+					if ( info.objctPtr_->nameId_ == "JumpPad" )
+					{
+						isGraund_ = false;
+						
+						fallV_ *= -3.f;
+					}
 				}
 			}
 			else
@@ -83,15 +96,57 @@ void MCB::Player::UniqueUpdate()
 
 			if ( isGround )
 			{
+				isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f);
 				isGraund_ = true;
-				if ( info.dist_ <= 1.f - distOverRange ) position_.y -= ( ( info.dist_ - distOverRange ) - sphere->GetRaius() * 2.0f );
+				if ( info.dist_ <= 1.f - distOverRange - 0.25f ) position_.y -= ( ( info.dist_ - distOverRange - 0.25f )
+					- sphere->GetRaius() * 2.0f );
 				Object3d::UpdateMatrix();
+				if ( info.objctPtr_ )
+				{
+					if ( info.objctPtr_->nameId_ == "JumpPad" )
+					{
+						isGraund_ = false;
+						fallV_ *= -3.f;
+						isMoveBlock = false;
+					}
+
+				
+				}
+
+			}
+			else if ( CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange +
+				0.25f))
+			{
+				if ( info.objctPtr_->nameId_ == "MoveBlock" )
+				{
+					if ( !info.objctPtr_->updated )
+					{
+						info.objctPtr_->UniqueUpdate();
+					}
+					moveBlock = info.objctPtr_;
+					isMoveBlock = true;
+				}
 			}
 			else
 			{
 				isGraund_ = false;
+				isMoveBlock = false;
 			}
 		}
+	}
+
+	if ( isMoveBlock )
+	{
+		
+		if ( !moveBlock->updated )
+		{
+			moveBlock->UniqueUpdate();
+		}
+
+		position_.x += moveBlock->totalMoveVec.vec_.x_;
+		position_.y += moveBlock->totalMoveVec.vec_.y_;
+		position_.z += moveBlock->totalMoveVec.vec_.z_;
+
 	}
 
 	PlayerQueryCallBack callback(sphere);
@@ -105,23 +160,23 @@ void MCB::Player::UniqueUpdate()
 		position_.z += callback.move.vec_.z_ * 0.4f;
 	}
 
-	//if (back)
-	//{
-	//	backTimer.SafeUpdate();
-	//	position_.x += backVec.vec_.x_;
-	//	position_.y += backVec.vec_.y_;
-	//	position_.z += backVec.vec_.z_;
-	//	if (backTimer.IsEnd())
-	//	{
-	//		back = false;
-	//	}
-	//}
-	//else
-	//{
-	//	backTimer.Set(5);
-	//	backVec = callback.move * 6;
-	//	back = callback.block;
-	//}
+	if (back)
+	{
+		backTimer.SafeUpdate();
+		position_.x += backVec.vec_.x_;
+		position_.y += backVec.vec_.y_;
+		position_.z += backVec.vec_.z_;
+		if (backTimer.IsEnd())
+		{
+			back = false;
+		}
+	}
+	else if(callback.block)
+	{
+		backTimer.Set(5);
+		backVec = callback.move * 2;
+		back = callback.block;
+	}
 
 	if (position_.y < outYPosition)
 	{
@@ -254,7 +309,7 @@ void MCB::Player::Move()
 		currentAnimation_ = "Jump";
 		animationSpeed_ = 0.025f;
 		animationPositionRock = true;
-		speedFront_ = 0;
+		//speedFront_ = 0;
 		if ( animeTime_ + animationSpeed_ >= 0.516 )
 		{
 			const float jumpVYFist = 0.1f;
@@ -283,9 +338,13 @@ void MCB::Player::Move()
 	{
 		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y;
 		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
+		if ( info.objctPtr_->nameId_ == "MoveBlock" || info.objctPtr_->nameId_ == "RBlock" )
+		{
+			wallHit_ = false;
+		}
 	}
 
-	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE) )
+	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE))
 	{
 		isJump = false;
 		fallV_.vec_.y_ = 0;
@@ -364,12 +423,6 @@ void MCB::Player::Move()
 
 		}
 		wallUPTimer.Update(1);
-		/*
-		使ってるモーションの上がってる区間とそうじゃない区間がある？
-		区間ごとにメモ取ってやるべきか？？？
-		今日（11/18)できなかったら先生に相談。
-		*/
-
 		
 		
 
@@ -385,11 +438,6 @@ void MCB::Player::Move()
 		* 2. 0.35～1.08
 		* 3. 1.08～2.58
 		* 4. 2.03～3.80※終了
-		* 移動量
-		* 1. z
-		* 2. y
-		* 3. y
-		* 4. z
 		*/
 			animationSpeed_ = 3.8f / static_cast<float>(uptime);
 			float time = animeTime_ + animationSpeed_;
@@ -472,49 +520,72 @@ void MCB::Player::Move()
 
 void MCB::Player::Debug()
 {
-	ImGui::Checkbox("Debug",&isDebug_);
-	ImGui::Checkbox("climbUpMove",&climbUpMove);
-	ImGui::Checkbox("climbFrontMove",&climbFrontMove);
-	ImGui::Checkbox("isRootStop",&isRootStop);
-	ImGui::Checkbox("ObjectSideView",&cameraViewFromSide_);
-	ImGui::Checkbox("isIk",&isIkClimb);
-	currentAnimation_ = animationName[ animationNum ];
-	if ( isDebug_ )
+	if ( ImGui::TreeNode("プレイヤーデバッグ") )
 	{
-		ImguiManager::GuizmoDraw(this,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
-		if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
-		{
-			for ( uint8_t i = 0; i < animationName.size(); i++ )
-			{
-				if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
-				{
-					animationNum = i;
-					
-				}
-			}
-			ImGui::EndCombo();
-		}
-		rotation_.y = ConvertRadius(180);
-		animationSpeed_ = 0;
-		animationPositionRock = isRootStop;
-	}
-	string rootName = animationModel_->animationManager.GetAnimation(currentAnimation_)->animationRootNode;
-	Node* root = animationModel_->skeleton.GetNode(rootName);
-	Vector3D nodePos;
-	if ( root ) nodePos = root->worldPosition;
-	ImGui::Text("Positin:%f,%f,%f",position_.x,position_.y,position_.z);
-	ImGui::Text("EffectorPositin:%f,%f,%f",effectorPos.vec_.x_,effectorPos.vec_.y_,effectorPos.vec_.z_);
-	ImGui::Text("ClimbStartPositin:%f,%f,%f",climbOldPos.vec_.x_,climbOldPos.vec_.y_,climbOldPos.vec_.z_);
-	ImGui::Text("animationRootPos:%f,%f,%f",nodePos.vec_.x_,nodePos.vec_.y_,nodePos.vec_.z_);
-	ImGui::Text("fallV:%f",fallV_.vec_.y_);
-	//position_.y = 2.88f;
-	//position_.z = 55.96f;
-	//0.73f;
-	//local y2.48f,z0.13
-	float animTime = animeTime_;
-	ImGui::SliderFloat("AnimTime",&animTime,0.f,3.8f);
-	animeTime_ = animTime;
+		ImGui::Checkbox("Debug",&isDebug_);
+		ImGui::Checkbox("climbUpMove",&climbUpMove);
+		ImGui::Checkbox("climbFrontMove",&climbFrontMove);
+		ImGui::Checkbox("isRootStop",&isRootStop);
+		ImGui::Checkbox("ObjectSideView",&cameraViewFromSide_);
+		ImGui::Checkbox("isIk",&isIkClimb);
+		ImGui::Text("EffectorとPoleVectorまでの線を描画左");
+		ImGui::Checkbox("LineDraw",&animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView);
+		ImGui::Text("EffectorとPoleVectorまでの線を描画右");
+		ImGui::Checkbox("LineDraw",&animationModel_->skeleton.GetNode("mixamorig:RightHand")->lineView);
+		currentAnimation_ = animationName[ animationNum ];
 
+		string rootName = animationModel_->animationManager.GetAnimation(currentAnimation_)->animationRootNode;
+		Node* root = animationModel_->skeleton.GetNode(rootName);
+		Vector3D nodePos;
+		if ( root ) nodePos = root->worldPosition;
+		ImGui::Text("Positin:%f,%f,%f",position_.x,position_.y,position_.z);
+		ImGui::Text("EffectorPositin:%f,%f,%f",effectorPos.vec_.x_,effectorPos.vec_.y_,effectorPos.vec_.z_);
+		ImGui::Text("ClimbStartPositin:%f,%f,%f",climbOldPos.vec_.x_,climbOldPos.vec_.y_,climbOldPos.vec_.z_);
+		ImGui::Text("animationRootPos:%f,%f,%f",nodePos.vec_.x_,nodePos.vec_.y_,nodePos.vec_.z_);
+		ImGui::Text("fallV:%f",fallV_.vec_.y_);
+		//position_.y = 2.88f;
+		//position_.z = 55.96f;
+		//0.73f;
+		//local y2.48f,z0.13
+		float animTime = animeTime_;
+		ImGui::SliderFloat("AnimTime",&animTime,0.f,3.8f);
+		animeTime_ = animTime;
+		if ( isDebug_ )
+		{
+			ImguiManager::GuizmoDraw(this,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+			if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
+			{
+				for ( uint8_t i = 0; i < animationName.size(); i++ )
+				{
+					if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
+					{
+						animationNum = i;
+
+					}
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::InputFloat("AnimationSpeed",&animationPlaySpeed);
+			if ( ImGui::Button("アニメーション再生") )
+			{
+				animePlay = !animePlay;
+				animeTime_ = 0.f;
+			}
+
+			if ( animePlay )
+			{
+				animationSpeed_ = animationPlaySpeed;
+			}
+			else
+			{
+				animationSpeed_ = 0;
+			}
+			rotation_.y = ConvertRadius(180);
+			animationPositionRock = isRootStop;
+		}
+		
+		ImGui::TreePop();
+	}
 }
 
 void MCB::Player::OnCollision(const CollisionInfomation& info)

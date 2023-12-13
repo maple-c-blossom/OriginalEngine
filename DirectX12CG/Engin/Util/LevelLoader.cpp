@@ -6,6 +6,8 @@
 #include "CheckPoint.h"
 #include "Goal.h"
 #include "Player.h"
+#include "RotationBlock.h"
+#include "MoveBlock.h"
 using namespace MCB;
 using namespace std;
 using namespace nlohmann;
@@ -41,6 +43,14 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			else if (objData->tag == "player")
 			{
 				objData->obj = std::make_unique<Player>();
+			}
+			else if ( objData->tag == "Rblock" )
+			{
+				objData->obj = std::make_unique<RotationBlock>();
+			}
+			else if ( objData->tag == "MoveBlock" )
+			{
+				objData->obj = std::make_unique<MoveBlock>();
 			}
 			else
 			{
@@ -84,7 +94,8 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 		}
-		else if ((objData->tag == "block"))
+		else if ((objData->tag == "block") || ( objData->tag == "Rblock" ) ||
+			( objData->tag == "JumpPad" ) ||(objData->tag == "MoveBlock" ) )
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 			objData->obj->GetCollider()->SetAttribute(9);

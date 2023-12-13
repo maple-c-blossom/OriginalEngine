@@ -76,10 +76,10 @@ namespace MCB
         WorldMatrix matWorld_ = {};
         Vector3D normFrontVec_ = {};
         Vector3D nowFrontVec_ = {0,0,1};
+        Vector3D totalMoveVec = {0,0,0};
         float frontAngle_ = 0;
         float animeTime_;
 		float animationSpeed_ = 0.0f;
-		Byte4 pad;
         Model* model_ = nullptr;
         AnimationModel* animationModel_ = nullptr;
         bool hited_ = false;
@@ -89,9 +89,11 @@ namespace MCB
 		bool animationPositionRock = false;
 		bool cameraViewFromSide_ = false;
 		bool animationLoop_ = true;
-		Byte1 pad2;
+		bool updated = false;
+
         Object3d* parent_ = nullptr;
-		int64_t pad3;
+		std::string tag = "None";
+		int64_t pad;
         static ICamera* camera_;
         Object3d();
         virtual ~Object3d();
@@ -128,7 +130,8 @@ namespace MCB
        static void SetLights(LightGroup* light);
        ConstBufferDataTransform* GetConstMapTrans();
        ID3D12Resource* GetConstBuffTrans();
-       std::string GetName() ;
+       std::string GetName();
+
     };
 
 }

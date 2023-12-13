@@ -55,7 +55,7 @@ void MCB::DemoScene::Update()
         test2Animation_.animationModel_ = anim2Model_.get();
     }
     lights_->UpDate();
-    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
         soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
@@ -196,6 +196,8 @@ void MCB::DemoScene::ImGuiUpdate()
 	{
 		gizmoDraw_ = !gizmoDraw_;
 	}
+
+
 	if ( gizmoDraw_ )
 	{
 		size_t matId = 0;
@@ -259,23 +261,44 @@ void MCB::DemoScene::ImGuiUpdate()
         ImGui::TreePop();
     }
 
-
-	if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
+	if ( ImGui::TreeNode("アニメーション関連") )
 	{
-		for ( uint8_t i = 0; i < animationName.size(); i++ )
+		ImGui::InputFloat("AnimationSpeed",&animationSpeed);
+		if ( ImGui::Button("アニメーション再生") )
 		{
-			if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
-			{
-				animationNum = i;
-
-			}
+			animePlay = !animePlay;
+			test2Animation_.animeTime_ = 0.f;
 		}
-		ImGui::EndCombo();
+
+		if ( animePlay )
+		{
+			test2Animation_.animationSpeed_ = animationSpeed;
+		}
+		else
+		{
+			test2Animation_.animationSpeed_ = 0;
+		}
+
+		if ( ImGui::BeginCombo("Animation",animationName[ animationNum ].c_str()) )
+		{
+			for ( uint8_t i = 0; i < animationName.size(); i++ )
+			{
+				if ( ImGui::Selectable(animationName[ i ].c_str(),i == animationNum) )
+				{
+					animationNum = i;
+
+				}
+			}
+			ImGui::EndCombo();
+		}
+
+
+		test2Animation_.currentAnimation_ = animationName[ animationNum ];
+		float animTime = test2Animation_.animeTime_;
+		ImGui::SliderFloat("AnimTime",&animTime,0.f,7.f);
+		test2Animation_.animeTime_ = animTime;
+		ImGui::TreePop();
 	}
-	test2Animation_.currentAnimation_ = animationName[ animationNum ];
-	float animTime = test2Animation_.animeTime_;
-	ImGui::SliderFloat("AnimTime",&animTime,0.f,7.f);
-	test2Animation_.animeTime_ = animTime;
     //ImGui::Checkbox("IkModelChenge", &objChenge_);
     test2Animation_.animationModel_->DrawHeirarchy();
 
@@ -324,6 +347,17 @@ void MCB::DemoScene::Initialize()
 
 	}
 		test2Animation_.currentAnimation_ = "Tpose..";
+		LightGroup::GetInstance()->SetDirLightIsActive(0,true);
+		LightGroup::GetInstance()->SetSLightIsActive(0,true);
+		LightGroup::GetInstance()->SetSLightIsActive(1,true);
+
+		LightGroup::GetInstance()->SetSLightForLightDir(0,{0,0,1});
+		LightGroup::GetInstance()->SetSLightForLightDir(1,{0,0,-1});
+		LightGroup::GetInstance()->SetSLightPos(0,
+			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z - 1.f });
+		LightGroup::GetInstance()->SetSLightPos(1,
+			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 1.f });
+
 }
 
 void MCB::DemoScene::LoadModel()

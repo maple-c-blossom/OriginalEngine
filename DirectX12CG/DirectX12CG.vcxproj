@@ -104,6 +104,8 @@
     <ClCompile Include="Engin\Collide\PlayerQueryCallBack.cpp" />
     <ClCompile Include="App\Goal.cpp" />
     <ClCompile Include="App\Scene\StageSelectScene.cpp" />
+    <ClCompile Include="App\RotationBlock.cpp" />
+    <ClCompile Include="App\MoveBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -334,6 +336,8 @@
     <ClInclude Include="App\Goal.h" />
     <ClInclude Include="App\Scene\StageSelectScene.h" />
     <ClInclude Include="Engin\Util\IgnoreWarning.h" />
+    <ClInclude Include="App\RotationBlock.h" />
+    <ClInclude Include="App\MoveBlock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

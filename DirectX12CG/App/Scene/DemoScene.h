@@ -49,15 +49,14 @@ namespace MCB
 		size_t test2Sound_;
 		
 		int32_t volume_ = 255;
-		Byte6 pad3;
-		Byte6 pad4;
-		int64_t pad9;
-		int64_t pad10;
+
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース
 
 #pragma region 3Dオブジェクト
+		float animationSpeed;
+		int64_t pad3;
 		Object3d ground_;
 		Object3d Skydorm_;
 		std::array<Object3d,4> effectorObjects_;
@@ -108,8 +107,9 @@ namespace MCB
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
+		bool animePlay = false;
 		Byte6 pad7;
-		Byte7 pad8;
+		Byte6 pad8;
 #pragma endregion 通常変数
 	public:
 
