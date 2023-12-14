@@ -155,6 +155,7 @@ void MCB::Player::UniqueUpdate()
 
 	if (callback.move.V3Len() >= distoffSet && !isClimb)
 	{
+		
 		position_.x += callback.move.vec_.x_ * 0.4f;
 		position_.y += callback.move.vec_.y_ * 0.4f;
 		position_.z += callback.move.vec_.z_ * 0.4f;
@@ -173,8 +174,8 @@ void MCB::Player::UniqueUpdate()
 	}
 	else if(callback.block)
 	{
-		backTimer.Set(5);
-		backVec = callback.move * 2;
+		backTimer.Set(10);
+		backVec.vec_.z_ =  0.5f;
 		back = callback.block;
 	}
 
@@ -191,54 +192,50 @@ void MCB::Player::Move()
 	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
 		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
 	{
-		speedFront_ = defualtSpeed_;
+		speedFront_ = 0;
 	}
 
 	if (input_->IsKeyDown(DIK_W))
 	{
-		speedFront_ += acceleratorfront_;
+		speedFront_ = maxspeed_;
 	}
 
 	if (input_->IsKeyDown(DIK_S))
 	{
-		speedFront_ -= acceleratorfront_;
+		speedFront_ = -maxspeed_;
 	}
 
 	if (input_->gamePad_->RTrriger_.x_)
 	{
-		accelerator_ *= input_->gamePad_->RTrriger_.x_;
-		speedFront_ += acceleratorfront_;
+		accelerator_ = input_->gamePad_->RTrriger_.x_ * maxspeed_;
+		speedFront_ = acceleratorfront_;
 	}
 	else if(input_->gamePad_->LTrriger_.x_)
 	{
-		accelerator_ *= input_->gamePad_->LTrriger_.x_;
-		speedFront_ -= acceleratorfront_;
+		accelerator_ = input_->gamePad_->LTrriger_.x_ * maxspeed_;
+		speedFront_ = -acceleratorfront_;
 	}
 
-	speedFront_ = clamp(speedFront_, 0.f, maxFrontSpeed_);
 
 
 
 
 	if (input_->IsKeyDown(DIK_D))
 	{
-		if (speedRight_ <= maxspeed_)speedRight_ += accelerator_;
-		else speedRight_ = maxspeed_;
+		speedRight_ = maxspeed_ / 2;
 	}
 
 	if (input_->IsKeyDown(DIK_A))
 	{
-		if (speedRight_ >= -maxspeed_)speedRight_ -= accelerator_;
-		else speedRight_ = -maxspeed_;
+		 speedRight_ = -maxspeed_ / 2;
 	}
 
 	if (input_->gamePad_->LStick_.x_)
 	{
 		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.x_;
-		if (speedRight_ <= maxspeed_ && speedRight_ >= -maxspeed_)speedRight_ += accelerator;
-		else if (speedRight_ >= maxspeed_) speedRight_ = maxspeed_;
-		else if (speedRight_ <= -maxspeed_)speedRight_ = -maxspeed_;
+		if ( accelerator > 0) speedRight_ = accelerator;
+		else if (accelerator < 0)speedRight_ = accelerator;
 	}
 
 	if (!input_->IsKeyDown(DIK_D) && !input_->IsKeyDown(DIK_A) && !input_->gamePad_->LStick_.x_)
@@ -338,13 +335,13 @@ void MCB::Player::Move()
 	{
 		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y;
 		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
-		if ( info.objctPtr_->nameId_ == "MoveBlock" || info.objctPtr_->nameId_ == "RBlock" )
+		if ( info.objctPtr_->nameId_ == "MoveBlock" || info.objctPtr_->nameId_ == "Rblock" )
 		{
 			wallHit_ = false;
 		}
 	}
 
-	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE))
+	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE) && effectorPos.vec_.y_ - position_.y <= 2.5f)
 	{
 		isJump = false;
 		fallV_.vec_.y_ = 0;

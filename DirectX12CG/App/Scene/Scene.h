@@ -72,6 +72,7 @@ namespace MCB
 
 		Goal* goal_;
 		Player* player_;
+		Object3d* skydome;
 		int64_t pad3;
 #pragma endregion 3Dオブジェクト
 

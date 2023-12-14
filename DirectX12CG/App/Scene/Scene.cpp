@@ -34,6 +34,7 @@ void MCB::Scene::Initialize()
     maincamera_.SetCameraTarget(level_->GetObjectPtr("player"));
     startTimer.TimeSet(300,300);
     goal_ = dynamic_cast<Goal*>(level_->GetObjectPtr("goal"));
+    skydome = level_->GetObjectPtr("backGround");
     player_ = dynamic_cast<Player*>(level_->GetObjectPtr("player"));
     player_->runFast = runFast;
     player_->runNormal = runNormal;
@@ -150,6 +151,7 @@ void MCB::Scene::Update()
 {
     startTimer.SafeDownUpdate();
     level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
+	skydome->position_.z = player_->position_.z;
     if (goal_->GetIsGoal())
     {
         player_->currentAnimation_ = "Idle";
