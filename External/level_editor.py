@@ -164,19 +164,21 @@ class MYADDON_OT_add_box_collider(bpy.types.Operator):
 
 class MYADDON_OT_add_variable(bpy.types.Operator):
     bl_idname = "myaddon.myaddon_ot_add_variable"
-    bl_label = "addVariable"
+    bl_label = "変数追加"
     bl_descriptor = "['variable']カスタムプロパティを追加します"
     bl_options = {"REGISTER","UNDO"}
     def execute(self,context):
+        context.object["variable"] = "VAR"
         context.object["RotationSpeed"] = mathutils.Vector((0,0,0))
         context.object["MoveVec"] = mathutils.Vector((0,0,0))
         context.object["MoveMax"] = 0.0
+        context.object["MoveSpeed"] = 0.0
         return {"FINISHED"}
 
 
 class OBJECT_PT_variable(bpy.types.Panel):
     bl_idname = "OBJECT_PT_variable"
-    bl_label = "addVariable"
+    bl_label = "Variable"
     bl_space_type = "PROPERTIES"
     bl_region_type = "WINDOW"
     bl_context = "object"
@@ -186,8 +188,9 @@ class OBJECT_PT_variable(bpy.types.Panel):
             self.layout.prop(context.object,'["RotationSpeed"]',text="RotationSpeed")
             self.layout.prop(context.object,'["MoveVec"]',text="MoveVec")
             self.layout.prop(context.object,'["MoveMax"]',text="MoveMax")
+            self.layout.prop(context.object,'["MoveSpeed"]',text="MoveSpeed")
         else:
-            self.layout.operator(MYADDON_OT_add_box_collider.bl_idname)
+            self.layout.operator(MYADDON_OT_add_variable.bl_idname)
 
 
 class OBJECT_PT_collider(bpy.types.Panel):
@@ -261,6 +264,11 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
             temp_str = indent + "CS %f %f %f"
             temp_str %= (object["collider_size"][0],object["collider_size"][1],object["collider_size"][2])
             self.write_and_print(file,temp_str)
+        if "variable" in object:
+            self.write_and_print(file,indent + "RS %f %f %f" % object["RotationSpeed"][0],object["RotationSpeed"][1],object["RotationSpeed"][2])
+            self.write_and_print(file,indent + "MV %f %f %f" % object["MoveVec"][0],object["MoveVec"][1],object["MoveVec"][2])
+            self.write_and_print(file,indent + "MM %f" % object["MoveMax"])
+            self.write_and_print(file,indent + "MS %f" % object["MoveSpeed"])
         self.write_and_print(file,indent + 'END')
         self.write_and_print(file,'')
         for child in object.children:
@@ -292,6 +300,14 @@ class MYADDON_OT_export_scene(bpy.types.Operator,bpy_extras.io_utils.ExportHelpe
             collider["center"] = object["collider_center"].to_list()
             collider["size"] = object["collider_size"].to_list()
             json_object["collider"] = collider
+        if "variable" in object:
+            variable = dict()
+            variable["RotationSpeed"] = object["RotationSpeed"].to_list()
+            variable["MoveVec"] = object["MoveVec"].to_list()
+            variable["MoveMax"] = object["MoveMax"]
+            variable["MoveSpeed"] = object["MoveSpeed"]
+            json_object["variable"] = variable
+
         if len(object.children) > 0:
             json_object["children"] = list()
             for child in object.children:
@@ -371,7 +387,9 @@ classes = (MYADDON_OT_export_scene,
            MYADDON_OT_add_tag,
            OBJECT_PT_tag,
            MYADDON_OT_add_modelType,
-           OBJECT_PT_modelType)
+           OBJECT_PT_modelType,
+           MYADDON_OT_add_variable,
+           OBJECT_PT_variable)
 
 def draw_menu_manual(self,context):
     self.layout.operator("wm.url_open_preset",text="Manual",icon='HELP')

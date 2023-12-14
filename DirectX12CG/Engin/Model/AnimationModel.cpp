@@ -1144,6 +1144,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    void MCB::Skeleton::DrawIkNode()
    {
+	   if ( ikNodes_.size() <= 0 )
+	   {
+		   ImGui::Text("None");
+		   return;
+	   }
 	   for ( auto& itr : ikNodes_ )
 	   {
 		   string tag = itr->name + ":IKData";

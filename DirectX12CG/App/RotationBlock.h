@@ -13,7 +13,7 @@ namespace MCB
 	class RotationBlock :public Object3d
 	{
 	public:
-		float rotateSpeed = 0.025f;
+		Vector3D rotateSpeed_;
 		void UniqueUpdate()override;
 		Byte6 pad1;
 		Byte6 pad2;

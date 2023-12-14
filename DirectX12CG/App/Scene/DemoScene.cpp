@@ -257,7 +257,11 @@ void MCB::DemoScene::ImGuiUpdate()
                 ImGui::TreePop();
             }
         }
-		test2Animation_.animationModel_->skeleton.DrawIkNode();
+		if ( ImGui::TreeNode("IKData") )
+		{
+			test2Animation_.animationModel_->skeleton.DrawIkNode();
+			ImGui::TreePop();
+		}
         ImGui::TreePop();
     }
 

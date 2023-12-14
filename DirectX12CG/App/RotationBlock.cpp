@@ -3,5 +3,7 @@
 void MCB::RotationBlock::UniqueUpdate()
 {
 	
-	rotation_.y += rotateSpeed;
+	rotation_.x += rotateSpeed_.vec_.x_;
+	rotation_.y += rotateSpeed_.vec_.y_;
+	rotation_.z += rotateSpeed_.vec_.z_;
 }

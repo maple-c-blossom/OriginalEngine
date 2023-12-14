@@ -46,11 +46,23 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			}
 			else if ( objData->tag == "Rblock" )
 			{
-				objData->obj = std::make_unique<RotationBlock>();
+				unique_ptr<RotationBlock> temp = std::make_unique<RotationBlock>();
+				json& var = objJson[ "variable" ];
+				temp->rotateSpeed_.vec_.x_ = static_cast< float >( var[ "RotationSpeed" ][ 0 ] );
+				temp->rotateSpeed_.vec_.y_ = static_cast< float >( var[ "RotationSpeed" ][ 1 ] );
+				temp->rotateSpeed_.vec_.z_ = static_cast< float >( var[ "RotationSpeed" ][ 2 ] );
+				objData->obj = std::move(temp);
 			}
 			else if ( objData->tag == "MoveBlock" )
 			{
-				objData->obj = std::make_unique<MoveBlock>();
+				unique_ptr<MoveBlock> temp = std::make_unique<MoveBlock>();
+				json& var = objJson[ "variable" ];
+				temp->moveVec.vec_.x_ = static_cast< float >( var[ "MoveVec" ][ 0 ] );
+				temp->moveVec.vec_.y_ = static_cast< float >( var[ "MoveVec" ][ 1 ] );
+				temp->moveVec.vec_.z_ = static_cast< float >( var[ "MoveVec" ][ 2 ] );
+				temp->maxMoveLength = static_cast< float >( var[ "MoveMax" ]);
+				temp->speed = static_cast< float >( var[ "MoveSpeed" ]);
+				objData->obj = std::move(temp);
 			}
 			else
 			{
