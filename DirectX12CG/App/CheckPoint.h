@@ -5,5 +5,6 @@ class CheckPoint : public MCB::Object3d
 {	
 public:
 	void Init()override;
+	void Draw()override;
 };
 

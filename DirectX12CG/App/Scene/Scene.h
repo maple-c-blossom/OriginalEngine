@@ -53,7 +53,7 @@ namespace MCB
 		//テクスチャ
 #pragma region テクスチャ
 		TextureCell* debugTextTexture_ = nullptr;
-		TextureCell* zoomTex_ = nullptr;
+		TextureCell* goText = nullptr;
 
 #pragma endregion テクスチャ
 
@@ -78,10 +78,6 @@ namespace MCB
 
 #pragma region スプライト
 		Sprite sprite_ = {};
-
-		Sprite zoomSprite_ = {};
-
-		Sprite scopeSprite_ = {};
 
 		DebugText debugText_ = {};
 

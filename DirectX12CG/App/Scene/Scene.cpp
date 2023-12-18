@@ -113,6 +113,7 @@ void MCB::Scene::LoadModel()
 void MCB::Scene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
+    goText = loader_->LoadTexture(L"Resources\\Go.png");
     //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
     //zoomTex = loader->CreateNoTextureFileIsTexture();
 
@@ -128,6 +129,7 @@ void MCB::Scene::LoadSound()
 void MCB::Scene::SpriteInit()
 {
     //postEffect->tex = debugTextTexture;
+	sprite_.CreateSprite();
     debugText_.Init(debugTextTexture_->texture.get());
 
 }
@@ -203,8 +205,10 @@ void MCB::Scene::SpriteDraw()
 
     debugText_.sprite_->color_ = { 1,1,1,1 };
     debugText_.Print(10, 10, 1, "accele:W or RTrriger");
-    debugText_.Print(10, 30, 1, "brake:S or LTrriger");
-    debugText_.Print(10, 60, 1, "Move:AD or LStick");
+    debugText_.Print(10, 30, 1, "back:S or LTrriger");
+    debugText_.Print(10, 50, 1, "Move:AD or LStick");
+    debugText_.Print(10, 70, 1, "Jump:Space or Abutton");
+	sprite_.SpriteDraw(*goText->texture.get(),dxWindow_->sWINDOW_CENTER_WIDTH_,20);
 
     if (!(startTimer.NowTime() <= 0))
     {

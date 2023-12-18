@@ -70,6 +70,13 @@ namespace MCB
         DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
         Quaternion rotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
+
+
+		DirectX::XMFLOAT3 prevscale_ = { 1.0f,1.0f,1.0f };
+		DirectX::XMFLOAT3 prevrotation_ = { 0.0f,0.0f,0.0f };
+		Quaternion prevrotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
+		DirectX::XMFLOAT3 prevposition_ = { 0.0f, 0.0f, 0.0f };
+
         Float4 color_ = { 1.f,1.f,1.f,1.f };
         float shaderNum_ = 1.f;
         //ワールド行列

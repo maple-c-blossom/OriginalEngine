@@ -13,9 +13,14 @@ bool MCB::PlayerQueryCallBack::OnQueryHit(const QueryHit& info)
 	{
 		sphere_->centerPosition_ += info.reject;
 		move += info.reject;
-		if (info.obj->nameId_ == "Rblock" && info.obj->nameId_ == "MoveBlock" )
+		if (info.obj->nameId_ == "Rblock" || info.obj->nameId_ == "MoveBlock" )
 		{
 			block = true;
+		}
+		if ( info.obj->nameId_ == "checkPoint" )
+		{
+			obj_ = info.obj;
+			move = { 0,0,0 };
 		}
 	}
 	return true;

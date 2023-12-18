@@ -7,6 +7,7 @@
 #include "Timer.h"
 namespace MCB
 {
+	class MoveBlock;
 	class Player :public Object3d
 	{
 
@@ -14,23 +15,24 @@ namespace MCB
 		bool isGraund_ = false;
 		bool animePlay = false;
 		bool isMoveBlock = false;
-		Byte1 pad;
+		bool isRespown_ = false;
 		Vector3D fallV_;
 		Input* input_ = Input::GetInstance();
 		float speedFront_ = 0.0f;
 		float speedRight_ = 0.0f;
 		float rotasionSpeed_ = 0.015f;
 		float defualtSpeed_ = 0.05f;
-		float maxFrontSpeed_ = 0.15f;
-		float maxspeed_ = 0.15f;
+		float maxFrontSpeed_ = 0.25f;
+		float maxspeed_ = 0.25f;
 		float accelerator_ = 0.005f;
 		float acceleratorfront_ = 0.05f;
 		float animationPlaySpeed;
 		MCB::Vector3D rightVec_ = { 1,0,0 };
-		int32_t uptime = 300;
-		int32_t pad2;
+		int32_t uptime = 75;
+		bool moving;
+		Byte3 pad2;
 		Object3d* ground;
-		Object3d* moveBlock;
+		MoveBlock* moveBlock;
 		Vector3D respownPosition_;
 		float outYPosition = -20;
 		float distoffSet = 0.00025f;
@@ -57,6 +59,8 @@ namespace MCB
 		bool isIkClimb = true;
 		uint8_t animationNum = 0;
 		bool isJump;
+		
+		Vector3D directionVec;
 		Vector3D poleVecLeft;
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
@@ -64,7 +68,6 @@ namespace MCB
 		
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
-
 	public:
 		size_t runNormal;
 		size_t runFast;
@@ -76,7 +79,7 @@ namespace MCB
 		void Move();
 		void Debug();
 		void OnCollision(const CollisionInfomation& info) override;
-
+		void AnimationUpdate(bool isBillBord = false) override;
 	};
 
 }

@@ -62,6 +62,19 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 				temp->moveVec.vec_.z_ = static_cast< float >( var[ "MoveVec" ][ 2 ] );
 				temp->maxMoveLength = static_cast< float >( var[ "MoveMax" ]);
 				temp->speed = static_cast< float >( var[ "MoveSpeed" ]);
+				temp->isSetMove = false;
+				objData->obj = std::move(temp);
+			}
+			else if ( objData->tag == "MoveBlockUP" )
+			{
+				unique_ptr<MoveBlock> temp = std::make_unique<MoveBlock>();
+				json& var = objJson[ "variable" ];
+				temp->moveVec.vec_.x_ = static_cast< float >( var[ "MoveVec" ][ 0 ] );
+				temp->moveVec.vec_.y_ = static_cast< float >( var[ "MoveVec" ][ 1 ] );
+				temp->moveVec.vec_.z_ = static_cast< float >( var[ "MoveVec" ][ 2 ] );
+				temp->maxMoveLength = static_cast< float >( var[ "MoveMax" ] );
+				temp->speed = static_cast< float >( var[ "MoveSpeed" ] );
+				temp->isSetMove = true;
 				objData->obj = std::move(temp);
 			}
 			else
@@ -107,7 +120,8 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 		}
 		else if ((objData->tag == "block") || ( objData->tag == "Rblock" ) ||
-			( objData->tag == "JumpPad" ) ||(objData->tag == "MoveBlock" ) )
+			( objData->tag == "JumpPad" ) ||(objData->tag == "MoveBlock" ) ||
+			(objData->tag == "MoveBlockUP" ) || (objData->tag == "checkPoint" ) )
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 			objData->obj->GetCollider()->SetAttribute(9);

@@ -7,11 +7,13 @@
 #include "Util.h"
 namespace MCB
 {
+	class Object3d;
 	class PlayerQueryCallBack :public MCB::QueryCallBack
 	{
 	public:
 		PlayerQueryCallBack(Sphere* sphere);
 		Sphere* sphere_ = nullptr;
+		Object3d* obj_ = nullptr;
 		Vector3D move = {};
 		Vector3D inter = {};
 		bool block = false;
