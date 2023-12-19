@@ -30,7 +30,9 @@ namespace MCB
 #pragma region テクスチャ
 		TextureCell* debugTextTexture_;
 		TextureCell* titleTex_;
-
+		TextureCell* abuttonTex_;
+		TextureCell* lStickTex_;
+		std::array<TextureCell* , 3> stageTex_;
 #pragma endregion テクスチャ
 		bool debugView;
 		bool isIk;
@@ -63,11 +65,13 @@ namespace MCB
 
 		Sprite titleSprite_;
 
-		Sprite scopeSprite_;
+		Sprite aButtonSprite_;
+		Sprite lStickSprite_;
 
 		DebugText debugText_;
 
 		std::array<std::string, 3> stages;
+		std::array<Sprite, 3> stageSprite_;
 		
 #pragma endregion スプライト
  

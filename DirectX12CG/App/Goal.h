@@ -3,6 +3,7 @@
 #include "SphereCollider.h"
 #include "PopEffect.h"
 #include "IgnoreWarning.h"
+#include "Sprite.h"
 WarningIgnoreBegin
 #include <vector>
 WarningIgnoreEnd
@@ -14,7 +15,14 @@ private:
 	int32_t timer_;
 	Byte4 pad;
 	MCB::Object3d* player;
-
+	std::array<MCB::Sprite,3> numSprite;
+	MCB::Sprite timeSprite;
+	MCB::Sprite goalSprite;
+	MCB::Sprite pressSprite;
+	MCB::TextureCell* numTex_;
+	MCB::TextureCell* timeTex_;
+	MCB::TextureCell* goalTex_;
+	MCB::TextureCell* pressTex_;
 public:
 	MCB::Model* popModel_ = nullptr;
 	static void ResetGoal();

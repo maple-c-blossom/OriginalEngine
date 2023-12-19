@@ -319,7 +319,7 @@ void MCB::Sprite::SpriteFlipDraw(Texture& tex, float positionX, float positionY,
 }
 
 void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positionY,
-    const Float2& cuttingsize,const Float2& CuttingLeftTop)
+    const Float2& cuttingsize,const Float2& CuttingLeftTop,float size_x,float size_y)
 {
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();
@@ -330,6 +330,38 @@ void MCB::Sprite::SpriteCuttingDraw( Texture& tex, float positionX, float positi
     tempSprite.position_.z_ = 0;
     tempSprite.texLeftTop_ = CuttingLeftTop;
     tempSprite.cuttingSize_ = cuttingsize;
+
+	 Float2 size;
+
+    size.x_ = size_x;
+    size.y_ = size_y;
+	if ( size.x_ == 0 || size.y_ == 0 )
+	{
+		D3D12_RESOURCE_DESC resdesc = tex.texBuff_.texbuff_->GetDesc();
+
+		if ( size.x_ == 0 )
+		{
+			tempSprite.size_.x_ = ( float ) resdesc.Width;
+		}
+
+		if ( size.y_ == 0 )
+		{
+			tempSprite.size_.y_ = ( float ) resdesc.Height;
+		}
+	}
+
+	if ( size.x_ != 0 || size.y_ != 0 )
+	{
+		if ( size.x_ != 0 )
+		{
+			tempSprite.size_.x_ = size.x_;
+		}
+
+		if ( size.y_ != 0 )
+		{
+			tempSprite.size_.y_ = size.y_;
+		}
+	}
 
     tempSprite.SpriteUpdate();
     tempSprite.SpriteTransferVertexBuffer(&tex);

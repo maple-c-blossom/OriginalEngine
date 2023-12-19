@@ -106,6 +106,7 @@
     <ClCompile Include="App\Scene\StageSelectScene.cpp" />
     <ClCompile Include="App\RotationBlock.cpp" />
     <ClCompile Include="App\MoveBlock.cpp" />
+    <ClCompile Include="Engin\Camera\StartCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -338,6 +339,7 @@
     <ClInclude Include="Engin\Util\IgnoreWarning.h" />
     <ClInclude Include="App\RotationBlock.h" />
     <ClInclude Include="App\MoveBlock.h" />
+    <ClInclude Include="Engin\Camera\StartCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

@@ -30,13 +30,15 @@ void MCB::Player::Init()
 	rotation_.y = ConvertRadius(180);
 	rotation_.x = ConvertRadius(0);
 	LightGroup::GetInstance()->SetSLightIsActive(1,false);
+	rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(180));
+	currentAnimation_ = "Idle";
 }
 
 void MCB::Player::UniqueUpdate()
 {
 	slights_->SetSLightPos(0,{ position_.x, position_.y + 1.f, position_.z });
 	slights_->SetSLightForLightDir(0,{ 0,-1,0 });
-	slights_->SetSLightIsActive(0,true);
+	//slights_->SetSLightIsActive(0,true);
 	if ( !isDebug_ )
 	{
 		if ( !back )
@@ -96,6 +98,7 @@ void MCB::Player::UniqueUpdate()
 
 			if ( isGround )
 			{
+				
 				isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f);
 				isGraund_ = true;
 				if ( info.dist_ <= 1.f - distOverRange - 0.25f ) position_.y -= ( ( info.dist_ - distOverRange - 0.05f )
@@ -113,23 +116,23 @@ void MCB::Player::UniqueUpdate()
 							fallV_.vec_.y_ = 4;
 						}
 					}
+					else if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
+					{
+						if ( !info.objctPtr_->updated )
+						{
+							info.objctPtr_->UniqueUpdate();
+						}
+						moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
+						isMoveBlock = true;
+					}
+					else
+					{
+						isMoveBlock = false;
+					}
 
 				
 				}
 
-			}
-			else if ( CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange +
-				0.25f))
-			{
-				if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
-				{
-					if ( !info.objctPtr_->updated )
-					{
-						info.objctPtr_->UniqueUpdate();
-					}
-					moveBlock = dynamic_cast<MoveBlock*>(info.objctPtr_);
-					isMoveBlock = true;
-				}
 			}
 			else
 			{
@@ -225,15 +228,12 @@ void MCB::Player::Move()
 		speedFront_ = -maxspeed_;
 	}
 
-	if (input_->gamePad_->RTrriger_.x_)
+	if ( input_->gamePad_->LStick_.y_ )
 	{
-		accelerator_ = input_->gamePad_->RTrriger_.x_ * maxspeed_;
-		speedFront_ = acceleratorfront_;
-	}
-	else if(input_->gamePad_->LTrriger_.x_)
-	{
-		accelerator_ = input_->gamePad_->LTrriger_.x_ * maxspeed_;
-		speedFront_ = -acceleratorfront_;
+		float accelerator = maxspeed_;
+		accelerator *= input_->gamePad_->LStick_.y_;
+		if ( accelerator > 0 ) speedFront_ = accelerator;
+		else if ( accelerator < 0 )speedFront_ = accelerator;
 	}
 
 
@@ -292,8 +292,8 @@ void MCB::Player::Move()
 	}
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.0025f;
-		const float VYMin = -0.5f;
+		const float fallAcc = -0.025f;
+		const float VYMin = -0.75f;
 		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
 		
 		animationPositionRock = true;
@@ -329,12 +329,12 @@ void MCB::Player::Move()
 		animeTime_ = 0.516f;
 		if ( animeTime_ + animationSpeed_ >= 0.516 )
 		{
-			const float jumpVYFist = 0.1f;
+			const float jumpVYFist = 0.4f;
 			fallV_ = { {{0,jumpVYFist,0,0}} };
 		}
 	}
 
-	if ( fallV_.vec_.y_ < 0 && animeTime_ < 0.516f && currentAnimation_ == "Jump" )
+	if ( fallV_.vec_.y_ < 0 && animeTime_ < 0.516f && currentAnimation_ == "Jump" && !isClimb)
 	{
 		animeTime_ = 0.516f;
 	}
@@ -348,7 +348,7 @@ void MCB::Player::Move()
 	upperCheckRay.rayVec_ = nowFrontVec_;
 	prevWallHit_ = wallHit_;
 	RayCastHit info;
-	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_WALL,&info,0.25f);
+	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_LANDSHAPE,&info,0.25f);
 	//bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
 
 	if ( info.objctPtr_ )
@@ -361,7 +361,7 @@ void MCB::Player::Move()
 		}
 	}
 
-	if ( wallHit_ && !isClimb &&Input::GetInstance()->IsKeyDown(DIK_SPACE) && effectorPos.vec_.y_ - position_.y <= 2.5f)
+	if ( wallHit_ && !isClimb &&(Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A) )&& effectorPos.vec_.y_ - position_.y <= 2.5f)
 	{
 		isJump = false;
 		fallV_.vec_.y_ = 0;
@@ -447,7 +447,7 @@ void MCB::Player::Move()
 		if ( animationPositionRock )
 		{
 
-			animationSpeed_ = 1.577f / static_cast<float>(uptime);
+			animationSpeed_ = 1.377f / static_cast<float>(uptime);
 			float time = animeTime_ + animationSpeed_;
 
 			// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
@@ -577,9 +577,13 @@ void MCB::Player::Move()
 		rotationQ_ = rotationQ_.DirToDir(Vector3D(0,0,-1),directionVec);
 	}
 	//rotationQ_ = rotationQ_.GetReciprocal(rotationQ_);
-	position_.x += fallV_.vec_.x_;
-	position_.y += fallV_.vec_.y_;
-	position_.z += fallV_.vec_.z_;
+	if ( !isClimb )
+	{
+		position_.x += fallV_.vec_.x_;
+		position_.y += fallV_.vec_.y_;
+		position_.z += fallV_.vec_.z_;
+
+	}
 
 }
 

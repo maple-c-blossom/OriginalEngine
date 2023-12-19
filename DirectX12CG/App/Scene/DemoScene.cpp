@@ -6,9 +6,7 @@ using namespace DirectX;
 
 void MCB::DemoScene::SpriteInit()
 {
-
-    debugText_.Init(debugTextTexture_->texture.get());
-    titleSprite_.CreateSprite();
+	sprite_.CreateSprite();
 }
 
 void MCB::DemoScene::ParticleInit()
@@ -177,8 +175,7 @@ void MCB::DemoScene::SpriteDraw()
     postEffect_->Draw();
     pipeline_->SetSpritePipeLine();
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
-    debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_ + 200, 2, "Press AButton");
-    debugText_.AllDraw();
+	sprite_.SpriteDraw(*enter->texture.get(),dxWindow_->sWINDOW_CENTER_WIDTH_,dxWindow_->sWINDOW_HEIGHT_ - 100);
 }
 
 void MCB::DemoScene::ParticleDraw()
@@ -223,8 +220,6 @@ void MCB::DemoScene::ImGuiUpdate()
 	{
 		ImGui::Text("このデモシーンはIKの挙動を確認するためのシーンです。");
 		ImGui::Text("球がEffector,四角錐がPoleVectorです");
-		ImGui::Text("操作:WASDでEffectorやPoleVectorを移動させることができます");
-		ImGui::Text("操作:SPACE,LCONTROLでEffectorやPoleVectorを上下に移動させることができます");
 		ImGui::TreePop();
 	}
 
@@ -242,10 +237,6 @@ void MCB::DemoScene::ImGuiUpdate()
             {
 				ImGui::Text("ONの時、IKを行う");
                 ImGui::Checkbox("isIK", &isIk_[i]);
-				ImGui::Text("ONの時、エフェクター,PoleVectorの移動を禁止");
-                ImGui::Checkbox("エフェクター,PoleVectorの移動を禁止", &noMove[i]);
-				ImGui::Text("ONの時、エフェクターの代わりにPoleVectorを移動する");
-                ImGui::Checkbox("PoleVectorを動かす(Effectorは動かない)", &PoleVecMove_[i]);
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
 				ImGui::Text("三角形を描画");
@@ -386,7 +377,7 @@ void MCB::DemoScene::LoadModel()
 void MCB::DemoScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
-    titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
+	enter = loader_->LoadTexture(L"Resources\\Enter.png");
 }
 
 void MCB::DemoScene::LoadSound()
@@ -402,7 +393,7 @@ void MCB::DemoScene::Object3DInit()
     ground_.model_ = groundModel_.get();
     ground_.scale_ = { 1,1,1 };
     ground_.position_ = { 0,-4,0 };
-    ground_.rotation_ = { 0,0,ConvertRadius(5) };
+    ground_.rotation_ = { 0,0,0 };
     ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
     ground_.camera_ = viewCamera_;
 

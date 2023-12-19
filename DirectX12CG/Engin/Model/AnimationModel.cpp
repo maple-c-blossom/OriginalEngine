@@ -30,7 +30,10 @@ MCB::AnimationModel::~AnimationModel()
 		{
 			for (auto& texture: mesh->textures_)
 			{
-				texture->free = true;
+				if ( texture )
+				{
+					texture->free = true;
+				}
 			}
 		}
 	}

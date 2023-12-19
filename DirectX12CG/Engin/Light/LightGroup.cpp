@@ -163,7 +163,7 @@ void LightGroup::TransferConstBuff()
 
 void LightGroup::DefaultLightSet()
 {
-	dirLights_[0].SetIsActive(false);
+	dirLights_[0].SetIsActive(true);
 	dirLights_[0].SetLightColor({ 1.0f, 1.0f, 1.0f });
 	dirLights_[0].SetLightDir({ -1.0f, -1.0f, 0.0f});
 	dirLights_[0].SetLightShininess(1.0f);
@@ -193,7 +193,7 @@ void LightGroup::DefaultLightSet()
 	PLights_[2].SetPLightColor({ 1,1,1 });
 	PLights_[2].SetPLightAtten({ 0.001f,0.001f,0.001f });
 
-	SLights_[0].SetIsActive(true);
+	SLights_[0].SetIsActive(false);
 	SLights_[0].SetSLightPos({ 0.0f,3.0f,20.0f });
 	SLights_[0].SetSLightColor({ 1,1,1 });
 	SLights_[0].SetSLightAtten({ 0.001f,0.001f,0.001f });

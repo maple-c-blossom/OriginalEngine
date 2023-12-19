@@ -19,6 +19,7 @@ namespace MCB
 		float speed = 0.025f;
 		bool isSetMove = false;//上に乗った時だけ動くのかそうじゃないのか
 		bool isMove = false;//動くかどうか
+		Timer rockTime;
 		int64_t pad;
 		void UniqueUpdate()override;
 	};

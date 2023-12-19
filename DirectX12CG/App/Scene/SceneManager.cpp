@@ -21,7 +21,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<StageSelectScene>(root_, depth_, pipeline_);
+	scene_ = make_unique<TitleScene>(root_, depth_, pipeline_);
 	//dynamic_cast< Scene* >( scene_.get() )->SetStage("Tutorial");
 }
 

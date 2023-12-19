@@ -69,7 +69,7 @@ namespace MCB
 			 bool isflipX = false,  bool isflipY = false);
 
 		void SpriteCuttingDraw(Texture& tex,  float positionX = 0,  float positionY = 0,
-			const Float2& cuttingsize = {0,0}, const Float2& CuttingLeftTop = {0,0});
+			const Float2& cuttingsize = {0,0}, const Float2& CuttingLeftTop = {0,0},float size_x = 0,float size_y = 0);
 
 
 

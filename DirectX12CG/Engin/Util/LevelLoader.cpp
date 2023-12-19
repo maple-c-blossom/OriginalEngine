@@ -124,7 +124,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			(objData->tag == "MoveBlockUP" ) || (objData->tag == "checkPoint" ) )
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
-			objData->obj->GetCollider()->SetAttribute(9);
+			objData->obj->GetCollider()->SetAttribute(ATTRIBUTE_LANDSHAPE);
 		}
 
 

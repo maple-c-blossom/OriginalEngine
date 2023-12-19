@@ -11,6 +11,11 @@ void MCB::StageSelectScene::SpriteInit()
 
     debugText_.Init(debugTextTexture_->texture.get());
     titleSprite_.CreateSprite();
+	aButtonSprite_.CreateSprite();
+	lStickSprite_.CreateSprite();
+	stageSprite_[0].CreateSprite();
+	stageSprite_[1].CreateSprite();
+	stageSprite_[2].CreateSprite();
 }
 
 void MCB::StageSelectScene::ParticleInit()
@@ -126,12 +131,13 @@ void MCB::StageSelectScene::SpriteDraw()
             scale = scale + resultSize / 2;
         }
 
-        debugText_.Print(dxWindow_->sWINDOW_CENTER_WIDTH_ - 100, 
-           posY , scale,
-            "Stage::%s",stages[i].c_str());
+		stageSprite_[i].SpriteDraw(*stageTex_[i]->texture.get(),dxWindow_->sWINDOW_CENTER_WIDTH_,
+		   posY,580 * (scale/2),64 * (scale/2));
     }
-    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 100 , 2, "Enter: AButton");
-    debugText_.Print(50, dxWindow_->sWINDOW_HEIGHT_ - 50 , 2, "Select: LStick");
+	aButtonSprite_.SpriteDraw(*abuttonTex_->texture.get(),170,
+		dxWindow_->sWINDOW_HEIGHT_ - 150,580,64);
+	lStickSprite_.SpriteDraw(*lStickTex_->texture.get(),180,
+	dxWindow_->sWINDOW_HEIGHT_ - 50,580,64);
     debugText_.AllDraw();
 }
 
@@ -203,6 +209,11 @@ void MCB::StageSelectScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
     titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
+	abuttonTex_ = loader_->LoadTexture(L"Resources\\Enter.png");
+	lStickTex_ = loader_->LoadTexture(L"Resources\\SelectLS.png");
+	stageTex_[0] = loader_->LoadTexture(L"Resources\\stageDemo.png");
+	stageTex_[1] = loader_->LoadTexture(L"Resources\\stageGame.png");
+	stageTex_[2] = loader_->LoadTexture(L"Resources\\stageTitle.png");
 }
 
 void MCB::StageSelectScene::LoadSound()
@@ -218,7 +229,7 @@ void MCB::StageSelectScene::Object3DInit()
     ground_.model_ = groundModel_.get();
     ground_.scale_ = { 1,1,1 };
     ground_.position_ = { 0,-4,0 };
-    ground_.rotation_ = { 0,0,ConvertRadius(5) };
+    ground_.rotation_ = { 0,0,0 };
     ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
     ground_.camera_ = viewCamera_;
 

@@ -432,6 +432,9 @@
     <ClCompile Include="App\MoveBlock.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Camera\StartCamera.cpp">
+      <Filter>ソース ファイル\Engin\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -759,6 +762,9 @@
     </ClInclude>
     <ClInclude Include="App\MoveBlock.h">
       <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Camera\StartCamera.h">
+      <Filter>ヘッダー ファイル\Engin\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

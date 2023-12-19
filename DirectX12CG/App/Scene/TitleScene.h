@@ -23,11 +23,6 @@ namespace MCB
 #pragma region 3Dモデル
 		std::unique_ptr<Model> groundModel_;
 		std::unique_ptr<Model> skydomeModel_;
-		std::unique_ptr<Model> sphereModel_;
-		std::unique_ptr<Model> boxModel_;
-
-		std::unique_ptr<AnimationModel> animModel_;
-		std::unique_ptr<AnimationModel> anim2Model_;
 #pragma endregion 3Dモデル
 
 		//テクスチャ
@@ -35,6 +30,7 @@ namespace MCB
 		TextureCell* debugTextTexture_;
 		TextureCell* titleTex_;
 		TextureCell* backGroundTex_;
+		TextureCell* abuttonTex_;
 
 #pragma endregion テクスチャ
 		bool debugView;
@@ -55,10 +51,6 @@ namespace MCB
 #pragma region 3Dオブジェクト
 		Object3d ground_;
 		Object3d Skydorm_;
-		Object3d testsphere_;
-		Object3d test2Animation_;
-		Player play_;
-		DirectX::XMFLOAT3 poleVec;
 
 		bool PoleVecMove;
 		Byte3 pad5;
@@ -69,7 +61,7 @@ namespace MCB
 
 		Sprite titleSprite_;
 
-		Sprite backGroundSprite_;
+		Sprite aButtonSprite_;
 
 		DebugText debugText_;
 

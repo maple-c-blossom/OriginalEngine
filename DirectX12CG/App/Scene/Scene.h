@@ -7,6 +7,7 @@
 #include "Goal.h"
 #include "CheckPoint.h"
 #include "Camera.h"
+#include "StartCamera.h"
 #include <memory>
 
 #pragma region ゲーム系.h include
@@ -36,6 +37,7 @@ namespace MCB
 		//変換行列
 		DebugCamera debugCamera_;
 		Camera maincamera_;
+		StartCamera startcamera;
 		std::string stage;
 #pragma endregion 変換行列
 
@@ -54,6 +56,11 @@ namespace MCB
 #pragma region テクスチャ
 		TextureCell* debugTextTexture_ = nullptr;
 		TextureCell* goText = nullptr;
+		TextureCell* moveText = nullptr;
+		TextureCell* lStickTex = nullptr;
+		TextureCell* jumpTex = nullptr;
+		TextureCell* numTex = nullptr;
+		TextureCell* startTex = nullptr;
 
 #pragma endregion テクスチャ
 
@@ -78,9 +85,24 @@ namespace MCB
 
 #pragma region スプライト
 		Sprite sprite_ = {};
+		Sprite countSprite_ = {};
+
+		Sprite moveTextSprite_ = {};
+
+		Sprite lStickTexSprite_ = {};
+		Sprite jumpTexSprite_ = {};
+
+		Sprite startTexSprite_ = {};
 
 		DebugText debugText_ = {};
+		std::array<Float2,4> stickMove;
+		Float2 centerPos = { 200,dxWindow_->sWINDOW_HEIGHT_ - 100.f };
+		Float2 stickPos = { 200,dxWindow_->sWINDOW_HEIGHT_ - 100.f };
+		Float2 nextStickPos = { 200,dxWindow_->sWINDOW_HEIGHT_ - 68.f };
+		Float2 prevStickPos = { 200,dxWindow_->sWINDOW_HEIGHT_ - 68.f };
 
+		int movenum = 0;
+		Timer stickMoveTime;
 #pragma endregion スプライト
 #pragma region パーティクル
 
