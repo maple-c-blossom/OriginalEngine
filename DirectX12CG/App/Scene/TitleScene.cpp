@@ -37,7 +37,7 @@ void MCB::TitleScene::Update()
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
-        soundManager_->PlaySoundWave(selectSound_);
+        //soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
     

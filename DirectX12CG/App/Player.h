@@ -65,7 +65,7 @@ namespace MCB
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
 		Vector3D poleVecLF;
-		
+		Timer jumpokTimer;
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
 	public:

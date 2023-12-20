@@ -72,7 +72,7 @@ void MCB::Object3d::CreateBuff()
 
 void MCB::Object3d::UniqueUpdate()
 {
-    isInvisible = false;
+    //isInvisible = false;
 }
 
 void Object3d::Update(bool isBillBord)
@@ -163,7 +163,11 @@ void MCB::Object3d::UpdateMatrix( Quaternion q, bool isBillBord)
 
 void Object3d::Draw()
 {
-    if (model_ == nullptr || isInvisible)return;
+	if ( model_ == nullptr || isInvisible )
+	{
+		isInvisible = false;
+		return;
+	}
     if (model_->material_.constBuffMaterialB1_ == nullptr)return;
     Dx12* dx12 = Dx12::GetInstance();
     ShaderResource* descriptor = ShaderResource::GetInstance();

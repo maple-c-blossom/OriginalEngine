@@ -140,7 +140,27 @@ void MCB::Player::UniqueUpdate()
 				isMoveBlock = false;
 			}
 		}
+
+		CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f + 0.09f);
+		if ( info.objctPtr_ )
+		{
+			if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
+			{
+				if ( !info.objctPtr_->updated )
+				{
+					info.objctPtr_->UniqueUpdate();
+				}
+				moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
+				isMoveBlock = true;
+			}
+			else
+			{
+				isMoveBlock = false;
+			}
+		}
 	}
+
+
 
 	if ( isMoveBlock )
 	{
@@ -292,21 +312,30 @@ void MCB::Player::Move()
 	}
 	if (!isGraund_)
 	{
-		const float fallAcc = -0.025f;
-		const float VYMin = -0.75f;
-		fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc, VYMin);
-		
-		animationPositionRock = true;
-		isJump = false;
-		currentAnimation_ = "Jump";
-		animationSpeed_ = 0.005f;
-		if ( animeTime_ >=  1.160f)
+		jumpokTimer.Update();
+		if ( jumpokTimer.IsEnd() )
 		{
-			animationSpeed_ = 0;
-		}
+			const float fallAcc = -0.025f;
+			const float VYMin = -0.75f;
+			fallV_.vec_.y_ = max(fallV_.vec_.y_ + fallAcc,VYMin);
 
+			animationPositionRock = true;
+			isJump = false;
+			currentAnimation_ = "Jump";
+			animationSpeed_ = 0.005f;
+			if ( animeTime_ >= 1.160f )
+			{
+				animationSpeed_ = 0;
+			}
+		}
 	}
-	else if ((Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))&&!isJump && !isClimb)
+	else
+	{
+		jumpokTimer.Set(5);
+	}
+
+	if ((Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))&&
+		!isJump && !isClimb && !jumpokTimer.IsEnd())
 	{
 		isJump = true;
 		animeTime_ = 0;
@@ -348,7 +377,7 @@ void MCB::Player::Move()
 	upperCheckRay.rayVec_ = nowFrontVec_;
 	prevWallHit_ = wallHit_;
 	RayCastHit info;
-	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_LANDSHAPE,&info,0.25f);
+	wallHit_ = CollisionManager::GetInstance()->Raycast(wallCheckRay,ATTRIBUTE_LANDSHAPE,&info,0.35f);
 	//bool upperHit = CollisionManager::GetInstance()->Raycast(upperCheckRay,ATTRIBUTE_WALL,nullptr,0.15f);
 
 	if ( info.objctPtr_ )

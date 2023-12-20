@@ -55,7 +55,7 @@ void MCB::DemoScene::Update()
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
-        soundManager_->PlaySoundWave(selectSound_);
+        //soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;
     }
 
@@ -377,7 +377,7 @@ void MCB::DemoScene::LoadModel()
 void MCB::DemoScene::LoadTexture()
 {
     debugTextTexture_ = loader_->LoadTexture(L"Resources\\debugfont.png");
-	enter = loader_->LoadTexture(L"Resources\\Enter.png");
+	enter = loader_->LoadTexture(L"Resources\\PressEnter.png");
 }
 
 void MCB::DemoScene::LoadSound()
