@@ -322,7 +322,7 @@ void MCB::Player::Move()
 			animationPositionRock = true;
 			isJump = false;
 			currentAnimation_ = "Jump";
-			animationSpeed_ = 0.005f;
+			animationSpeed_ = 0.015f;
 			if ( animeTime_ >= 1.160f )
 			{
 				animationSpeed_ = 0;
@@ -338,7 +338,6 @@ void MCB::Player::Move()
 		!isJump && !isClimb && !jumpokTimer.IsEnd())
 	{
 		isJump = true;
-		animeTime_ = 0;
 	}
 	else if ( isGraund_ )
 	{
@@ -355,18 +354,19 @@ void MCB::Player::Move()
 		currentAnimation_ = "Jump";
 		animationPositionRock = true;
 		//speedFront_ = 0;
-		animeTime_ = 0.516f;
-		if ( animeTime_ + animationSpeed_ >= 0.516 )
+		animeTime_ = 0.09f;
+		animationSpeed_ = 0.015f;
+		if ( animeTime_ + animationSpeed_ >= 0.09f )
 		{
 			const float jumpVYFist = 0.4f;
 			fallV_ = { {{0,jumpVYFist,0,0}} };
 		}
 	}
 
-	if ( fallV_.vec_.y_ < 0 && animeTime_ < 0.516f && currentAnimation_ == "Jump" && !isClimb)
+	/*if ( fallV_.vec_.y_ < 0 && animeTime_ < 0.979f && currentAnimation_ == "Jump" && !isClimb)
 	{
-		animeTime_ = 0.516f;
-	}
+		animeTime_ = 0.979f;
+	}*/
 
 	wallCheckRay.StartPosition_ = position_;
 	wallCheckRay.rayVec_ = nowFrontVec_;

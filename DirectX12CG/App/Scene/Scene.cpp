@@ -174,6 +174,13 @@ void MCB::Scene::Update()
 		stickMoveTime.GetEndTime(),stickMoveTime.NowTime()));
 	stickPos.y_ = static_cast< float >(Lerp(static_cast<float>(prevStickPos.y_),static_cast<float>(nextStickPos.y_),
 		stickMoveTime.GetEndTime(),stickMoveTime.NowTime()));
+
+	if ( input_->IsKeyTrigger(DIK_N) )
+	{
+		debugWindow_ = !debugWindow_;
+	}
+
+
     //goal_.UniqueUpdate();
     //Node* node = playerModel_->ReadNode("LowerArm.R");
     //node->ikData.isIK = true;
@@ -202,9 +209,9 @@ void MCB::Scene::PostEffectDraw()
     level_->AnimationDraw();
 	//playerModel_->skeleton.GetNode("mixamorig:LeftFoot")->jointView = true;
 	pipeline_->SetObjPipeLine(false,false);
-	//player_->animationModel_->skeleton.JointObjectDraw();
+	if(debugWindow_ ) player_->animationModel_->skeleton.JointObjectDraw();
 	pipeline_->SetLinePipeLine();
-	//level_->GetObjectPtr("player")->animationModel_->skeleton.JointLineDraw();
+	if(debugWindow_) level_->GetObjectPtr("player")->animationModel_->skeleton.JointLineDraw();
 
     postEffect_->PostDraw();
 
@@ -280,12 +287,15 @@ void MCB::Scene::ImGuiUpdate()
     //        ImGui::TreePop();
     //    }
     //}
+	if ( debugWindow_ )
+	{
+		   if (ImGui::CollapsingHeader("MotionModel"))
+		   {
+		        playerModel_->DrawHeirarchy();
+		   }
+		player_->Debug();
 
-    //if (ImGui::CollapsingHeader("MotionModel"))
-    //{
-    //     playerModel_->DrawHeirarchy();
-    //}
-	//player_->Debug();
+	}
     imgui_.End();
 }
 

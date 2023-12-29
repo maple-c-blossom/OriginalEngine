@@ -813,8 +813,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
 	   endJoint.ikDebugData.defaultTriangleNormal = nd;
 
-	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,xmLocalConstraintVectorFromRoot,
-		   EffectorLocalFromRootPos);
+	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,EffectorLocalFromRootPos,xmLocalConstraintVectorFromRoot);
 
 
 

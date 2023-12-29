@@ -111,7 +111,8 @@ namespace MCB
 		bool loopFlag_ = true;
 		bool startPositionReset_ = true;
 		bool ybill_ = false;
-		Byte5 pad4;
+		bool debugWindow_ = false;
+		Byte4 pad4;
 		std::unique_ptr<LevelLoader::LevelData> level_;
 		Timer startTimer;
 		bool startDrawed;
