@@ -5,21 +5,33 @@ using namespace MCB;
 using namespace std;
 
 bool Goal::goal_ = false;
+int32_t Goal::timer_ = SECOND_FROM_MINITE * 3;
 void Goal::ResetGoal()
 {
 	goal_ = false;
+	timer_ = SECOND_FROM_MINITE * 3;
 }
 void Goal::Init()
 {
 	Object3d::Init();
 	goal_ = false;
-	timer_ = 0;
+	timer_ = SECOND_FROM_MINITE * 3;
 	numSprite[0].CreateSprite();
 	numSprite[1].CreateSprite();
 	numSprite[2].CreateSprite();
 	timeSprite.CreateSprite();
 	goalSprite.CreateSprite();
 	pressSprite.CreateSprite();
+	RankSprite_.CreateSprite();
+	RankNumTexs[ 0 ] = TextureManager::GetInstance()->LoadTexture(L"Resources\\S.png");
+	RankNumTexs[ 1 ] = TextureManager::GetInstance()->LoadTexture(L"Resources\\A.png");
+	RankNumTexs[ 2 ] = TextureManager::GetInstance()->LoadTexture(L"Resources\\B.png");
+	RankNumTexs[ 3 ] = TextureManager::GetInstance()->LoadTexture(L"Resources\\C.png");
+	RankTex = TextureManager::GetInstance()->LoadTexture(L"Resources\\Rank.png");
+	for ( size_t i = 0; i < 4; i++ )
+	{
+		RankNumSprites[ i ].CreateSprite();
+	}
 	numTex_ = TextureManager::GetInstance()->LoadTexture(L"Resources\\num.png");
 	timeTex_ = TextureManager::GetInstance()->LoadTexture(L"Resources\\time.png");
 	goalTex_ = TextureManager::GetInstance()->LoadTexture(L"Resources\\Goal.png");
@@ -38,8 +50,8 @@ void Goal::UniqueUpdate()
 	}
 	if (!goal_)
 	{
-		timer_++;
-		timer_ = min(timer_,999 * 60);
+		timer_--;
+		timer_ = max(0,timer_);
 	}
 	for (auto& effect : effects_)
 	{
@@ -77,6 +89,28 @@ void Goal::DebugTextDraw(MCB::DebugText* debugText)
 		DxWindow* dxw = DxWindow::GetInstance();
 		goalSprite.SpriteDraw(*goalTex_->texture.get(),dxw->sWINDOW_CENTER_WIDTH_,256,
 			580 * 2,64 * 2);
+		RankSprite_.SpriteDraw(*RankTex->texture.get(),dxw->sWINDOW_CENTER_WIDTH_,256 + 135,
+			580 * 2,64 * 2);
+		if ( timer_ >= SRank )
+		{
+			RankNumSprites[0].SpriteDraw(*RankNumTexs[ 0 ]->texture.get(),dxw->sWINDOW_CENTER_WIDTH_ + 64,256 + 135,
+			580 * 2,64 * 2);
+		}
+		else if ( timer_ >= ARank )
+		{
+			RankNumSprites[ 1 ].SpriteDraw(*RankNumTexs[ 1 ]->texture.get(),dxw->sWINDOW_CENTER_WIDTH_ + 64,256 + 135,
+			580 * 2,64 * 2);
+		}
+		else if ( timer_ >= BRank )
+		{
+			RankNumSprites[ 2 ].SpriteDraw(*RankNumTexs[ 2 ]->texture.get(),dxw->sWINDOW_CENTER_WIDTH_ + 64,256 + 135,
+			580 * 2,64 * 2);
+		}
+		else
+		{
+			RankNumSprites[ 3 ].SpriteDraw(*RankNumTexs[ 3 ]->texture.get(),dxw->sWINDOW_CENTER_WIDTH_ + 64,256 + 135,
+			580 * 2,64 * 2);
+		}
 		pressSprite.SpriteDraw(*pressTex_->texture.get(),dxw->sWINDOW_CENTER_WIDTH_,dxw->sWINDOW_CENTER_HEIGHT_ + 250,
 			580 * 2,64 * 2);
 	}
@@ -133,7 +167,11 @@ int32_t Goal::GetTime()
 
 bool Goal::GetIsGoal()
 {
-	return goal_;
+	if ( goal_ || timer_ <= 0 )
+	{
+		return true;
+	}
+	return false;
 }
 
 void Goal::OnCollision(const MCB::CollisionInfomation& info)

@@ -7,6 +7,7 @@
 #include "Goal.h"
 #include "CheckPoint.h"
 #include "Camera.h"
+#include "DemoCamera.h"
 #include "StartCamera.h"
 #include <memory>
 
@@ -34,7 +35,7 @@ namespace MCB
 			NONE = 7
 		};
 
-		//変換行列
+
 		DebugCamera debugCamera_;
 		Camera maincamera_;
 		StartCamera startcamera;
@@ -62,6 +63,7 @@ namespace MCB
 		TextureCell* numTex = nullptr;
 		TextureCell* startTex = nullptr;
 
+		
 #pragma endregion テクスチャ
 
 		//サウンド
@@ -93,6 +95,12 @@ namespace MCB
 		Sprite jumpTexSprite_ = {};
 
 		Sprite startTexSprite_ = {};
+
+
+		
+
+
+		Sprite Sprite_ = {};
 
 		DebugText debugText_ = {};
 		std::array<Float2,4> stickMove;

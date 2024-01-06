@@ -6,6 +6,8 @@
 #include "Sound.h"
 #include "ImGuiManager.h"
 #include "MoveBlock.h"
+#include "JumpPad.h"
+
 
 using namespace std;
 float MCB::Player::GetSpeed()
@@ -70,7 +72,12 @@ void MCB::Player::UniqueUpdate()
 			if ( isGround )
 			{
 				isGraund_ = true;
-				if ( info.dist_ <= 1.f - distOverRange ) position_.y -= ( ( info.dist_ ) - sphere->GetRaius() * 2.0f - 0.05f );
+				if(!isJump && !isClimb)position_.y -= fallV_.vec_.y_;
+				if ( info.dist_ <= 1.f - distOverRange )
+				{
+					position_.y -= ( ( info.dist_ ) - sphere->GetRaius() * 2.0f - 0.05f );
+					
+				}
 				Object3d::UpdateMatrix();
 				for ( uint8_t i = 0; i < footBoneName.size(); i++ )
 				{
@@ -82,15 +89,15 @@ void MCB::Player::UniqueUpdate()
 					if ( info.objctPtr_->nameId_ == "JumpPad" )
 					{
 						isGraund_ = false;
-						
-						fallV_ *= -3.f;
+						JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
+						fallV_ = ptr->jumpVec;
 					}
 				}
 			}
 			else
 			{
 				isGraund_ = false;
-				if(currentAnimation_ != "Jump" )fallV_ = {{{0,0,0,0}}};
+				//if(currentAnimation_ != "Jump" )fallV_ = {{{0,0,0,0}}};
 			}
 		}
 		else if ( fallV_.vec_.y_ <= 0.0f )
@@ -108,13 +115,10 @@ void MCB::Player::UniqueUpdate()
 				{
 					if ( info.objctPtr_->nameId_ == "JumpPad" )
 					{
+						JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
 						isGraund_ = false;
-						fallV_ *= -3.f;
+						fallV_ = ptr->jumpVec;
 						isMoveBlock = false;
-						if ( fallV_.vec_.y_ >= 4 )
-						{
-							fallV_.vec_.y_ = 4;
-						}
 					}
 					else if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
 					{
@@ -125,7 +129,7 @@ void MCB::Player::UniqueUpdate()
 						moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
 						isMoveBlock = true;
 					}
-					else
+					else if ( !isClimb )
 					{
 						isMoveBlock = false;
 					}
@@ -134,7 +138,7 @@ void MCB::Player::UniqueUpdate()
 				}
 
 			}
-			else
+			else if ( !isClimb )
 			{
 				isGraund_ = false;
 				isMoveBlock = false;
@@ -153,13 +157,12 @@ void MCB::Player::UniqueUpdate()
 				moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
 				isMoveBlock = true;
 			}
-			else
+			else if(!isClimb )
 			{
 				isMoveBlock = false;
 			}
 		}
 	}
-
 
 
 	if ( isMoveBlock )
@@ -170,9 +173,10 @@ void MCB::Player::UniqueUpdate()
 			moveBlock->UniqueUpdate();
 		}
 
-		position_.x += moveBlock->totalMoveVec.vec_.x_;
-		position_.y += moveBlock->totalMoveVec.vec_.y_;
-		position_.z += moveBlock->totalMoveVec.vec_.z_;
+
+			position_.x += moveBlock->totalMoveVec.vec_.x_;
+			position_.y += moveBlock->totalMoveVec.vec_.y_;
+			position_.z += moveBlock->totalMoveVec.vec_.z_;
 
 	}
 	if ( !isMoveBlock )
@@ -343,7 +347,7 @@ void MCB::Player::Move()
 	{
 		if ( currentAnimation_ != "Jump" )
 		{
-			fallV_.vec_.y_ = 0;
+			fallV_.vec_.y_ = -0.075f;
 		}
 		animationPositionRock = true;
 	}
@@ -384,7 +388,7 @@ void MCB::Player::Move()
 	{
 		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y;
 		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
-		if ( info.objctPtr_->nameId_ == "MoveBlock" || info.objctPtr_->nameId_ == "Rblock" )
+		if (info.objctPtr_->nameId_ == "Rblock" )
 		{
 			wallHit_ = false;
 		}
@@ -392,6 +396,14 @@ void MCB::Player::Move()
 
 	if ( wallHit_ && !isClimb &&(Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A) )&& effectorPos.vec_.y_ - position_.y <= 2.5f)
 	{
+		if ( info.objctPtr_ )
+		{
+			if ( info.objctPtr_->nameId_ == "MoveBlock" )
+			{
+				moveBlock = static_cast<MoveBlock*>(info.objctPtr_);
+				isMoveBlock = true;
+			}
+		}
 		isJump = false;
 		fallV_.vec_.y_ = 0;
 		position_.z = effectorPos.vec_.z_-0.025f;
@@ -407,6 +419,8 @@ void MCB::Player::Move()
 		isGrab = false;
 		//  よじ登りを実行
 		isClimb = true;
+
+		moveBlockTotal = { 0,0,0 };
 
 		animeTime_ = 0.f;
 		wallUPTimer.Set(uptime);
@@ -485,15 +499,11 @@ void MCB::Player::Move()
 				if ( time <= 0.45f )
 				{
 
-					//position_.x = static_cast< float >( Lerp(climbOldPos.vec_.x_,climbOldPos.vec_.x_ - 0.45f,
-					//	0.45f,time) );
 					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbOldPos.vec_.z_ - 0.45f,
 						0.45f,time) );
 				}
 				else if ( time >= 0.45f && time <= 1.145f )
 				{
-					//position_.x = static_cast< float >( Lerp(climbOldPos.vec_.x_ - 0.45f,climbPos.vec_.x_,
-					//	1.145f - 0.45f,time - 0.45f) );
 					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_ - 0.45f,climbPos.vec_.z_ + 0.7f,
 						1.145f - 0.45f,time - 0.45f) );
 				}
@@ -519,21 +529,11 @@ void MCB::Player::Move()
 						animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
 						animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
 					}
-				//else if ( time >= 1.08f && time <= 3.80f )
-				//{
-				//	position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_,
-				//		3.80f,wallUPTimer.NowTime() - 1.08f) );
-				//}
-			}
-			//  上下は等速直線で移動//上への動きが独り歩きしている（開始、速度全部ぐちゃぐちゃ）
-		/*	if ( time >= wallUPTimer.NowTime() && climbUpMove )
-			{
-
 				
-			}*/
+			}
+		
 		}
-		//currentAnimation->duration - 0.0001f
-		//Animation* anim = animationModel_->animationManager.GetAnimation(currentAnimation_)
+
 		float time = animeTime_ + animationSpeed_;
 		//  座標を更新
 		fallV_.vec_.y_ = 0.0f;
@@ -582,7 +582,10 @@ void MCB::Player::Move()
 	if ( moving )
 	{
 		if ( isClimb ) directionVec = Vector3D(0,0,1);
-		else directionVec = Vector3D(speedRight_,0,speedFront_);
+		else
+		{
+			directionVec = Vector3D(speedRight_,0,speedFront_);
+		}
 		if ( directionVec.V3Len() == 0 )
 		{
 			directionVec = Vector3D(0,0,1);

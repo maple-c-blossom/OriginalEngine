@@ -48,6 +48,12 @@ void MCB::Scene::Initialize()
 	startcamera.Inilialize();
 	startcamera.targetstart_ = goal_;
 	startcamera.targetend_ = player_;
+
+
+	maincamera_.SetViewEye(Float3(0.0f,player_->position_.y + 5.5f, player_->position_.z + -10.5f));
+
+	Vector3D frontVec = player_->position_ - maincamera_.GetView()->eye_;
+	//maincamera_.disEyeTarget_ = frontVec.V3Len();
 }
 
 void MCB::Scene::SetStage(std::string stageName)
@@ -85,7 +91,7 @@ void MCB::Scene::LoadTexture()
 	jumpTex = loader_->LoadTexture(L"Resources\\Jump.png");
 	numTex = loader_->LoadTexture(L"Resources\\num.png");
 	startTex = loader_->LoadTexture(L"Resources\\start.png");
-
+	
     //zoomTex = loader->LoadTexture(L"Resources\\testenemy.png");
     //zoomTex = loader->CreateNoTextureFileIsTexture();
 
@@ -106,6 +112,9 @@ void MCB::Scene::SpriteInit()
 	lStickTexSprite_.CreateSprite();
 	moveTextSprite_.CreateSprite();
 	countSprite_.CreateSprite();
+	startTexSprite_.CreateSprite();
+
+	
 	startTexSprite_.CreateSprite();
     debugText_.Init(debugTextTexture_->texture.get());
 
@@ -139,16 +148,31 @@ void MCB::Scene::Update()
 		
 	}
   
-    level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
+
 	skydome->position_.z = player_->position_.z;
     if (goal_->GetIsGoal())
     {
-        player_->currentAnimation_ = "Idle";
+		if ( goal_->GetTime() >= 0)
+		{
+			player_->currentAnimation_ = "Dance";
+		}
+		player_->animationLoop_ = false;
     }
+	else
+	{
+		player_->animationLoop_ = true;
+	}
     lights_->UpDate();
     debugCamera_.Update();
     maincamera_.Update();
+
+	maincamera_.SetViewTarget(Float3(player_->position_.x,player_->position_.y,player_->position_.z));
+	Vector3D frontVec = player_->position_ - maincamera_.GetView()->eye_;
+	frontVec.V3Norm();
+	player_->nowFrontVec_ = frontVec;
+	player_->rightVec_ = Vector3D().GetRightVec(frontVec);
 	stickMoveTime.SafeUpdate();
+	level_->Update(startTimer.NowTime() <= 0 && !goal_->GetIsGoal());
 	if ( stickMoveTime.IsEnd() )
 	{
 		stickMoveTime.ReSet();
@@ -185,6 +209,9 @@ void MCB::Scene::Update()
     //Node* node = playerModel_->ReadNode("LowerArm.R");
     //node->ikData.isIK = true;
     //node->ikData.iKTargetPosition = { player_.position_.x + 1.0f,player_.position_.y + 0.5f,player_.position_.z };
+
+
+
     CheckAllColision();
     MatrixUpdate();
     

@@ -65,7 +65,7 @@ void MCB::DemoCamera::Update()
 	}
 	else if(input_->gamePad_->RStick_.x_ || input_->gamePad_->RStick_.y_)
 	{
-		moveCursor = Vector2D(-input_->gamePad_->RStick_.x_ / 50.f,input_->gamePad_->RStick_.y_ / 50.f);
+		moveCursor = Vector2D(input_->gamePad_->RStick_.x_ / 50.f,input_->gamePad_->RStick_.y_ / 50.f);
 			if ( view_.up_.y < 0 )
 			{
 				moveCursor.x_ = -input_->gamePad_->RStick_.x_;
@@ -89,7 +89,14 @@ void MCB::DemoCamera::Update()
 	moveLen += ( ( ( float ) input_->IsKeyDown(DIK_N) - input_->IsKeyDown(DIK_M) ) * 0.25f );
 
 	disEyeTarget_ += moveLen;
-
+	if ( disEyeTarget_ < 2 )
+	{
+		disEyeTarget_ = 2;
+	}
+	if ( disEyeTarget_ > 20 )
+	{
+		disEyeTarget_ = 20;
+	}
 
 	//if (rotAngle_.x_ >= PI * 2) rotAngle_.x_ -= PI * 2;
 	//if (rotAngle_.x_ < 0) rotAngle_.x_ += PI * 2;

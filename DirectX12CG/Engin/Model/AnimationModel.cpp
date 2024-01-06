@@ -776,9 +776,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   //座標変換(rootJointの座標系に変換)-----------------------------------
 	   Node* rootJoint = endJoint.ikData.rootJointNode;
 	   Node& middleJoint = *endJoint.ikData.middleJointNode;
-	   if(!rootJoint->chengeObjectColor)rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
-	   if(!middleJoint.chengeObjectColor)middleJoint.object->color_ = { 0,0.5f,0,1 };
-	   if(!endJoint.chengeObjectColor)endJoint.object->color_ = { 0,0,0.5f,1 };
+	   //if(!rootJoint->chengeObjectColor)rootJoint->object->color_ = { 0.5f,0,0.5f,1 };
+	   //if(!middleJoint.chengeObjectColor)middleJoint.object->color_ = { 0,0.5f,0,1 };
+	   //if(!endJoint.chengeObjectColor)endJoint.object->color_ = { 0,0,0.5f,1 };
 	   
 	   endJoint.ikData.middleJointNode = &middleJoint;
 	   endJoint.ikData.rootJointNode = rootJoint;
@@ -819,7 +819,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 
 	   endJoint.ikDebugData.taregetTriangleNormal = nt;
-	   endJoint.ikData.triangleNormalLine.PointA_ = nt * 20;
+	   //endJoint.ikData.triangleNormalLine.PointA_ = nt * 20;
 	   Quaternion q1;//同一平面上にいるようにする回転
 	   q1 = q1.GetDirectProduct(rootJoint->rotation,q1.DirToDir(nd, nt));
 	   rootJoint->rotation = q1.ConvertXMVector();

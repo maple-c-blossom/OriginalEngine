@@ -12,7 +12,7 @@ class Goal:public MCB::Object3d
 private:
 	static bool goal_;
 	std::list<std::unique_ptr<MCB::PopEffect>> effects_;
-	int32_t timer_;
+	static int32_t timer_;
 	Byte4 pad;
 	MCB::Object3d* player;
 	std::array<MCB::Sprite,3> numSprite;
@@ -23,6 +23,10 @@ private:
 	MCB::TextureCell* timeTex_;
 	MCB::TextureCell* goalTex_;
 	MCB::TextureCell* pressTex_;
+	std::array<MCB::TextureCell*,4> RankNumTexs;
+	std::array<MCB::Sprite,4> RankNumSprites;
+	MCB::TextureCell* RankTex;
+	MCB::Sprite RankSprite_;
 public:
 	MCB::Model* popModel_ = nullptr;
 	static void ResetGoal();

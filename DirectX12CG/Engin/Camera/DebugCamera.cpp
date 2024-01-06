@@ -64,9 +64,8 @@ void MCB::DebugCamera::Update()
 	if (input_->IsKeyDown(DIK_RSHIFT)) {
 		disEyeTarget_ += static_cast<float>( -input_->GetMousePosition().z) * (disEyeTarget_ * 0.001f);
 	}
-	//if (disEyeTarget_ < 10) {
-	//	disEyeTarget_ = 4;
-	//}
+
+
 #pragma endregion
 
 	target_ += rightVec * ((float)(input_->IsKeyDown(DIK_RIGHT) - input_->IsKeyDown(DIK_LEFT)) * 0.25f);

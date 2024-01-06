@@ -64,13 +64,14 @@ namespace MCB
         ConstBufferDataTransform* constMapTranceform_ = nullptr;
         std::string nameId_;
         std::string currentAnimation_ = "Null";
+        std::string nextAnimation_ = "Null";
         static LightGroup* slights_;
         //アフィン変換情報
         DirectX::XMFLOAT3 scale_ = { 1.0f,1.0f,1.0f };
         DirectX::XMFLOAT3 rotation_ = { 0.0f,0.0f,0.0f };
         Quaternion rotationQ_ = { 0.0f,0.0f,0.0f,1.0f };
         DirectX::XMFLOAT3 position_ = { 0.0f, 0.0f, 0.0f };
-
+		MCB::Vector3D rightVec_ = { 1,0,0 };
 
 		DirectX::XMFLOAT3 prevscale_ = { 1.0f,1.0f,1.0f };
 		DirectX::XMFLOAT3 prevrotation_ = { 0.0f,0.0f,0.0f };
@@ -100,7 +101,8 @@ namespace MCB
 
         Object3d* parent_ = nullptr;
 		std::string tag = "None";
-		int64_t pad;
+		bool animationChenge = false;
+		Byte7 pad;
         static ICamera* camera_;
         Object3d();
         virtual ~Object3d();

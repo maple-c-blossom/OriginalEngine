@@ -2,6 +2,12 @@
 #include <math.h>
 #include "Object3d.h"
 #define PI 3.14159265358979323846264338327950288f
+#define SECOND_FROM_MINITE 60 * 60
+
+#define CRank 20
+#define BRank 40
+#define ARank 60
+#define SRank 100
 namespace MCB
 {
 	double Lerp( double startPos,  double endPos,  double maxTime,  double time);

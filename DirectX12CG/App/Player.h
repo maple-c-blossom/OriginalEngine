@@ -27,7 +27,8 @@ namespace MCB
 		float accelerator_ = 0.005f;
 		float acceleratorfront_ = 0.05f;
 		float animationPlaySpeed;
-		MCB::Vector3D rightVec_ = { 1,0,0 };
+		Vector3D moveBlockTotal;
+
 		int32_t uptime = 75;
 		bool moving;
 		Byte3 pad2;

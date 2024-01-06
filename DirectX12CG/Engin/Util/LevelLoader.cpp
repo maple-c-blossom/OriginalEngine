@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "RotationBlock.h"
 #include "MoveBlock.h"
+#include "JumpPad.h"
 using namespace MCB;
 using namespace std;
 using namespace nlohmann;
@@ -75,6 +76,15 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 				temp->maxMoveLength = static_cast< float >( var[ "MoveMax" ] );
 				temp->speed = static_cast< float >( var[ "MoveSpeed" ] );
 				temp->isSetMove = true;
+				objData->obj = std::move(temp);
+			}
+			else if ( objData->tag == "JumpPad" )
+			{
+				unique_ptr<JumpPad> temp = std::make_unique<JumpPad>();
+				json& var = objJson[ "variable" ];
+				temp->jumpVec.vec_.x_ = static_cast< float >( var[ "MoveVec" ][ 0 ] );
+				temp->jumpVec.vec_.y_ = static_cast< float >( var[ "MoveVec" ][ 1 ] );
+				temp->jumpVec.vec_.z_ = static_cast< float >( var[ "MoveVec" ][ 2 ] );
 				objData->obj = std::move(temp);
 			}
 			else

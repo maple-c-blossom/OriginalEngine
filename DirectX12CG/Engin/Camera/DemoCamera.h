@@ -11,7 +11,6 @@ namespace MCB
 	private:
 		Input* input_ = Input::GetInstance();
 	
-		float disEyeTarget_;
 		Vector2D rotAngle_;
 		Vector2D cursorSpd_;
 		Vector3D eye_;
@@ -19,11 +18,13 @@ namespace MCB
 	
 		//Vector3D up;
 	public:
+		float disEyeTarget_;
 		bool moveStop = false;
 		Byte5 pad1;
 		Byte6 pad2;
 		void Inilialize()override;
 		void Update()override;
+		
 	};
 }
 
