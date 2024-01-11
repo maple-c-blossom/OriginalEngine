@@ -534,7 +534,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	{
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
-		if (false)
+		if (itr->ikData.isCollisionIk)
 		{
 				if( itr->ikData.middleJointNode == nullptr )itr->ikData.middleJointNode = itr->parent;
 				itr->ikData.middleJointNode->worldBoneRay.rayCasted_ = false;
@@ -626,7 +626,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	  pNode->worldBoneRay.rayVec_ = pNode->boneVec;
 	  pNode->worldBoneRay.StartPosition_ = MCB::MCBMatrix::GetTranslate(pNode->AnimaetionParentMat);
 	  pNode->worldBoneRay.range_ = pNode->boneLength;
-
+	  if ( currentAnimationPtr->name == "Tpose" )
+	  {
+		  pNode->defaultModelTransform = pNode->AnimaetionParentMat;
+	  }
 
   }
 
@@ -809,11 +812,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   endJoint.ikData.effectorPosFromRoot = EffectorLocalFromRootPos;
 	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
-	   Vector3D nd = nd.GetV3Normal(rootJointLocalPositionFromRoot,
-		   middleJointLocalPositionFromRoot, endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
+	   Vector3D nd = nd.GetV3Normal(
+		   rootJointLocalPositionFromRoot,
+		   middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot);//rootJointからみた位置で法線取ってるならrootJointは原点じゃね？
 	   endJoint.ikDebugData.defaultTriangleNormal = nd;
 
-	   Vector3D nt = nt.GetV3Normal(rootJointLocalPositionFromRoot,EffectorLocalFromRootPos,xmLocalConstraintVectorFromRoot);
+	   Vector3D nt = nt.GetV3Normal(
+		   rootJointLocalPositionFromRoot,xmLocalConstraintVectorFromRoot,EffectorLocalFromRootPos);
 
 
 
@@ -827,25 +832,35 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);
 
-	   middleJointLocalPositionFromRoot = MCBMatrix::GetTranslate(middleJoint.AnimaetionParentMat * rootJointModelMatrixinv);
-	   endJointLocalPositionFromRoot = MCBMatrix::GetTranslate(endJoint.AnimaetionParentMat * rootJointModelMatrixinv);
-	   rootJointLocalPositionFromRoot = MCBMatrix::GetTranslate(rootJoint->AnimaetionParentMat * rootJointModelMatrixinv);
+	   rootJointModelMatrixinv = rootJointModelMatrixinv.MatrixInverse(rootJoint->AnimaetionParentMat);
+
+	    middleJointLocalPositionFromRoot = MCBMatrix::GetTranslate(middleJoint.AnimaetionParentMat * rootJointModelMatrixinv);
+	    endJointLocalPositionFromRoot = MCBMatrix::GetTranslate(endJoint.AnimaetionParentMat * rootJointModelMatrixinv);
+	    rootJointLocalPositionFromRoot = MCBMatrix::GetTranslate(rootJoint->AnimaetionParentMat * rootJointModelMatrixinv);
+	   endJoint.ikData.effectorPosFromRoot = EffectorLocalFromRootPos;
+	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
+	   //------------------------------
+	  Vector3D nowNormal = nd.GetV3Normal(
+		   rootJointLocalPositionFromRoot,
+		   middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot);
+	  endJoint.ikDebugData.nowTriangleNormal = nowNormal;
+
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
-	   float middleJointBoneLength = middleJointLocalPositionFromRoot.V3Len();
+	   float middleJointBoneLength = Vector3D(middleJoint.defaultLocalTranslation).V3Len();
 	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
 	   //float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
 	   float rootToEndLength = Vector3D(rootJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 	   float localTargetVectorFromRootJoint = EffectorLocalFromRootPos.V3Len();
 
 	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//余弦定理で角度算出
-	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, localTargetVectorFromRootJoint, endJointBoneLength));//余弦定理で角度算出
+	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength,endJointBoneLength, localTargetVectorFromRootJoint ));//余弦定理で角度算出
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
-	   Quaternion d2RotaionQ(nt,theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
+	   Quaternion d2RotaionQ(nowNormal,theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
-	   Quaternion q2 = q2.DirToDir(middleJoint.boneVec,targetMiddleVector);
+	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   Quaternion rootJointRotation = q2.GetDirectProduct(q1,q2);
-	   rootJoint->rotation = q1.ConvertXMVector();
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);
@@ -1091,6 +1106,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 						{
 							
 							Node::IKData& nodeIkData = node->ikData;
+							Node::IKDebugData& nodeIkDebugData = node->ikDebugData;
 							//ImGui::Checkbox("lineView",&node->lineView);
 							if (node->ikData.rootJointNode)
 							{
@@ -1104,8 +1120,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 								nodeIkData.iKEffectorPosition.vec_.y_, nodeIkData.iKEffectorPosition.vec_.z_);
 							ImGui::Text("ConstRaintPosFromWorld:%f,%f,%f", nodeIkData.constraintWorldVector.vec_.x_,
 								nodeIkData.constraintWorldVector.vec_.y_, nodeIkData.constraintWorldVector.vec_.z_);
-							ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintFromRoot.vec_.x_,
-									nodeIkData.constraintFromRoot.vec_.y_,nodeIkData.constraintFromRoot.vec_.z_);
+							ImGui::Text("nt:%f,%f,%f",
+								nodeIkDebugData.taregetTriangleNormal.vec_.x_,nodeIkDebugData.taregetTriangleNormal.vec_.y_,
+								nodeIkDebugData.taregetTriangleNormal.vec_.z_);
+
+							ImGui::Text("nnow:%f,%f,%f",
+								nodeIkDebugData.nowTriangleNormal.vec_.x_,nodeIkDebugData.nowTriangleNormal.vec_.y_,
+								nodeIkDebugData.nowTriangleNormal.vec_.z_);
+							
 							if ( node->ikData.isCollisionIk )
 							{
 								ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",
@@ -1173,6 +1195,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   nodeIkData.constraintWorldVector.vec_.y_,nodeIkData.constraintWorldVector.vec_.z_);
 			   ImGui::Text("ConstRaintPosFromRoot:%f,%f,%f",nodeIkData.constraintLocalPositionFromRoot.vec_.x_,
 					   nodeIkData.constraintLocalPositionFromRoot.vec_.y_,nodeIkData.constraintLocalPositionFromRoot.vec_.z_);
+
+			   if ( itr->ikData.rootJointNode )
+			   {
+				   ImGui::Text("RootJointName:%s",nodeIkData.rootJointNode->name.c_str());
+			   }
+
+
 			   if ( itr->ikData.isCollisionIk )
 			   {
 				   ImGui::Text("WarldBoneRayStartPosition:%f,%f,%f",

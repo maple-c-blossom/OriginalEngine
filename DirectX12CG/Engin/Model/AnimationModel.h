@@ -144,6 +144,7 @@ PragmaWarningNum(4324)
             std::array<Vector3D, 3> triangleNodeLocalVector;
             Vector3D defaultTriangleNormal;
             Vector3D taregetTriangleNormal;
+            Vector3D nowTriangleNormal;
             Vector3D constraintModelVector;
             Vector3D constraintWorldVector;
 

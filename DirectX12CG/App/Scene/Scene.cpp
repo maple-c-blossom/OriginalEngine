@@ -38,6 +38,10 @@ void MCB::Scene::Initialize()
     player_ = dynamic_cast<Player*>(level_->GetObjectPtr("player"));
     player_->runFast = runFast;
     player_->runNormal = runNormal;
+	player_->currentAnimation_ = "Tpose";
+	player_->AnimationUpdate();
+	player_->UniqueUpdate();
+	player_->animationSpeed_ = 0;
 	stickMove[ 0 ] = { centerPos.x_,centerPos.y_ + 10 };
 	stickMove[ 1 ] = { centerPos.x_ + 10,centerPos.y_ };
 	stickMove[ 2 ] = { centerPos.x_,centerPos.y_ - 10 };

@@ -165,8 +165,12 @@ Vector3D MCB::Vector3D::GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2)
 {
 	Vector3D ans;
 	Vector3D vv1, vv2;
-	vv1 = vv1.Vector3Substruct(v0.vec_, v1.vec_);
-	vv2 = vv2.Vector3Substruct(v1.vec_, v2.vec_);
+	Vector3D v0n,v1n,v2n;
+	v0n = v0; //v0n.V3Norm();
+	v1n = v1; //v1n.V3Norm();
+	v2n = v2; //v2n.V3Norm();
+	vv1 = vv1.Vector3Substruct(v0n.vec_,v1n.vec_);
+	vv2 = vv2.Vector3Substruct(v1n.vec_,v2n.vec_);
 	vv1.V3Norm();
 	vv2.V3Norm();
 	ans = vv1.GetV3Cross(vv2);
