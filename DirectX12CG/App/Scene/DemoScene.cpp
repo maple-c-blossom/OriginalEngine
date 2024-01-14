@@ -44,14 +44,6 @@ void MCB::DemoScene::Update()
 	
 	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
 	else test2Animation_.color_.w_ = { 1.0f };
-    if (objChenge_)
-    {
-        test2Animation_.animationModel_ = animModel_.get();
-    }
-    else
-    {
-        test2Animation_.animationModel_ = anim2Model_.get();
-    }
     lights_->UpDate();
     if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
     {
@@ -107,32 +99,27 @@ void MCB::DemoScene::Update()
 
     for (uint8_t i = 0; i < 4; i++)
     {
-
-        if (isIk_[i])
+		if ( collIK[ i ] )
+		{
+			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),true);
+		}
+		else
+		{
+			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
+		}
+        if (isIk_[i] && !collIK[i] )
         {
-            if (objChenge_)
-            {
-				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-                    { effectorObjects_[0].position_.x,effectorObjects_[0].position_.y,effectorObjects_[0].position_.z },
-                    { poleVec_[0].x,poleVec_[0].y,poleVec_[0].z }, "Bone3");
-            }
-            else
-            {
-				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
+			
+			test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
                     { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
                     { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
-            }
         }
-        else if(!objChenge_)
+        else if(!collIK[i] )
         {
             test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
-            test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
+
         }
-		else if(objChenge_  && isIk_[0])
-		{
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
-		}
+		
     }
     MatrixUpdate();
 }
@@ -195,9 +182,9 @@ void MCB::DemoScene::ImGuiUpdate()
 	}
 
 
+	size_t matId = 0;
 	if ( gizmoDraw_ )
 	{
-		size_t matId = 0;
 		for ( auto& obj : effectorObjects_ )
 		{
 			ImGuizmo::SetID(static_cast< int32_t >( matId ));
@@ -215,6 +202,8 @@ void MCB::DemoScene::ImGuiUpdate()
 		}
 
 	}
+	ImGuizmo::SetID(static_cast< int32_t >( matId ));
+	ImguiManager::GuizmoDraw(&ground_,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
 
 	if ( ImGui::TreeNode("説明") )
 	{
@@ -227,7 +216,6 @@ void MCB::DemoScene::ImGuiUpdate()
 	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
 	ImGui::Checkbox("半透明表示",&debugView_);
 	ImGui::Checkbox("オブジェクトを表示しない",&objInvisibleView_);
-
     if (ImGui::TreeNode("IK 制御"))
     {
         for (uint8_t i = 0; i < 4; i++)
@@ -235,8 +223,18 @@ void MCB::DemoScene::ImGuiUpdate()
             std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
-				ImGui::Text("ONの時、IKを行う");
-                ImGui::Checkbox("isIK", &isIk_[i]);
+				ImGui::Checkbox("当たり判定に基づいたIK",&collIK[i]);
+				if ( collIK[i])
+				{
+					ImGui::Text("現在、当たり判定に基づいてIKを行っています。");
+					ImGui::Text("手動で確認をしたい場合、");
+					ImGui::Text("「当たり判定に基づいたIK」のチェックを外してください");
+				}
+				else
+				{
+					ImGui::Text("ONの時、IKを行う");
+					ImGui::Checkbox("isIK", &isIk_[i]);
+				}
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
 				ImGui::Text("三角形を描画");
@@ -294,7 +292,7 @@ void MCB::DemoScene::ImGuiUpdate()
 		test2Animation_.animeTime_ = animTime;
 		ImGui::TreePop();
 	}
-    //ImGui::Checkbox("IkModelChenge", &objChenge_);
+
     test2Animation_.animationModel_->DrawHeirarchy();
 
     imgui_.End();
@@ -392,7 +390,7 @@ void MCB::DemoScene::Object3DInit()
     ground_.Init();
     ground_.model_ = groundModel_.get();
     ground_.scale_ = { 1,1,1 };
-    ground_.position_ = { 0,-4,0 };
+    ground_.position_ = { 0,2,0 };
     ground_.rotation_ = { 0,0,0 };
     ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
     ground_.camera_ = viewCamera_;

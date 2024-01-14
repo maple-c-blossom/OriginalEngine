@@ -9,7 +9,7 @@ WarningIgnoreEnd
 #include "Player.h"
 namespace MCB
 {
-	class DemoScene :public IScene
+	class MiniatureGardenScene :public IScene
 	{
 		int64_t pad;
 	private:
@@ -47,7 +47,7 @@ namespace MCB
 #pragma region サウンド
 		size_t selectSound_;
 		size_t test2Sound_;
-		
+
 		int32_t volume_ = 255;
 
 #pragma endregion サウンド
@@ -62,7 +62,7 @@ namespace MCB
 		std::array<Object3d,4> effectorObjects_;
 		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,-0.48f),
 			DirectX::XMFLOAT3(-0.6f,3.45f,-0.48f),
-			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f)};
+			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f) };
 		Object3d test2Animation_;
 		Player play_;
 		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.44f,-0.05f),
@@ -71,7 +71,7 @@ namespace MCB
 		};
 		std::array<Object3d,4> poleVecObjects_;
 		std::array<bool,4> PoleVecMove_ = { {false,false,false,false} };
-		std::array<bool,4> collIK = { {false,false,false,false} };
+		bool objChenge_;
 		bool gizmoDraw_ = true;
 		uint8_t animationNum = 4;
 		Byte1 pad5;
@@ -86,7 +86,7 @@ namespace MCB
 			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint);
 		};
 		std::array<IKDataSet,4> ikBoneName_ = { std::string("mixamorig:LeftHand"),
-												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
+												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"} };
 		int64_t pad6;
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"} };
 		int64_t pad114514;
@@ -107,10 +107,10 @@ namespace MCB
 #pragma endregion 通常変数
 	public:
 
-		DemoScene(RootParameter* root, Depth* depth,PipeLineManager* pipeline);
-		DemoScene(const DemoScene&) = delete;
-		DemoScene& operator=(const DemoScene&) = delete;
-		~DemoScene();
+		MiniatureGardenScene(RootParameter* root,Depth* depth,PipeLineManager* pipeline);
+		MiniatureGardenScene(const MiniatureGardenScene&) = delete;
+		MiniatureGardenScene& operator=(const MiniatureGardenScene&) = delete;
+		~MiniatureGardenScene();
 		void Initialize() override;
 
 		//各初期化系関数群--------------------

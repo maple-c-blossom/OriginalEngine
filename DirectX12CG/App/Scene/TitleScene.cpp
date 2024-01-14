@@ -117,7 +117,6 @@ void MCB::TitleScene::Initialize()
     SpriteInit();
     ParticleInit();
     //soundManager.PlaySoundWave(testSound, loopFlag);
-    lights_->DefaultLightSet();
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();

@@ -138,6 +138,27 @@ PSOutput PhoneShader(GSOutput input)
 
         }
     }
+    
+    for (int l = 0; l < CIRCLESHADOW_NUM; l++)
+    {
+        if (cShadow[l].active)
+        {
+            float3 casterv = cShadow[l].casterPos - input.worldpos.xyz;
+            float d = dot(casterv, cShadow[l].dir);
+            float atten = saturate(1.0f / (cShadow[l].atten.x + cShadow[l].atten.y * d + cShadow[l].atten.z * d * d));
+            atten *= step(0, d);
+
+            float3 lightpos = cShadow[l].casterPos + cShadow[l].dir * cShadow[l].distanceCasterLight;
+            float3 lightv = normalize(lightpos - input.worldpos.xyz);
+            float cos = dot(lightv, cShadow[l].dir);
+            float angleatten = smoothstep(cShadow[l].factorAngleCos.y, cShadow[l].factorAngleCos.x, cos);
+            atten *= angleatten;
+            
+            shadeColor.rgb -= atten;
+            
+        }
+    }
+    
 	
     output.target0 = shadeColor;
     //output.target1 = float4(1 - ((shadeColor * texcolor) * color).rgb, 1);

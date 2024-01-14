@@ -31,15 +31,16 @@ void MCB::Player::Init()
 	respownPosition_ = position_;
 	rotation_.y = ConvertRadius(180);
 	rotation_.x = ConvertRadius(0);
-	LightGroup::GetInstance()->SetSLightIsActive(1,false);
+	LightGroup::GetInstance()->SetCShadowActive(0,true);
 	rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(180));
 	currentAnimation_ = "Idle";
 }
 
 void MCB::Player::UniqueUpdate()
 {
-	slights_->SetSLightPos(0,{ position_.x, position_.y + 1.f, position_.z });
-	slights_->SetSLightForLightDir(0,{ 0,-1,0 });
+	//slights_->SetSLightPos(0,{ position_.x, position_.y + 1.f, position_.z });
+	
+
 	//slights_->SetSLightIsActive(0,true);
 	if ( !isDebug_ )
 	{
@@ -230,6 +231,14 @@ void MCB::Player::UniqueUpdate()
 	{
 		position_ = respownPosition_.ConvertXMFloat3();
 	}
+
+
+
+	slights_->SetCShadowActive(0,true);
+	slights_->SetCShadowDistCasterL(0,distanceCasterLight_);
+	slights_->SetCShadowFascorAngle(0,factorAngleCos_);
+	slights_->SetCShadowAtten(0,atten_);
+	slights_->SetCShadowCasterPos(0,{ position_.x, position_.y, position_.z });
 }
 
 
@@ -621,6 +630,19 @@ void MCB::Player::Move()
 
 void MCB::Player::Debug()
 {
+
+	ImGui::InputFloat("Dist",&distanceCasterLight_);
+	slights_->SetCShadowDistCasterL(0,distanceCasterLight_);
+	float temp[ 2 ] = { factorAngleCos_.x_,factorAngleCos_.y_ };
+	ImGui::InputFloat2("angle",temp);
+	factorAngleCos_.x_ = temp[ 0 ]; factorAngleCos_.y_ = temp[ 1 ];
+	slights_->SetCShadowFascorAngle(0,factorAngleCos_);
+
+	float temp2[ 3 ] = { atten_.x_,atten_.y_ ,atten_ .z_};
+	ImGui::InputFloat2("atten",temp2);
+	atten_.x_ = temp2[ 0 ]; atten_.y_ = temp2[ 1 ]; atten_.z_ = temp2[2];
+	slights_->SetCShadowAtten(0,atten_);
+
 	if ( ImGui::TreeNode("プレイヤーデバッグ") )
 	{
 		ImGui::Checkbox("Debug",&isDebug_);

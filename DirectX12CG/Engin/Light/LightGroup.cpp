@@ -157,7 +157,29 @@ void LightGroup::TransferConstBuff()
 				constMap->SLights[i].active = 0;
 			}
 		}
+
+		for ( int32_t i = 0; i < sC_SHADOW_NUM_; i++ )
+		{
+			if ( CShadow_[ i ].IsActive() )
+			{
+				constMap->CShadow[ i ].active = 1;
+				constMap->CShadow[ i ].dir = -CShadow_[ i ].GetDir();
+				constMap->CShadow[ i ].casterPos = CShadow_[ i ].GetCasterPos();
+				constMap->CShadow[ i ].distanceCasterLight = CShadow_[ i ].GetDistCasterL();
+				constMap->CShadow[ i ].atten = CShadow_[i].GetAtten();
+				constMap->CShadow[ i ].factorAngleCos = CShadow_[ i ].GetFacterAngleCos();
+			}
+			else
+			{
+				constMap->CShadow[ i ].active = 0;
+			}
+		}
+
+
 		constBuff_->Unmap(0, nullptr);
+
+
+
 	}
 }
 
@@ -192,6 +214,14 @@ void LightGroup::DefaultLightSet()
 	PLights_[2].SetPLightPos({ 10.0f,2.0f,20.0f });
 	PLights_[2].SetPLightColor({ 1,1,1 });
 	PLights_[2].SetPLightAtten({ 0.001f,0.001f,0.001f });
+
+
+	CShadow_[ 0 ].SetActive(false);
+	CShadow_[ 0 ].SetCasterPos({ 0, 2, 10 });
+	CShadow_[ 0 ].SetDir({ 0,-1,0 });
+	CShadow_[ 0 ].SetDistanceCasterLight(-0.9f);
+	CShadow_[ 0 ].SetFactorAngleCos({ 1.0f,0.1f });
+	CShadow_[ 0 ].SetAtten({ 0.9f,2.6f,0.f });
 
 	SLights_[0].SetIsActive(false);
 	SLights_[0].SetSLightPos({ 0.0f,3.0f,20.0f });
@@ -400,6 +430,49 @@ float MCB::LightGroup::GetSLightShininess( int32_t lightindexNum)
 {
 	assert(0 <= lightindexNum && lightindexNum < sS_LIGHT_NUM_);
 	return SLights_[lightindexNum].GetSLightShininess();
+}
+
+void MCB::LightGroup::SetCShadowActive(int32_t shadowindexNum,bool active)
+
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetActive(active);
+	isUpdate_ = true;
+}
+
+void MCB::LightGroup::SetCShadowCasterPos(int32_t shadowindexNum,const Float3& casterPos)
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetCasterPos(casterPos);
+	isUpdate_ = true;
+}
+
+void MCB::LightGroup::SetCShadowDir(int32_t shadowindexNum,const Vector3D& dir)
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetDir(dir);
+	isUpdate_ = true;
+}
+
+void MCB::LightGroup::SetCShadowDistCasterL(int32_t shadowindexNum,float dist)
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetDistanceCasterLight(dist);
+	isUpdate_ = true;
+}
+
+void MCB::LightGroup::SetCShadowAtten(int32_t shadowindexNum,const Float3& shadowAtten)
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetAtten(shadowAtten);
+	isUpdate_ = true;
+}
+
+void MCB::LightGroup::SetCShadowFascorAngle(int32_t shadowindexNum,Float2 factorAngle)
+{
+	assert(0 <= shadowindexNum && shadowindexNum < sC_SHADOW_NUM_);
+	CShadow_[ shadowindexNum ].SetFactorAngleCos(factorAngle);
+	isUpdate_ = true;
 }
 
 

@@ -50,12 +50,28 @@ struct SLight
     float pad4;
 };
 
+
+static const int CIRCLESHADOW_NUM = 1;
+struct CircleShadow
+{
+    float3 dir;
+    float distanceCasterLight;
+    float3 casterPos;
+    float pad1;
+    float3 atten;
+    float pad2;
+    float2 factorAngleCos;
+    uint active;
+};
+
+
 cbuffer cbuff2 : register(b2)
 {
     float3 ambientColor;
     DirLight dirLights[DIRLIGHT_NUM];
     PLight pLights[PLIGHT_NUM];
     SLight sLights[SLIGHT_NUM];
+    CircleShadow cShadow[SLIGHT_NUM];
 }
 static const int MAX_SKINNING = 128; //1頂点が受けるボーンの数(最大値)
 

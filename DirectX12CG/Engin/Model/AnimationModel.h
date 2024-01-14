@@ -241,7 +241,13 @@ PragmaPop
 
 		void SetTwoBoneIK(const Object3d& obj,const Vector3D& targetPos,const Vector3D& constraintPosition = { 0,1,0 },
 			const std::string& boneName = "NULL",
-			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",bool useConstraintFromEffector = false);
+			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",
+			bool useConstraintFromEffector = false);
+
+		void SetCollTwoIK(const std::string boneName,bool isCollIK = false);
+
+		void SetConstraint(const Object3d& obj,const std::string boneName,
+			const Vector3D& constraintPosition,bool useConstraintFromEffector = false);
 
         void TwoBoneIKOff(const std::string& boneName);
 

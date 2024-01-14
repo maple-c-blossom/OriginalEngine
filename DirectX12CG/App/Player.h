@@ -69,6 +69,13 @@ namespace MCB
 		Timer jumpokTimer;
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
+
+
+
+		float distanceCasterLight_ = 0.f;
+		Float3 casterPos_ = { 0,0,0 };
+		Float2 factorAngleCos_ = { 1.1f,0.9f };
+		Float3 atten_ = { 0.0f,1.5f,0.2f };
 	public:
 		size_t runNormal;
 		size_t runFast;

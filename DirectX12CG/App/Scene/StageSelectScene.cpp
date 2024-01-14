@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include "TitleScene.h"
 #include "DemoScene.h"
+#include "MiniatureGardenScene.h"
+
 using namespace MCB;
 using namespace std;
 using namespace DirectX;
@@ -30,6 +32,13 @@ unique_ptr<MCB::IScene> MCB::StageSelectScene::GetNextScene()
         unique_ptr<DemoScene> scene = move(make_unique<DemoScene>(rootparamsPtr_, depth_, pipeline_));
         return move(scene);
     }
+
+	if ( stages[ selectStageNum ] == "Miniature" )
+	{
+		unique_ptr<MiniatureGardenScene> scene = move(make_unique<MiniatureGardenScene>(rootparamsPtr_,depth_,pipeline_));
+		return move(scene);
+	}
+
 
     if (stages[selectStageNum] == "Title")
     {
@@ -77,6 +86,7 @@ void MCB::StageSelectScene::Update()
         selectStageNum++;
         uint32_t time = selectMoveMaxTime_ + (selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime());
         selectMoveTime_.TimeSet(selectMoveTime_.GetEndTime() - selectMoveTime_.NowTime(),static_cast< int32_t >( time));
+
     }
     selectStageNum = static_cast<uint32_t>(clamp(static_cast<float>(selectStageNum), 0.f,(static_cast< float >(stages.size()) - 1.f)));
     selectMoveTime_.SafeUpdate();
@@ -106,33 +116,24 @@ void MCB::StageSelectScene::SpriteDraw()
     //titleSprite_.SpriteDraw(*titleTex_->texture.get(), dxWindow_->sWINDOW_CENTER_WIDTH_, dxWindow_->sWINDOW_CENTER_HEIGHT_);
     for (size_t i = 0; i < stages.size(); i++)
     {
-        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * static_cast<float>((i - oldSelectStageNum)));
-        float scale = 3;
-        float selectMoveStartScale = scale - (abs(static_cast<float>(i) - ( static_cast< float >(oldSelectStageNum)) / 2.f));
-        scale = scale - (abs(static_cast<float>(i) - ( static_cast< float >( selectStageNum)) / 2.f));
-        scale = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartScale),
-            static_cast<double>(scale), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
+        selectMoveStartPosy = dxWindow_->sWINDOW_CENTER_HEIGHT_ + ( static_cast<float>(( static_cast< int32_t >(i)
+			- static_cast< int32_t >( oldSelectStageNum))) * 200.f);
+		float temp = static_cast< float >( ( static_cast< int32_t >(i) - static_cast< int32_t >(selectStageNum)) * 200 );
+        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + temp;
 
-        float posY = dxWindow_->sWINDOW_CENTER_HEIGHT_ + (100.f * ((static_cast<float>(i) -
-			(static_cast< float >(selectStageNum)) * scale)));
-        posY = static_cast<float>(OutQuad(static_cast<double>(selectMoveStartPosy), 
+        posY = static_cast<float>(Lerp(static_cast<double>(selectMoveStartPosy), 
             static_cast<double>(posY), selectMoveTime_.GetEndTime(), selectMoveTime_.NowTime()));
-
-        //if (posY > dxWindow_->sWINDOW_CENTER_HEIGHT_ + 150)
-        //{
-        //    break;
-        //}
-
+		float size = 1;
         if (i == selectStageNum && selectMoveTime_.IsEnd())
         {
             float resultSize = sinf(ConvertRadius(static_cast<float>(selectScaleTime_.NowTime()) >= 180.f ? static_cast<float>(selectScaleTime_.NowTime()) * -1.f : static_cast<float>(selectScaleTime_.NowTime()))) * 0.25f + 1.2f;
             selectScaleTime_.SafeUpdate();
             selectScaleTime_.ReSet();
-            scale = scale + resultSize / 2;
+			size = resultSize;
         }
 
 		stageSprite_[i].SpriteDraw(*stageTex_[i]->texture.get(),dxWindow_->sWINDOW_CENTER_WIDTH_,
-		   posY,580 * (scale/2),64 * (scale/2));
+		   posY,580 * size,64 * size);
     }
 	aButtonSprite_.SpriteDraw(*abuttonTex_->texture.get(),170,
 		dxWindow_->sWINDOW_HEIGHT_ - 150,580,64);
@@ -173,8 +174,8 @@ MCB::StageSelectScene::~StageSelectScene()
 
 void MCB::StageSelectScene::Initialize()
 {
-    stages[0] = "Demo";
-    stages[1] = "Game";
+    stages[0] = "Game";
+    stages[1] = "Demo";
     stages[2] = "Title";
     camera_.Inilialize();
     camera_.moveStop = true;
@@ -211,8 +212,9 @@ void MCB::StageSelectScene::LoadTexture()
     titleTex_ = loader_->LoadTexture(L"Resources\\Title.png");
 	abuttonTex_ = loader_->LoadTexture(L"Resources\\Enter.png");
 	lStickTex_ = loader_->LoadTexture(L"Resources\\SelectLS.png");
-	stageTex_[0] = loader_->LoadTexture(L"Resources\\stageDemo.png");
-	stageTex_[1] = loader_->LoadTexture(L"Resources\\stageGame.png");
+	stageTex_[0] = loader_->LoadTexture(L"Resources\\stageGame.png");
+	//stageTex_[1] = loader_->LoadTexture(L"Resources\\stageDemo.png");
+	stageTex_[1] = loader_->LoadTexture(L"Resources\\stageDemo.png");
 	stageTex_[2] = loader_->LoadTexture(L"Resources\\stageTitle.png");
 }
 

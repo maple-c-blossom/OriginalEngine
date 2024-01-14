@@ -438,6 +438,12 @@
     <ClCompile Include="App\JumpPad.cpp">
       <Filter>ソース ファイル\Game</Filter>
     </ClCompile>
+    <ClCompile Include="App\Scene\MiniatureGardenScene.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Light\CircleShadow.cpp">
+      <Filter>ソース ファイル\Engin\Light</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -454,9 +460,6 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\OBJShader\OBJPixelShader.hlsl">
       <Filter>リソース ファイル\BasicShader\PixelShader</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\OBJShader\OBJVertexShader.hlsl">
-      <Filter>リソース ファイル\BasicShader\VertexShader</Filter>
     </FxCompile>
     <FxCompile Include="Resources\Shaders\SpriteShader\SpritePixelShader.hlsl">
       <Filter>リソース ファイル\SpriteShader</Filter>
@@ -511,6 +514,9 @@
     </FxCompile>
     <FxCompile Include="Resources\Shaders\OBJShaderTiling\OBJTilingVertexShader.hlsl">
       <Filter>リソース ファイル\OBJTilingShader</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\OBJShader\OBJVertexShader.hlsl">
+      <Filter>リソース ファイル\BasicShader\VertexShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -771,6 +777,12 @@
     </ClInclude>
     <ClInclude Include="App\JumpPad.h">
       <Filter>ヘッダー ファイル\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="App\Scene\MiniatureGardenScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Light\CircleShadow.h">
+      <Filter>ヘッダー ファイル\Engin\Light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
