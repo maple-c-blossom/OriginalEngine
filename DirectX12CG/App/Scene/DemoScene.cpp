@@ -129,7 +129,7 @@ void MCB::DemoScene::PostEffectDraw()
 	postEffect_->PreDraw();
 	//pipeline_->SetObjPipeLine(false, true);
 	Skydorm_.Draw();
-	pipeline_->SetObjPipeLine();
+	pipeline_->SetObjPipeLine(); 
 	ground_.Draw();
 	for ( auto& obj : effectorObjects_ )
 	{
