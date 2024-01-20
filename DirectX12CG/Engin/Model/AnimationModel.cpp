@@ -529,6 +529,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		itr->worldPosition = temp.GetTranslate(temp);
 	
 	}
+
 	AllNodeMatrixForModelToBone();
 	for ( auto& itr : nodes_ )
 	{
@@ -549,8 +550,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 					ATTRIBUTE_LANDSHAPE,&info,distRange);
 				if ( hit )
 				{
-					itr->ikData.iKEffectorPosition = info.inter_;
+					itr->ikData.iKEffectorPosition = info.inter_ + itr->ikData.middleJointNode->worldPosition;
 					itr->ikData.isIK = true;
+					AllNodeMatrixForModelToBone();
 				}
 				else
 				{
@@ -559,6 +561,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 		}
 	}
+	
   /*  if(transforms->getCount() == 0)
       transforms->addElements((int32_t)boneMapping().size());
     
