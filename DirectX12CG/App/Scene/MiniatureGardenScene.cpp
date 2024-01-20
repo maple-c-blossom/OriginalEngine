@@ -24,7 +24,7 @@ void MCB::MiniatureGardenScene::MatrixUpdate()
 	viewCamera_->Update();
 	Skydorm_.Update();
 	ground_.Update();
-	test2Animation_.AnimationUpdate();
+	play_.AnimationUpdate();
 	for ( auto& obj : effectorObjects_ )
 	{
 		obj.Update();
@@ -35,105 +35,14 @@ void MCB::MiniatureGardenScene::MatrixUpdate()
 	{
 		obj.Update();
 	}
-	test2Animation_.animationModel_->skeleton.JointObjectMatrixUpdate(viewCamera_,
-		&test2Animation_,boxModel_.get());
 }
 
 void MCB::MiniatureGardenScene::Update()
 {
 
-	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
-	else test2Animation_.color_.w_ = { 1.0f };
-	if ( objChenge_ )
-	{
-		test2Animation_.animationModel_ = animModel_.get();
-	}
-	else
-	{
-		test2Animation_.animationModel_ = anim2Model_.get();
-	}
-	lights_->UpDate();
-	if ( input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) )
-	{
-		//soundManager_->PlaySoundWave(selectSound_);
-		sceneEnd_ = true;
-	}
+	play_.UniqueUpdate();
+	
 
-	for ( uint8_t i = 0; i < 4; i++ )
-	{
-		if ( noMove[ i ] ) continue;
-		DirectX::XMFLOAT3* pos = &effectorObjects_[ i ].position_;
-
-		if ( PoleVecMove_[ i ] )
-		{
-			pos = &poleVec_[ i ];
-		}
-		else
-		{
-			pos = &effectorObjects_[ i ].position_;
-		}
-
-
-		if ( input_->IsKeyDown(DIK_W) )
-		{
-			pos->z += 0.05f;
-		}
-
-		if ( input_->IsKeyDown(DIK_S) )
-		{
-			pos->z -= 0.05f;
-		}
-
-		if ( input_->IsKeyDown(DIK_D) )
-		{
-			pos->x += 0.05f;
-		}
-
-		if ( input_->IsKeyDown(DIK_A) )
-		{
-			pos->x -= 0.05f;
-		}
-
-		if ( input_->IsKeyDown(DIK_SPACE) )
-		{
-			pos->y += 0.05f;
-		}
-
-		if ( input_->IsKeyDown(DIK_LCONTROL) )
-		{
-			pos->y -= 0.05f;
-		}
-	}
-
-	for ( uint8_t i = 0; i < 4; i++ )
-	{
-
-		if ( isIk_[ i ] )
-		{
-			if ( objChenge_ )
-			{
-				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-					{ effectorObjects_[ 0 ].position_.x,effectorObjects_[ 0 ].position_.y,effectorObjects_[ 0 ].position_.z },
-					{ poleVec_[ 0 ].x,poleVec_[ 0 ].y,poleVec_[ 0 ].z },"Bone3");
-			}
-			else
-			{
-				test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-					{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },
-					{ poleVec_[ i ].x,poleVec_[ i ].y,poleVec_[ i ].z },ikBoneName_[ i ].endJointName.c_str(),ikBoneName_[ i ].middleJointName.c_str(),ikBoneName_[ i ].rootJointName.c_str());
-			}
-		}
-		else if ( !objChenge_ )
-		{
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
-		}
-		else if ( objChenge_ && isIk_[ 0 ] )
-		{
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
-			test2Animation_.animationModel_->skeleton.TwoBoneIKOff("Bone3");
-		}
-	}
 	MatrixUpdate();
 }
 
@@ -149,16 +58,11 @@ void MCB::MiniatureGardenScene::PostEffectDraw()
 		obj.Draw();
 	}
 	pipeline_->SetObjPipeLine(false,false);
-	test2Animation_.animationModel_->skeleton.JointObjectDraw();
+	play_.animationModel_->skeleton.JointObjectDraw();
 	pipeline_->SetLinePipeLine();
-	test2Animation_.animationModel_->skeleton.JointLineDraw();
-	if ( !objInvisibleView_ )
-	{
-
-		pipeline_->SetFbxPipeLine();
-		test2Animation_.AnimationDraw();
-	}
-	pipeline_->SetObjPipeLine();
+	//play_.animationModel_->skeleton.JointLineDraw();
+	pipeline_->SetFbxPipeLine();
+	play_.AnimationDraw();
 	postEffect_->PostDraw();
 }
 
@@ -191,19 +95,7 @@ void MCB::MiniatureGardenScene::ImGuiUpdate()
 	imgui_.Begin();
 	
 
-	if ( ImGui::TreeNode("説明") )
-	{
-		ImGui::Text("このデモシーンはIKの挙動を確認するためのシーンです。");
-		ImGui::Text("球がEffector,四角錐がPoleVectorです");
-		ImGui::TreePop();
-	}
-
-	ImGui::Text(" ");
-	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
-	ImGui::Checkbox("半透明表示",&debugView_);
-	ImGui::Checkbox("オブジェクトを表示しない",&objInvisibleView_);
-	test2Animation_.animationModel_->DrawHeirarchy();
-
+	
 	imgui_.End();
 }
 
@@ -227,7 +119,7 @@ MCB::MiniatureGardenScene::~MiniatureGardenScene()
 void MCB::MiniatureGardenScene::Initialize()
 {
 	camera_.Inilialize();
-
+	camera_.SetCameraTarget(&play_);
 	viewCamera_ = &camera_;
 	LoadTexture();
 	LoadModel();
@@ -240,25 +132,6 @@ void MCB::MiniatureGardenScene::Initialize()
 	lights_->UpDate();
 	Object3d::SetLights(lights_);
 	postEffect_->Init();
-	for ( uint8_t i = 0; i < 4; i++ )
-	{
-		test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-			{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },
-			{ poleVec_[ i ].x,poleVec_[ i ].y,poleVec_[ i ].z },ikBoneName_[ i ].endJointName.c_str(),ikBoneName_[ i ].middleJointName.c_str(),ikBoneName_[ i ].rootJointName.c_str());
-		//test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[ i ].endJointName.c_str());
-
-	}
-	test2Animation_.currentAnimation_ = "Tpose..";
-	LightGroup::GetInstance()->SetDirLightIsActive(0,true);
-	LightGroup::GetInstance()->SetSLightIsActive(0,true);
-	LightGroup::GetInstance()->SetSLightIsActive(1,true);
-
-	LightGroup::GetInstance()->SetSLightForLightDir(0,{ 0,0,1 });
-	LightGroup::GetInstance()->SetSLightForLightDir(1,{ 0,0,-1 });
-	LightGroup::GetInstance()->SetSLightPos(0,
-		{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z - 1.f });
-	LightGroup::GetInstance()->SetSLightPos(1,
-		{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 1.f });
 
 }
 
@@ -299,45 +172,19 @@ void MCB::MiniatureGardenScene::Object3DInit()
 	ground_.Init();
 	ground_.model_ = groundModel_.get();
 	ground_.scale_ = { 1,1,1 };
-	ground_.position_ = { 0,2,0 };
+	ground_.position_ = { 0,0,0 };
 	ground_.rotation_ = { 0,0,0 };
 	ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
 	ground_.camera_ = viewCamera_;
-
-	play_.Init();
-	play_.model_ = sphereModel_.get();
-	play_.position_ = { 0,2,0 };
-	play_.camera_ = viewCamera_;
 
 
 	Skydorm_.Init();
 	Skydorm_.model_ = skydomeModel_.get();
 	Skydorm_.scale_ = { 4,4,4 };
 	Skydorm_.camera_ = viewCamera_;
-
-	for ( uint8_t i = 0; i < 4; i++ )
-	{
-		effectorObjects_[ i ].Init();
-		//testsphere.model = BoxModel;
-		effectorObjects_[ i ].model_ = sphereModel_.get();
-		effectorObjects_[ i ].scale_ = { 0.05f,0.05f,0.05f };
-		effectorObjects_[ i ].position_ = effectorPos[ i ];
-		effectorObjects_[ i ].camera_ = viewCamera_;
-
-
-		poleVecObjects_[ i ].Init();
-	//testsphere.model = BoxModel;
-		poleVecObjects_[ i ].model_ = sphereModel_.get();
-		poleVecObjects_[ i ].scale_ = { 0.05f,0.05f,0.05f };
-		poleVecObjects_[ i ].position_ = poleVec_[ i ];
-		poleVecObjects_[ i ].camera_ = viewCamera_;
-	}
-	test2Animation_.animationModel_ = anim2Model_.get();
-	test2Animation_.scale_ = { 0.01f,0.01f,0.01f };
-	test2Animation_.position_ = { 0,2,0 };
-	test2Animation_.camera_ = viewCamera_;
-	test2Animation_.currentAnimation_ = "Tpose";
-	test2Animation_.AnimationUpdate();
+	play_.animationModel_ = anim2Model_.get();
+	play_.Init();
+	play_.position_ = { 0,0.5f,0 };
 }
 
 MCB::MiniatureGardenScene::IKDataSet::IKDataSet()
