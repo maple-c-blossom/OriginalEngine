@@ -18,6 +18,7 @@ void MCB::StageSelectScene::SpriteInit()
 	stageSprite_[0].CreateSprite();
 	stageSprite_[1].CreateSprite();
 	stageSprite_[2].CreateSprite();
+	stageSprite_[3].CreateSprite();
 }
 
 void MCB::StageSelectScene::ParticleInit()
@@ -176,7 +177,8 @@ void MCB::StageSelectScene::Initialize()
 {
     stages[0] = "Game";
     stages[1] = "Demo";
-    stages[2] = "Title";
+    stages[2] = "Miniature";
+    stages[3] = "Title";
     camera_.Inilialize();
     camera_.moveStop = true;
     viewCamera_ = &camera_;
@@ -213,9 +215,9 @@ void MCB::StageSelectScene::LoadTexture()
 	abuttonTex_ = loader_->LoadTexture(L"Resources\\Enter.png");
 	lStickTex_ = loader_->LoadTexture(L"Resources\\SelectLS.png");
 	stageTex_[0] = loader_->LoadTexture(L"Resources\\stageGame.png");
-	//stageTex_[1] = loader_->LoadTexture(L"Resources\\stageDemo.png");
 	stageTex_[1] = loader_->LoadTexture(L"Resources\\stageDemo.png");
-	stageTex_[2] = loader_->LoadTexture(L"Resources\\stageTitle.png");
+	stageTex_[2] = loader_->LoadTexture(L"Resources\\Backyard.png");
+	stageTex_[3] = loader_->LoadTexture(L"Resources\\stageTitle.png");
 }
 
 void MCB::StageSelectScene::LoadSound()

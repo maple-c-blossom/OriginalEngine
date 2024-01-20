@@ -6,6 +6,7 @@ WarningIgnoreBegin
 #include <cmath>
 WarningIgnoreEnd
 #include "DemoCamera.h"
+#include "Camera.h"
 #include "Player.h"
 namespace MCB
 {
@@ -15,7 +16,7 @@ namespace MCB
 	private:
 #pragma region 変換行列
 		//変換行列
-		DemoCamera camera_;
+		Camera camera_;
 
 #pragma endregion 変換行列
 
@@ -63,7 +64,6 @@ namespace MCB
 		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,-0.48f),
 			DirectX::XMFLOAT3(-0.6f,3.45f,-0.48f),
 			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f) };
-		Object3d test2Animation_;
 		Player play_;
 		std::array<DirectX::XMFLOAT3,4> poleVec_ = { DirectX::XMFLOAT3(0.4f,3.44f,-0.05f),
 			DirectX::XMFLOAT3(-0.4f,3.44f,-0.05f),
