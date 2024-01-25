@@ -1,5 +1,5 @@
 #pragma once
-
+//アニメーションするモデルの制御や管理を行う
 #include "IgnoreWarning.h"
 WarningIgnoreBegin
 
@@ -162,9 +162,9 @@ PragmaWarningNum(4324)
 		Byte4 pad10;
         std::unique_ptr<Object3d> object;//ジョイント表示用のオブジェクト
 
-        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});
-        void JointObjectDraw();
-        void JointLineDraw();
+        void JointObjectMatrixUpdate(ICamera* camera,Object3d* Obj,Model* model,const Float3& scale = {1.0f,1.0f,1.0f});//bone表示に関するUpdate
+        void JointObjectDraw();//Effector等を含めたBone関連物のオブジェクト表示
+        void JointLineDraw();//Bone関連物のライン表示
 		Node(const Node&) = delete;
 		Node();
 		Node& operator=(const Node&) = delete;
@@ -242,14 +242,14 @@ PragmaPop
 		void SetTwoBoneIK(const Object3d& obj,const Vector3D& targetPos,const Vector3D& constraintPosition = { 0,1,0 },
 			const std::string& boneName = "NULL",
 			const std::string& middleJointName = "NULL",const std::string& rootJointName = "NULL",
-			bool useConstraintFromEffector = false);
+			bool useConstraintFromEffector = false);//2BoneIKを設定し有効化
 
-		void SetCollTwoIK(const std::string boneName,bool isCollIK = false);
+		void SetCollTwoIK(const std::string boneName,bool isCollIK = false);//当たり判定に基づいたIKを有効化
 
 		void SetConstraint(const Object3d& obj,const std::string boneName,
-			const Vector3D& constraintPosition,bool useConstraintFromEffector = false);
+			const Vector3D& constraintPosition,bool useConstraintFromEffector = false);//PoleVectorを設定
 
-        void TwoBoneIKOff(const std::string& boneName);
+        void TwoBoneIKOff(const std::string& boneName);//2BoneIKを無効化
 
 
         //関節の曲がる方向を制限(試作)
@@ -257,14 +257,14 @@ PragmaPop
 
         void ApplyRotation(Node& joint, const DirectX::XMFLOAT3& axis, float angle);
 
-        void DrawHeirarchy(Node* node);
-        void DrawIkNode();
+        void DrawHeirarchy(Node* node);//Nodeの全体情報をImguiで表示
+        void DrawIkNode();//IKに関するNodeのデータ表示imgui
 
-        void UpdateNodeMatrix(Node* node);
+        void UpdateNodeMatrix(Node* node);//Bone関連のマトリックス更新
 
-        void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model, const Float3& scale = {1.0f,1.0f,1.0f});
-        void JointObjectDraw();
-        void JointLineDraw();
+        void JointObjectMatrixUpdate(ICamera* camera, Object3d* worldObjMatrix, Model* model, const Float3& scale = {1.0f,1.0f,1.0f});//Node側の関数をスケルトン単位で呼び出す
+        void JointObjectDraw();//上記関数と同じ
+        void JointLineDraw();//上記関数と同じ
         Float4 lineDefaultColor = { 0.f,0.f,0.f,1.f };
     };
 
@@ -292,7 +292,7 @@ PragmaPop
         Skeleton skeleton;//スケルトン情報
         AnimationManager animationManager;//アニメーション情報
         //CurrentAnimationの名前からAnimationを検索してskeletonにAnimationするように依頼する。(AnimationOrderって名前にした方が良い？)
-		void AnimationUpdate(float& timeInSeconds,const std::string& currentAnimation = "Null",Object3d* obj = nullptr,bool loop = true,bool animtionPositionRock = false);
+		void AnimationUpdate(float& timeInSeconds,const std::string& currentAnimation = "Null",Object3d* obj = nullptr,bool loop = true,bool animtionPositionRock = false);//モデルのアニメーション再生等のNodeマトリックス更新
         ~AnimationModel();
 
 		AnimationModel();
@@ -308,7 +308,7 @@ PragmaPop
         std::vector<TextureCell*> loadMaterialTextures(aiMaterial* mat, const aiTextureType& type, const std::string& typeName, const aiScene* scene);//Material内のTexture情報の解析,抽出
         void TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos);
         void Draw();//Modelの描画
-        void DrawHeirarchy();
+        void DrawHeirarchy();//スケルトン情報の表示
 		AnimationModel(const AnimationModel&) = delete;
 		AnimationModel& operator=(const AnimationModel&) = delete;
     };

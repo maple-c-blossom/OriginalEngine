@@ -846,8 +846,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   rootJointLocalPositionFromRoot,
 		   middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot);
 	  endJoint.ikDebugData.nowTriangleNormal = nowNormal;
-
-	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
+	  	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
 	   float middleJointBoneLength = Vector3D(middleJoint.defaultLocalTranslation).V3Len();
 	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
 	   //float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
@@ -858,7 +857,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength,endJointBoneLength, localTargetVectorFromRootJoint ));//余弦定理で角度算出
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
-	   Quaternion d2RotaionQ(nt,theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
+	   Quaternion d2RotaionQ(nt,-theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
 	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q1,q2);
