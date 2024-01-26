@@ -542,7 +542,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				itr->ikData.middleJointNode->worldBoneRay.StartPosition_ = itr->ikData.middleJointNode->worldPosition;
 				itr->ikData.middleJointNode->worldBoneRay.rayVec_ = Vector3D(itr->ikData.middleJointNode->worldPosition,
 																			 itr->worldPosition);
-				itr->ikData.middleJointNode->worldBoneRay.range_ = itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Len();
+				itr->ikData.middleJointNode->worldBoneRay.range_ = itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Len() + 0.25f;
 				itr->ikData.middleJointNode->worldBoneRay.rayVec_.V3Norm();
 				RayCastHit info;
 				float distRange = itr->ikData.middleJointNode->worldBoneRay.range_;
@@ -848,14 +848,14 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	  endJoint.ikDebugData.nowTriangleNormal = nowNormal;
 
 	   Vector3D middleBoneVector = middleJointLocalPositionFromRoot;
-	   float middleJointBoneLength = Vector3D(middleJoint.defaultLocalTranslation).V3Len();
-	   float endJointBoneLength = Vector3D(endJoint.defaultLocalTranslation).V3Len();
+	   float middleJointBoneLength = Vector3D(rootJointLocalPositionFromRoot,middleJointLocalPositionFromRoot).V3Len();
+	   float endJointBoneLength = Vector3D(middleJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 	   //float rootToEndLength = middleJointLocalPositionFromRoot.V3Len();
 	   float rootToEndLength = Vector3D(rootJointLocalPositionFromRoot,endJointLocalPositionFromRoot).V3Len();
 	   float localTargetVectorFromRootJoint = EffectorLocalFromRootPos.V3Len();
 
-	   float angleFromdefaultTriangle = acos(cosineFrom3LineLength(middleJointBoneLength, rootToEndLength, endJointBoneLength));//余弦定理で角度算出
-	   float angleFromTargetTriangle = acos(cosineFrom3LineLength(middleJointBoneLength,endJointBoneLength, localTargetVectorFromRootJoint ));//余弦定理で角度算出
+	   float angleFromdefaultTriangle = -acos(cosineFrom3LineLength(middleJointBoneLength,endJointBoneLength,rootToEndLength));//余弦定理で角度算出
+	   float angleFromTargetTriangle = -acos(cosineFrom3LineLength(middleJointBoneLength,endJointBoneLength, localTargetVectorFromRootJoint ));//余弦定理で角度算出
 
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
 	   Quaternion d2RotaionQ(nt,theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
@@ -863,7 +863,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q1,q2);
 
-	   rootJoint->rotation = q1.ConvertXMVector();
+	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);
 	   UpdateNodeMatrix(&middleJoint);//middleJointを回転させる
 	   UpdateNodeMatrix(&endJoint);

@@ -242,7 +242,9 @@ void MCB::DemoScene::ImGuiUpdate()
                 bone = ikBoneName_[i].endJointName;
 				ImGui::Text("エフェクターの位置");
                 bone = bone + ":effector";
-                ImGui::Text("%s:%f,%f,%f", bone.c_str(), effectorObjects_[i].position_.x, effectorObjects_[i].position_.y, effectorObjects_[i].position_.z);
+				Node* node = test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName);
+                ImGui::Text("%s:%f,%f,%f", bone.c_str(),node->ikData.iKEffectorPosition.vec_.x_,
+					node->ikData.iKEffectorPosition.vec_.y_,node->ikData.iKEffectorPosition.vec_.z_);
                 ImGui::TreePop();
             }
         }

@@ -39,6 +39,11 @@ void MCB::MiniatureGardenScene::MatrixUpdate()
 
 void MCB::MiniatureGardenScene::Update()
 {
+	if ( input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) )
+	{
+		//soundManager_->PlaySoundWave(selectSound_);
+		sceneEnd_ = true;
+	}
 
 	play_.UniqueUpdate();
 	

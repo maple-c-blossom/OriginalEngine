@@ -154,7 +154,7 @@ PragmaWarningNum(4324)
         IKDebugData ikDebugData;
         bool lineColorEqualObject = false;
 		Byte7 pad9;
-        Float4 lineDefaultColor = {0.f,0.f,0.f,1.f};
+        Float4 lineDefaultColor = {1.f,1.f,1.f,1.f};
 		int32_t pad7;
         bool chengeObjectColor;
 
