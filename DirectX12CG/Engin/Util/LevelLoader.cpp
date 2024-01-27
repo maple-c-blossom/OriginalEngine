@@ -255,6 +255,8 @@ MCB::LevelLoader::LevelData::~LevelData()
 		if(object->obj->model_)object->obj->model_->isDelete_ = true;
 		if (object->obj->animationModel_)object->obj->animationModel_->isDelete_ = true;
 	}
+
+	ModelManager::GetInstance()->erase();
 }
 
 std::unique_ptr<LevelLoader::LevelData> MCB::LevelLoader::LevelData::ReLoad()

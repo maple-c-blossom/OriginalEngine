@@ -68,7 +68,7 @@ void MCB::StageSelectScene::Update()
 
     if(selectMoveTime_.IsEnd())oldSelectStageNum = selectStageNum;
     lights_->UpDate();
-    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    if (input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_B))
     {
         //soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;

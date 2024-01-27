@@ -50,7 +50,7 @@ namespace MCB
 		size_t test2Sound_;
 
 		int32_t volume_ = 255;
-
+		std::unique_ptr<LevelLoader::LevelData> level_;
 #pragma endregion サウンド
 
 #pragma endregion 各種リソース

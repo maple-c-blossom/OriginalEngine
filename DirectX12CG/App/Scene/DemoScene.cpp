@@ -45,7 +45,7 @@ void MCB::DemoScene::Update()
 	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
 	else test2Animation_.color_.w_ = { 1.0f };
     lights_->UpDate();
-    if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A))
+    if (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_B))
     {
         //soundManager_->PlaySoundWave(selectSound_);
         sceneEnd_ = true;

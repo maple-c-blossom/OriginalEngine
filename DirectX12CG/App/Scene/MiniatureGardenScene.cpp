@@ -21,10 +21,10 @@ unique_ptr<MCB::IScene> MCB::MiniatureGardenScene::GetNextScene()
 void MCB::MiniatureGardenScene::MatrixUpdate()
 {
 	//test2Animation_.UpdateMatrix();
+	camera_.SetCameraTarget(level_->GetObjectPtr("player"));
 	viewCamera_->Update();
-	Skydorm_.Update();
-	ground_.Update();
-	play_.AnimationUpdate();
+	level_->UpdateMatrix();
+	//play_.AnimationUpdate();
 	for ( auto& obj : effectorObjects_ )
 	{
 		obj.Update();
@@ -39,35 +39,24 @@ void MCB::MiniatureGardenScene::MatrixUpdate()
 
 void MCB::MiniatureGardenScene::Update()
 {
-	if ( input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) )
+	if ( input_->IsKeyTrigger(DIK_RETURN) || input_->gamePad_->IsButtonTrigger(GAMEPAD_B) )
 	{
 		//soundManager_->PlaySoundWave(selectSound_);
 		sceneEnd_ = true;
 	}
 
-	play_.UniqueUpdate();
+	//play_.UniqueUpdate();
 	
-
+	level_->Update();
 	MatrixUpdate();
 }
 
 void MCB::MiniatureGardenScene::PostEffectDraw()
 {
 	postEffect_->PreDraw();
-	//pipeline_->SetObjPipeLine(false, true);
-	Skydorm_.Draw();
-	pipeline_->SetObjPipeLine();
-	ground_.Draw();
-	for ( auto& obj : effectorObjects_ )
-	{
-		obj.Draw();
-	}
-	pipeline_->SetObjPipeLine(false,false);
-	play_.animationModel_->skeleton.JointObjectDraw();
-	pipeline_->SetLinePipeLine();
-	//play_.animationModel_->skeleton.JointLineDraw();
+	level_->Draw(pipeline_);
 	pipeline_->SetFbxPipeLine();
-	play_.AnimationDraw();
+	level_->AnimationDraw();
 	postEffect_->PostDraw();
 }
 
@@ -143,20 +132,20 @@ void MCB::MiniatureGardenScene::Initialize()
 void MCB::MiniatureGardenScene::LoadModel()
 {
 
-	groundModel_ = std::make_unique<Model>("ground");
+	//groundModel_ = std::make_unique<Model>("ground");
 
-	skydomeModel_ = std::make_unique<Model>("skydome");
+	//skydomeModel_ = std::make_unique<Model>("skydome");
 
-	sphereModel_ = std::make_unique<Model>("sphere");
+	//sphereModel_ = std::make_unique<Model>("sphere");
 
-	boxModel_ = std::make_unique<Model>("Bone");
+	//boxModel_ = std::make_unique<Model>("Bone");
 
 
-	animModel_ = std::make_unique<AnimationModel>();
-	animModel_->Load("IKTest");
+	//animModel_ = std::make_unique<AnimationModel>();
+	//animModel_->Load("IKTest");
 
-	anim2Model_ = std::make_unique<AnimationModel>();
-	anim2Model_->Load("player");
+	//anim2Model_ = std::make_unique<AnimationModel>();
+	//anim2Model_->Load("player");
 }
 
 void MCB::MiniatureGardenScene::LoadTexture()
@@ -173,23 +162,11 @@ void MCB::MiniatureGardenScene::LoadSound()
 
 void MCB::MiniatureGardenScene::Object3DInit()
 {
+	level_ = move(LevelLoader::Load("Minitu",viewCamera_));
 
-	ground_.Init();
-	ground_.model_ = groundModel_.get();
-	ground_.scale_ = { 1,1,1 };
-	ground_.position_ = { 0,0,0 };
-	ground_.rotation_ = { 0,0,0 };
-	ground_.SetCollider(std::move(std::make_unique<MeshCollider>(groundModel_.get())));
-	ground_.camera_ = viewCamera_;
-
-
-	Skydorm_.Init();
-	Skydorm_.model_ = skydomeModel_.get();
-	Skydorm_.scale_ = { 4,4,4 };
-	Skydorm_.camera_ = viewCamera_;
-	play_.animationModel_ = anim2Model_.get();
-	play_.Init();
-	play_.position_ = { 0,0.5f,0 };
+	//play_.animationModel_ = anim2Model_.get();
+	//play_.Init();
+	//play_.position_ = { 0,0.5f,0 };
 }
 
 MCB::MiniatureGardenScene::IKDataSet::IKDataSet()

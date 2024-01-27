@@ -220,7 +220,7 @@ void MCB::Scene::Update()
     MatrixUpdate();
     
 
-    if (goal_->GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A)))
+    if (goal_->GetIsGoal() && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_B)))
     {
         sceneEnd_ = true;
     }
