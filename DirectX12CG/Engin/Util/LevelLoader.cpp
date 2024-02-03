@@ -102,6 +102,23 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 			objData->modelType = objJson["modelType"];
 		}
 
+		if ( objJson.contains("variable") )
+		{
+			json& var = objJson[ "variable" ];
+			auto subjectIdIter = var.find("Color");
+			if ( subjectIdIter != var.end() )
+			{
+				objData->obj->color_.x_ = static_cast< float >( var[ "Color" ][ 0 ] );
+				objData->obj->color_.y_ = static_cast< float >( var[ "Color" ][ 1 ] );
+				objData->obj->color_.z_ = static_cast< float >( var[ "Color" ][ 2 ] );
+			}
+			else
+			{
+				objData->obj->color_ = { 1.f,1.f,1.f,1.f };
+			}
+		}
+
+
 		if (objJson.contains("file_name"))
 		{
 			objData->fileName = objJson["file_name"];

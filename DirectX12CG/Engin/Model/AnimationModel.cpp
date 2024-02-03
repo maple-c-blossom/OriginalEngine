@@ -551,6 +551,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				if ( hit )
 				{
 					itr->ikData.iKEffectorPosition = info.inter_ + itr->ikData.middleJointNode->worldPosition;
+					itr->ikData.iKEffectorPosition = MCBMatrix::GetTranslate((MCBMatrix::MCBMatrixTransrate
+					(itr->ikData.iKEffectorPosition) * MCBMatrix::MCBMatrixConvertXMMatrix(obj->GetMatWorld())));
+
 					itr->ikData.isIK = true;
 					AllNodeMatrixForModelToBone();
 				}
@@ -858,12 +861,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   float theta = angleFromTargetTriangle - angleFromdefaultTriangle;
 	   Quaternion d2RotaionQ(nt,-theta);//平面の回転で考えるならnt(平面の法線)を回転軸として利用してもいいと予想
 	   Vector3D targetMiddleVector = d2RotaionQ.SetRotationVector(d2RotaionQ, Vector3D(EffectorLocalFromRootPos));//rootからmiddleにいてほしい場所までのベクトル算出
-	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);//問題はq2にある。
+	   Quaternion q2 = q2.DirToDir(middleJoint.defaultBoneVec,targetMiddleVector);
 
 
 
 
-	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2,q1);//合成説
+	   Quaternion rootJointRotation = rootJointRotation.GetDirectProduct(q2,q1);
 
 	   rootJoint->rotation = rootJointRotation.ConvertXMVector();
 	   UpdateNodeMatrix(rootJoint);

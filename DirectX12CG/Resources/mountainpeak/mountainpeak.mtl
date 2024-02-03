@@ -1,0 +1,13 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl mountainpeak
+Ns 399.999995
+Ka 1.000000 1.000000 1.000000
+Kd 0.761411 0.761335 0.761457
+Ks 0.270000 0.270000 0.270000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tori.png

@@ -566,6 +566,7 @@ void MCB::Player::Move()
 		{
 			position_.x += nowFrontVec_.vec_.x_ * speedFront_;
 			position_.z += nowFrontVec_.vec_.z_ * speedFront_;
+			rightVec_ = rightVec_.GetRightVec(nowFrontVec_);
 			position_.x += rightVec_.vec_.x_ * speedRight_;
 			position_.z += rightVec_.vec_.z_ * speedRight_;
 

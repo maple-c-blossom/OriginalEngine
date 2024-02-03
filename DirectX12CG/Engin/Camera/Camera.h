@@ -3,7 +3,8 @@
 #include "pading.h"
 #include "ICamera.h"
 #include "Object3d.h"
-
+#include "Vecter2D.h"
+#include "Input.h"
 namespace MCB
 {
 	class Camera :public ICamera
@@ -29,12 +30,19 @@ namespace MCB
 		Camera(const Camera&) = delete;
 		Camera();
 		Camera& MCB::Camera::operator=(const Camera&) = delete;
+
+		Vector2D rotAngle_;
+		Vector2D cursorSpd_;
+		Vector3D eye_;
+		Vector3D target_;
+
+		float disEyeTarget_ = 3.5f;
 	private:
 
 		std::unique_ptr<Object3d> object3d_ = std::make_unique<Object3d>();
 
 		//Object3d* object3d = nullptr;
-		Object3d* target_;
+		Object3d* targetObj_;
 
  
 		DirectX::XMFLOAT3 eyeStartPos_;

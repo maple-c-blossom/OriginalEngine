@@ -68,7 +68,7 @@ PSOutput toonShader(GSOutput input)
             float3 color = saturate((lerp(diffuse, speculer,
             smoothstep(0.5f, 0.55f, dotref))) * sLights[k].lightColor);
             shadeColor.rgb += saturate(lerp(ambientcolor.rgb, color.rgb, smoothstep(0.5f, 0.55f, dotLightNormal))).rgb;
-            shadeColor.rgb += color.rgb;
+            shadeColor.rgb *= color.rgb;
 
         }
     }
