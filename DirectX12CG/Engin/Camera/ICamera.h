@@ -13,6 +13,7 @@ namespace MCB
 		View view_;
 		Projection projection_;
 	public:
+		Vector3D targetObjctVec_;
 		virtual ~ICamera() {};
 		virtual void Inilialize() = 0;
 		virtual void Update() = 0;

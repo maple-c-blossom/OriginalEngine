@@ -57,7 +57,7 @@ void MCB::Scene::Initialize()
 	maincamera_.SetViewEye(Float3(0.0f,player_->position_.y + 5.5f, player_->position_.z + -10.5f));
 
 	Vector3D frontVec = player_->position_ - maincamera_.GetView()->eye_;
-	//maincamera_.disEyeTarget_ = frontVec.V3Len();
+	maincamera_.disEyeTarget_ = frontVec.V3Len();
 }
 
 void MCB::Scene::SetStage(std::string stageName)

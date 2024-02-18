@@ -39,7 +39,7 @@ void MCB::Player::Init()
 void MCB::Player::UniqueUpdate()
 {
 	//slights_->SetSLightPos(0,{ position_.x, position_.y + 1.f, position_.z });
-	
+	prevIsClimb = isClimb;
 
 	//slights_->SetSLightIsActive(0,true);
 	if ( !isDebug_ )
@@ -428,7 +428,7 @@ void MCB::Player::Move()
 		isGrab = false;
 		//  よじ登りを実行
 		isClimb = true;
-
+		isClimbUp = false;
 		moveBlockTotal = { 0,0,0 };
 
 		animeTime_ = 0.f;
@@ -482,83 +482,145 @@ void MCB::Player::Move()
 		}
 		//y0.7,z54.8;
 
-
-
-
-		if ( !animationPositionRock )
+		if ( !isClimbUp && prevIsClimb && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) ) )
 		{
-			position_.x = climbOldPos.vec_.x_;
-			position_.y = climbOldPos.vec_.y_;
-			position_.z = climbOldPos.vec_.z_;
-
+			isClimbUp = true;
 		}
-		wallUPTimer.Update(1);
-		
-		
 
-		if ( animationPositionRock )
+		if ( !isClimbUp ) animationSpeed_ = 0;
+		else animationSpeed_ = 0.015f;
+		if ( isClimbUp )
 		{
 
-			animationSpeed_ = 1.377f / static_cast<float>(uptime);
-			float time = animeTime_ + animationSpeed_;
 
-			// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
-			if ( climbFrontMove )
+			if ( !animationPositionRock )
 			{
-				if ( time <= 0.45f )
-				{
+				position_.x = climbOldPos.vec_.x_;
+				position_.y = climbOldPos.vec_.y_;
+				position_.z = climbOldPos.vec_.z_;
 
-					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbOldPos.vec_.z_ - 0.45f,
-						0.45f,time) );
-				}
-				else if ( time >= 0.45f && time <= 1.145f )
-				{
-					position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_ - 0.45f,climbPos.vec_.z_ + 0.7f,
-						1.145f - 0.45f,time - 0.45f) );
-				}
 			}
+			wallUPTimer.Update(1);
 
 
-			if ( climbUpMove )
+
+			if ( animationPositionRock )
 			{
-				if ( time <= 0.299f )
+
+				animationSpeed_ = 1.377f / static_cast< float >( uptime );
+				float time = animeTime_ + animationSpeed_;
+
+				// 前後は後半にかけて早く移動する//前後も始まりずれてる。速度も少しずれている
+				if ( climbFrontMove )
 				{
-					position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_ - 0.486f,
-						0.299f,time) );
+					if ( time <= 0.45f )
+					{
+
+						position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_,climbOldPos.vec_.z_ - 0.45f,
+							0.45f,time) );
+					}
+					else if ( time >= 0.45f && time <= 1.145f )
+					{
+						float prevz = position_.z;
+						position_.z = static_cast< float >( Lerp(climbOldPos.vec_.z_ - 0.45f,climbPos.vec_.z_ + 0.7f,
+							1.145f - 0.45f,time - 0.45f) );
+
+						climbMove.vec_.z_ = position_.z - prevz;
+						animationModel_->skeleton.SetTwoBoneIK(*this,
+							{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ + climbMove.vec_.z_ },poleVecLeft,
+							"mixamorig:LeftHand","NULL","NULL",true);
+
+						animationModel_->skeleton.SetTwoBoneIK(*this,
+							{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ + climbMove.vec_.z_ },
+							poleVecRight, "mixamorig:RightHand","NULL","NULL",true);
+
+						if ( time >= 0.5f )
+						{
+							animationModel_->skeleton.SetTwoBoneIK(*this,
+								{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ },poleVecLeft,
+								"mixamorig:LeftFoot","NULL","NULL",true);
+							animationModel_->skeleton.SetTwoBoneIK(*this,
+								{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },poleVecRight,
+							"mixamorig:RightFoot","NULL","NULL",true);
+						}
+
+					}
 				}
 
-				else if ( time >= 0.299f && time <= 0.4f )
-				{
 
-					position_.y = static_cast< float >( Lerp(climbPos.vec_.y_ - 0.486f,climbPos.vec_.y_,
-						0.4f - 0.299f,time - 0.299f) );
-				}
+				if ( climbUpMove )
+				{
+					if ( time <= 0.299f )
+					{
+						position_.y = static_cast< float >( Lerp(climbOldPos.vec_.y_,climbPos.vec_.y_ - 0.486f,
+							0.299f,time) );
+					}
+
+					else if ( time >= 0.299f && time <= 0.4f )
+					{
+
+						position_.y = static_cast< float >( Lerp(climbPos.vec_.y_ - 0.486f,climbPos.vec_.y_,
+							0.4f - 0.299f,time - 0.299f) );
+					}
 					if ( time + animationSpeed_ > 1.145f )
 					{
-						animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
-						animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
+						//animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
+						//animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
 					}
-				
+
+				}
+
 			}
-		
 		}
-
-		float time = animeTime_ + animationSpeed_;
-		//  座標を更新
-		fallV_.vec_.y_ = 0.0f;
-		if ( wallUPTimer.IsEnd() || time >= 1.377f )
+		else
 		{
-			isClimb = false;
-			animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
-			animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
-			//position_.x = climbPos.vec_.x_;
-			//position_.y = climbPos.vec_.y_;
-			//position_.z = climbPos.vec_.z_ + 0.7f;//最後に目的の場所に最終調整
-			fallV_.vec_.y_ = 0.0f;
-			isJump = false;
-		}
-	}
 
+			if ( abs(position_.y - effectorPos.vec_.y_) <= 0.25f )
+			{
+
+				if ( input_->IsKeyDown(DIK_D) )
+				{
+					speedRight_ = maxspeed_ / 2;
+				}
+
+				if ( input_->IsKeyDown(DIK_A) )
+				{
+					speedRight_ = -maxspeed_ / 2;
+				}
+
+				if ( input_->gamePad_->LStick_.x_ )
+				{
+					float accelerator = maxspeed_;
+					accelerator *= input_->gamePad_->LStick_.x_;
+					if ( accelerator > 0 ) speedRight_ = accelerator;
+					else if ( accelerator < 0 )speedRight_ = accelerator;
+				}
+				position_.x += nowFrontVec_.vec_.x_ * speedFront_;
+				//position_.z += nowFrontVec_.vec_.z_ * speedFront_;
+				rightVec_ = rightVec_.GetRightVec(nowFrontVec_);
+				position_.x += rightVec_.vec_.x_ * speedRight_;
+				//position_.z += rightVec_.vec_.z_ * speedRight_;
+			}
+		}
+
+			float time = animeTime_ + animationSpeed_;
+			//  座標を更新
+			fallV_.vec_.y_ = 0.0f;
+			if ( wallUPTimer.IsEnd() || time >= 1.377f )
+			{
+				isClimb = false;
+				animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
+				animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
+				animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftFoot");
+				animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightFoot");
+				//position_.x = climbPos.vec_.x_;
+				//position_.y = climbPos.vec_.y_;
+				//position_.z = climbPos.vec_.z_ + 0.7f;//最後に目的の場所に最終調整
+				fallV_.vec_.y_ = 0.0f;
+				isJump = false;
+			}
+	}
+	
 	
 	if ( !isClimb )
 	{
@@ -617,6 +679,9 @@ void MCB::Player::Move()
 	else
 	{
 		rotationQ_ = rotationQ_.DirToDir(Vector3D(0,0,-1),directionVec);
+		camera_->targetObjctVec_.vec_.y_ = 0;
+		Quaternion q = q.DirToDir(Vector3D(0,0,1),camera_->targetObjctVec_.GetV3Norm());
+		rotationQ_ = q.GetDirectProduct(rotationQ_,q);
 	}
 	//rotationQ_ = rotationQ_.GetReciprocal(rotationQ_);
 	if ( !isClimb )

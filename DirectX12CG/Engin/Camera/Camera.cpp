@@ -14,6 +14,7 @@ void Camera::Inilialize()
 	view_.CreateMatrixView(XMFLOAT3(0.0f, 10.0f, -100.0f), XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f));
 	projection_.CreateMatrixProjection(XMConvertToRadians(45.0f), static_cast<float>(DxWindow::GetInstance()->sWINDOW_WIDTH_ / DxWindow::GetInstance()->sWINDOW_HEIGHT_), 0.1f, 4000.0f);
 	disEyeTarget_ = 3.5f;
+	rotAngle_ = { -0.0203672126f ,0.285243392f };
 }
 
 void Camera::WorldPositionInit()
@@ -133,7 +134,7 @@ void Camera::Update()
 		}
 	}
 
-
+	targetObjctVec_ = Vector3D(eye_,target_);
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();
 }

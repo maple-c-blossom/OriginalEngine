@@ -36,6 +36,8 @@ namespace MCB
 		Vector3D eye_;
 		Vector3D target_;
 
+
+
 		float disEyeTarget_ = 3.5f;
 	private:
 

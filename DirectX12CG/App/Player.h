@@ -57,15 +57,18 @@ namespace MCB
 		Vector3D climbPos;
 		Vector3D effectorPos;
 		bool isClimb;
+		bool prevIsClimb;
+		bool isClimbUp;
 		bool isIkClimb = true;
 		uint8_t animationNum = 0;
 		bool isJump;
-		
+		int climbMoveCount = 0;
 		Vector3D directionVec;
 		Vector3D poleVecLeft;
 		Vector3D poleVecRight;
 		Vector3D poleVecRF;
 		Vector3D poleVecLF;
+		Vector3D climbMove;
 		Timer jumpokTimer;
 		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
