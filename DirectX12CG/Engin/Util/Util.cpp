@@ -23,6 +23,15 @@ double MCB::InQuad(double startPos, double endPos, double maxTime, double time)
 	return change * time * time + startPos;
 }
 
+float MCB::InQuad(float startPos,float endPos,int32_t maxTime,int32_t time)
+{
+	float _time = static_cast<float>(time) / static_cast<float>(maxTime);
+	float change = endPos - startPos;
+	return change * _time * _time + startPos;
+}
+
+
+
 double MCB::OutQuad(double startPos, double endPos, double maxTime, double time)
 {
 	time /= maxTime;

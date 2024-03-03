@@ -10,7 +10,7 @@ WarningIgnoreBegin
 WarningIgnoreEnd
 namespace MCB
 {
-	class Object3D;
+	class Object3d;
 	class ImguiManager
 	{
 		//Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvHeap = nullptr;

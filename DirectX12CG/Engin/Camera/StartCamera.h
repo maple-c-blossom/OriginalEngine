@@ -32,7 +32,7 @@ namespace MCB
 		Object3d* targetend_;
 		Timer moveTimer;
 	private:
-
+		bool isSkip = false;
 		std::unique_ptr<Object3d> object3d_ = std::make_unique<Object3d>();
 
 		//Object3d* object3d = nullptr;

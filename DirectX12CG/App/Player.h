@@ -10,7 +10,13 @@ namespace MCB
 	class MoveBlock;
 	class Player :public Object3d
 	{
-
+		enum Catch
+		{
+			LH = 0,
+			RH = 1,
+			LF = 2,
+			RF = 3
+		};
 	private:
 		bool isGraund_ = false;
 		bool animePlay = false;
@@ -50,6 +56,7 @@ namespace MCB
 		Ray upperCheckRay;
 		Timer wallUPTimer;
 		Timer wallTimer;
+		Timer moveTimer;
 		float wallCheckOffSet;
 		float upperCheckOffSet;
 		Vector3D backVec;
@@ -64,21 +71,28 @@ namespace MCB
 		bool isJump;
 		int climbMoveCount = 0;
 		Vector3D directionVec;
-		Vector3D poleVecLeft;
-		Vector3D poleVecRight;
-		Vector3D poleVecRF;
-		Vector3D poleVecLF;
+
+		std::array<Vector3D,4> poleVec;
 		Vector3D climbMove;
+		//Vector3D moveEffectorLeftHand;
+		//Vector3D moveEffectorRightHand;
+		Vector3D oldMovePos;
 		Timer jumpokTimer;
-		std::array<std::string,2> footBoneName = { { "mixamorig:LeftFoot", "mixamorig:RightFoot"} };
+		std::array<std::string,4> boneName = { {"mixamorig:LeftHand","mixamorig:RightHand",
+			"mixamorig:LeftFoot", "mixamorig:RightFoot"} };
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
 
-
+		bool upOk;
 
 		float distanceCasterLight_ = 0.f;
 		Float3 casterPos_ = { 0,0,0 };
 		Float2 factorAngleCos_ = { 1.1f,0.9f };
 		Float3 atten_ = { 0.0f,1.5f,0.2f };
+
+		std::array<Object3d,4> moveEffectors;
+		std::array<float,4> effectorMove;
+
+		Object3d* climbObj;
 	public:
 		size_t runNormal;
 		size_t runFast;
@@ -91,6 +105,7 @@ namespace MCB
 		void Debug();
 		void OnCollision(const CollisionInfomation& info) override;
 		void AnimationUpdate(bool isBillBord = false) override;
+		void Draw() override;
 	};
 
 }

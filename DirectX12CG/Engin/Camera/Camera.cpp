@@ -60,7 +60,7 @@ void Camera::Update()
 		rightVec.V3Norm();
 		downVec.V3Norm();
 
-		if ( input->gamePad_->RStick_.x_ || input->gamePad_->RStick_.y_ )
+		if ( (input->gamePad_->RStick_.x_ || input->gamePad_->RStick_.y_) && input->gamePad_->IsButtonDown(GAMEPAD_RB) )
 		{
 			moveCursor = Vector2D(input->gamePad_->RStick_.x_ / 50.f,input->gamePad_->RStick_.y_ / 50.f);
 			if ( view_.up_.y < 0 )

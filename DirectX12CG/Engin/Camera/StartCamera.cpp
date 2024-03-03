@@ -3,6 +3,7 @@
 #include "DxWindow.h"
 #include "RayCollider.h"
 #include "CollisionManager.h"
+#include "input.h"
 WarningIgnoreBegin
 #include "DirectXMath.h"
 WarningIgnoreEnd
@@ -27,23 +28,41 @@ void StartCamera::WorldPositionInit()
 void StartCamera::Update()
 {
 
+	if ( Input::GetInstance()->gamePad_->IsButtonDown(GAMEPAD::GAMEPAD_START) )
+	{
+		isSkip = true;
+	}
+
 	if ( targetstart_ && targetend_ )
 	{
 		moveTimer.SafeUpdate();
+		if ( isSkip )
+		{
+			for(int i = 0; i < 3; i++)moveTimer.SafeUpdate();
+		}
 		view_.eye_.x = static_cast<float>(InQuad(targetstart_->position_.x,targetend_->position_.x,moveTimer.GetEndTime(),moveTimer.NowTime()));
-
-		view_.eye_.y = static_cast<float>(InQuad(targetstart_->position_.y + 30.5f,targetend_->position_.y + 5.5f,
-			moveTimer.GetEndTime(),moveTimer.NowTime()));
-
 		view_.eye_.z = static_cast<float>(InQuad(targetstart_->position_.z + ( 10.5f * -targetstart_->nowFrontVec_.vec_.z_ ),
 			targetend_->position_.z + ( 10.5f * -targetend_->nowFrontVec_.vec_.z_ ),moveTimer.GetEndTime(),moveTimer.NowTime()));
 
 		view_.target_.x =  static_cast<float>(InQuad(targetstart_->position_.x,targetend_->position_.x,
 			moveTimer.GetEndTime(),moveTimer.NowTime()));
-		view_.target_.y =  static_cast<float>(InQuad(targetstart_->position_.y,targetend_->position_.y,
-			moveTimer.GetEndTime(),moveTimer.NowTime()));
 		view_.target_.z =  static_cast<float>(InQuad(targetstart_->position_.z,targetend_->position_.z,
 			moveTimer.GetEndTime(),moveTimer.NowTime()));
+
+		if ( moveTimer.NowTime() >= moveTimer.GetEndTime() / 2 )
+		{
+			view_.eye_.y = static_cast< float >( InQuad(targetstart_->position_.y + 30.5f,targetend_->position_.y + 5.5f,
+				moveTimer.GetEndTime() - moveTimer.GetEndTime() / 2,moveTimer.NowTime() - moveTimer.GetEndTime() / 2) );
+			view_.target_.y = static_cast< float >( InQuad(targetstart_->position_.y,targetend_->position_.y,
+				moveTimer.GetEndTime() - moveTimer.GetEndTime() / 2,moveTimer.NowTime() - moveTimer.GetEndTime() / 2) );
+		}
+		else
+		{
+			view_.eye_.y = static_cast< float >( InQuad(targetstart_->position_.y + 30.5f,targetend_->position_.y + 5.5f,
+				moveTimer.GetEndTime(),0) );
+			view_.target_.y = static_cast< float >( InQuad(targetstart_->position_.y,targetend_->position_.y,
+				moveTimer.GetEndTime(),0) );
+		}
 	}
 	view_.UpDateMatrixView();
 	projection_.UpdataMatrixProjection();

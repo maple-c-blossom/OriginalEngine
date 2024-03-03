@@ -235,7 +235,7 @@ void MCB::LevelLoader::LevelData::Draw(PipeLineManager* pipeline, bool wireFrame
 	static_cast< void >( pipeline );
 	for (auto& itr : objects)
 	{
-		if (itr->obj->model_)
+		if (itr->obj->model_ || itr->tag == "player" )
 		{
 			itr->obj->Draw();
 		}
