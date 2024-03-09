@@ -210,7 +210,19 @@ void MCB::DemoScene::ImGuiUpdate()
 		ImGui::Text("このデモシーンはIKの挙動を確認するためのシーンです。");
 		ImGui::Text("球がEffector,四角錐がPoleVectorです");
 		ImGui::TreePop();
+		if ( ImGui::TreeNode("操作説明") )
+		{
+			ImGui::Text("このシーンでは基本キーボード&マウスで操作します。");
+			ImGui::Text("カメラのみ、コントローラーで操作可能です");
+			ImGui::Text("");
+			ImGui::Text("Effector・PoleVec:カーソルを合わせてdrug&drop");
+			ImGui::Text("カメラ回転:LShift+drug or RStick");
+			ImGui::Text("カメラ距離:N/M key or LRTrigger");
+			ImGui::TreePop();
+		}
 	}
+
+
 
 	ImGui::Text(" ");
 	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
@@ -223,7 +235,7 @@ void MCB::DemoScene::ImGuiUpdate()
             std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
-				ImGui::Checkbox("当たり判定に基づいたIK",&collIK[i]);
+				//ImGui::Checkbox("当たり判定に基づいたIK",&collIK[i]);
 				if ( collIK[i])
 				{
 					ImGui::Text("現在、当たり判定に基づいてIKを行っています。");
