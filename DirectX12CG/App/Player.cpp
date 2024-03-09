@@ -626,9 +626,19 @@ void MCB::Player::Move()
 		}
 		else
 		{
-
+			upOk = true;
+			animationModel_->skeleton.SetTwoBoneIK(*this,
+				{ position_.x - 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+					poleVec[ LH ],
+					"mixamorig:LeftHand","NULL","NULL",true);
+			animationModel_->skeleton.SetTwoBoneIK(*this,
+				{
+				position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+				poleVec[ RH ],
+				"mixamorig:RightHand","NULL","NULL",true);
 			if ( !upOk )
 			{
+				
 
 				if ( input_->gamePad_->LStick_.x_ )
 				{
@@ -695,7 +705,7 @@ void MCB::Player::Move()
 					}
 				}
 
-				if( abs(effectorPos.vec_.y_ - position_.y) <= 0.5f )
+				if( abs(effectorPos.vec_.y_ - position_.y) <= 0.25 )
 				{
 					upOk = true;
 					animationModel_->skeleton.SetTwoBoneIK(*this,
