@@ -83,6 +83,7 @@ namespace MCB
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
 
 		bool upOk;
+		bool developmentMode;
 
 		float distanceCasterLight_ = 0.f;
 		Float3 casterPos_ = { 0,0,0 };

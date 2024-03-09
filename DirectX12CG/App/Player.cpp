@@ -695,7 +695,7 @@ void MCB::Player::Move()
 					}
 				}
 
-				if( abs(effectorPos.vec_.y_ - position_.y) <= 0.25f )
+				if( abs(effectorPos.vec_.y_ - position_.y) <= 0.5f )
 				{
 					upOk = true;
 					animationModel_->skeleton.SetTwoBoneIK(*this,
