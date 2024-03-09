@@ -626,16 +626,20 @@ void MCB::Player::Move()
 		}
 		else
 		{
-			upOk = true;
-			animationModel_->skeleton.SetTwoBoneIK(*this,
-				{ position_.x - 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
-					poleVec[ LH ],
-					"mixamorig:LeftHand","NULL","NULL",true);
-			animationModel_->skeleton.SetTwoBoneIK(*this,
-				{
-				position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
-				poleVec[ RH ],
-				"mixamorig:RightHand","NULL","NULL",true);
+			if ( developmentMode == false )
+			{
+				upOk = true;
+				animationModel_->skeleton.SetTwoBoneIK(*this,
+					{ position_.x - 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+						poleVec[ LH ],
+						"mixamorig:LeftHand","NULL","NULL",true);
+				animationModel_->skeleton.SetTwoBoneIK(*this,
+					{
+					position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
+					poleVec[ RH ],
+					"mixamorig:RightHand","NULL","NULL",true);
+			}
+
 			if ( !upOk )
 			{
 				
@@ -885,6 +889,7 @@ void MCB::Player::Debug()
 	if ( ImGui::TreeNode("プレイヤーデバッグ") )
 	{
 		ImGui::Checkbox("Debug",&isDebug_);
+		ImGui::Checkbox("DevelopMode",&developmentMode);
 		ImGui::Checkbox("climbUpMove",&climbUpMove);
 		ImGui::Checkbox("climbFrontMove",&climbFrontMove);
 		ImGui::Checkbox("isRootStop",&isRootStop);
