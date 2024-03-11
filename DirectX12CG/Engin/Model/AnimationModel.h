@@ -112,6 +112,7 @@ PragmaWarningNum(4324)
             bool isIK = false;//IKを行うか（自分がendJointかどうか）
 			bool isCollisionIk = false;
 			bool triangleDraw = false;
+			bool computeConstraintVec = false;
 			bool IkUseConstraintIsLocalFromRoot = false;
 			Byte4 pad1;
             Node* middleJointNode = nullptr;//ミドルジョイントのポインタ

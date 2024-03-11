@@ -505,6 +505,7 @@ void MCB::Player::Move()
 					{ moveEffectors[ i ].position_.x,moveEffectors[ i ].position_.y,moveEffectors[ i ].position_.z },
 					poleVec[ i ],
 					boneName[ i ],"NULL","NULL",i <= RH);
+				animationModel_->skeleton.GetNode(boneName[ i ])->ikData.computeConstraintVec = true;
 			}
 
 		}

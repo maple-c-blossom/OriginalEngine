@@ -235,18 +235,12 @@ void MCB::DemoScene::ImGuiUpdate()
             std::string bone = ikBoneName_[i].endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
-				//ImGui::Checkbox("当たり判定に基づいたIK",&collIK[i]);
-				if ( collIK[i])
-				{
-					ImGui::Text("現在、当たり判定に基づいてIKを行っています。");
-					ImGui::Text("手動で確認をしたい場合、");
-					ImGui::Text("「当たり判定に基づいたIK」のチェックを外してください");
-				}
-				else
-				{
-					ImGui::Text("ONの時、IKを行う");
-					ImGui::Checkbox("isIK", &isIk_[i]);
-				}
+				ImGui::Text("ONの時、自動でPoleVecの位置を再計算する");
+				ImGui::Checkbox("ComputePoleVec",&test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[i].endJointName)->ikData.computeConstraintVec);
+
+				ImGui::Text("ONの時、IKを行う");
+				ImGui::Checkbox("isIK", &isIk_[i]);
+
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
 				ImGui::Text("三角形を描画");
@@ -298,9 +292,15 @@ void MCB::DemoScene::ImGuiUpdate()
 			}
 			ImGui::EndCombo();
 		}
+		if ( test2Animation_.currentAnimation_ != animationName[ animationNum ] )
+		{
+			test2Animation_.currentAnimation_ = animationName[ animationNum ];
+			for ( int i = 0; i < 4; i++ )
+			{
+				test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName)->ikData.computeConstraintVec = true;
+			}
+		}
 
-
-		test2Animation_.currentAnimation_ = animationName[ animationNum ];
 		float animTime = test2Animation_.animeTime_;
 		ImGui::SliderFloat("AnimTime",&animTime,0.f,7.f);
 		test2Animation_.animeTime_ = animTime;

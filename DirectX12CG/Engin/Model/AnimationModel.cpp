@@ -799,21 +799,33 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 
 
-	   Vector3D xmLocalConstraintVectorFromRoot;
-	   if ( endJoint.ikData.IkUseConstraintIsLocalFromRoot )
-	   {
-		   xmLocalConstraintVectorFromRoot = endJoint.ikData.constraintFromRoot;
-	   }
-	   else
-	   {
-		   xmLocalConstraintVectorFromRoot = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(endJoint.ikData.constraintModelVector)
-			   * rootJointModelMatrixinv);
-	   }
-	   endJoint.ikData.constraintLocalPositionFromRoot = xmLocalConstraintVectorFromRoot;
-
 	   Vector3D middleJointLocalPositionFromRoot = MCBMatrix::GetTranslate(middleJoint.defaultModelTransform * rootJointModelMatrixinv);
 	   Vector3D endJointLocalPositionFromRoot = MCBMatrix::GetTranslate(endJoint.defaultModelTransform * rootJointModelMatrixinv);
 	   Vector3D rootJointLocalPositionFromRoot = MCBMatrix::GetTranslate(rootJoint->defaultModelTransform * rootJointModelMatrixinv);
+
+	   Vector3D xmLocalConstraintVectorFromRoot;
+	   if ( endJoint.ikData.computeConstraintVec )
+	   {
+		   Vector3D vec1(rootJointLocalPositionFromRoot,middleJointLocalPositionFromRoot);
+		   Vector3D vec2(endJointLocalPositionFromRoot,middleJointLocalPositionFromRoot);
+
+		   xmLocalConstraintVectorFromRoot = vec1 + vec2;
+		   xmLocalConstraintVectorFromRoot.V3Norm();
+	   }
+	   else
+	   {
+		   if ( endJoint.ikData.IkUseConstraintIsLocalFromRoot )
+		   {
+			   xmLocalConstraintVectorFromRoot = endJoint.ikData.constraintFromRoot;
+		   }
+		   else
+		   {
+			   xmLocalConstraintVectorFromRoot = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(endJoint.ikData.constraintModelVector)
+				   * rootJointModelMatrixinv);
+		   }
+	   }
+		endJoint.ikData.constraintLocalPositionFromRoot = xmLocalConstraintVectorFromRoot;
+
 	   endJoint.ikData.effectorPosFromRoot = EffectorLocalFromRootPos;
 	   //xmEffectorLocalVecFromRoot = endJointLocalPositionFromRoot;
 	   //------------------------------
