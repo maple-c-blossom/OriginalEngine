@@ -811,6 +811,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 		   xmLocalConstraintVectorFromRoot = vec1 + vec2;
 		   xmLocalConstraintVectorFromRoot.V3Norm();
+		   endJoint.ikData.constraintWorldVector = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTransrate(xmLocalConstraintVectorFromRoot) * rootJoint->defaultModelTransform);
 	   }
 	   else
 	   {
