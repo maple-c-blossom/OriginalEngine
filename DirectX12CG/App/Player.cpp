@@ -843,24 +843,10 @@ void MCB::Player::Move()
 	}
 	directionVec.V3Norm();
 
-	if ( directionVec.vec_.x_ == 0 )
-	{
-		if ( directionVec.vec_.z_ > 0 )
-		{
-			rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(180));
-		}
-		else if( directionVec.vec_.z_ < 0 )
-		{
-			rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(0));
-		}
-	}
-	else
-	{
-		rotationQ_ = rotationQ_.DirToDir(Vector3D(0,0,-1),directionVec);
+		rotationQ_ = rotationQ_.DirToDir(Vector3D(0,0,1),directionVec);
 		camera_->targetObjctVec_.vec_.y_ = 0;
-		Quaternion q = q.DirToDir(Vector3D(0,0,1),camera_->targetObjctVec_.GetV3Norm());
+		Quaternion q = q.DirToDir(Vector3D(0,0,-1),camera_->targetObjctVec_.GetV3Norm());
 		rotationQ_ = q.GetDirectProduct(rotationQ_,q);
-	}
 	//rotationQ_ = rotationQ_.GetReciprocal(rotationQ_);
 	if ( !isClimb )
 	{
