@@ -110,6 +110,7 @@
     <ClCompile Include="Engin\Camera\StartCamera.cpp" />
     <ClCompile Include="App\JumpPad.cpp" />
     <ClCompile Include="App\Scene\MiniatureGardenScene.cpp" />
+    <ClCompile Include="Engin\Collide\GrabCallBack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -346,6 +347,7 @@
     <ClInclude Include="Engin\Camera\StartCamera.h" />
     <ClInclude Include="App\JumpPad.h" />
     <ClInclude Include="App\Scene\MiniatureGardenScene.h" />
+    <ClInclude Include="Engin\Collide\GrabCallBack.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />

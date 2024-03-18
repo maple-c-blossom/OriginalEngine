@@ -92,6 +92,7 @@ namespace MCB
 
 		std::array<Object3d,4> moveEffectors;
 		std::array<float,4> effectorMove;
+		std::array<Sphere,4> grabHit;
 
 		Object3d* climbObj;
 	public:

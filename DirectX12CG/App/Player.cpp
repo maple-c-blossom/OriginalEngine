@@ -8,6 +8,7 @@
 #include "MoveBlock.h"
 #include "JumpPad.h"
 #include "ModelManager.h"
+#include "GrabCallBack.h"
 
 using namespace std;
 float MCB::Player::GetSpeed()
@@ -55,7 +56,11 @@ void MCB::Player::UniqueUpdate()
 			Move();
 		}
 	}
-
+	for ( int i = 0; i < 4; i++ )
+	{
+		grabHit[i].centerPosition_ = animationModel_->skeleton.GetNode(boneName[i])->worldPosition;
+		grabHit[ i ].radius_ = scale_.x;
+	}
 	Object3d::UpdateMatrix();
 	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
 	assert(sphere);
@@ -206,6 +211,16 @@ void MCB::Player::UniqueUpdate()
 	PlayerQueryCallBack callback(sphere);
 
 	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
+
+	for ( int i = 0; i < 4; i++ )
+	{
+		GrabCallBack grab;
+		CollisionManager::GetInstance()->QuerySphere(grabHit[ i ],&grab);
+		if ( grab.hited )
+		{
+			moveEffectors[ i ].position_;
+		}
+	}
 
 	if (callback.move.V3Len() >= distoffSet && !isClimb)
 	{

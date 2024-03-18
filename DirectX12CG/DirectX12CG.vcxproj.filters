@@ -444,6 +444,9 @@
     <ClCompile Include="Engin\Light\CircleShadow.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
     </ClCompile>
+    <ClCompile Include="Engin\Collide\GrabCallBack.cpp">
+      <Filter>ソース ファイル\Engin\Collider</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -783,6 +786,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Light\CircleShadow.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\GrabCallBack.h">
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
