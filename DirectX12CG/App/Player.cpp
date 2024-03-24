@@ -30,7 +30,7 @@ void MCB::Player::Init()
 	}
 
 	scale_ = { 0.01f,0.01f,0.01f };
-	SetCollider(make_unique<SphereCollider>(Vector3D{0,0.5f,0},0.5f));
+	SetCollider(make_unique<SphereCollider>(Vector3D{ 0,0.5f,0 },0.5f));
 	collider_->SetAttribute(ATTRIBUTE_FLENDRY);
 	UpdateMatrix();
 	collider_->Update();
@@ -58,140 +58,140 @@ void MCB::Player::UniqueUpdate()
 	}
 
 	Object3d::UpdateMatrix();
-	SphereCollider* sphere = dynamic_cast<SphereCollider*>(collider_);
+	SphereCollider* sphere = dynamic_cast< SphereCollider* >( collider_ );
 	assert(sphere);
 
-		Ray ray;
-		ray.StartPosition_ = sphere->centerPosition_;
-		ray.StartPosition_.vec_.y_ = sphere->centerPosition_.vec_.y_ - 1.f;
-		ray.StartPosition_.vec_.y_ += sphere->GetRaius();
-		ray.rayVec_ = { {{0,-1,0,0}} };
+	Ray ray;
+	ray.StartPosition_ = sphere->centerPosition_;
+	ray.StartPosition_.vec_.y_ = sphere->centerPosition_.vec_.y_ - 1.f;
+	ray.StartPosition_.vec_.y_ += sphere->GetRaius();
+	ray.rayVec_ = { {{0,-1,0,0}} };
 
-		RayCastHit info;
-		float distRange = sphere->GetRaius() * 2.0f + 0.05f;
-		float distOverRange = distRange * distoffSet;
-		bool isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange);
-		if ( isGraund_ )
+	RayCastHit info;
+	float distRange = sphere->GetRaius() * 2.0f + 0.05f;
+	float distOverRange = distRange * distoffSet;
+	bool isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange);
+	if ( isGraund_ )
+	{
+		//const float absDistance = 0.2f;
+
+		if ( isGround )
 		{
-			//const float absDistance = 0.2f;
-
-			if ( isGround )
-			{
-				isGraund_ = true;
-				if ( info.objctPtr_ == climbObj && isClimb )
-				{
-					isGraund_ = false;
-				}
-				if ( isGraund_ )
-				{
-					if ( !isJump && !isClimb )position_.y -= fallV_.vec_.y_;
-					if ( info.dist_ <= 1.f - distOverRange )
-					{
-						position_.y -= ( ( info.dist_ ) - sphere->GetRaius() * 2.0f - 0.05f );
-
-					}
-					Object3d::UpdateMatrix();
-					if ( info.objctPtr_ )
-					{
-						if ( info.objctPtr_->nameId_ == "JumpPad" )
-						{
-							isGraund_ = false;
-							JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
-							fallV_ = ptr->jumpVec;
-						}
-					}
-				}
-			}
-			else
+			isGraund_ = true;
+			if ( info.objctPtr_ == climbObj && isClimb )
 			{
 				isGraund_ = false;
-				//if(currentAnimation_ != "Jump" )fallV_ = {{{0,0,0,0}}};
 			}
-		}
-		else if ( fallV_.vec_.y_ <= 0.0f )
-		{
-
-			if ( isGround )
+			if ( isGraund_ )
 			{
-				
-				isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f);
-					isGraund_ = true;
-				if ( info.objctPtr_ == climbObj && isClimb )
+				if ( !isJump && !isClimb )position_.y -= fallV_.vec_.y_;
+				if ( info.dist_ <= 1.f - distOverRange )
 				{
-					isGraund_ = false;
+					position_.y -= ( ( info.dist_ ) - sphere->GetRaius() * 2.0f - 0.05f );
+
 				}
-				if ( isGraund_ )
+				Object3d::UpdateMatrix();
+				if ( info.objctPtr_ )
 				{
-					if ( info.dist_ <= 1.f - distOverRange - 0.25f ) position_.y -= ( ( info.dist_ - distOverRange - 0.05f )
-						- sphere->GetRaius() * 2.0f - 0.5f );
-					Object3d::UpdateMatrix();
-					if ( info.objctPtr_ )
+					if ( info.objctPtr_->nameId_ == "JumpPad" )
 					{
-						if ( info.objctPtr_->nameId_ == "JumpPad" )
-						{
-							JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
-							isGraund_ = false;
-							fallV_ = ptr->jumpVec;
-							isMoveBlock = false;
-						}
-						else if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
-						{
-							if ( !info.objctPtr_->updated )
-							{
-								info.objctPtr_->UniqueUpdate();
-							}
-							moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
-							isMoveBlock = true;
-						}
-						else if ( !isClimb )
-						{
-							isMoveBlock = false;
-						}
-
-
+						isGraund_ = false;
+						JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
+						fallV_ = ptr->jumpVec;
 					}
 				}
-
 			}
-			else if ( !isClimb )
+		}
+		else
+		{
+			isGraund_ = false;
+			//if(currentAnimation_ != "Jump" )fallV_ = {{{0,0,0,0}}};
+		}
+	}
+	else if ( fallV_.vec_.y_ <= 0.0f )
+	{
+
+		if ( isGround )
+		{
+
+			isGround = CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f);
+			isGraund_ = true;
+			if ( info.objctPtr_ == climbObj && isClimb )
 			{
 				isGraund_ = false;
-				isMoveBlock = false;
 			}
-		}
-
-		CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f + 0.09f);
-		if ( info.objctPtr_ )
-		{
-			if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
+			if ( isGraund_ )
 			{
-				if ( !info.objctPtr_->updated )
+				if ( info.dist_ <= 1.f - distOverRange - 0.25f ) position_.y -= ( ( info.dist_ - distOverRange - 0.05f )
+					- sphere->GetRaius() * 2.0f - 0.5f );
+				Object3d::UpdateMatrix();
+				if ( info.objctPtr_ )
 				{
-					info.objctPtr_->UniqueUpdate();
+					if ( info.objctPtr_->nameId_ == "JumpPad" )
+					{
+						JumpPad* ptr = static_cast< JumpPad* >( info.objctPtr_ );
+						isGraund_ = false;
+						fallV_ = ptr->jumpVec;
+						isMoveBlock = false;
+					}
+					else if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
+					{
+						if ( !info.objctPtr_->updated )
+						{
+							info.objctPtr_->UniqueUpdate();
+						}
+						moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
+						isMoveBlock = true;
+					}
+					else if ( !isClimb )
+					{
+						isMoveBlock = false;
+					}
+
+
 				}
-				moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
-				isMoveBlock = true;
 			}
-			else if(!isClimb )
-			{
-				isMoveBlock = false;
-			}
+
 		}
-	
+		else if ( !isClimb )
+		{
+			isGraund_ = false;
+			isMoveBlock = false;
+		}
+	}
+
+	CollisionManager::GetInstance()->Raycast(ray,ATTRIBUTE_LANDSHAPE,&info,distRange + distOverRange + 0.25f + 0.09f);
+	if ( info.objctPtr_ )
+	{
+		if ( info.objctPtr_->nameId_ == "MoveBlockUP" || info.objctPtr_->nameId_ == "MoveBlock" )
+		{
+			if ( !info.objctPtr_->updated )
+			{
+				info.objctPtr_->UniqueUpdate();
+			}
+			moveBlock = dynamic_cast< MoveBlock* >( info.objctPtr_ );
+			isMoveBlock = true;
+		}
+		else if ( !isClimb )
+		{
+			isMoveBlock = false;
+		}
+	}
+
 
 
 	if ( isMoveBlock )
 	{
-		
+
 		if ( !moveBlock->updated )
 		{
 			moveBlock->UniqueUpdate();
 		}
 
 
-			position_.x += moveBlock->totalMoveVec.vec_.x_;
-			position_.y += moveBlock->totalMoveVec.vec_.y_;
-			position_.z += moveBlock->totalMoveVec.vec_.z_;
+		position_.x += moveBlock->totalMoveVec.vec_.x_;
+		position_.y += moveBlock->totalMoveVec.vec_.y_;
+		position_.z += moveBlock->totalMoveVec.vec_.z_;
 
 	}
 	if ( !isMoveBlock )
@@ -202,15 +202,15 @@ void MCB::Player::UniqueUpdate()
 	{
 		moveBlock->isMove = true;
 	}
-	
+
 
 	PlayerQueryCallBack callback(sphere);
 
-	CollisionManager::GetInstance()->QuerySphere(*sphere, &callback, ATTRIBUTE_LANDSHAPE);
+	CollisionManager::GetInstance()->QuerySphere(*sphere,&callback,ATTRIBUTE_LANDSHAPE);
 
-	if (callback.move.V3Len() >= distoffSet && !isClimb)
+	if ( callback.move.V3Len() >= distoffSet && !isClimb )
 	{
-		
+
 		position_.x += callback.move.vec_.x_ * 1.4f;
 		position_.y += callback.move.vec_.y_ * 1.4f;
 		position_.z += callback.move.vec_.z_ * 1.4f;
@@ -223,21 +223,21 @@ void MCB::Player::UniqueUpdate()
 		}
 	}
 
-	if (back)
+	if ( back )
 	{
 		backTimer.SafeUpdate();
 		position_.x += backVec.vec_.x_;
 		position_.y += backVec.vec_.y_;
 		position_.z += backVec.vec_.z_;
-		if (backTimer.IsEnd())
+		if ( backTimer.IsEnd() )
 		{
 			back = false;
 		}
 	}
-	else if(callback.block)
+	else if ( callback.block )
 	{
 		backTimer.Set(10);
-		backVec.vec_.z_ =  -0.5f;
+		backVec.vec_.z_ = -0.5f;
 		back = callback.block;
 	}
 
@@ -270,7 +270,7 @@ void MCB::Player::UniqueUpdate()
 						}
 					}
 				}
-				grabed[i] = true;
+				grabed[ i ] = true;
 			}
 			else
 			{
@@ -279,7 +279,7 @@ void MCB::Player::UniqueUpdate()
 		}
 	}
 
-	if (position_.y < outYPosition || isRespown_ )
+	if ( position_.y < outYPosition || isRespown_ )
 	{
 		position_ = respownPosition_.ConvertXMFloat3();
 	}
@@ -297,18 +297,18 @@ void MCB::Player::UniqueUpdate()
 void MCB::Player::Move()
 {
 	//SoundManager* sm = SoundManager::GetInstance();
-	if (!input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) && 
-		!input_->gamePad_->RTrriger_.x_&& !input_->gamePad_->LTrriger_.x_)
+	if ( !input_->IsKeyDown(DIK_S) && !input_->IsKeyDown(DIK_W) &&
+		!input_->gamePad_->RTrriger_.x_ && !input_->gamePad_->LTrriger_.x_ )
 	{
 		speedFront_ = 0;
 	}
 
-	if (input_->IsKeyDown(DIK_W))
+	if ( input_->IsKeyDown(DIK_W) )
 	{
 		speedFront_ = maxspeed_;
 	}
 
-	if (input_->IsKeyDown(DIK_S))
+	if ( input_->IsKeyDown(DIK_S) )
 	{
 		speedFront_ = -maxspeed_;
 	}
@@ -325,42 +325,42 @@ void MCB::Player::Move()
 
 
 
-	if (input_->IsKeyDown(DIK_D))
+	if ( input_->IsKeyDown(DIK_D) )
 	{
 		speedRight_ = maxspeed_ / 2;
 	}
 
-	if (input_->IsKeyDown(DIK_A))
+	if ( input_->IsKeyDown(DIK_A) )
 	{
-		 speedRight_ = -maxspeed_ / 2;
+		speedRight_ = -maxspeed_ / 2;
 	}
 
-	if (input_->gamePad_->LStick_.x_)
+	if ( input_->gamePad_->LStick_.x_ )
 	{
 		float accelerator = maxspeed_;
 		accelerator *= input_->gamePad_->LStick_.x_;
-		if ( accelerator > 0) speedRight_ = accelerator;
-		else if (accelerator < 0)speedRight_ = accelerator;
+		if ( accelerator > 0 ) speedRight_ = accelerator;
+		else if ( accelerator < 0 )speedRight_ = accelerator;
 	}
 
-	if (!input_->IsKeyDown(DIK_D) && !input_->IsKeyDown(DIK_A) && !input_->gamePad_->LStick_.x_)
+	if ( !input_->IsKeyDown(DIK_D) && !input_->IsKeyDown(DIK_A) && !input_->gamePad_->LStick_.x_ )
 	{
 		speedRight_ = 0;
 	}
 
-	if (abs(speedFront_) > abs(speedRight_))
+	if ( abs(speedFront_) > abs(speedRight_) )
 	{
-		if (speedFront_ != 0)
+		if ( speedFront_ != 0 )
 		{
-			if (speedFront_ > 0)currentAnimation_ = "Run";
-			if (speedFront_ < 0)currentAnimation_ = "Run";
+			if ( speedFront_ > 0 )currentAnimation_ = "Run";
+			if ( speedFront_ < 0 )currentAnimation_ = "Run";
 
 		}
 	}
-	else if(speedRight_ != 0)
+	else if ( speedRight_ != 0 )
 	{
-		if (speedRight_ > 0)currentAnimation_ = "Run";
-		if (speedRight_ < 0)currentAnimation_ = "Run";
+		if ( speedRight_ > 0 )currentAnimation_ = "Run";
+		if ( speedRight_ < 0 )currentAnimation_ = "Run";
 	}
 	else
 	{
@@ -375,7 +375,7 @@ void MCB::Player::Move()
 	{
 		animationSpeed_ = max(abs(speedFront_) / 10,abs(speedRight_) / 10);
 	}
-	if (!isGraund_)
+	if ( !isGraund_ )
 	{
 		jumpokTimer.Update();
 		if ( jumpokTimer.IsEnd() )
@@ -399,8 +399,8 @@ void MCB::Player::Move()
 		jumpokTimer.Set(5);
 	}
 
-	if ((Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A))&&
-		!isJump && !isClimb && !jumpokTimer.IsEnd())
+	if ( ( Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A) ) &&
+		!isJump && !isClimb && !jumpokTimer.IsEnd() )
 	{
 		isJump = true;
 	}
@@ -450,27 +450,27 @@ void MCB::Player::Move()
 		effectorPos.vec_.y_ = info.objctPtr_->position_.y + info.objctPtr_->scale_.y;
 		effectorPos.vec_.z_ = info.objctPtr_->position_.z - info.objctPtr_->scale_.z;
 
-		moveEffectors[LH].position_ = {
+		moveEffectors[ LH ].position_ = {
 			position_.x - 0.15f,position_.y,effectorPos.vec_.z_
 		};
 
-		moveEffectors[RH].position_ = {
+		moveEffectors[ RH ].position_ = {
 			position_.x + 0.15f,position_.y,effectorPos.vec_.z_
 		};
 
-		if (info.objctPtr_->nameId_ == "Rblock" )
+		if ( info.objctPtr_->nameId_ == "Rblock" )
 		{
 			wallHit_ = false;
 		}
 	}
 
-	if ( wallHit_ && !isClimb &&(Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A) ))
+	if ( wallHit_ && !isClimb && ( Input::GetInstance()->IsKeyDown(DIK_SPACE) || input_->gamePad_->IsButtonDown(GAMEPAD_A) ) )
 	{
 		if ( info.objctPtr_ )
 		{
 			if ( info.objctPtr_->nameId_ == "MoveBlock" )
 			{
-				moveBlock = static_cast<MoveBlock*>(info.objctPtr_);
+				moveBlock = static_cast< MoveBlock* >( info.objctPtr_ );
 				isMoveBlock = true;
 			}
 		}
@@ -478,7 +478,7 @@ void MCB::Player::Move()
 		climbObj = info.objctPtr_;
 		isJump = false;
 		fallV_.vec_.y_ = 0;
-		position_.z = effectorPos.vec_.z_-0.025f;
+		position_.z = effectorPos.vec_.z_ - 0.025f;
 		//  開始位置を保持
 		//climbOldPos = Vector3D(position_.x,effectorPos.vec_.y_ - 2.63f,effectorPos.vec_.z_ - 0.18f);
 		climbOldPos = Vector3D(position_.x,position_.y,position_.z - 0.5f);
@@ -498,10 +498,10 @@ void MCB::Player::Move()
 		animeTime_ = 0.f;
 		wallUPTimer.Set(uptime);
 
-		poleVec[LH] = Vector3D(0.1134f,-0.4093f, -0.4241f);
-		poleVec[RH] = Vector3D(0.1134f,-0.4093f, -0.4241f);
-		poleVec[LF] = Vector3D(position_.x - 1.15f,position_.y - 1.5f,position_.z + 2.f);
-		poleVec[RF] = Vector3D(position_.x + 1.15f,position_.y - 1.5f,position_.z + 2.f);
+		poleVec[ LH ] = Vector3D(0.1134f,-0.4093f,-0.4241f);
+		poleVec[ RH ] = Vector3D(0.1134f,-0.4093f,-0.4241f);
+		poleVec[ LF ] = Vector3D(position_.x - 1.15f,position_.y - 1.5f,position_.z + 2.f);
+		poleVec[ RF ] = Vector3D(position_.x + 1.15f,position_.y - 1.5f,position_.z + 2.f);
 		animationModel_->skeleton.GetNode("mixamorig:LeftHand")->lineView = true;
 		animationModel_->skeleton.GetNode("mixamorig:RightHand")->lineView = true;
 	}
@@ -558,7 +558,7 @@ void MCB::Player::Move()
 		}
 		//y0.7,z54.8;
 
-		if ( !isClimbUp && prevIsClimb && (input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) ) )
+		if ( !isClimbUp && prevIsClimb && ( input_->IsKeyTrigger(DIK_SPACE) || input_->gamePad_->IsButtonTrigger(GAMEPAD_A) ) )
 		{
 			isClimbUp = true;
 		}
@@ -604,12 +604,12 @@ void MCB::Player::Move()
 
 							climbMove.vec_.z_ = position_.z - prevz;
 							animationModel_->skeleton.SetTwoBoneIK(*this,
-								{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ + climbMove.vec_.z_ },poleVec[LH],
+								{ position_.x - 0.15f,effectorPos.vec_.y_,effectorPos.vec_.z_ + climbMove.vec_.z_ },poleVec[ LH ],
 								"mixamorig:LeftHand","NULL","NULL",true);
 
 							animationModel_->skeleton.SetTwoBoneIK(*this,
 								{ position_.x + 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ + climbMove.vec_.z_ },
-								poleVec[RH],"mixamorig:RightHand","NULL","NULL",true);
+								poleVec[ RH ],"mixamorig:RightHand","NULL","NULL",true);
 
 							if ( time >= 0.5f )
 							{
@@ -652,7 +652,7 @@ void MCB::Player::Move()
 			else
 			{
 				DirectX::XMFLOAT3 prevPos = position_;
-				if ( input_->gamePad_->IsButtonDown(GAMEPAD_LB) && grabed[LH] )
+				if ( input_->gamePad_->IsButtonDown(GAMEPAD_LB) && grabed[ LH ] )
 				{
 					Node* node = animationModel_->skeleton.GetNode(boneName[ LH ]);
 					position_.x = InQuad(oldMovePos.vec_.x_,node->worldPosition.vec_.x_,
@@ -660,7 +660,7 @@ void MCB::Player::Move()
 					position_.y = InQuad(oldMovePos.vec_.y_,node->worldPosition.vec_.y_,
 						moveTimer.GetEndTime(),moveTimer.NowTime());
 				}
-				else if (grabed[RH])
+				else if ( grabed[ RH ] )
 				{
 					Node* node = animationModel_->skeleton.GetNode(boneName[ RH ]);
 					position_.x = InQuad(oldMovePos.vec_.x_,node->worldPosition.vec_.x_,
@@ -705,7 +705,7 @@ void MCB::Player::Move()
 
 			if ( !upOk )
 			{
-				
+
 
 				if ( input_->gamePad_->LStick_.x_ )
 				{
@@ -713,11 +713,11 @@ void MCB::Player::Move()
 					accelerator *= input_->gamePad_->LStick_.x_;
 					if ( input_->gamePad_->IsButtonDown(GAMEPAD_LB) )
 					{
-						moveEffectors[LF].position_.x += accelerator;
+						moveEffectors[ LF ].position_.x += accelerator;
 					}
 					else
 					{
-						moveEffectors[LH].position_.x += accelerator;
+						moveEffectors[ LH ].position_.x += accelerator;
 					}
 					//moveEffectors[RH].position_.y += accelerator;
 				}
@@ -740,7 +740,7 @@ void MCB::Player::Move()
 				}
 
 
-				if ( input_->gamePad_->RStick_.x_ && !input_->gamePad_->IsButtonDown(GAMEPAD_RB))
+				if ( input_->gamePad_->RStick_.x_ && !input_->gamePad_->IsButtonDown(GAMEPAD_RB) )
 				{
 					float accelerator = maxspeed_;
 					accelerator *= input_->gamePad_->RStick_.x_;
@@ -772,12 +772,12 @@ void MCB::Player::Move()
 					}
 				}
 
-				if( abs(effectorPos.vec_.y_ - position_.y) <= 0.25 )
+				if ( abs(effectorPos.vec_.y_ - position_.y) <= 0.25 )
 				{
 					upOk = true;
 					animationModel_->skeleton.SetTwoBoneIK(*this,
 						{ effectorPos.vec_.x_ - 0.15f ,effectorPos.vec_.y_,effectorPos.vec_.z_ },
-						poleVec[LH],
+						poleVec[ LH ],
 						"mixamorig:LeftHand","NULL","NULL",true);
 					animationModel_->skeleton.SetTwoBoneIK(*this,
 						{
@@ -798,25 +798,25 @@ void MCB::Player::Move()
 
 				float moveMaxLen = 0.75f;
 				Vector3D moveVec(Float3{ position_.x,position_.y,0 },
-					{ moveEffectors[LH].position_.x,moveEffectors[LH].position_.y,0});
+					{ moveEffectors[ LH ].position_.x,moveEffectors[ LH ].position_.y,0 });
 
 				if ( moveVec.V3Len() > moveMaxLen )
 				{
 					moveVec.V3Norm();
 					moveVec = moveVec * 1.5f;
-					moveEffectors[LH].position_.x = moveVec.vec_.x_ + position_.x;
-					moveEffectors[LH].position_.y = moveVec.vec_.y_ + position_.y;
+					moveEffectors[ LH ].position_.x = moveVec.vec_.x_ + position_.x;
+					moveEffectors[ LH ].position_.y = moveVec.vec_.y_ + position_.y;
 				}
 
 				moveVec = Vector3D(Float3{ position_.x,position_.y,0 },
-					{ moveEffectors[RH].position_.x,moveEffectors[RH].position_.y,0});
+					{ moveEffectors[ RH ].position_.x,moveEffectors[ RH ].position_.y,0 });
 
 				if ( moveVec.V3Len() > moveMaxLen )
 				{
 					moveVec.V3Norm();
 					moveVec = moveVec * 1.5f;
-					moveEffectors[RH].position_.x = moveVec.vec_.x_ + position_.x;
-					moveEffectors[RH].position_.y = moveVec.vec_.y_ + position_.y;
+					moveEffectors[ RH ].position_.x = moveVec.vec_.x_ + position_.x;
+					moveEffectors[ RH ].position_.y = moveVec.vec_.y_ + position_.y;
 				}
 
 
@@ -840,31 +840,31 @@ void MCB::Player::Move()
 				oldMovePos = position_;
 				moveTimer.Set(30);
 			}
-			
+
 		}
 
-			float time = animeTime_ + animationSpeed_;
-			//  座標を更新
+		float time = animeTime_ + animationSpeed_;
+		//  座標を更新
+		fallV_.vec_.y_ = 0.0f;
+		if ( wallUPTimer.IsEnd() || time >= 1.377f )
+		{
+			isClimb = false;
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftFoot");
+			animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightFoot");
+			//position_.x = climbPos.vec_.x_;
+			//position_.y = climbPos.vec_.y_;
+			//position_.z = climbPos.vec_.z_ + 0.7f;//最後に目的の場所に最終調整
 			fallV_.vec_.y_ = 0.0f;
-			if ( wallUPTimer.IsEnd() || time >= 1.377f )
-			{
-				isClimb = false;
-				animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftHand");
-				animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightHand");
-				animationModel_->skeleton.TwoBoneIKOff("mixamorig:LeftFoot");
-				animationModel_->skeleton.TwoBoneIKOff("mixamorig:RightFoot");
-				//position_.x = climbPos.vec_.x_;
-				//position_.y = climbPos.vec_.y_;
-				//position_.z = climbPos.vec_.z_ + 0.7f;//最後に目的の場所に最終調整
-				fallV_.vec_.y_ = 0.0f;
-				isJump = false;
-			}
+			isJump = false;
+		}
 	}
-	
-	
+
+
 	if ( !isClimb )
 	{
-		if ( !(speedFront_ > 0 && wallHit_) )
+		if ( !( speedFront_ > 0 && wallHit_ ) )
 		{
 			position_.x += nowFrontVec_.vec_.x_ * speedFront_;
 			position_.z += nowFrontVec_.vec_.z_ * speedFront_;
@@ -886,7 +886,7 @@ void MCB::Player::Move()
 			moving = false;
 		}
 	}
-	else if( isClimb )
+	else if ( isClimb )
 	{
 		moving = true;
 		directionVec = Vector3D(0,0,1);
@@ -911,7 +911,7 @@ void MCB::Player::Move()
 		{
 			rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(180));
 		}
-		else if( directionVec.vec_.z_ < 0 )
+		else if ( directionVec.vec_.z_ < 0 )
 		{
 			rotationQ_.SetRota(Vector3D(0,1,0),ConvertRadius(0));
 		}
@@ -944,9 +944,9 @@ void MCB::Player::Debug()
 	factorAngleCos_.x_ = temp[ 0 ]; factorAngleCos_.y_ = temp[ 1 ];
 	slights_->SetCShadowFascorAngle(0,factorAngleCos_);
 
-	float temp2[ 3 ] = { atten_.x_,atten_.y_ ,atten_ .z_};
+	float temp2[ 3 ] = { atten_.x_,atten_.y_ ,atten_.z_ };
 	ImGui::InputFloat2("atten",temp2);
-	atten_.x_ = temp2[ 0 ]; atten_.y_ = temp2[ 1 ]; atten_.z_ = temp2[2];
+	atten_.x_ = temp2[ 0 ]; atten_.y_ = temp2[ 1 ]; atten_.z_ = temp2[ 2 ];
 	slights_->SetCShadowAtten(0,atten_);
 
 	if ( ImGui::TreeNode("プレイヤーデバッグ") )
@@ -1026,14 +1026,14 @@ void MCB::Player::Debug()
 			rotation_.y = ConvertRadius(180);
 			animationPositionRock = isRootStop;
 		}
-		
+
 		ImGui::TreePop();
 	}
 }
 
 void MCB::Player::OnCollision(const CollisionInfomation& info)
 {
-	if (info.object3d_->nameId_ == "checkPoint")
+	if ( info.object3d_->nameId_ == "checkPoint" )
 	{
 		respownPosition_ = info.object3d_->position_;
 	}
@@ -1042,24 +1042,24 @@ void MCB::Player::OnCollision(const CollisionInfomation& info)
 
 void MCB::Player::AnimationUpdate(bool isBillBord)
 {
-	 if (animationModel_ == nullptr)return;
-    UpdateMatrix(rotationQ_,isBillBord);
+	if ( animationModel_ == nullptr )return;
+	UpdateMatrix(rotationQ_,isBillBord);
 
-    constMapTranceform_->world = matWorld_.matWorld_;
-    constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
-    constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
-    constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
-    constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
-    constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
-    constMapTranceform_->shaderNum = shaderNum_;
-    constMapTranceform_->color = color_;
-    if (collider_)collider_->Update();
-    animeTime_ += animationSpeed_;
+	constMapTranceform_->world = matWorld_.matWorld_;
+	constMapTranceform_->cameraMat = camera_->GetView()->mat_ /** animationModel->nodes.begin()->get()->globalTransform*/;
+	constMapTranceform_->viewproj = camera_->GetProjection()->mat_;
+	constMapTranceform_->cameraPos.x_ = camera_->GetView()->eye_.x;
+	constMapTranceform_->cameraPos.y_ = camera_->GetView()->eye_.y;
+	constMapTranceform_->cameraPos.z_ = camera_->GetView()->eye_.z;
+	constMapTranceform_->shaderNum = shaderNum_;
+	constMapTranceform_->color = color_;
+	if ( collider_ )collider_->Update();
+	animeTime_ += animationSpeed_;
 
-    animationModel_->AnimationUpdate(animeTime_, currentAnimation_,this,animationLoop_,animationPositionRock);
-	moveEffectors[LH].camera_ = moveEffectors[RH].camera_ = camera_;
-	moveEffectors[LH].Update(false);
-	moveEffectors[RH].Update(false);
+	animationModel_->AnimationUpdate(animeTime_,currentAnimation_,this,animationLoop_,animationPositionRock);
+	moveEffectors[ LH ].camera_ = moveEffectors[ RH ].camera_ = camera_;
+	moveEffectors[ LH ].Update(false);
+	moveEffectors[ RH ].Update(false);
 
 
 }
