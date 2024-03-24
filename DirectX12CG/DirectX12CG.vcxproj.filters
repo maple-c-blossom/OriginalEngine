@@ -27,15 +27,6 @@
     <Filter Include="ソース ファイル\Engin\Object">
       <UniqueIdentifier>{f9678f7a-df8e-47b9-b1ac-dfb176c574a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engin\Math">
-      <UniqueIdentifier>{b2488221-a3ca-4c3c-bd45-18c6adfa0ed1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engin\Math\Matrix">
-      <UniqueIdentifier>{e84cb9d1-fc26-4494-9bce-75c39c9494da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engin\Math\Vector">
-      <UniqueIdentifier>{23479cc5-8905-4bea-8da4-8f37b7055e3f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engin\Input">
       <UniqueIdentifier>{57e1e8d7-770f-447d-a971-18c7cca3cb58}</UniqueIdentifier>
     </Filter>
@@ -186,6 +177,15 @@
     </Filter>
     <Filter Include="リソース ファイル\OBJTilingShader">
       <UniqueIdentifier>{38730a7c-7704-449a-b77d-65c9f54ac948}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math">
+      <UniqueIdentifier>{b2488221-a3ca-4c3c-bd45-18c6adfa0ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math\Matrix">
+      <UniqueIdentifier>{e84cb9d1-fc26-4494-9bce-75c39c9494da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engin\Math\Vector">
+      <UniqueIdentifier>{23479cc5-8905-4bea-8da4-8f37b7055e3f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -443,6 +443,9 @@
     </ClCompile>
     <ClCompile Include="Engin\Light\CircleShadow.cpp">
       <Filter>ソース ファイル\Engin\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Engin\Collide\GrabQuery.cpp">
+      <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -783,6 +786,9 @@
     </ClInclude>
     <ClInclude Include="Engin\Light\CircleShadow.h">
       <Filter>ヘッダー ファイル\Engin\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Engin\Collide\GrabQuery.h">
+      <Filter>ヘッダー ファイル\Engin\Collider</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

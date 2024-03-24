@@ -12,13 +12,15 @@ namespace MCB
 {
 	class LevelLoader
 	{
-		public:
-		// レベルデータ
-		struct LevelData {
+	public:
+	// レベルデータ
+		struct LevelData
+		{
 
 
-			struct ObjectData {
-				// ファイル名
+			struct ObjectData
+			{
+// ファイル名
 				std::string fileName;
 				std::string tag;
 				std::string modelType;
@@ -47,6 +49,7 @@ namespace MCB
 		// ファイル拡張子
 		static const std::string sEXTEND_;
 
+		static const std::array<Float3,3> colors;
 		public:// メンバ関数
 
 		static void RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson,ICamera* camera);

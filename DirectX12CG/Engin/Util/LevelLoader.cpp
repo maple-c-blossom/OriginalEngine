@@ -17,7 +17,7 @@ using namespace nlohmann;
 
 const std::string LevelLoader::sBASE_FILE_DIR_ = "Resources/levels/";
 const std::string LevelLoader::sEXTEND_ = ".json";
-
+const std::array<Float3,3> LevelLoader::colors = { { {0.75,0.125,0.125},{0.125,0.75,0.125},{0.125,0.125,0.75} } };
 void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson, ICamera* camera)
 {
 
@@ -148,7 +148,7 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 		}
 		else if ((objData->tag == "block") || ( objData->tag == "Rblock" ) ||
 			( objData->tag == "JumpPad" ) ||(objData->tag == "MoveBlock" ) ||
-			(objData->tag == "MoveBlockUP" ) || (objData->tag == "checkPoint" ) )
+			(objData->tag == "MoveBlockUP" ) || (objData->tag == "checkPoint" )||(objData->tag == "grabObj") )
 		{
 			objData->obj->SetCollider(make_unique<MeshCollider>(objData->obj->model_));
 			objData->obj->GetCollider()->SetAttribute(ATTRIBUTE_LANDSHAPE);
@@ -156,7 +156,10 @@ void LevelLoader::RecursiveAnalysis(LevelData* levelData, nlohmann::json objJson
 
 
 		objData->obj->Init();
-
+		if ( objData->tag == "grabObj" )
+		{
+			objData->obj->color_ = { GetRand(0,255) / 255.f, GetRand(0,255) / 255.f, GetRand(0,255) / 255.f,1};
+		}
 		objData->obj->camera_ = camera;
 		objData->obj->nameId_ = objData->tag;
 		levelData->objects.emplace_back(move(objData));

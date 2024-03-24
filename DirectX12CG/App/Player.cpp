@@ -8,6 +8,7 @@
 #include "MoveBlock.h"
 #include "JumpPad.h"
 #include "ModelManager.h"
+#include "GrabQuery.h"
 
 using namespace std;
 float MCB::Player::GetSpeed()
@@ -238,6 +239,44 @@ void MCB::Player::UniqueUpdate()
 		backTimer.Set(10);
 		backVec.vec_.z_ =  -0.5f;
 		back = callback.block;
+	}
+
+	if ( isClimb )
+	{
+		for ( int i = 0; i < 4; i++ )
+		{
+			handFootSphere[ i ].centerPosition_ = animationModel_->skeleton.GetNode(boneName[ i ])->worldPosition;
+			handFootSphere[ i ].radius_ = 0.5f;
+			GrabQuery query(&handFootSphere[ i ]);
+			CollisionManager::GetInstance()->QuerySphere(handFootSphere[ i ],&query,ATTRIBUTE_LANDSHAPE);
+			if ( query.grab )
+			{
+				Vector3D vec(position_,query.obj_->position_);
+				if ( vec.V3Len() >= 0.5f )
+				{
+					if ( i >= LF )
+					{
+						if ( query.obj_->position_.y < position_.y )
+						{
+							moveEffectors[ i ].position_ = query.obj_->position_;
+						}
+					}
+					else
+					{
+						if ( query.obj_->position_.y >= position_.y )
+						{
+							moveEffectors[ i ].position_ = query.obj_->position_;
+
+						}
+					}
+				}
+				grabed[i] = true;
+			}
+			else
+			{
+				grabed[ i ] = false;
+			}
+		}
 	}
 
 	if (position_.y < outYPosition || isRespown_ )
@@ -488,9 +527,17 @@ void MCB::Player::Move()
 	{
 		animationLoop_ = false;
 	}
-
+	if ( input_->gamePad_->IsButtonDown(GAMEPAD_B) && isClimb )
+	{
+		isClimb = false;
+		for ( int i = 0; i < 4; i++ )
+		{
+			animationModel_->skeleton.TwoBoneIKOff(boneName[ i ]);
+		}
+	}
 	if ( isClimb )
 	{
+
 		isJump = false;
 		animationPositionRock = isRootStop;
 		currentAnimation_ = "Climb";
@@ -505,7 +552,7 @@ void MCB::Player::Move()
 					{ moveEffectors[ i ].position_.x,moveEffectors[ i ].position_.y,moveEffectors[ i ].position_.z },
 					poleVec[ i ],
 					boneName[ i ],"NULL","NULL",i <= RH);
-				animationModel_->skeleton.GetNode(boneName[ i ])->ikData.computeConstraintVec = true;
+				//animationModel_->skeleton.GetNode(boneName[ i ])->ikData.computeConstraintVec = true;
 			}
 
 		}
@@ -604,17 +651,32 @@ void MCB::Player::Move()
 			}
 			else
 			{
-				position_.x = InQuad(oldMovePos.vec_.x_,moveEffectors[LH ].position_.x,
-					moveTimer.GetEndTime(),moveTimer.NowTime());
-				position_.y = InQuad(oldMovePos.vec_.y_,moveEffectors[ LH ].position_.y,
-					moveTimer.GetEndTime(),moveTimer.NowTime());
+				DirectX::XMFLOAT3 prevPos = position_;
+				if ( input_->gamePad_->IsButtonDown(GAMEPAD_LB) && grabed[LH] )
+				{
+					Node* node = animationModel_->skeleton.GetNode(boneName[ LH ]);
+					position_.x = InQuad(oldMovePos.vec_.x_,node->worldPosition.vec_.x_,
+						moveTimer.GetEndTime(),moveTimer.NowTime());
+					position_.y = InQuad(oldMovePos.vec_.y_,node->worldPosition.vec_.y_,
+						moveTimer.GetEndTime(),moveTimer.NowTime());
+				}
+				else if (grabed[RH])
+				{
+					Node* node = animationModel_->skeleton.GetNode(boneName[ RH ]);
+					position_.x = InQuad(oldMovePos.vec_.x_,node->worldPosition.vec_.x_,
+						moveTimer.GetEndTime(),moveTimer.NowTime());
+					position_.y = InQuad(oldMovePos.vec_.y_,node->worldPosition.vec_.y_,
+						moveTimer.GetEndTime(),moveTimer.NowTime());
+				}
+				DirectX::XMFLOAT3 moveLevel = { position_.x - prevPos.x, position_.y - prevPos.y, position_.z - prevPos.z };
+				for ( int i = 0; i < 4; i++ )
+				{
+					moveEffectors[ i ].position_.x += moveLevel.x;
+					moveEffectors[ i ].position_.y += moveLevel.y;
+				}
 				moveTimer.SafeUpdate();
 				if ( moveTimer.IsEnd() )
 				{
-					moveEffectors[ LH ].position_.x = position_.x;
-					moveEffectors[ LH ].position_.y = position_.y;
-					moveEffectors[ RH ].position_.x = position_.x;
-					moveEffectors[ RH ].position_.y = position_.y;
 
 					isClimbUp = false;
 				}
@@ -918,6 +980,19 @@ void MCB::Player::Debug()
 		float animTime = animeTime_;
 		ImGui::SliderFloat("AnimTime",&animTime,0.f,3.8f);
 		animeTime_ = animTime;
+
+		if ( ImGui::TreeNode("ComputePoleVec") )
+		{
+			for ( uint8_t i = 0; i < 4; i++ )
+			{
+				ImGui::Text(" ");
+				ImGui::Text("ONの時、自動でPoleVecの位置を再計算する");
+				string temp = boneName[ i ] + ":ComputePoleVec";
+				ImGui::Checkbox(temp.c_str(),&animationModel_->skeleton.GetNode(boneName[ i ])->ikData.computeConstraintVec);
+			}
+			ImGui::TreePop();
+		}
+
 		if ( isDebug_ )
 		{
 			ImguiManager::GuizmoDraw(this,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);

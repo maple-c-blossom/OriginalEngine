@@ -83,7 +83,7 @@ namespace MCB
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"}};
 
 		bool upOk;
-		bool developmentMode;
+		bool developmentMode = true;
 
 		float distanceCasterLight_ = 0.f;
 		Float3 casterPos_ = { 0,0,0 };
@@ -92,6 +92,8 @@ namespace MCB
 
 		std::array<Object3d,4> moveEffectors;
 		std::array<float,4> effectorMove;
+		std::array<Sphere,4> handFootSphere;
+		std::array<bool,4> grabed;
 
 		Object3d* climbObj;
 	public:
