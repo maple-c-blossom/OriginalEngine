@@ -1336,6 +1336,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   
    }
 
+   void MCB::Skeleton::AddMotion()
+   {
+
+
+
+   }
+
    Node* MCB::Skeleton::GetNearPositionNode(const Vector3D& targetPos, const Vector3D& objectPositoin, uint32_t closestNum)
    {
 	   struct LengeData

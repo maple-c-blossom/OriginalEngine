@@ -194,6 +194,7 @@ PragmaPop
 
 		void SetNode(std::unique_ptr<Node> node);//Nodeを追加
 
+		void AddMotion();
         /// <summary>
         /// 与えられたポジションに近いNodeを返す
         /// </summary>
