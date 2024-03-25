@@ -243,6 +243,7 @@ void MCB::Player::UniqueUpdate()
 
 	if ( isClimb )
 	{
+		isClimb = false;
 		for ( int i = 0; i < 4; i++ )
 		{
 			handFootSphere[ i ].centerPosition_ = animationModel_->skeleton.GetNode(boneName[ i ])->worldPosition;
@@ -271,6 +272,7 @@ void MCB::Player::UniqueUpdate()
 					}
 				}
 				grabed[ i ] = true;
+				isClimb = true;
 			}
 			else
 			{
