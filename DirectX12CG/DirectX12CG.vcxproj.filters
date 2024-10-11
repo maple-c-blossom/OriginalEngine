@@ -447,6 +447,12 @@
     <ClCompile Include="Engin\Collide\GrabQuery.cpp">
       <Filter>ソース ファイル\Engin\Collider</Filter>
     </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\ParticleShader\ParticleGeometryShader.hlsl">
@@ -789,6 +795,12 @@
     </ClInclude>
     <ClInclude Include="Engin\Collide\GrabQuery.h">
       <Filter>ヘッダー ファイル\Engin\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

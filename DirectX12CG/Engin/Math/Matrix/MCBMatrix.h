@@ -32,11 +32,13 @@ namespace MCB
 		MCBMatrix(DirectX::XMMATRIX mat);
 		void MCBMatrixIdentity();
 
-		static MCBMatrix MCBMatrixTransrate( float x,  float y,  float z);
+		static MCBMatrix MCBMatrixTranslate( float x,  float y,  float z);
 
-		static MCBMatrix MCBMatrixTransrate(Vector3D pos);
+		static MCBMatrix MCBMatrixTranslate(Vector3D pos);
 
 		static MCBMatrix MCBMatrixScaling( float x,  float y,  float z);
+
+		static MCBMatrix MCBMatrixScaling(Vector3D scale);
 
 		void ConvertMatrixArray(float** ArrayMat);
 

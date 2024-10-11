@@ -31,7 +31,7 @@ void MCB::MCBMatrix::MCBMatrixIdentity()
 	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
 }
 
-MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate( float x,  float y,  float z)
+MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTranslate( float x,  float y,  float z)
 {
 	MCBMatrix temp;
 	temp.MCBMatrixIdentity();
@@ -44,7 +44,7 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate( float x,  float y,  float z)
 	return temp;
 }
 
-MCBMatrix MCB::MCBMatrix::MCBMatrixTransrate(Vector3D pos)
+MCBMatrix MCB::MCBMatrix::MCBMatrixTranslate(Vector3D pos)
 {
 	MCBMatrix temp;
 	temp.MCBMatrixIdentity();
@@ -70,6 +70,19 @@ MCB::MCBMatrix MCB::MCBMatrix::MCBMatrixScaling( float x,  float y,  float z)
 
 	return temp;
 
+}
+
+MCBMatrix MCB::MCBMatrix::MCBMatrixScaling(Vector3D scale)
+{
+	MCBMatrix temp;
+	temp.MCBMatrixIdentity();
+
+	temp._11_ = scale.vec_.x_;
+	temp._22_ = scale.vec_.y_;
+	temp._33_ = scale.vec_.z_;
+	temp._44_ = 1;
+
+	return temp;
 }
 
 void MCB::MCBMatrix::ConvertMatrixArray(float** ArrayMat)

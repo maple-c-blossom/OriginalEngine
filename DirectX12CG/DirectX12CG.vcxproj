@@ -16,6 +16,7 @@
     <ClCompile Include="App\Scene\DemoScene.cpp">
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableAllWarnings</WarningLevel>
     </ClCompile>
+    <ClCompile Include="Bone.cpp" />
     <ClCompile Include="Engin\Light\CircleShadow.cpp" />
     <ClCompile Include="Engin\Camera\DemoCamera.cpp" />
     <ClCompile Include="Engin\Model\AnimationMesh.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="App\JumpPad.cpp" />
     <ClCompile Include="App\Scene\MiniatureGardenScene.cpp" />
     <ClCompile Include="Engin\Collide\GrabQuery.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\FbxShader\FbxGeometryShader.hlsl">
@@ -262,6 +264,7 @@
     <ClInclude Include="App\PopEffect.h" />
     <ClInclude Include="App\CheckPoint.h" />
     <ClInclude Include="App\Scene\DemoScene.h" />
+    <ClInclude Include="Bone.h" />
     <ClInclude Include="Engin\Light\CircleShadow.h" />
     <ClInclude Include="Engin\Camera\DemoCamera.h" />
     <ClInclude Include="Engin\Model\AnimationMesh.h" />
@@ -348,6 +351,7 @@
     <ClInclude Include="App\JumpPad.h" />
     <ClInclude Include="App\Scene\MiniatureGardenScene.h" />
     <ClInclude Include="Engin\Collide\GrabQuery.h" />
+    <ClInclude Include="Skeleton.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxShader\FbxShaderHeader.hlsli" />
