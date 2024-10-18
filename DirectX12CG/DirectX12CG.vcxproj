@@ -112,6 +112,7 @@
     <ClCompile Include="App\JumpPad.cpp" />
     <ClCompile Include="App\Scene\MiniatureGardenScene.cpp" />
     <ClCompile Include="Engin\Collide\GrabQuery.cpp" />
+    <ClCompile Include="IKSolver.cpp" />
     <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +352,7 @@
     <ClInclude Include="App\JumpPad.h" />
     <ClInclude Include="App\Scene\MiniatureGardenScene.h" />
     <ClInclude Include="Engin\Collide\GrabQuery.h" />
+    <ClInclude Include="IKSolver.h" />
     <ClInclude Include="Skeleton.h" />
   </ItemGroup>
   <ItemGroup>

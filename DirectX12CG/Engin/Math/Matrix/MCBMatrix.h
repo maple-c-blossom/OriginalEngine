@@ -75,9 +75,9 @@ namespace MCB
 
 		static Vector3D GetTranslate(const MCBMatrix& m);
 
+		Vector3D GetRotationToEuler();
 
 
-		//MCBMatrix operator*(MCBMatrix matrix);
 		MCBMatrix operator*( float s);
 		MCBMatrix operator/( float s);
 		MCBMatrix operator+(const MCBMatrix& matrix);

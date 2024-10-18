@@ -32,6 +32,13 @@ void MCBRef::Bone::SetIK(bool flag)
 	isIK = flag;
 }
 
+MCBRef::Bone* MCBRef::Bone::GetParent()
+{
+	return parentBone_;
+}
+
+
+
 void MCBRef::Bone::SetRotation(Quaternion rotation)
 {
 	rotation_ = rotation;
@@ -47,7 +54,18 @@ void MCBRef::Bone::SetScale(Vector3D scale)
 	scale_ = scale;
 }
 
+void MCBRef::Bone::SetInverseBindMatrix(MCB::MCBMatrix mat)
+{
+	inverseBindMatrix_ = mat;
+}
+
+void MCBRef::Bone::SetName(std::string name)
+{
+	name_ = name;
+}
+
 void MCBRef::Bone::SetParent(Bone* parent)
 {
 	parentBone_ = parent;
 }
+

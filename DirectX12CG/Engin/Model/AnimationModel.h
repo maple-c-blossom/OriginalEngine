@@ -136,6 +136,7 @@ PragmaWarningNum(4324)
             PrimitiveFigure::Triangle jointTriangle;
             Vector3D constraintLocalPositionFromRoot;
 			Byte4 pad5;
+			int32_t linkBonNum;
 
         };
 
@@ -151,8 +152,23 @@ PragmaWarningNum(4324)
 
 			Byte4 pad1;
         };
+
+
+		struct CCDIKData
+		{
+			bool isLimit;
+			int32_t linkBoneCount;
+			float threshold = 1.0e-5f;
+			int32_t iteration = 20;
+			Vector3D targetPos;
+			Vector3D topLimitEulerRadian;
+			Vector3D bottomLimitEulerRadian;
+		};
+
+
         IKData ikData;//IKに関するデータ
         IKDebugData ikDebugData;
+		CCDIKData ccd;
         bool lineColorEqualObject = false;
 		Byte7 pad9;
         Float4 lineDefaultColor = {1.f,1.f,1.f,1.f};
@@ -236,10 +252,10 @@ PragmaPop
         /// <param name="effectter">目標地点に向ける先端のNode</param>
         /// <param name="targetPos">目標地点</param>
         /// <param name="numMaxIteration">CCDの反復回数</param>
-        /// <param name="errToleranceSq">誤差の許容数値(2乗）</param>
+        /// <param name="errToleranceSq">誤差の許容数値</param>
         void CCDIK(Node& effectter,Vector3D targetPos,int32_t numMaxIteration,float errToleranceSq);//理論理解段階のため未定義(引数も不十分の可能性あり)
 
-        void SetCCDIK(Vector3D targetPos,Vector3D objPos);
+        //void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 
 		void SetTwoBoneIK(const Object3d& obj,const Vector3D& targetPos,const Vector3D& constraintPosition = { 0,1,0 },
 			const std::string& boneName = "NULL",

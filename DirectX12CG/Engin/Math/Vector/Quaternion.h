@@ -39,7 +39,8 @@ namespace MCB
 		Vector3D SetRotationVector(const Vector3D& rotationAxisVec,  Vector3D PositionVec,  float angle);
 		//与えられたクォータニオンの回転をPositionVecに与える
 		Vector3D SetRotationVector(const Quaternion& rotationQuaternion,  Vector3D PositionVec);
-		//何のために作ったの作ったんでしょうかね
+
+
 		Vector3D SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec);
 
 		Quaternion DirToDir( Vector3D u,  Vector3D v);
@@ -51,7 +52,7 @@ namespace MCB
 		MCBMatrix GetQuaternionRotaMat(const Quaternion& rotaQ);
 		
 		void SinCos(float* returnSin, float* returnCos, float theta);
-		//多分オイラー角からクォータニオンを生成
+		//オイラー角からクォータニオンを生成
 		Quaternion SetToRorateObjectToInternal(const Float3& eulerAngle);
 		//クォータニオンの回転軸を算出
 		Vector3D GetRotationAxis(const Quaternion& q);

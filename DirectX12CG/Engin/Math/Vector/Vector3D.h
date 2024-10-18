@@ -39,6 +39,7 @@ namespace MCB
 
 		Vector3D GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2);
 
+		Vector3D Qlamp(const Vector3D& vec,const Vector3D& min,const Vector3D& max);
 
 		Vector3D& operator+=(const Vector3D& Vec);
 		Vector3D& operator-=(const Vector3D& Vec);

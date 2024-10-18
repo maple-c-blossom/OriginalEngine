@@ -4,6 +4,8 @@ WarningIgnoreBegin
 #include <string>
 WarningIgnoreEnd
 
+#define PI 3.141592654f
+
 using namespace DirectX;
 using namespace MCB;
 
@@ -376,6 +378,31 @@ Vector3D MCB::MCBMatrix::GetTranslate(const MCBMatrix& m)
 	pos.vec_.y_ = m._42_;
 	pos.vec_.z_ = m._43_;
 	return pos;
+}
+
+Vector3D MCB::MCBMatrix::GetRotationToEuler()
+{
+	Vector3D rot;
+	if (_13_ == 1.0f )
+	{
+		rot.vec_.x_ = atan2(_23_,_33_);
+		rot.vec_.y_ = PI * 0.5f;
+		rot.vec_.z_ = 0;
+	}
+	else if ( 13 == -1.0f )
+	{
+		rot.vec_.x_ = atan2(_23_,_33_);
+		rot.vec_.y_ = -PI * 0.5f;
+		rot.vec_.z_ = 0;
+	}
+	else
+	{
+		rot.vec_.x_ = atan2(_23_,_33_);
+		rot.vec_.y_ = -asin(_13_);
+		rot.vec_.z_ = atan2(_12_,_11_);///-90~90
+	}
+
+	return rot;
 }
 
 MCB::MCBMatrix MCB::MCBMatrix::operator*( float s)

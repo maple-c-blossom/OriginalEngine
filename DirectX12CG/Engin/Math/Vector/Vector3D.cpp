@@ -178,6 +178,39 @@ Vector3D MCB::Vector3D::GetV3Normal(Vector3D v0, Vector3D v1, Vector3D v2)
 	return ans;
 }
 
+Vector3D MCB::Vector3D::Qlamp(const Vector3D& vec,const Vector3D& min,const Vector3D& max)
+{
+	Vector3D ret = vec;
+	if ( vec.vec_.x_ < min.vec_.x_ )
+	{
+		ret.vec_.x_ = min.vec_.x_;
+	}
+	else if ( vec.vec_.x_ > max.vec_.x_ )
+	{
+		ret.vec_.x_ = max.vec_.x_;
+	}
+
+	if ( vec.vec_.y_ < min.vec_.y_ )
+	{
+		ret.vec_.y_ = min.vec_.y_;
+	}
+	else if ( vec.vec_.y_ > max.vec_.y_ )
+	{
+		ret.vec_.y_ = max.vec_.y_;
+	}
+
+	if ( vec.vec_.z_ < min.vec_.z_ )
+	{
+		ret.vec_.z_ = min.vec_.z_;
+	}
+	else if ( vec.vec_.z_ > max.vec_.z_ )
+	{
+		ret.vec_.z_ = max.vec_.z_;
+	}
+
+	return ret;
+}
+
 
 
 float MCB::Vector3D::GetInnerProduct(Vector3D vector)

@@ -956,25 +956,45 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::CCDIK(Node& effectter, Vector3D targetPos, int32_t numMaxIteration, float errToleranceSq)
+   void MCB::Skeleton::CCDIK(Node& effector, Vector3D targetPos, int32_t numMaxIteration, float errToleranceSq)
    {
-	   static_cast< void >( errToleranceSq );
-	   XMVECTOR localTargetPos = XMVectorZero();
-	   XMVECTOR localEffecrPos = XMVectorZero();
-
-	   for (int32_t i = 0; i < numMaxIteration; i++)
+	   bool run = true;
+	   float iteration = effector.ccd.iteration;
+	   while (iteration-- )
 	   {
-		   for (Node* joint = effectter.parent; joint != nullptr; joint = joint->parent)
+		   Quaternion idealRotation;
+		   Quaternion realRotation;
+		   Quaternion remainingRotation;
+		   Vector3D localTargetPos;
+		   Node* effectorBone = &effector;
+		   Node* effectorParent = effectorBone->parent;
+		   for ( int i = 0; i < effector.ccd.linkBoneCount; i++ )
 		   {
-				XMVECTOR effectorPos = effectter.translation;
-				XMVECTOR jointPos = joint->translation;
-				XMMATRIX invCoord = XMMatrixInverse(nullptr, joint->AnimaetionParentMat);
-				localEffecrPos = XMVector3Transform(effectorPos, invCoord);
-				localTargetPos = XMVector3Transform(targetPos.ConvertXMVEC(), invCoord);
-				
+
+			   //座標変換
+
+			   //理想回転作成
+			   Vector3D boneVec = Vector3D(effectorParent->endPosition,effectorBone->endPosition);
+			   Vector3D effectToTarget = Vector3D(effectorParent->endPosition,localTargetPos);
+			   Vector3D axis = boneVec.GetV3Cross(effectToTarget);
+			   float radian = boneVec.GetV3Dot(effectToTarget);
+
+			   idealRotation.SetRota(axis,radian);
+
+			   Vector3D eulerRot = idealRotation.GetQuaternionRotaMat(idealRotation).GetRotationToEuler();
+
+
+
+			   effectorBone = effectorParent;
+			   effectorParent = effectorBone->parent;
+			   if ( effectorParent == nullptr )
+			   {
+				   break;
+			   }
+
+
 		   }
 	   }
-
 
    }
 

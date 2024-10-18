@@ -9,13 +9,6 @@
 namespace MCBRef
 {
 
-	struct IKData
-	{
-		Vector3D effectorPosition;
-
-	};
-
-
 	class Bone
 	{
 
@@ -49,6 +42,7 @@ namespace MCBRef
 
 	public:
 
+
 		void SetParent(Bone* parent);
 
 		void AddChild(Bone* bone);
@@ -59,11 +53,17 @@ namespace MCBRef
 
 		void SetScale(MCB::Vector3D scale);
 
+		void SetInverseBindMatrix(MCB::MCBMatrix mat);
+
+		void SetName(std::string name);
+
 		MCB::MCBMatrix GetGlobalMatrix();
 
 		MCB::MCBMatrix GetLocalMatrix();
 
 		void SetIK(bool flag);
+
+		Bone* GetParent();
 
 	};
 }
