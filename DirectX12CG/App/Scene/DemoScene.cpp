@@ -99,7 +99,7 @@ void MCB::DemoScene::Update()
 
     for (uint8_t i = 0; i < 4; i++)
     {
-		if ( collIK[ i ] )
+		if ( false )
 		{
 			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),true);
 			test2Animation_.animationModel_->skeleton.SetConstraint(test2Animation_,ikBoneName_[ i ].endJointName.c_str(),poleVec_[i]);
@@ -109,9 +109,8 @@ void MCB::DemoScene::Update()
         {
 			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
 			
-			test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
-                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },
-                    { poleVec_[i].x,poleVec_[i].y,poleVec_[i].z }, ikBoneName_[i].endJointName.c_str(),ikBoneName_[i].middleJointName.c_str(),ikBoneName_[i].rootJointName.c_str());
+			test2Animation_.animationModel_->skeleton.SetCCDIK(test2Animation_,
+                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },*test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[i].endJointName));
         }
         else if(!collIK[i] )
         {
@@ -121,6 +120,7 @@ void MCB::DemoScene::Update()
         }
 		
     }
+
     MatrixUpdate();
 }
 

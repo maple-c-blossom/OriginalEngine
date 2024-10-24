@@ -47,6 +47,8 @@ namespace MCB
 		Vector3D& operator= (const Float3& a);
 		Vector3D& operator= (const DirectX::XMVECTOR& a);
 		Vector3D& operator= (const DirectX::XMFLOAT3& a);
+
+		Vector3D Clamp(const Vector3D& vec1,const Vector3D& min,const Vector3D& max,bool* isClamped = nullptr);
 		
 	};
 	Vector3D operator+(const Vector3D& vecA, const Vector3D& vecB);

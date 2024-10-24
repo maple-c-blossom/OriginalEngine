@@ -912,7 +912,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   {
 		   if (node->ikData.isIK)
 		   {
-			   TwoBoneIK(*node.get());
+			   CCDIK(*node.get());
 			   for (auto& updateNode : nodes_)
 			   {
 				   UpdateNodeMatrix(updateNode.get());
@@ -956,34 +956,92 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
    }
 
-   void MCB::Skeleton::CCDIK(Node& effector, Vector3D targetPos, int32_t numMaxIteration, float errToleranceSq)
+   void MCB::Skeleton::CCDIK(Node& effector)
    {
 	   bool run = true;
-	   float iteration = effector.ccd.iteration;
+	   bool remaining = false;
+	   int32_t iteration = effector.ccd.iteration;
+	   Node* effectorB = &effector;
+	   Node* effectorP = effectorB->parent;
+	   for ( int32_t i = 0; i < effector.ccd.linkBoneCount; i++ )
+	   {
+		   if ( effectorP == nullptr )
+		   {
+			   break;
+		   }
+		   effectorB->endPosition = effectorB->defaultLocalTranslation;
+		   effectorP->endPosition = effectorP->defaultLocalTranslation;
+		   effectorB->rotation = effectorB->defaultRotation;
+		   effectorP->rotation = effectorP->defaultRotation;
+		   effectorB = effectorP;
+		   effectorP = effectorB->parent;
+	   }
+
 	   while (iteration-- )
 	   {
 		   Quaternion idealRotation;
 		   Quaternion realRotation;
 		   Quaternion remainingRotation;
-		   Vector3D localTargetPos;
+		   Vector3D localTargetPos = effector.ccd.targetPos;
 		   Node* effectorBone = &effector;
 		   Node* effectorParent = effectorBone->parent;
-		   for ( int i = 0; i < effector.ccd.linkBoneCount; i++ )
+		   Node* rootBone = nullptr;
+
+		   for ( int32_t i = 0; i < effector.ccd.linkBoneCount; i++ )
 		   {
 
 			   //座標変換
+			   if ( effector.ccd.isCoordinateTransformation )
+			   {
+					//向きたい場所のObj座標系の場所
+				   Vector3D effectorWorldVec = effector.ccd.targetPos;//Objからの相対位置(targetPos - ObjPos)
+				   //向きたい場所(RootJointの座標系)
+				   localTargetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effector.ccd.targetPos) * MCBMatrix::MatrixInverse(effectorParent->defaultModelTransform));
+
+			   }
 
 			   //理想回転作成
 			   Vector3D boneVec = Vector3D(effectorParent->endPosition,effectorBone->endPosition);
 			   Vector3D effectToTarget = Vector3D(effectorParent->endPosition,localTargetPos);
+			   boneVec.V3Norm();
+			   effectToTarget.V3Norm();
 			   Vector3D axis = boneVec.GetV3Cross(effectToTarget);
-			   float radian = boneVec.GetV3Dot(effectToTarget);
+			   float radian = acos(boneVec.GetV3Dot(effectToTarget));
+
+			   if ( radian < effectorParent->ccd.threshold )
+			   {
+				   continue;
+			   }
 
 			   idealRotation.SetRota(axis,radian);
 
-			   Vector3D eulerRot = idealRotation.GetQuaternionRotaMat(idealRotation).GetRotationToEuler();
+			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
 
+			   if ( remaining )
+			   {
+				   idealRotation = idealRotation.GetDirectProduct(idealRotation,remainingRotation);
+			   }
 
+			   if ( effector.ccd.isLimit )
+			   {
+				   Vector3D eulerRot = idealRotation.GetQuaternionRotaMat(idealRotation).GetRotationToEuler();
+
+				   eulerRot = eulerRot.Clamp(eulerRot,effector.ccd.bottomLimitEulerRadian,
+					   effector.ccd.topLimitEulerRadian,&remaining);
+
+				   realRotation = realRotation.SetToRorateObjectToInternal(eulerRot.vec_);
+
+				   remainingRotation = realRotation.GetDirectProduct(
+					   realRotation.GetConjugated(realRotation),idealRotation);
+
+			   }
+			   else
+			   {
+				   realRotation = idealRotation;
+			   }
+			   
+			   effectorParent->rotation = idealRotation.ConvertXMVector();
+				//UpdateNodeMatrix(effectorParent);
 
 			   effectorBone = effectorParent;
 			   effectorParent = effectorBone->parent;
@@ -991,12 +1049,49 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   {
 				   break;
 			   }
+			   else
+			   {
+				   rootBone = effectorParent;
+			   }
+		   }
 
 
+		   if ( rootBone )
+		   {
+			   std::vector<Node*> nodes;
+			   nodes.push_back(rootBone);
+			   int32_t count = 0;
+			   while ( count < nodes.size())
+			   {
+				   UpdateNodeMatrix(nodes[count]);
+				   for ( auto child : nodes[ count ]->children )
+				   {
+					   nodes.push_back(child);
+				   }
+				   count++;
+			   }
 		   }
 	   }
 
    }
+
+   void MCB::Skeleton::SetCCDIK(const Object3d& obj,const Vector3D& targetPos,Node& effectter)
+   {
+	   Vector3D pos(obj.position_.x,obj.position_.y,obj.position_.z);
+	   WorldMatrix mat = obj.matWorld_;
+	   MCBMatrix worldMatInv = XMMatrixInverse(nullptr,mat.matWorld_);
+	   Node* node = &effectter;
+
+	   if ( node )
+	   {
+		   node->ikData.isIK = true;
+		   
+		   node->ccd.targetPos = targetPos;
+		   node->ccd.targetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(targetPos) * worldMatInv);
+	   }
+
+   }
+
 
    void MCB::Skeleton::SetTwoBoneIK(const Object3d& obj, const Vector3D& targetPos, const Vector3D& constraintPosition,
 	   const string& boneName,

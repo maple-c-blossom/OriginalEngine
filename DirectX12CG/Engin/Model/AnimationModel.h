@@ -156,8 +156,9 @@ PragmaWarningNum(4324)
 
 		struct CCDIKData
 		{
-			bool isLimit;
-			int32_t linkBoneCount;
+			bool isLimit = false;
+			bool isCoordinateTransformation = true;
+			int32_t linkBoneCount = 2;
 			float threshold = 1.0e-5f;
 			int32_t iteration = 20;
 			Vector3D targetPos;
@@ -253,7 +254,9 @@ PragmaPop
         /// <param name="targetPos">目標地点</param>
         /// <param name="numMaxIteration">CCDの反復回数</param>
         /// <param name="errToleranceSq">誤差の許容数値</param>
-        void CCDIK(Node& effectter,Vector3D targetPos,int32_t numMaxIteration,float errToleranceSq);//理論理解段階のため未定義(引数も不十分の可能性あり)
+        void CCDIK(Node& effectter);
+
+		void SetCCDIK(const Object3d& obj,const Vector3D& targetPos,Node& effectter);
 
         //void SetCCDIK(Vector3D targetPos,Vector3D objPos);
 

@@ -270,6 +270,51 @@ Vector3D& MCB::Vector3D::operator=(const DirectX::XMFLOAT3& a)
 	return *this;
 }
 
+Vector3D MCB::Vector3D::Clamp(const Vector3D& vec1,const Vector3D& min,const Vector3D& max,bool* isClamped)
+{
+	Vector3D ret;
+	bool isClamp = false;
+	if ( vec1.vec_.x_ < min.vec_.x_ )
+	{
+		ret.vec_.x_ = min.vec_.x_;
+		isClamp = true;
+	}
+	else if(vec1.vec_.x_ > max.vec_.x_ )
+	{
+		ret.vec_.x_ = max.vec_.x_;
+		isClamp = true;
+	}
+
+
+	if ( vec1.vec_.y_ < min.vec_.y_ )
+	{
+		ret.vec_.y_ = min.vec_.y_;
+		isClamp = true;
+	}
+	else if ( vec1.vec_.y_ > max.vec_.y_ )
+	{
+		ret.vec_.y_ = max.vec_.y_;
+		isClamp = true;
+	}
+
+	if ( vec1.vec_.z_ < min.vec_.z_ )
+	{
+		ret.vec_.z_ = min.vec_.z_;
+		isClamp = true;
+	}
+	else if ( vec1.vec_.z_ > max.vec_.z_ )
+	{
+		ret.vec_.z_ = max.vec_.z_;
+		isClamp = true;
+	}
+	if ( isClamped != nullptr )
+	{
+		*isClamped = isClamp;
+	}
+
+	return ret;
+}
+
 Vector3D MCB::operator+(const Vector3D& vecA, const Vector3D& vecB)
 {
 	Vector3D temp;

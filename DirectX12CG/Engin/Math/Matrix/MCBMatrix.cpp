@@ -385,21 +385,21 @@ Vector3D MCB::MCBMatrix::GetRotationToEuler()
 	Vector3D rot;
 	if (_13_ == 1.0f )
 	{
-		rot.vec_.x_ = atan2(_23_,_33_);
+		rot.vec_.x_ = static_cast<float>(atan2(_23_,_33_));
 		rot.vec_.y_ = PI * 0.5f;
 		rot.vec_.z_ = 0;
 	}
 	else if ( 13 == -1.0f )
 	{
-		rot.vec_.x_ = atan2(_23_,_33_);
+		rot.vec_.x_ = static_cast<float>(atan2(_23_,_33_));
 		rot.vec_.y_ = -PI * 0.5f;
 		rot.vec_.z_ = 0;
 	}
 	else
 	{
-		rot.vec_.x_ = atan2(_23_,_33_);
-		rot.vec_.y_ = -asin(_13_);
-		rot.vec_.z_ = atan2(_12_,_11_);///-90~90
+		rot.vec_.x_ = static_cast<float>(atan2(_23_,_33_));
+		rot.vec_.y_ = -static_cast<float>(asin(_13_));
+		rot.vec_.z_ = static_cast<float>(atan2(_12_,_11_));///-90~90
 	}
 
 	return rot;
