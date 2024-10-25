@@ -85,8 +85,8 @@ namespace MCB
 			IKDataSet(std::string endJoint,std::string middlejoint);
 			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint);
 		};
-		std::array<IKDataSet,4> ikBoneName_ = { std::string("mixamorig:LeftHand"),
-												{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"}};
+		std::array<IKDataSet,4> ikBoneName_ = { std::string("Bone.004"),
+												{"Bone.001"},{"Bone.001"},{"Bone.001"}};
 		int64_t pad6;
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"} };
 		int64_t pad114514;

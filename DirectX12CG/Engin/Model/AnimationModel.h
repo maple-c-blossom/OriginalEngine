@@ -158,7 +158,7 @@ PragmaWarningNum(4324)
 		{
 			bool isLimit = false;
 			bool isCoordinateTransformation = true;
-			int32_t linkBoneCount = 2;
+			int32_t linkBoneCount = 4;
 			float threshold = 1.0e-5f;
 			int32_t iteration = 20;
 			Vector3D targetPos;

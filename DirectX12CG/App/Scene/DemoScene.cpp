@@ -201,6 +201,7 @@ void MCB::DemoScene::ImGuiUpdate()
 			ImguiManager::GuizmoDraw(&poleObj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
 		}
 
+
 	}
 	ImGuizmo::SetID(static_cast< int32_t >( matId ));
 	ImguiManager::GuizmoDraw(&ground_,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
@@ -383,7 +384,7 @@ void MCB::DemoScene::LoadModel()
     animModel_->Load("IKTest");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-    anim2Model_->Load("player");
+    anim2Model_->Load("TestIKObject");
 }
 
 void MCB::DemoScene::LoadTexture()
@@ -438,10 +439,10 @@ void MCB::DemoScene::Object3DInit()
 		poleVecObjects_[ i ].camera_ = viewCamera_;
     }
     test2Animation_.animationModel_ = anim2Model_.get();
-    test2Animation_.scale_ = { 0.01f,0.01f,0.01f };
+    test2Animation_.scale_ = { 0.1f,0.1f,0.1f };
     test2Animation_.position_ = { 0,2,0 };
     test2Animation_.camera_ = viewCamera_;
-	test2Animation_.currentAnimation_ = "Tpose";
+	//test2Animation_.currentAnimation_ = "Tpose";
 	test2Animation_.AnimationUpdate();
 }
 
