@@ -969,10 +969,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   {
 			   break;
 		   }
+
 		   effectorB->endPosition = effectorB->defaultLocalTranslation;
 		   effectorP->endPosition = effectorP->defaultLocalTranslation;
+
 		   effectorB->rotation = effectorB->defaultRotation;
 		   effectorP->rotation = effectorP->defaultRotation;
+
 		   effectorB = effectorP;
 		   effectorP = effectorB->parent;
 	   }
@@ -982,7 +985,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   Quaternion idealRotation;
 		   Quaternion realRotation;
 		   Quaternion remainingRotation;
+
 		   Vector3D localTargetPos = effector.ccd.targetPos;
+
 		   Node* effectorBone = &effector;
 		   Node* effectorParent = effectorBone->parent;
 		   Node* rootBone = nullptr;
@@ -995,6 +1000,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   {
 					//向きたい場所のObj座標系の場所
 				   Vector3D effectorWorldVec = effector.ccd.targetPos;//Objからの相対位置(targetPos - ObjPos)
+
 				   //向きたい場所(RootJointの座標系)
 				   localTargetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effector.ccd.targetPos) * MCBMatrix::MatrixInverse(effectorParent->defaultModelTransform));
 
@@ -1003,10 +1009,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   //理想回転作成
 			   Vector3D boneVec = Vector3D(effectorParent->endPosition,effectorBone->endPosition);
 			   Vector3D effectToTarget = Vector3D(effectorParent->endPosition,localTargetPos);
+
 			   boneVec.V3Norm();
 			   effectToTarget.V3Norm();
+
 			   Vector3D axis = boneVec.GetV3Cross(effectToTarget);
-			   float radian = acos(boneVec.GetV3Dot(effectToTarget));
+			   float dotRadian = effectToTarget.GetV3Dot(boneVec);
+			   float radian = acos(dotRadian);
 
 			   if ( radian < effectorParent->ccd.threshold )
 			   {
@@ -1015,7 +1024,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 			   idealRotation.SetRota(axis,radian);
 
-			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
+			   idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->defaultRotation);
 
 			   if ( remaining )
 			   {

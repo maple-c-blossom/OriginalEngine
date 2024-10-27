@@ -60,7 +60,7 @@ namespace MCB
 		Object3d ground_;
 		Object3d Skydorm_;
 		std::array<Object3d,4> effectorObjects_;
-		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0.6f,3.45f,-0.48f),
+		std::array<DirectX::XMFLOAT3,4> effectorPos = { DirectX::XMFLOAT3(0,3.45f,0),
 			DirectX::XMFLOAT3(-0.6f,3.45f,-0.48f),
 			DirectX::XMFLOAT3(0.14f,1.8f,0.05f),DirectX::XMFLOAT3(-0.1f,1.8f,0.0f)};
 		Object3d test2Animation_;
