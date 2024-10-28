@@ -980,7 +980,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   effectorP = effectorB->parent;
 	   }
 
-	   while (iteration-- )
+	   while (iteration-- && run)
 	   {
 		   Quaternion idealRotation;
 		   Quaternion realRotation;
@@ -1012,7 +1012,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 				   localEffectorParentPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effectorParent->endPosition) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
 
-				   //localEffectorPos = Quaternion().SetRotationVector(Quaternion(effectorParent->rotation),localEffectorPos);
+				   localEffectorPos = Quaternion().SetRotationVector(Quaternion(effectorParent->rotation),localEffectorPos);
 
 			   }
 
@@ -1034,7 +1034,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 			   idealRotation.SetRota(axis,radian);
 
-			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorBone->rotation);
+			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
 
 			   if ( remaining )
 			   {
@@ -1061,9 +1061,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   
 			   effectorParent->rotation = realRotation.ConvertXMVector();
 
-
-			   effectorBone = effectorParent;
-			   effectorParent = effectorBone->parent;
+			   effectorParent = effectorParent->parent;
 			   if ( effectorParent == nullptr )
 			   {
 				   break;
@@ -1338,7 +1336,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 					for (auto& child2 : node->children)
 					{
-					DrawHeirarchy(child2);
+						DrawHeirarchy(child2);
 					}
 					ImGui::TreePop();
 				}
