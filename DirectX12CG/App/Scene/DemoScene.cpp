@@ -242,6 +242,10 @@ void MCB::DemoScene::ImGuiUpdate()
 				ImGui::Text("ONの時、IKを行う");
 				ImGui::Checkbox("isIK", &isIk_[i]);
 
+				ImGui::Text("IterationNum");
+				ImGui::SliderInt("Num",&test2Animation_.animationModel_->skeleton.GetNode(bone)->ccd.iteration,
+					1,30);
+
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
 				ImGui::Text("三角形を描画");

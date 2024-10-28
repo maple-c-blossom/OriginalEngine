@@ -15,9 +15,15 @@
     "nodes" : [
         {
             "name" : "Bone.004",
+            "rotation" : [
+                -3.970466940254533e-23,
+                -5.329070941717225e-15,
+                -9.793818452627848e-22,
+                1
+            ],
             "translation" : [
-                0,
-                2.9983363151550293,
+                3.232156867880098e-20,
+                2.9983386993408203,
                 0
             ]
         },
@@ -26,10 +32,16 @@
                 0
             ],
             "name" : "Bone.003",
+            "rotation" : [
+                1.4210854715202004e-14,
+                -7.105428204633949e-15,
+                2.3202416182112426e-22,
+                1
+            ],
             "translation" : [
-                0,
-                2.991281509399414,
-                0
+                1.2546675531204324e-20,
+                2.9912829399108887,
+                -1.1368683772161603e-13
             ]
         },
         {
@@ -37,10 +49,16 @@
                 1
             ],
             "name" : "Bone.002",
+            "rotation" : [
+                4.263256414560601e-14,
+                -4.085620730620576e-14,
+                3.006387936323979e-21,
+                1
+            ],
             "translation" : [
-                0,
-                2.878403663635254,
-                0
+                7.273478289948333e-21,
+                2.8784048557281494,
+                -6.706953243652836e-14
             ]
         },
         {
@@ -48,17 +66,29 @@
                 2
             ],
             "name" : "Bone.001",
+            "rotation" : [
+                -3.970466940254533e-23,
+                -4.694054086298448e-22,
+                -2.8206858888058244e-22,
+                1
+            ],
             "translation" : [
-                0,
-                1.9308561086654663,
-                0
+                -9.065899513581183e-22,
+                1.9308570623397827,
+                -5.684341886080802e-14
             ]
         },
         {
             "children" : [
                 3
             ],
-            "name" : "Bone"
+            "name" : "Bone",
+            "rotation" : [
+                1.65143518415789e-07,
+                2.8370715554615344e-08,
+                4.2869320018758955e-15,
+                1
+            ]
         },
         {
             "mesh" : 0,
@@ -179,7 +209,7 @@
         {
             "bufferView" : 0,
             "componentType" : 5126,
-            "count" : 48,
+            "count" : 58,
             "max" : [
                 1,
                 10.775524139404297,
@@ -187,33 +217,33 @@
             ],
             "min" : [
                 -1,
-                0,
-                -1
+                -7.574785243491533e-09,
+                -1.0000001192092896
             ],
             "type" : "VEC3"
         },
         {
             "bufferView" : 1,
             "componentType" : 5126,
-            "count" : 48,
+            "count" : 58,
             "type" : "VEC3"
         },
         {
             "bufferView" : 2,
             "componentType" : 5126,
-            "count" : 48,
+            "count" : 58,
             "type" : "VEC2"
         },
         {
             "bufferView" : 3,
             "componentType" : 5121,
-            "count" : 48,
+            "count" : 58,
             "type" : "VEC4"
         },
         {
             "bufferView" : 4,
             "componentType" : 5126,
-            "count" : 48,
+            "count" : 58,
             "type" : "VEC4"
         },
         {
@@ -262,58 +292,58 @@
     "bufferViews" : [
         {
             "buffer" : 0,
-            "byteLength" : 576,
+            "byteLength" : 696,
             "byteOffset" : 0
         },
         {
             "buffer" : 0,
-            "byteLength" : 576,
-            "byteOffset" : 576
+            "byteLength" : 696,
+            "byteOffset" : 696
         },
         {
             "buffer" : 0,
-            "byteLength" : 384,
-            "byteOffset" : 1152
+            "byteLength" : 464,
+            "byteOffset" : 1392
         },
         {
             "buffer" : 0,
-            "byteLength" : 192,
-            "byteOffset" : 1536
+            "byteLength" : 232,
+            "byteOffset" : 1856
         },
         {
             "buffer" : 0,
-            "byteLength" : 768,
-            "byteOffset" : 1728
+            "byteLength" : 928,
+            "byteOffset" : 2088
         },
         {
             "buffer" : 0,
             "byteLength" : 216,
-            "byteOffset" : 2496
+            "byteOffset" : 3016
         },
         {
             "buffer" : 0,
             "byteLength" : 320,
-            "byteOffset" : 2712
+            "byteOffset" : 3232
         },
         {
             "buffer" : 0,
             "byteLength" : 8,
-            "byteOffset" : 3032
+            "byteOffset" : 3552
         },
         {
             "buffer" : 0,
             "byteLength" : 24,
-            "byteOffset" : 3040
+            "byteOffset" : 3560
         },
         {
             "buffer" : 0,
             "byteLength" : 32,
-            "byteOffset" : 3064
+            "byteOffset" : 3584
         },
         {
             "buffer" : 0,
             "byteLength" : 24,
-            "byteOffset" : 3096
+            "byteOffset" : 3616
         }
     ],
     "samplers" : [
@@ -324,7 +354,7 @@
     ],
     "buffers" : [
         {
-            "byteLength" : 3120,
+            "byteLength" : 3640,
             "uri" : "TestIKObject.bin"
         }
     ]

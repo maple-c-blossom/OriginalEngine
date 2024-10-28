@@ -100,6 +100,7 @@ PragmaWarningNum(4324)
         Vector3D startPosition;//ボーンの根本のポジション(ローカル空間)
         Vector3D boneVec;//ボーンのベクトル(ローカル空間)
         Vector3D defaultBoneVec;//初期のボーンのベクトル(ローカル空間)
+		MCB::Quaternion globalRotation;
 		Ray worldBoneRay;//ボーンをレイに見立てて当たり判定を行う。
         float boneLength;//ボーンの長さ
         bool updated = false;
@@ -160,9 +161,9 @@ PragmaWarningNum(4324)
 			bool isCoordinateTransformation = true;
 			int32_t linkBoneCount = 4;
 			float threshold = 1.0e-5f;
-			int32_t iteration = 20;
+			int32_t iteration = 2;
 			Vector3D targetPos;
-			Vector3D topLimitEulerRadian;
+			Vector3D topLimitEulerRadian = {};
 			Vector3D bottomLimitEulerRadian;
 		};
 

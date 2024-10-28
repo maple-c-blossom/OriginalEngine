@@ -988,9 +988,13 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 		   Vector3D localTargetPos = effector.ccd.targetPos;
 
+
 		   Node* effectorBone = &effector;
 		   Node* effectorParent = effectorBone->parent;
 		   Node* rootBone = nullptr;
+
+		   Vector3D localEffectorPos = effectorBone->endPosition;
+		   Vector3D localEffectorParentPos = effectorParent->endPosition;
 
 		   for ( int32_t i = 0; i < effector.ccd.linkBoneCount; i++ )
 		   {
@@ -999,16 +1003,22 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   if ( effector.ccd.isCoordinateTransformation )
 			   {
 					//向きたい場所のObj座標系の場所
-				   Vector3D effectorWorldVec = effector.ccd.targetPos;//Objからの相対位置(targetPos - ObjPos)
+				   Vector3D effectorWorldVec = effector.ccd.targetPos;
 
 				   //向きたい場所(RootJointの座標系)
-				   localTargetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effector.ccd.targetPos) * MCBMatrix::MatrixInverse(effectorParent->defaultModelTransform));
+				   localTargetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effector.ccd.targetPos) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
+
+				   localEffectorPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effectorBone->endPosition) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
+
+				   localEffectorParentPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effectorParent->endPosition) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
+
+				   //localEffectorPos = Quaternion().SetRotationVector(Quaternion(effectorParent->rotation),localEffectorPos);
 
 			   }
 
 			   //理想回転作成
-			   Vector3D boneVec = Vector3D(effectorParent->endPosition,effectorBone->endPosition);
-			   Vector3D effectToTarget = Vector3D(effectorParent->endPosition,localTargetPos);
+			   Vector3D boneVec = Vector3D(localEffectorParentPos,localEffectorPos);
+			   Vector3D effectToTarget = Vector3D(localEffectorParentPos,localTargetPos);
 
 			   boneVec.V3Norm();
 			   effectToTarget.V3Norm();
@@ -1024,7 +1034,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 			   idealRotation.SetRota(axis,radian);
 
-			   idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->defaultRotation);
+			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorBone->rotation);
 
 			   if ( remaining )
 			   {
@@ -1049,8 +1059,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   realRotation = idealRotation;
 			   }
 			   
-			   effectorParent->rotation = idealRotation.ConvertXMVector();
-				//UpdateNodeMatrix(effectorParent);
+			   effectorParent->rotation = realRotation.ConvertXMVector();
+
 
 			   effectorBone = effectorParent;
 			   effectorParent = effectorBone->parent;
@@ -1095,7 +1105,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   {
 		   node->ikData.isIK = true;
 		   
-		   node->ccd.targetPos = targetPos;
+		   node->ikData.effectorWorldPos = targetPos;
 		   node->ccd.targetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(targetPos) * worldMatInv);
 	   }
 
@@ -1401,9 +1411,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	   else pNode->AnimaetionParentMat = nodeTrans;
 	   XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
-	   pNode->endPosition.vec_.x_ = pNode->translation.m128_f32[0];
-	   pNode->endPosition.vec_.y_ = pNode->translation.m128_f32[1];
-	   pNode->endPosition.vec_.z_ = pNode->translation.m128_f32[2];
+	   MCBMatrix temp = nodeTrans;
+	   pNode->endPosition = temp.GetTranslate(temp);
+
 	   if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
 	   else pNode->startPosition = { 0,0,0 };
 	   pNode->boneVec = Vector3D().Vector3Substruct(pNode->startPosition.vec_, pNode->endPosition.vec_);
