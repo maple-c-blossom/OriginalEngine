@@ -5,6 +5,7 @@
 #include "TitleScene.h"
 #include "AnimationModel.h"
 #include "Object3d.h"
+#include "DemoScene.h"
 using namespace std;
 
 
@@ -21,7 +22,7 @@ MCB::SceneManager::SceneManager(RootParameter* root, Depth* depth, PipeLineManag
 	loadSprite_.InitMatProje();
 	InitRand();
 	imgui_.Init();
-	scene_ = make_unique<TitleScene>(root_, depth_, pipeline_);
+	scene_ = make_unique<DemoScene>(root_, depth_, pipeline_);
 	//dynamic_cast< Scene* >( scene_.get() )->SetStage("Tutorial");
 }
 

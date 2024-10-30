@@ -989,7 +989,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   Vector3D localTargetPos = effector.ccd.targetPos;
 
 
-		   Node* effectorBone = &effector;
+		   const Node* effectorBone = &effector;
 		   Node* effectorParent = effectorBone->parent;
 		   Node* rootBone = nullptr;
 
@@ -999,22 +999,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   for ( int32_t i = 0; i < effector.ccd.linkBoneCount; i++ )
 		   {
 
-			   //座標変換
-			   if ( effector.ccd.isCoordinateTransformation )
-			   {
-					//向きたい場所のObj座標系の場所
-				   Vector3D effectorWorldVec = effector.ccd.targetPos;
-
-				   //向きたい場所(RootJointの座標系)
-				   localTargetPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effector.ccd.targetPos) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
-
-				   localEffectorPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effectorBone->endPosition) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
-
-				   localEffectorParentPos = MCBMatrix::GetTranslate(MCBMatrix::MCBMatrixTranslate(effectorParent->endPosition) * MCBMatrix::MatrixInverse(effectorParent->AnimaetionParentMat));
-
-				   localEffectorPos = Quaternion().SetRotationVector(Quaternion(effectorParent->rotation),localEffectorPos);
-
-			   }
+			    localEffectorPos = effectorBone->endPosition;
+			    localEffectorParentPos = effectorParent->endPosition;
 
 			   //理想回転作成
 			   Vector3D boneVec = Vector3D(localEffectorParentPos,localEffectorPos);
@@ -1034,7 +1020,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 			   idealRotation.SetRota(axis,radian);
 
-			   //idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
+			   idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
 
 			   if ( remaining )
 			   {
@@ -1060,6 +1046,20 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   }
 			   
 			   effectorParent->rotation = realRotation.ConvertXMVector();
+			  
+			   std::vector<Node*> nodes;
+			   nodes.push_back(effectorParent);
+			   int32_t count = 0;
+			   while ( count < nodes.size() )
+			   {
+				   UpdateNodeMatrix(nodes[ count ]);
+				   for ( auto child : nodes[ count ]->children )
+				   {
+					   nodes.push_back(child);
+				   }
+				   count++;
+			   }
+
 
 			   effectorParent = effectorParent->parent;
 			   if ( effectorParent == nullptr )
@@ -1409,7 +1409,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   if (pNode->parent) pNode->AnimaetionParentMat = nodeTrans * (pNode->parent->AnimaetionParentMat);
 	   else pNode->AnimaetionParentMat = nodeTrans;
 	   XMMatrixDecompose(&pNode->scale, &pNode->rotation, &pNode->translation, nodeTrans);
-	   MCBMatrix temp = nodeTrans;
+	   MCBMatrix temp = pNode->AnimaetionParentMat;
 	   pNode->endPosition = temp.GetTranslate(temp);
 
 	   if (pNode->parent) pNode->startPosition = pNode->parent->endPosition;
