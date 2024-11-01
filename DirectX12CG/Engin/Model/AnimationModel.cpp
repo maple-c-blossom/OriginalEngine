@@ -970,8 +970,8 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   break;
 		   }
 
-		   effectorB->endPosition = effectorB->defaultLocalTranslation;
-		   effectorP->endPosition = effectorP->defaultLocalTranslation;
+		   effectorB->endPosition = MCBMatrix().GetTranslate(effectorB->defaultModelTransform);
+		   effectorP->endPosition = MCBMatrix().GetTranslate(effectorB->defaultModelTransform);
 
 		   effectorB->rotation = effectorB->defaultRotation;
 		   effectorP->rotation = effectorP->defaultRotation;
@@ -1021,30 +1021,33 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   idealRotation.SetRota(axis,radian);
 
 			   idealRotation = idealRotation.GetDirectProduct(idealRotation,effectorParent->rotation);
+			   idealRotation.Normalize();
 
 			   if ( remaining )
 			   {
 				   idealRotation = idealRotation.GetDirectProduct(idealRotation,remainingRotation);
+				   idealRotation.Normalize();
 			   }
 
 			   if ( effector.ccd.isLimit )
 			   {
 				   Vector3D eulerRot = idealRotation.GetQuaternionRotaMat(idealRotation).GetRotationToEuler();
 
-				   eulerRot = eulerRot.Clamp(eulerRot,effector.ccd.bottomLimitEulerRadian,
-					   effector.ccd.topLimitEulerRadian,&remaining);
+				   eulerRot = eulerRot.Clamp(eulerRot,effectorParent->ccd.bottomLimitEulerRadian,
+					  effectorParent->ccd.topLimitEulerRadian,&remaining);
 
 				   realRotation = realRotation.SetToRorateObjectToInternal(eulerRot.vec_);
-
+				   realRotation.Normalize();
 				   remainingRotation = realRotation.GetDirectProduct(
 					   realRotation.GetConjugated(realRotation),idealRotation);
-
+				   remainingRotation.Normalize();
 			   }
 			   else
 			   {
 				   realRotation = idealRotation;
 			   }
-			   
+
+			   realRotation.Normalize();
 			   effectorParent->rotation = realRotation.ConvertXMVector();
 			  
 			   std::vector<Node*> nodes;

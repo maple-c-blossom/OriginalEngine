@@ -85,8 +85,12 @@ namespace MCB
 			IKDataSet(std::string endJoint,std::string middlejoint);
 			IKDataSet(std::string endJoint,std::string middleJoint,std::string rootJoint);
 		};
-		std::array<IKDataSet,4> ikBoneName_ = { std::string("Bone.004"),
-												{"Bone.001"},{"Bone.001"},{"Bone.001"}};
+		std::array<IKDataSet,4> ikBoneName_ = { std::string("Hand.L"),
+														{"mixamorig:RightHand"},{"mixamorig:LeftFoot"},{"mixamorig:RightFoot"} };
+
+		std::array<IKDataSet,4> ikBoneName_2 = { std::string("hand.L"),
+											{"Bone.001"},{"Bone.001"},{"Bone.001"} };
+		DirectX::XMFLOAT3 scale2 = { 0.1f,0.1f,0.1f };
 		int64_t pad6;
 		std::array<std::string,5> animationName = { { "Idle", "Run","Jump","Climb","Tpose"} };
 		int64_t pad114514;
@@ -99,6 +103,7 @@ namespace MCB
 
 #pragma region 通常変数
 		bool loopFlag_ = true;
+		bool chengeModel = false;
 		bool startPositionReset_ = true;
 		bool debugStop = false;
 		bool animePlay = false;

@@ -157,14 +157,14 @@ PragmaWarningNum(4324)
 
 		struct CCDIKData
 		{
-			bool isLimit = false;
+			bool isLimit = true;
 			bool isCoordinateTransformation = true;
 			int32_t linkBoneCount = 4;
 			float threshold = 1.0e-5f;
 			int32_t iteration = 2;
 			Vector3D targetPos;
-			Vector3D topLimitEulerRadian = {};
-			Vector3D bottomLimitEulerRadian;
+			Vector3D topLimitEulerRadian = {PI/2,PI/2,PI/2};
+			Vector3D bottomLimitEulerRadian = {-PI/2,-PI/2,-PI/2};
 		};
 
 

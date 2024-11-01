@@ -51,6 +51,17 @@ void MCB::DemoScene::Update()
         sceneEnd_ = true;
     }
 
+
+	if ( chengeModel )
+	{
+		test2Animation_.animationModel_ = animModel_.get();
+		test2Animation_.scale_ = { 0.1f,0.1f,0.1f };
+	}
+	else
+	{
+		test2Animation_.animationModel_ = anim2Model_.get();
+		test2Animation_.scale_ = { 1.0f,1.0f,1.0f };
+	}
     for (uint8_t i = 0; i < 4; i++)
     {
         if (noMove[i]) continue;
@@ -97,7 +108,7 @@ void MCB::DemoScene::Update()
         }
     }
 
-    for (uint8_t i = 0; i < 4; i++)
+    for (uint8_t i = 0; i < 1; i++)
     {
 		if ( false )
 		{
@@ -107,15 +118,23 @@ void MCB::DemoScene::Update()
 		}
         else if (isIk_[i] )
         {
-			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
-			
-			test2Animation_.animationModel_->skeleton.SetCCDIK(test2Animation_,
-                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },*test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[i].endJointName));
+			//test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
+
+			if(chengeModel)
+			{
+				test2Animation_.animationModel_->skeleton.SetCCDIK(test2Animation_,
+							{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },*test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName));
+			}
+			else
+			{
+				test2Animation_.animationModel_->skeleton.SetCCDIK(test2Animation_,
+                    { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },*test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_2[i].endJointName));
+			}
         }
         else if(!collIK[i] )
         {
-			test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
-            test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
+			//test2Animation_.animationModel_->skeleton.SetCollTwoIK(ikBoneName_[ i ].endJointName.c_str(),false);
+   //         test2Animation_.animationModel_->skeleton.TwoBoneIKOff(ikBoneName_[i].endJointName.c_str());
 
         }
 		
@@ -134,6 +153,7 @@ void MCB::DemoScene::PostEffectDraw()
 	for ( auto& obj : effectorObjects_ )
 	{
 		obj.Draw();
+		break;
 	}
 	pipeline_->SetObjPipeLine(false,false);
 	test2Animation_.animationModel_->skeleton.JointObjectDraw();
@@ -190,16 +210,17 @@ void MCB::DemoScene::ImGuiUpdate()
 			ImGuizmo::SetID(static_cast< int32_t >( matId ));
 			matId++;
 			ImguiManager::GuizmoDraw(&obj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
+			break;
 		}
 
 
-		for ( auto& poleObj : poleVecObjects_ )
+		/*for ( auto& poleObj : poleVecObjects_ )
 		{
 			ImGuizmo::SetID(static_cast< int32_t >( matId ));
 			poleVec_[ matId - 4u ] = poleObj.position_;
 			matId++;
 			ImguiManager::GuizmoDraw(&poleObj,ImGuizmo::OPERATION::TRANSLATE,ImGuizmo::LOCAL);
-		}
+		}*/
 
 
 	}
@@ -229,15 +250,23 @@ void MCB::DemoScene::ImGuiUpdate()
 	ImGui::Text("objPos:%f,%f,%f",test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z);
 	ImGui::Checkbox("半透明表示",&debugView_);
 	ImGui::Checkbox("オブジェクトを表示しない",&objInvisibleView_);
+	bool tempflag = chengeModel;
+	ImGui::Checkbox("モデル変更",&chengeModel);
     if (ImGui::TreeNode("IK 制御"))
     {
-        for (uint8_t i = 0; i < 4; i++)
+        for (uint8_t i = 0; i < 1; i++)
         {
-            std::string bone = ikBoneName_[i].endJointName;
+           
+			IKDataSet* data = &ikBoneName_2[ i ];
+			if ( tempflag )
+			{
+				data = &ikBoneName_[ i ];
+			}
+			std::string bone = data->endJointName;
             if (ImGui::TreeNode(bone.c_str()))
             {
 				ImGui::Text("ONの時、自動でPoleVecの位置を再計算する");
-				ImGui::Checkbox("ComputePoleVec",&test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[i].endJointName)->ikData.computeConstraintVec);
+				ImGui::Checkbox("ComputePoleVec",&test2Animation_.animationModel_->skeleton.GetNode(data->endJointName)->ikData.computeConstraintVec);
 
 				ImGui::Text("ONの時、IKを行う");
 				ImGui::Checkbox("isIK", &isIk_[i]);
@@ -246,14 +275,18 @@ void MCB::DemoScene::ImGuiUpdate()
 				ImGui::SliderInt("Num",&test2Animation_.animationModel_->skeleton.GetNode(bone)->ccd.iteration,
 					1,30);
 
+				ImGui::Text("ChainNum");
+				ImGui::SliderInt("ChainNum",&test2Animation_.animationModel_->skeleton.GetNode(bone)->ccd.linkBoneCount,
+					1,4);
+
 				ImGui::Text("EffectorとPoleVectorまでの線を描画");
 				ImGui::Checkbox("LineDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->lineView);
 				ImGui::Text("三角形を描画");
 				ImGui::Checkbox("TriangleDraw",&test2Animation_.animationModel_->skeleton.GetNode(bone)->ikData.triangleDraw);
-                bone = ikBoneName_[i].endJointName;
+                bone = data->endJointName;
 				ImGui::Text("エフェクターの位置");
                 bone = bone + ":effector";
-				Node* node = test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName);
+				Node* node = test2Animation_.animationModel_->skeleton.GetNode(data->endJointName);
                 ImGui::Text("%s:%f,%f,%f", bone.c_str(),node->ikData.iKEffectorPosition.vec_.x_,
 					node->ikData.iKEffectorPosition.vec_.y_,node->ikData.iKEffectorPosition.vec_.z_);
                 ImGui::TreePop();
@@ -296,15 +329,15 @@ void MCB::DemoScene::ImGuiUpdate()
 				}
 			}
 			ImGui::EndCombo();
-		}
+		}/*
 		if ( test2Animation_.currentAnimation_ != animationName[ animationNum ] )
 		{
 			test2Animation_.currentAnimation_ = animationName[ animationNum ];
-			for ( int i = 0; i < 4; i++ )
+			for ( int i = 0; i < 1; i++ )
 			{
 				test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_[ i ].endJointName)->ikData.computeConstraintVec = true;
 			}
-		}
+		}*/
 
 		float animTime = test2Animation_.animeTime_;
 		ImGui::SliderFloat("AnimTime",&animTime,0.f,7.f);
@@ -350,7 +383,7 @@ void MCB::DemoScene::Initialize()
     lights_->UpDate();
     Object3d::SetLights(lights_);
     postEffect_->Init();
-	for ( uint8_t i = 0; i < 4; i++ )
+	for ( uint8_t i = 0; i < 1; i++ )
 	{
 		test2Animation_.animationModel_->skeleton.SetTwoBoneIK(test2Animation_,
 			{ effectorObjects_[ i ].position_.x,effectorObjects_[ i ].position_.y,effectorObjects_[ i ].position_.z },
@@ -385,10 +418,11 @@ void MCB::DemoScene::LoadModel()
 
 
     animModel_ = std::make_unique<AnimationModel>();
-    animModel_->Load("IKTest");
+    animModel_->Load("player");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-    anim2Model_->Load("TestIKObject");
+	anim2Model_->Load("TestIKObject");
+    //anim2Model_->Load("player");
 }
 
 void MCB::DemoScene::LoadTexture()
@@ -443,7 +477,7 @@ void MCB::DemoScene::Object3DInit()
 		poleVecObjects_[ i ].camera_ = viewCamera_;
     }
     test2Animation_.animationModel_ = anim2Model_.get();
-    test2Animation_.scale_ = { 0.1f,0.1f,0.1f };
+    test2Animation_.scale_ = { 0.01f,0.01f,0.01f };
     test2Animation_.position_ = { 0,2,0 };
     test2Animation_.camera_ = viewCamera_;
 	//test2Animation_.currentAnimation_ = "Tpose";
