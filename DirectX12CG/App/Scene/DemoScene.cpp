@@ -421,7 +421,7 @@ void MCB::DemoScene::LoadModel()
     animModel_->Load("player");
 
     anim2Model_ = std::make_unique<AnimationModel>();
-	anim2Model_->Load("TestIKObject");
+	anim2Model_->Load("player");
     //anim2Model_->Load("player");
 }
 

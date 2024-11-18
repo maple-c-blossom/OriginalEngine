@@ -157,7 +157,7 @@ PragmaWarningNum(4324)
 
 		struct CCDIKData
 		{
-			bool isLimit = true;
+			bool isLimit = false;
 			bool isCoordinateTransformation = true;
 			int32_t linkBoneCount = 4;
 			float threshold = 1.0e-5f;

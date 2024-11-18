@@ -631,10 +631,10 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	  pNode->worldBoneRay.rayVec_ = pNode->boneVec;
 	  pNode->worldBoneRay.StartPosition_ = MCB::MCBMatrix::GetTranslate(pNode->AnimaetionParentMat);
 	  pNode->worldBoneRay.range_ = pNode->boneLength;
-	  if ( currentAnimationPtr->name == "Tpose" )
-	  {
-		  pNode->defaultModelTransform = pNode->AnimaetionParentMat;
-	  }
+	  //if ( currentAnimationPtr->name == "Tpose" )
+	  //{
+		 // pNode->defaultModelTransform = pNode->AnimaetionParentMat;
+	  //}
 
   }
 
@@ -1011,7 +1011,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 			   Vector3D axis = boneVec.GetV3Cross(effectToTarget);
 			   float dotRadian = effectToTarget.GetV3Dot(boneVec);
-			   float radian = acos(dotRadian);
+			   float radian = std::clamp(acos(dotRadian),-1.f,1.f);
 
 			   if ( radian < effectorParent->ccd.threshold )
 			   {
