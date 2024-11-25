@@ -22,6 +22,7 @@ namespace MCB
 	class Capture
 	{
 	private:
+		std::unordered_map<YOLO_POSE_INDEX,CaptureData> capturedata_;
 		cv::VideoCapture capture_;
 		cv::Mat img_;
 		const std::string& modelPath_ = "Resources/Checkpoints/yolo11x-pose.onnx";
@@ -35,6 +36,7 @@ namespace MCB
 
 		void Initialize();
 		void Update();
+		void SetInitialPose();
 		void Finalize();
 	};
 
