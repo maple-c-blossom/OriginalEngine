@@ -9,6 +9,7 @@ WarningIgnoreEnd
 #include "Util.h"
 #include "Object3d.h"
 #include "ImguiManager.h"
+#include "Capture.h"
 
 
 using namespace MCB;
@@ -501,7 +502,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		  if (loop)
 			  animationTime = (float)fmod(animationTime, currentAnimation->duration);
 		  else
-			  animationTime = (float)min(animationTime, currentAnimation->duration - 0.0001f);
+			  animationTime = (float)min(animationTime, (float)currentAnimation->duration - 0.0001f);
 
 	  }
 	for (auto& itr : nodes_)
@@ -1092,6 +1093,78 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 			   }
 		   }
 	   }
+
+   }
+
+   //testCase1(FKだけでできる可能性の検証)
+   void MCB::Skeleton::CalcTargetPosFromCapdataTest1(const CaptureData& data,uint32_t boneCount)
+   {
+		   CaptureData rootCap = data;
+		   for ( int i = 0; i < boneCount; i++ )
+		   {
+			   Node* rootBone = GetNode(rootCap.captureBoneName);
+			   for ( int k = 0; k < rootCap.captureChildren.size(); k++ )
+			   {
+				   CaptureData* child = rootCap.captureChildren[ k ];
+				   Vector3D initializeBone = Vector3D(rootCap.initializedCaptureBonePos,child->initializedCaptureBonePos);
+				   Vector3D nowBone = Vector3D(rootCap.captureBonePos,child->captureBonePos);
+
+				   Vector3D axis = initializeBone.GetV3Cross(nowBone);
+				   float dotRadian = initializeBone.GetV3Dot(nowBone);
+				   float rotation = std::clamp(acos(dotRadian),-1.f,1.f);
+
+				   Quaternion q(axis,rotation);
+
+				   q.Normalize();
+
+				   rootBone->rotation = q.GetDirectProduct(q,rootBone->rotation).ConvertXMVector();
+			   }
+				   rootCap = *rootCap.captureChildren[ i ];
+			}
+   }
+
+   //testCase2元のプラン
+   Vector3D MCB::Skeleton::CalcTargetPosFromCapdataTest2(const CaptureData& data,uint32_t boneCount,std::string targetBone)
+   {
+	   CaptureData rootCap = data;
+	   Skeleton* skelton = this;
+	   for ( int i = 0; i < boneCount; i++ )
+	   {
+		   Node* rootBone = skelton->GetNode(rootCap.captureBoneName);
+		   for ( int k = 0; k < rootCap.captureChildren.size(); k++ )
+		   {
+			   CaptureData* child = rootCap.captureChildren[ k ];
+			   Vector3D initializeBone = Vector3D(rootCap.initializedCaptureBonePos,child->initializedCaptureBonePos);
+			   Vector3D nowBone = Vector3D(rootCap.captureBonePos,child->captureBonePos);
+
+			   Vector3D axis = initializeBone.GetV3Cross(nowBone);
+			   float dotRadian = initializeBone.GetV3Dot(nowBone);
+			   float rotation = std::clamp(acos(dotRadian),-1.f,1.f);
+
+			   Quaternion q(axis,rotation);
+
+			   q.Normalize();
+
+			   rootBone->rotation = q.GetDirectProduct(q,rootBone->rotation).ConvertXMVector();
+		   }
+		   rootCap = *rootCap.captureChildren[ i ];
+	   }
+
+	   for ( int i = 0; i < skelton->nodes_.size(); i++ )
+	   {
+		   skelton->UpdateNodeMatrix(skelton->nodes_[ i ].get());
+		}
+
+	   Vector3D ret = skelton->GetNode(targetBone)->endPosition;
+
+	   for ( int i = 0; i < skelton->nodes_.size(); i++ )
+	   {
+		   skelton->nodes_[ i ]->rotation = skelton->nodes_[ i ]->defaultRotation;
+		   skelton->UpdateNodeMatrix(skelton->nodes_[ i ].get());
+	   }
+
+	   return ret;
+
 
    }
 

@@ -29,6 +29,10 @@ namespace MCB
 
 PragmaPush
 PragmaWarningNum(4324)
+
+struct CaptureData;
+
+
     //頂点データ構造体-------------------------------------
     typedef struct FbxVertex
     {
@@ -75,6 +79,8 @@ PragmaWarningNum(4324)
         std::vector<NodeAnim> channels;
 		std::string animationRootNode = "NULL";
     }Animation;
+
+
 
     typedef struct Node
     {
@@ -256,6 +262,9 @@ PragmaPop
         /// <param name="numMaxIteration">CCDの反復回数</param>
         /// <param name="errToleranceSq">誤差の許容数値</param>
         void CCDIK(Node& effectter);
+
+		void CalcTargetPosFromCapdataTest1(const CaptureData& data,uint32_t boneCount);
+		Vector3D CalcTargetPosFromCapdataTest2(const CaptureData& data,uint32_t boneCount,std::string targetBone);
 
 		void SetCCDIK(const Object3d& obj,const Vector3D& targetPos,Node& effectter);
 
