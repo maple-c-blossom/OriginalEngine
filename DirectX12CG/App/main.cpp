@@ -13,8 +13,8 @@
 
 int32_t main()
 {
-	MCB::Capture temp;
-	temp.Initialize();
+	//MCB::Capture temp;
+	//temp.Initialize();
     //std::make_unique<MCB::App>()->Run();
 	return 0;
 }
