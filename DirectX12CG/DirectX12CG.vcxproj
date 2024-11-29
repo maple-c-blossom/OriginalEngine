@@ -443,7 +443,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)External\motion\Thaad\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opencv_objdetect4d.lib;opencv_video4d.lib;opencv_stitching4d.lib;opencv_calib3d4d.lib;opencv_highgui4d.lib;opencv_videoio4d.lib;opencv_features2d4d.lib;opencv_dnn4d.lib;opencv_photo4d.lib;opencv_imgcodecs4d.lib;opencv_imgproc4d.lib;opencv_ml4d.lib;opencv_flann4d.lib;opencv_core4d.lib;onnxruntime.lib;jpeg.lib;tiffd.lib;libpng16d.lib;libwebp.lib;zlibd.lib;lzma.lib;libsharpyuv.lib;OnnxRuntimeDirectMLTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>

@@ -41,7 +41,7 @@ void MCB::DemoScene::MatrixUpdate()
 
 void MCB::DemoScene::Update()
 {
-	
+	cap.Update();
 	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
 	else test2Animation_.color_.w_ = { 1.0f };
     lights_->UpDate();
@@ -130,6 +130,8 @@ void MCB::DemoScene::Update()
 				test2Animation_.animationModel_->skeleton.SetCCDIK(test2Animation_,
                     { effectorObjects_[i].position_.x,effectorObjects_[i].position_.y,effectorObjects_[i].position_.z },*test2Animation_.animationModel_->skeleton.GetNode(ikBoneName_2[i].endJointName));
 			}
+
+			//test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
         }
         else if(!collIK[i] )
         {
@@ -362,7 +364,7 @@ MCB::DemoScene::~DemoScene()
 {
     //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
-
+	cap.Finalize();
     //modelManager_->erase();
     loader_->Erase();
 }
@@ -402,6 +404,8 @@ void MCB::DemoScene::Initialize()
 			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z - 1.f });
 		LightGroup::GetInstance()->SetSLightPos(1,
 			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 1.f });
+
+		//cap.Initialize();
 
 }
 

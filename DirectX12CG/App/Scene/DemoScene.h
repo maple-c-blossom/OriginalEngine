@@ -5,6 +5,7 @@
 WarningIgnoreBegin
 #include <cmath>
 WarningIgnoreEnd
+#include "Capture.h"
 #include "DemoCamera.h"
 #include "Player.h"
 namespace MCB
@@ -109,6 +110,8 @@ namespace MCB
 		bool animePlay = false;
 		Byte6 pad7;
 		Byte6 pad8;
+
+		Capture cap;
 #pragma endregion 通常変数
 	public:
 
