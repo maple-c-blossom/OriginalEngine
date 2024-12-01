@@ -142,6 +142,11 @@ void MCB::DemoScene::Update()
 		
     }
 
+	if ( poseInitialize_ )
+	{
+		cap.SetInitialPose();
+	}
+
     MatrixUpdate();
 }
 
@@ -256,6 +261,11 @@ void MCB::DemoScene::ImGuiUpdate()
 	ImGui::Checkbox("モデル変更",&chengeModel);
     if (ImGui::TreeNode("IK 制御"))
     {
+
+		if ( ImGui::Button("PoseInitialize") )
+		{
+			poseInitialize_ = true;
+		}
         for (uint8_t i = 0; i < 1; i++)
         {
            
@@ -301,6 +311,7 @@ void MCB::DemoScene::ImGuiUpdate()
 		}
         ImGui::TreePop();
     }
+
 
 	if ( ImGui::TreeNode("アニメーション関連") )
 	{
@@ -405,7 +416,7 @@ void MCB::DemoScene::Initialize()
 		LightGroup::GetInstance()->SetSLightPos(1,
 			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 1.f });
 
-		//cap.Initialize();
+		cap.Initialize();
 
 }
 

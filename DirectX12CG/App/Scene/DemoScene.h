@@ -108,6 +108,10 @@ namespace MCB
 		bool startPositionReset_ = true;
 		bool debugStop = false;
 		bool animePlay = false;
+
+		bool poseInitialize_ = false;
+		time_t initializetime_ = 0;
+
 		Byte6 pad7;
 		Byte6 pad8;
 

@@ -1,5 +1,5 @@
-//#include "App.h"
-#include "Capture.h"
+#include "App.h"
+//#include "Capture.h"
 #pragma region pragma comment
 
 #pragma comment(lib,"d3d12.lib")
@@ -13,8 +13,6 @@
 
 int32_t main()
 {
-	//MCB::Capture temp;
-	//temp.Initialize();
-    //std::make_unique<MCB::App>()->Run();
+    std::make_unique<MCB::App>()->Run();
 	return 0;
 }
