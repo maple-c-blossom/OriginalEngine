@@ -1105,7 +1105,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		   for ( int i = 0; i < boneCount; i++ )
 		   {
 			   Node* rootBone = GetNode(rootCap.captureBoneName);
-			   for ( int k = 0; k < rootCap.captureChildren.size(); k++ )
+			   for ( int k = 0; k < 1; k++ )
 			   {
 				   CaptureData* child = rootCap.captureChildren[ k ];
 				   Vector3D initializeBone = Vector3D(rootCap.initializedCaptureBonePos,child->initializedCaptureBonePos);
