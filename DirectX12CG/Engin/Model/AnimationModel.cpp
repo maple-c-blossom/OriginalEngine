@@ -1114,7 +1114,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   initializeBone.V3Norm();
 				   nowBone.V3Norm();
 
-				   Vector3D axis = initializeBone.GetV3Cross(nowBone);
+				   Vector3D axis = nowBone.GetV3Cross(initializeBone);
 				   float dotRadian = initializeBone.GetV3Dot(nowBone);
 				   float rotation = std::clamp(acos(dotRadian),-1.f,1.f);
 
@@ -1122,7 +1122,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 				   q.Normalize();
 				   rootBone->rotation = rootBone->defaultRotation;
-				   Quaternion temp = q.GetDirectProduct(q,rootBone->rotation);
+				   Quaternion temp = q.GetDirectProduct(rootBone->rotation,q);
 				   temp.Normalize();
 				   rootBone->rotation = temp.ConvertXMVector();
 			   }

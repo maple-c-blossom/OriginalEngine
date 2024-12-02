@@ -11,7 +11,7 @@
 *.sln.docstates
 
 DirectX12CG/Resources/Checkpoints/
-
+DirectX12CG/Checkpoints/
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

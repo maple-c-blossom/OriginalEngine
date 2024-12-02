@@ -115,7 +115,8 @@ void MCB::Capture::SetInitialPose()
 	//skelton構成
 	for ( int32_t i = 0; i < ( int32_t ) YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
-		capturedata_[ ( YOLO_POSE_INDEX ) i ].initializedCaptureBonePos = { land_[ i ].x,land_[ i ].y,1 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].initializedCaptureBonePos = { land_[ i ].x,land_[ i ].y,0 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { land_[ i ].x,land_[ i ].y,0 };
 	}
 }
 
