@@ -524,7 +524,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 		if ( !itr->ikData.isIK )
 		{
 
-			readAnimNodeHeirarchy(animationTime,itr.get(),rootAnim,currentAnimation);
+			//readAnimNodeHeirarchy(animationTime,itr.get(),rootAnim,currentAnimation);
 		}
 		MCBMatrix temp = itr->AnimaetionParentMat * obj->GetMatWorld();
 		itr->worldPosition = temp.GetTranslate(temp);
@@ -913,13 +913,15 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 	   {
 		   if (node->ikData.isIK)
 		   {
-			   CCDIK(*node.get());
+			   //CCDIK(*node.get());
 			   for (auto& updateNode : nodes_)
 			   {
 				   UpdateNodeMatrix(updateNode.get());
 			   }
 			   ikNodes_.push_back(node.get());
 		   }
+
+		   UpdateNodeMatrix(node.get());
 	   }
 	   for (auto& node : nodes_)
 	   {
@@ -1109,6 +1111,9 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   Vector3D initializeBone = Vector3D(rootCap.initializedCaptureBonePos,child->initializedCaptureBonePos);
 				   Vector3D nowBone = Vector3D(rootCap.captureBonePos,child->captureBonePos);
 
+				   initializeBone.V3Norm();
+				   nowBone.V3Norm();
+
 				   Vector3D axis = initializeBone.GetV3Cross(nowBone);
 				   float dotRadian = initializeBone.GetV3Dot(nowBone);
 				   float rotation = std::clamp(acos(dotRadian),-1.f,1.f);
@@ -1116,10 +1121,12 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   Quaternion q(axis,rotation);
 
 				   q.Normalize();
-
-				   rootBone->rotation = q.GetDirectProduct(q,rootBone->rotation).ConvertXMVector();
+				   rootBone->rotation = rootBone->defaultRotation;
+				   Quaternion temp = q.GetDirectProduct(q,rootBone->rotation);
+				   temp.Normalize();
+				   rootBone->rotation = temp.ConvertXMVector();
 			   }
-				   rootCap = *rootCap.captureChildren[ i ];
+				   rootCap = *rootCap.captureChildren[ 0 ];
 			}
    }
 

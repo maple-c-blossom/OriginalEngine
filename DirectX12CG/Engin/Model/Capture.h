@@ -23,8 +23,8 @@ namespace MCB
 	{
 	private:
 		std::array<std::string,17> linkBoneNames = {"none","none" ,"none" ,"none" ,"none" ,
-													" upper_arm.L" ,"upper_arm.R","forearm.L","forearm.R" ,"hand.L" ,
-													"hand.R " ,"none" ,"none" ,"none" ,"none" ,
+													"upper_arm.L","upper_arm.R","forearm.L","forearm.R","hand.L",
+													"hand.R" ,"none" ,"none" ,"none" ,"none" ,
 													"none","none"};
 
 		std::unordered_map<YOLO_POSE_INDEX,CaptureData> capturedata_;

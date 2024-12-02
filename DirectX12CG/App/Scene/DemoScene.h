@@ -110,7 +110,8 @@ namespace MCB
 		bool animePlay = false;
 
 		bool poseInitialize_ = false;
-		time_t initializetime_ = 0;
+		std::chrono::system_clock::time_point initializetime_;
+		std::chrono::system_clock::time_point initializeCount_;
 
 		Byte6 pad7;
 		Byte6 pad8;

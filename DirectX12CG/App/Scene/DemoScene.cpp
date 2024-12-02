@@ -144,7 +144,18 @@ void MCB::DemoScene::Update()
 
 	if ( poseInitialize_ )
 	{
+		initializeCount_ = std::chrono::system_clock::now();
 		cap.SetInitialPose();
+		std::chrono::seconds sec = std::chrono::duration_cast< std::chrono::seconds >( initializeCount_ - initializetime_ );
+		if ( sec >std::chrono::seconds{ 5 } )
+		{
+			poseInitialize_ = false;
+		}
+	}
+	else
+	{
+		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
+		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_R),2);
 	}
 
     MatrixUpdate();
@@ -265,6 +276,11 @@ void MCB::DemoScene::ImGuiUpdate()
 		if ( ImGui::Button("PoseInitialize") )
 		{
 			poseInitialize_ = true;
+			initializetime_ = std::chrono::system_clock::now();
+		}
+		if ( poseInitialize_ )
+		{
+			ImGui::Text("PoseInitializeing...");
 		}
         for (uint8_t i = 0; i < 1; i++)
         {
