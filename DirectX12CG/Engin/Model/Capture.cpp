@@ -1,4 +1,5 @@
 #include "Capture.h"
+#include "Util.h"
 void MCB::Capture::Initialize()
 {
 	cv::VideoCapture cap(0);
@@ -103,7 +104,7 @@ void MCB::Capture::Update()
 	//skelton構成
 	for ( int32_t i = 0; i < (int32_t)YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
-		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { land_[ i ].x,land_[ i ].y,1 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
 	}
 
 }
@@ -115,8 +116,8 @@ void MCB::Capture::SetInitialPose()
 	//skelton構成
 	for ( int32_t i = 0; i < ( int32_t ) YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
-		capturedata_[ ( YOLO_POSE_INDEX ) i ].initializedCaptureBonePos = { land_[ i ].x,land_[ i ].y,0 };
-		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { land_[ i ].x,land_[ i ].y,0 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].initializedCaptureBonePos = {truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
 	}
 }
 

@@ -140,6 +140,11 @@ float MCB::ConvertRadius(float angle)
 	return angle * PI / 180.0f;
 }
 
+float MCB::truncateToTens(float value)
+{
+	return std::trunc(value / 10) * 10;
+}
+
 void MCB::InitRand()
 {
 	srand((static_cast<uint32_t>(time(nullptr))));

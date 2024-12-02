@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include <iostream>
 #include "Object3d.h"
 #define PI 3.14159265358979323846264338327950288f
 #define SECOND_FROM_MINITE 60 * 60
@@ -27,6 +28,7 @@ namespace MCB
 	float Abs( float num);
 	double Abs( double num);
 	float ConvertRadius( float angle);
+	float truncateToTens(float value);
 
 
 	void InitRand();
