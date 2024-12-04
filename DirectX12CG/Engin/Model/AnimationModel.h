@@ -93,6 +93,7 @@ struct CaptureData;
 		DirectX::XMVECTOR translation = { { 0,0,0,1 } };//ローカルの位置情報
 		DirectX::XMMATRIX localTransform = { DirectX::XMMatrixIdentity() };//ローカルのsrtMatrix
 		DirectX::XMMATRIX globalTransform = { DirectX::XMMatrixIdentity() };//Model空間のMatrix
+		DirectX::XMMATRIX initGlobalTransform = { DirectX::XMMatrixIdentity() };//Model空間のMatrix
 		DirectX::XMMATRIX globalInverseTransform = { DirectX::XMMatrixIdentity() };//Model空間のMatrixの逆行列
 		DirectX::XMMATRIX AnimaetionParentMat = { DirectX::XMMatrixIdentity() };//アニメーションするときに使用するModel空間のMatrix
 		DirectX::XMVECTOR defaultScale = { { 0,0,0,1 } };//初期姿勢時のローカルスケール情報
