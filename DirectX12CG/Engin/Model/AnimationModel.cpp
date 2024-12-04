@@ -1113,15 +1113,11 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 				   Vector3D nowBone = Vector3D(rootCap.captureBonePos,child->captureBonePos);
 
 				   initializeBone.V3Norm();
-				   nowBone.V3Norm();
 
 				   initializeBone = tempQ.SetRotationVector(tempQ,initializeBone);
-				   nowBone = tempQ.SetRotationVector(tempQ,nowBone);
-
-
 				   initializeBone.V3Norm();
-				   nowBone.V3Norm();
 
+				   nowBone.V3Norm();
 
 				   Vector3D axis = nowBone.GetV3Cross(initializeBone);
 				   float dotRadian = nowBone.GetV3Dot(initializeBone);
