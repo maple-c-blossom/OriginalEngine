@@ -1102,7 +1102,7 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
    void MCB::Skeleton::CalcTargetPosFromCapdataTest1(const CaptureData& data,uint32_t boneCount)
    {
 		   CaptureData rootCap = data;
-		   Quaternion tempQ;
+		   Vector3D tempVec;
 		   for ( int i = 0; i < boneCount; i++ )
 		   {
 			   Node* rootBone = GetNode(rootCap.captureBoneName);
@@ -1114,18 +1114,27 @@ void MCB::AnimationModel::TwoBoneIkOrder(Object3d& objPos, Vector3D targetPos)
 
 				   initializeBone.V3Norm();
 
-				   initializeBone = tempQ.SetRotationVector(tempQ,initializeBone);
-				   initializeBone.V3Norm();
-
 				   nowBone.V3Norm();
+
+				   if ( i != 0 )
+				   {
+					   initializeBone = tempVec;
+				   }
+
+				   tempVec = nowBone;
 
 				   Vector3D axis = nowBone.GetV3Cross(initializeBone);
 				   float dotRadian = nowBone.GetV3Dot(initializeBone);
-				   float rotation = std::clamp(acos(dotRadian),-1.f,1.f);
+				   float rotation = acos(dotRadian);
+
+				   if ( !isfinite(rotation) )
+				   {
+					   rotation = 0;
+				   }
+				   axis.V3Norm();
 
 				   Quaternion q(axis,rotation);
 				   q.Normalize();
-				   tempQ = q;
 				   rootBone->rotation = rootBone->defaultRotation;
 				   Quaternion temp = q.GetDirectProduct(rootBone->rotation,q);
 				   temp.Normalize();
