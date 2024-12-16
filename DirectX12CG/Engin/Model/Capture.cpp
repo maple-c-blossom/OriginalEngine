@@ -104,7 +104,16 @@ void MCB::Capture::Update()
 	//skelton構成
 	for ( int32_t i = 0; i < (int32_t)YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
-		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
+		if ( isSideCapture )
+		{
+			capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { 0,
+				truncateToTens(land_[ i ].y),truncateToTens(land_[ i ].x) };
+		}
+		else
+		{
+			capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { truncateToTens(land_[ i ].x),
+				truncateToTens(land_[ i ].y),0 };
+		}
 	}
 
 }
@@ -118,6 +127,7 @@ void MCB::Capture::SetInitialPose()
 	{
 		capturedata_[ ( YOLO_POSE_INDEX ) i ].initializedCaptureBonePos = {truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
 		capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { truncateToTens(land_[ i ].x),truncateToTens(land_[ i ].y),0 };
+		capturedata_[ ( YOLO_POSE_INDEX ) i ].reliability = land_[ i ].vi;
 	}
 }
 
@@ -125,6 +135,11 @@ void MCB::Capture::Finalize()
 {
 	m_YOLOPoseEstimation_->End();
 	cv::destroyWindow("run");
+}
+
+void MCB::Capture::SetSideCaptureFlag(bool flag)
+{
+	isSideCapture = flag;
 }
 
 MCB::CaptureData& MCB::Capture::GetCaptureData(YOLO_POSE_INDEX key)

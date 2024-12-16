@@ -14,6 +14,7 @@ namespace MCB
 		std::string captureBoneName;
 		Vector3D captureBonePos;
 		Vector3D initializedCaptureBonePos;
+		float reliability;
 		std::vector<CaptureData*> captureChildren;
 		CaptureData* parent;
 
@@ -38,11 +39,13 @@ namespace MCB
 		float iou_threshold_ = 0.45f;
 		int conversion_code_ = cv::COLOR_BGR2RGB;
 		bool initialized_ = false;
+		bool isSideCapture = false;
 	public:
 		void Initialize();
 		void Update();
 		void SetInitialPose();
 		void Finalize();
+		void SetSideCaptureFlag(bool flag);
 		CaptureData& GetCaptureData(YOLO_POSE_INDEX key);
 	};
 

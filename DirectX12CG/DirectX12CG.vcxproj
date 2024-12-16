@@ -17,6 +17,7 @@
       <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableAllWarnings</WarningLevel>
     </ClCompile>
     <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="CaptureManager.cpp" />
     <ClCompile Include="Engin\Model\Capture.cpp" />
     <ClCompile Include="Engin\Light\CircleShadow.cpp" />
     <ClCompile Include="Engin\Camera\DemoCamera.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="App\CheckPoint.h" />
     <ClInclude Include="App\Scene\DemoScene.h" />
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="CaptureManager.h" />
     <ClInclude Include="Engin\Model\Capture.h" />
     <ClInclude Include="Engin\Light\CircleShadow.h" />
     <ClInclude Include="Engin\Camera\DemoCamera.h" />
@@ -426,7 +428,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)External\Assimp\include;$(SolutionDir)External\nlohmann_json;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)External\DirectXTex;$(SolutionDir)External\MyImgui;$(ProjectDir)Engin\Camera;$(ProjectDir)Engin\Collide;$(ProjectDir)Engin\DirectX;$(ProjectDir)Engin\Light;$(ProjectDir)Engin\Math\Matrix;$(ProjectDir)Engin\Math\Util;$(ProjectDir)Engin\Math\Vector;$(ProjectDir)Engin\Model;$(ProjectDir)Engin\Object;$(ProjectDir)Engin\Particle;$(ProjectDir)Engin\Pipeline;$(ProjectDir)Engin\Sound;$(ProjectDir)Engin\Sprite;$(ProjectDir)Engin\Texture;$(ProjectDir)Engin\Util;$(ProjectDir)App\Scene;$(ProjectDir)App</IncludePath>
-    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\External\motion\Thaad\lib\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -462,21 +464,21 @@ echo D | xcopy "$(ProjectDir)Resources" "$(TargetDir)"/Y</Command>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;IMGUI_DEFINE_MATH_OPERATORS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)External\motion\Thaad\include</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>5045;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
-      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
+      <AdditionalDependencies>opencv_objdetect4d.lib;opencv_video4d.lib;opencv_stitching4d.lib;opencv_calib3d4d.lib;opencv_highgui4d.lib;opencv_videoio4d.lib;opencv_features2d4d.lib;opencv_dnn4d.lib;opencv_photo4d.lib;opencv_imgcodecs4d.lib;opencv_imgproc4d.lib;opencv_ml4d.lib;opencv_flann4d.lib;opencv_core4d.lib;onnxruntime.lib;jpeg.lib;tiffd.lib;libpng16d.lib;libwebp.lib;zlibd.lib;lzma.lib;libsharpyuv.lib;OnnxRuntimeDirectMLTest.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <TreatLinkerWarningAsErrors>false</TreatLinkerWarningAsErrors>
     </Link>
     <PostBuildEvent>
       <Command>echo F | xcopy "$(SolutionDir)External\Assimp\lib\Release\assimp-vc143-mt.lib" $(TargetDir)lib\assimp\lib\Release\assimp-vc143-mt.lib/Y
