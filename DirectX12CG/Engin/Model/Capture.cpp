@@ -104,7 +104,7 @@ void MCB::Capture::Update()
 	//skelton構成
 	for ( int32_t i = 0; i < (int32_t)YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
-		if ( isSideCapture )
+		if ( isSideCapture_ )
 		{
 			capturedata_[ ( YOLO_POSE_INDEX ) i ].captureBonePos = { 0,
 				truncateToTens(land_[ i ].y),truncateToTens(land_[ i ].x) };
@@ -139,10 +139,15 @@ void MCB::Capture::Finalize()
 
 void MCB::Capture::SetSideCaptureFlag(bool flag)
 {
-	isSideCapture = flag;
+	isSideCapture_ = flag;
 }
 
 MCB::CaptureData& MCB::Capture::GetCaptureData(YOLO_POSE_INDEX key)
 {
 	return capturedata_[ key ];
+}
+
+bool MCB::Capture::IsSideCapture()
+{
+	return isSideCapture_;
 }

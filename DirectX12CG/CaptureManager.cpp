@@ -37,6 +37,9 @@ void MCB::CaptureManager::CalclateFinalCaptureData()
 	Vector3D finalData;
 	for ( int32_t i = 0; i < ( int32_t ) YOLO_POSE_INDEX::YOLO_POSE_INDEX_MAX; i++ )
 	{
+		for ( int i = 0; i < 4; i++ )
+		{
 
+		}
 	}
 }

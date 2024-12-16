@@ -39,7 +39,7 @@ namespace MCB
 		float iou_threshold_ = 0.45f;
 		int conversion_code_ = cv::COLOR_BGR2RGB;
 		bool initialized_ = false;
-		bool isSideCapture = false;
+		bool isSideCapture_ = false;
 	public:
 		void Initialize();
 		void Update();
@@ -47,6 +47,7 @@ namespace MCB
 		void Finalize();
 		void SetSideCaptureFlag(bool flag);
 		CaptureData& GetCaptureData(YOLO_POSE_INDEX key);
+		bool IsSideCapture();
 	};
 
 }
