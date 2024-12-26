@@ -1,4 +1,4 @@
-#include "Bone.h"
+#include <Animation/Bone.h>
 
 using namespace MCBM;
 

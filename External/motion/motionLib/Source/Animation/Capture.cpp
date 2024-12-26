@@ -1,5 +1,5 @@
-#include "Capture.h"
-#include "Util.h"
+#include <Animation/Capture.h>
+#include <Math/MathUtil.h>
 void MCBM::Capture::Initialize()
 {
 	cv::VideoCapture cap(0);

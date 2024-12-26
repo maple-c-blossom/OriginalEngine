@@ -1,8 +1,8 @@
 #pragma once
 #include <stdint.h>
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Bone.h"
+#include <Math/Vector3.h>
+#include <Math/Quaternion.h>
+#include <Animation/Bone.h>
 
 namespace MCBM
 {

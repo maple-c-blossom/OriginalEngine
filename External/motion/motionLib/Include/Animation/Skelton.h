@@ -2,8 +2,8 @@
 #include <memory>
 #include <unordered_map>
 
-#include "Bone.h"
-#include "Capture.h"
+#include <Animation/Bone.h>
+#include <Animation/Capture.h>
 
 
 namespace MCBM
@@ -15,11 +15,10 @@ namespace MCBM
 		
 		Bone* rootBone_;
 
-		std::unique_ptr<Capture> capture;
+		Capture* capture;
 
 	public:
-		//カメラの起動等を行う
-		void InitializeCapture();
+		void SetCapturePtr(Capture* cap);
 
 		void AddBone(std::unique_ptr<Bone> bone);
 
@@ -37,6 +36,7 @@ namespace MCBM
 
 		void CaptureBoneAccept();
 
+		void Finalize();
 		/// <summary>
 		/// モデルの回転の計算
 		/// </summary>

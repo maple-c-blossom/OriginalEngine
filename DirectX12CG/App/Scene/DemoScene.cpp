@@ -41,7 +41,8 @@ void MCB::DemoScene::MatrixUpdate()
 
 void MCB::DemoScene::Update()
 {
-	cap.Update();
+	skelton_.UpdateCaptureData();
+
 	if ( debugView_ )test2Animation_.color_.w_ = { 0.25f };
 	else test2Animation_.color_.w_ = { 1.0f };
     lights_->UpDate();
@@ -145,9 +146,9 @@ void MCB::DemoScene::Update()
 	if ( poseInitialize_ )
 	{
 		initializeCount_ = std::chrono::system_clock::now();
-		cap.SetInitialPose();
-		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
-		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_R),2);
+		skelton_.CaptureBasePoseInitialize();
+		//test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
+		//test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_R),2);
 		std::chrono::seconds sec = std::chrono::duration_cast< std::chrono::seconds >( initializeCount_ - initializetime_ );
 		if ( sec >std::chrono::seconds{ 5 } )
 		{
@@ -156,8 +157,8 @@ void MCB::DemoScene::Update()
 	}
 	else
 	{
-		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
-		test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_R),2);
+		//test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_L),2);
+		//test2Animation_.animationModel_->skeleton.CalcTargetPosFromCapdataTest1(cap.GetCaptureData(YOLO_POSE_INDEX::SHOULDER_R),2);
 	}
 
     MatrixUpdate();
@@ -393,7 +394,7 @@ MCB::DemoScene::~DemoScene()
 {
     //soundManager_->AllDeleteSound();
     debugTextTexture_->free = true;
-	cap.Finalize();
+	skelton_.Finalize();
     //modelManager_->erase();
     loader_->Erase();
 }
@@ -435,6 +436,8 @@ void MCB::DemoScene::Initialize()
 			{ test2Animation_.position_.x,test2Animation_.position_.y,test2Animation_.position_.z + 1.f });
 
 		cap.Initialize();
+		skelton_.SetCapturePtr(&cap);
+		
 
 }
 

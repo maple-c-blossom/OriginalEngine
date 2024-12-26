@@ -24,6 +24,8 @@ WarningIgnoreEnd
 #include "RayCollider.h"
 #include <CollisionManager.h>
 
+
+
 namespace MCB
 {
 
@@ -203,7 +205,9 @@ PragmaPop
     private:
         std::vector< std::unique_ptr<Node>> nodes_;
 		std::vector<Node*> ikNodes_;
-        
+
+		
+
     public:
         Node* rootNode;
      

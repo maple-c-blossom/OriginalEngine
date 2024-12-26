@@ -1,10 +1,9 @@
-#include "Skelton.h"
-#include "Vector3.h"
-void MCBM::Skelton::InitializeCapture()
+#include <Animation/Skelton.h>
+#include <Math/Vector3.h>
+
+void MCBM::Skelton::SetCapturePtr(Capture* cap)
 {
-	capture = std::make_unique<Capture>();
-	capture->Initialize();
-	capture->SetInitialPose();
+	capture = cap;
 }
 
 void MCBM::Skelton::AddBone(std::unique_ptr<Bone> bone)
@@ -50,6 +49,11 @@ void MCBM::Skelton::CaptureBoneAccept()
 
 
 
+}
+
+void MCBM::Skelton::Finalize()
+{
+	capture->Finalize();
 }
 
 void MCBM::Skelton::CaptureBoneUpdate(YOLO_POSE_INDEX rootBoneName, uint32_t boneCount)

@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Vector3.h"
-#include "Quaternion.h"
-#include "Matrix.h"
+#include <Math/Vector3.h>
+#include <Math/Quaternion.h>
+#include <Math/Matrix.h>
 
 namespace MCBM
 {
@@ -42,12 +42,7 @@ namespace MCBM
 		void SetTranslation(const Vector3& translation);
 		void SetModelTranslation(const Vector3& translation);
 		void SetParent(Bone* parent);
-		void SetBoneRotationLimit(Vector3 topEulerLimit, Vector3 bottomEulerLimit);
-		std::string GetName();
-		Vector3 GetScale();
-		Vector3 GetTranslation();
-		Matrix GetOffSetMatrix();
-		Matrix GetFinalMatrix();
+
 		void AddChild(Bone* child);
 		void SetFinalMatrix(const Matrix& matrix);
 		void SetOffsetMatrix(const Matrix& matrix);
@@ -59,6 +54,7 @@ namespace MCBM
 		//現在のデータを初期値として設定
 		void SetInitializeTransformData();
 
+		void SetBoneRotationLimit(Vector3 topEulerLimit, Vector3 bottomEulerLimit);
 
 		Matrix GetAnimationMatrix();
 		Quaternion GetRotation();
@@ -69,6 +65,11 @@ namespace MCBM
 		Vector3 GetBottomLimitEulerRadian();
 		Vector3 GetInitializeModelTranslate();
 		Quaternion GetInitializeRotation();
+		std::string GetName();
+		Vector3 GetScale();
+		Vector3 GetTranslation();
+		Matrix GetOffSetMatrix();
+		Matrix GetFinalMatrix();
 
 		void UpdateMatrix();
 	};

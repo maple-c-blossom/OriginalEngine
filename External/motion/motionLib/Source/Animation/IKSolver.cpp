@@ -1,5 +1,5 @@
-#include "IKSolver.h"
-#include "MathUtil.h"
+#include <Animation/IKSolver.h>
+#include <Math/MathUtil.h>
 
 void MCBM::IKSolver::CCDIK()
 {

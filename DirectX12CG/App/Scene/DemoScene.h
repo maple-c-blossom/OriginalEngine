@@ -8,6 +8,9 @@ WarningIgnoreEnd
 #include "Capture.h"
 #include "DemoCamera.h"
 #include "Player.h"
+
+#include <Animation/Skelton.h>
+
 namespace MCB
 {
 	class DemoScene :public IScene
@@ -116,7 +119,8 @@ namespace MCB
 		Byte6 pad7;
 		Byte6 pad8;
 
-		Capture cap;
+		MCBM::Skelton skelton_;
+		MCBM::Capture cap;
 #pragma endregion 通常変数
 	public:
 
