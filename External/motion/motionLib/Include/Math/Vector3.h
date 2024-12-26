@@ -1,5 +1,5 @@
 #pragma once
-namespace MCB
+namespace MCBM
 {
 
 	class Vector3

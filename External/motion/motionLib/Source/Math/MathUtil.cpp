@@ -1,6 +1,6 @@
 #include "MathUtil.h"
 
-float MCB::MathUtil::Clamp(float var, float min, float max)
+float MCBM::MathUtil::Clamp(float var, float min, float max)
 {
     if (var < min)
     {

@@ -3,15 +3,15 @@
 #include <cmath>
 #define PI 3.14159265358979323846264338327950288f
 #define FLT_EPSILON      1.192092896e-07F
-using namespace MCB;
+using namespace MCBM;
 
 
-MCB::Quaternion::Quaternion(const Vector3& vec, float angle)
+MCBM::Quaternion::Quaternion(const Vector3& vec, float angle)
 {
 	SetRota(vec, angle);
 }
 
-void MCB::Quaternion::SetRota(Vector3 vec, float angle)
+void MCBM::Quaternion::SetRota(Vector3 vec, float angle)
 {
 	vec.V3Norm();
 	float s = sinf(angle / 2);
@@ -22,12 +22,12 @@ void MCB::Quaternion::SetRota(Vector3 vec, float angle)
 	Normalize();
 }
 
-MCB::Quaternion::Quaternion()
+MCBM::Quaternion::Quaternion()
 {
 	Identity();
 }
 
-MCB::Quaternion::Quaternion(float x, float y, float z, float w)
+MCBM::Quaternion::Quaternion(float x, float y, float z, float w)
 {
 	x = x;
 	y = y;
@@ -35,7 +35,7 @@ MCB::Quaternion::Quaternion(float x, float y, float z, float w)
 	w = w;
 }
 
-Quaternion MCB::Quaternion::GetConjugated(Quaternion q)
+Quaternion MCBM::Quaternion::GetConjugated(Quaternion q)
 {
 	q.x *= -1;
 	q.y *= -1;
@@ -43,7 +43,7 @@ Quaternion MCB::Quaternion::GetConjugated(Quaternion q)
 	return q;
 }
 
-Quaternion MCB::Quaternion::GetReciprocal(Quaternion q)
+Quaternion MCBM::Quaternion::GetReciprocal(Quaternion q)
 {
 	Quaternion tempQ = GetConjugated(q);
 	double norm = q.GetNorm();
@@ -52,12 +52,12 @@ Quaternion MCB::Quaternion::GetReciprocal(Quaternion q)
 	return tempQ;
 }
 
-double MCB::Quaternion::GetNorm()
+double MCBM::Quaternion::GetNorm()
 {
 	return sqrt(x * x + y * y + z * z + w * w);
 }
 
-Quaternion MCB::Quaternion::GetDirectProduct(const Quaternion& q, const Quaternion& p)
+Quaternion MCBM::Quaternion::GetDirectProduct(const Quaternion& q, const Quaternion& p)
 {
 	Quaternion ans;
 	ans.x = (q.x * p.w) + (q.y * p.z) - (q.z * p.y) + (q.w * p.x);
@@ -68,13 +68,13 @@ Quaternion MCB::Quaternion::GetDirectProduct(const Quaternion& q, const Quaterni
 	return ans;
 }
 
-float MCB::Quaternion::Dot(const Quaternion& a, const Quaternion& b)
+float MCBM::Quaternion::Dot(const Quaternion& a, const Quaternion& b)
 {
 
 	return a.x * b.x + a.y * b.y + a.z * b.z + a.w * b.w;
 }
 
-float MCB::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b, float& dot, bool& nan)
+float MCBM::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b, float& dot, bool& nan)
 {
 	dot = Dot(a, b);
 	if (dot < 0)
@@ -85,7 +85,7 @@ float MCB::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b, float&
 	return acosf(dot);
 }
 
-float MCB::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b)
+float MCBM::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b)
 {
 	float dot = Dot(a, b);
 	if (dot < 0)
@@ -95,7 +95,7 @@ float MCB::Quaternion::GetAngle(const Quaternion& a, const Quaternion& b)
 	return acosf(dot);
 }
 
-Vector3 MCB::Quaternion::SetRotationVector(const Vector3& rotationAxisVec, Vector3 PositionVec, float angle)
+Vector3 MCBM::Quaternion::SetRotationVector(const Vector3& rotationAxisVec, Vector3 PositionVec, float angle)
 {
 	PositionVec.V3Norm();
 	Quaternion position{};
@@ -113,7 +113,7 @@ Vector3 MCB::Quaternion::SetRotationVector(const Vector3& rotationAxisVec, Vecto
 	return Vector3(position.x, position.y, position.z);
 }
 
-Vector3 MCB::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion, Vector3 PositionVec)
+Vector3 MCBM::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion, Vector3 PositionVec)
 {
 	PositionVec.V3Norm();
 	Quaternion position{};
@@ -129,7 +129,7 @@ Vector3 MCB::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion,
 	return Vector3(position.x, position.y, position.z);
 }
 
-Vector3 MCB::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec)
+Vector3 MCBM::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion, const Quaternion& PositionVec)
 {
 
 	Quaternion position{};
@@ -141,7 +141,7 @@ Vector3 MCB::Quaternion::SetRotationVector(const Quaternion& rotationQuaternion,
 	return Vector3(position.x, position.y, position.z);
 }
 
-Quaternion MCB::Quaternion::DirToDir(Vector3 u, Vector3 v)
+Quaternion MCBM::Quaternion::DirToDir(Vector3 u, Vector3 v)
 {
 	u.V3Norm();
 	v.V3Norm();
@@ -153,7 +153,7 @@ Quaternion MCB::Quaternion::DirToDir(Vector3 u, Vector3 v)
 }
 
 
-void MCB::Quaternion::Normalize()
+void MCBM::Quaternion::Normalize()
 {
 	float mag = (float)sqrt(x * x + y * y + z * z + w * w);
 
@@ -171,19 +171,19 @@ void MCB::Quaternion::Normalize()
 }
 
 
-Quaternion MCB::Quaternion::Normalize(Quaternion q)
+Quaternion MCBM::Quaternion::Normalize(Quaternion q)
 {
 	q.Normalize();
 	return q;
 }
 
-void MCB::Quaternion::SinCos(float* returnSin, float* returnCos, float theta)
+void MCBM::Quaternion::SinCos(float* returnSin, float* returnCos, float theta)
 {
 	*returnSin = sin(theta);
 	*returnCos = cos(theta);
 }
 
-Quaternion MCB::Quaternion::SetToRorateObjectToInternal(const Vector3& eulerAngle)
+Quaternion MCBM::Quaternion::SetToRorateObjectToInternal(const Vector3& eulerAngle)
 {
 	Quaternion ans;
 	float sp, sb, sh;
@@ -201,7 +201,7 @@ Quaternion MCB::Quaternion::SetToRorateObjectToInternal(const Vector3& eulerAngl
 	return ans;
 }
 
-Vector3 MCB::Quaternion::GetRotationAxis(const Quaternion& q)
+Vector3 MCBM::Quaternion::GetRotationAxis(const Quaternion& q)
 {
 	float sinThetaOver2Sq = 1.0f - q.w * q.w;
 
@@ -222,7 +222,7 @@ Vector3 MCB::Quaternion::GetRotationAxis(const Quaternion& q)
 
 }
 
-void MCB::Quaternion::GetRotationAxis(const Quaternion& q, Vector3& AxisVec)
+void MCBM::Quaternion::GetRotationAxis(const Quaternion& q, Vector3& AxisVec)
 {
 	float sinThetaOver2Sq = 1.0f - q.w * q.w;
 
@@ -242,13 +242,13 @@ void MCB::Quaternion::GetRotationAxis(const Quaternion& q, Vector3& AxisVec)
 	);
 }
 
-float MCB::Quaternion::GetAngle(const Quaternion& q)
+float MCBM::Quaternion::GetAngle(const Quaternion& q)
 {
 	float thetaOver2 = SafeAcos(q.w);
 	return thetaOver2 * 2.0f;
 }
 
-float MCB::Quaternion::SafeAcos(float a)
+float MCBM::Quaternion::SafeAcos(float a)
 {
 	if (a <= -1.0f)
 	{
@@ -261,7 +261,7 @@ float MCB::Quaternion::SafeAcos(float a)
 	return acos(a);
 }
 
-bool MCB::Quaternion::operator==(const Quaternion& q)
+bool MCBM::Quaternion::operator==(const Quaternion& q)
 {
 	if (q.x == x && q.y == y && q.z == z && q.w == w)
 	{
@@ -271,33 +271,33 @@ bool MCB::Quaternion::operator==(const Quaternion& q)
 }
 
 
-Quaternion MCB::Quaternion::operator-()
+Quaternion MCBM::Quaternion::operator-()
 {
 	return { -x,-y,-z,-w };
 }
 
-Quaternion MCB::Quaternion::operator*(float k)
+Quaternion MCBM::Quaternion::operator*(float k)
 {
 	return Quaternion(x * k, y * k, z * k, w * k);
 }
 
-Quaternion MCB::Quaternion::operator+(Quaternion q)
+Quaternion MCBM::Quaternion::operator+(Quaternion q)
 {
 	return Quaternion(x + q.x, y + q.y, z + q.z, w + q.w);
 }
 
-Quaternion MCB::operator*(float k, Quaternion q)
+Quaternion MCBM::operator*(float k, Quaternion q)
 {
 	return q * k;
 }
 
-Quaternion MCB::Quaternion::Identity()
+Quaternion MCBM::Quaternion::Identity()
 {
 	return Quaternion(0, 0, 0, 1);
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, const Quaternion& end,
+MCBM::Quaternion MCBM::Quaternion::Slerp(Quaternion start, const Quaternion& end,
 	int32_t time, int32_t maxTime)
 {
 	float Time = (float)time / (float)maxTime;
@@ -343,7 +343,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, const Quaternion& end,
 }
 
 
-MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
+MCBM::Quaternion MCBM::Quaternion::Slerp(Quaternion start, Quaternion end, float time)//ŒW”‚ð’¼‚Å“ü—Í‚·‚é—p
 {
 	if (start.operator== (end))
 	{
@@ -392,7 +392,7 @@ MCB::Quaternion MCB::Quaternion::Slerp(Quaternion start, Quaternion end, float t
 
 }
 
-Quaternion MCB::SetRota(const Vector3& vec, float angle)
+Quaternion MCBM::SetRota(const Vector3& vec, float angle)
 {
 	return Quaternion(vec, angle);
 }

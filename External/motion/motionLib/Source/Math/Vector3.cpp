@@ -2,8 +2,8 @@
 #include <cmath>
 
 
-using namespace MCB;
-MCB::Vector3::Vector3(const Vector3& start, const Vector3& end)
+using namespace MCBM;
+MCBM::Vector3::Vector3(const Vector3& start, const Vector3& end)
 {
 	Vector3 temp = end - start;
 	x = temp.x;
@@ -11,31 +11,31 @@ MCB::Vector3::Vector3(const Vector3& start, const Vector3& end)
 	z = temp.z;
 }
 
-MCB::Vector3::Vector3()
+MCBM::Vector3::Vector3()
 {
 	x = 0;
 	y = 0;
 	z = 0;
 }
 
-MCB::Vector3::Vector3(float x, float y, float z)
+MCBM::Vector3::Vector3(float x, float y, float z)
 {
 	x = x;
 	y = y;
 	z = z;
 }
-Vector3 MCB::Vector3::Vector3Substruct(const Vector3& start, const Vector3& end)
+Vector3 MCBM::Vector3::Vector3Substruct(const Vector3& start, const Vector3& end)
 {
 	Vector3 temp(start, end);
 	return temp;
 }
 
-float MCB::Vector3::V3Len() const
+float MCBM::Vector3::V3Len() const
 {
 	return sqrtf(((x * x) + (y * y) + (z * z)));
 }
 
-void MCB::Vector3::V3Norm()
+void MCBM::Vector3::V3Norm()
 {
 	float VecLen = V3Len();
 	if (VecLen == 0.0f)
@@ -50,19 +50,19 @@ void MCB::Vector3::V3Norm()
 
 }
 
-Vector3 MCB::Vector3::GetV3Norm()
+Vector3 MCBM::Vector3::GetV3Norm()
 {
 	Vector3 ans = *this;
 	ans.V3Norm();
 	return ans;
 }
 
-float MCB::Vector3::GetV3Dot(const Vector3& vector)
+float MCBM::Vector3::GetV3Dot(const Vector3& vector)
 {
 	return (x * vector.x) + (y * vector.y) + (z * vector.z);
 }
 
-Vector3 MCB::Vector3::GetV3Cross(const Vector3& vector)
+Vector3 MCBM::Vector3::GetV3Cross(const Vector3& vector)
 {
 	Vector3 temp;
 	temp.x = y * vector.z - z * vector.y;
@@ -71,7 +71,7 @@ Vector3 MCB::Vector3::GetV3Cross(const Vector3& vector)
 	return temp;
 }
 
-Vector3 MCB::Vector3::GetV3Cross(const Vector3& avector, const Vector3& bvector)
+Vector3 MCBM::Vector3::GetV3Cross(const Vector3& avector, const Vector3& bvector)
 {
 	Vector3 temp;
 	temp.x = avector.y * bvector.z - avector.z * bvector.y;
@@ -80,7 +80,7 @@ Vector3 MCB::Vector3::GetV3Cross(const Vector3& avector, const Vector3& bvector)
 	return temp;
 }
 
-Vector3 MCB::Vector3::GetUpVec(Vector3 RightVec, Vector3 frontVec)
+Vector3 MCBM::Vector3::GetUpVec(Vector3 RightVec, Vector3 frontVec)
 {
 	Vector3 ans;
 	RightVec.V3Norm();
@@ -92,7 +92,7 @@ Vector3 MCB::Vector3::GetUpVec(Vector3 RightVec, Vector3 frontVec)
 }
 
 
-Vector3 MCB::Vector3::GetRightVec(Vector3 frontVec, Vector3 UpVec)
+Vector3 MCBM::Vector3::GetRightVec(Vector3 frontVec, Vector3 UpVec)
 {
 	Vector3 ans;
 	frontVec.V3Norm();
@@ -103,7 +103,7 @@ Vector3 MCB::Vector3::GetRightVec(Vector3 frontVec, Vector3 UpVec)
 	return ans;
 }
 
-Vector3 MCB::Vector3::GetV3Normal(Vector3 v0, Vector3 v1, Vector3 v2)
+Vector3 MCBM::Vector3::GetV3Normal(Vector3 v0, Vector3 v1, Vector3 v2)
 {
 	Vector3 ans;
 	Vector3 vv1, vv2;
@@ -120,7 +120,7 @@ Vector3 MCB::Vector3::GetV3Normal(Vector3 v0, Vector3 v1, Vector3 v2)
 	return ans;
 }
 
-Vector3 MCB::Vector3::Qlamp(const Vector3& vec, const Vector3& min, const Vector3& max)
+Vector3 MCBM::Vector3::Qlamp(const Vector3& vec, const Vector3& min, const Vector3& max)
 {
 	Vector3 ret = vec;
 	if (vec.x < min.x)
@@ -155,7 +155,7 @@ Vector3 MCB::Vector3::Qlamp(const Vector3& vec, const Vector3& min, const Vector
 
 
 
-float MCB::Vector3::GetInnerProduct(Vector3 vector)
+float MCBM::Vector3::GetInnerProduct(Vector3 vector)
 {
 	Vector3 temp;
 	temp = *this;
@@ -164,7 +164,7 @@ float MCB::Vector3::GetInnerProduct(Vector3 vector)
 	return acos(temp.GetV3Dot(vector));
 }
 
-Vector3& MCB::Vector3::operator+=(const Vector3& Vec)
+Vector3& MCBM::Vector3::operator+=(const Vector3& Vec)
 {
 	x += Vec.x;
 	y += Vec.y;
@@ -172,7 +172,7 @@ Vector3& MCB::Vector3::operator+=(const Vector3& Vec)
 	return *this;
 }
 
-Vector3& MCB::Vector3::operator-=(const Vector3& Vec)
+Vector3& MCBM::Vector3::operator-=(const Vector3& Vec)
 {
 	x -= Vec.x;
 	y -= Vec.y;
@@ -180,7 +180,7 @@ Vector3& MCB::Vector3::operator-=(const Vector3& Vec)
 	return *this;
 }
 
-Vector3& MCB::Vector3::operator*=(float k)
+Vector3& MCBM::Vector3::operator*=(float k)
 {
 	x *= k;
 	y *= k;
@@ -188,7 +188,7 @@ Vector3& MCB::Vector3::operator*=(float k)
 	return *this;
 }
 
-Vector3 MCB::Vector3::Clamp(const Vector3& vec1, const Vector3& min, const Vector3& max, bool* isClamped)
+Vector3 MCBM::Vector3::Clamp(const Vector3& vec1, const Vector3& min, const Vector3& max, bool* isClamped)
 {
 	Vector3 ret;
 	bool isClamp = false;
@@ -233,7 +233,7 @@ Vector3 MCB::Vector3::Clamp(const Vector3& vec1, const Vector3& min, const Vecto
 	return ret;
 }
 
-Vector3 MCB::operator+(const Vector3& vecA, const Vector3& vecB)
+Vector3 MCBM::operator+(const Vector3& vecA, const Vector3& vecB)
 {
 	Vector3 temp;
 	temp = vecA;
@@ -241,12 +241,12 @@ Vector3 MCB::operator+(const Vector3& vecA, const Vector3& vecB)
 	return temp;
 }
 
-bool MCB::operator!=(const Vector3& vecA, const Vector3& vecB)
+bool MCBM::operator!=(const Vector3& vecA, const Vector3& vecB)
 {
 	return (vecA.x != vecB.x || vecA.y != vecB.x || vecA.z != vecB.x);
 }
 
-Vector3 MCB::operator-(const Vector3& vecA, const Vector3& vecB)
+Vector3 MCBM::operator-(const Vector3& vecA, const Vector3& vecB)
 {
 	Vector3 temp;
 	temp = vecA;
@@ -254,7 +254,7 @@ Vector3 MCB::operator-(const Vector3& vecA, const Vector3& vecB)
 	return temp;
 }
 
-Vector3 MCB::operator*(const Vector3& vecA, float k)
+Vector3 MCBM::operator*(const Vector3& vecA, float k)
 {
 	Vector3 temp;
 	temp = vecA;
@@ -262,7 +262,7 @@ Vector3 MCB::operator*(const Vector3& vecA, float k)
 	return temp;
 }
 
-Vector3 MCB::operator*(float k, const Vector3& vecA)
+Vector3 MCBM::operator*(float k, const Vector3& vecA)
 {
 	Vector3 temp;
 	temp = vecA;
@@ -270,7 +270,7 @@ Vector3 MCB::operator*(float k, const Vector3& vecA)
 	return temp;
 }
 
-Vector3 MCB::operator/(const Vector3& vecA, float k)
+Vector3 MCBM::operator/(const Vector3& vecA, float k)
 {
 	Vector3 temp;
 	temp.x = vecA.x / k;
@@ -279,7 +279,7 @@ Vector3 MCB::operator/(const Vector3& vecA, float k)
 	return temp;
 }
 
-Vector3 MCB::operator-(const Vector3& vecA)
+Vector3 MCBM::operator-(const Vector3& vecA)
 {
 	Vector3 temp;
 	temp.x = vecA.x * -1;

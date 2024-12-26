@@ -5,7 +5,7 @@
 #include "Quaternion.h"
 #include "Matrix.h"
 
-namespace MCB
+namespace MCBM
 {
 	class Bone
 	{

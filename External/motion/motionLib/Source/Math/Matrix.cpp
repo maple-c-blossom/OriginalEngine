@@ -4,9 +4,9 @@
 
 #define PI 3.141592654f
 
-using namespace MCB;
+using namespace MCBM;
 
-MCB::Matrix::Matrix()
+MCBM::Matrix::Matrix()
 {
 	_11_ = 1.0f; _12_ = 0.0f; _13_ = 0.0f; _14_ = 0.0f;
 	_21_ = 0.0f; _22_ = 1.0f; _23_ = 0.0f; _24_ = 0.0f;
@@ -14,7 +14,7 @@ MCB::Matrix::Matrix()
 	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
 }
 
-void MCB::Matrix::MatrixIdentity()
+void MCBM::Matrix::MatrixIdentity()
 {
 	_11_ = 1.0f; _12_ = 0.0f; _13_ = 0.0f; _14_ = 0.0f;
 	_21_ = 0.0f; _22_ = 1.0f; _23_ = 0.0f; _24_ = 0.0f;
@@ -22,7 +22,7 @@ void MCB::Matrix::MatrixIdentity()
 	_41_ = 0.0f; _42_ = 0.0f; _43_ = 0.0f; _44_ = 1.0f;
 }
 
-MCB::Matrix MCB::Matrix::MatrixTranslate(float x, float y, float z)
+MCBM::Matrix MCBM::Matrix::MatrixTranslate(float x, float y, float z)
 {
 	Matrix temp;
 	temp.MatrixIdentity();
@@ -35,7 +35,7 @@ MCB::Matrix MCB::Matrix::MatrixTranslate(float x, float y, float z)
 	return temp;
 }
 
-Matrix MCB::Matrix::MatrixTranslate(Vector3 pos)
+Matrix MCBM::Matrix::MatrixTranslate(Vector3 pos)
 {
 	Matrix temp;
 	temp.MatrixIdentity();
@@ -48,7 +48,7 @@ Matrix MCB::Matrix::MatrixTranslate(Vector3 pos)
 	return temp;
 }
 
-MCB::Matrix MCB::Matrix::MatrixScaling(float x, float y, float z)
+MCBM::Matrix MCBM::Matrix::MatrixScaling(float x, float y, float z)
 {
 
 	Matrix temp;
@@ -63,7 +63,7 @@ MCB::Matrix MCB::Matrix::MatrixScaling(float x, float y, float z)
 
 }
 
-Matrix MCB::Matrix::MatrixScaling(Vector3 scale)
+Matrix MCBM::Matrix::MatrixScaling(Vector3 scale)
 {
 	Matrix temp;
 	temp.MatrixIdentity();
@@ -76,7 +76,7 @@ Matrix MCB::Matrix::MatrixScaling(Vector3 scale)
 	return temp;
 }
 
-void MCB::Matrix::ConvertMatrixArray(float** ArrayMat)
+void MCBM::Matrix::ConvertMatrixArray(float** ArrayMat)
 {
 	ArrayMat[0][0] = _11_, ArrayMat[0][1] = _12_, ArrayMat[0][2] = _13_, ArrayMat[0][3] = _14_;
 	ArrayMat[1][0] = _21_, ArrayMat[1][1] = _22_, ArrayMat[1][2] = _23_, ArrayMat[1][3] = _24_;
@@ -84,7 +84,7 @@ void MCB::Matrix::ConvertMatrixArray(float** ArrayMat)
 	ArrayMat[3][0] = _41_, ArrayMat[3][1] = _42_, ArrayMat[3][2] = _43_, ArrayMat[3][3] = _44_;
 }
 
-void MCB::Matrix::ConvertMatrixMCBMat(float** ArrayMat)
+void MCBM::Matrix::ConvertMatrixMCBMat(float** ArrayMat)
 {
 	_11_ = ArrayMat[0][0], _12_ = ArrayMat[0][1], _13_ = ArrayMat[0][2], _14_ = ArrayMat[0][3];
 	_21_ = ArrayMat[1][0], _22_ = ArrayMat[1][1], _23_ = ArrayMat[1][2], _24_ = ArrayMat[1][3];
@@ -92,7 +92,7 @@ void MCB::Matrix::ConvertMatrixMCBMat(float** ArrayMat)
 	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
 }
 
-void MCB::Matrix::ConvertMatrixMCBMat(std::array<std::array<float, 4>, 4> ArrayMat)
+void MCBM::Matrix::ConvertMatrixMCBMat(std::array<std::array<float, 4>, 4> ArrayMat)
 {
 	_11_ = ArrayMat[0][0], _12_ = ArrayMat[0][1], _13_ = ArrayMat[0][2], _14_ = ArrayMat[0][3];
 	_21_ = ArrayMat[1][0], _22_ = ArrayMat[1][1], _23_ = ArrayMat[1][2], _24_ = ArrayMat[1][3];
@@ -100,7 +100,7 @@ void MCB::Matrix::ConvertMatrixMCBMat(std::array<std::array<float, 4>, 4> ArrayM
 	_41_ = ArrayMat[3][0], _42_ = ArrayMat[3][1], _43_ = ArrayMat[3][2], _44_ = ArrayMat[3][3];
 }
 
-std::array<std::array<float, 4>, 4> MCB::Matrix::GetArrayMat(Matrix mat)
+std::array<std::array<float, 4>, 4> MCBM::Matrix::GetArrayMat(Matrix mat)
 {
 	std::array<std::array<float, 4>, 4> ans;
 	ans[0][0] = mat._11_, ans[1][0] = mat._21_, ans[2][0] = mat._31_, ans[3][0] = mat._41_;
@@ -110,7 +110,7 @@ std::array<std::array<float, 4>, 4> MCB::Matrix::GetArrayMat(Matrix mat)
 	return ans;
 }
 
-MCB::Matrix MCB::Matrix::MatrixRotaX(float angle)
+MCBM::Matrix MCBM::Matrix::MatrixRotaX(float angle)
 {
 	Matrix matrix;
 
@@ -125,7 +125,7 @@ MCB::Matrix MCB::Matrix::MatrixRotaX(float angle)
 	return matrix;
 }
 
-MCB::Matrix MCB::Matrix::MatrixRotaY(float angle)
+MCBM::Matrix MCBM::Matrix::MatrixRotaY(float angle)
 {
 	Matrix matrix;
 
@@ -139,7 +139,7 @@ MCB::Matrix MCB::Matrix::MatrixRotaY(float angle)
 	return matrix;
 }
 
-MCB::Matrix MCB::Matrix::MatrixRotaZ(float angle)
+MCBM::Matrix MCBM::Matrix::MatrixRotaZ(float angle)
 {
 	Matrix matrix;
 	matrix.MatrixIdentity();
@@ -154,7 +154,7 @@ MCB::Matrix MCB::Matrix::MatrixRotaZ(float angle)
 }
 
 
-Matrix MCB::Matrix::GetQuaternionRotaMat(const Quaternion& rotaQ)
+Matrix MCBM::Matrix::GetQuaternionRotaMat(const Quaternion& rotaQ)
 {
 	Matrix mat;
 	mat.MatrixIdentity();
@@ -183,7 +183,7 @@ Matrix MCB::Matrix::GetQuaternionRotaMat(const Quaternion& rotaQ)
 }
 
 
-MCB::Matrix MCB::Matrix::ReturnMatrixIdentity()
+MCBM::Matrix MCBM::Matrix::ReturnMatrixIdentity()
 {
 	Matrix ans;
 	ans._11_ = 1.0f; ans._12_ = 0.0f; ans._13_ = 0.0f; ans._14_ = 0.0f;
@@ -193,7 +193,7 @@ MCB::Matrix MCB::Matrix::ReturnMatrixIdentity()
 	return ans;
 }
 
-Matrix MCB::Matrix::MatrixTranspose(Matrix mat)
+Matrix MCBM::Matrix::MatrixTranspose(Matrix mat)
 {
 	std::array<std::array<float, 4>, 4> ans;
 	std::array<std::array<float, 4>, 4> arrayMat = mat.GetArrayMat(mat);
@@ -209,7 +209,7 @@ Matrix MCB::Matrix::MatrixTranspose(Matrix mat)
 	return ret;
 }
 
-Matrix MCB::Matrix::MatrixInverse(Matrix mat)
+Matrix MCBM::Matrix::MatrixInverse(Matrix mat)
 {
 
 	Matrix result;
@@ -291,7 +291,7 @@ Matrix MCB::Matrix::MatrixInverse(Matrix mat)
 //	return ans;
 //}
 
-Vector3 MCB::Matrix::Transform(const Vector3& v, const Matrix& m)
+Vector3 MCBM::Matrix::Transform(const Vector3& v, const Matrix& m)
 {
 	float w = v.x * m._14_ + v.y * m._24_ + v.z * m._34_ + m._44_;
 
@@ -304,7 +304,7 @@ Vector3 MCB::Matrix::Transform(const Vector3& v, const Matrix& m)
 	return result;
 }
 
-Vector3 MCB::Matrix::GetTranslate(const Matrix& m)
+Vector3 MCBM::Matrix::GetTranslate(const Matrix& m)
 {
 	Vector3 pos;
 	pos.x = m._41_;
@@ -313,7 +313,7 @@ Vector3 MCB::Matrix::GetTranslate(const Matrix& m)
 	return pos;
 }
 
-Vector3 MCB::Matrix::GetRotationToEuler()
+Vector3 MCBM::Matrix::GetRotationToEuler()
 {
 	Vector3 rot;
 	if (_13_ == 1.0f)
@@ -338,7 +338,7 @@ Vector3 MCB::Matrix::GetRotationToEuler()
 	return rot;
 }
 
-MCB::Matrix MCB::Matrix::operator*(float s)
+MCBM::Matrix MCBM::Matrix::operator*(float s)
 {
 	Matrix ans;
 	ans._11_ = _11_ * s;
@@ -364,7 +364,7 @@ MCB::Matrix MCB::Matrix::operator*(float s)
 	return ans;
 }
 
-MCB::Matrix MCB::Matrix::operator/(float s)
+MCBM::Matrix MCBM::Matrix::operator/(float s)
 {
 	Matrix ans;
 	ans._11_ = _11_ / s;
@@ -390,7 +390,7 @@ MCB::Matrix MCB::Matrix::operator/(float s)
 	return ans;
 }
 
-MCB::Matrix MCB::Matrix::operator+(const Matrix& matrix)
+MCBM::Matrix MCBM::Matrix::operator+(const Matrix& matrix)
 {
 	Matrix ans;
 	ans._11_ = _11_ + matrix._11_;
@@ -417,7 +417,7 @@ MCB::Matrix MCB::Matrix::operator+(const Matrix& matrix)
 	return ans;
 }
 
-MCB::Matrix MCB::Matrix::operator-(const Matrix& matrix)
+MCBM::Matrix MCBM::Matrix::operator-(const Matrix& matrix)
 {
 	Matrix ans;
 	ans._11_ = _11_ - matrix._11_;
@@ -444,37 +444,37 @@ MCB::Matrix MCB::Matrix::operator-(const Matrix& matrix)
 	return ans;
 }
 
-MCB::Matrix& MCB::Matrix::operator*=(const Matrix& matrix)
+MCBM::Matrix& MCBM::Matrix::operator*=(const Matrix& matrix)
 {
 	*this = *this * matrix;
 	return(*this);
 }
 
-MCB::Matrix& MCB::Matrix::operator*=(float s)
+MCBM::Matrix& MCBM::Matrix::operator*=(float s)
 {
 	*this = *this * s;
 	return(*this);
 }
 
-MCB::Matrix& MCB::Matrix::operator/=(float s)
+MCBM::Matrix& MCBM::Matrix::operator/=(float s)
 {
 	*this = *this / s;
 	return(*this);
 }
 
-MCB::Matrix& MCB::Matrix::operator+=(const Matrix& matrix)
+MCBM::Matrix& MCBM::Matrix::operator+=(const Matrix& matrix)
 {
 	*this = *this + matrix;
 	return(*this);
 }
 
-MCB::Matrix& MCB::Matrix::operator-=(const Matrix& matrix)
+MCBM::Matrix& MCBM::Matrix::operator-=(const Matrix& matrix)
 {
 	*this = *this - matrix;
 	return *this;
 }
 
-float MCB::Matrix::operator[](size_t n)
+float MCBM::Matrix::operator[](size_t n)
 {
 	switch (n)
 	{
@@ -549,7 +549,7 @@ float MCB::Matrix::operator[](size_t n)
 
 }
 
-Matrix& MCB::Matrix::operator=(float* m)
+Matrix& MCBM::Matrix::operator=(float* m)
 {
 	for (int i = 0; i < 16; i++)
 	{
@@ -558,7 +558,7 @@ Matrix& MCB::Matrix::operator=(float* m)
 	return *this;
 }
 
-Matrix MCB::operator*(const Matrix& matrix1, const Matrix& matrix2)
+Matrix MCBM::operator*(const Matrix& matrix1, const Matrix& matrix2)
 {
 	Matrix ans;
 

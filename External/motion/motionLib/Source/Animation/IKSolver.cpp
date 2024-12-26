@@ -1,7 +1,7 @@
 #include "IKSolver.h"
 #include "MathUtil.h"
 
-void MCB::IKSolver::CCDIK()
+void MCBM::IKSolver::CCDIK()
 {
 	bool run = true;
 	bool remaining = false;
@@ -137,7 +137,7 @@ void MCB::IKSolver::CCDIK()
 	}
 }
 
-void MCB::IKSolver::SetIKConfig(int32_t linkBone, int32_t iteration, bool isLimit, bool isCoordinateTransformation, float threshold)
+void MCBM::IKSolver::SetIKConfig(int32_t linkBone, int32_t iteration, bool isLimit, bool isCoordinateTransformation, float threshold)
 {
 	linkBoneCount_ = linkBone;
 	iteration_ = iteration;
@@ -147,7 +147,7 @@ void MCB::IKSolver::SetIKConfig(int32_t linkBone, int32_t iteration, bool isLimi
 
 }
 
-void MCB::IKSolver::SetTarget(Vector3 targetPos)
+void MCBM::IKSolver::SetTarget(Vector3 targetPos)
 {
 	targetPos_ = targetPos;
 }

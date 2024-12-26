@@ -1,6 +1,6 @@
 #include "Capture.h"
 #include "Util.h"
-void MCB::Capture::Initialize()
+void MCBM::Capture::Initialize()
 {
 	cv::VideoCapture cap(0);
 	capture_ = std::move(cap);
@@ -95,7 +95,7 @@ void MCB::Capture::Initialize()
 
 }
 
-void MCB::Capture::Update()
+void MCBM::Capture::Update()
 {
 	cv::imshow("run", img_);
 
@@ -109,7 +109,7 @@ void MCB::Capture::Update()
 
 }
 
-void MCB::Capture::SetInitialPose()
+void MCBM::Capture::SetInitialPose()
 {
 	land_ = m_YOLOPoseEstimation_->GetLandmakes();
 
@@ -122,13 +122,13 @@ void MCB::Capture::SetInitialPose()
 	}
 }
 
-void MCB::Capture::Finalize()
+void MCBM::Capture::Finalize()
 {
 	m_YOLOPoseEstimation_->End();
 	cv::destroyWindow("run");
 }
 
-MCB::CaptureData& MCB::Capture::GetCaptureData(YOLO_POSE_INDEX key)
+MCBM::CaptureData& MCBM::Capture::GetCaptureData(YOLO_POSE_INDEX key)
 {
 	return capturedata_[key];
 }

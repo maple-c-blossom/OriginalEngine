@@ -6,7 +6,7 @@
 #include "Capture.h"
 
 
-namespace MCB
+namespace MCBM
 {
 	class Skelton
 	{

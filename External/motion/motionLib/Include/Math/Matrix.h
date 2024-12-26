@@ -4,7 +4,7 @@
 #include <array>
 #include "Quaternion.h"
 
-namespace MCB
+namespace MCBM
 {
 
 	class Matrix

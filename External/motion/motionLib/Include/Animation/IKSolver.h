@@ -4,7 +4,7 @@
 #include "Quaternion.h"
 #include "Bone.h"
 
-namespace MCB
+namespace MCBM
 {
 	class IKSolver
 	{

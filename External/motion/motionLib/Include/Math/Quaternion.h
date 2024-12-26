@@ -2,7 +2,7 @@
 #include "Vector3.h"
 #include <stdint.h>
 
-namespace MCB
+namespace MCBM
 {
 	class Quaternion
 	{

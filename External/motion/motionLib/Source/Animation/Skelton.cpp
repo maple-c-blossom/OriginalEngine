@@ -1,18 +1,18 @@
 #include "Skelton.h"
 #include "Vector3.h"
-void MCB::Skelton::InitializeCapture()
+void MCBM::Skelton::InitializeCapture()
 {
 	capture = std::make_unique<Capture>();
 	capture->Initialize();
 	capture->SetInitialPose();
 }
 
-void MCB::Skelton::AddBone(std::unique_ptr<Bone> bone)
+void MCBM::Skelton::AddBone(std::unique_ptr<Bone> bone)
 {
 	bones_.push_back(std::move(bone));
 }
 
-MCB::Bone* MCB::Skelton::GetBone(std::string name)
+MCBM::Bone* MCBM::Skelton::GetBone(std::string name)
 {
 	for (auto& bone : bones_)
 	{
@@ -24,35 +24,35 @@ MCB::Bone* MCB::Skelton::GetBone(std::string name)
 	return nullptr;
 }
 
-MCB::Quaternion MCB::Skelton::GetBoneRotation(std::string name)
+MCBM::Quaternion MCBM::Skelton::GetBoneRotation(std::string name)
 {
 	return GetBone(name)->GetRotation();
 }
 
-void MCB::Skelton::UpdateCaptureData()
+void MCBM::Skelton::UpdateCaptureData()
 {
 	capture->Update();
 }
 
-void MCB::Skelton::CaptureBasePoseInitialize()
+void MCBM::Skelton::CaptureBasePoseInitialize()
 {
 	capture->SetInitialPose();
 
 }
 
-void MCB::Skelton::SetRootBone(Bone* bone)
+void MCBM::Skelton::SetRootBone(Bone* bone)
 {
 	rootBone_ = bone;
 }
 
-void MCB::Skelton::CaptureBoneAccept()
+void MCBM::Skelton::CaptureBoneAccept()
 {
 
 
 
 }
 
-void MCB::Skelton::CaptureBoneUpdate(YOLO_POSE_INDEX rootBoneName, uint32_t boneCount)
+void MCBM::Skelton::CaptureBoneUpdate(YOLO_POSE_INDEX rootBoneName, uint32_t boneCount)
 {
 
 	CaptureData rootCap = capture->GetCaptureData(rootBoneName);

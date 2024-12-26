@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-namespace MCB
+namespace MCBM
 {
 	namespace Util
 	{

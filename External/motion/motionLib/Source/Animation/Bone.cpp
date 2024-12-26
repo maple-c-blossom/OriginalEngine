@@ -1,84 +1,84 @@
 #include "Bone.h"
 
-using namespace MCB;
+using namespace MCBM;
 
-void MCB::Bone::SetRotation(const Quaternion& rot)
+void MCBM::Bone::SetRotation(const Quaternion& rot)
 {
 	rotation_ = rot;
 }
 
-void MCB::Bone::SetName(const std::string& name)
+void MCBM::Bone::SetName(const std::string& name)
 {
 	name_ = name;
 }
 
-void MCB::Bone::SetScale(const Vector3& scale)
+void MCBM::Bone::SetScale(const Vector3& scale)
 {
 	scale_ = scale;
 }
 
-void MCB::Bone::SetTranslation(const Vector3& translation)
+void MCBM::Bone::SetTranslation(const Vector3& translation)
 {
 	translation_ = translation;
 }
 
-void MCB::Bone::SetModelTranslation(const Vector3& translation)
+void MCBM::Bone::SetModelTranslation(const Vector3& translation)
 {
 	modelTranslate_ = translation;
 }
 
-void MCB::Bone::SetParent(Bone* parent)
+void MCBM::Bone::SetParent(Bone* parent)
 {
 	parent_ = parent;
 }
 
-void MCB::Bone::SetBoneRotationLimit(Vector3 topEulerLimit, Vector3 bottomEulerLimit)
+void MCBM::Bone::SetBoneRotationLimit(Vector3 topEulerLimit, Vector3 bottomEulerLimit)
 {
 	topLimitEulerRadian_ = topEulerLimit;
 	bottomLimitEulerRadian_ = bottomEulerLimit;
 }
 
-std::string MCB::Bone::GetName()
+std::string MCBM::Bone::GetName()
 {
 	return name_;
 }
 
-Vector3 MCB::Bone::GetScale()
+Vector3 MCBM::Bone::GetScale()
 {
 	return scale_;
 }
 
-Vector3 MCB::Bone::GetTranslation()
+Vector3 MCBM::Bone::GetTranslation()
 {
 	return translation_;
 }
 
-Matrix MCB::Bone::GetOffSetMatrix()
+Matrix MCBM::Bone::GetOffSetMatrix()
 {
 	return offsetMatrix_;
 }
 
-Matrix MCB::Bone::GetFinalMatrix()
+Matrix MCBM::Bone::GetFinalMatrix()
 {
 	return finalMatrix_;
 }
 
-void MCB::Bone::AddChild(Bone* child)
+void MCBM::Bone::AddChild(Bone* child)
 {
 	children_.push_back(child);
 }
 
-void MCB::Bone::SetFinalMatrix(const Matrix& matrix)
+void MCBM::Bone::SetFinalMatrix(const Matrix& matrix)
 {
 	finalMatrix_ = matrix;
 }
 
-void MCB::Bone::SetOffsetMatrix(const Matrix& matrix)
+void MCBM::Bone::SetOffsetMatrix(const Matrix& matrix)
 {
 	offsetMatrix_ = matrix;
 }
 
-void MCB::Bone::RemoveChild(Bone* child)
+void MCBM::Bone::RemoveChild(Bone* child)
 {
 	auto itr = find(children_.begin(), children_.end(), child);
 	if (itr != children_.end())
@@ -88,7 +88,7 @@ void MCB::Bone::RemoveChild(Bone* child)
 
 }
 
-void MCB::Bone::SetParentAndChild(Bone* parent)
+void MCBM::Bone::SetParentAndChild(Bone* parent)
 {
 	if (parent_ != nullptr)
 	{
@@ -98,7 +98,7 @@ void MCB::Bone::SetParentAndChild(Bone* parent)
 	parent_->AddChild(this);
 }
 
-void MCB::Bone::SetInitializeTransformData()
+void MCBM::Bone::SetInitializeTransformData()
 {
 	initializeLocalTranslation_ = translation_;
 	initializeRotation_ = rotation_;
@@ -108,51 +108,51 @@ void MCB::Bone::SetInitializeTransformData()
 	initializeModelTranslation_ = initializeModelTransform_.GetTranslate(initializeModelTransform_);
 }
 
-Matrix MCB::Bone::GetAnimationMatrix()
+Matrix MCBM::Bone::GetAnimationMatrix()
 {
 	return animationParentMatrix_;
 }
 
-Quaternion MCB::Bone::GetRotation()
+Quaternion MCBM::Bone::GetRotation()
 {
 	return rotation_;
 }
 
-Vector3 MCB::Bone::GetModelTranslate()
+Vector3 MCBM::Bone::GetModelTranslate()
 {
 	return modelTranslate_;
 }
 
-Bone* MCB::Bone::GetParent()
+Bone* MCBM::Bone::GetParent()
 {
 	return parent_;
 }
-std::vector<Bone*> MCB::Bone::GetChildren()
+std::vector<Bone*> MCBM::Bone::GetChildren()
 {
 	return children_;
 }
 
-Vector3 MCB::Bone::GetTopLimitEulerRadian()
+Vector3 MCBM::Bone::GetTopLimitEulerRadian()
 {
 	return topLimitEulerRadian_;
 }
 
-Vector3 MCB::Bone::GetBottomLimitEulerRadian()
+Vector3 MCBM::Bone::GetBottomLimitEulerRadian()
 {
 	return bottomLimitEulerRadian_;
 }
 
-Vector3 MCB::Bone::GetInitializeModelTranslate()
+Vector3 MCBM::Bone::GetInitializeModelTranslate()
 {
 	return initializeModelTranslation_;
 }
 
-Quaternion MCB::Bone::GetInitializeRotation()
+Quaternion MCBM::Bone::GetInitializeRotation()
 {
 	return initializeRotation_;
 }
 
-void MCB::Bone::UpdateMatrix()
+void MCBM::Bone::UpdateMatrix()
 {
 	Matrix scaleMat = Matrix::MatrixScaling(scale_);
 	Matrix rotationMat = Matrix::GetQuaternionRotaMat(rotation_);
